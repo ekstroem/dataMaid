@@ -1,0 +1,17 @@
+Package: cleanR
+Type: Package
+Title: Checks for potential errors in data frame as par of the data cleaning process.
+Version: 0.2
+Date: 2016-09-23
+Author: Anne Helby Petersen <ahpe@sund.ku.dk> and Claus Thorn Ekstrøm <ekstrom@sund.ku.dk>
+Maintainer: Claus Thorn Ekstrøm <ekstrom@sund.ku.dk>
+Description: The package runs a number of tests on an R data frame in order to identify potential errors in the dataset. It also produces a document that can be used for humans to identify possible errors.
+Depends:
+    pander,
+    lubridate,
+Suggests:
+    testthat    
+Encoding: UTF-8
+ByteCompile: true
+License: GPL-2
+RoxygenNote: 5.0.1

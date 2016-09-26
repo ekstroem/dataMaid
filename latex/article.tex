@@ -1,0 +1,92 @@
+\documentclass[article]{jss}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% declarations for jss.cls %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% almost as usual
+\author{Achim Zeileis\\Universit\"at Innsbruck \And
+        Second Author\\Plus Affiliation}
+\title{A Capitalized Title: Something about a Package \pkg{cleanR}}
+
+%% for pretty printing and a nice hypersummary also set:
+\Plainauthor{Achim Zeileis, Second Author} %% comma-separated
+\Plaintitle{A Capitalized Title: Something about a Package cleanR} %% without formatting
+\Shorttitle{\pkg{cleanR}: A Capitalized Title} %% a short title (if necessary)
+
+%% an abstract and keywords
+\Abstract{
+  The abstract of the article.
+}
+\Keywords{keywords, comma-separated, not capitalized, \proglang{Java}}
+\Plainkeywords{keywords, comma-separated, not capitalized, Java} %% without formatting
+%% at least one keyword must be supplied
+
+%% publication information
+%% NOTE: Typically, this can be left commented and will be filled out by the technical editor
+%% \Volume{50}
+%% \Issue{9}
+%% \Month{June}
+%% \Year{2012}
+%% \Submitdate{2012-06-04}
+%% \Acceptdate{2012-06-04}
+
+%% The address of (at least) one author should be given
+%% in the following format:
+\Address{
+  Achim Zeileis\\
+  Department of Statistics and Mathematics\\
+  Faculty of Economics and Statistics\\
+  Universit\"at Innsbruck\\
+  6020 Innsbruck, Austria\\
+  E-mail: \email{Achim.Zeileis@uibk.ac.at}\\
+  URL: \url{http://eeecon.uibk.ac.at/~zeileis/}
+}
+%% It is also possible to add a telephone and fax number
+%% before the e-mail in the following format:
+%% Telephone: +43/512/507-7103
+%% Fax: +43/512/507-2851
+
+%% for those who use Sweave please include the following line (with % symbols):
+%% need no \usepackage{Sweave.sty}
+
+%% end of declarations %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+\section{Introduction}
+Statisticians and data analysts spend a large portion of their time on
+data cleaning and on data wrangling. Packages such as \pkg{}, \pkg{},
+and \pkg{} make data wrangling a lot easier in R, but there are only a
+few options available for data cleaning.
+
+
+Data cleaning is a time consuming endeavour and it inherently requires
+human interaction since every dataset is different and the variables
+in the dataset can only be understood in the proper context of the
+experiment. While each dataset is different and require
+... (``simple questions''
+
+... there are a number of common occurrences that .... This is particulary
+Automated
+
+
+... partly be done by ... However ... enough ... similar tasks that
+pop
+
+
+However it is not uncommon for ... to run a set of ....
+
+
+\section{Checking a dataset for errors}
+
+%% include your article here, just as usual
+%% Note that you should use the \pkg{}, \proglang{} and \code{}
+%% commands.
+
+\begin{Schunk}
+\begin{Sinput}
+> library(cleanR)
+> data(testData)
+> testData
