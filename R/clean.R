@@ -12,7 +12,7 @@
 #' @param output Output format, options are pdf and html
 #' @param finish "render" (makes pdf/html), "markdown" (makes markdown file), "print" (prints to screen).
 #' @param twoCol Should the results be presented in two columns (if finish is "render" or "markdown")?
-#' @param o the data frame to be checked
+#' @param o the data frame or tibble(???) object to be checked
 #' @param characterChecks a list of error-checking functions to apply to character vectors
 #' @param integerChecks a list of error-checking functions to apply to integer vectors
 #' @param silent Should clean() run completely silently? Note that this option overrules the settings for
@@ -54,7 +54,7 @@
 #'
 #' @export
 clean <- function(o, file=NULL, removeExisting=TRUE, maxnum=NULL,
-                  standAlone=TRUE, brag=TRUE, ordering=c("asIs", "alpha"),
+                  standAlone=TRUE, brag=FALSE, ordering=c("asIs", "alpha"),
                   cleanUp="deletethisoption?",
                   quiet=TRUE, output="pdf", finish = "markdown",
                   twoCol=TRUE, silent=FALSE, openResult=TRUE,
@@ -64,7 +64,7 @@ clean <- function(o, file=NULL, removeExisting=TRUE, maxnum=NULL,
                   stopOverwrite=TRUE, ...) {
 
     ## Start by doing a few sanity checks
-    if (! (is(object, "data.frame") )) {
+    if (! (is(o, "data.frame") )) {
         ## tibble is automatically a data frame
         stop("clean requires a data.frame or tibble as input")
     }
@@ -133,8 +133,10 @@ clean <- function(o, file=NULL, removeExisting=TRUE, maxnum=NULL,
 
 
 
-  ## make tables left-aligned
+  ## make tables left-aligned and allow for 6 columns
+    #change back to original settings in the end of the function?
     panderOptions("table.alignment.default", "left")
+    panderOptions("table.split.table", Inf)
 
   ## write to file
     writer <- function(x, ..., outfile=file, sep="\n") {
@@ -233,12 +235,52 @@ clean <- function(o, file=NULL, removeExisting=TRUE, maxnum=NULL,
 
    writer("\n")
 
+   #browser() 
+   
+   ## List the checking that were used for each possible variable type
+   dots <- list(...) 
+   
+   if ("characterChecks" %in% names(dots)) cChecks <- dots$characterChecks
+   else cChecks <- eval(formals(check.character)$characterChecks)
+   
+   if ("factorChecks" %in% names(dots)) fChecks <- dots$factorChecks
+   else fChecks <- eval(formals(check.factor)$factorChecks)
+   
+   if ("labelledChecks" %in% names(dots)) lChecks <- dots$labelledChecks
+   else lChecks <- eval(formals(check.labelled)$labelledChecks)
+   
+   if ("numericChecks" %in% names(dots)) nChecks <- dots$numericChecks
+   else nChecks <- eval(formals(check.numeric)$numericChecks)
+   
+   if ("integerChecks" %in% names(dots)) iChecks <- dots$integerChecks
+   else iChecks <- eval(formals(check.integer)$integerChecks)
+   
+   if ("logicalChecks" %in% names(dots)) bChecks <- dots$logicalChecks
+   else bChecks <- eval(formals(check.logical)$logicalChecks)
+   
+   allChecks <- union(cChecks, c(fChecks, lChecks, nChecks, iChecks, bChecks))
+   checkMat <- matrix("\\&nbsp", length(allChecks), 6, #6: number of different variable types
+                      dimnames=list(allChecks, c("character", "factor", "labelled", 
+                                                 "numeric", "integer", "logical")))
+   checkMat[cChecks, "character"] <- "x"
+   checkMat[fChecks, "factor"] <- "x"
+   checkMat[lChecks, "labelled"] <- "x"
+   checkMat[nChecks, "numeric"] <- "x"
+   checkMat[iChecks, "integer"] <- "x"
+   checkMat[bChecks, "logical"] <- "x"
+   
+   print(checkMat)
+   
+   writer(pander_return(checkMat), "\n")
+   
+   
     ## List of variables
     writer("# Variable list")
 
     for (idx in index) {
-        extraMessages <- list(do=F, messages=NULL)
+        extraMessages <- list(do=FALSE, messages=NULL)
         skip <- FALSE
+        problems <- FALSE
 
         v <- o[[idx]]
         vnam <- vnames[idx]
@@ -266,7 +308,7 @@ clean <- function(o, file=NULL, removeExisting=TRUE, maxnum=NULL,
         }
 
       ## skip non problem-causing variables
-        if (useVar=="problematic" && (!specialStatus$problem && !any(problems))) skip <- TRUE
+        if (useVar=="problematic" && (!any(preCheckProblems) && !any(problems))) skip <- TRUE
 
 
         ###remove
@@ -451,14 +493,12 @@ isCPR <- function(v) {
 
   if (!all(isDanishDate(substring(v, 1, 6)))) return(out)
   
-  browser()
-
   v <- gsub("-", "", v)
   
-  year <- substring(v, 5, 6)
+  year <- as.numeric(substring(v, 5, 6))
   digit7 <- substring(v, 7, 7)
 
-  noCheckPl <- year<36 & year>=7 & digit7 >= 5
+  noCheckPl <- year<36 & year>=7 & digit7 >= 4 #is this right?
   
   if (!all(noCheckPl)) {
     check <- function(x) {
@@ -468,7 +508,7 @@ isCPR <- function(v) {
     }
     res <- sapply(v[!noCheckPl], check)
     if (!all(res)) return(out)
-  } else if (!all(digit7[noCheckPl])>3) return(out)
+  } else if (!all(digit7[noCheckPl]>3)) return(out)
   
   out$problem <- TRUE
   out$message <- m

@@ -36,7 +36,7 @@
 #'   \item{"problem"}{An integer giving an error code. 0 means no potential errors were identified}
 #'   \item{"message"}{A string giving summary information in R markdown format about the results}
 #' }
-#' @author Anne Helby Petersen \email{ahpe@@sund.ku.dk} and Claus Thorn Ekstrom \email{ekstrom@@sund.ku.dk}
+#' @author Anne H. Petersen \email{ahpe@@sund.ku.dk} and Claus Thorn Ekstrom \email{ekstrom@@sund.ku.dk}
 #' @seealso \code{\link{clean}}
 #' @keywords misc
 #' @examples
@@ -206,14 +206,17 @@ identifyMissingCF <- function(v) {
   problem <- F
   problemValues <- NULL
 
-  missStrs <- c(".", "", "nan", "NaN", "NAN", "na", "NA", "Na", "Inf", "inf",
+  missStrs <- c("", "nan", "NaN", "NAN", "na", "NA", "Na", "Inf", "inf",
                 "-Inf", "-inf", "-", " ", "9")
   missStrsOcc <- intersect(v, missStrs) #what potential missing value strings occur?
 
   missNinesOcc <- identifyMissRepChar(v, "9") #what 99, 999, ... strings occur?
   missSpaceOcc <- identifyMissRepChar(v, " ") #what "  ", "   ", ... strings occur?
+  
+    #STATA-style: .something describes a "something" type of missing value
+  missDotPrefixOcc <- unique(v[substr(v, 1, 1) == "."])
 
-  allProblemOcc <- c(missStrsOcc, missNinesOcc, missSpaceOcc)
+  allProblemOcc <- c(missStrsOcc, missNinesOcc, missSpaceOcc, missDotPrefixOcc)
 
   if (length(allProblemOcc) > 0) {
     problemValues <- allProblemOcc
