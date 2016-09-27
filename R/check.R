@@ -161,6 +161,8 @@ unpackLabelled <- function(v) {
 
 ####IdentifyMiss#####
 identifyMissing <- function(v) UseMethod("identifyMissing")
+class(identifyMissing) <- c("checkFunction", "function")
+attr(identifyMissing, "description") <- "Identify missing values"
 
 #Identify candidate missing values that are interpreted as
 #"regular" values in a variable.
@@ -279,6 +281,8 @@ identifyMissing.logical <- function(v) identifyMissingB(v)
 
 ####IdentifyWhitespace#####
 identifyWhitespace <- function(v) UseMethod("identifyWhitespace")
+class(identifyWhitespace) <- c("checkFunction", "function")
+attr(identifyWhitespace, "description") <- "Identify prefixed and suffixed whitespace"
 
 #Identify values that begin or end with one or more whitespaces for
 #character, factor and labelled variabled.
@@ -328,6 +332,9 @@ identifyWhitespace.labelled <- function(v) identifyWhitespaceL(v)
 
 ####IdentifyOutliers#####
 identifyOutliers <- function(v, ...) UseMethod("identifyOutliers")
+class(identifyOutliers) <- c("checkFunction", "function")
+attr(identifyOutliers, "description") <- "Identify outliers"
+
 
 #Identify values in numeric or integer variables that are considered to be
 #outliers, i.e. smaller than the 1st quartile minus 1.5*IQR or
@@ -365,6 +372,9 @@ identifyOutliers.integer <- function(v) identifyOutliersNI(v)
 
 ####IdentifyLoners#####
 identifyLoners <- function(v, ...) UseMethod("identifyLoners")
+class(identifyLoners) <- c("checkFunction", "function")
+attr(identifyLoners, "description") <- "Identify levels with < 6 obs."
+
 
 #For character/factor variables, identify values that only have a
 #very low number of observations, as these categories might be
@@ -412,6 +422,9 @@ identifyLoners.character <- function(v) identifyLonersC(v)
 
 ####IdentifyCaseIssues#####
 identifyCaseIssues <- function(v, ...) UseMethod("identifyCaseIssues")
+class(identifyCaseIssues) <- c("checkFunction", "function")
+attr(identifyCaseIssues, "description") <- "Identify case issues"
+
 
 #Identify whether the same levels appear multiple times in a factor
 #or character variable, using different case settings.

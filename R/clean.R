@@ -32,6 +32,9 @@
 #' any of these checks find problems, the variable will not be summarized nor visualized nor checked.
 #' @param stopOverwrite If TRUE, an error is returned if cleanR is about to overwrite a file that was
 #' not produced by cleanR
+#' @param listChecks If TRUE, the document contains an overview of what checks were performed for 
+#' each variable data type.
+#' @param checkDetails MAYBE ALSO IMPLEMENT THIS?: If TRUE, details about each check function are added to the document (if available)
 #' @param \dots other arguments that are passed on the to checking, summary and visualization functions
 #' @return ???
 #' \itemize{
@@ -51,6 +54,18 @@
 #' data(testData)
 #' clean(testData)
 #' }
+#' 
+#' \dontrun{
+#' characterFoo <- function(v) {
+#'  if (substr(substitute(a), 1, 1) == "_") {
+#'    out <- list(problem=TRUE, message="Note that the variable name begins with \\_")
+#'  } else out <- list(problem=FALSE, message="")
+#'  out
+#' }
+#' class(characterFoo) <- "checkFunction"
+#' attr(characterFoo, "description") <- "I really hate underscores"
+#' clean(testData, characterChecks="characterFoo")
+#' }
 #'
 #' @export
 clean <- function(o, file=NULL, removeExisting=TRUE, maxnum=NULL,
@@ -61,7 +76,8 @@ clean <- function(o, file=NULL, removeExisting=TRUE, maxnum=NULL,
                   mode=c("summarize", "visualize", "check"),
                   useVar="all", nagUser=TRUE,
                   smartNum=TRUE, preChecks=c("isSpecial", "isCPR"),
-                  stopOverwrite=TRUE, ...) {
+                  stopOverwrite=TRUE, listChecks=TRUE,
+                  checkDetails=FALSE, ...) {
 
     ## Start by doing a few sanity checks
     if (! (is(o, "data.frame") )) {
@@ -88,6 +104,7 @@ clean <- function(o, file=NULL, removeExisting=TRUE, maxnum=NULL,
     } else index <- 1:nvariables
     n <- nrow(o)
     vnames <- names(o)
+    dots <- list(...) 
 
 
   ## check function input and initial settings
@@ -137,6 +154,7 @@ clean <- function(o, file=NULL, removeExisting=TRUE, maxnum=NULL,
     #change back to original settings in the end of the function?
     panderOptions("table.alignment.default", "left")
     panderOptions("table.split.table", Inf)
+    panderOptions("table.alignment.rownames", "left") #why doesn't this work?!
 
   ## write to file
     writer <- function(x, ..., outfile=file, sep="\n") {
@@ -238,41 +256,72 @@ clean <- function(o, file=NULL, removeExisting=TRUE, maxnum=NULL,
    #browser() 
    
    ## List the checking that were used for each possible variable type
-   dots <- list(...) 
-   
-   if ("characterChecks" %in% names(dots)) cChecks <- dots$characterChecks
-   else cChecks <- eval(formals(check.character)$characterChecks)
-   
-   if ("factorChecks" %in% names(dots)) fChecks <- dots$factorChecks
-   else fChecks <- eval(formals(check.factor)$factorChecks)
-   
-   if ("labelledChecks" %in% names(dots)) lChecks <- dots$labelledChecks
-   else lChecks <- eval(formals(check.labelled)$labelledChecks)
-   
-   if ("numericChecks" %in% names(dots)) nChecks <- dots$numericChecks
-   else nChecks <- eval(formals(check.numeric)$numericChecks)
-   
-   if ("integerChecks" %in% names(dots)) iChecks <- dots$integerChecks
-   else iChecks <- eval(formals(check.integer)$integerChecks)
-   
-   if ("logicalChecks" %in% names(dots)) bChecks <- dots$logicalChecks
-   else bChecks <- eval(formals(check.logical)$logicalChecks)
-   
-   allChecks <- union(cChecks, c(fChecks, lChecks, nChecks, iChecks, bChecks))
-   checkMat <- matrix("\\&nbsp", length(allChecks), 6, #6: number of different variable types
-                      dimnames=list(allChecks, c("character", "factor", "labelled", 
-                                                 "numeric", "integer", "logical")))
-   checkMat[cChecks, "character"] <- "x"
-   checkMat[fChecks, "factor"] <- "x"
-   checkMat[lChecks, "labelled"] <- "x"
-   checkMat[nChecks, "numeric"] <- "x"
-   checkMat[iChecks, "integer"] <- "x"
-   checkMat[bChecks, "logical"] <- "x"
-   
-   print(checkMat)
-   
-   writer(pander_return(checkMat), "\n")
-   
+   if (listChecks) {
+     if ("characterChecks" %in% names(dots)) cChecks <- dots$characterChecks
+     else cChecks <- eval(formals(check.character)$characterChecks)
+     
+     if ("factorChecks" %in% names(dots)) fChecks <- dots$factorChecks
+     else fChecks <- eval(formals(check.factor)$factorChecks)
+     
+     if ("labelledChecks" %in% names(dots)) lChecks <- dots$labelledChecks
+     else lChecks <- eval(formals(check.labelled)$labelledChecks)
+     
+     if ("numericChecks" %in% names(dots)) nChecks <- dots$numericChecks
+     else nChecks <- eval(formals(check.numeric)$numericChecks)
+     
+     if ("integerChecks" %in% names(dots)) iChecks <- dots$integerChecks
+     else iChecks <- eval(formals(check.integer)$integerChecks)
+     
+     if ("logicalChecks" %in% names(dots)) bChecks <- dots$logicalChecks
+     else bChecks <- eval(formals(check.logical)$logicalChecks)
+     
+     allChecks <- union(cChecks, c(fChecks, lChecks, nChecks, iChecks, bChecks))
+     checkMat <- matrix("", length(allChecks), 6, #6: number of different variable types
+                        dimnames=list(allChecks, c("character", "factor", "labelled", 
+                                                   "numeric", "integer", "logical")))
+     y <- "$\\times$"
+     checkMat[cChecks, "character"] <- y
+     checkMat[fChecks, "factor"] <- y
+     checkMat[lChecks, "labelled"] <- y
+     checkMat[nChecks, "numeric"] <- y
+     checkMat[iChecks, "integer"] <- y
+     
+     rownames(checkMat) <- sapply(rownames(checkMat), funSum)
+     
+    ##works
+     #writer(pander_return(checkMat))
+     #writer("\n")
+    ##
+     
+     
+    ##Doesn't change anything
+     #checkMat <- as.data.frame(checkMat)
+    ## 
+     
+     writer("[Write some meta text here?]. The following variable checks were performed, 
+            depending on the data type of each variable:")
+     writer(pandoc.table.return(checkMat, justify="centre",
+                                emphasize.rownames=FALSE,
+                                table.alignment.rownames = "left")) #allows for centering in this table only
+     writer("\n")
+    
+    ##doesn't work
+     #library(xtable) 
+     #writer(xtable(checkMat))
+     #writer("\n")
+    ##
+     
+    ##works 
+      #chunk.wrapper(paste("pander(", paste(deparse(checkMat), collapse=" "), ")", sep=""))
+      #writer("\n")
+    ##
+     
+    ##doesn't work - printed in verbatim 
+      #chunk.wrapper("panderOptions(\"table.alignment.rownames\", \"left\");", paste("pandoc.table(", paste(deparse(checkMat), collapse=" "), ", justify=\"centre\"",
+      #                  ", emphasize.rownames=FALSE)", sep=""), options="results=\"markup\"") 
+    ##
+     
+   }
    
     ## List of variables
     writer("# Variable list")
@@ -338,7 +387,10 @@ clean <- function(o, file=NULL, removeExisting=TRUE, maxnum=NULL,
 
             ## make Summary table
             if (doSummarize) sumTable <- pander_return(summarize(v, ...))
-
+              #if (doSummarize) sumTable <- pandoc.table.return(summarize(v, ...))
+                #exactly the same result as with pander_return()
+            
+            
             ## Label information
               #???
 
@@ -531,3 +583,18 @@ isDanishDate <- function(strs) {
 
   TRUE
 }
+
+
+#Extract a function summary/description from checkFunction objects and 
+#return the function name for other function types. 
+#NOTE: fName is a string containing the function name and therefore, 
+#this function cannot be implemented as a generic function with 
+#methods.
+funSum <- function(fName) {
+  foo <- get(fName)
+  if ("checkFunction" %in% class(foo)) {
+    out <- attr(foo, "description")
+  } else out <- fName
+  out
+}
+

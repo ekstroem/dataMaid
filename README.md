@@ -15,7 +15,7 @@ install_github('ekstroem/cleanR')
 ## To Do / ideas
 
 * Documentation
-* Liste / forklare checks
+* ~~Liste / forklare checks~~ &#10003;
 * mulighed for print på skærm
 * ~~Væk fra Tufte? (html/standard-pdf)~~ &#10003;
 * ~~Kun variable med problemer~~ &#10003;
