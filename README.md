@@ -22,4 +22,8 @@ install_github('ekstroem/cleanR')
 * ~~Kun figurer~~ &#10003;
 * ~~Kun tabeller~~ &#10003;
 * Formattering er meget hardcoded mht. bredder osv. Det betyder specielt at basicVisual-plots bliver meget, meget små. Kan vi fikse det på en smart måde?
-* stopOverwrite er implementeret for rmd-filerne, men ikke for pdf/html. Jeg har ikke fundet en smart måde at "afmærke" disse filer. Vi kan godt tilføje en kommentar ("%comment") til pdf-filen, men IKKE i slutningen af filen (der er en end-of-file-marker, som jeg ikke tør rode med). Det betyder, at vi skal skrive kommentaren i starten og altså skal det gøres "før" (eller mens) der knittes - ellers vil vi skulle have hele pdf-filen liggende i hukommelsen mens vores funktion kører. For html kan vi godt kommentere i slutningen af filen, men det bliver langsomt (og tungt?) at skulle læse dertil hver gang. Hvad gør vi?
+* replace (fejl ved overskrivning) er implementeret for rmd-filerne, men ikke for pdf/html. Det er ikke straight-forward for pdf, da vi skal kunne læse en pdf-fils metadata. Dette kan muligvis gøres med en ny pakke (exif), men jeg kan ikke få lov til at installere den vha. devtools. Derfor: replace defaulter nu til ikke at overskrive. Har desuden tilføjet en option for versionsnummer, så brugeren let og hurtigt kan få nye filnavne.
+* Check for factor/character-variable: Er det en dato? Jeg kan ikke finde nogen, der har skrevet en funktion, som forsøger at genkende datoer (heller ikke i lubridate). Jeg er ikke sikker på, at jeg synes det er besværet værd at skrive den selv - der findes mange, mange datoformater.
+
+
+
