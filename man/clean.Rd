@@ -5,7 +5,7 @@
 \title{Perform a check of potential errors in a data frame}
 \usage{
 clean(o, file = NULL, removeExisting = TRUE, maxnum = NULL,
-  standAlone = TRUE, brag = TRUE, ordering = c("asIs", "alpha"),
+  standAlone = TRUE, brag = FALSE, ordering = c("asIs", "alpha"),
   cleanUp = "deletethisoption?", quiet = TRUE, output = "pdf",
   finish = "markdown", twoCol = TRUE, silent = FALSE, openResult = TRUE,
   mode = c("summarize", "visualize", "check"), useVar = "all",
@@ -13,7 +13,7 @@ clean(o, file = NULL, removeExisting = TRUE, maxnum = NULL,
   stopOverwrite = TRUE, ...)
 }
 \arguments{
-\item{o}{the data frame to be checked}
+\item{o}{the data frame or tibble(???) object to be checked}
 
 \item{standAlone}{If TRUE, the document begins with a markdown preamble such that it
 can be rendered as is.}

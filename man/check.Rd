@@ -33,7 +33,7 @@ y <- c(rnorm(100), rep(99, 10))
 
 }
 \author{
-Anne Helby Petersen \email{ahpe@sund.ku.dk} and Claus Thorn Ekstrom \email{ekstrom@sund.ku.dk}
+Anne H. Petersen \email{ahpe@sund.ku.dk} and Claus Thorn Ekstrom \email{ekstrom@sund.ku.dk}
 }
 \seealso{
 \code{\link{clean}}
