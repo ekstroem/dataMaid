@@ -10,7 +10,8 @@ clean(o, file = NULL, removeExisting = TRUE, maxnum = NULL,
   finish = "markdown", twoCol = TRUE, silent = FALSE, openResult = TRUE,
   mode = c("summarize", "visualize", "check"), useVar = "all",
   nagUser = TRUE, smartNum = TRUE, preChecks = c("isSpecial", "isCPR"),
-  stopOverwrite = TRUE, ...)
+  replace = "never", listChecks = TRUE, checkDetails = FALSE, vol = "",
+  ...)
 }
 \arguments{
 \item{o}{the data frame or tibble(???) object to be checked}
@@ -53,8 +54,19 @@ message is printed in the data summary as well.}
 \item{preChecks}{Variable checks that are performed before the summary/visualization/checking step. If
 any of these checks find problems, the variable will not be summarized nor visualized nor checked.}
 
-\item{stopOverwrite}{If TRUE, an error is returned if cleanR is about to overwrite a file that was
-not produced by cleanR}
+\item{replace}{If "never", an error is thrown if one of the files that we are about to write to 
+already exist. If "onlyCleanR", an error is thrown if one of the files that we are about to write to was 
+not produced by cleanR (NOT DONE). If "always", no checks are performed.}
+
+\item{listChecks}{If TRUE, the document contains an overview of what checks were performed for 
+each variable data type.}
+
+\item{checkDetails}{MAYBE ALSO IMPLEMENT THIS?: If TRUE, details about each check function are added 
+to the document (if available)}
+
+\item{vol}{Extra text string that is appended on the end of the output file name(s). For example, if the data
+set is called "myData", no file argument is supplied and vol="2", the output file will be called
+"cleanR_myData2.Rmd"}
 
 \item{characterChecks}{a list of error-checking functions to apply to character vectors}
 
@@ -82,6 +94,18 @@ clean(data.frame(x=1:15))
 \dontrun{
 data(testData)
 clean(testData)
+}
+
+\dontrun{
+characterFoo <- function(v) {
+ if (substr(substitute(a), 1, 1) == "_") {
+   out <- list(problem=TRUE, message="Note that the variable name begins with \\\\_")
+ } else out <- list(problem=FALSE, message="")
+ out
+}
+class(characterFoo) <- "checkFunction"
+attr(characterFoo, "description") <- "I really hate underscores"
+clean(testData, characterChecks="characterFoo")
 }
 
 }
