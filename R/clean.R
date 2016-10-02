@@ -3,6 +3,9 @@
 #' Runs a set of validation checks to check the variables in a data frame for potential errors.
 #' Performs checking steps according to user input and/or data type of the inputted variable.
 #'
+#' @param file XXX
+#' @param removeExisting XXX
+#' @param maxnum XXX
 #' @param standAlone If TRUE, the document begins with a markdown preamble such that it
 #' can be rendered as is.
 #' @param brag If TRUE, a note about cleanR is appended at the end of the output document.
@@ -30,12 +33,12 @@
 #' message is printed in the data summary as well.
 #' @param preChecks Variable checks that are performed before the summary/visualization/checking step. If
 #' any of these checks find problems, the variable will not be summarized nor visualized nor checked.
-#' @param replace If "never", an error is thrown if one of the files that we are about to write to 
-#' already exist. If "onlyCleanR", an error is thrown if one of the files that we are about to write to was 
+#' @param replace If "never", an error is thrown if one of the files that we are about to write to
+#' already exist. If "onlyCleanR", an error is thrown if one of the files that we are about to write to was
 #' not produced by cleanR (NOT DONE). If "always", no checks are performed.
-#' @param listChecks If TRUE, the document contains an overview of what checks were performed for 
+#' @param listChecks If TRUE, the document contains an overview of what checks were performed for
 #' each variable data type.
-#' @param checkDetails MAYBE ALSO IMPLEMENT THIS?: If TRUE, details about each check function are added 
+#' @param checkDetails MAYBE ALSO IMPLEMENT THIS?: If TRUE, details about each check function are added
 #' to the document (if available)
 #' @param vol Extra text string that is appended on the end of the output file name(s). For example, if the data
 #' set is called "myData", no file argument is supplied and vol="2", the output file will be called
@@ -59,7 +62,7 @@
 #' data(testData)
 #' clean(testData)
 #' }
-#' 
+#'
 #' \dontrun{
 #' characterFoo <- function(v) {
 #'  if (substr(substitute(a), 1, 1) == "_") {
@@ -82,7 +85,7 @@ clean <- function(o, file=NULL, removeExisting=TRUE, maxnum=NULL,
                   useVar="all", nagUser=TRUE,
                   smartNum=TRUE, preChecks=c("isSpecial", "isCPR"),
                   replace="never", listChecks=TRUE,
-                  checkDetails=FALSE, 
+                  checkDetails=FALSE,
                   vol="", ...) {
 
     ## Start by doing a few sanity checks
@@ -110,7 +113,7 @@ clean <- function(o, file=NULL, removeExisting=TRUE, maxnum=NULL,
     } else index <- 1:nvariables
     n <- nrow(o)
     vnames <- names(o)
-    dots <- list(...) 
+    dots <- list(...)
 
 
   ## check function input and initial settings
@@ -126,11 +129,11 @@ clean <- function(o, file=NULL, removeExisting=TRUE, maxnum=NULL,
       file <- paste("cleanR_", dfname, vol, ".Rmd", sep="")
     }
     if (finish!="render") output <- "Rmd"
-    outFile <- paste(substring(file, 1, nchar(file)-4), ".", output, sep="") 
-    
+    outFile <- paste(substring(file, 1, nchar(file)-4), ".", output, sep="")
+
     fileExists <- file.exists(file)
     outFileExists <- file.exists(outFile)
-    
+
     ###ALSO: check that vol produces a valid file name
 
   ## check if we are about to overwrite a file
@@ -147,25 +150,25 @@ clean <- function(o, file=NULL, removeExisting=TRUE, maxnum=NULL,
                    "- check that you do not want to keep the original file and if so,",
                    "use cleanR with replace = \"always\""))
       }
-      
+
       if (replace=="onlyCleanR") {
         fileProblem <- F
         outputFileProblem <- F
-      
+
         if (fileExists) {
           l12 <- readLines(file, 2, warn=FALSE)
           if (!identical(l12, c("---", "cleanR: yes"))) fileProblem <- T
-        } 
+        }
         if (outFileExists) {
           #############################################
           #check if pdf/html was produced by cleanR....
           #############################################
         }
-        
+
         if (fileProblem & outFileProblem) problemFiles <- paste(file, "and", outFile)
         if (fileProblem & !outFileProblem) problemFiles <- file
         if (!fileproblem & outFileProblem) problemFiles <- outFile
-        
+
         if (fileProblem || outFileProblem) {
           stop(paste("The file name(s) to be used by cleanR,", paste(problemFiles, ",", sep=""),
                      "are already in use and the files do not look like they were produced by cleanR.",
@@ -298,31 +301,31 @@ clean <- function(o, file=NULL, removeExisting=TRUE, maxnum=NULL,
 
    writer("\n")
 
-   #browser() 
-   
+   #browser()
+
    ## List the checking that were used for each possible variable type
    if (listChecks) {
      if ("characterChecks" %in% names(dots)) cChecks <- dots$characterChecks
      else cChecks <- eval(formals(check.character)$characterChecks)
-     
+
      if ("factorChecks" %in% names(dots)) fChecks <- dots$factorChecks
      else fChecks <- eval(formals(check.factor)$factorChecks)
-     
+
      if ("labelledChecks" %in% names(dots)) lChecks <- dots$labelledChecks
      else lChecks <- eval(formals(check.labelled)$labelledChecks)
-     
+
      if ("numericChecks" %in% names(dots)) nChecks <- dots$numericChecks
      else nChecks <- eval(formals(check.numeric)$numericChecks)
-     
+
      if ("integerChecks" %in% names(dots)) iChecks <- dots$integerChecks
      else iChecks <- eval(formals(check.integer)$integerChecks)
-     
+
      if ("logicalChecks" %in% names(dots)) bChecks <- dots$logicalChecks
      else bChecks <- eval(formals(check.logical)$logicalChecks)
-     
+
      allChecks <- union(cChecks, c(fChecks, lChecks, nChecks, iChecks, bChecks))
      checkMat <- matrix("", length(allChecks), 6, #6: number of different variable types
-                        dimnames=list(allChecks, c("character", "factor", "labelled", 
+                        dimnames=list(allChecks, c("character", "factor", "labelled",
                                                    "numeric", "integer", "logical")))
      y <- "$\\times$"
      checkMat[cChecks, "character"] <- y
@@ -330,44 +333,44 @@ clean <- function(o, file=NULL, removeExisting=TRUE, maxnum=NULL,
      checkMat[lChecks, "labelled"] <- y
      checkMat[nChecks, "numeric"] <- y
      checkMat[iChecks, "integer"] <- y
-     
+
      rownames(checkMat) <- sapply(rownames(checkMat), funSum)
-     
+
     ##works
      #writer(pander_return(checkMat))
      #writer("\n")
     ##
-     
-     
+
+
     ##Doesn't change anything
      #checkMat <- as.data.frame(checkMat)
-    ## 
-     
-     writer("[Write some meta text here?]. The following variable checks were performed, 
+    ##
+
+     writer("[Write some meta text here?]. The following variable checks were performed,
             depending on the data type of each variable:")
      writer(pandoc.table.return(checkMat, justify="centre",
                                 emphasize.rownames=FALSE,
                                 table.alignment.rownames = "left")) #allows for centering in this table only
      writer("\n")
-    
+
     ##doesn't work
-     #library(xtable) 
+     #library(xtable)
      #writer(xtable(checkMat))
      #writer("\n")
     ##
-     
-    ##works 
+
+    ##works
       #chunk.wrapper(paste("pander(", paste(deparse(checkMat), collapse=" "), ")", sep=""))
       #writer("\n")
     ##
-     
-    ##doesn't work - printed in verbatim 
+
+    ##doesn't work - printed in verbatim
       #chunk.wrapper("panderOptions(\"table.alignment.rownames\", \"left\");", paste("pandoc.table(", paste(deparse(checkMat), collapse=" "), ", justify=\"centre\"",
-      #                  ", emphasize.rownames=FALSE)", sep=""), options="results=\"markup\"") 
+      #                  ", emphasize.rownames=FALSE)", sep=""), options="results=\"markup\"")
     ##
-     
+
    }
-   
+
     ## List of variables
     writer("# Variable list")
 
@@ -434,8 +437,8 @@ clean <- function(o, file=NULL, removeExisting=TRUE, maxnum=NULL,
             if (doSummarize) sumTable <- pander_return(summarize(v, ...))
               #if (doSummarize) sumTable <- pandoc.table.return(summarize(v, ...))
                 #exactly the same result as with pander_return()
-            
-            
+
+
             ## Label information
               #???
 
@@ -589,14 +592,14 @@ isCPR <- function(v) {
   if (!all(posCPR)) return(out)
 
   if (!all(isDanishDate(substring(v, 1, 6)))) return(out)
-  
+
   v <- gsub("-", "", v)
-  
+
   year <- as.numeric(substring(v, 5, 6))
   digit7 <- substring(v, 7, 7)
 
   noCheckPl <- year<36 & year>=7 & digit7 >= 4 #is this right?
-  
+
   if (!all(noCheckPl)) {
     check <- function(x) {
       x <- as.numeric(strsplit(x, "")[[1]])
@@ -606,7 +609,7 @@ isCPR <- function(v) {
     res <- sapply(v[!noCheckPl], check)
     if (!all(res)) return(out)
   } else if (!all(digit7[noCheckPl]>3)) return(out)
-  
+
   out$problem <- TRUE
   out$message <- m
   out
@@ -630,10 +633,10 @@ isDanishDate <- function(strs) {
 }
 
 
-#Extract a function summary/description from checkFunction objects and 
-#return the function name for other function types. 
-#NOTE: fName is a string containing the function name and therefore, 
-#this function cannot be implemented as a generic function with 
+#Extract a function summary/description from checkFunction objects and
+#return the function name for other function types.
+#NOTE: fName is a string containing the function name and therefore,
+#this function cannot be implemented as a generic function with
 #methods.
 funSum <- function(fName) {
   foo <- get(fName)
