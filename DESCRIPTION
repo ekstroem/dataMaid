@@ -1,14 +1,13 @@
 Package: cleanR
 Type: Package
-Title: Checks for potential errors in data frame as par of the data cleaning process.
+Title: A Suite of Checks for Identification of Potential Errors in a Data Frame as Part of the Data Cleaning Process
 Version: 0.3
-Date: 2016-09-23
+Date: 2016-10-05
 Author: Anne Helby Petersen <ahpe@sund.ku.dk> and Claus Thorn Ekstrøm <ekstrom@sund.ku.dk>
 Maintainer: Claus Thorn Ekstrøm <ekstrom@sund.ku.dk>
-Description: The package runs a number of tests on an R data frame in order to identify potential errors in the dataset. It also produces a document that can be used for humans to identify possible errors.
+Description: Data cleaning is an important first step of any statistical analysis. cleanR provides an extendable suite of test for common potential errors in a dataset. It produces a document with a thorough summary of the checks and the results that a human can use to identify possible errors.
 Depends:
     pander,
-    lubridate,
 Suggests:
     testthat    
 Encoding: UTF-8

@@ -10,7 +10,7 @@ clean(o, file = NULL, removeExisting = TRUE, standAlone = TRUE,
   finish = "markdown", twoCol = TRUE, silent = FALSE, openResult = TRUE,
   mode = c("summarize", "visualize", "check"), useVar = "all",
   nagUser = TRUE, smartNum = TRUE, preChecks = c("isSpecial", "isCPR"),
-  replace = "never", listChecks = TRUE, checkDetails = FALSE, vol = "",
+  replace = FALSE, listChecks = TRUE, checkDetails = FALSE, vol = "",
   ...)
 }
 \arguments{
@@ -58,9 +58,8 @@ message is printed in the data summary as well.}
 \item{preChecks}{Variable checks that are performed before the summary/visualization/checking step. If
 any of these checks find problems, the variable will not be summarized nor visualized nor checked.}
 
-\item{replace}{If "never", an error is thrown if one of the files that we are about to write to
-already exist. If "onlyCleanR", an error is thrown if one of the files that we are about to write to was
-not produced by cleanR (NOT DONE). If "always", no checks are performed.}
+\item{replace}{If FALSE (the default) an error is thrown if one of the files that we are about to write to
+already exist. If TRUE no checks are performed.}
 
 \item{listChecks}{If TRUE, the document contains an overview of what checks were performed for
 each variable data type.}
