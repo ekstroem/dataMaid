@@ -4,8 +4,8 @@
 \alias{clean}
 \title{Perform a check of potential errors in a data frame}
 \usage{
-clean(o, file = NULL, removeExisting = TRUE, maxnum = NULL,
-  standAlone = TRUE, brag = FALSE, ordering = c("asIs", "alpha"),
+clean(o, file = NULL, removeExisting = TRUE, standAlone = TRUE,
+  brag = FALSE, ordering = c("asIs", "alpha"),
   cleanUp = "deletethisoption?", quiet = TRUE, output = "pdf",
   finish = "markdown", twoCol = TRUE, silent = FALSE, openResult = TRUE,
   mode = c("summarize", "visualize", "check"), useVar = "all",
@@ -15,6 +15,10 @@ clean(o, file = NULL, removeExisting = TRUE, maxnum = NULL,
 }
 \arguments{
 \item{o}{the data frame or tibble(???) object to be checked}
+
+\item{file}{XXX}
+
+\item{removeExisting}{XXX}
 
 \item{standAlone}{If TRUE, the document begins with a markdown preamble such that it
 can be rendered as is.}
@@ -54,14 +58,14 @@ message is printed in the data summary as well.}
 \item{preChecks}{Variable checks that are performed before the summary/visualization/checking step. If
 any of these checks find problems, the variable will not be summarized nor visualized nor checked.}
 
-\item{replace}{If "never", an error is thrown if one of the files that we are about to write to 
-already exist. If "onlyCleanR", an error is thrown if one of the files that we are about to write to was 
+\item{replace}{If "never", an error is thrown if one of the files that we are about to write to
+already exist. If "onlyCleanR", an error is thrown if one of the files that we are about to write to was
 not produced by cleanR (NOT DONE). If "always", no checks are performed.}
 
-\item{listChecks}{If TRUE, the document contains an overview of what checks were performed for 
+\item{listChecks}{If TRUE, the document contains an overview of what checks were performed for
 each variable data type.}
 
-\item{checkDetails}{MAYBE ALSO IMPLEMENT THIS?: If TRUE, details about each check function are added 
+\item{checkDetails}{MAYBE ALSO IMPLEMENT THIS?: If TRUE, details about each check function are added
 to the document (if available)}
 
 \item{vol}{Extra text string that is appended on the end of the output file name(s). For example, if the data
@@ -76,12 +80,6 @@ set is called "myData", no file argument is supplied and vol="2", the output fil
 }
 \value{
 ???
-\itemize{
-  \item{"name"}{The name of the check}
-  \item{"description"}{Slightly more information about the check}
-  \item{"problem"}{An integer giving an error code. 0 means no potential errors were identified}
-  \item{"message"}{A string giving summary information in R markdown format about the results}
-}
 }
 \description{
 Runs a set of validation checks to check the variables in a data frame for potential errors.

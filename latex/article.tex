@@ -1,5 +1,9 @@
 \documentclass[article]{jss}
 
+\usepackage[nogin]{Sweave}
+\usepackage{pdfpages}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% declarations for jss.cls %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -78,11 +82,14 @@ pop
 
 However it is not uncommon for ... to run a set of ....
 
+
+The manuscript is structured as follows. In
+
 %% include your article here, just as usual
 %% Note that you should use the \pkg{}, \proglang{} and \code{}
 %% commands.
 
-\section{Checking a dataset for errors}
+\section{Checking a dataset for errors} \label{sec:example1}
 
 
 \begin{Schunk}
@@ -135,10 +142,14 @@ However it is not uncommon for ... to run a set of ....
 \end{Schunk}
 
 
+\includepdf[fitpaper=true, pages=-]{test.pdf}
+
 Arguments
 
+\section{The structure of \pkg{cleanR}} \label{sec:internals}
 
-\section{Extending the error checks}
+
+\section{Extending the error checks} \label{sec:extending}
 
 \section[About Java]{About \proglang{Java}}
 %% Note: If there is markup in \(sub)section, then it has to be escape as above.

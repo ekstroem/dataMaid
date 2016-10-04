@@ -5,7 +5,6 @@
 #'
 #' @param file XXX
 #' @param removeExisting XXX
-#' @param maxnum XXX
 #' @param standAlone If TRUE, the document begins with a markdown preamble such that it
 #' can be rendered as is.
 #' @param brag If TRUE, a note about cleanR is appended at the end of the output document.
@@ -33,9 +32,8 @@
 #' message is printed in the data summary as well.
 #' @param preChecks Variable checks that are performed before the summary/visualization/checking step. If
 #' any of these checks find problems, the variable will not be summarized nor visualized nor checked.
-#' @param replace If "never", an error is thrown if one of the files that we are about to write to
-#' already exist. If "onlyCleanR", an error is thrown if one of the files that we are about to write to was
-#' not produced by cleanR (NOT DONE). If "always", no checks are performed.
+#' @param replace If FALSE (the default) an error is thrown if one of the files that we are about to write to
+#' already exist. If TRUE no checks are performed.
 #' @param listChecks If TRUE, the document contains an overview of what checks were performed for
 #' each variable data type.
 #' @param checkDetails MAYBE ALSO IMPLEMENT THIS?: If TRUE, details about each check function are added
@@ -45,12 +43,6 @@
 #' "cleanR_myData2.Rmd"
 #' @param \dots other arguments that are passed on the to checking, summary and visualization functions
 #' @return ???
-#' \itemize{
-#'   \item{"name"}{The name of the check}
-#'   \item{"description"}{Slightly more information about the check}
-#'   \item{"problem"}{An integer giving an error code. 0 means no potential errors were identified}
-#'   \item{"message"}{A string giving summary information in R markdown format about the results}
-#' }
 #' @author Anne H. Petersen \email{ahpe@@sund.ku.dk} and Claus Thorn Ekstrom \email{ekstrom@@sund.ku.dk}
 #' @seealso \code{\link{clean}}
 #' @keywords misc
@@ -76,7 +68,7 @@
 #' }
 #'
 #' @export
-clean <- function(o, file=NULL, removeExisting=TRUE, maxnum=NULL,
+clean <- function(o, file=NULL, removeExisting=TRUE,
                   standAlone=TRUE, brag=FALSE, ordering=c("asIs", "alpha"),
                   cleanUp="deletethisoption?",
                   quiet=TRUE, output="pdf", finish = "markdown",
@@ -84,7 +76,7 @@ clean <- function(o, file=NULL, removeExisting=TRUE, maxnum=NULL,
                   mode=c("summarize", "visualize", "check"),
                   useVar="all", nagUser=TRUE,
                   smartNum=TRUE, preChecks=c("isSpecial", "isCPR"),
-                  replace="never", listChecks=TRUE,
+                  replace=FALSE,  listChecks=TRUE,
                   checkDetails=FALSE,
                   vol="", ...) {
 
@@ -134,10 +126,12 @@ clean <- function(o, file=NULL, removeExisting=TRUE, maxnum=NULL,
     fileExists <- file.exists(file)
     outFileExists <- file.exists(outFile)
 
-    ###ALSO: check that vol produces a valid file name
+###ALSO: check that vol produces a valid file name
+
+    replace <- ifelse(!replace, "never", "always")
 
   ## check if we are about to overwrite a file
-    if (replace %in% c("never", "onlyCleanR") && (fileExists || outFileExists)) {
+    if (!replace %in% c("never", "onlyCleanR") && (fileExists || outFileExists)) {
       if (replace=="never") {
         if (fileExists & outFileExists) problemFiles <- paste(file, "and", outFile)
         if (fileExists & !outFileExists) problemFiles <- file
@@ -186,9 +180,14 @@ clean <- function(o, file=NULL, removeExisting=TRUE, maxnum=NULL,
       nagUser <- FALSE
     }
 
+    print(mode)
+
     doCheck <- "check" %in% mode
     doVisualize <- "visualize" %in% mode
     doSummarize <- "summarize" %in% mode
+
+    print(doCheck)
+    print(doVisualize)
 
     if (!doCheck & !doVisualize & !doSummarize) {
       warning("Note that no proper arguments were supplied to \"mode\" - no cleaning is performed")
@@ -443,7 +442,7 @@ clean <- function(o, file=NULL, removeExisting=TRUE, maxnum=NULL,
               #???
 
             ## make Visualization
-            if (doVisualize) visual <- visualize(v, vnam, doEval=F, ...)
+            if (doVisualize) visual <- visualize(v, vnam, doEval=FALSE, ...)
 
             ## add visualization + summary results to file
             if (twoCol) {
