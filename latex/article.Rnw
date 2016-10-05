@@ -111,9 +111,9 @@ Arguments
 \section{The structure of \pkg{cleanR}} \label{sec:internals}
 
 
-\section{Extending the error checks} \label{sec:extending}
+\section[Extending \pkg{cleanR}]{Extending the error checks} \label{sec:extending}
 
-\section[About Java]{About \proglang{Java}}
-%% Note: If there is markup in \(sub)section, then it has to be escape as above.
+\section{Web-app}
+
 
 \end{document}

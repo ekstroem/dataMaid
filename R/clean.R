@@ -3,7 +3,8 @@
 #' Runs a set of validation checks to check the variables in a data frame for potential errors.
 #' Performs checking steps according to user input and/or data type of the inputted variable.
 #'
-#' @param file XXX
+#' @param o the data frame object to be checked
+#' @param file The filename of output file. If set to NULL (the default) then the filename will be the name of the data frame prefixed with "cleanR-".
 #' @param removeExisting XXX
 #' @param standAlone If TRUE, the document begins with a markdown preamble such that it
 #' can be rendered as is.
@@ -14,7 +15,7 @@
 #' @param output Output format, options are pdf and html
 #' @param finish "render" (makes pdf/html), "markdown" (makes markdown file), "print" (prints to screen).
 #' @param twoCol Should the results be presented in two columns (if finish is "render" or "markdown")?
-#' @param o the data frame or tibble(???) object to be checked
+
 #' @param characterChecks a list of error-checking functions to apply to character vectors
 #' @param integerChecks a list of error-checking functions to apply to integer vectors
 #' @param silent Should clean() run completely silently? Note that this option overrules the settings for
