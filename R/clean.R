@@ -284,12 +284,13 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
 
     ## Title
     writer("# Data cleaning summary")
+    writer("The data frame examined has the following dimensions")
 
     ## Summary
     sumMat <- matrix(c("Number of rows", "Number of variables",
                        n, nvariables), 2,
                      dimnames= list(NULL, c("Feature", "Result")))
-    writer(pander_return(sumMat))
+    writer(pander_return(sumMat, justify="lr"))
 
     ## if useVar options are chosen, they are printed accordingly
     if (useVar=="subset") {
@@ -343,10 +344,9 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
      #writer("\n")
     ##
 
-     writer("[Write some meta text here?]. The following variable checks were performed,
-            depending on the data type of each variable:")
-     writer(pandoc.table.return(checkMat, justify=paste0("l", paste0(rep("c", length(allChecks)), collapse="")),
-                                emphasize.rownames=FALSE) #allows for centering in this table only
+     writer("The following variable checks were performed, depending on the data type of each variable:")
+     writer(pandoc.table.return(checkMat, justify="lcccccc",
+                                emphasize.rownames=FALSE)) #allows for centering in this table only
      writer("\n")
 
 
@@ -355,10 +355,6 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
       #writer("\n")
     ##
 
-    ##doesn't work - printed in verbatim
-      #chunk.wrapper("panderOptions(\"table.alignment.rownames\", \"left\");", paste("pandoc.table(", paste(deparse(checkMat), collapse=" "), ", justify=\"centre\"",
-      #                  ", emphasize.rownames=FALSE)", sep=""), options="results=\"markup\"")
-    ##
 
    }
 

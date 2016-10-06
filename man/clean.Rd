@@ -14,9 +14,9 @@ clean(o, file = NULL, removeExisting = TRUE, standAlone = TRUE,
   ...)
 }
 \arguments{
-\item{o}{the data frame or tibble(???) object to be checked}
+\item{o}{the data frame object to be checked}
 
-\item{file}{XXX}
+\item{file}{The filename of output file. If set to NULL (the default) then the filename will be the name of the data frame prefixed with "cleanR-".}
 
 \item{removeExisting}{XXX}
 
