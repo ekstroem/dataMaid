@@ -203,6 +203,8 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
     panderOptions("table.alignment.default", "left")
     panderOptions("table.split.table", Inf)
     panderOptions("table.alignment.rownames", "left") #why doesn't this work?!
+    panderOptions('table.alignment.default', 'center')
+    panderOptions('table.alignment.rownames', 'left')
 
   ## write to file
     writer <- function(x, ..., outfile=file, sep="\n") {
@@ -341,23 +343,12 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
      #writer("\n")
     ##
 
-
-    ##Doesn't change anything
-     #checkMat <- as.data.frame(checkMat)
-    ##
-
      writer("[Write some meta text here?]. The following variable checks were performed,
             depending on the data type of each variable:")
-     writer(pandoc.table.return(checkMat, justify="centre",
-                                emphasize.rownames=FALSE,
-                                table.alignment.rownames = "left")) #allows for centering in this table only
+     writer(pandoc.table.return(checkMat, justify=paste0("l", paste0(rep("c", length(allChecks)), collapse="")),
+                                emphasize.rownames=FALSE) #allows for centering in this table only
      writer("\n")
 
-    ##doesn't work
-     #library(xtable)
-     #writer(xtable(checkMat))
-     #writer("\n")
-    ##
 
     ##works
       #chunk.wrapper(paste("pander(", paste(deparse(checkMat), collapse=" "), ")", sep=""))
