@@ -42,7 +42,27 @@
 #' @param vol Extra text string that is appended on the end of the output file name(s). For example, if the data
 #' set is called "myData", no file argument is supplied and vol="2", the output file will be called
 #' "cleanR_myData2.Rmd"
-#' @param \dots other arguments that are passed on the to checking, summary and visualization functions
+#' @param characterChecks STUFF
+#' @param factorChecks STUFF
+#' @param labelledChecks STUFF
+#' @param numericChecks STUFF
+#' @param integerChecks STUFF
+#' @param logicalChecks STUFF
+#' @param allChecks Vector of function names that should be used as check-functions for all variable types. 
+#' See ???? for more details OR SOMETHING? Note that this option overwrites the options characterChekcs, 
+#' factorChecks, etc. 
+#' @param characterSummaries STUFF
+#' @param factorSummaries STUFF
+#' @param labelledSummaries STUFF
+#' @param numericSummaries STUFF
+#' @param integerSummaries STUFF
+#' @param logicalSummaries STUFF
+#' @param allSummaries Vector of function names that should be used as summary-functions for all variable types. 
+#' See ???? for more details OR SOMETHING? Note that this option overwrites the options charachterSummaries, 
+#' factorSummaries, etc. 
+#' @param allVisuals STUFF. Default: "standardVisual". 
+
+#' @param \dots other arguments that are passed on the to precheck, checking, summary and visualization functions
 #' @return ???
 #' @author Anne H. Petersen \email{ahpe@@sund.ku.dk} and Claus Thorn Ekstrom \email{ekstrom@@sund.ku.dk}
 #' @seealso \code{\link{clean}}
@@ -80,6 +100,21 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
                   smartNum=TRUE, preChecks=c("isSpecial", "isCPR"),
                   replace=FALSE,  listChecks=TRUE,
                   checkDetails=FALSE,
+                  characterChecks = defaultCharacterChecks(),
+                  factorChecks = defaultFactorChecks(),
+                  labelledChecks = defaultLabelledChecks(),
+                  numericChecks = defaultNumericChecks(),
+                  integerChecks = defaultIntegerChecks(),
+                  logicalChecks = defaultLogicalChecks(),
+                  allChecks = NULL, 
+                  characterSummaries = defaultCharacterSummaries(),
+                  factorSummaries = defaultFactorSummaries(),
+                  labelledSummaries = defaultLabelledSummaries(),
+                  numericSummaries = defaultNumericSummaries(),
+                  integerSummaries = defaultIntegerSummaries(),
+                  logicalSummaries = defaultLogicalSummaries(),
+                  allSummaries = NULL,
+                  allVisuals = c("standardVisual", "basicVisual"),
                   vol="", ...) {
 
     ## Start by doing a few sanity checks
@@ -90,6 +125,8 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
 
   ##Match arguments
     ordering <- match.arg(ordering)
+    allVisuals <- match.arg(allVisuals) 
+        #OBS!!!: visual-option virker IKKE lige nu
 
   ## dataframe name
     dfname <- deparse(substitute(o))
@@ -220,6 +257,18 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
     } #rewrite warning message
 
     if (!doVisualize || !doSummarize) twoCol <- FALSE
+    
+    #allChecks overwrites other check-options
+    if (!is.null(allChecks)) {
+      characterChecks <- factorChecks <- labelledChecks <- allChecks
+      numericChecks <- integerChecks <- logicalChecks <- allChecks
+    }
+    
+    #allSummaries overwrites other summary-options
+    if (!is.null(allSummaries)) {
+      characterSummaries <- factorSummaries <- labelledSummaries <- allSummaries
+      numericSummaries <- integerSummaries <- logicalSummaries <- allSummaries
+    }
 
 
 
@@ -333,34 +382,36 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
 
    ## List the checking that were used for each possible variable type
    if (listChecks) {
-     if ("characterChecks" %in% names(dots)) cChecks <- dots$characterChecks
-     else cChecks <- eval(formals(check.character)$characterChecks)
+    # if ("characterChecks" %in% names(dots)) cChecks <- dots$characterChecks
+    # else cChecks <- eval(formals(check.character)$characterChecks)
+    #
+    # if ("factorChecks" %in% names(dots)) fChecks <- dots$factorChecks
+    # else fChecks <- eval(formals(check.factor)$factorChecks)
+    #
+    # if ("labelledChecks" %in% names(dots)) lChecks <- dots$labelledChecks
+    # else lChecks <- eval(formals(check.labelled)$labelledChecks)
+    #
+    # if ("numericChecks" %in% names(dots)) nChecks <- dots$numericChecks
+    # else nChecks <- eval(formals(check.numeric)$numericChecks)
+    #
+    # if ("integerChecks" %in% names(dots)) iChecks <- dots$integerChecks
+    # else iChecks <- eval(formals(check.integer)$integerChecks)
+    #
+    # if ("logicalChecks" %in% names(dots)) bChecks <- dots$logicalChecks
+    # else bChecks <- eval(formals(check.logical)$logicalChecks)
 
-     if ("factorChecks" %in% names(dots)) fChecks <- dots$factorChecks
-     else fChecks <- eval(formals(check.factor)$factorChecks)
-
-     if ("labelledChecks" %in% names(dots)) lChecks <- dots$labelledChecks
-     else lChecks <- eval(formals(check.labelled)$labelledChecks)
-
-     if ("numericChecks" %in% names(dots)) nChecks <- dots$numericChecks
-     else nChecks <- eval(formals(check.numeric)$numericChecks)
-
-     if ("integerChecks" %in% names(dots)) iChecks <- dots$integerChecks
-     else iChecks <- eval(formals(check.integer)$integerChecks)
-
-     if ("logicalChecks" %in% names(dots)) bChecks <- dots$logicalChecks
-     else bChecks <- eval(formals(check.logical)$logicalChecks)
-
-     allChecks <- union(cChecks, c(fChecks, lChecks, nChecks, iChecks, bChecks))
-     checkMat <- matrix("", length(allChecks), 6, #6: number of different variable types
-                        dimnames=list(allChecks, c("character", "factor", "labelled",
+     everyCheck <- union(characterChecks, c(factorChecks, labelledChecks, numericChecks, 
+                                           integerChecks, logicalChecks))
+     checkMat <- matrix("", length(everyCheck), 6, #6: number of different variable types
+                        dimnames=list(everyCheck, c("character", "factor", "labelled",
                                                    "numeric", "integer", "logical")))
      y <- "$\\times$"
-     checkMat[cChecks, "character"] <- y
-     checkMat[fChecks, "factor"] <- y
-     checkMat[lChecks, "labelled"] <- y
-     checkMat[nChecks, "numeric"] <- y
-     checkMat[iChecks, "integer"] <- y
+     checkMat[characterChecks, "character"] <- y
+     checkMat[factorChecks, "factor"] <- y
+     checkMat[labelledChecks, "labelled"] <- y
+     checkMat[numericChecks, "numeric"] <- y
+     checkMat[integerChecks, "integer"] <- y
+     checkMat[logicalChecks, "logical"] <- y
 
      rownames(checkMat) <- sapply(rownames(checkMat), funSum)
 
@@ -412,7 +463,12 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
 
         ## Make checks
         if (doCheck && !any(preCheckProblems)) {
-          checkRes <- check(v, ...)
+          checkRes <- check(v, characterChecks = characterChecks, 
+                            factorChecks = factorChecks,
+                            labelledChecks = labelledChecks,
+                            numericChecks = numericChecks,
+                            integerChecks = integerChecks,
+                            logicalChecks = logicalChecks, ...)
           problems <- sapply(checkRes, function(x) x[[1]])
         }
 
@@ -446,7 +502,13 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
                                                sep=""))
 
             ## make Summary table
-            if (doSummarize) sumTable <- pander_return(summarize(v, ...))
+            if (doSummarize) sumTable <- pander_return(summarize(v, characterSummaries = characterSummaries,
+                                                                 factorSummaries = factorSummaries, 
+                                                                 labelledSummaries = labelledSummaries,
+                                                                 numericSummaries = numericSummaries,
+                                                                 integerSummaries = integerSummaries,
+                                                                 logicalSummaries = logicalSummaries,
+                                                                 ...))
               #if (doSummarize) sumTable <- pandoc.table.return(summarize(v, ...))
                 #exactly the same result as with pander_return()
 
@@ -455,7 +517,7 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
               #???
 
             ## make Visualization
-            if (doVisualize) visual <- visualize(v, vnam, doEval=FALSE, ...)
+            if (doVisualize) visual <- visualize(v, vnam, doEval=FALSE, allVisuals = allVisuals, ...)
 
             ## add visualization + summary results to file
             if (twoCol) {

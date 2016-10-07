@@ -57,7 +57,8 @@ vMiss <- c(".", "", "nan", "NaN", "NAN", "na", "NA", "Na", "Inf", "inf",
            "-Inf", "-inf", "-", "9", "9") #there are more missing strings, add them 
 #when data is expanded to have more obs.
 
-
+stringsAsFactorsOption <- getOption("stringsAsFactors")
+options(stringsAsFactors = FALSE)
 data <- data.frame(charVar=c(rep(vC, 2), NA),
                    factorVar=factor(c(rep(vC, 2), "999")),
                    numVar=vN, intVar=vI, boolVar=c(rep(vB, 2), rep(NA, 3)),
@@ -71,6 +72,7 @@ data <- data.frame(charVar=c(rep(vC, 2), NA),
                    cprKeyVar=vCPRKey,
                    miscodedMissingVar=vMiss)
 names(data)[names(data)=="joeVar"] <- "_joeVar"
+options(stringsAsFactors = stringsAsFactorsOption)
 
 testData <- data
 

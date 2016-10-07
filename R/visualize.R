@@ -1,16 +1,16 @@
 library(ggplot2)
 
-#QUESTION: Simpler way to parse allVisual = "standardVisual"-argument
+#QUESTION: Simpler way to parse allVisuals = "standardVisual"-argument
 #           on to every method?
 
 
 
 #Make plot of a variable v, depending on its data type
-#plotting function is supplied in the argument allVisual 
+#plotting function is supplied in the argument allVisuals 
 #(for all data types) or separately in the arguments
 #characterVisual, factorVisual etc. for each datatype. 
 #Note that data type specific arguments (e.g. characterVisual)
-#overwrites allVisual, if supplied.
+#overwrites allVisuals, if supplied.
 #NA, NaN and Inf values are ignored for numeric/integer 
 #variables. only NA are ignored for character/factor/labelled/logical
 #variables. 
@@ -19,50 +19,51 @@ library(ggplot2)
 #NOTE: smartNum option should be removed(?) - it is done 
 #using a smartNum s3 class now. 
 
-visualize <- function(v, vnam, allVisual = "standardVisual", 
+visualize <- function(v, vnam, allVisuals = "standardVisual", 
                       doEval=T, ...) UseMethod("visualize")
 
-visualize.character <- function(v, vnam, allVisual = "standardVisual", 
+
+visualize.character <- function(v, vnam, allVisuals = "standardVisual", 
                                 characterVisual=NULL, doEval=T, ...) {
-  useVisual <- ifelse(is.null(characterVisual), allVisual, characterVisual)
+  useVisual <- ifelse(is.null(characterVisual), allVisuals, characterVisual)
   eval(call(useVisual, v, vnam, doEval))
 }
 
-visualize.factor <- function(v, vnam, allVisual = "standardVisual", 
+visualize.factor <- function(v, vnam, allVisuals = "standardVisual", 
                              factorVisual = NULL, doEval=T, ...) {
-  useVisual <- ifelse(is.null(factorVisual), allVisual, factorVisual)
+  useVisual <- ifelse(is.null(factorVisual), allVisuals, factorVisual)
   eval(call(useVisual, v, vnam, doEval))
 }
 
-visualize.labelled <- function(v, vnam, allVisual = "standardVisual",
+visualize.labelled <- function(v, vnam, allVisuals = "standardVisual",
                                labelledVisual = NULL, doEval=T, ...) {
-  useVisual <- ifelse(is.null(labelledVisual), allVisual, labelledVisual)
+  useVisual <- ifelse(is.null(labelledVisual), allVisuals, labelledVisual)
   eval(call(useVisual, v, vnam, doEval))
 }
 
-visualize.numeric <- function(v, vnam, allVisual = "standardVisual", 
+visualize.numeric <- function(v, vnam, allVisuals = "standardVisual", 
                               numericVisual = NULL, smartNum = F, 
                               doEval = T, ...) {
-  useVisual <- ifelse(is.null(numericVisual), allVisual, numericVisual)
+  useVisual <- ifelse(is.null(numericVisual), allVisuals, numericVisual)
   eval(call(useVisual, v, vnam, doEval=doEval))
 }
 
-visualize.integer <- function(v, vnam, allVisual = "standardVisual", 
+visualize.integer <- function(v, vnam, allVisuals = "standardVisual", 
                               integerVisual = NULL, smartNum = F, 
                               doEval = T, ...) {
-  useVisual <- ifelse(is.null(integerVisual), allVisual, integerVisual)
+  useVisual <- ifelse(is.null(integerVisual), allVisuals, integerVisual)
   eval(call(useVisual, v, vnam, doEval))
 }
 
-visualize.logical <- function(v, vnam, allVisual = "standardVisual",
+visualize.logical <- function(v, vnam, allVisuals = "standardVisual",
                               logicalVisual = NULL, doEval = T, ...) {
-  useVisual <- ifelse(is.null(logicalVisual), allVisual, logicalVisual)
+  useVisual <- ifelse(is.null(logicalVisual), allVisuals, logicalVisual)
   eval(call(useVisual, v, vnam, doEval))
 }
 
 
 #NOTE: no need for a smartNum visual - it is caught by "factor"
-#visualize.smartNum <- function(v, vnam, allVisual = "standardVisual",
+#visualize.smartNum <- function(v, vnam, allVisuals = "standardVisual",
 #                               smartNumVisual = NULL, doEval = T) {
 #  
 #}

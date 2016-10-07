@@ -19,6 +19,9 @@
 #list(feature=..., result=...) object.
 summarize <- function(v, descriptive=F, ...) UseMethod("summarize") 
 
+#NOTE: default descriptions can still be accesssed using defaultCharacterDescriptions() etc.,
+#but they are not available as arguments to clean() directly, but should be passed in ...
+
 
 #produces the output matrix from a summarize call
 #use internally only
@@ -34,64 +37,72 @@ sumMatGenerator <- function(v, summaries) {
   outMat
 }
 
-summarize.character <- function(v, characterSummaries=c("variableType",
-                                                        "countMissing",
-                                                        "uniqueValues"),
-                                characterDescriptions=c("centralValue"),
+
+defaultCharacterSummaries <- function() c("variableType", "countMissing", "uniqueValues")
+defaultCharacterDescriptions <- function() "centralValue"
+
+summarize.character <- function(v, characterSummaries = defaultCharacterSummaries(),
+                                characterDescriptions = defaultCharacterDescriptions(),
                                 descriptive=F, ...) {
   characterCalls <- if (descriptive) c(characterSummaries, characterDescriptions)
                     else characterSummaries
   sumMatGenerator(v, characterCalls)
 }
 
-summarize.factor <- function(v, factorSummaries=c("variableType",
-                                                  "countMissing",
-                                                  "uniqueValues"),
-                             factorDescriptions=c("centralValue"),
+
+defaultFactorSummaries <- function() c("variableType", "countMissing", "uniqueValues")
+defaultFactorDescriptions <- function() "centralValue"
+
+summarize.factor <- function(v, factorSummaries = defaultFactorSummaries(),
+                             factorDescriptions = defaultFactorDescriptions(),
                              descriptive=F, ...) {
   factorCalls <- if (descriptive) c(factorSummaries, factorDescriptions)
                  else factorSummaries
   sumMatGenerator(v, factorCalls)
 }
 
-summarize.labelled <- function(v, labelledSummaries=c("variableType",
-                                                      "countMissing",
-                                                      "uniqueValues"),
-                               labelledDescriptions=c("centralValue"),
+
+defaultLabelledSummaries <- function() c("variableType", "countMissing", "uniqueValues")
+defaultLabelledDescriptions <- function() "centralValue"
+
+summarize.labelled <- function(v, labelledSummaries = defaultLabelledSummaries(),
+                               labelledDescriptions = defaultLabelledDescriptions(),
                                descriptive=F, ...) {
   labelledCalls <- if (descriptive) c(labelledSummaries, labelledDescriptions)
                    else labelledSummaries
   sumMatGenerator(v, labelledCalls)
 }
 
-summarize.numeric <- function(v, numericSummaries=c("variableType",
-                                                    "countMissing",
-                                                    "uniqueValues"),
-                              numericDescriptions=c("centralValue",
-                                                    "quartiles",
-                                                    "minMax"),
+
+defaultNumericSummaries <- function() c("variableType", "countMissing", "uniqueValues")
+defaultNumericDescriptions <- function() c("centralValue", "quartiles", "minMax")
+
+summarize.numeric <- function(v, numericSummaries = defaultNumericSummaries(),
+                              numericDescriptions = defaultNumericDescriptions(),
                               descriptive=F, ...) {
   numericCalls <- if (descriptive) c(numericSummaries, numericDescriptions)
                   else numericSummaries
   sumMatGenerator(v, numericCalls)
 }
 
-summarize.integer <- function(v, integerSummaries=c("variableType",
-                                                    "countMissing",
-                                                    "uniqueValues"),
-                              integerDescriptions=c("centralValue",
-                                                    "quartiles",
-                                                    "minMax"),
+
+defaultIntegerSummaries <- function() c("variableType", "countMissing", "uniqueValues")
+defaultIntegerDescriptions <- function() c("centralValue", "quartiles", "minMax")
+
+summarize.integer <- function(v, integerSummaries = defaultIntegerSummaries(),
+                              integerDescriptions = defaultIntegerDescriptions(),
                               descriptive=F, ...) {
   integerCalls <- if (descriptive) c(integerSummaries, integerDescriptions) 
                   else integerSummaries
   sumMatGenerator(v, integerCalls)
 }
 
-summarize.logical <- function(v, logicalSummaries=c("variableType",
-                                                    "countMissing",
-                                                    "uniqueValues"),
-                              logicalDescriptions=c("centralValue"),
+
+defaultLogicalSummaries <- function() c("variableType", "countMissing", "uniqueValues")
+defaultLogicalDescriptions <- function() "centralValue"
+
+summarize.logical <- function(v, logicalSummaries = defaultLogicalSummaries(),
+                              logicalDescriptions = defaultLogicalDescriptions(),
                               descriptive=F, ...) {
   logicalCalls <- if (descriptive) c(logicalSummaries, logicalDescriptions)
                   else logicalSummaries

@@ -74,48 +74,61 @@ check <- function(v, ...) UseMethod("check")
 #}
 
 
-
 #' @export
-check.character <- function(v, characterChecks=c("identifyMissing",
-                                                 "identifyWhitespace",
-                                                 "identifyLoners",
-                                                 "identifyCaseIssues"), ...) {
+defaultCharacterChecks <- function() c("identifyMissing", "identifyWhitespace", "identifyLoners",
+                                       "identifyCaseIssues") 
+#' @export
+check.character <- function(v, characterChecks=defaultCharacterChecks(), ...) {
   lapply(characterChecks, function(x) eval(call(x, v)))
 }
 
+
 #' @export
-check.factor <- function(v, factorChecks=c("identifyMissing",
-                                           "identifyWhitespace",
-                                           "identifyLoners",
-                                           "identifyCaseIssues"), ...) {
+defaultFactorChecks <- function() c("identifyMissing", "identifyWhitespace", "identifyLoners",
+                                       "identifyCaseIssues") 
+#' @export
+check.factor <- function(v, factorChecks = defaultFactorChecks(), ...) {
   lapply(factorChecks, function(x) eval(call(x, v)))
 }
 
+
 #' @export
-check.labelled <- function(v, labelledChecks=c("identifyMissing",
-                                               "identifyWhitespace"), ...) {
+defaultLabelledChecks <- function() c("identifyMissing", "identifyWhitespace") 
+
+#' @export
+check.labelled <- function(v, labelledChecks = defaultLabelledChecks(), ...) {
   lapply(labelledChecks, function(x) eval(call(x, v)))
 }
 
+
 #' @export
-check.numeric <- function(v, numericChecks=c("identifyMissing",
-                                             "identifyOutliers"), ...) {
+defaultNumericChecks <- function() c("identifyMissing", "identifyOutliers") 
+
+#' @export
+check.numeric <- function(v, numericChecks = defaultNumericChecks(), ...) {
   lapply(numericChecks, function(x) eval(call(x, v)))
 }
 
+
 #' @export
-check.integer <- function(v, integerChecks=c("identifyMissing",
-                                             "identifyOutliers"), ...) {
+defaultIntegerChecks <- function() c("identifyMissing", "identifyOutliers") 
+
+#' @export
+check.integer <- function(v, integerChecks = defaultIntegerChecks(), ...) {
   lapply(integerChecks, function(x) eval(call(x, v)))
 }
 
 
-#NOTE: we don't actually do any logical checks...
 
 
 #' @export
-check.logical <- function(v, logicalChecks=c("identifyMissing"), ...) {
-  lapply(logicalChecks, function(x) eval(call(x, v)))
+defaultLogicalChecks <- function() NULL #NOTE: we don't actually do any logical checks...
+
+#' @export
+check.logical <- function(v, logicalChecks = defaultLogicalChecks(), ...) {
+  if (! is.null(logicalChecks)) {
+    return(lapply(logicalChecks, function(x) eval(call(x, v))))
+  } else return(list(list(problem = FALSE, message="")))
 }
 
 
@@ -242,9 +255,10 @@ identifyMissingNI <- function(v) {
   v <- na.omit(v)
   problem <- F
   problemValues <- NULL
+  finiteInd <- is.finite(v)
 
-  missNinesOcc <- identifyMissRepChar(v, "9") #what 99, 999, ... values occur?
-  missNaNOcc <- unique(v[which(!is.finite(v))]) #what NaN, Inf, ... values occur?
+  missNinesOcc <- identifyMissRepChar(max(v[finiteInd]), "9") #what 99, 999, ... values occur?
+  missNaNOcc <- unique(v[!finiteInd]) #what NaN, Inf, ... values occur?
   missNineOcc <- identifyMissNine(v) #returns 9 if 9 seems to act as missing value
   allProblemOcc <- c(missNinesOcc, missNaNOcc, missNineOcc)
 
