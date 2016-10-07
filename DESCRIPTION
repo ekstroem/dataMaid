@@ -9,7 +9,8 @@ Description: Data cleaning is an important first step of any statistical analysi
 Depends:
     pander,
 Suggests:
-    testthat    
+    stringi,
+    ggplot2
 Encoding: UTF-8
 ByteCompile: true
 License: GPL-2

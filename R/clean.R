@@ -3,7 +3,7 @@
 #' Runs a set of validation checks to check the variables in a data frame for potential errors.
 #' Performs checking steps according to user input and/or data type of the inputted variable.
 #'
-#' @param o the data frame object to be checked
+#' @param o the data frame object to be checked.
 #' @param file The filename of output file. If set to NULL (the default) then the filename will be the name of the data frame prefixed with "cleanR-".
 #' @param removeExisting XXX
 #' @param standAlone If TRUE, the document begins with a markdown preamble such that it
@@ -12,10 +12,8 @@
 #' @param ordering Choose the ordering of the variables in the data presentation. The options
 #' are "asIs" (ordering as in the dataset) and "alpha" (alphabetical order).
 #' @param cleanUp - not done yet -.
-#' @param output Output format, options are pdf and html
-#' @param finish "render" (makes pdf/html), "markdown" (makes markdown file), "print" (prints to screen).
-#' @param twoCol Should the results be presented in two columns (if finish is "render" or "markdown")?
-
+#' @param output Output format. Options are "markdown" (the default), "pdf", "html", and "print".
+#' @param twoCol Should the results be presented in two columns (if output is "render" or "markdown")?
 #' @param characterChecks a list of error-checking functions to apply to character vectors
 #' @param integerChecks a list of error-checking functions to apply to integer vectors
 #' @param silent Should clean() run completely silently? Note that this option overrules the settings for
@@ -71,9 +69,9 @@
 #'
 #' @export
 clean <- function(o, file=NULL, removeExisting=TRUE,
-                  standAlone=TRUE, brag=FALSE, ordering=c("asIs", "alpha"),
+                  standAlone=TRUE, brag=FALSE, ordering=c("asIs", "alphabetical"),
                   cleanUp="deletethisoption?",
-                  quiet=TRUE, output="pdf", finish = c("markdown", "render", "print"),
+                  quiet=TRUE, output=c("markdown", "pdf", "html", "print"),
                   twoCol=TRUE, silent=FALSE, openResult=TRUE,
                   mode=c("summarize", "visualize", "check"),
                   useVar="all", nagUser=TRUE,
@@ -82,18 +80,23 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
                   checkDetails=FALSE,
                   vol="", ...) {
 
-    ## Start by doing a few sanity checks
+    ## Start by doing a few sanity checks of the input
     if (! (is(o, "data.frame") )) {
         ## tibble is automatically a data frame
-        stop("clean requires a data.frame or tibble as input")
+        if (is.matrix(o)) {
+            o <- as.data.frame(o)
+        } else stop("clean requires a data.frame, tibble or matrix as input")
     }
 
-  ##Match arguments
+    ##Match arguments
     ordering <- match.arg(ordering)
-    finish <- match.arg(finish)
+    output <- match.arg(output)
 
-  ## dataframe name
+    ## Extract the dataframe name
     dfname <- deparse(substitute(o))
+
+
+    ### XXX
 
   ## What variables should be used?
     if (!identical(useVar, "all") & !identical(useVar, "problematic")) {
@@ -115,35 +118,33 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
       stop(paste(useVarMessage, ifelse(identical(useVar, "all"), useVarAllMessage, useVarProbMessage)))
           #maybe better option for useVar=="problematic"? However, we would probably have to add an
           #extra argument. Is it worth the trouble?
-    }
+  }
 
-  ## Background variables
+    ### YYY
+
+
+    ## Background variables
     nvariables <- ncol(o)
-    if (ordering == "alpha") {
-      index <- order(names(o))
+    if (ordering == "alphabetical") {
+        index <- order(names(o))
     } else index <- 1:nvariables
     n <- nrow(o)
     vnames <- names(o)
     dots <- list(...)
 
-
-  ## check function input and initial settings
-    if (!is.data.frame(o)) {
-      if (is.matrix(o)) {
-        o <- as.data.frame(o)
-        warning("Data was converted into a data.frame object")
-      } else stop("Data is of the wrong type, use data.frame or matrix data")
-    }
-
+    ## Set the output file name if input is NULL or not Rmd
     if (is.null(file) || substr(file, nchar(file)-3, nchar(file)) != ".Rmd") {
-        #maybe try fixing the user's faulty file name instead of just overwriting it?
-      file <- paste("cleanR_", dfname, vol, ".Rmd", sep="")
+        ## maybe try fixing the user's faulty file name instead of just overwriting it?
+        file <- paste0("cleanR_", dfname, vol, ".Rmd")
     }
+
     outOutput <- output #copy of output for file extension generation
                         #Note: Changing output itself will cause problems as we need to know
                         #whether we are making a pdf or html .rmd file
     if (finish!="render") outOutput <- "Rmd"
-    outFile <- paste(substring(file, 1, nchar(file)-4), ".", outOutput, sep="")
+
+    outOutput <- "Rmd"
+    outFile <- paste0(substring(file, 1, nchar(file)-4), ".", outOutput)
 
 
     ################################################################################################
@@ -153,7 +154,6 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
     fileExists <- file.exists(file)
     outFileExists <- file.exists(outFile)
 
-    #replace <- ifelse(!replace, "never", "always")
 
   ## check if we are about to overwrite a file
     #if (!replace %in% c("never", "onlyCleanR") && (fileExists || outFileExists)) {
@@ -207,14 +207,9 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
       nagUser <- FALSE
     }
 
-   # print(mode)
-
     doCheck <- "check" %in% mode
     doVisualize <- "visualize" %in% mode
     doSummarize <- "summarize" %in% mode
-
-   # print(doCheck)
-   # print(doVisualize)
 
     if (!doCheck & !doVisualize & !doSummarize) {
       warning("Note that no proper arguments were supplied to \"mode\" - no cleaning is performed")
@@ -243,18 +238,19 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
       writer("```")
     }
 
-    fig.wrapper <- function(x, ..., outfile=file, options=c("echo=F", "fig.width=4",
-                                                            "fig.height=3", "message=F",
-                                                            "warning=F")) {
+    fig.wrapper <- function(x, ..., outfile=file, options=c("echo=FALSE", "fig.width=4",
+                                                            "fig.height=3", "message=FALSE",
+                                                            "warning=FALSE")) {
       chunk.wrapper(x, outfile=outfile, options=options)
     }
 
-    secretChunk.wrapper <- function(x, ..., outfile=file, options=c("echo=F", "include=F",
-                                                                    "warning=F", "message=F",
-                                                                    "error=F")) {
+    secretChunk.wrapper <- function(x, ..., outfile=file, options=c("echo=FALSE", "include=FALSE",
+                                                                    "warning=FALSE", "message=FALSE",
+                                                                    "error=FALSE")) {
       chunk.wrapper(x, outfile=outfile, options=options)
     }
 
+    ## outputty sets the output type
     twoCols.wrapper <- function(text, figure, outfile=file, outputty=output) {
       if (outputty=="pdf") { #note: does NOT work if there is a linebreak between the two
                           #minipage environments!
@@ -280,108 +276,103 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
 
     if (removeExisting) unlink(file)
 
-  ## write YAML preamble
+    ## write YAML preamble
     writer("---")
     writer("cleanR: yes")
     if (standAlone & !(finish=="print")) {
-      writer(paste("title:", dfname))
-      writer("subtitle: \"Autogenerated data summary from cleanR\"")
-      writer("date: \"`r Sys.Date()`\"")
-      if (output=="pdf") {
-        writer("output: pdf_document")
-        writer("documentclass: report")
-        writer("header-includes:")
-        writer("  - \\renewcommand{\\chaptername}{Part}")
-        writer("  - \\newcommand{\\fullline}{\\noindent\\makebox[\\linewidth]{\\rule{\\textwidth}{0.4pt}}}")
-        if (twoCol) {
-          writer("  - \\newcommand{\\bminione}{\\begin{minipage}{0.75 \\textwidth}}")
-          writer("  - \\newcommand{\\bminitwo}{\\begin{minipage}{0.25 \\textwidth}}")
-          writer("  - \\newcommand{\\emini}{\\end{minipage}}")
+        writer(paste("title:", dfname))
+        writer("subtitle: \"Autogenerated data summary from cleanR\"")
+        writer("date: \"`r Sys.Date()`\"")
+        if (output=="pdf") {
+            writer("output: pdf_document")
+            writer("documentclass: report")
+            writer("header-includes:")
+            writer("  - \\renewcommand{\\chaptername}{Part}")
+            writer("  - \\newcommand{\\fullline}{\\noindent\\makebox[\\linewidth]{\\rule{\\textwidth}{0.4pt}}}")
+            if (twoCol) {
+                writer("  - \\newcommand{\\bminione}{\\begin{minipage}{0.75 \\textwidth}}")
+                writer("  - \\newcommand{\\bminitwo}{\\begin{minipage}{0.25 \\textwidth}}")
+                writer("  - \\newcommand{\\emini}{\\end{minipage}}")
+            }
         }
-      }
-      if (output=="html") writer("output: html_document")
+        if (output=="html") writer("output: html_document")
 
     }
     writer("---")
 
-  ## include packages
+
+    ## include packages as a first chunk
     secretChunk.wrapper("library(ggplot2)\n library(stringi)\n library(pander)")
 
     ## Title
     writer("# Data cleaning summary")
     writer("The data frame examined has the following dimensions")
 
-    ## Summary
+    ## Print data frame summary
     sumMat <- matrix(c("Number of rows", "Number of variables",
                        n, nvariables), 2,
                      dimnames= list(NULL, c("Feature", "Result")))
     writer(pander_return(sumMat, justify="lr"))
 
+
+
+    ## XXX
+
+
     ## if useVar options are chosen, they are printed accordingly
     if (useVar=="subset") {
-      writer("\n")
-      writer(paste("* Only the following variables in", dfname, "were cleaned:",
-                   paste(vnames, collapse=", ")))
+        writer("\n")
+        writer(paste("* Only the following variables in", dfname, "were cleaned:",
+                     paste(vnames, collapse=", ")))
     } else if (useVar=="problematic") {
-      writer("\n")
-      writer("* Only variables that were deemed potentially problematic are included in this summary")
+        writer("\n")
+        writer("* Only variables that were deemed potentially problematic are included in this summary")
     }
 
-   writer("\n")
-
-   #browser()
-
-   ## List the checking that were used for each possible variable type
-   if (listChecks) {
-     if ("characterChecks" %in% names(dots)) cChecks <- dots$characterChecks
-     else cChecks <- eval(formals(check.character)$characterChecks)
-
-     if ("factorChecks" %in% names(dots)) fChecks <- dots$factorChecks
-     else fChecks <- eval(formals(check.factor)$factorChecks)
-
-     if ("labelledChecks" %in% names(dots)) lChecks <- dots$labelledChecks
-     else lChecks <- eval(formals(check.labelled)$labelledChecks)
-
-     if ("numericChecks" %in% names(dots)) nChecks <- dots$numericChecks
-     else nChecks <- eval(formals(check.numeric)$numericChecks)
-
-     if ("integerChecks" %in% names(dots)) iChecks <- dots$integerChecks
-     else iChecks <- eval(formals(check.integer)$integerChecks)
-
-     if ("logicalChecks" %in% names(dots)) bChecks <- dots$logicalChecks
-     else bChecks <- eval(formals(check.logical)$logicalChecks)
-
-     allChecks <- union(cChecks, c(fChecks, lChecks, nChecks, iChecks, bChecks))
-     checkMat <- matrix("", length(allChecks), 6, #6: number of different variable types
-                        dimnames=list(allChecks, c("character", "factor", "labelled",
-                                                   "numeric", "integer", "logical")))
-     y <- "$\\times$"
-     checkMat[cChecks, "character"] <- y
-     checkMat[fChecks, "factor"] <- y
-     checkMat[lChecks, "labelled"] <- y
-     checkMat[nChecks, "numeric"] <- y
-     checkMat[iChecks, "integer"] <- y
-
-     rownames(checkMat) <- sapply(rownames(checkMat), funSum)
-
-    ##works
-     #writer(pander_return(checkMat))
-     #writer("\n")
-    ##
-
-     writer("The following variable checks were performed, depending on the data type of each variable:")
-     writer(pandoc.table.return(checkMat, justify="lcccccc",
-                                emphasize.rownames=FALSE)) #allows for centering in this table only
-     writer("\n")
+    writer("\n")
 
 
-    ##works
-      #chunk.wrapper(paste("pander(", paste(deparse(checkMat), collapse=" "), ")", sep=""))
-      #writer("\n")
-    ##
+
+    ## List the checking that were used for each possible variable type
+    if (listChecks) {
+        if ("characterChecks" %in% names(dots)) cChecks <- dots$characterChecks
+        else cChecks <- eval(formals(check.character)$characterChecks)
+
+        if ("factorChecks" %in% names(dots)) fChecks <- dots$factorChecks
+        else fChecks <- eval(formals(check.factor)$factorChecks)
+
+        if ("labelledChecks" %in% names(dots)) lChecks <- dots$labelledChecks
+        else lChecks <- eval(formals(check.labelled)$labelledChecks)
+
+        if ("numericChecks" %in% names(dots)) nChecks <- dots$numericChecks
+        else nChecks <- eval(formals(check.numeric)$numericChecks)
+
+        if ("integerChecks" %in% names(dots)) iChecks <- dots$integerChecks
+        else iChecks <- eval(formals(check.integer)$integerChecks)
+
+        if ("logicalChecks" %in% names(dots)) bChecks <- dots$logicalChecks
+        else bChecks <- eval(formals(check.logical)$logicalChecks)
+
+        allChecks <- union(cChecks, c(fChecks, lChecks, nChecks, iChecks, bChecks))
+        checkMat <- matrix("", length(allChecks), 6, #6: number of different variable types
+                           dimnames=list(allChecks, c("character", "factor", "labelled",
+                               "numeric", "integer", "logical")))
+        y <- "$\\times$"
+        checkMat[cChecks, "character"] <- y
+        checkMat[fChecks, "factor"] <- y
+        checkMat[lChecks, "labelled"] <- y
+        checkMat[nChecks, "numeric"] <- y
+        checkMat[iChecks, "integer"] <- y
+
+        rownames(checkMat) <- sapply(rownames(checkMat), funSum)
 
 
-   }
+        writer("The following variable checks were performed, depending on the data type of each variable:")
+        writer(pandoc.table.return(checkMat, justify="lcccccc",
+                                   emphasize.rownames=FALSE)) #allows for centering in this table only
+        writer("\n")
+
+    }
 
     ## List of variables
     writer("# Variable list")
@@ -391,7 +382,7 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
         skip <- FALSE
         problems <- FALSE
 
-        # How to order the variables
+        ## How to order the variables
         v <- o[[idx]]
         vnam <- vnames[idx]
 
