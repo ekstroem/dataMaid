@@ -211,7 +211,6 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
       cat(paste0(x, ...), file=outfile, append=TRUE, sep=sep)
     }
 
-
     chunk.wrapper <- function(x, ..., outfile=file, options=c("echo=FALSE", "warning=FALSE")) {
       writer(paste("```{r", paste(options, collapse=", "), "}"))
       writer(x, ..., outfile=outfile)
