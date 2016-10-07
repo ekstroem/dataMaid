@@ -7,11 +7,11 @@
 clean(o, file = NULL, removeExisting = TRUE, standAlone = TRUE,
   brag = FALSE, ordering = c("asIs", "alpha"),
   cleanUp = "deletethisoption?", quiet = TRUE, output = "pdf",
-  finish = "markdown", twoCol = TRUE, silent = FALSE, openResult = TRUE,
-  mode = c("summarize", "visualize", "check"), useVar = "all",
-  nagUser = TRUE, smartNum = TRUE, preChecks = c("isSpecial", "isCPR"),
-  replace = FALSE, listChecks = TRUE, checkDetails = FALSE, vol = "",
-  ...)
+  finish = c("markdown", "render", "print"), twoCol = TRUE,
+  silent = FALSE, openResult = TRUE, mode = c("summarize", "visualize",
+  "check"), useVar = "all", nagUser = TRUE, smartNum = TRUE,
+  preChecks = c("isSpecial", "isCPR"), replace = FALSE, listChecks = TRUE,
+  checkDetails = FALSE, vol = "", ...)
 }
 \arguments{
 \item{o}{the data frame object to be checked}
@@ -93,6 +93,7 @@ data(testData)
 clean(testData)
 }
 
+#Add user defined check-function to the checks performed on character variables:
 \dontrun{
 characterFoo <- function(v) {
  if (substr(substitute(a), 1, 1) == "_") {
@@ -102,7 +103,7 @@ characterFoo <- function(v) {
 }
 class(characterFoo) <- "checkFunction"
 attr(characterFoo, "description") <- "I really hate underscores"
-clean(testData, characterChecks="characterFoo")
+clean(testData, characterChecks=c(defaultCharacterChecks(), "characterFoo"))
 }
 
 }
