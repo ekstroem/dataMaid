@@ -162,7 +162,7 @@ unpackLabelled <- function(v) {
 ####IdentifyMiss#####
 identifyMissing <- function(v) UseMethod("identifyMissing")
 class(identifyMissing) <- c("checkFunction", "function")
-attr(identifyMissing, "description") <- "Identify missing values"
+attr(identifyMissing, "description") <- "Identify miscoded missing values"
 
 #Identify candidate missing values that are interpreted as
 #"regular" values in a variable.

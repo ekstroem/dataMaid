@@ -56,6 +56,7 @@
 #' clean(testData)
 #' }
 #'
+#'#Add user defined check-function to the checks performed on character variables:
 #' \dontrun{
 #' characterFoo <- function(v) {
 #'  if (substr(substitute(a), 1, 1) == "_") {
@@ -64,8 +65,8 @@
 #'  out
 #' }
 #' class(characterFoo) <- "checkFunction"
-#' attr(characterFoo, "description") <- "I really hate underscores"
-#' clean(testData, characterChecks="characterFoo")
+#' attr(characterFoo, "description") <- "I really hate underscores" 
+#' clean(testData, characterChecks=c(defaultCharacterChecks(), "characterFoo"))
 #' }
 #'
 #' @export
@@ -87,7 +88,7 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
         stop("clean requires a data.frame or tibble as input")
     }
 
-    ##
+  ##Match arguments
     ordering <- match.arg(ordering)
 
   ## dataframe name
@@ -97,6 +98,22 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
     if (!identical(useVar, "all") & !identical(useVar, "problematic")) {
       o <- o[, useVar, drop=FALSE]  #warning here if this doesn't work + overwrite stuff?
       useVar <- "subset"
+    } else if (useVar %in% names(o)) {
+      useVarQuoted <- paste("\"", useVar, "\"", sep="")
+      useVarMessage <- paste("The argument supplied for the useVar option,", paste(useVarQuoted, ",", sep=""),
+                             "was ambiguous,", "as the dataset contains a variable named", 
+                             useVarQuoted, "which is a special option.",
+                             "We recommend the following solutions: \n",
+                             "- If you wish to clean only the variable named", useVarQuoted, "run", 
+                             paste("clean(", dfname, "[, ", useVarQuoted, "])", sep=""), "instead. \n")
+      useVarAllMessage <- paste("- If you wish to clean the full dataset, run",
+                                paste("clean(", dfname, "[, names(", dfname, ")])", sep=""))
+      useVarProbMessage <- paste("- If you wish to clean only problematic variables",
+                                 "please rename the variable \"problematic\" in your dataset, e.g.",
+                                 "with a suffixed whitespace, and rerun clean.")
+      stop(paste(useVarMessage, ifelse(identical(useVar, "all"), useVarAllMessage, useVarProbMessage)))
+          #maybe better option for useVar=="problematic"? However, we would probably have to add an 
+          #extra argument. Is it worth the trouble?
     }
 
   ## Background variables
@@ -121,19 +138,26 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
         #maybe try fixing the user's faulty file name instead of just overwriting it?
       file <- paste("cleanR_", dfname, vol, ".Rmd", sep="")
     }
-    if (finish!="render") output <- "Rmd"
-    outFile <- paste(substring(file, 1, nchar(file)-4), ".", output, sep="")
+    outOutput <- output #copy of output for file extension generation
+                        #Note: Changing output itself will cause problems as we need to know
+                        #whether we are making a pdf or html .rmd file 
+    if (finish!="render") outOutput <- "Rmd"
+    outFile <- paste(substring(file, 1, nchar(file)-4), ".", outOutput, sep="")
 
+    
+    ################################################################################################    
+    ###ALSO: check that vol and file and dataname produces a valid file name (no strange characters)
+    ################################################################################################
+    
     fileExists <- file.exists(file)
     outFileExists <- file.exists(outFile)
 
-###ALSO: check that vol produces a valid file name
-
-    replace <- ifelse(!replace, "never", "always")
+    #replace <- ifelse(!replace, "never", "always")
 
   ## check if we are about to overwrite a file
-    if (!replace %in% c("never", "onlyCleanR") && (fileExists || outFileExists)) {
-      if (replace=="never") {
+    #if (!replace %in% c("never", "onlyCleanR") && (fileExists || outFileExists)) {
+      if (!replace) {
+     # if (replace=="never") {
         if (fileExists & outFileExists) problemFiles <- paste(file, "and", outFile)
         if (fileExists & !outFileExists) problemFiles <- file
         if (!fileExists & outFileExists) problemFiles <- outFile
@@ -143,52 +167,53 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
                    "- rename your cleanR output file using the \"file\" option \n",
                    "- Add a volume number to your file name using the \"vol\" option \n",
                    "- check that you do not want to keep the original file and if so,",
-                   "use cleanR with replace = \"always\""))
+                   "use cleanR with replace = TRUE"))
       }
 
-      if (replace=="onlyCleanR") {
-        fileProblem <- F
-        outputFileProblem <- F
+      #if (replace=="onlyCleanR") {
+      #  fileProblem <- F
+      #  outputFileProblem <- F
+      #
+      #  if (fileExists) {
+      #    l12 <- readLines(file, 2, warn=FALSE)
+      #    if (!identical(l12, c("---", "cleanR: yes"))) fileProblem <- T
+      #  }
+      #  if (outFileExists) {
+      #    #############################################
+      #    #check if pdf/html was produced by cleanR....
+      #    #############################################
+      #  }
+      #  
+      #  if (fileProblem & outFileProblem) problemFiles <- paste(file, "and", outFile)
+      #  if (fileProblem & !outFileProblem) problemFiles <- file
+      #  if (!fileproblem & outFileProblem) problemFiles <- outFile
+      #  
+      #  if (fileProblem || outFileProblem) {
+      #    stop(paste("The file name(s) to be used by cleanR,", paste(problemFiles, ",", sep=""),
+      #               "are already in use and the files do not look like they were produced by cleanR.",
+      #               "We recommend trying one of the following solutions: \n",
+      #               "- rename your cleanR output files using the \"file\" option \n",
+      #               "- Add a volume number to your file name using the \"vol\" option \n",
+      #              "- check that you do not want to keep the original file and if so,",
+      #               "use cleanR with replace = \"always\""))
+      #  }
+      #}
+    #}
 
-        if (fileExists) {
-          l12 <- readLines(file, 2, warn=FALSE)
-          if (!identical(l12, c("---", "cleanR: yes"))) fileProblem <- T
-        }
-        if (outFileExists) {
-          #############################################
-          #check if pdf/html was produced by cleanR....
-          #############################################
-        }
-
-        if (fileProblem & outFileProblem) problemFiles <- paste(file, "and", outFile)
-        if (fileProblem & !outFileProblem) problemFiles <- file
-        if (!fileproblem & outFileProblem) problemFiles <- outFile
-
-        if (fileProblem || outFileProblem) {
-          stop(paste("The file name(s) to be used by cleanR,", paste(problemFiles, ",", sep=""),
-                     "are already in use and the files do not look like they were produced by cleanR.",
-                     "We recommend trying one of the following solutions: \n",
-                     "- rename your cleanR output files using the \"file\" option \n",
-                     "- Add a volume number to your file name using the \"vol\" option \n",
-                     "- check that you do not want to keep the original file and if so,",
-                     "use cleanR with replace = \"always\""))
-        }
-      }
-    }
-
+    
     if (silent) {
       quiet <- TRUE
       nagUser <- FALSE
     }
 
-    print(mode)
+   # print(mode)
 
     doCheck <- "check" %in% mode
     doVisualize <- "visualize" %in% mode
     doSummarize <- "summarize" %in% mode
 
-    print(doCheck)
-    print(doVisualize)
+   # print(doCheck)
+   # print(doVisualize)
 
     if (!doCheck & !doVisualize & !doSummarize) {
       warning("Note that no proper arguments were supplied to \"mode\" - no cleaning is performed")
@@ -495,17 +520,18 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
       #print(paste("Data cleaning was succesful. Find your results in", ###version 1
        #     paste(getwd(), "/", fileName, sep="")))
       message(paste("Data cleaning was succesful. Find your results in", ###version 2
-            path.expand(paste("~/", outFile, sep=""))))
+            #path.expand(paste("~/", outFile, sep=""))))  #doesn't work
+            paste(getwd(), "/", outFile, sep="")))
           #to do: make into link so that the user can just click it and open the file.
           #must be possible, debug() does interactive stuff..
           #CHECK: Does this work on mac? linux?
 
       #awkward if openResult==T? What should we write instead in that case?
       #also feels awkward if no message is printed in that case (in case the user e.g.
-      #accidentally shuts down the pdf/html/rmd-file.)
+      #accidentially shuts down the pdf/html/rmd-file.)
     }
 
-    if (openResult) system(paste("open", outFile))
+    if (openResult) system(paste("open", outFile)) #tjek: virker det på linux?
 }
 
 
