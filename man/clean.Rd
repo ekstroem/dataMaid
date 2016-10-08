@@ -5,13 +5,13 @@
 \title{Perform a check of potential errors in a data frame}
 \usage{
 clean(o, file = NULL, removeExisting = TRUE, standAlone = TRUE,
-  brag = FALSE, ordering = c("asIs", "alphabetical"),
-  cleanUp = "deletethisoption?", quiet = TRUE, output = c("markdown",
-  "pdf", "html", "screen"), render = TRUE, twoCol = TRUE, silent = FALSE,
-  openResult = TRUE, mode = c("summarize", "visualize", "check"),
-  useVar = "all", nagUser = TRUE, smartNum = TRUE,
+  brag = FALSE, ordering = c("asIs", "alphabetical"), quiet = TRUE,
+  output = c("markdown", "pdf", "html", "screen"), render = TRUE,
+  twoCol = TRUE, silent = FALSE, openResult = TRUE,
+  mode = c("summarize", "visualize", "check"), useVar = NULL,
+  showProblematic = FALSE, nagUser = TRUE, smartNum = TRUE,
   preChecks = c("isSpecial", "isCPR"), replace = FALSE, listChecks = TRUE,
-  checkDetails = FALSE, vol = "", ...)
+  checkDetails = FALSE, garbageCollection = TRUE, vol = "", ...)
 }
 \arguments{
 \item{o}{the data frame object to be checked.}
@@ -28,8 +28,6 @@ can be rendered as is.}
 \item{ordering}{Choose the ordering of the variables in the data presentation. The options
 are "asIs" (ordering as in the dataset) and "alpha" (alphabetical order).}
 
-\item{cleanUp}{- not done yet -.}
-
 \item{output}{Output format. Options are "markdown" (the default), "pdf", "html", and "screen".}
 
 \item{render}{Should the output file be rendered (defaults to TRUE)? This argument has no impact for screen output.}
@@ -45,9 +43,9 @@ the function run.}
 \item{mode}{Vector of tasks to perform among the three categories "summarize", "visualize" and "check".
 Note that... SOMETHING ABOUT HOW THE FUNCTIONS CALLED IN EACH PART ARE CONTROLLED.}
 
-\item{useVar}{Variables to clean and present results for. Either a list of variable names (as used in
-the data.frame o) or one of two special options; "all" (every variable is cleaned and presented) or
-"problematic" (only variables yielding problems from the checking function are presented)}
+\item{useVar}{Variables to clean. If NULL (the default) then all variables in the data frame o are included. If a vector of variable names is included then only the variables in o that are also part of useVar are checked.}
+
+\item{showProblematic}{A logical.}
 
 \item{nagUser}{Remove at some point}
 
@@ -66,6 +64,8 @@ each variable data type.}
 
 \item{checkDetails}{MAYBE ALSO IMPLEMENT THIS?: If TRUE, details about each check function are added
 to the document (if available)}
+
+\item{garbageCollection}{A logical. If TRUE (the default) then garbage collection code is added to the R markdown file that is output. This is useful for larger dataset to prevent memory problems.}
 
 \item{vol}{Extra text string that is appended on the end of the output file name(s). For example, if the data
 set is called "myData", no file argument is supplied and vol="2", the output file will be called
