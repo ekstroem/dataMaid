@@ -5,11 +5,11 @@
 \title{Perform a check of potential errors in a data frame}
 \usage{
 clean(o, file = NULL, removeExisting = TRUE, standAlone = TRUE,
-  brag = FALSE, ordering = c("asIs", "alphabetical"), quiet = TRUE,
+  ordering = c("asIs", "alphabetical"), quiet = TRUE,
   output = c("markdown", "pdf", "html", "screen"), render = TRUE,
   twoCol = TRUE, silent = FALSE, openResult = TRUE,
   mode = c("summarize", "visualize", "check"), useVar = NULL,
-  showProblematic = FALSE, nagUser = TRUE, smartNum = TRUE,
+  onlyProblematic = FALSE, nagUser = TRUE, smartNum = TRUE,
   preChecks = c("isSpecial", "isCPR"), replace = FALSE, listChecks = TRUE,
   checkDetails = FALSE, garbageCollection = TRUE, vol = "", ...)
 }
@@ -22,8 +22,6 @@ clean(o, file = NULL, removeExisting = TRUE, standAlone = TRUE,
 
 \item{standAlone}{If TRUE, the document begins with a markdown preamble such that it
 can be rendered as is.}
-
-\item{brag}{If TRUE, a note about cleanR is appended at the end of the output document.}
 
 \item{ordering}{Choose the ordering of the variables in the data presentation. The options
 are "asIs" (ordering as in the dataset) and "alpha" (alphabetical order).}
@@ -45,7 +43,7 @@ Note that... SOMETHING ABOUT HOW THE FUNCTIONS CALLED IN EACH PART ARE CONTROLLE
 
 \item{useVar}{Variables to clean. If NULL (the default) then all variables in the data frame o are included. If a vector of variable names is included then only the variables in o that are also part of useVar are checked.}
 
-\item{showProblematic}{A logical.}
+\item{onlyProblematic}{A logical. Set to TRUE if only the potentially problematic variables should be listed.}
 
 \item{nagUser}{Remove at some point}
 

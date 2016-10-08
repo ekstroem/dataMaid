@@ -8,7 +8,6 @@
 #' @param removeExisting XXX
 #' @param standAlone If TRUE, the document begins with a markdown preamble such that it
 #' can be rendered as is.
-#' @param brag If TRUE, a note about cleanR is appended at the end of the output document.
 #' @param ordering Choose the ordering of the variables in the data presentation. The options
 #' are "asIs" (ordering as in the dataset) and "alpha" (alphabetical order).
 #' @param output Output format. Options are "markdown" (the default), "pdf", "html", and "screen".
@@ -23,7 +22,7 @@
 #' @param mode Vector of tasks to perform among the three categories "summarize", "visualize" and "check".
 #' Note that... SOMETHING ABOUT HOW THE FUNCTIONS CALLED IN EACH PART ARE CONTROLLED.
 #' @param useVar Variables to clean. If NULL (the default) then all variables in the data frame o are included. If a vector of variable names is included then only the variables in o that are also part of useVar are checked.
-#' @param showProblematic A logical.
+#' @param onlyProblematic A logical. Set to TRUE if only the potentially problematic variables should be listed.
 #' @param nagUser Remove at some point
 #' @param smartNum If TRUE, numeric and integer variables with less than maxLevels (defaults to 5) unique
 #' values are treated as factor variables in the checking, visualization and summary functions. A
@@ -69,12 +68,12 @@
 #'
 #' @export
 clean <- function(o, file=NULL, removeExisting=TRUE,
-                  standAlone=TRUE, brag=FALSE, ordering=c("asIs", "alphabetical"),
+                  standAlone=TRUE, ordering=c("asIs", "alphabetical"),
                   quiet=TRUE,
                   output=c("markdown", "pdf", "html", "screen"), render=TRUE,
                   twoCol=TRUE, silent=FALSE, openResult=TRUE,
                   mode=c("summarize", "visualize", "check"),
-                  useVar=NULL, showProblematic=FALSE,
+                  useVar=NULL, onlyProblematic=FALSE,
                   nagUser=TRUE,
                   smartNum=TRUE, preChecks=c("isSpecial", "isCPR"),
                   replace=FALSE,  listChecks=TRUE,
@@ -97,36 +96,13 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
     ## Extract the dataframe name
     dfname <- deparse(substitute(o))
 
-
-### XXX
-
     ## What variables should be used?
-    if (!is.null(useVar) && (!showProblematic)) {
-        ## This is probably not efficient if we have large datasets and want to extract many variables
+    if (!is.null(useVar)) {
+        ## The line below is probably not efficient if we have large datasets and want to extract many variables
         ### o <- o[, useVar, drop=FALSE]  #warning here if this doesn't work + overwrite stuff?
         ## Instead run through the dataframe and NULL the variables to exclude?
-        o[names(o)[! useVar %in% names(o)]] <- NULL
-        useVar <- "subset"
-    } else if (useVar %in% names(o)) {
-#        useVarQuoted <- paste("\"", useVar, "\"", sep="")
-#        useVarMessage <- paste("The argument supplied for the useVar option,", paste(useVarQuoted, ",", sep=""),
-#                               "was ambiguous,", "as the dataset contains a variable named",
-#                               useVarQuoted, "which is a special option.",
-#                               "We recommend the following solutions: \n",
-#                               "- If you wish to clean only the variable named", useVarQuoted, "run",
-#                               paste("clean(", dfname, "[, ", useVarQuoted, "])", sep=""), "instead. \n")
-#        useVarAllMessage <- paste("- If you wish to clean the full dataset, run",
-#                                  paste("clean(", dfname, "[, names(", dfname, ")])", sep=""))
-#        useVarProbMessage <- paste("- If you wish to clean only problematic variables",
-#                                   "please rename the variable \"problematic\" in your dataset, e.g.",
-#                                   "with a suffixed whitespace, and rerun clean.")
-#        stop(paste(useVarMessage, ifelse(identical(useVar, "all"), useVarAllMessage, useVarProbMessage)))
-                                        #maybe better option for useVar=="problematic"? However, we would probably have to add an
-                                        #extra argument. Is it worth the trouble?
+        o[names(o)[! names(o) %in% useVar]] <- NULL
     }
-
-### YYY
-
 
     ## Background variables
     nvariables <- ncol(o)
@@ -143,13 +119,8 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
         file <- paste0("cleanR_", dfname, vol, ".Rmd")
     }
 
-    outOutput <- output #copy of output for file extension generation
-                                        #Note: Changing output itself will cause problems as we need to know
-                                        #whether we are making a pdf or html .rmd file
-    ##CE    if (finish!="render") outOutput <- "Rmd"
-
-    outOutput <- "Rmd"
-    outFile <- paste0(substring(file, 1, nchar(file)-4), ".", outOutput)
+    ## The name of the R markdown file that is output
+    outFile <- paste0(substring(file, 1, nchar(file)-4), ".Rmd")
 
 
 ################################################################################################
@@ -331,22 +302,16 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
     writer(pander_return(sumMat, justify="lr"))
 
 
-
-    ## XXX
-
-
     ## if useVar options are chosen, they are printed accordingly
-    if (useVar=="subset") {
-        writer("\n")
-        writer(paste("* Only the following variables in", dfname, "were cleaned:",
+    if (!is.null(useVar)) {
+        writer(paste("\n* Only the following variables in", dfname, "were cleaned:",
                      paste(vnames, collapse=", ")))
-    } else if (showProblematic) {
-        writer("\n")
-        writer("* Only variables that were deemed potentially problematic are included in this summary")
     }
-
+    ## And the user is informed if we only show problematic variables
+    if (onlyProblematic) {
+        writer("\n* Only variables that were deemed potentially problematic are included in this summary")
+    }
     writer("\n")
-
 
 
     ## List the checking that were used for each possible variable type
@@ -383,6 +348,7 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
         rownames(checkMat) <- sapply(rownames(checkMat), funSum)
 
 
+        writer("### Checks performed")
         writer("The following variable checks were performed, depending on the data type of each variable:")
         writer(pandoc.table.return(checkMat, justify="lcccccc",
                                    emphasize.rownames=FALSE)) #allows for centering in this table only
@@ -425,7 +391,7 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
         }
 
         ## skip non problem-causing variables
-        if (showProblematic && (!any(preCheckProblems) && !any(problems))) skip <- TRUE
+        if (onlyProblematic && (!any(preCheckProblems) && !any(problems))) skip <- TRUE
 
 
         ## Now print out the information if the variable isn't skipped
@@ -486,10 +452,10 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
         }
     }
 
-    if (brag) {
-        ## This could be wrapped in a tryCatch for those rather weird situations where the package is not installed.
-        writer("This report was created by cleanR v", paste(packageVersion("cleanR"), sep="."), ".")
-    }
+    ## This could be wrapped in a tryCatch for those rather weird situations where the package is not installed.
+    ## But it is indeer rather obscure
+    writer("This report was created by cleanR v", paste(packageVersion("cleanR"), sep="."), ".")
+
 
     if(finish=="render") {
 ####is it possible to close the file clean_data.pdf/html if it is open such
