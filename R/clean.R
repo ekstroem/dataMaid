@@ -22,9 +22,8 @@
 #' the function run.
 #' @param mode Vector of tasks to perform among the three categories "summarize", "visualize" and "check".
 #' Note that... SOMETHING ABOUT HOW THE FUNCTIONS CALLED IN EACH PART ARE CONTROLLED.
-#' @param useVar Variables to clean and present results for. Either a list of variable names (as used in
-#' the data.frame o) or one of two special options; "all" (every variable is cleaned and presented) or
-#' "problematic" (only variables yielding problems from the checking function are presented)
+#' @param useVar Variables to clean. If NULL (the default) then all variables in the data frame o are included. If a vector of variable names is included then only the variables in o that are also part of useVar are checked.
+#' @param showProblematic A logical.
 #' @param nagUser Remove at some point
 #' @param smartNum If TRUE, numeric and integer variables with less than maxLevels (defaults to 5) unique
 #' values are treated as factor variables in the checking, visualization and summary functions. A
@@ -75,7 +74,8 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
                   output=c("markdown", "pdf", "html", "screen"), render=TRUE,
                   twoCol=TRUE, silent=FALSE, openResult=TRUE,
                   mode=c("summarize", "visualize", "check"),
-                  useVar="all", nagUser=TRUE,
+                  useVar=NULL, showProblematic=FALSE,
+                  nagUser=TRUE,
                   smartNum=TRUE, preChecks=c("isSpecial", "isCPR"),
                   replace=FALSE,  listChecks=TRUE,
                   checkDetails=FALSE,
@@ -101,23 +101,26 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
 ### XXX
 
     ## What variables should be used?
-    if (!identical(useVar, "all") & !identical(useVar, "problematic")) {
-        o <- o[, useVar, drop=FALSE]  #warning here if this doesn't work + overwrite stuff?
+    if (!is.null(useVar) && (!showProblematic)) {
+        ## This is probably not efficient if we have large datasets and want to extract many variables
+        ### o <- o[, useVar, drop=FALSE]  #warning here if this doesn't work + overwrite stuff?
+        ## Instead run through the dataframe and NULL the variables to exclude?
+        o[names(o)[! useVar %in% names(o)]] <- NULL
         useVar <- "subset"
     } else if (useVar %in% names(o)) {
-        useVarQuoted <- paste("\"", useVar, "\"", sep="")
-        useVarMessage <- paste("The argument supplied for the useVar option,", paste(useVarQuoted, ",", sep=""),
-                               "was ambiguous,", "as the dataset contains a variable named",
-                               useVarQuoted, "which is a special option.",
-                               "We recommend the following solutions: \n",
-                               "- If you wish to clean only the variable named", useVarQuoted, "run",
-                               paste("clean(", dfname, "[, ", useVarQuoted, "])", sep=""), "instead. \n")
-        useVarAllMessage <- paste("- If you wish to clean the full dataset, run",
-                                  paste("clean(", dfname, "[, names(", dfname, ")])", sep=""))
-        useVarProbMessage <- paste("- If you wish to clean only problematic variables",
-                                   "please rename the variable \"problematic\" in your dataset, e.g.",
-                                   "with a suffixed whitespace, and rerun clean.")
-        stop(paste(useVarMessage, ifelse(identical(useVar, "all"), useVarAllMessage, useVarProbMessage)))
+#        useVarQuoted <- paste("\"", useVar, "\"", sep="")
+#        useVarMessage <- paste("The argument supplied for the useVar option,", paste(useVarQuoted, ",", sep=""),
+#                               "was ambiguous,", "as the dataset contains a variable named",
+#                               useVarQuoted, "which is a special option.",
+#                               "We recommend the following solutions: \n",
+#                               "- If you wish to clean only the variable named", useVarQuoted, "run",
+#                               paste("clean(", dfname, "[, ", useVarQuoted, "])", sep=""), "instead. \n")
+#        useVarAllMessage <- paste("- If you wish to clean the full dataset, run",
+#                                  paste("clean(", dfname, "[, names(", dfname, ")])", sep=""))
+#        useVarProbMessage <- paste("- If you wish to clean only problematic variables",
+#                                   "please rename the variable \"problematic\" in your dataset, e.g.",
+#                                   "with a suffixed whitespace, and rerun clean.")
+#        stop(paste(useVarMessage, ifelse(identical(useVar, "all"), useVarAllMessage, useVarProbMessage)))
                                         #maybe better option for useVar=="problematic"? However, we would probably have to add an
                                         #extra argument. Is it worth the trouble?
     }
@@ -337,7 +340,7 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
         writer("\n")
         writer(paste("* Only the following variables in", dfname, "were cleaned:",
                      paste(vnames, collapse=", ")))
-    } else if (useVar=="problematic") {
+    } else if (showProblematic) {
         writer("\n")
         writer("* Only variables that were deemed potentially problematic are included in this summary")
     }
@@ -422,7 +425,7 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
         }
 
         ## skip non problem-causing variables
-        if (useVar=="problematic" && (!any(preCheckProblems) && !any(problems))) skip <- TRUE
+        if (showProblematic && (!any(preCheckProblems) && !any(problems))) skip <- TRUE
 
 
         ## Now print out the information if the variable isn't skipped
