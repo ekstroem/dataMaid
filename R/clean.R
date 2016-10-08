@@ -2,45 +2,46 @@
 #'
 #' Runs a set of validation checks to check the variables in a data frame for potential errors.
 #' Performs checking steps according to user input and/or data type of the inputted variable.
+#' The checks are saved to an R markdown file which can rendered into an easy-to-read document.
 #'
 #' @param o the data frame object to be checked.
-#' @param file The filename of output file. If set to NULL (the default) then the filename will be the name of the data frame prefixed with "cleanR-".
-#' @param removeExisting XXX
-#' @param standAlone If TRUE, the document begins with a markdown preamble such that it
-#' can be rendered as is.
+#' @param output Output format. Options are "markdown" (the default), "pdf", "html", and "screen". All but the "screen" option produces an R markdown file which can be rendered. The "screen" option prints a small summary on the screen.
+#' @param render Should the output file be rendered (defaults to TRUE)? This argument has no impact unless the output is "html" or "pdf" in which case the R markdown file is rendered to produce the corresponding file.
+#' @param useVar Variables to clean. If NULL (the default) then all variables in the data frame o are included. If a vector of variable names is included then only the variables in o that are also part of useVar are checked.
 #' @param ordering Choose the ordering of the variables in the data presentation. The options
-#' are "asIs" (ordering as in the dataset) and "alpha" (alphabetical order).
-#' @param output Output format. Options are "markdown" (the default), "pdf", "html", and "screen".
-#' @param render Should the output file be rendered (defaults to TRUE)? This argument has no impact for screen output.
-#' @param twoCol Should the results be presented in two columns (if output is "html" or "pdf")? Defaults to TRUE.
-#' @param characterChecks a list of error-checking functions to apply to character vectors
-#' @param integerChecks a list of error-checking functions to apply to integer vectors
-#' @param silent Should clean() run completely silently? Note that this option overrules the settings for
-#' "quiet": A silent session is always quiet.
-#' @param openResult If TRUE, the file produced by clean() is automatically opened by the end of
-#' the function run.
+#' are "asIs" (ordering as in the dataset) and "alphabetical" (alphabetical order).
+#' @param onlyProblematic A logical. Set to TRUE if only the potentially problematic variables should be listed.
 #' @param mode Vector of tasks to perform among the three categories "summarize", "visualize" and "check".
 #' Note that... SOMETHING ABOUT HOW THE FUNCTIONS CALLED IN EACH PART ARE CONTROLLED.
-#' @param useVar Variables to clean. If NULL (the default) then all variables in the data frame o are included. If a vector of variable names is included then only the variables in o that are also part of useVar are checked.
-#' @param onlyProblematic A logical. Set to TRUE if only the potentially problematic variables should be listed.
-#' @param nagUser Remove at some point
+#' @param characterChecks a list of error-checking functions to apply to character vectors
+#' @param factorChecks a list of error-checking functions to apply to integer vectors
+#' @param labelledChecks a list of error-checking functions to apply to character vectors
+#' @param integerChecks a list of error-checking functions to apply to integer vectors
+#' @param numericChecks a list of error-checking functions to apply to integer vectors
+#' @param logicalChecks a list of error-checking functions to apply to integer vectors
 #' @param smartNum If TRUE, numeric and integer variables with less than maxLevels (defaults to 5) unique
 #' values are treated as factor variables in the checking, visualization and summary functions. A
 #' message is printed in the data summary as well.
 #' @param preChecks Variable checks that are performed before the summary/visualization/checking step. If
 #' any of these checks find problems, the variable will not be summarized nor visualized nor checked.
+#' @param file The filename of output file. If set to NULL (the default) then the filename will be the name of the data frame prefixed with "cleanR-".
 #' @param replace If FALSE (the default) an error is thrown if one of the files that we are about to write to
 #' already exists. If TRUE no checks are performed.
-#' @param listChecks If TRUE, the document contains an overview of what checks were performed for
-#' each variable data type.
-#' @param checkDetails MAYBE ALSO IMPLEMENT THIS?: If TRUE, details about each check function are added
-#' to the document (if available)
 #' @param vol Extra text string that is appended on the end of the output file name(s). For example, if the data
 #' set is called "myData", no file argument is supplied and vol="2", the output file will be called
 #' "cleanR_myData2.Rmd"
+#' @param standAlone If TRUE, the document begins with a markdown preamble such that it
+#' can be rendered as a stand alone R markdown file.
+#' @param twoCol Should the results be presented in two columns (if output is "html" or "pdf")? Defaults to TRUE.
+#' @param quiet Should clean run completely silently?
+#' @param openResult If TRUE, the file produced by clean() is automatically opened by the end of
+#' the function run.
+#' @param nagUser Remove at some point
+#' @param checkDetails MAYBE ALSO IMPLEMENT THIS?: If TRUE, details about each check function are added
+#' to the document (if available)
 #' @param garbageCollection A logical. If TRUE (the default) then garbage collection code is added to the R markdown file that is output. This is useful for larger dataset to prevent memory problems.
-#' @param \dots other arguments that are passed on the to checking, summary and visualization functions
-#' @return ???
+#' @param \dots other arguments that are passed on to the checking, summary and visualization functions
+#' @return The function does not return anything. It's side effect (the production of the Rmd file summary) is the reason for running the function.
 #' @author Anne H. Petersen \email{ahpe@@sund.ku.dk} and Claus Thorn Ekstrom \email{ekstrom@@sund.ku.dk}
 #' @seealso \code{\link{clean}}
 #' @keywords misc
@@ -67,19 +68,23 @@
 #' }
 #'
 #' @export
-clean <- function(o, file=NULL, removeExisting=TRUE,
-                  standAlone=TRUE, ordering=c("asIs", "alphabetical"),
-                  quiet=TRUE,
+clean <- function(o,
                   output=c("markdown", "pdf", "html", "screen"), render=TRUE,
-                  twoCol=TRUE, silent=FALSE, openResult=TRUE,
+                  useVar=NULL, ordering=c("asIs", "alphabetical"), onlyProblematic=FALSE,
                   mode=c("summarize", "visualize", "check"),
-                  useVar=NULL, onlyProblematic=FALSE,
-                  nagUser=TRUE,
+#                  characterChecks,
+#                  factorChecks,
+#                  labelledChecks,
+#                  integerChecks,
+#                  numericChecks,
+#                  logicalChecks,
                   smartNum=TRUE, preChecks=c("isSpecial", "isCPR"),
-                  replace=FALSE,  listChecks=TRUE,
+                  file=NULL, replace=FALSE, vol="",
+                  standAlone=TRUE, twoCol=TRUE, quiet=FALSE, openResult=TRUE,
+                  nagUser=TRUE,
                   checkDetails=FALSE,
                   garbageCollection=TRUE,
-                  vol="", ...) {
+                  ...) {
 
     ## Start by doing a few sanity checks of the input
     if (! (is(o, "data.frame") )) {
@@ -133,7 +138,9 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
 
     ## check if we are about to overwrite a file
                                         #if (!replace %in% c("never", "onlyCleanR") && (fileExists || outFileExists)) {
-    if (!replace) {
+    if (replace) {
+        unlink(file)
+    } else {
      # if (replace=="never") {
         if (fileExists & outFileExists) problemFiles <- paste(file, "and", outFile)
         if (fileExists & !outFileExists) problemFiles <- file
@@ -175,13 +182,10 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
                                         #               "use cleanR with replace = \"always\""))
                                         #  }
                                         #}
-    #}
+                                        #}
 
+    if (quiet) nagUser <- FALSE
 
-    if (silent) {
-        quiet <- TRUE
-        nagUser <- FALSE
-    }
 
     ## Figure out which classes of output that the user requests.
     ## By default we want both checks, graphics, and summarize.
@@ -200,7 +204,7 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
 
     ## make tables left-aligned and allow for 6 columns
     oldPanderOptions <- panderOptions() # Used to restore towards the end
-    panderOptions("table.alignment.default", "left")
+    ## panderOptions("table.alignment.default", "left")
     panderOptions('table.alignment.default', 'center')  ## XXX CE only one of these two
     panderOptions("table.split.table", Inf)
     panderOptions('table.alignment.rownames', 'left')
@@ -227,8 +231,8 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
     secretChunk.wrapper <- function(x, ..., outfile=file, options=c("echo=FALSE", "include=FALSE",
                                                               "warning=FALSE", "message=FALSE",
                                                               "error=FALSE")) {
-      chunk.wrapper(x, outfile=outfile, options=options)
-  }
+        chunk.wrapper(x, outfile=outfile, options=options)
+    }
 
     ## outputty sets the output type
     twoCols.wrapper <- function(text, figure, outfile=file, outputty=output) {
@@ -255,18 +259,12 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
     }
 
 
-    ## XXX
-    if (removeExisting) unlink(file)
-
-    finish<-"markdown"
-
-
 
 
     ## write YAML preamble
     writer("---")
     writer("cleanR: yes")
-    if (standAlone & !(finish=="print")) {
+    if (standAlone & !(identical(output, "screen"))) {
         writer(paste("title:", dfname))
         writer("subtitle: \"Autogenerated data summary from cleanR\"")
         writer("date: \"`r Sys.Date()`\"")
@@ -315,46 +313,45 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
 
 
     ## List the checking that were used for each possible variable type
-    if (listChecks) {
-        if ("characterChecks" %in% names(dots)) cChecks <- dots$characterChecks
-        else cChecks <- eval(formals(check.character)$characterChecks)
+    if ("characterChecks" %in% names(dots)) cChecks <- dots$characterChecks
+    else cChecks <- eval(formals(check.character)$characterChecks)
 
-        if ("factorChecks" %in% names(dots)) fChecks <- dots$factorChecks
-        else fChecks <- eval(formals(check.factor)$factorChecks)
+    if ("factorChecks" %in% names(dots)) fChecks <- dots$factorChecks
+    else fChecks <- eval(formals(check.factor)$factorChecks)
 
-        if ("labelledChecks" %in% names(dots)) lChecks <- dots$labelledChecks
-        else lChecks <- eval(formals(check.labelled)$labelledChecks)
+    if ("labelledChecks" %in% names(dots)) lChecks <- dots$labelledChecks
+    else lChecks <- eval(formals(check.labelled)$labelledChecks)
 
-        if ("numericChecks" %in% names(dots)) nChecks <- dots$numericChecks
-        else nChecks <- eval(formals(check.numeric)$numericChecks)
+    if ("numericChecks" %in% names(dots)) nChecks <- dots$numericChecks
+    else nChecks <- eval(formals(check.numeric)$numericChecks)
 
-        if ("integerChecks" %in% names(dots)) iChecks <- dots$integerChecks
-        else iChecks <- eval(formals(check.integer)$integerChecks)
+    if ("integerChecks" %in% names(dots)) iChecks <- dots$integerChecks
+    else iChecks <- eval(formals(check.integer)$integerChecks)
 
-        if ("logicalChecks" %in% names(dots)) bChecks <- dots$logicalChecks
-        else bChecks <- eval(formals(check.logical)$logicalChecks)
+    if ("logicalChecks" %in% names(dots)) bChecks <- dots$logicalChecks
+    else bChecks <- eval(formals(check.logical)$logicalChecks)
 
-        allChecks <- union(cChecks, c(fChecks, lChecks, nChecks, iChecks, bChecks))
-        checkMat <- matrix("", length(allChecks), 6, #6: number of different variable types
-                           dimnames=list(allChecks, c("character", "factor", "labelled",
-                               "numeric", "integer", "logical")))
-        y <- "$\\times$"
-        checkMat[cChecks, "character"] <- y
-        checkMat[fChecks, "factor"] <- y
-        checkMat[lChecks, "labelled"] <- y
-        checkMat[nChecks, "numeric"] <- y
-        checkMat[iChecks, "integer"] <- y
+    allChecks <- union(cChecks, c(fChecks, lChecks, nChecks, iChecks, bChecks))
+    checkMat <- matrix("", length(allChecks), 6, #6: number of different variable types
+                       dimnames=list(allChecks, c("character", "factor", "labelled",
+                           "numeric", "integer", "logical")))
 
-        rownames(checkMat) <- sapply(rownames(checkMat), funSum)
+    y <- "$\\times$"
+    checkMat[cChecks, "character"] <- y
+    checkMat[fChecks, "factor"] <- y
+    checkMat[lChecks, "labelled"] <- y
+    checkMat[nChecks, "numeric"] <- y
+    checkMat[iChecks, "integer"] <- y
+
+    rownames(checkMat) <- sapply(rownames(checkMat), funSum)
 
 
-        writer("### Checks performed")
-        writer("The following variable checks were performed, depending on the data type of each variable:")
-        writer(pandoc.table.return(checkMat, justify="lcccccc",
-                                   emphasize.rownames=FALSE)) #allows for centering in this table only
-        writer("\n")
+    writer("### Checks performed")
+    writer("The following variable checks were performed, depending on the data type of each variable:")
+    writer(pandoc.table.return(checkMat, justify="lcccccc",
+                               emphasize.rownames=FALSE)) #allows for centering in this table only
+    writer("\n")
 
-    }
 
     ## List of variables
     writer("# Variable list")
@@ -380,7 +377,6 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
                 extraMessages$do <- TRUE
                 extraMessages$messages <- c(extraMessages$messages,
                                             "Note that this variable is treated as a factor variable below, as it only takes a few unique values.")
-                                        #more concrete message here?
             }
         }
 
@@ -450,20 +446,22 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
             ## Add garbage collection. Should help with memory problems.
             if (garbageCollection) secretChunk.wrapper("gc(verbose=FALSE)")
         }
+
     }
 
     ## This could be wrapped in a tryCatch for those rather weird situations where the package is not installed.
     ## But it is indeer rather obscure
     writer("This report was created by cleanR v", paste(packageVersion("cleanR"), sep="."), ".")
 
+    ## Now we should not write anything more to the file
 
-    if(finish=="render") {
+    if (output %in% c("html", "pdf") && render) {
 ####is it possible to close the file clean_data.pdf/html if it is open such
 ####that no access permission issues can occur?
 ####or maybe just check if it is open and then not try and render.
                                         #fileName <- paste(substring(fileName, 1, nchar(fileName)-4), ".",
                                         #                  output, sep="")
-        if (!silent) {
+        if (!quiet) {
             message("Data cleaning is finished. Please wait while your output file is rendered.")
         }
         if (nagUser && output=="pdf" && identical(as.character(Sys.info()["sysname"]),"Windows")) {
@@ -473,11 +471,11 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
         render(file, quiet=quiet)
     }
 
-    if (finish=="print") {
+    if (output=="screen") {
         unlink(file) #delete rmd
     }
 
-    if (!silent) { #whoops - version 1 only makes sense for windows, doesn't it?
+    if (!quiet) { #whoops - version 1 only makes sense for windows, doesn't it?
                                         #does version 2 work on mac/linux?
                                         #also: problems if people supply their own file paths using the "file"-argument?
                                         #print(paste("Data cleaning was succesful. Find your results in", ###version 1
@@ -495,6 +493,7 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
     }
 
     if (openResult) system(paste("open", outFile)) #tjek: virker det på linux?
+
 }
 
 
