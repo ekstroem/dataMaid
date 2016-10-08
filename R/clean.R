@@ -11,9 +11,9 @@
 #' @param brag If TRUE, a note about cleanR is appended at the end of the output document.
 #' @param ordering Choose the ordering of the variables in the data presentation. The options
 #' are "asIs" (ordering as in the dataset) and "alpha" (alphabetical order).
-#' @param cleanUp - not done yet -.
-#' @param output Output format. Options are "markdown" (the default), "pdf", "html", and "print".
-#' @param twoCol Should the results be presented in two columns (if output is "render" or "markdown")?
+#' @param output Output format. Options are "markdown" (the default), "pdf", "html", and "screen".
+#' @param render Should the output file be rendered (defaults to TRUE)? This argument has no impact for screen output.
+#' @param twoCol Should the results be presented in two columns (if output is "html" or "pdf")? Defaults to TRUE.
 #' @param characterChecks a list of error-checking functions to apply to character vectors
 #' @param integerChecks a list of error-checking functions to apply to integer vectors
 #' @param silent Should clean() run completely silently? Note that this option overrules the settings for
@@ -32,7 +32,7 @@
 #' @param preChecks Variable checks that are performed before the summary/visualization/checking step. If
 #' any of these checks find problems, the variable will not be summarized nor visualized nor checked.
 #' @param replace If FALSE (the default) an error is thrown if one of the files that we are about to write to
-#' already exist. If TRUE no checks are performed.
+#' already exists. If TRUE no checks are performed.
 #' @param listChecks If TRUE, the document contains an overview of what checks were performed for
 #' each variable data type.
 #' @param checkDetails MAYBE ALSO IMPLEMENT THIS?: If TRUE, details about each check function are added
@@ -40,6 +40,7 @@
 #' @param vol Extra text string that is appended on the end of the output file name(s). For example, if the data
 #' set is called "myData", no file argument is supplied and vol="2", the output file will be called
 #' "cleanR_myData2.Rmd"
+#' @param garbageCollection A logical. If TRUE (the default) then garbage collection code is added to the R markdown file that is output. This is useful for larger dataset to prevent memory problems.
 #' @param \dots other arguments that are passed on the to checking, summary and visualization functions
 #' @return ???
 #' @author Anne H. Petersen \email{ahpe@@sund.ku.dk} and Claus Thorn Ekstrom \email{ekstrom@@sund.ku.dk}
@@ -70,14 +71,15 @@
 #' @export
 clean <- function(o, file=NULL, removeExisting=TRUE,
                   standAlone=TRUE, brag=FALSE, ordering=c("asIs", "alphabetical"),
-                  cleanUp="deletethisoption?",
-                  quiet=TRUE, output=c("markdown", "pdf", "html", "print"),
+                  quiet=TRUE,
+                  output=c("markdown", "pdf", "html", "screen"), render=TRUE,
                   twoCol=TRUE, silent=FALSE, openResult=TRUE,
                   mode=c("summarize", "visualize", "check"),
                   useVar="all", nagUser=TRUE,
                   smartNum=TRUE, preChecks=c("isSpecial", "isCPR"),
                   replace=FALSE,  listChecks=TRUE,
                   checkDetails=FALSE,
+                  garbageCollection=TRUE,
                   vol="", ...) {
 
     ## Start by doing a few sanity checks of the input
@@ -96,31 +98,31 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
     dfname <- deparse(substitute(o))
 
 
-    ### XXX
+### XXX
 
-  ## What variables should be used?
+    ## What variables should be used?
     if (!identical(useVar, "all") & !identical(useVar, "problematic")) {
-      o <- o[, useVar, drop=FALSE]  #warning here if this doesn't work + overwrite stuff?
-      useVar <- "subset"
+        o <- o[, useVar, drop=FALSE]  #warning here if this doesn't work + overwrite stuff?
+        useVar <- "subset"
     } else if (useVar %in% names(o)) {
-      useVarQuoted <- paste("\"", useVar, "\"", sep="")
-      useVarMessage <- paste("The argument supplied for the useVar option,", paste(useVarQuoted, ",", sep=""),
-                             "was ambiguous,", "as the dataset contains a variable named",
-                             useVarQuoted, "which is a special option.",
-                             "We recommend the following solutions: \n",
-                             "- If you wish to clean only the variable named", useVarQuoted, "run",
-                             paste("clean(", dfname, "[, ", useVarQuoted, "])", sep=""), "instead. \n")
-      useVarAllMessage <- paste("- If you wish to clean the full dataset, run",
-                                paste("clean(", dfname, "[, names(", dfname, ")])", sep=""))
-      useVarProbMessage <- paste("- If you wish to clean only problematic variables",
-                                 "please rename the variable \"problematic\" in your dataset, e.g.",
-                                 "with a suffixed whitespace, and rerun clean.")
-      stop(paste(useVarMessage, ifelse(identical(useVar, "all"), useVarAllMessage, useVarProbMessage)))
-          #maybe better option for useVar=="problematic"? However, we would probably have to add an
-          #extra argument. Is it worth the trouble?
-  }
+        useVarQuoted <- paste("\"", useVar, "\"", sep="")
+        useVarMessage <- paste("The argument supplied for the useVar option,", paste(useVarQuoted, ",", sep=""),
+                               "was ambiguous,", "as the dataset contains a variable named",
+                               useVarQuoted, "which is a special option.",
+                               "We recommend the following solutions: \n",
+                               "- If you wish to clean only the variable named", useVarQuoted, "run",
+                               paste("clean(", dfname, "[, ", useVarQuoted, "])", sep=""), "instead. \n")
+        useVarAllMessage <- paste("- If you wish to clean the full dataset, run",
+                                  paste("clean(", dfname, "[, names(", dfname, ")])", sep=""))
+        useVarProbMessage <- paste("- If you wish to clean only problematic variables",
+                                   "please rename the variable \"problematic\" in your dataset, e.g.",
+                                   "with a suffixed whitespace, and rerun clean.")
+        stop(paste(useVarMessage, ifelse(identical(useVar, "all"), useVarAllMessage, useVarProbMessage)))
+                                        #maybe better option for useVar=="problematic"? However, we would probably have to add an
+                                        #extra argument. Is it worth the trouble?
+    }
 
-    ### YYY
+### YYY
 
 
     ## Background variables
@@ -139,25 +141,25 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
     }
 
     outOutput <- output #copy of output for file extension generation
-                        #Note: Changing output itself will cause problems as we need to know
-                        #whether we are making a pdf or html .rmd file
-    if (finish!="render") outOutput <- "Rmd"
+                                        #Note: Changing output itself will cause problems as we need to know
+                                        #whether we are making a pdf or html .rmd file
+    ##CE    if (finish!="render") outOutput <- "Rmd"
 
     outOutput <- "Rmd"
     outFile <- paste0(substring(file, 1, nchar(file)-4), ".", outOutput)
 
 
-    ################################################################################################
-    ###ALSO: check that vol and file and dataname produces a valid file name (no strange characters)
-    ################################################################################################
+################################################################################################
+###ALSO: check that vol and file and dataname produces a valid file name (no strange characters)
+################################################################################################
 
     fileExists <- file.exists(file)
     outFileExists <- file.exists(outFile)
 
 
-  ## check if we are about to overwrite a file
-    #if (!replace %in% c("never", "onlyCleanR") && (fileExists || outFileExists)) {
-      if (!replace) {
+    ## check if we are about to overwrite a file
+                                        #if (!replace %in% c("never", "onlyCleanR") && (fileExists || outFileExists)) {
+    if (!replace) {
      # if (replace=="never") {
         if (fileExists & outFileExists) problemFiles <- paste(file, "and", outFile)
         if (fileExists & !outFileExists) problemFiles <- file
@@ -169,112 +171,123 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
                    "- Add a volume number to your file name using the \"vol\" option \n",
                    "- check that you do not want to keep the original file and if so,",
                    "use cleanR with replace = TRUE"))
-      }
+    }
 
-      #if (replace=="onlyCleanR") {
-      #  fileProblem <- F
-      #  outputFileProblem <- F
-      #
-      #  if (fileExists) {
-      #    l12 <- readLines(file, 2, warn=FALSE)
+                                        #if (replace=="onlyCleanR") {
+                                        #  fileProblem <- F
+                                        #  outputFileProblem <- F
+                                        #
+                                        #  if (fileExists) {
+                                        #    l12 <- readLines(file, 2, warn=FALSE)
       #    if (!identical(l12, c("---", "cleanR: yes"))) fileProblem <- T
-      #  }
-      #  if (outFileExists) {
-      #    #############################################
-      #    #check if pdf/html was produced by cleanR....
-      #    #############################################
-      #  }
-      #
-      #  if (fileProblem & outFileProblem) problemFiles <- paste(file, "and", outFile)
+                                        #  }
+                                        #  if (outFileExists) {
+                                        #    #############################################
+                                        #    #check if pdf/html was produced by cleanR....
+                                        #    #############################################
+                                        #  }
+                                        #
+                                        #  if (fileProblem & outFileProblem) problemFiles <- paste(file, "and", outFile)
       #  if (fileProblem & !outFileProblem) problemFiles <- file
-      #  if (!fileproblem & outFileProblem) problemFiles <- outFile
-      #
-      #  if (fileProblem || outFileProblem) {
-      #    stop(paste("The file name(s) to be used by cleanR,", paste(problemFiles, ",", sep=""),
-      #               "are already in use and the files do not look like they were produced by cleanR.",
+                                        #  if (!fileproblem & outFileProblem) problemFiles <- outFile
+                                        #
+                                        #  if (fileProblem || outFileProblem) {
+                                        #    stop(paste("The file name(s) to be used by cleanR,", paste(problemFiles, ",", sep=""),
+                                        #               "are already in use and the files do not look like they were produced by cleanR.",
       #               "We recommend trying one of the following solutions: \n",
-      #               "- rename your cleanR output files using the \"file\" option \n",
-      #               "- Add a volume number to your file name using the \"vol\" option \n",
-      #              "- check that you do not want to keep the original file and if so,",
-      #               "use cleanR with replace = \"always\""))
-      #  }
-      #}
+                                        #               "- rename your cleanR output files using the \"file\" option \n",
+                                        #               "- Add a volume number to your file name using the \"vol\" option \n",
+                                        #              "- check that you do not want to keep the original file and if so,",
+                                        #               "use cleanR with replace = \"always\""))
+                                        #  }
+                                        #}
     #}
 
 
     if (silent) {
-      quiet <- TRUE
-      nagUser <- FALSE
+        quiet <- TRUE
+        nagUser <- FALSE
     }
 
+    ## Figure out which classes of output that the user requests.
+    ## By default we want both checks, graphics, and summarize.
     doCheck <- "check" %in% mode
     doVisualize <- "visualize" %in% mode
     doSummarize <- "summarize" %in% mode
 
     if (!doCheck & !doVisualize & !doSummarize) {
-      warning("Note that no proper arguments were supplied to \"mode\" - no cleaning is performed")
+        warning("Note that no proper arguments were supplied to \"mode\" - no data cleaning performed")
     } #rewrite warning message
 
+    ## Disregard the twocolumn option if we're only asking for one of visualize and summarize
+    ## If output is not html or pdf then drop the twoCol option too
     if (!doVisualize || !doSummarize) twoCol <- FALSE
+    if (!(output %in% c("html", "pdf"))) twoCol <- FALSE
 
-
-
-  ## make tables left-aligned and allow for 6 columns
-    #change back to original settings in the end of the function?
+    ## make tables left-aligned and allow for 6 columns
+    oldPanderOptions <- panderOptions() # Used to restore towards the end
     panderOptions("table.alignment.default", "left")
+    panderOptions('table.alignment.default', 'center')  ## XXX CE only one of these two
     panderOptions("table.split.table", Inf)
-    panderOptions("table.alignment.rownames", "left") #why doesn't this work?!
-    panderOptions('table.alignment.default', 'center')
     panderOptions('table.alignment.rownames', 'left')
 
-  ## write to file
+    ##
+    ## Below comes a bunch of helper files for writing the output
+    ##
     writer <- function(x, ..., outfile=file, sep="\n") {
-      cat(paste0(x, ...), file=outfile, append=TRUE, sep=sep)
+        cat(paste0(x, ...), file=outfile, append=TRUE, sep=sep)
     }
 
     chunk.wrapper <- function(x, ..., outfile=file, options=c("echo=FALSE", "warning=FALSE")) {
-      writer(paste("```{r", paste(options, collapse=", "), "}"))
-      writer(x, ..., outfile=outfile)
-      writer("```")
+        writer(paste("```{r", paste(options, collapse=", "), "}"))
+        writer(x, ..., outfile=outfile)
+        writer("```")
     }
 
     fig.wrapper <- function(x, ..., outfile=file, options=c("echo=FALSE", "fig.width=4",
-                                                            "fig.height=3", "message=FALSE",
-                                                            "warning=FALSE")) {
-      chunk.wrapper(x, outfile=outfile, options=options)
+                                                      "fig.height=3", "message=FALSE",
+                                                      "warning=FALSE")) {
+        chunk.wrapper(x, outfile=outfile, options=options)
     }
 
     secretChunk.wrapper <- function(x, ..., outfile=file, options=c("echo=FALSE", "include=FALSE",
-                                                                    "warning=FALSE", "message=FALSE",
-                                                                    "error=FALSE")) {
+                                                              "warning=FALSE", "message=FALSE",
+                                                              "error=FALSE")) {
       chunk.wrapper(x, outfile=outfile, options=options)
-    }
+  }
 
     ## outputty sets the output type
     twoCols.wrapper <- function(text, figure, outfile=file, outputty=output) {
-      if (outputty=="pdf") { #note: does NOT work if there is a linebreak between the two
-                          #minipage environments!
-        writer("\\bminione")
-        writer(text)
-        writer("\\emini")
-        writer("\\bminitwo")
-        fig.wrapper(figure)
-        writer("\\emini")
-      }
-      if (outputty=="html") {
-        writer("<div class = \"row\">")
-        writer("<div class = \"col-lg-8\">")
-        writer(text)
+        if (outputty=="pdf") { #note: does NOT work if there is a linebreak between the two
+                                        #minipage environments!
+            writer("\\bminione")
+            writer(text)
+            writer("\\emini")
+            writer("\\bminitwo")
+            fig.wrapper(figure)
+            writer("\\emini")
+        }
+        if (outputty=="html") {
+            writer("<div class = \"row\">")
+            writer("<div class = \"col-lg-8\">")
+            writer(text)
+            writer("</div>")
+            writer("<div class = \"col-lg-4\">")
+            fig.wrapper(figure)
         writer("</div>")
-        writer("<div class = \"col-lg-4\">")
-        fig.wrapper(figure)
-        writer("</div>")
-        writer("</div>")
-      }
-      writer("\n")
+            writer("</div>")
+        }
+        writer("\n")
     }
 
+
+    ## XXX
     if (removeExisting) unlink(file)
+
+    finish<-"markdown"
+
+
+
 
     ## write YAML preamble
     writer("---")
@@ -302,7 +315,7 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
 
 
     ## include packages as a first chunk
-    secretChunk.wrapper("library(ggplot2)\n library(stringi)\n library(pander)")
+    secretChunk.wrapper("library(ggplot2)\nlibrary(stringi)\nlibrary(pander)")
 
     ## Title
     writer("# Data cleaning summary")
@@ -393,134 +406,123 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
 
         ## use smartNum
         if (smartNum & class(v) %in% c("numeric", "integer")) {
-          v <- doSmartNum(v, ...)
-          if ("smartNum" %in% class(v)) {
-            extraMessages$do <- TRUE
-            extraMessages$messages <- c(extraMessages$messages,
-                                        "Note that this variable is treated as a factor variable below, as it only takes a few unique values.")
-              #more concrete message here?
-          }
+            v <- doSmartNum(v, ...)
+            if ("smartNum" %in% class(v)) {
+                extraMessages$do <- TRUE
+                extraMessages$messages <- c(extraMessages$messages,
+                                            "Note that this variable is treated as a factor variable below, as it only takes a few unique values.")
+                                        #more concrete message here?
+            }
         }
 
         ## Make checks
         if (doCheck && !any(preCheckProblems)) {
-          checkRes <- check(v, ...)
-          problems <- sapply(checkRes, function(x) x[[1]])
+            checkRes <- check(v, ...)
+            problems <- sapply(checkRes, function(x) x[[1]])
         }
 
-      ## skip non problem-causing variables
+        ## skip non problem-causing variables
         if (useVar=="problematic" && (!any(preCheckProblems) && !any(problems))) skip <- TRUE
 
 
-        ###remove
-        #if (specialStatus$problem) browser()
-        ###
-
+        ## Now print out the information if the variable isn't skipped
         if (!skip) {
 
-          ## Variable name
-          writer("## **", #ifelse(substring(vnam, 1, 1) == "_",
-                          #      paste("\\", vnam, sep=""),
-                          #      vnam),
-                 gsub("_", "\\\\_", vnam),
-                "**\n")
+            ## Variable name
+            writer("## **", gsub("_", "\\\\_", vnam), "**\n")
 
-          if ("label" %in% attributes(v)$names)
-              writer("*",attr(v, "label"), "*\n")  # Write label
+            ## If the variable has label information the print that below
+            if ("label" %in% attributes(v)$names)
+                writer("*",attr(v, "label"), "*\n")  # Write label
 
-          ## write result of key/empty check
-          if (any(preCheckProblems)) {
-            writer(paste("* ", preCheckMessages[preCheckProblems], "\n", collapse=" \n ", sep=""))
-          } else {
-
-            ## write extra messages if any
-            if (extraMessages$do) writer(paste("* ", extraMessages$messages, "\n", collapse=" \n ",
-                                               sep=""))
-
-            ## make Summary table
-            if (doSummarize) sumTable <- pander_return(summarize(v, justify="lr", ...))
-              #if (doSummarize) sumTable <- pandoc.table.return(summarize(v, ...))
-                #exactly the same result as with pander_return()
-
-
-            ## Label information
-              #???
-
-            ## make Visualization
-            if (doVisualize) visual <- visualize(v, vnam, doEval=FALSE, ...)
-
-            ## add visualization + summary results to file
-            if (twoCol) {
-              twoCols.wrapper(sumTable, visual)
+            ## write result of key/empty check
+            if (any(preCheckProblems)) {
+                writer(paste("* ", preCheckMessages[preCheckProblems], "\n", collapse=" \n ", sep=""))
             } else {
-              if (doSummarize) writer(sumTable)
-              if (doVisualize) fig.wrapper(visual)
-              writer("\n")
-            }
 
-            ## add check results to file
-            if (doCheck) {
-              if (any(problems)) {
-                messages <- sapply(checkRes, function(x) x[[2]])[problems]
-                for (i in 1:length(messages)) {
-                  writer(paste("- ", pander_return(messages[i]), sep=""))
+                ## write extra messages if any
+                if (extraMessages$do) writer(paste("* ", extraMessages$messages, "\n", collapse=" \n ",
+                                                   sep=""))
+
+                ## make Summary table
+                if (doSummarize) sumTable <- pander_return(summarize(v, ...), justify="lr")
+
+                ## Label information
+                ## Right now we are not doing anything besides wirint the label above
+
+                ## make Visualization
+                if (doVisualize) visual <- visualize(v, vnam, doEval=FALSE, ...)
+
+
+                ## add visualization + summary results to output file
+                if (twoCol) {
+                    twoCols.wrapper(sumTable, visual)
+                } else {
+                    if (doSummarize) writer(sumTable)
+                    if (doVisualize) fig.wrapper(visual)
+                    writer("\n")
                 }
-              }
+
+                ## add check results to file
+                if (doCheck) {
+                    if (any(problems)) {
+                        messages <- sapply(checkRes, function(x) x[[2]])[problems]
+                        for (i in 1:length(messages)) {
+                            writer(paste0("- ", pander_return(messages[i])))
+                        }
+                    }
+                }
             }
-          }
 
-          writer("\n")
-          if (output=="html") writer("---\n")
-          if (output=="pdf") writer("\\fullline \n")
+            writer("\n")
+            if (output=="html") writer("---\n")
+            if (output=="pdf") writer("\\fullline\n")
 
-          #collect garbage, should maybe help with memory?
-          if (cleanUp=="always") {
-             secretChunk.wrapper("gc(verbose=F)")
-          }
+            ## Add garbage collection. Should help with memory problems.
+            if (garbageCollection) secretChunk.wrapper("gc(verbose=FALSE)")
         }
     }
 
-#    close(ff)
     if (brag) {
         ## This could be wrapped in a tryCatch for those rather weird situations where the package is not installed.
         writer("This report was created by cleanR v", paste(packageVersion("cleanR"), sep="."), ".")
     }
 
     if(finish=="render") {
-          ####is it possible to close the file clean_data.pdf/html if it is open such
-          ####that no access permission issues can occur?
-          ####or maybe just check if it is open and then not try and render.
-      #fileName <- paste(substring(fileName, 1, nchar(fileName)-4), ".",
-      #                  output, sep="")
-      if (!silent) {
-        message("Data cleaning is finished. Please wait while your output file is rendered.")
-      }
-      if (nagUser && output=="pdf" && identical(as.character(Sys.info()["sysname"]),"Windows")) {
-        message(paste("\n Is", outFile,
-                      "open on your computer? Please close it as fast as possible to avoid problems! \n"))
-      }
-      render(file, quiet=quiet)
+####is it possible to close the file clean_data.pdf/html if it is open such
+####that no access permission issues can occur?
+####or maybe just check if it is open and then not try and render.
+                                        #fileName <- paste(substring(fileName, 1, nchar(fileName)-4), ".",
+                                        #                  output, sep="")
+        if (!silent) {
+            message("Data cleaning is finished. Please wait while your output file is rendered.")
+        }
+        if (nagUser && output=="pdf" && identical(as.character(Sys.info()["sysname"]),"Windows")) {
+            message(paste("\n Is", outFile,
+                          "open on your computer? Please close it as fast as possible to avoid problems! \n"))
+        }
+        render(file, quiet=quiet)
     }
 
     if (finish=="print") {
-      unlink(file) #delete rmd
+        unlink(file) #delete rmd
     }
 
     if (!silent) { #whoops - version 1 only makes sense for windows, doesn't it?
-                    #does version 2 work on mac/linux?
-                   #also: problems if people supply their own file paths using the "file"-argument?
-      #print(paste("Data cleaning was succesful. Find your results in", ###version 1
-       #     paste(getwd(), "/", fileName, sep="")))
-      message(paste("Data cleaning was succesful. Find your results in", ###version 2
-            #path.expand(paste("~/", outFile, sep=""))))  #doesn't work
-            paste(getwd(), "/", outFile, sep="")))
-          #to do: make into link so that the user can just click it and open the file.
-          #must be possible, debug() does interactive stuff..
-          #CHECK: Does this work on mac? linux?
+                                        #does version 2 work on mac/linux?
+                                        #also: problems if people supply their own file paths using the "file"-argument?
+                                        #print(paste("Data cleaning was succesful. Find your results in", ###version 1
+                                        #     paste(getwd(), "/", fileName, sep="")))
+        message(paste("Data cleaning was succesful. Find your results in", ###version 2
+                                        #path.expand(paste("~/", outFile, sep=""))))  #doesn't work
+                      paste(getwd(), "/", outFile, sep="")))
+                                        #to do: make into link so that the user can just click it and open the file.
+                                        #must be possible, debug() does interactive stuff..
+                                        #CHECK: Does this work on mac? linux?
 
-      #awkward if openResult==T? What should we write instead in that case?
-      #also feels awkward if no message is printed in that case (in case the user e.g.
-      #accidentially shuts down the pdf/html/rmd-file.)
+                                        #awkward if openResult==T? What should we write instead in that case?
+                                        #also feels awkward if no message is printed in that case (in case the user e.g.
+                                        #accidentially shuts down the pdf/html/rmd-file.)
     }
 
     if (openResult) system(paste("open", outFile)) #tjek: virker det på linux?

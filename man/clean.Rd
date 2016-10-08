@@ -5,16 +5,16 @@
 \title{Perform a check of potential errors in a data frame}
 \usage{
 clean(o, file = NULL, removeExisting = TRUE, standAlone = TRUE,
-  brag = FALSE, ordering = c("asIs", "alpha"),
-  cleanUp = "deletethisoption?", quiet = TRUE, output = "pdf",
-  finish = c("markdown", "render", "print"), twoCol = TRUE,
-  silent = FALSE, openResult = TRUE, mode = c("summarize", "visualize",
-  "check"), useVar = "all", nagUser = TRUE, smartNum = TRUE,
+  brag = FALSE, ordering = c("asIs", "alphabetical"),
+  cleanUp = "deletethisoption?", quiet = TRUE, output = c("markdown",
+  "pdf", "html", "screen"), render = TRUE, twoCol = TRUE, silent = FALSE,
+  openResult = TRUE, mode = c("summarize", "visualize", "check"),
+  useVar = "all", nagUser = TRUE, smartNum = TRUE,
   preChecks = c("isSpecial", "isCPR"), replace = FALSE, listChecks = TRUE,
   checkDetails = FALSE, vol = "", ...)
 }
 \arguments{
-\item{o}{the data frame object to be checked}
+\item{o}{the data frame object to be checked.}
 
 \item{file}{The filename of output file. If set to NULL (the default) then the filename will be the name of the data frame prefixed with "cleanR-".}
 
@@ -30,11 +30,11 @@ are "asIs" (ordering as in the dataset) and "alpha" (alphabetical order).}
 
 \item{cleanUp}{- not done yet -.}
 
-\item{output}{Output format, options are pdf and html}
+\item{output}{Output format. Options are "markdown" (the default), "pdf", "html", and "screen".}
 
-\item{finish}{"render" (makes pdf/html), "markdown" (makes markdown file), "print" (prints to screen).}
+\item{render}{Should the output file be rendered (defaults to TRUE)? This argument has no impact for screen output.}
 
-\item{twoCol}{Should the results be presented in two columns (if finish is "render" or "markdown")?}
+\item{twoCol}{Should the results be presented in two columns (if output is "html" or "pdf")? Defaults to TRUE.}
 
 \item{silent}{Should clean() run completely silently? Note that this option overrules the settings for
 "quiet": A silent session is always quiet.}
@@ -59,7 +59,7 @@ message is printed in the data summary as well.}
 any of these checks find problems, the variable will not be summarized nor visualized nor checked.}
 
 \item{replace}{If FALSE (the default) an error is thrown if one of the files that we are about to write to
-already exist. If TRUE no checks are performed.}
+already exists. If TRUE no checks are performed.}
 
 \item{listChecks}{If TRUE, the document contains an overview of what checks were performed for
 each variable data type.}
