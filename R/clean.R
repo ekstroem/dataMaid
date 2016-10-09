@@ -57,7 +57,7 @@
 #'#Add user defined check-function to the checks performed on character variables:
 #' \dontrun{
 #' characterFoo <- function(v) {
-#'  if (substr(substitute(a), 1, 1) == "_") {
+#'  if (substr(substitute(v), 1, 1) == "_") {
 #'    out <- list(problem=TRUE, message="Note that the variable name begins with \\_")
 #'  } else out <- list(problem=FALSE, message="")
 #'  out
