@@ -4,24 +4,26 @@
 \alias{clean}
 \title{Perform a check of potential errors in a data frame}
 \usage{
-<<<<<<< HEAD
-clean(o, file = NULL, removeExisting = TRUE, standAlone = TRUE,
-  brag = FALSE, ordering = c("asIs", "alpha"),
-  cleanUp = "deletethisoption?", quiet = TRUE, output = "pdf",
-  finish = "markdown", twoCol = TRUE, silent = FALSE, openResult = TRUE,
-  mode = c("summarize", "visualize", "check"), useVar = "all",
-  nagUser = TRUE, smartNum = TRUE, preChecks = c("isSpecial", "isCPR"),
-  replace = FALSE, listChecks = TRUE, checkDetails = FALSE, vol = "",
-  ...)
-=======
-clean(o, output = c("markdown", "pdf", "html", "screen"), render = TRUE,
+clean(o, output = c("pdf", "html", "screen"), render = TRUE,
   useVar = NULL, ordering = c("asIs", "alphabetical"),
   onlyProblematic = FALSE, mode = c("summarize", "visualize", "check"),
   smartNum = TRUE, preChecks = c("isSpecial", "isCPR"), file = NULL,
   replace = FALSE, vol = "", standAlone = TRUE, twoCol = TRUE,
-  quiet = FALSE, openResult = TRUE, nagUser = TRUE,
-  checkDetails = FALSE, garbageCollection = TRUE, ...)
->>>>>>> 7df5f92abb7698401704efa622f5a1a2561d4f00
+  quiet = TRUE, openResult = TRUE, nagUser = TRUE, checkDetails = FALSE,
+  characterChecks = defaultCharacterChecks(),
+  factorChecks = defaultFactorChecks(),
+  labelledChecks = defaultLabelledChecks(),
+  numericChecks = defaultNumericChecks(),
+  integerChecks = defaultIntegerChecks(),
+  logicalChecks = defaultLogicalChecks(), allChecks = NULL,
+  characterSummaries = defaultCharacterSummaries(),
+  factorSummaries = defaultFactorSummaries(),
+  labelledSummaries = defaultLabelledSummaries(),
+  numericSummaries = defaultNumericSummaries(),
+  integerSummaries = defaultIntegerSummaries(),
+  logicalSummaries = defaultLogicalSummaries(), allSummaries = NULL,
+  allVisuals = "standardVisual", garbageCollection = TRUE,
+  listChecks = TRUE, brag = FALSE, ...)
 }
 \arguments{
 \item{o}{the data frame object to be checked.}
@@ -71,21 +73,55 @@ the function run.}
 \item{checkDetails}{MAYBE ALSO IMPLEMENT THIS?: If TRUE, details about each check function are added
 to the document (if available)}
 
-\item{garbageCollection}{A logical. If TRUE (the default) then garbage collection code is added to the R markdown file that is output. This is useful for larger dataset to prevent memory problems.}
-
 \item{characterChecks}{a list of error-checking functions to apply to character vectors}
 
 \item{factorChecks}{a list of error-checking functions to apply to integer vectors}
 
 \item{labelledChecks}{a list of error-checking functions to apply to character vectors}
 
-\item{integerChecks}{a list of error-checking functions to apply to integer vectors}
-
 \item{numericChecks}{a list of error-checking functions to apply to integer vectors}
+
+\item{integerChecks}{a list of error-checking functions to apply to integer vectors}
 
 \item{logicalChecks}{a list of error-checking functions to apply to integer vectors}
 
-\item{\dots}{other arguments that are passed on to the checking, summary and visualization functions}
+\item{allChecks}{Vector of function names that should be used as check-functions for all variable types. 
+See ???? for more details OR SOMETHING? Note that this option overwrites the options characterChekcs, 
+factorChecks, etc.}
+
+\item{characterSummaries}{STUFF}
+
+\item{factorSummaries}{STUFF}
+
+\item{labelledSummaries}{STUFF}
+
+\item{numericSummaries}{STUFF}
+
+\item{integerSummaries}{STUFF}
+
+\item{logicalSummaries}{STUFF}
+
+\item{allSummaries}{Vector of function names that should be used as summary-functions for all variable types. 
+See ???? for more details OR SOMETHING? Note that this option overwrites the options charachterSummaries, 
+factorSummaries, etc.}
+
+\item{allVisuals}{STUFF. Default: "standardVisual".}
+
+\item{garbageCollection}{A logical. If TRUE (the default) then garbage collection code is added to the R markdown file that is output. This is useful for larger dataset to prevent memory problems.}
+
+\item{characterChecks}{STUFF}
+
+\item{factorChecks}{STUFF}
+
+\item{labelledChecks}{STUFF}
+
+\item{numericChecks}{STUFF}
+
+\item{integerChecks}{STUFF}
+
+\item{logicalChecks}{STUFF}
+
+\item{\dots}{other arguments that are passed on the to precheck, checking, summary and visualization functions}
 }
 \value{
 The function does not return anything. It's side effect (the production of the Rmd file summary) is the reason for running the function.
@@ -104,16 +140,17 @@ data(testData)
 clean(testData)
 }
 
+#Add user defined check-function to the checks performed on character variables:
 \dontrun{
 characterFoo <- function(v) {
- if (substr(substitute(a), 1, 1) == "_") {
+ if (substr(substitute(v), 1, 1) == "_") {
    out <- list(problem=TRUE, message="Note that the variable name begins with \\\\_")
  } else out <- list(problem=FALSE, message="")
  out
 }
 class(characterFoo) <- "checkFunction"
 attr(characterFoo, "description") <- "I really hate underscores"
-clean(testData, characterChecks="characterFoo")
+clean(testData, characterChecks=c(defaultCharacterChecks(), "characterFoo"))
 }
 
 }
