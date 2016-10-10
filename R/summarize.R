@@ -1,8 +1,8 @@
 #GENERAL COMMENTS/TO DO:
 #QUESTION: We want to do the same thing in some functions,
 #           no matter the data class.
-#           Should I implement a generic function + class specific 
-#           functions anyway for readility/comparibility with the 
+#           Should I implement a generic function + class specific
+#           functions anyway for readility/comparibility with the
 #           rest of the code?
 #           Relevant functions: variableType, countMissing
 
@@ -15,9 +15,9 @@
 
 #Make matrix containing summary information about a variable v,
 #depending on its class and possibly user supplied arguments
-#summary-functions must take a vector v and return a 
+#summary-functions must take a vector v and return a
 #list(feature=..., result=...) object.
-summarize <- function(v, descriptive=F, ...) UseMethod("summarize") 
+summarize <- function(v, descriptive=F, ...) UseMethod("summarize")
 
 #NOTE: default descriptions can still be accesssed using defaultCharacterDescriptions() etc.,
 #but they are not available as arguments to clean() directly, but should be passed in ...
@@ -26,8 +26,8 @@ summarize <- function(v, descriptive=F, ...) UseMethod("summarize")
 #produces the output matrix from a summarize call
 #use internally only
 sumMatGenerator <- function(v, summaries) {
-  nFunctions <- length(summaries) 
-  outMat <- matrix(NA, nFunctions, 2, 
+  nFunctions <- length(summaries)
+  outMat <- matrix(NA, nFunctions, 2,
                    dimnames=list(NULL, c("Feature", "Result")))
   for (i in 1:nFunctions) {
     res <- eval(call(summaries[i], v))
@@ -92,7 +92,7 @@ defaultIntegerDescriptions <- function() c("centralValue", "quartiles", "minMax"
 summarize.integer <- function(v, integerSummaries = defaultIntegerSummaries(),
                               integerDescriptions = defaultIntegerDescriptions(),
                               descriptive=F, ...) {
-  integerCalls <- if (descriptive) c(integerSummaries, integerDescriptions) 
+  integerCalls <- if (descriptive) c(integerSummaries, integerDescriptions)
                   else integerSummaries
   sumMatGenerator(v, integerCalls)
 }
@@ -131,7 +131,7 @@ variableType <- function(v) {
 countMissing <- function(v) {
   noMissing <- sum(is.na(v))
   percentMissing <- round(100*noMissing/length(v),2)
-  list(feature="No. missing obs." , 
+  list(feature="No. missing obs." ,
        result=paste(noMissing, " (", percentMissing," %)", sep=""))
 }
 
@@ -141,7 +141,7 @@ countMissing <- function(v) {
 
 #Counts the number of unique (non-NA) values taken by a variable
 
-uniqueValues <- function(v) UseMethod("uniqueValues") 
+uniqueValues <- function(v) UseMethod("uniqueValues")
 
 uniqueValuesCFLBI <- function(v) {
   noUnique <- length(unique(na.omit(v)))
@@ -149,14 +149,14 @@ uniqueValuesCFLBI <- function(v) {
 }
 
 uniqueValuesN <- function(v) {
-  out <- uniqueValuesCFLBI(v) 
-  #check for NaNs 
+  out <- uniqueValuesCFLBI(v)
+  #check for NaNs
   if (any(is.nan(v))) out$result <- out$result + 1
   out
 }
 
 
-#assign methods to generic uniqueVales function
+#assign methods to generic uniqueValues function
 uniqueValues.character <- function(v) uniqueValuesCFLBI(v)
 uniqueValues.factor <- function(v) uniqueValuesCFLBI(v)
 uniqueValues.labelled <- function(v) uniqueValuesCFLBI(v) #?PROBLEM?
@@ -177,7 +177,7 @@ centralValue <- function(v) UseMethod("centralValue")
 
 #Find the central value (mode for categorical, median for
 #numeric variables) of a variable, ignoring NA and NaN values
-#for numeric/integer variables and ignoring NA for 
+#for numeric/integer variables and ignoring NA for
 #character/factor variables
 
 #logical variables
@@ -219,7 +219,7 @@ centralValue.logical <- function(v) centralValueB(v)
 
 #######minMax#########
 
-#returns min and max of v. Should only be used on numeric/integer 
+#returns min and max of v. Should only be used on numeric/integer
 #variables. CONTROL THIS?
 
 minMax <- function(v) {
