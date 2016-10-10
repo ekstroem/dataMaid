@@ -85,7 +85,7 @@
 #'  out
 #' }
 #' class(characterFoo) <- "checkFunction"
-#' attr(characterFoo, "description") <- "I really hate underscores" 
+#' attr(characterFoo, "description") <- "I really hate underscores"
 #' clean(testData, characterChecks=c(defaultCharacterChecks(), "characterFoo"))
 #' }
 #'
@@ -93,7 +93,7 @@
 clean <- function(o, file=NULL, removeExisting=TRUE,
                   standAlone=TRUE, brag=FALSE, ordering=c("asIs", "alpha"),
                   cleanUp="deletethisoption?",
-                  quiet=TRUE, output="pdf", finish = "markdown",
+                  quiet=TRUE, output="pdf", finish = c("markdown", "render", "print"),
                   twoCol=TRUE, silent=FALSE, openResult=TRUE,
                   mode=c("summarize", "visualize", "check"),
                   useVar="all", nagUser=TRUE,
@@ -127,6 +127,7 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
     ordering <- match.arg(ordering)
     allVisuals <- match.arg(allVisuals) 
         #OBS!!!: visual-option virker IKKE lige nu
+    finish <- match.arg(finish)
 
   ## dataframe name
     dfname <- deparse(substitute(o))
@@ -138,10 +139,10 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
     } else if (useVar %in% names(o)) {
       useVarQuoted <- paste("\"", useVar, "\"", sep="")
       useVarMessage <- paste("The argument supplied for the useVar option,", paste(useVarQuoted, ",", sep=""),
-                             "was ambiguous,", "as the dataset contains a variable named", 
+                             "was ambiguous,", "as the dataset contains a variable named",
                              useVarQuoted, "which is a special option.",
                              "We recommend the following solutions: \n",
-                             "- If you wish to clean only the variable named", useVarQuoted, "run", 
+                             "- If you wish to clean only the variable named", useVarQuoted, "run",
                              paste("clean(", dfname, "[, ", useVarQuoted, "])", sep=""), "instead. \n")
       useVarAllMessage <- paste("- If you wish to clean the full dataset, run",
                                 paste("clean(", dfname, "[, names(", dfname, ")])", sep=""))
@@ -149,7 +150,7 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
                                  "please rename the variable \"problematic\" in your dataset, e.g.",
                                  "with a suffixed whitespace, and rerun clean.")
       stop(paste(useVarMessage, ifelse(identical(useVar, "all"), useVarAllMessage, useVarProbMessage)))
-          #maybe better option for useVar=="problematic"? However, we would probably have to add an 
+          #maybe better option for useVar=="problematic"? However, we would probably have to add an
           #extra argument. Is it worth the trouble?
     }
 
@@ -177,15 +178,15 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
     }
     outOutput <- output #copy of output for file extension generation
                         #Note: Changing output itself will cause problems as we need to know
-                        #whether we are making a pdf or html .rmd file 
+                        #whether we are making a pdf or html .rmd file
     if (finish!="render") outOutput <- "Rmd"
     outFile <- paste(substring(file, 1, nchar(file)-4), ".", outOutput, sep="")
 
-    
-    ################################################################################################    
+
+    ################################################################################################
     ###ALSO: check that vol and file and dataname produces a valid file name (no strange characters)
     ################################################################################################
-    
+
     fileExists <- file.exists(file)
     outFileExists <- file.exists(outFile)
 
@@ -220,11 +221,11 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
       #    #check if pdf/html was produced by cleanR....
       #    #############################################
       #  }
-      #  
+      #
       #  if (fileProblem & outFileProblem) problemFiles <- paste(file, "and", outFile)
       #  if (fileProblem & !outFileProblem) problemFiles <- file
       #  if (!fileproblem & outFileProblem) problemFiles <- outFile
-      #  
+      #
       #  if (fileProblem || outFileProblem) {
       #    stop(paste("The file name(s) to be used by cleanR,", paste(problemFiles, ",", sep=""),
       #               "are already in use and the files do not look like they were produced by cleanR.",
@@ -237,7 +238,7 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
       #}
     #}
 
-    
+
     if (silent) {
       quiet <- TRUE
       nagUser <- FALSE
@@ -284,7 +285,6 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
     writer <- function(x, ..., outfile=file, sep="\n") {
       cat(paste0(x, ...), file=outfile, append=TRUE, sep=sep)
     }
-
 
     chunk.wrapper <- function(x, ..., outfile=file, options=c("echo=FALSE", "warning=FALSE")) {
       writer(paste("```{r", paste(options, collapse=", "), "}"))
@@ -442,6 +442,7 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
         skip <- FALSE
         problems <- FALSE
 
+        # How to order the variables
         v <- o[[idx]]
         vnam <- vnames[idx]
 
@@ -508,7 +509,7 @@ clean <- function(o, file=NULL, removeExisting=TRUE,
                                                                  numericSummaries = numericSummaries,
                                                                  integerSummaries = integerSummaries,
                                                                  logicalSummaries = logicalSummaries,
-                                                                 ...))
+                                                                 ...), justify="lr")
               #if (doSummarize) sumTable <- pandoc.table.return(summarize(v, ...))
                 #exactly the same result as with pander_return()
 
