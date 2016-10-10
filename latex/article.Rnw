@@ -83,9 +83,10 @@
 
 \section{Introduction}
 Statisticians and data analysts spend a large portion of their time on
-data cleaning and on data wrangling. Packages such as \pkg{data.table}, \pkg{plyr},
-and \pkg{} make data wrangling a lot easier in R, but there are only a
-few options available for automated data cleaning.
+data cleaning and on data wrangling. Packages such as
+\pkg{data.table}, and \pkg{plyr} have made data wrangling a lot easier in
+\proglang{R}, but there are only a few options available for automated data
+cleaning.
 
 Data cleaning is a time consuming endeavour and it inherently requires
 human interaction since every dataset is different and the variables
