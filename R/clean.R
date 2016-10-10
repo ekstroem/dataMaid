@@ -88,12 +88,14 @@
 #'
 #' @export
 clean <- function(o,
-                  output=c("markdown", "pdf", "html", "screen"), render=TRUE,
+                  output=c("pdf", "html", "screen"), render=TRUE,
+                      #note: output cannot just be markdown. Either it's pdf-markdown or html-markdown.
+                      #what files are produced is controlled using render. 
                   useVar=NULL, ordering=c("asIs", "alphabetical"), onlyProblematic=FALSE,
                   mode=c("summarize", "visualize", "check"),
                   smartNum=TRUE, preChecks=c("isSpecial", "isCPR"),
                   file=NULL, replace=FALSE, vol="",
-                  standAlone=TRUE, twoCol=TRUE, quiet=FALSE, openResult=TRUE,
+                  standAlone=TRUE, twoCol=TRUE, quiet=TRUE, openResult=TRUE,
                   nagUser=TRUE,
                   checkDetails=FALSE,
                   characterChecks = defaultCharacterChecks(),
@@ -110,9 +112,10 @@ clean <- function(o,
                   integerSummaries = defaultIntegerSummaries(),
                   logicalSummaries = defaultLogicalSummaries(),
                   allSummaries = NULL,
-                  allVisuals = c("standardVisual", "basicVisual"),
-                  vol="", 
+                  allVisuals = "standardVisual",
                   garbageCollection=TRUE,
+                  listChecks = TRUE,
+                  brag=FALSE, #remove me 
                   ...) {
 
     ## Start by doing a few sanity checks of the input
@@ -125,9 +128,6 @@ clean <- function(o,
 
     ##Match arguments
     ordering <- match.arg(ordering)
-    allVisuals <- match.arg(allVisuals) 
-        #OBS!!!: visual-option virker IKKE lige nu
-    finish <- match.arg(finish)
     output <- match.arg(output)
 
     ## Extract the dataframe name
@@ -138,7 +138,15 @@ clean <- function(o,
         ## The line below is probably not efficient if we have large datasets and want to extract many variables
         ### o <- o[, useVar, drop=FALSE]  #warning here if this doesn't work + overwrite stuff?
         ## Instead run through the dataframe and NULL the variables to exclude?
-        o[names(o)[! names(o) %in% useVar]] <- NULL
+        ##If we really want to do this, we should probably do it using data.table but there is no way
+        ##around creating a local copy of o, as we do NOT want to change the version of o in the 
+        ##global environment.
+      
+      o <- o[, useVar, drop=FALSE]  #warning here if this doesn't work + overwrite stuff?
+      
+      ###this does not work, it produces an error!:########################
+      #o[names(o)[! names(o) %in% useVar]] <- NULL
+      #############################################
     }
 
     ## Background variables
@@ -155,9 +163,19 @@ clean <- function(o,
         ## maybe try fixing the user's faulty file name instead of just overwriting it?
         file <- paste0("cleanR_", dfname, vol, ".Rmd")
     }
+    
+    outOutput <- output #copy of output for file extension generation
+                        #Note: Changing output itself will cause problems as we need to know
+                        #whether we are making a pdf or html .rmd file
+    
+    if (!render) outOutput <- "Rmd"
+    
+    outFile <- paste0(substring(file, 1, nchar(file)-4), ".", outOutput)
+                  #outFile is the file we might want to open at the end. Should be consistent 
+                  #with the user's choice of output (NOT just .rmd). 
 
     ## The name of the R markdown file that is output
-    outFile <- paste0(substring(file, 1, nchar(file)-4), ".Rmd")
+    #outFile <- paste0(substring(file, 1, nchar(file)-4), ".Rmd")
 
 
 ################################################################################################
@@ -337,7 +355,7 @@ clean <- function(o,
 
     ## Title
     writer("# Data cleaning summary")
-    writer("The data frame examined has the following dimensions")
+    writer("The data frame examined has the following dimensions:")
 
     ## Print data frame summary
     sumMat <- matrix(c("Number of rows", "Number of variables",
@@ -516,8 +534,9 @@ clean <- function(o,
 
     ## This could be wrapped in a tryCatch for those rather weird situations where the package is not installed.
     ## But it is indeer rather obscure
+    if (brag) {
     writer("This report was created by cleanR v", paste(packageVersion("cleanR"), sep="."), ".")
-
+    }
     ## Now we should not write anything more to the file
 
     if (output %in% c("html", "pdf") && render) {
