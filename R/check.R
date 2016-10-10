@@ -204,7 +204,7 @@ identifyMissRepChar <- function(v, char) {
 }
 
 
-#Should only be used on numeric/integer vectors. 
+#Should only be used on numeric/integer vectors.
 #returns 9 if 9 seems to act as a missing value indicator
 #in the variable
 identifyMissNine <- function(v) {
@@ -227,7 +227,7 @@ identifyMissingCF <- function(v) {
 
   missNinesOcc <- identifyMissRepChar(v, "9") #what 99, 999, ... strings occur?
   missSpaceOcc <- identifyMissRepChar(v, " ") #what "  ", "   ", ... strings occur?
-  
+
     #STATA-style: .something describes a "something" type of missing value
   missDotPrefixOcc <- unique(v[substr(v, 1, 1) == "."])
 
