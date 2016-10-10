@@ -3,3 +3,5 @@ latex/
 .Rhistory
 R/makeData.R
 ^README*
+^.*\.Rproj$
+^\.Rproj\.user$
