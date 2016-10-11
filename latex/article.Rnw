@@ -91,54 +91,31 @@ cleaning.
 Data cleaning is a time consuming endeavour and it inherently requires
 human interaction since every dataset is different and the variables
 in the dataset can only be understood in the proper context of the
-experiment. While each dataset is different and require
-... (``simple questions''
+experiment. While each dataset is different and requires unique
+attention there are often a number of similar tasks that are
+undertaken as part of the data cleaning and quality control
+process. This is especially true when data are received repeatedly
+from the same source as data providers tend to use a stable setup (and
+hence introduce the same set of potential mistakes that need to be
+identified and corrected).
 
-... there are a number of common occurrences that .... This is particulary
-Automated
+In many situations these errors are discovered in the process of the
+data analysis (e.g., a categorical variable with numeric labels is
+wrongly classified as a numeric variable), but in other cases a human
+with knowledge about the data context area is needed to identify
+possible mistakes in the data (e.g., if there are 4 categories for a
+variable that should only have 3).  It is necessary to summarize
+information --- both numerically and graphically --- about each
+variable in order for an investigator to detect possible errors, and
+help raise flags of warning to draw the attention of investigator for
+the situations where there \emph{might} be a error.
 
-
-... partly be done by ... However ... enough ... similar tasks that
-pop
-
-
-However it is not uncommon for ... to run a set of ....
-
-
-In this paper, we will briefly present some properties of the simplex
-distribution, which provides a foundation for the inference and
-computation in the package simplexreg (Zhang, Qiu, and Shi 2016). The
-package is implemented in the R system and available from the
-Comprehensive R Archive Network (CRAN) at https:
-//CRAN.R-project.org/package=simplexreg. There are three major lines
-of functions:
-1. Calculation of the density, cumulative distribution, quantile and
-random number gen- erating functions for the simplex distribution.
-2. Statistical inference in the simplex generalized linear model
-(SGLM, Zhang and Qiu 2014) via maximum likelihood (ML) for
-cross-sectional proportional data set.
-3. Analysis of longitudinal proportional data set via an extended
-version of generalized estimating equations (GEE) using the simplex
-distribution.
-
-
-The manusccript is organized as follows. Section \ref{sec:example1}
-presents a worked example and tutorial on how to use the \pkg{cleanR}
-package to create a summary of potential errors. Section
-\ref{sec:internals} illustrates the methodology of modeling
-proportional data using simplex generalized regression. The
-generalized estimating equations for longitudinal proportional
-outcomes are given in Section 4. Then we address model diagnostics in
-Section 5. Section 6 presents the details of the simplexreg
-package. Section 7 further conducts analyses based on the simplex
-distribution in R with real data sets. Finally, plans for extending
-the package are described in Section 8.
-
-
-%% include your article here, just as usual
-%% Note that you should use the \pkg{}, \proglang{} and \code{}
-%% commands.
-
+The \pkg{cleanR} package supports the automated checking of errors in
+a dataset and produces an output document with detailed information
+about each variable that can be
+The process is illustrated in Figure~\ref{fig:flowchart1}. A dataset
+is cleaned and an \proglang{R} markdown file is produced and possibly
+rendered into html or pdf.
 
 \begin{figure}
 \begin{center}
@@ -164,6 +141,25 @@ the package are described in Section 8.
   subsequently rendered.}
 \end{figure}
 
+
+The manusccript is organized as follows. Section \ref{sec:example1}
+presents a worked example and tutorial on how to use the \pkg{cleanR}
+package to create a summary of potential errors. Section
+\ref{sec:internals} illustrates the methodology of modeling
+proportional data using simplex generalized regression. The
+generalized estimating equations for longitudinal proportional
+outcomes are given in Section 4. Then we address model diagnostics in
+Section 5. Section 6 presents the details of the simplexreg
+package. Section 7 further conducts analyses based on the simplex
+distribution in R with real data sets. Finally, plans for extending
+the package are described in Section 8.
+
+
+%% include your article here, just as usual
+%% Note that you should use the \pkg{}, \proglang{} and \code{}
+%% commands.
+
+
 \section{Checking a dataset for errors} \label{sec:example1}
 
 In \pkg{cleanR} the clean function
@@ -185,13 +181,39 @@ head(testData)
 
 Arguments
 
-\section{The structure of \pkg{cleanR}} \label{sec:internals}
 
-asd
-asd
+\section{The structure of cleanR} \label{sec:internals}
 
 
-\section{Extending \pkg{cleanR} by adding custom error checks} \label{sec:extending}
+\begin{figure}
+\begin{center}
+\begin{tikzpicture}[node distance=2cm]
+\node (start) [io] {data.frame};
+\node (pro1) [process, below of=start] {prechecks};
+\node (screen) [io, right of=pro1, xshift=2cm] {Screen};
+\node (pro2) [process, below of=pro1] {Rmd};
+\node (html) [io, right of=pro2, xshift=2cm] {html};
+\node (pdf) [io, below of=html] {pdf};
+\draw [arrow] (start) -- (pro1);
+\draw [arrow] (pro1) -- (screen);
+\draw [arrow] (pro1) -- (pro2);
+\draw [arrow] (pro2) -- (html);
+\draw [arrow] (pro2) -- (pdf);
+\end{tikzpicture}
+\end{center}
+\label{fig:flowchart1}
+\caption{The process of cleaning data frames using the \pkg{cleanR}
+  package. A series of check is applied to each variable in a
+  \texttt{data.frame} and a summary of the result is either printed to
+  the screen, or an \proglang{R} markdown file is produced which is
+  subsequently rendered.}
+\end{figure}
+
+Bør vise DF -> prechecks -> for each variable do this ...
+
+
+
+\section{Extending cleanR by adding custom error checks} \label{sec:extending}
 
 Lav en situation svarende til eksemplet
 

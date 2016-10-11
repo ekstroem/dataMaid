@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.11.26)  9 OCT 2016 12:44
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.11.26)  11 OCT 2016 03:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -988,7 +988,11 @@ File: tikzlibraryarrows.code.tex 2008/01/09 v3.0.1a (rcs-revision 1.1)
 code.tex
 File: pgflibraryarrows.code.tex 2013/09/23 v3.0.1a (rcs-revision 1.16)
 \arrowsize=\dimen159
-)) (./article.aux)
+)) (./article.aux
+
+LaTeX Warning: Label `fig:flowchart1' multiply defined.
+
+)
 \openout1 = `article.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 82.
@@ -1005,8 +1009,7 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 82.
 LaTeX Font Info:    ... okay on input line 82.
 LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 82.
 LaTeX Font Info:    Try loading font information for TS1+cmr on input line 82.
-
-(/usr/local/texlive/2015/texmf-dist/tex/latex/base/ts1cmr.fd
+ (/usr/local/texlive/2015/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    ... okay on input line 82.
@@ -1056,67 +1059,18 @@ LaTeX Info: Redefining \ref on input line 82.
 LaTeX Info: Redefining \pageref on input line 82.
 LaTeX Info: Redefining \nameref on input line 82.
 
-(./article.out) (./article.out
-! Missing \endcsname inserted.
-<to be read again> 
-                   \protect 
-l.3 ...font  cleanR}.1}{The structure of cleanR}{}
-                                                  % 3
-? 
-! Missing number, treated as zero.
-<to be read again> 
-                   \edef 
-l.3 ...font  cleanR}.1}{The structure of cleanR}{}
-                                                  % 3
-? 
-! Missing { inserted.
-<to be read again> 
-                   \edef 
-l.3 ...font  cleanR}.1}{The structure of cleanR}{}
-                                                  % 3
-? 
-! Extra \endcsname.
-\check@bm@number ...r \ifx \csname B_#1\endcsname 
-                                                  \relax 0\else \csname B_#1...
-l.3 ...font  cleanR}.1}{The structure of cleanR}{}
-                                                  % 3
-? 
-! Missing \endcsname inserted.
-<to be read again> 
-                   \protect 
-l.4 ...ing cleanR by adding custom error checks}{}
-                                                  % 4
-? 
-! Missing number, treated as zero.
-<to be read again> 
-                   \edef 
-l.4 ...ing cleanR by adding custom error checks}{}
-                                                  % 4
-? 
-! Missing { inserted.
-<to be read again> 
-                   \edef 
-l.4 ...ing cleanR by adding custom error checks}{}
-                                                  % 4
-? 
-! Extra \endcsname.
-\check@bm@number ...r \ifx \csname B_#1\endcsname 
-                                                  \relax 0\else \csname B_#1...
-l.4 ...ing cleanR by adding custom error checks}{}
-                                                  % 4
-? 
-)
+(./article.out) (./article.out)
 \@outlinefile=\write5
 \openout5 = `article.out'.
 
  <jsslogo.jpg, id=27, 540.0175pt x 393.47pt>
 File: jsslogo.jpg Graphic file (type jpg)
- <use jsslogo.jpg>
+
+<use jsslogo.jpg>
 Package pdftex.def Info: jsslogo.jpg used on input line 82.
 (pdftex.def)             Requested size: 89.80768pt x 65.43607pt.
 LaTeX Font Info:    Try loading font information for T1+pzc on input line 82.
-
-(/usr/local/texlive/2015/texmf-dist/tex/latex/psnfss/t1pzc.fd
+ (/usr/local/texlive/2015/texmf-dist/tex/latex/psnfss/t1pzc.fd
 File: t1pzc.fd 2001/06/04 font definitions for T1/pzc.
 )
 LaTeX Font Info:    Font shape `T1/pzc/m/n' in size <28> not available
@@ -1149,18 +1103,21 @@ ABD: EveryShipout initializing macros [1
 {/usr/local/texlive/2015/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./jsslo
 go.jpg>]
 
-Package xcolor Warning: Incompatible color definition on input line 124.
+Package xcolor Warning: Incompatible color definition on input line 116.
 
-
-Package xcolor Warning: Incompatible color definition on input line 127.
-
-LaTeX Font Info:    Try loading font information for T1+aett on input line 163.
+LaTeX Font Info:    Try loading font information for T1+aett on input line 141.
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/ae/t1aett.fd
 File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
 )
+
+Package xcolor Warning: Incompatible color definition on input line 145.
+
+
+Package xcolor Warning: Incompatible color definition on input line 148.
+
 LaTeX Font Info:    Font shape `T1/aer/b/sl' in size <10.95> not available
-(Font)              Font shape `T1/aer/bx/sl' tried instead on input line 174.
+(Font)              Font shape `T1/aer/bx/sl' tried instead on input line 171.
 
 Overfull \hbox (5.47499pt too wide) has occurred while \output is active
 \T1/aer/m/n/10.95 2 []
@@ -1173,21 +1130,21 @@ Overfull \hbox (5.47499pt too wide) has occurred while \output is active
 
 [3]
 
-Package xcolor Warning: Incompatible color definition on input line 246.
+Package xcolor Warning: Incompatible color definition on input line 269.
 
 
-Package xcolor Warning: Incompatible color definition on input line 246.
+Package xcolor Warning: Incompatible color definition on input line 269.
 
 LaTeX Font Info:    Font shape `T1/pzc/m/n' in size <13> not available
-(Font)              Font shape `T1/pzc/mb/it' tried instead on input line 246.
+(Font)              Font shape `T1/pzc/mb/it' tried instead on input line 269.
 
-Package xcolor Warning: Incompatible color definition on input line 246.
-
-
-Package xcolor Warning: Incompatible color definition on input line 246.
+Package xcolor Warning: Incompatible color definition on input line 269.
 
 
-Package xcolor Warning: Incompatible color definition on input line 246.
+Package xcolor Warning: Incompatible color definition on input line 269.
+
+
+Package xcolor Warning: Incompatible color definition on input line 269.
 
 
 Overfull \hbox (5.47499pt too wide) has occurred while \output is active
@@ -1195,51 +1152,45 @@ Overfull \hbox (5.47499pt too wide) has occurred while \output is active
  []
 
 [4]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 246.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 246.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 269.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 269.
  (./article.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 246.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 246.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 269.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 269.
 Package rerunfilecheck Info: File `article.out' has not changed.
-(rerunfilecheck)             Checksum: 576423841A2099C2AC3AF1025D869BA0;520.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 246.
+(rerunfilecheck)             Checksum: 8A32098A03F43CBCA6B66FC4C17D7670;458.
+
+
+LaTeX Warning: There were multiply-defined labels.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 269.
  ) 
 Here is how much of TeX's memory you used:
- 18762 strings out of 493054
- 354874 string characters out of 6134759
- 414064 words of memory out of 5000000
- 21873 multiletter control sequences out of 15000+600000
- 55666 words of font info for 93 fonts, out of 8000000 for 9000
+ 18758 strings out of 493054
+ 354399 string characters out of 6134759
+ 416011 words of memory out of 5000000
+ 21872 multiletter control sequences out of 15000+600000
+ 53489 words of font info for 90 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,9n,56p,429b,750s stack positions out of 5000i,500n,10000p,200000b,80000s
-pdfTeX warning (dest): name{Section.3.Extending\040{\\protect\040\\edef\040m{
-b}\\protect\040\\xdef\040\\T1/aer/m/n/10.95\040{\\T1/aer/m/n/10.95\040}\\T1/aer
-/m/n/10.95\040\\size@update\040\\enc@update\040cleanR}\040by\040adding\040custo
-m\040error\040checks.1} has been referenced but does not exist, replaced by a f
-ixed one
-
-pdfTeX warning (dest): name{Section.2.The\040structure\040of\040{\\protect\040\
-\edef\040m{b}\\protect\040\\xdef\040\\T1/aer/m/n/10.95\040{\\T1/aer/m/n/10.95\0
-40}\\T1/aer/m/n/10.95\040\\size@update\040\\enc@update\040cleanR}.1} has been r
-eferenced but does not exist, replaced by a fixed one
-
-{/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/tex
-live/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmb10.pfb></usr/local/texli
-ve/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texliv
-e/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive
-/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxsl10.pfb></usr/local/texliv
-e/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/
-2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl10.pfb></usr/local/texlive/2
-015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsltt10.pfb></usr/local/texlive/
-2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/texlive/2
-015/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/local/texlive/
-2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2
-015/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/20
-15/texmf-dist/fonts/type1/urw/zapfchan/uzcmi8a.pfb>
-Output written on article.pdf (4 pages, 182060 bytes).
+{/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
+exlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmb10.pfb></usr/local/tex
+live/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texl
+ive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texli
+ve/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxsl10.pfb></usr/local/texl
+ive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texli
+ve/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive
+/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl10.pfb></usr/local/texlive/
+2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsltt10.pfb></usr/local/texlive
+/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/texlive/
+2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/local/texlive
+/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/
+2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2
+015/texmf-dist/fonts/type1/urw/zapfchan/uzcmi8a.pfb>
+Output written on article.pdf (4 pages, 189594 bytes).
 PDF statistics:
- 118 PDF objects out of 1000 (max. 8388607)
- 98 compressed objects within 1 object stream
- 18 named destinations out of 1000 (max. 500000)
+ 123 PDF objects out of 1000 (max. 8388607)
+ 101 compressed objects within 2 object streams
+ 17 named destinations out of 1000 (max. 500000)
  58 words of extra memory for PDF output out of 10000 (max. 10000000)
 
