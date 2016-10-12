@@ -1,250 +1,118 @@
-library(ggplot2)
+#'@title Produce marginal distribution plots
+#'
+#'@description Generic shell function that calls a plotting function in order to produce a marginal 
+#'distribution plot for a variable, depending on the class of the variable.
+#'
+#'@param v The variable (vector) which is to be plotted.
+#'@param vnam The name of the variable. This name might be printed on the plots, depending on the 
+#'choice of plotting function. If not supplied, it will default to the name of \code{v}.
+#'@param allVisuals The name (as a character string) of the actual plotting function to be used, no 
+#'matter the class of \code{v}. See \code{details} for more details about the structure of such plotting 
+#'functions. Note that this option is overwritten if a non-null class specific 
+#'plotting function is supplied in \code{...} (see \code{details}).
+#'@param doEval If TRUE, \code{visualize} returns a plot (IS THIS THE CORRECT WAY TO SAY IT?). Otherwise,
+#'visualize returns a character string containing R-code for producing a plot.
+#'@param ... ALLOW FOR ARGUMENTS TO BE PASSED ON TO E.G. STANDARDVISUAL AS WELL? If the plotting 
+#'function to be used should differ by variable type, this can be specified by using additional arguments
+#'on the form \code{characterVisual = "standardVisual"}, ..., \code{logicalVisual = "standardVisual"} for 
+#'each of the 6 data classes \code{character}, \code{factor}, \code{labelled}, \code{numeric}, 
+#'\code{integer} and \code{logical}.
+#'
+#'@details The function supplied in \code{allVisuals} should take a variable, \code{v}, and its name, 
+#'\code{vnam}, and an evaluation indicator, \code{doEval}, and return a character string containing 
+#'(standalone) code for producing a plot if \code{doEval = FALSE} and a plot otherwise. 
+#'See e.g. \code{\link{standardVisual}} for an example of such a plotting function and the example 
+#'below.
+#'
+#'@examples 
+#'  #Standard use: Return standalone code for plotting a function:
+#'    visualize(c(1:10), "Variable 1", doEval = FALSE)
+#'  
+#'  
+#'  #Define a new visualization function and call it using visualize either 
+#'  #using allVisual or a class specific argument:
+#'    pieVisual <- function(v, vnam, doEval) {
+#'      thisCall <- call("pie", x=table(v), main=vnam)
+#'      if (doEval) {
+#'        return(eval(thisCall))
+#'      } else return(deparse(thisCall))
+#'    }
+#'    
+#'  \dontrun{
+#'    #use allVisual:
+#'    visualize(c("1", "1", "1", "2", "2", "a"), "My variable", allVisuals = "pieVisual")
+#'    
+#'    #use characterVisual:
+#'    visualize(c("1", "1", "1", "2", "2", "a"), "My variable", characterVisual = "pieVisual")
+#'    
+#'    #this will use standardVisual:
+#'    visualize(c("1", "1", "1", "2", "2", "a"), "My variable", numericVisual = "pieVisual")
+#'  }
+#'    
+#'    #return code for a pie chart
+#'    visualize(c("1", "1", "1", "2", "2", "a"), "My variable", allVisuals = "pieVisual", doEval=F)
+#'  
+#'  \dontrun{
+#'  #Produce multiple plots easily, depending on data type
+#'    data(testData)
+#'    testData <- testData[, c("charVar", "factorVar", "numVar", "intVar")]
+#'    par(mfrow = c(2, 2))
+#'    plots <- lapply(testData, function(x) visualize(x, allVisual="basicVisual"))
+#'    par(mfrow = c(1, 1))
+#'  }
+#'
+#'@seealso \code{\link{standardVisual}}, \code{\link{basicVisual}}
+#'@export
+visualize <- function(v, vnam = NULL, allVisuals = "standardVisual", 
+                      doEval = FALSE, ...) UseMethod("visualize")
 
-#QUESTION: Simpler way to parse allVisuals = "standardVisual"-argument
-#           on to every method?
 
 
 
-#Make plot of a variable v, depending on its data type
-#plotting function is supplied in the argument allVisuals 
-#(for all data types) or separately in the arguments
-#characterVisual, factorVisual etc. for each datatype. 
-#Note that data type specific arguments (e.g. characterVisual)
-#overwrites allVisuals, if supplied.
-#NA, NaN and Inf values are ignored for numeric/integer 
-#variables. only NA are ignored for character/factor/labelled/logical
-#variables. 
+##########################################Not exported below#########################################
 
 
-#NOTE: smartNum option should be removed(?) - it is done 
-#using a smartNum s3 class now. 
-
-visualize <- function(v, vnam, allVisuals = "standardVisual", 
-                      doEval=T, ...) UseMethod("visualize")
-
-
-visualize.character <- function(v, vnam, allVisuals = "standardVisual", 
-                                characterVisual=NULL, doEval=T, ...) {
+#Methods for each variable type
+visualize.character <- function(v, vnam = NULL, allVisuals = "standardVisual", 
+                                characterVisual=NULL, doEval = FALSE, ...) {
+  if (is.null(vnam)) vnam <- deparse(substitute(v))
   useVisual <- ifelse(is.null(characterVisual), allVisuals, characterVisual)
   eval(call(useVisual, v, vnam, doEval))
 }
 
-visualize.factor <- function(v, vnam, allVisuals = "standardVisual", 
-                             factorVisual = NULL, doEval=T, ...) {
+visualize.factor <- function(v, vnam = NULL, allVisuals = "standardVisual", 
+                             factorVisual = NULL, doEval = FALSE, ...) {
+  if (is.null(vnam)) vnam <- deparse(substitute(v))
   useVisual <- ifelse(is.null(factorVisual), allVisuals, factorVisual)
   eval(call(useVisual, v, vnam, doEval))
 }
 
-visualize.labelled <- function(v, vnam, allVisuals = "standardVisual",
-                               labelledVisual = NULL, doEval=T, ...) {
+visualize.labelled <- function(v, vnam = NULL, allVisuals = "standardVisual",
+                               labelledVisual = NULL, doEval = FALSE, ...) {
+  if (is.null(vnam)) vnam <- deparse(substitute(v))
   useVisual <- ifelse(is.null(labelledVisual), allVisuals, labelledVisual)
   eval(call(useVisual, v, vnam, doEval))
 }
 
-visualize.numeric <- function(v, vnam, allVisuals = "standardVisual", 
-                              numericVisual = NULL, smartNum = F, 
-                              doEval = T, ...) {
+visualize.numeric <- function(v, vnam = NULL, allVisuals = "standardVisual", 
+                              numericVisual = NULL, doEval = FALSE, ...) {
+  if (is.null(vnam)) vnam <- deparse(substitute(v))
   useVisual <- ifelse(is.null(numericVisual), allVisuals, numericVisual)
   eval(call(useVisual, v, vnam, doEval=doEval))
 }
 
-visualize.integer <- function(v, vnam, allVisuals = "standardVisual", 
-                              integerVisual = NULL, smartNum = F, 
-                              doEval = T, ...) {
+visualize.integer <- function(v, vnam = NULL, allVisuals = "standardVisual", 
+                              integerVisual = NULL, doEval = FALSE, ...) {
+  if (is.null(vnam)) vnam <- deparse(substitute(v))
   useVisual <- ifelse(is.null(integerVisual), allVisuals, integerVisual)
   eval(call(useVisual, v, vnam, doEval))
 }
 
-visualize.logical <- function(v, vnam, allVisuals = "standardVisual",
-                              logicalVisual = NULL, doEval = T, ...) {
+visualize.logical <- function(v, vnam = NULL, allVisuals = "standardVisual",
+                              logicalVisual = NULL, doEval = FALSE, ...) {
+  if (is.null(vnam)) vnam <- deparse(substitute(v))
   useVisual <- ifelse(is.null(logicalVisual), allVisuals, logicalVisual)
   eval(call(useVisual, v, vnam, doEval))
 }
 
 
-#NOTE: no need for a smartNum visual - it is caught by "factor"
-#visualize.smartNum <- function(v, vnam, allVisuals = "standardVisual",
-#                               smartNumVisual = NULL, doEval = T) {
-#  
-#}
-
-
-
-#############################################################
-
-
-########standardVisual###########
-
-standardVisual <- function(v, vnam, doEval=T, ...) UseMethod("standardVisual") 
-
-#Makes "standard" (ggplot2) visualization of a variable v,
-#i.e. barplots for qualitative variables and histograms
-#for quantitative variables. 
-#if smartNum=T, the function checks whether a numeric/integer
-#seems to be categorical (i.e. only has <=3 levels), and in that 
-#case, it is plotted using a barplot.
-
-#character, factor, labelled and logical variables
-standardVisualCFLB <- function(v, vnam, doEval=T, ...) {
-  thisCall <- call("qplot", x=na.omit(v), geom="bar", xlab="", main=vnam)
-  if (doEval) {
-    return(eval(thisCall))
-  } else return(deparse(thisCall))
-}
-
-#numeric and integer variables
-standardVisualIN <- function(v, vnam, doEval=T, smartNum=T) {
-  v <- v[is.finite(v)]
-  if (smartNum) {
-    if (length(unique(v)) <= 3) {
-      return(standardVisualCFLB(as.factor(v), vnam, doEval))
-    }
-  } 
-  thisCall <- call("qplot", x=na.omit(v), geom="histogram", xlab="",
-                    main=vnam, bins=20)
-  if (doEval) {
-    return(eval(thisCall))
-  } else return(deparse(thisCall))
-} #fix such that no stat_bin()-message is produced, it's annoying. And also a clever
-  #choice of binwidth, how does it work in hist()?
-
-
-#assign methods to generic standardVisual function
-standardVisual.character <- function(v, vnam, doEval=T) standardVisualCFLB(v, vnam, doEval=doEval)
-standardVisual.factor <- function(v, vnam, doEval=T) standardVisualCFLB(v, vnam, doEval=doEval)
-standardVisual.labelled <- function(v, vnam, doEval=T) standardVisualCFLB(v, vnam, doEval=doEval)
-standardVisual.numeric <- function(v, vnam, doEval=T, smartNum=T) standardVisualIN(v, vnam, 
-                                                                                   doEval=doEval, 
-                                                                                   smartNum=smartNum)
-standardVisual.integer <- function(v, vnam, doEval=T, smartNum=T) standardVisualIN(v, vnam, 
-                                                                                   doEval=doEval, 
-                                                                                   smartNum=smartNum)
-standardVisual.logical <- function(v, vnam, doEval=T) standardVisualCFLB(v, vnam, doEval=doEval)
-
-
-#####################################################################
-
-
-########basicVisual###########
-
-basicVisual <- function(v, vnam, doEval = T, ...) UseMethod("basicVisual") 
-
-#Makes plots using the standard R plotting options
-
-#character, factor, labelled and logical variables
-basicVisualCFLB <- function(v, vnam, doEval=T, ...) {
-  v <- as.factor(v)
-  thisCall <- call("plot", x=na.omit(v), main=vnam)
-  if (doEval) {
-    return(eval(thisCall))
-  } else return(deparse(thisCall))
-}
-
-#numeric and integer variables
-basicVisualIN <- function(v, vnam, doEval=T) {
-  v <- v[is.finite(v)]
-  thisCall <- call("hist", v, main=vnam, col="grey", xlab="")
-  if (doEval) {
-    return(eval(thisCall))
-  } else return(deparse(thisCall))
-} 
-
-#assign methods to generic standardVisual function
-basicVisual.character <- function(v, vnam, doEval=T) basicVisualCFLB(v, vnam, doEval=doEval)
-basicVisual.factor <- function(v, vnam, doEval=T) basicVisualCFLB(v, vnam, doEval=doEval)
-basicVisual.labelled <- function(v, vnam, doEval=T) basicVisualCFLB(v, vnam, doEval=doEval)
-basicVisual.numeric <- function(v, vnam, doEval=T) basicVisualIN(v, vnam, doEval=doEval)
-basicVisual.integer <- function(v, vnam, doEval=T) basicVisualIN(v, vnam, doEval=doEval)
-basicVisual.logical <- function(v, vnam, doEval=T) basicVisualCFLB(v, vnam, doEval=doEval)
-
-
-
-#####################################################################
-
-
-########fancyVisual###########
-
-#THINK ABOUT: use myDistrPlots-ish function from my thesis? 
-#       - adds density smoothers to histograms
-#       - for barplots: move x-axis breaks into the plot for more 
-#           control wrt. the (actual) size of the plot
-
-#TO DO: If we are to keep "fancy"-option: Rewrite myDistrPlots
-#       in s3 style and such that it is only designed to produce one
-#       plot
-
-#NOTE: the use of substitute() requires that v is a named vector.
-#       better way to do this? And will this be a problem in our 
-#       setting? I don't think so.
-
-fancyVisual <- function(v, vnam) {
-  data <- data.frame(v)
-  names(data) <- vnam
-  myDistrPlots(data, vnam)[[1]]
-}
-
-myDistrPlots <- function(data, var, labels=NULL,
-                         makeCont=NULL,
-                         makeCat=NULL,
-                         catStyle="bars",
-                         adjustFunction=function(x){1}) {
-  if (is.null(labels)) labels <- var
-  n <- length(var)
-  outLst <- NULL
-  if (class(data[, var]) %in% c("logical", "character", "labelled")) {
-    data[, var] <- factor(data[, var])
-  } 
-  for (i in 1:n) {
-    thisVar <- var[i]
-    if ((is.factor(data[, thisVar]) & !(thisVar %in% makeCont)) |
-        thisVar %in% makeCat) {
-      if (thisVar %in% makeCat) {
-        data[, thisVar] <- factor(data[, thisVar])
-      }
-      thisTab <- table(data[, thisVar])
-      thisCount <- as.numeric(c(thisTab))
-      tpDat <- data.frame(freq=thisCount/sum(thisCount),
-                          lab=factor(names(thisTab), levels=levels(data[, thisVar])))
-      if (catStyle == "stacked") {
-        p <- ggplot(tpDat, aes(x=1, y=freq, fill=lab,
-                               label=lab)) +
-          geom_bar(stat="identity") +
-          geom_text(position="stack", vjust=1) +
-          scale_fill_discrete(breaks=NULL) +
-          scale_x_continuous(breaks=NULL) +
-          xlab("") +
-          ylab("Cummulative frequency") +
-          ggtitle(labels[i]) +
-          theme_bw()
-      } else {
-        p <- ggplot(tpDat, aes(x=lab, y=freq, fill=lab,
-                               label=lab)) +
-          geom_bar(stat="identity") +
-          geom_text(angle=90, aes(y=0),
-                    hjust=-0.01, size=3) +
-          scale_x_discrete("", breaks=NULL) +
-          ylab("Frequency") + 
-          scale_fill_discrete(breaks=NULL)+
-          ggtitle(labels[i]) +
-          theme_bw()
-        
-      }
-    } else {
-      if (thisVar %in% makeCont) {
-        data[, thisVar] <- as.numeric(as.character(data[, thisVar]))
-      }
-      p <- ggplot(data, aes_string(x=thisVar)) +
-        geom_histogram(mapping=aes(y=..density..),
-                       col="white", fill="#00BFC4",
-                       bins=20) +
-        geom_line(size=1, col="black", stat="density",
-                  adjust=adjustFunction(data[, thisVar])) +
-        xlab("") + 
-        ylab("Density") +
-        ggtitle(labels[i]) +
-        theme_bw()
-    }
-    outLst <- c(outLst, list(p))
-  }
-  outLst
-}
