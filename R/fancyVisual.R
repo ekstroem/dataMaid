@@ -5,9 +5,9 @@
 
 #NOT DONE - SHOULD NOT BE EXPORTED. NEED TO IMPLIMENT DOEVAL=F STUFF FIRST...
 
-#THINK ABOUT: use myDistrPlots-ish function from my thesis? 
+#THINK ABOUT: use myDistrPlots-ish function from my thesis?
 #       - adds density smoothers to histograms
-#       - for barplots: move x-axis breaks into the plot for more 
+#       - for barplots: move x-axis breaks into the plot for more
 #           control wrt. the (actual) size of the plot
 
 #TO DO: If we are to keep "fancy"-option: Rewrite myDistrPlots
@@ -15,7 +15,7 @@
 #       plot
 
 #NOTE: the use of substitute() requires that v is a named vector.
-#       better way to do this? And will this be a problem in our 
+#       better way to do this? And will this be a problem in our
 #       setting? I don't think so.
 
 fancyVisual <- function(v, vnam) {
@@ -24,6 +24,8 @@ fancyVisual <- function(v, vnam) {
   myDistrPlots(data, vnam)[[1]]
 }
 
+
+#' @importFrom ggplot2 ggplot aes aes_string geom_bar geom_text scale_fill_discrete scale_x_continuous xlab ylab ggtitle theme_bw geom_histogram geom_line
 myDistrPlots <- function(data, var, labels=NULL,
                          makeCont=NULL,
                          makeCat=NULL,
@@ -34,7 +36,7 @@ myDistrPlots <- function(data, var, labels=NULL,
   outLst <- NULL
   if (class(data[, var]) %in% c("logical", "character", "labelled")) {
     data[, var] <- factor(data[, var])
-  } 
+  }
   for (i in 1:n) {
     thisVar <- var[i]
     if ((is.factor(data[, thisVar]) & !(thisVar %in% makeCont)) |
@@ -64,11 +66,11 @@ myDistrPlots <- function(data, var, labels=NULL,
           geom_text(angle=90, aes(y=0),
                     hjust=-0.01, size=3) +
           scale_x_discrete("", breaks=NULL) +
-          ylab("Frequency") + 
+          ylab("Frequency") +
           scale_fill_discrete(breaks=NULL)+
           ggtitle(labels[i]) +
           theme_bw()
-        
+
       }
     } else {
       if (thisVar %in% makeCont) {
@@ -80,7 +82,7 @@ myDistrPlots <- function(data, var, labels=NULL,
                        bins=20) +
         geom_line(size=1, col="black", stat="density",
                   adjust=adjustFunction(data[, thisVar])) +
-        xlab("") + 
+        xlab("") +
         ylab("Density") +
         ggtitle(labels[i]) +
         theme_bw()

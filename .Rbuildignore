@@ -5,3 +5,6 @@ R/makeData.R
 ^README*
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^.*\.html
+^.*\.Rmd
+^.*\.rda

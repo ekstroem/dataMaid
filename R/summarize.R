@@ -143,6 +143,7 @@ countMissing <- function(v) {
 
 uniqueValues <- function(v) UseMethod("uniqueValues")
 
+#' @importFrom stats na.omit
 uniqueValuesCFLBI <- function(v) {
   noUnique <- length(unique(na.omit(v)))
   list(feature="No. unique values", result=noUnique)
@@ -188,6 +189,7 @@ centralValueB <- function(v) {
 }
 
 #character and factor variables
+#' @importFrom stats median
 centralValueCF <- function(v) {
   centralValueB(na.omit(v))
 }
@@ -199,6 +201,9 @@ centralValueL <- function(v) {
 }
 
 #integer and numeric variables
+
+#''
+#' @importFrom stats median
 centralValueIN <- function(v) {
   v <- na.omit(v)
   list(feature="Median", result=median(v))

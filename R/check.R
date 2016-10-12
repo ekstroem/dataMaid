@@ -47,6 +47,7 @@
 #' # Annoyingly coded missing as 99
 #' y <- c(rnorm(100), rep(99, 10))
 #'
+#' @importFrom utils packageVersion tail
 #' @export
 check <- function(v, ...) UseMethod("check")
 
@@ -76,7 +77,7 @@ check <- function(v, ...) UseMethod("check")
 
 #' @export
 defaultCharacterChecks <- function() c("identifyMissing", "identifyWhitespace", "identifyLoners",
-                                       "identifyCaseIssues") 
+                                       "identifyCaseIssues")
 #' @export
 check.character <- function(v, characterChecks=defaultCharacterChecks(), ...) {
   lapply(characterChecks, function(x) eval(call(x, v)))
@@ -85,7 +86,7 @@ check.character <- function(v, characterChecks=defaultCharacterChecks(), ...) {
 
 #' @export
 defaultFactorChecks <- function() c("identifyMissing", "identifyWhitespace", "identifyLoners",
-                                       "identifyCaseIssues") 
+                                       "identifyCaseIssues")
 #' @export
 check.factor <- function(v, factorChecks = defaultFactorChecks(), ...) {
   lapply(factorChecks, function(x) eval(call(x, v)))
@@ -93,7 +94,7 @@ check.factor <- function(v, factorChecks = defaultFactorChecks(), ...) {
 
 
 #' @export
-defaultLabelledChecks <- function() c("identifyMissing", "identifyWhitespace") 
+defaultLabelledChecks <- function() c("identifyMissing", "identifyWhitespace")
 
 #' @export
 check.labelled <- function(v, labelledChecks = defaultLabelledChecks(), ...) {
@@ -102,7 +103,7 @@ check.labelled <- function(v, labelledChecks = defaultLabelledChecks(), ...) {
 
 
 #' @export
-defaultNumericChecks <- function() c("identifyMissing", "identifyOutliers") 
+defaultNumericChecks <- function() c("identifyMissing", "identifyOutliers")
 
 #' @export
 check.numeric <- function(v, numericChecks = defaultNumericChecks(), ...) {
@@ -111,7 +112,7 @@ check.numeric <- function(v, numericChecks = defaultNumericChecks(), ...) {
 
 
 #' @export
-defaultIntegerChecks <- function() c("identifyMissing", "identifyOutliers") 
+defaultIntegerChecks <- function() c("identifyMissing", "identifyOutliers")
 
 #' @export
 check.integer <- function(v, integerChecks = defaultIntegerChecks(), ...) {
@@ -357,6 +358,8 @@ attr(identifyOutliers, "description") <- "Identify outliers"
 #NOTE: Add identifyOutliers function for (some) labelled variables?
 
 #numerical and integer variables
+
+#' @importFrom stats quantile
 identifyOutliersNI <- function(v) {
   v <- na.omit(v)
   qs <- quantile(v, c(0.25, 0.75))

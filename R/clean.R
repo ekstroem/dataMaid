@@ -5,13 +5,13 @@
 #' The checks are saved to an R markdown file which can rendered into an easy-to-read document.
 #'
 #' @param o the data frame object to be checked.
-#' @param output Output format. Options are "markdown" (the default), "pdf", "html", and "screen". 
-#' All but the "screen" option produces an R markdown file which can be rendered. 
+#' @param output Output format. Options are "markdown" (the default), "pdf", "html", and "screen".
+#' All but the "screen" option produces an R markdown file which can be rendered.
 #' The "screen" option prints a small summary on the screen.
-#' @param render Should the output file be rendered (defaults to TRUE)? This argument has no 
-#' impact unless the output is "html" or "pdf" in which case the R markdown file is rendered to 
+#' @param render Should the output file be rendered (defaults to TRUE)? This argument has no
+#' impact unless the output is "html" or "pdf" in which case the R markdown file is rendered to
 #' produce the corresponding file.
-#' @param useVar Variables to clean. If NULL (the default) then all variables in the data.frame 
+#' @param useVar Variables to clean. If NULL (the default) then all variables in the data.frame
 #' o are included. If a vector of variable names is included then only the variables in o that are
 #' also part of useVar are checked.
 #' @param ordering Choose the ordering of the variables in the data presentation. The options
@@ -30,7 +30,7 @@
 #' message is printed in the data summary as well.
 #' @param preChecks Variable checks that are performed before the summary/visualization/checking step. If
 #' any of these checks find problems, the variable will not be summarized nor visualized nor checked.
-#' @param file The filename of output file. If set to NULL (the default) then the filename will be 
+#' @param file The filename of output file. If set to NULL (the default) then the filename will be
 #' the name of the data frame prefixed with "cleanR-".
 #' @param replace If FALSE (the default) an error is thrown if one of the files that we are about to write to
 #' already exists. If TRUE no checks are performed.
@@ -43,19 +43,19 @@
 #' @param numericChecks STUFF
 #' @param integerChecks STUFF
 #' @param logicalChecks STUFF
-#' @param allChecks Vector of function names that should be used as check-functions for all variable types. 
-#' See ???? for more details OR SOMETHING? Note that this option overwrites the options characterChekcs, 
-#' factorChecks, etc. 
+#' @param allChecks Vector of function names that should be used as check-functions for all variable types.
+#' See ???? for more details OR SOMETHING? Note that this option overwrites the options characterChekcs,
+#' factorChecks, etc.
 #' @param characterSummaries STUFF
 #' @param factorSummaries STUFF
 #' @param labelledSummaries STUFF
 #' @param numericSummaries STUFF
 #' @param integerSummaries STUFF
 #' @param logicalSummaries STUFF
-#' @param allSummaries Vector of function names that should be used as summary-functions for all variable types. 
-#' See ???? for more details OR SOMETHING? Note that this option overwrites the options charachterSummaries, 
-#' factorSummaries, etc. 
-#' @param allVisuals STUFF. Default: "standardVisual". 
+#' @param allSummaries Vector of function names that should be used as summary-functions for all variable types.
+#' See ???? for more details OR SOMETHING? Note that this option overwrites the options charachterSummaries,
+#' factorSummaries, etc.
+#' @param allVisuals STUFF. Default: "standardVisual".
 #' @param standAlone If TRUE, the document begins with a markdown preamble such that it
 #' can be rendered as a stand alone R markdown file.
 #' @param twoCol Should the results be presented in two columns (if output is "html" or "pdf")? Defaults to TRUE.
@@ -65,10 +65,10 @@
 #' @param nagUser Remove at some point
 #' @param checkDetails MAYBE ALSO IMPLEMENT THIS?: If TRUE, details about each check function are added
 #' to the document (if available)
-#' @param garbageCollection A logical. If TRUE (the default) then garbage collection code is added to 
+#' @param garbageCollection A logical. If TRUE (the default) then garbage collection code is added to
 #' the R markdown file that is output. This is useful for larger dataset to prevent memory problems.
 #' @param \dots other arguments that are passed on the to precheck, checking, summary and visualization functions
-#' @return The function does not return anything. It's side effect (the production of the Rmd file summary) 
+#' @return The function does not return anything. It's side effect (the production of the Rmd file summary)
 #' is the reason for running the function.
 #' @author Anne H. Petersen \email{ahpe@@sund.ku.dk} and Claus Thorn Ekstrom \email{ekstrom@@sund.ku.dk}
 #' @seealso \code{\link{clean}}
@@ -95,11 +95,12 @@
 #' clean(testData, characterChecks=c(defaultCharacterChecks(), "characterFoo"))
 #' }
 #'
+#' @importFrom pander pander_return panderOptions pandoc.table.return
 #' @export
 clean <- function(o,
                   output=c("pdf", "html", "screen"), render=TRUE,
                       #note: output cannot just be markdown. Either it's pdf-markdown or html-markdown.
-                      #what files are produced is controlled using render. 
+                      #what files are produced is controlled using render.
                   useVar=NULL, ordering=c("asIs", "alphabetical"), onlyProblematic=FALSE,
                   mode=c("summarize", "visualize", "check"),
                   smartNum=TRUE, preChecks=c("isSpecial", "isCPR"),
@@ -113,7 +114,7 @@ clean <- function(o,
                   numericChecks = defaultNumericChecks(),
                   integerChecks = defaultIntegerChecks(),
                   logicalChecks = defaultLogicalChecks(),
-                  allChecks = NULL, 
+                  allChecks = NULL,
                   characterSummaries = defaultCharacterSummaries(),
                   factorSummaries = defaultFactorSummaries(),
                   labelledSummaries = defaultLabelledSummaries(),
@@ -124,7 +125,7 @@ clean <- function(o,
                   allVisuals = "standardVisual",
                   garbageCollection=TRUE,
                   listChecks = TRUE,
-                  brag=FALSE, #remove me 
+                  brag=FALSE, #remove me
                   ...) {
 
     ## Start by doing a few sanity checks of the input
@@ -148,11 +149,11 @@ clean <- function(o,
         ### o <- o[, useVar, drop=FALSE]  #warning here if this doesn't work + overwrite stuff?
         ## Instead run through the dataframe and NULL the variables to exclude?
         ##If we really want to do this, we should probably do it using data.table but there is no way
-        ##around creating a local copy of o, as we do NOT want to change the version of o in the 
+        ##around creating a local copy of o, as we do NOT want to change the version of o in the
         ##global environment.
-      
+
       o <- o[, useVar, drop=FALSE]  #warning here if this doesn't work + overwrite stuff?
-      
+
       ###this does not work, it produces an error!:########################
       #o[names(o)[! names(o) %in% useVar]] <- NULL
       #####################################################################
@@ -172,16 +173,16 @@ clean <- function(o,
         ## maybe try fixing the user's faulty file name instead of just overwriting it?
         file <- paste0("cleanR_", dfname, vol, ".Rmd")
     }
-    
+
     outOutput <- output #copy of output for file extension generation
                         #Note: Changing output itself will cause problems as we need to know
                         #whether we are making a pdf or html .rmd file
-    
+
     if (!render) outOutput <- "Rmd"
-    
+
     outFile <- paste0(substring(file, 1, nchar(file)-4), ".", outOutput)
-                  #outFile is the file we might want to open at the end. Should be consistent 
-                  #with the user's choice of output (NOT just .rmd). 
+                  #outFile is the file we might want to open at the end. Should be consistent
+                  #with the user's choice of output (NOT just .rmd).
 
     ## The name of the R markdown file that is output
     #outFile <- paste0(substring(file, 1, nchar(file)-4), ".Rmd")
@@ -265,7 +266,7 @@ clean <- function(o,
       characterChecks <- factorChecks <- labelledChecks <- allChecks
       numericChecks <- integerChecks <- logicalChecks <- allChecks
     }
-    
+
     #allSummaries overwrites other summary-options
     if (!is.null(allSummaries)) {
       characterSummaries <- factorSummaries <- labelledSummaries <- allSummaries
@@ -407,7 +408,7 @@ clean <- function(o,
     # if ("logicalChecks" %in% names(dots)) bChecks <- dots$logicalChecks
     # else bChecks <- eval(formals(check.logical)$logicalChecks)
 
-     everyCheck <- union(characterChecks, c(factorChecks, labelledChecks, numericChecks, 
+     everyCheck <- union(characterChecks, c(factorChecks, labelledChecks, numericChecks,
                                            integerChecks, logicalChecks))
      checkMat <- matrix("", length(everyCheck), 6, #6: number of different variable types
                         dimnames=list(everyCheck, c("character", "factor", "labelled",
@@ -460,7 +461,7 @@ clean <- function(o,
 
         ## Make checks
         if (doCheck && !any(preCheckProblems)) {
-          checkRes <- check(v, characterChecks = characterChecks, 
+          checkRes <- check(v, characterChecks = characterChecks,
                             factorChecks = factorChecks,
                             labelledChecks = labelledChecks,
                             numericChecks = numericChecks,
@@ -494,7 +495,7 @@ clean <- function(o,
 
             ## make Summary table
             if (doSummarize) sumTable <- pander_return(summarize(v, characterSummaries = characterSummaries,
-                                                                 factorSummaries = factorSummaries, 
+                                                                 factorSummaries = factorSummaries,
                                                                  labelledSummaries = labelledSummaries,
                                                                  numericSummaries = numericSummaries,
                                                                  integerSummaries = integerSummaries,
@@ -506,7 +507,7 @@ clean <- function(o,
                 ## Label information
                 ## Right now we are not doing anything besides wirint the label above
 
-               
+
 
             ## make Visualization
             if (doVisualize) visual <- visualize(v, vnam, doEval=FALSE, allVisuals = allVisuals, ...)

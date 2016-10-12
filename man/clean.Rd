@@ -28,11 +28,17 @@ clean(o, output = c("pdf", "html", "screen"), render = TRUE,
 \arguments{
 \item{o}{the data frame object to be checked.}
 
-\item{output}{Output format. Options are "markdown" (the default), "pdf", "html", and "screen". All but the "screen" option produces an R markdown file which can be rendered. The "screen" option prints a small summary on the screen.}
+\item{output}{Output format. Options are "markdown" (the default), "pdf", "html", and "screen".
+All but the "screen" option produces an R markdown file which can be rendered.
+The "screen" option prints a small summary on the screen.}
 
-\item{render}{Should the output file be rendered (defaults to TRUE)? This argument has no impact unless the output is "html" or "pdf" in which case the R markdown file is rendered to produce the corresponding file.}
+\item{render}{Should the output file be rendered (defaults to TRUE)? This argument has no
+impact unless the output is "html" or "pdf" in which case the R markdown file is rendered to
+produce the corresponding file.}
 
-\item{useVar}{Variables to clean. If NULL (the default) then all variables in the data frame o are included. If a vector of variable names is included then only the variables in o that are also part of useVar are checked.}
+\item{useVar}{Variables to clean. If NULL (the default) then all variables in the data.frame
+o are included. If a vector of variable names is included then only the variables in o that are
+also part of useVar are checked.}
 
 \item{ordering}{Choose the ordering of the variables in the data presentation. The options
 are "asIs" (ordering as in the dataset) and "alphabetical" (alphabetical order).}
@@ -49,7 +55,8 @@ message is printed in the data summary as well.}
 \item{preChecks}{Variable checks that are performed before the summary/visualization/checking step. If
 any of these checks find problems, the variable will not be summarized nor visualized nor checked.}
 
-\item{file}{The filename of output file. If set to NULL (the default) then the filename will be the name of the data frame prefixed with "cleanR-".}
+\item{file}{The filename of output file. If set to NULL (the default) then the filename will be
+the name of the data frame prefixed with "cleanR-".}
 
 \item{replace}{If FALSE (the default) an error is thrown if one of the files that we are about to write to
 already exists. If TRUE no checks are performed.}
@@ -85,8 +92,8 @@ to the document (if available)}
 
 \item{logicalChecks}{a list of error-checking functions to apply to integer vectors}
 
-\item{allChecks}{Vector of function names that should be used as check-functions for all variable types. 
-See ???? for more details OR SOMETHING? Note that this option overwrites the options characterChekcs, 
+\item{allChecks}{Vector of function names that should be used as check-functions for all variable types.
+See ???? for more details OR SOMETHING? Note that this option overwrites the options characterChekcs,
 factorChecks, etc.}
 
 \item{characterSummaries}{STUFF}
@@ -101,13 +108,14 @@ factorChecks, etc.}
 
 \item{logicalSummaries}{STUFF}
 
-\item{allSummaries}{Vector of function names that should be used as summary-functions for all variable types. 
-See ???? for more details OR SOMETHING? Note that this option overwrites the options charachterSummaries, 
+\item{allSummaries}{Vector of function names that should be used as summary-functions for all variable types.
+See ???? for more details OR SOMETHING? Note that this option overwrites the options charachterSummaries,
 factorSummaries, etc.}
 
 \item{allVisuals}{STUFF. Default: "standardVisual".}
 
-\item{garbageCollection}{A logical. If TRUE (the default) then garbage collection code is added to the R markdown file that is output. This is useful for larger dataset to prevent memory problems.}
+\item{garbageCollection}{A logical. If TRUE (the default) then garbage collection code is added to
+the R markdown file that is output. This is useful for larger dataset to prevent memory problems.}
 
 \item{characterChecks}{STUFF}
 
@@ -124,7 +132,8 @@ factorSummaries, etc.}
 \item{\dots}{other arguments that are passed on the to precheck, checking, summary and visualization functions}
 }
 \value{
-The function does not return anything. It's side effect (the production of the Rmd file summary) is the reason for running the function.
+The function does not return anything. It's side effect (the production of the Rmd file summary)
+is the reason for running the function.
 }
 \description{
 Runs a set of validation checks to check the variables in a data frame for potential errors.

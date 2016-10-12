@@ -7,11 +7,11 @@ Author: Anne Helby Petersen <ahpe@sund.ku.dk> and Claus Thorn Ekstrøm <ekstrom@
 Maintainer: Claus Thorn Ekstrøm <ekstrom@sund.ku.dk>
 Description: Data cleaning is an important first step of any statistical analysis. cleanR provides an extendable suite of test for common potential errors in a dataset. It produces a document with a thorough summary of the checks and the results that a human can use to identify possible errors.
 Depends:
-    pander, ggplot2
+    pander,
+    ggplot2
 Suggests:
     stringi,
-    rmarkdown,
-    ggplot2
+    rmarkdown    
 Encoding: UTF-8
 ByteCompile: true
 License: GPL-2
