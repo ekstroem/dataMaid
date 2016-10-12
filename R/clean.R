@@ -5,9 +5,15 @@
 #' The checks are saved to an R markdown file which can rendered into an easy-to-read document.
 #'
 #' @param o the data frame object to be checked.
-#' @param output Output format. Options are "markdown" (the default), "pdf", "html", and "screen". All but the "screen" option produces an R markdown file which can be rendered. The "screen" option prints a small summary on the screen.
-#' @param render Should the output file be rendered (defaults to TRUE)? This argument has no impact unless the output is "html" or "pdf" in which case the R markdown file is rendered to produce the corresponding file.
-#' @param useVar Variables to clean. If NULL (the default) then all variables in the data frame o are included. If a vector of variable names is included then only the variables in o that are also part of useVar are checked.
+#' @param output Output format. Options are "markdown" (the default), "pdf", "html", and "screen". 
+#' All but the "screen" option produces an R markdown file which can be rendered. 
+#' The "screen" option prints a small summary on the screen.
+#' @param render Should the output file be rendered (defaults to TRUE)? This argument has no 
+#' impact unless the output is "html" or "pdf" in which case the R markdown file is rendered to 
+#' produce the corresponding file.
+#' @param useVar Variables to clean. If NULL (the default) then all variables in the data.frame 
+#' o are included. If a vector of variable names is included then only the variables in o that are
+#' also part of useVar are checked.
 #' @param ordering Choose the ordering of the variables in the data presentation. The options
 #' are "asIs" (ordering as in the dataset) and "alphabetical" (alphabetical order).
 #' @param onlyProblematic A logical. Set to TRUE if only the potentially problematic variables should be listed.
@@ -24,7 +30,8 @@
 #' message is printed in the data summary as well.
 #' @param preChecks Variable checks that are performed before the summary/visualization/checking step. If
 #' any of these checks find problems, the variable will not be summarized nor visualized nor checked.
-#' @param file The filename of output file. If set to NULL (the default) then the filename will be the name of the data frame prefixed with "cleanR-".
+#' @param file The filename of output file. If set to NULL (the default) then the filename will be 
+#' the name of the data frame prefixed with "cleanR-".
 #' @param replace If FALSE (the default) an error is thrown if one of the files that we are about to write to
 #' already exists. If TRUE no checks are performed.
 #' @param vol Extra text string that is appended on the end of the output file name(s). For example, if the data
@@ -58,9 +65,11 @@
 #' @param nagUser Remove at some point
 #' @param checkDetails MAYBE ALSO IMPLEMENT THIS?: If TRUE, details about each check function are added
 #' to the document (if available)
-#' @param garbageCollection A logical. If TRUE (the default) then garbage collection code is added to the R markdown file that is output. This is useful for larger dataset to prevent memory problems.
+#' @param garbageCollection A logical. If TRUE (the default) then garbage collection code is added to 
+#' the R markdown file that is output. This is useful for larger dataset to prevent memory problems.
 #' @param \dots other arguments that are passed on the to precheck, checking, summary and visualization functions
-#' @return The function does not return anything. It's side effect (the production of the Rmd file summary) is the reason for running the function.
+#' @return The function does not return anything. It's side effect (the production of the Rmd file summary) 
+#' is the reason for running the function.
 #' @author Anne H. Petersen \email{ahpe@@sund.ku.dk} and Claus Thorn Ekstrom \email{ekstrom@@sund.ku.dk}
 #' @seealso \code{\link{clean}}
 #' @keywords misc
@@ -146,7 +155,7 @@ clean <- function(o,
       
       ###this does not work, it produces an error!:########################
       #o[names(o)[! names(o) %in% useVar]] <- NULL
-      #############################################
+      #####################################################################
     }
 
     ## Background variables
@@ -187,7 +196,7 @@ clean <- function(o,
 
 
     ## check if we are about to overwrite a file
-                                        #if (!replace %in% c("never", "onlyCleanR") && (fileExists || outFileExists)) {
+      #if (!replace %in% c("never", "onlyCleanR") && (fileExists || outFileExists)) {
     if (replace) {
         unlink(file)
     } else {
@@ -204,35 +213,35 @@ clean <- function(o,
                    "use cleanR with replace = TRUE"))
     }
 
-                                        #if (replace=="onlyCleanR") {
-                                        #  fileProblem <- F
-                                        #  outputFileProblem <- F
-                                        #
-                                        #  if (fileExists) {
-                                        #    l12 <- readLines(file, 2, warn=FALSE)
+      #if (replace=="onlyCleanR") {
+      #  fileProblem <- F
+      #  outputFileProblem <- F
+      #
+      #  if (fileExists) {
+      #    l12 <- readLines(file, 2, warn=FALSE)
       #    if (!identical(l12, c("---", "cleanR: yes"))) fileProblem <- T
-                                        #  }
-                                        #  if (outFileExists) {
-                                        #    #############################################
-                                        #    #check if pdf/html was produced by cleanR....
-                                        #    #############################################
-                                        #  }
-                                        #
-                                        #  if (fileProblem & outFileProblem) problemFiles <- paste(file, "and", outFile)
+      #  }
+      #  if (outFileExists) {
+      #    #############################################
+      #    #check if pdf/html was produced by cleanR....
+      #    #############################################
+      #  }
+      #
+      #  if (fileProblem & outFileProblem) problemFiles <- paste(file, "and", outFile)
       #  if (fileProblem & !outFileProblem) problemFiles <- file
-                                        #  if (!fileproblem & outFileProblem) problemFiles <- outFile
-                                        #
-                                        #  if (fileProblem || outFileProblem) {
-                                        #    stop(paste("The file name(s) to be used by cleanR,", paste(problemFiles, ",", sep=""),
-                                        #               "are already in use and the files do not look like they were produced by cleanR.",
+      #  if (!fileproblem & outFileProblem) problemFiles <- outFile
+      #
+      #  if (fileProblem || outFileProblem) {
+      #    stop(paste("The file name(s) to be used by cleanR,", paste(problemFiles, ",", sep=""),
+      #               "are already in use and the files do not look like they were produced by cleanR.",
       #               "We recommend trying one of the following solutions: \n",
-                                        #               "- rename your cleanR output files using the \"file\" option \n",
-                                        #               "- Add a volume number to your file name using the \"vol\" option \n",
-                                        #              "- check that you do not want to keep the original file and if so,",
-                                        #               "use cleanR with replace = \"always\""))
-                                        #  }
-                                        #}
-                                        #}
+      #               "- rename your cleanR output files using the \"file\" option \n",
+      #               "- Add a volume number to your file name using the \"vol\" option \n",
+      #              "- check that you do not want to keep the original file and if so,",
+      #               "use cleanR with replace = \"always\""))
+      #  }
+      #}
+      #}
 
     if (quiet) nagUser <- FALSE
 
@@ -540,11 +549,11 @@ clean <- function(o,
     ## Now we should not write anything more to the file
 
     if (output %in% c("html", "pdf") && render) {
-####is it possible to close the file clean_data.pdf/html if it is open such
-####that no access permission issues can occur?
-####or maybe just check if it is open and then not try and render.
-                                        #fileName <- paste(substring(fileName, 1, nchar(fileName)-4), ".",
-                                        #                  output, sep="")
+      ##is it possible to close the file clean_data.pdf/html if it is open such
+      ###that no access permission issues can occur?
+      ###or maybe just check if it is open and then not try and render.
+      #fileName <- paste(substring(fileName, 1, nchar(fileName)-4), ".",
+      #                  output, sep="")
         if (!quiet) {
             message("Data cleaning is finished. Please wait while your output file is rendered.")
         }
@@ -560,20 +569,20 @@ clean <- function(o,
     }
 
     if (!quiet) { #whoops - version 1 only makes sense for windows, doesn't it?
-                                        #does version 2 work on mac/linux?
-                                        #also: problems if people supply their own file paths using the "file"-argument?
-                                        #print(paste("Data cleaning was succesful. Find your results in", ###version 1
-                                        #     paste(getwd(), "/", fileName, sep="")))
+                  #does version 2 work on mac/linux?
+                  #also: problems if people supply their own file paths using the "file"-argument?
+                  #print(paste("Data cleaning was succesful. Find your results in", ###version 1
+                  #     paste(getwd(), "/", fileName, sep="")))
         message(paste("Data cleaning was succesful. Find your results in", ###version 2
-                                        #path.expand(paste("~/", outFile, sep=""))))  #doesn't work
+                      #path.expand(paste("~/", outFile, sep=""))))  #doesn't work
                       paste(getwd(), "/", outFile, sep="")))
-                                        #to do: make into link so that the user can just click it and open the file.
-                                        #must be possible, debug() does interactive stuff..
-                                        #CHECK: Does this work on mac? linux?
+                      #to do: make into link so that the user can just click it and open the file.
+                      #must be possible, debug() does interactive stuff..
+                      #CHECK: Does this work on mac? linux?
 
-                                        #awkward if openResult==T? What should we write instead in that case?
-                                        #also feels awkward if no message is printed in that case (in case the user e.g.
-                                        #accidentially shuts down the pdf/html/rmd-file.)
+                      #awkward if openResult==T? What should we write instead in that case?
+                      #also feels awkward if no message is printed in that case (in case the user e.g.
+                      #accidentially shuts down the pdf/html/rmd-file.)
     }
 
     if (openResult) system(paste("open", outFile)) #tjek: virker det på linux?
