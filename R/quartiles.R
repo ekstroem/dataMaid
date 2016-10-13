@@ -13,6 +13,7 @@
 #' @examples
 #' quartiles(c(1:100))
 #' 
+#' @importFrom stats na.omit quantile
 #' @export
 quartiles <- function(v) {
   v <- na.omit(v) #maybe keep Inf's?

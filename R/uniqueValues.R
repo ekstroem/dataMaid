@@ -13,6 +13,7 @@
 #' @examples
 #' uniqueValues(c(1:3, rep(NA, 10), Inf, NaN))
 #' 
+#' @importFrom stats na.omit
 #' @export
 uniqueValues <- function(v) UseMethod("uniqueValues")
 
@@ -23,17 +24,17 @@ uniqueValues <- function(v) UseMethod("uniqueValues")
 
 
 #methods for each variable type
-
-# #' @importFrom stats na.omit
 uniqueValuesCFLBI <- function(v) {
   noUnique <- length(unique(na.omit(v)))
-  list(feature="No. unique values", result=noUnique)
+  list(feature="No. unique values", result = noUnique)
 }
 
 uniqueValuesN <- function(v) {
   out <- uniqueValuesCFLBI(v)
+  
   #check for NaNs
   if (any(is.nan(v))) out$result <- out$result + 1
+  
   out
 }
 

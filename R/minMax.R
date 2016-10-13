@@ -13,6 +13,7 @@
 #' @examples
 #' minMax(c(1:100))
 #' 
+#' @importFrom stats na.omit
 #' @export
 minMax <- function(v) {
   v <- na.omit(v) #maybe keep Inf's?

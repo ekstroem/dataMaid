@@ -620,11 +620,16 @@ doSmartNum <- function(v, maxLevels = 5, ...) {
   #check if v is numeric/integer here? now we check it before the function is called
 
   if (length(unique(v)) <= maxLevels) {
-    oClass <- class(v)
-    v <- factor(v)
-    attr(v, "originalClass") <- oClass
-    class(v) <- c("smartNum", "factor")
+    v <- smartNum(v)
   }
+  v
+}
+
+smartNum <- function(v) {
+  oriClass <- class(v)
+  v <- factor(v)
+  attr(v, "originalClass") <- oriClass
+  class(v) <- c("smartNum", "factor")
   v
 }
 

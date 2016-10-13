@@ -13,6 +13,7 @@
 #' @examples
 #' countMissing(c(1:100, rep(NA, 10)))
 #' 
+#' @importFrom stats is.na
 #' @export
 countMissing <- function(v) {
   noMissing <- sum(is.na(v))

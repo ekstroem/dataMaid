@@ -24,8 +24,8 @@
 #' }
 #' @seealso \code{\link{visualize}}, \code{\link{basicVisual}}
 #'
-#' @importFrom ggplot2 ggplot
-#'
+#' @importFrom ggplot2 qplot
+#' @importFrom stats na.omit
 #' @export
 standardVisual <- function(v, vnam, doEval = TRUE) UseMethod("standardVisual")
 
@@ -37,7 +37,7 @@ standardVisual <- function(v, vnam, doEval = TRUE) UseMethod("standardVisual")
 ##########################################Not exported below#########################################
 
 #character, factor, labelled and logical variables
-standardVisualCFLB <- function(v, vnam, doEval=T) {
+standardVisualCFLB <- function(v, vnam, doEval = TRUE) {
   thisCall <- call("qplot", x=na.omit(v), geom="bar", xlab="", main=vnam)
   if (doEval) {
     return(eval(thisCall))
@@ -45,7 +45,7 @@ standardVisualCFLB <- function(v, vnam, doEval=T) {
 }
 
 #numeric and integer variables
-standardVisualIN <- function(v, vnam, doEval=T) {
+standardVisualIN <- function(v, vnam, doEval = TRUE) {
   v <- v[is.finite(v)]
   thisCall <- call("qplot", x=na.omit(v), geom="histogram", xlab="",
                    main=vnam, bins=20)
@@ -57,11 +57,9 @@ standardVisualIN <- function(v, vnam, doEval=T) {
 
 
 #assign methods to generic standardVisual function
-standardVisual.character <- function(v, vnam, doEval=T) standardVisualCFLB(v, vnam, doEval=doEval)
-standardVisual.factor <- function(v, vnam, doEval=T) standardVisualCFLB(v, vnam, doEval=doEval)
-standardVisual.labelled <- function(v, vnam, doEval=T) standardVisualCFLB(v, vnam, doEval=doEval)
-standardVisual.numeric <- function(v, vnam, doEval=T, smartNum=T) standardVisualIN(v, vnam,
-                                                                                   doEval=doEval)
-standardVisual.integer <- function(v, vnam, doEval=T, smartNum=T) standardVisualIN(v, vnam,
-                                                                                   doEval=doEval)
-standardVisual.logical <- function(v, vnam, doEval=T) standardVisualCFLB(v, vnam, doEval=doEval)
+standardVisual.character <- function(v, vnam, doEval = TRUE) standardVisualCFLB(v, vnam, doEval=doEval)
+standardVisual.factor <- function(v, vnam, doEval = TRUE) standardVisualCFLB(v, vnam, doEval=doEval)
+standardVisual.labelled <- function(v, vnam, doEval = TRUE) standardVisualCFLB(v, vnam, doEval=doEval)
+standardVisual.numeric <- function(v, vnam, doEval = TRUE) standardVisualIN(v, vnam, doEval=doEval)
+standardVisual.integer <- function(v, vnam, doEval = TRUE) standardVisualIN(v, vnam, doEval=doEval)
+standardVisual.logical <- function(v, vnam, doEval = TRUE) standardVisualCFLB(v, vnam, doEval=doEval)

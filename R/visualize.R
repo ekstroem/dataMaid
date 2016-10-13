@@ -75,42 +75,42 @@ visualize <- function(v, vnam = NULL, allVisuals = "standardVisual",
 
 #Methods for each variable type
 visualize.character <- function(v, vnam = NULL, allVisuals = "standardVisual", 
-                                characterVisual=NULL, doEval = FALSE, ...) {
+                                doEval = FALSE, characterVisual = NULL, ...) {
   if (is.null(vnam)) vnam <- deparse(substitute(v))
   useVisual <- ifelse(is.null(characterVisual), allVisuals, characterVisual)
   eval(call(useVisual, v, vnam, doEval))
 }
 
 visualize.factor <- function(v, vnam = NULL, allVisuals = "standardVisual", 
-                             factorVisual = NULL, doEval = FALSE, ...) {
+                             doEval = FALSE, factorVisual = NULL, ...) {
   if (is.null(vnam)) vnam <- deparse(substitute(v))
   useVisual <- ifelse(is.null(factorVisual), allVisuals, factorVisual)
   eval(call(useVisual, v, vnam, doEval))
 }
 
 visualize.labelled <- function(v, vnam = NULL, allVisuals = "standardVisual",
-                               labelledVisual = NULL, doEval = FALSE, ...) {
+                               doEval = FALSE, labelledVisual = NULL, ...) {
   if (is.null(vnam)) vnam <- deparse(substitute(v))
   useVisual <- ifelse(is.null(labelledVisual), allVisuals, labelledVisual)
   eval(call(useVisual, v, vnam, doEval))
 }
 
 visualize.numeric <- function(v, vnam = NULL, allVisuals = "standardVisual", 
-                              numericVisual = NULL, doEval = FALSE, ...) {
+                              doEval = FALSE, numericVisual = NULL, ...) {
   if (is.null(vnam)) vnam <- deparse(substitute(v))
   useVisual <- ifelse(is.null(numericVisual), allVisuals, numericVisual)
   eval(call(useVisual, v, vnam, doEval=doEval))
 }
 
 visualize.integer <- function(v, vnam = NULL, allVisuals = "standardVisual", 
-                              integerVisual = NULL, doEval = FALSE, ...) {
+                              doEval = FALSE, integerVisual = NULL, ...) {
   if (is.null(vnam)) vnam <- deparse(substitute(v))
   useVisual <- ifelse(is.null(integerVisual), allVisuals, integerVisual)
   eval(call(useVisual, v, vnam, doEval))
 }
 
 visualize.logical <- function(v, vnam = NULL, allVisuals = "standardVisual",
-                              logicalVisual = NULL, doEval = FALSE, ...) {
+                              doEval = FALSE, logicalVisual = NULL, ...) {
   if (is.null(vnam)) vnam <- deparse(substitute(v))
   useVisual <- ifelse(is.null(logicalVisual), allVisuals, logicalVisual)
   eval(call(useVisual, v, vnam, doEval))

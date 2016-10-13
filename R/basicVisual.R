@@ -1,4 +1,4 @@
-#' @title Produce distribution plots in the base R style using \code{\link{plot}} and
+#' @title Produce distribution plots in the base R (graphics) style using \code{\link{plot}} and
 #' \code{\link{barplot}}
 #'
 #' @description Plot the distribution of a variable, depending on its data class, using the base R
@@ -24,6 +24,8 @@
 #'  }
 #' @seealso \code{\link{visualize}}, \code{\link{standardVisual}}
 #'
+#' @importFrom stats na.omit
+#' @importFrom graphics plot hist
 #' @export
 basicVisual <- function(v, vnam, doEval = TRUE) UseMethod("basicVisual")
 
@@ -35,7 +37,7 @@ basicVisual <- function(v, vnam, doEval = TRUE) UseMethod("basicVisual")
 
 ##character, factor, labelled and logical variables
 #' importFrom stats na.omit
-basicVisualCFLB <- function(v, vnam, doEval=TRUE) {
+basicVisualCFLB <- function(v, vnam, doEval = TRUE) {
   v <- as.factor(v)
   thisCall <- call("plot", x=na.omit(v), main=vnam)
   if (doEval) {
@@ -44,7 +46,7 @@ basicVisualCFLB <- function(v, vnam, doEval=TRUE) {
 }
 
 #numeric and integer variables
-basicVisualIN <- function(v, vnam, doEval=TRUE) {
+basicVisualIN <- function(v, vnam, doEval = TRUE) {
   v <- v[is.finite(v)]
   thisCall <- call("hist", v, main=vnam, col="grey", xlab="")
   if (doEval) {
@@ -53,11 +55,11 @@ basicVisualIN <- function(v, vnam, doEval=TRUE) {
 }
 
 #assign methods to generic standardVisual function
-basicVisual.character <- function(v, vnam, doEval=T) basicVisualCFLB(v, vnam, doEval=doEval)
-basicVisual.factor <- function(v, vnam, doEval=T) basicVisualCFLB(v, vnam, doEval=doEval)
-basicVisual.labelled <- function(v, vnam, doEval=T) basicVisualCFLB(v, vnam, doEval=doEval)
-basicVisual.numeric <- function(v, vnam, doEval=T) basicVisualIN(v, vnam, doEval=doEval)
-basicVisual.integer <- function(v, vnam, doEval=T) basicVisualIN(v, vnam, doEval=doEval)
-basicVisual.logical <- function(v, vnam, doEval=T) basicVisualCFLB(v, vnam, doEval=doEval)
+basicVisual.character <- function(v, vnam, doEval = TRUE) basicVisualCFLB(v, vnam, doEval=doEval)
+basicVisual.factor <- function(v, vnam, doEval = TRUE) basicVisualCFLB(v, vnam, doEval=doEval)
+basicVisual.labelled <- function(v, vnam, doEval = TRUE) basicVisualCFLB(v, vnam, doEval=doEval)
+basicVisual.numeric <- function(v, vnam, doEval = TRUE) basicVisualIN(v, vnam, doEval=doEval)
+basicVisual.integer <- function(v, vnam, doEval = TRUE) basicVisualIN(v, vnam, doEval=doEval)
+basicVisual.logical <- function(v, vnam, doEval = TRUE) basicVisualCFLB(v, vnam, doEval=doEval)
 
 

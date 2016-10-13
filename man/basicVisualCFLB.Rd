@@ -4,7 +4,7 @@
 \alias{basicVisualCFLB}
 \title{importFrom stats na.omit}
 \usage{
-basicVisualCFLB(v, vnam, doEval = TRUE, ...)
+basicVisualCFLB(v, vnam, doEval = TRUE)
 }
 \description{
 importFrom stats na.omit
