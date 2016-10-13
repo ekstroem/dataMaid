@@ -24,6 +24,8 @@
 #' }
 #' @seealso \code{\link{visualize}}, \code{\link{basicVisual}}
 #'
+#' @importFrom ggplot2 ggplot
+#'
 #' @export
 standardVisual <- function(v, vnam, doEval = TRUE, ...) UseMethod("standardVisual")
 

@@ -57,7 +57,7 @@
 #'    data(testData)
 #'    testData <- testData[, c("charVar", "factorVar", "numVar", "intVar")]
 #'    par(mfrow = c(2, 2))
-#'    plots <- lapply(testData, function(x) visualize(x, allVisual="basicVisual"))
+#'    plots <- lapply(testData, function(x) visualize(x, allVisual="basicVisual", doEval=T))
 #'    par(mfrow = c(1, 1))
 #'  }
 #'
