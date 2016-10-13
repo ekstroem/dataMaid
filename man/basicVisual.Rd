@@ -2,7 +2,7 @@
 % Please edit documentation in R/basicVisual.R
 \name{basicVisual}
 \alias{basicVisual}
-\title{Produce distribution plots in the base R style using \code{\link{plot}} and
+\title{Produce distribution plots in the base R (graphics) style using \code{\link{plot}} and
 \code{\link{barplot}}}
 \usage{
 basicVisual(v, vnam, doEval = TRUE)

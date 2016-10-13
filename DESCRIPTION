@@ -11,7 +11,9 @@ Depends:
     ggplot2
 Suggests:
     stringi,
-    rmarkdown    
+    rmarkdown
+Imports:
+    methods
 Encoding: UTF-8
 ByteCompile: true
 License: GPL-2

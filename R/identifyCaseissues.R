@@ -1,19 +1,19 @@
 #' @title A checkFunction for identifying case issues
-#' 
+#'
 #' @description A checkFunction to be called from \code{\link{check}} that identifies values in a vector
 #' that appear multiple times with different case settings.
-#' 
+#'
 #' @param v A character or factor variable to check
-#' 
+#'
 #' @return A list with two elements, $problem: TRUE if any case issues were found, FALSE otherwise, and
 #' $message A message describing which values in \code{v} resulted in case issues. Only unique values
 #' are listed and they are presented in alphabetical order.
-#' 
+#'
 #' @seealso \code{\link{check}}, \code{\link{checkFunction}}
-#' 
+#'
 #' @examples
 #'  identifyCaseIssues(c("val", "b", "1", "1", "vAl", "VAL", "oh", "OH"))
-#' 
+#'
 #' @importFrom stats na.omit
 #' @export
 identifyCaseIssues <- function(v) UseMethod("identifyCaseIssues")
@@ -53,6 +53,8 @@ identifyCaseIssuesF <- function(v) {
 
 
 #add methods to generic identifyCaseIssues function
+#' @export
 identifyCaseIssues.character <- function(v) identifyCaseIssuesC(v)
+#' @export
 identifyCaseIssues.factor <- function(v) identifyCaseIssuesF(v)
 
