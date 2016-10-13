@@ -217,6 +217,7 @@ identifyMissNine <- function(v) {
 }
 
 #factor and character variables
+#' importFrom stats na.fails
 identifyMissingCF <- function(v) {
   v <- na.omit(v)
   problem <- F
@@ -245,6 +246,7 @@ identifyMissingCF <- function(v) {
 }
 
 #labbeled variables
+#' importFrom stats na.omit
 identifyMissingL <- function(v) {
   v <- na.omit(v)
   v <- unpackLabelled(v)
@@ -252,6 +254,7 @@ identifyMissingL <- function(v) {
 }
 
 #numerical and integer variables
+#' importFrom stats na.omit
 identifyMissingNI <- function(v) {
   v <- na.omit(v)
   problem <- F
@@ -304,6 +307,7 @@ attr(identifyWhitespace, "description") <- "Identify prefixed and suffixed white
 
 
 #character variables
+#' importFrom stats na.omit
 identifyWhitespaceC <- function(v) {
   v <- na.omit(v)
   wsPrefixPlaces <- sapply(v, substr, 1, 1) == " "
@@ -328,6 +332,7 @@ identifyWhitespaceF <- function(v) {
 }
 
 #labelled variables
+#' importFrom stats na.omit
 identifyWhitespaceL <- function(v) {
   v <- na.omit(v)
   v <- unpackLabelled(v)
@@ -449,6 +454,7 @@ attr(identifyCaseIssues, "description") <- "Identify case issues"
 
 
 #character variable
+#' importFrom stats na.omit
 identifyCaseIssuesC <- function(v) {
   v <- na.omit(v)
   vLevs <- unique(v)
