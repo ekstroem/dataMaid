@@ -32,10 +32,10 @@ values are removed.
    myVar <- c(1:10)
  #Plot a variable
    basicVisual(myVar, "MyVar")
- }
+
  #Produce code for plotting a variable
    basicVisual(myVar, "MyVar", doEval = FALSE)
-
+ }
 }
 \seealso{
 \code{\link{visualize}}, \code{\link{standardVisual}}

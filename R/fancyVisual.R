@@ -25,7 +25,7 @@ fancyVisual <- function(v, vnam) {
 }
 
 
-#' @importFrom ggplot2 ggplot aes aes_string geom_bar geom_text scale_fill_discrete scale_x_continuous xlab ylab ggtitle theme_bw geom_histogram geom_line
+#' @importFrom ggplot2 ggplot aes aes_string geom_bar geom_text scale_fill_discrete scale_x_continuous xlab ylab ggtitle theme_bw geom_histogram geom_line scale_x_discrete
 myDistrPlots <- function(data, var, labels=NULL,
                          makeCont=NULL,
                          makeCat=NULL,
@@ -56,7 +56,7 @@ myDistrPlots <- function(data, var, labels=NULL,
           scale_fill_discrete(breaks=NULL) +
           scale_x_continuous(breaks=NULL) +
           xlab("") +
-          ylab("Cummulative frequency") +
+          ylab("Cumulative frequency") +
           ggtitle(labels[i]) +
           theme_bw()
       } else {

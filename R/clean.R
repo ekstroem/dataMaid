@@ -200,7 +200,7 @@ clean <- function(o,
       #if (!replace %in% c("never", "onlyCleanR") && (fileExists || outFileExists)) {
     if (replace) {
         unlink(file)
-    } else {
+    } else if (fileExists | outFileExists) {
      # if (replace=="never") {
         if (fileExists & outFileExists) problemFiles <- paste(file, "and", outFile)
         if (fileExists & !outFileExists) problemFiles <- file
