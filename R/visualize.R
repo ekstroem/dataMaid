@@ -9,7 +9,8 @@
 #'@param allVisuals The name (as a character string) of the actual plotting function to be used, no 
 #'matter the class of \code{v}. See \code{details} for more details about the structure of such plotting 
 #'functions. Note that this option is overwritten if a non-null class specific 
-#'plotting function is supplied in \code{...} (see \code{details}).
+#'plotting function is supplied in \code{...} (see \code{details}).Two options are readily available, 
+#'\code{\link{standardVisual}} and \code{\link{\basicVisual}}. 
 #'@param doEval If TRUE, \code{visualize} returns a plot (IS THIS THE CORRECT WAY TO SAY IT?). Otherwise,
 #'visualize returns a character string containing R-code for producing a plot.
 #'@param ... ALLOW FOR ARGUMENTS TO BE PASSED ON TO E.G. STANDARDVISUAL AS WELL? If the plotting 
