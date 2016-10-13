@@ -6,7 +6,7 @@
 #' @param vnam The name of the variable which will appear as the title of the plot.
 #' @param doEval If TRUE, the plot itself is returned. Otherwise, the function returns
 #' a character string containing standalone R code for producing the plot.
-#'
+#' 
 #' @details For character, factor, logical and labelled variables, a barplot is produced. For numeric
 #' or integer variables, \code{standardVisual} produces a histogram instead. Note that for
 #' integer and numeric variables, all non-finite (i.e. \code{NA}, \code{NaN}, \code{Inf}) values are
@@ -24,8 +24,10 @@
 #' }
 #' @seealso \code{\link{visualize}}, \code{\link{basicVisual}}
 #'
+#' @importFrom ggplot2 ggplot
+#'
 #' @export
-standardVisual <- function(v, vnam, doEval = TRUE, ...) UseMethod("standardVisual")
+standardVisual <- function(v, vnam, doEval = TRUE) UseMethod("standardVisual")
 
 
 
@@ -35,7 +37,7 @@ standardVisual <- function(v, vnam, doEval = TRUE, ...) UseMethod("standardVisua
 ##########################################Not exported below#########################################
 
 #character, factor, labelled and logical variables
-standardVisualCFLB <- function(v, vnam, doEval=T, ...) {
+standardVisualCFLB <- function(v, vnam, doEval=T) {
   thisCall <- call("qplot", x=na.omit(v), geom="bar", xlab="", main=vnam)
   if (doEval) {
     return(eval(thisCall))

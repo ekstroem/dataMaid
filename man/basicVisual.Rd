@@ -5,7 +5,7 @@
 \title{Produce distribution plots in the base R style using \code{\link{plot}} and
 \code{\link{barplot}}}
 \usage{
-basicVisual(v, vnam, doEval = TRUE, ...)
+basicVisual(v, vnam, doEval = TRUE)
 }
 \arguments{
 \item{v}{The variable (vector) to be plotted.}

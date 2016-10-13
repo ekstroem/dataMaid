@@ -1,30 +1,240 @@
-#GENERAL COMMENTS/TO DO:
-#QUESTION: We want to do the same thing in some functions,
-#           no matter the data class.
-#           Should I implement a generic function + class specific
-#           functions anyway for readility/comparibility with the
-#           rest of the code?
-#           Relevant functions: variableType, countMissing
-
-#IDEA: Make it easier for users to append their own functions
-#     to the standard functions so that they don't have to write
-#     it all out
-
-
-###################################################################
 
 #Make matrix containing summary information about a variable v,
 #depending on its class and possibly user supplied arguments
 #summary-functions must take a vector v and return a
 #list(feature=..., result=...) object.
-summarize <- function(v, descriptive=F, ...) UseMethod("summarize")
 
-#NOTE: default descriptions can still be accesssed using defaultCharacterDescriptions() etc.,
-#but they are not available as arguments to clean() directly, but should be passed in ...
+#' @title Make summary matrix
+#' 
+#' @description Generic shell function that produces a summary matrix for a variable \code{v}, 
+#' given a number of summary functions and depending on its data class.
+#' 
+#' @formals v The variable (vector) which is to be summarized.
+#' @formals descriptive If TRUE, descriptive functions are added to the summary matrix 
+#' (see details).
+#' @formals ... Additional argument passed to data class specific methods. First and foremost, 
+#' this is where to supply the summary functions and description functions (see details). 
+#' 
+#' @details Summary functions are supplied using their
+#' names (in character strings) in the class-specific argument, e.g. 
+#' \code{characterSummaries = c("countMissing", "uniqueValues")} for character variables and 
+#' similarly for the remaining 5 data classes (factor, labelled, numeric, integer, logical). 
+#' Secondly, additional functions can be added using the "descriptions"-arguments, e.g. 
+#' \code{characterDescriptions = "centralValue"}. If \code{descriptive = T} the results of 
+#' these functions are added to the outputted summary matrix. Note that this is nothing 
+#' more than a convenient way to add an extra category of summary functions to the output. 
+#' Summary functions and description functions are treated in the exact same way. 
+#' 
+#' The default summary- and character functions are available in data class specific functions, e.g. 
+#' \code{defaultCharacterSummaries()} and \code{defaultCharacterDescriptions()}, respectively. 
+#' 
+#' A user defined summary (or description) function can be supplied using its function name. Note
+#' however that it should take a vector as argument and return a list on the form 
+#' \code{list(feature="Feature name", result="The result")}. See e.g. \code\link{variableType} for 
+#' an example of a summary function. 
+#' 
+#' @return A matrix with two columns, \code{feature} and \code{result} and one row for each
+#' summary/description function that was called.
+#' 
+#' @seealso \code{\link{defaultCharacterSummaries}}, \code{\link{defaultFactorSummaries}},
+#' \code{\link{defaultLabelledSummaries}}, \code{\link{defaultLabelledSummaries}},
+#' \code{\link{defaultNumericSummaries}}, \code{\link{defaultIntegerSummaries}},
+#' \code{\link{defaultLogicalSummaries}}, 
+#' \code{\link{defaultCharacterDescriptions}}, \code{\link{defaultFactorDescriptions}},
+#' \code{\link{defaultLabelledDescriptions}}, \code{\link{defaultLabelledDescriptions}},
+#' \code{\link{defaultNumericDescriptions}}, \code{\link{defaultIntegerDescriptions}},
+#' \code{\link{defaultLogicalDescriptions}}, 
+#' 
+#' @examples 
+#' #Default summary for a character vector 
+#'    charV <- c("a", "b", "c", "a", "a", NA, "b", "0")
+#'    summarize(charV)
+#'  
+#' #Add default description functions
+#'    summarize(charV, descriptive = T)
+#' 
+#' #Inspect default character summary functions
+#'    defaultCharacterSummaries()
+#'    
+#' #Define a new summary function and add it to the summary for character vectors
+#'    countZeros <- function(v) {
+#'      res <- length(which(v == 0))
+#'      list(feature="No. zeros", result = res)
+#'    }
+#'    summarize(charV, characterSummaries = c(defaultCharacterSummaries(), "countZeros"))
+#'  
+#'  #Does nothing, as intV is not affected by characterSummaries
+#'    intV <- c(0:10)
+#'    summarize(intV, characterSummaries = c(defaultCharacterSummaries(), "countZeros"))
+#'  
+#'  #But supplying the argument for integer variables changes the summary:
+#'    summarize(intV, integerSummaries = "countZeros")
+#'    
+#' @export    
+summarize <- function(v, descriptive = FALSE, ...) UseMethod("summarize")
 
 
-#produces the output matrix from a summarize call
-#use internally only
+
+
+
+#' @title Default summary functions for character variables
+#' @return A list of function names (as character strings).
+#' 
+#' @seealso \code{\link{defaultCharacterDescriptions}}, \code{\link{variableType}},
+#' \code{\link{countMissing}}, \code{\link{uniqueValues}}
+#' 
+#' @examples 
+#' defaultCharacterSummaries()
+#' 
+#' @export
+defaultCharacterSummaries <- function() c("variableType", "countMissing", "uniqueValues")
+
+
+#' @title Default description functions for character variables
+#' @return A list of function names (as character strings).
+#' 
+#' @seealso \code{\link{defaultCharacterSummaries}}, \code{\link{centralValue}}
+#' 
+#' @examples 
+#' defaultCharacterDescriptions()
+#' 
+#' @export
+defaultCharacterDescriptions <- function() "centralValue"
+
+
+#' @title Default summary functions for factor variables
+#' @return A list of function names (as character strings).
+#' 
+#' @seealso \code{\link{defaultFactorDescriptions}}, \code{\link{variableType}},
+#' \code{\link{countMissing}}, \code{\link{uniqueValues}}
+#' 
+#' @examples 
+#' defaultFactorSummaries()
+#' 
+#' @export
+defaultFactorSummaries <- function() c("variableType", "countMissing", "uniqueValues")
+
+
+#' @title Default description functions for factor variables
+#' @return A list of function names (as character strings).
+#' 
+#' @seealso \code{\link{defaultFactorSummaries}}, \code{\link{centralValue}}
+#' 
+#' @examples 
+#' defaultFactorDescriptions()
+#' 
+#' @export
+defaultFactorDescriptions <- function() "centralValue"
+
+
+#' @title Default summary functions for labelled variables
+#' @return A list of function names (as character strings).
+#' 
+#' @seealso \code{\link{defaultLabelledDescriptions}}, \code{\link{variableType}},
+#' \code{\link{countMissing}}, \code{\link{uniqueValues}}
+#' 
+#' @examples 
+#' defaultLabelledSummaries()
+#' 
+#' @export
+defaultLabelledSummaries <- function() c("variableType", "countMissing", "uniqueValues")
+
+
+#' @title Default description functions for labelled variables
+#' @return A list of function names (as character strings).
+#' 
+#' @seealso \code{\link{defaultLabelledSummaries}}, \code{\link{centralValue}}
+#' 
+#' @examples 
+#' defaultLabelledDescriptions()
+#' 
+#' @export
+defaultLabelledDescriptions <- function() "centralValue"
+
+
+#' @title Default summary functions for numeric variables
+#' @return A list of function names (as character strings).
+#' 
+#' @seealso \code{\link{defaultNumericDescriptions}}, \code{\link{variableType}},
+#' \code{\link{countMissing}}, \code{\link{uniqueValues}}
+#' 
+#' @examples 
+#' defaultNumericSummaries()
+#' 
+#' @export
+defaultNumericSummaries <- function() c("variableType", "countMissing", "uniqueValues")
+
+
+#' @title Default description functions for numeric variables
+#' @return A list of function names (as character strings).
+#' 
+#' @seealso \code{\link{defaultNumericSummaries}}, \code{\link{centralValue}}, 
+#' \code{\link{quartiles}}, \code{\link{minMax}}
+#' 
+#' @examples 
+#' defaultNumericDescriptions()
+#' 
+#' @export
+defaultNumericDescriptions <- function() c("centralValue", "quartiles", "minMax")
+
+
+#' @title Default summary functions for integer variables
+#' @return A list of function names (as character strings).
+#' 
+#' @seealso \code{\link{defaultIntegerDescriptions}}, \code{\link{variableType}},
+#' \code{\link{countMissing}}, \code{\link{uniqueValues}}
+#' 
+#' @examples 
+#' defaultIntegerSummaries()
+#' 
+#' @export
+defaultIntegerSummaries <- function() c("variableType", "countMissing", "uniqueValues")
+
+
+#' @title Default description functions for integer variables
+#' @return A list of function names (as character strings).
+#' 
+#' @seealso \code{\link{defaultIntgerSummaries}}, \code{\link{centralValue}},
+#' \code{\link{quartiles}}, \code{\link{minMax}}
+#' 
+#' @examples 
+#' defaultIntegerDescriptions()
+#' 
+#' @export
+defaultIntegerDescriptions <- function() c("centralValue", "quartiles", "minMax")
+
+
+#' @title Default summary functions for logical variables
+#' @return A list of function names (as character strings).
+#' 
+#' @seealso \code{\link{defaultLogicalDescriptions}}, \code{\link{variableType}},
+#' \code{\link{countMissing}}, \code{\link{uniqueValues}}
+#' 
+#' @examples 
+#' defaultLogicalSummaries()
+#' 
+#' @export
+defaultLogicalSummaries <- function() c("variableType", "countMissing", "uniqueValues")
+
+
+#' @title Default description functions for logical variables
+#' @return A list of function names (as character strings).
+#' 
+#' @seealso \code{\link{defaultLogicalSummaries}}, \code{\link{centralValue}}
+#' 
+#' @examples 
+#' defaultLogicalDescriptions()
+#' 
+#' @export
+defaultLogicalDescriptions <- function() "centralValue"
+
+
+
+
+
+##########################################Not exported below#########################################
+
+#produces the output matrix from a summarize call. Use internally only
 sumMatGenerator <- function(v, summaries) {
   nFunctions <- length(summaries)
   outMat <- matrix(NA, nFunctions, 2,
@@ -38,9 +248,7 @@ sumMatGenerator <- function(v, summaries) {
 }
 
 
-defaultCharacterSummaries <- function() c("variableType", "countMissing", "uniqueValues")
-defaultCharacterDescriptions <- function() "centralValue"
-
+#methods for each data type
 summarize.character <- function(v, characterSummaries = defaultCharacterSummaries(),
                                 characterDescriptions = defaultCharacterDescriptions(),
                                 descriptive=F, ...) {
@@ -49,9 +257,6 @@ summarize.character <- function(v, characterSummaries = defaultCharacterSummarie
   sumMatGenerator(v, characterCalls)
 }
 
-
-defaultFactorSummaries <- function() c("variableType", "countMissing", "uniqueValues")
-defaultFactorDescriptions <- function() "centralValue"
 
 summarize.factor <- function(v, factorSummaries = defaultFactorSummaries(),
                              factorDescriptions = defaultFactorDescriptions(),
@@ -62,20 +267,14 @@ summarize.factor <- function(v, factorSummaries = defaultFactorSummaries(),
 }
 
 
-defaultLabelledSummaries <- function() c("variableType", "countMissing", "uniqueValues")
-defaultLabelledDescriptions <- function() "centralValue"
-
 summarize.labelled <- function(v, labelledSummaries = defaultLabelledSummaries(),
                                labelledDescriptions = defaultLabelledDescriptions(),
                                descriptive=F, ...) {
   labelledCalls <- if (descriptive) c(labelledSummaries, labelledDescriptions)
-                   else labelledSummaries
+                  else labelledSummaries
   sumMatGenerator(v, labelledCalls)
 }
 
-
-defaultNumericSummaries <- function() c("variableType", "countMissing", "uniqueValues")
-defaultNumericDescriptions <- function() c("centralValue", "quartiles", "minMax")
 
 summarize.numeric <- function(v, numericSummaries = defaultNumericSummaries(),
                               numericDescriptions = defaultNumericDescriptions(),
@@ -86,9 +285,6 @@ summarize.numeric <- function(v, numericSummaries = defaultNumericSummaries(),
 }
 
 
-defaultIntegerSummaries <- function() c("variableType", "countMissing", "uniqueValues")
-defaultIntegerDescriptions <- function() c("centralValue", "quartiles", "minMax")
-
 summarize.integer <- function(v, integerSummaries = defaultIntegerSummaries(),
                               integerDescriptions = defaultIntegerDescriptions(),
                               descriptive=F, ...) {
@@ -98,9 +294,6 @@ summarize.integer <- function(v, integerSummaries = defaultIntegerSummaries(),
 }
 
 
-defaultLogicalSummaries <- function() c("variableType", "countMissing", "uniqueValues")
-defaultLogicalDescriptions <- function() "centralValue"
-
 summarize.logical <- function(v, logicalSummaries = defaultLogicalSummaries(),
                               logicalDescriptions = defaultLogicalDescriptions(),
                               descriptive=F, ...) {
@@ -108,141 +301,5 @@ summarize.logical <- function(v, logicalSummaries = defaultLogicalSummaries(),
                   else logicalSummaries
   sumMatGenerator(v, logicalCalls)
 }
-
-
-####################################################################
-
-#####variableType######
-
-#Returns the class of the variable, as registered in R.
-
-variableType <- function(v) {
-  list(feature="Variable type", result=oClass(v))
-}
-  #oClass is defined in clean.R - is this a problem?
-
-
-####################################################################
-
-#####countMissing######
-
-#Counts the number of missing values (coded as NA) in the variable
-
-countMissing <- function(v) {
-  noMissing <- sum(is.na(v))
-  percentMissing <- round(100*noMissing/length(v),2)
-  list(feature="No. missing obs." ,
-       result=paste(noMissing, " (", percentMissing," %)", sep=""))
-}
-
-####################################################################
-
-#####uniqueValues######
-
-#Counts the number of unique (non-NA) values taken by a variable
-
-uniqueValues <- function(v) UseMethod("uniqueValues")
-
-#' @importFrom stats na.omit
-uniqueValuesCFLBI <- function(v) {
-  noUnique <- length(unique(na.omit(v)))
-  list(feature="No. unique values", result=noUnique)
-}
-
-uniqueValuesN <- function(v) {
-  out <- uniqueValuesCFLBI(v)
-  #check for NaNs
-  if (any(is.nan(v))) out$result <- out$result + 1
-  out
-}
-
-
-#assign methods to generic uniqueValues function
-uniqueValues.character <- function(v) uniqueValuesCFLBI(v)
-uniqueValues.factor <- function(v) uniqueValuesCFLBI(v)
-uniqueValues.labelled <- function(v) uniqueValuesCFLBI(v) #?PROBLEM?
-uniqueValues.numeric <- function(v) uniqueValuesN(v)
-uniqueValues.integer <- function(v) uniqueValuesCFLBI(v)
-uniqueValues.logical <- function(v) uniqueValuesCFLBI(v)
-
-####################################################################
-
-#Optinal descriptive functions below here
-
-descriptiveFunctions <- c("centralValue", "minMax", "quartiles")
-
-
-#####centralValue#####
-
-centralValue <- function(v) UseMethod("centralValue")
-
-#Find the central value (mode for categorical, median for
-#numeric variables) of a variable, ignoring NA and NaN values
-#for numeric/integer variables and ignoring NA for
-#character/factor variables
-
-#logical variables
-centralValueB <- function(v) {
-  vCats <- unique(v)
-  vMode <- vCats[which.max(table(v, exclude=NULL))][1]
-  list(feature="Mode", result=paste("\"", vMode, "\"", sep=""))
-}
-
-#character and factor variables
-#' @importFrom stats median
-centralValueCF <- function(v) {
-  centralValueB(na.omit(v))
-}
-
-#labelled variables
-centralValueL <- function(v) {
-  #PLACE HOLDER
-  list(feature="Mode", result="?labelled?")
-}
-
-#integer and numeric variables
-
-#''
-#' @importFrom stats median
-centralValueIN <- function(v) {
-  v <- na.omit(v)
-  list(feature="Median", result=median(v))
-}
-
-
-#assign methods to generic centralValue function
-centralValue.character <- function(v) centralValueCF(v)
-centralValue.factor <- function(v) centralValueCF(v)
-centralValue.labelled <- function(v) centralValueL(v)
-centralValue.numeric <- function(v) centralValueIN(v)
-centralValue.integer <- function(v) centralValueIN(v)
-centralValue.logical <- function(v) centralValueB(v)
-
-
-
-
-
-#######minMax#########
-
-#returns min and max of v. Should only be used on numeric/integer
-#variables. CONTROL THIS?
-
-minMax <- function(v) {
-  v <- na.omit(v) #maybe keep Inf's?
-  list(feature="Min. and max.", result=paste(min(v), max(v), sep=", "))
-}
-
-
-#######quartiles#########
-
-#returns 1st and 3rd quartiles of v. Should only be used on numeric/integer
-#variables. CONTROL THIS?
-
-quartiles <- function(v) {
-  v <- na.omit(v) #maybe keep Inf's?
-  list(feature="1st and 3rd quartiles", result = paste(quantile(v, c(0.25, 0.75)), collapse=", "))
-}
-
-
 
 

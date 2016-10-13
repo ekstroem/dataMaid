@@ -25,7 +25,7 @@
 #' @seealso \code{\link{visualize}}, \code{\link{standardVisual}}
 #'
 #' @export
-basicVisual <- function(v, vnam, doEval = TRUE, ...) UseMethod("basicVisual")
+basicVisual <- function(v, vnam, doEval = TRUE) UseMethod("basicVisual")
 
 
 
@@ -35,7 +35,7 @@ basicVisual <- function(v, vnam, doEval = TRUE, ...) UseMethod("basicVisual")
 
 ##character, factor, labelled and logical variables
 #' importFrom stats na.omit
-basicVisualCFLB <- function(v, vnam, doEval=TRUE, ...) {
+basicVisualCFLB <- function(v, vnam, doEval=TRUE) {
   v <- as.factor(v)
   thisCall <- call("plot", x=na.omit(v), main=vnam)
   if (doEval) {

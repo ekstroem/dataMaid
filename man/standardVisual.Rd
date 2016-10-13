@@ -4,7 +4,7 @@
 \alias{standardVisual}
 \title{Produce distribution plots using \code{\link{ggplot}} from ggplot2}
 \usage{
-standardVisual(v, vnam, doEval = TRUE, ...)
+standardVisual(v, vnam, doEval = TRUE)
 }
 \arguments{
 \item{v}{The variable (vector) to be plotted.}
