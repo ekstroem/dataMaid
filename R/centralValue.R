@@ -1,24 +1,24 @@
 #' @title Description function for central values
-#' 
+#'
 #' @description A description type function to be called from \code{\link{summarize}}, which returns
-#' the central value of a variable. For numeric and integer variables, this is the median. For 
+#' the central value of a variable. For numeric and integer variables, this is the median. For
 #' character, factor, labelled and logical variables, the central value is the mode (i.e. the
-#' value that occurs the largest number of times). 
-#' 
+#' value that occurs the largest number of times).
+#'
 #' @param v A variable (vector).
-#' 
-#' @details Note that NA, NaN and Inf values are ignored for numeric and integer variables, while 
-#' only NA values are ignored for factor, character and labelled variables. No values are 
-#' ignored for logical variables. 
-#' 
-#' @return A list with $feature: [Mode/median] and $result: [the central value of \code{v}]. 
-#' 
+#'
+#' @details Note that NA, NaN and Inf values are ignored for numeric and integer variables, while
+#' only NA values are ignored for factor, character and labelled variables. No values are
+#' ignored for logical variables.
+#'
+#' @return A list with $feature: [Mode/median] and $result: [the central value of \code{v}].
+#'
 #' @seealso \code{\link{summarize}}
-#' 
+#'
 #' @examples
 #'  #central value of a integer variable:
 #'    centralValue(c(rep(1, 25), rep(2, 10), rep(3, 20)))
-#'  
+#'
 #'  #central value of a character variable:
 #'    centralValue(as.character(c(rep(1, 20), rep(2, 10), rep(3, 20))))
 #'    
@@ -61,11 +61,17 @@ centralValueIN <- function(v) {
 
 
 #assign methods to generic centralValue function
+#' @export
 centralValue.character <- function(v) centralValueCF(v)
+#' @export
 centralValue.factor <- function(v) centralValueCF(v)
+#' @export
 centralValue.labelled <- function(v) centralValueL(v)
+#' @export
 centralValue.numeric <- function(v) centralValueIN(v)
+#' @export
 centralValue.integer <- function(v) centralValueIN(v)
+#' @export
 centralValue.logical <- function(v) centralValueB(v)
 
 
