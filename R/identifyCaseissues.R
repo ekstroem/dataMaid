@@ -20,6 +20,12 @@ identifyCaseIssues <- function(v) UseMethod("identifyCaseIssues")
 identifyCaseIssues <- checkFunction(identifyCaseIssues, "Identify case issues")
 
 
+#add methods to generic identifyCaseIssues function
+#' @export
+identifyCaseIssues.character <- function(v) identifyCaseIssuesC(v)
+#' @export
+identifyCaseIssues.factor <- function(v) identifyCaseIssuesF(v)
+
 
 
 
@@ -51,10 +57,4 @@ identifyCaseIssuesF <- function(v) {
   identifyCaseIssuesC(v)
 }
 
-
-#add methods to generic identifyCaseIssues function
-#' @export
-identifyCaseIssues.character <- function(v) identifyCaseIssuesC(v)
-#' @export
-identifyCaseIssues.factor <- function(v) identifyCaseIssuesF(v)
 

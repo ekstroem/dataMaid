@@ -5,11 +5,9 @@
 #'
 #' @param v A character or factor variable to check
 #'
-#' @details DOES LATEX WORK HERE? IT SHOULD, SHOULDN'T IT?
-#' Outliers are defined in the style of Turkey Boxplots (consistent with the
-#' \code{\link{boxplot}} function), i.e. as values v such that $v < Q_1 - 1.5*IQR$ or
-#' $v > Q_3 + 1.5*IQR$ where $Q_1$, $Q_3$ and IQR is the 1st quartile,
-#' 3rd quartile and inter quartile range, respectively.
+#' @details Outliers are defined in the style of Turkey Boxplots (consistent with the
+#' \code{\link{boxplot}} function), i.e. as values  that are smaller than the 1st quartile minus
+#' the inter quartile range (IQR) or greater than  the third quartile plus the IQR.
 #'
 #' @return A list with two elements, $problem: TRUE if any outliers were found, FALSE otherwise, and
 #' $message A message describing which values in \code{v} were outliers. Note that outlier values
@@ -24,6 +22,15 @@
 #' @export
 identifyOutliers <- function(v) UseMethod("identifyOutliers")
 identifyOutliers <- checkFunction(identifyOutliers, "Identify outliers")
+
+
+#add methods to generic identifyOutliers function
+#' @export
+identifyOutliers.numeric <- function(v) identifyOutliersNI(v)
+
+#' @export
+identifyOutliers.integer <- function(v) identifyOutliersNI(v)
+
 
 
 
@@ -50,8 +57,3 @@ identifyOutliersNI <- function(v) {
                                  "identifyOutliers")
   list(problem=problem, message=outMessage)
 }
-
-#add methods to generic identifyOutliers function
-identifyOutliers.numeric <- function(v) identifyOutliersNI(v)
-identifyOutliers.integer <- function(v) identifyOutliersNI(v)
-

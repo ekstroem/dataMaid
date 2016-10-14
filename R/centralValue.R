@@ -27,6 +27,28 @@
 centralValue <- function(v) UseMethod("centralValue")
 
 
+#assign methods to generic centralValue function
+
+#' @export
+centralValue.character <- function(v) centralValueCF(v)
+
+#' @export
+centralValue.factor <- function(v) centralValueCF(v)
+
+#' @export
+centralValue.labelled <- function(v) centralValueL(v)
+
+#' @export
+centralValue.numeric <- function(v) centralValueIN(v)
+
+#' @export
+centralValue.integer <- function(v) centralValueIN(v)
+
+#' @export
+centralValue.logical <- function(v) centralValueB(v)
+
+
+
 
 ##########################################Not exported below#########################################
 
@@ -58,21 +80,6 @@ centralValueIN <- function(v) {
   v <- na.omit(v)
   list(feature="Median", result=median(v))
 }
-
-
-#assign methods to generic centralValue function
-#' @export
-centralValue.character <- function(v) centralValueCF(v)
-#' @export
-centralValue.factor <- function(v) centralValueCF(v)
-#' @export
-centralValue.labelled <- function(v) centralValueL(v)
-#' @export
-centralValue.numeric <- function(v) centralValueIN(v)
-#' @export
-centralValue.integer <- function(v) centralValueIN(v)
-#' @export
-centralValue.logical <- function(v) centralValueB(v)
 
 
 

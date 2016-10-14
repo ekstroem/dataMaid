@@ -30,6 +30,25 @@
 standardVisual <- function(v, vnam, doEval = TRUE) UseMethod("standardVisual")
 
 
+#assign methods to generic standardVisual function
+
+#' @export
+standardVisual.character <- function(v, vnam, doEval = TRUE) standardVisualCFLB(v, vnam, doEval=doEval)
+
+#' @export
+standardVisual.factor <- function(v, vnam, doEval = TRUE) standardVisualCFLB(v, vnam, doEval=doEval)
+
+#' @export
+standardVisual.labelled <- function(v, vnam, doEval = TRUE) standardVisualCFLB(v, vnam, doEval=doEval)
+
+#' @export
+standardVisual.numeric <- function(v, vnam, doEval = TRUE) standardVisualIN(v, vnam, doEval=doEval)
+
+#' @export
+standardVisual.integer <- function(v, vnam, doEval = TRUE) standardVisualIN(v, vnam, doEval=doEval)
+
+#' @export
+standardVisual.logical <- function(v, vnam, doEval = TRUE) standardVisualCFLB(v, vnam, doEval=doEval)
 
 
 
@@ -56,10 +75,3 @@ standardVisualIN <- function(v, vnam, doEval = TRUE) {
 #choice of binwidth, how does it work in hist()?
 
 
-#assign methods to generic standardVisual function
-standardVisual.character <- function(v, vnam, doEval = TRUE) standardVisualCFLB(v, vnam, doEval=doEval)
-standardVisual.factor <- function(v, vnam, doEval = TRUE) standardVisualCFLB(v, vnam, doEval=doEval)
-standardVisual.labelled <- function(v, vnam, doEval = TRUE) standardVisualCFLB(v, vnam, doEval=doEval)
-standardVisual.numeric <- function(v, vnam, doEval = TRUE) standardVisualIN(v, vnam, doEval=doEval)
-standardVisual.integer <- function(v, vnam, doEval = TRUE) standardVisualIN(v, vnam, doEval=doEval)
-standardVisual.logical <- function(v, vnam, doEval = TRUE) standardVisualCFLB(v, vnam, doEval=doEval)

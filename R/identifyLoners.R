@@ -20,6 +20,12 @@ identifyLoners <- function(v) UseMethod("identifyLoners")
 identifyLoners <- checkFunction(identifyLoners, "Identify levels with < 6 obs.")
 
 
+#add methods to generic identifyLoners function
+#' @export
+identifyLoners.factor <- function(v) identifyLonersF(v)
+#' @export
+identifyLoners.character <- function(v) identifyLonersC(v)
+
 ##########################################Not exported below#########################################
 
 
@@ -59,8 +65,3 @@ identifyLonersC <- function(v) {
 }
 
 
-#add methods to generic identifyLoners function
-#' @export
-identifyLoners.factor <- function(v) identifyLonersF(v)
-#' @export
-identifyLoners.character <- function(v) identifyLonersC(v)

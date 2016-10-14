@@ -21,6 +21,16 @@ identifyWhitespace <- function(v) UseMethod("identifyWhitespace")
 identifyWhitespace <- checkFunction(identifyWhitespace, "Identify prefixed and suffixed whitespace")
 
 
+#add methods to generic identifyWhitespace function
+
+#'@export
+identifyWhitespace.character <- function(v) identifyWhitespaceC(v)
+
+#'@export
+identifyWhitespace.factor <- function(v) identifyWhitespaceF(v)
+
+#'@export
+identifyWhitespace.labelled <- function(v) identifyWhitespaceL(v)
 
 
 ##########################################Not exported below#########################################
@@ -58,8 +68,4 @@ identifyWhitespaceL <- function(v) {
 }
 
 
-#add methods to generic identifyWhitespace function
-identifyWhitespace.character <- function(v) identifyWhitespaceC(v)
-identifyWhitespace.factor <- function(v) identifyWhitespaceF(v)
-identifyWhitespace.labelled <- function(v) identifyWhitespaceL(v)
 
