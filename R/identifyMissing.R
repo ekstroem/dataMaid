@@ -14,7 +14,7 @@
 #' FALSE otherwise, and $message A message describing which values in \code{v} were miscoded missing
 #' values. Note that only unique values are listed and that they appear in alphabetical order.
 #'
-#' @seealso \code{\link{check}}, \code{\link{checkFunction}}
+#' @seealso \code{\link{check}}, \code{\link[clean]{checkFunction}}
 #'
 #' @examples
 #'  data(testData)

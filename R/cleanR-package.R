@@ -21,6 +21,3 @@
 #' }
 #'
 "testData"
-
-#' @import methods
-NULL

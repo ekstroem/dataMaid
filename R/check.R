@@ -132,7 +132,6 @@ check.logical <- function(v, logicalChecks = defaultLogicalChecks(), ...) {
   } else return(list(list(problem = FALSE, message="")))
 }
 
-
 #' @export
 checkFunction <- function(f, description) {
   class(f) <- c("checkFunction", "function")

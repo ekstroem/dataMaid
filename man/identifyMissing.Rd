@@ -31,6 +31,6 @@ R standards. These include special words (NaN and Inf (no matter the cases)), on
 
 }
 \seealso{
-\code{\link{check}}, \code{\link{checkFunction}}
+\code{\link{check}}, \code{\link[clean]{checkFunction}}
 }
 
