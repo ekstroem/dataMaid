@@ -1,19 +1,19 @@
 #' @title A checkFunction for identifying sparsely represented values (loners)
-#' 
-#' @description A checkFunction to be called from \code{\link{check}} that identifies values that 
+#'
+#' @description A checkFunction to be called from \code{\link{check}} that identifies values that
 #' only occur less than 6 times in factor or character variables (that is, loners).
-#' 
+#'
 #' @param v A character or factor variable to check.
-#' 
+#'
 #' @return A list with two elements, $problem: TRUE if any loners were found, FALSE otherwise, and
 #' $message A message describing which values in \code{v} were loners. Note that loner values
 #' are listed only once (no matter how many time they occur) in alphabetical order.
-#' 
+#'
 #' @seealso \code{\link{check}}, \code{\link{checkFunction}}
-#' 
-#' @example 
-#'  identifyLoners(c(rep(c("a", "b", "c"), 10), "d", "d"))
-#' 
+#'
+#' @examples
+#' identifyLoners( c(rep(c("a", "b", "c"), 10), "d", "d") )
+#'
 #' @importFrom stats na.omit
 #' @export
 identifyLoners <- function(v) UseMethod("identifyLoners")
@@ -60,5 +60,7 @@ identifyLonersC <- function(v) {
 
 
 #add methods to generic identifyLoners function
+#' @export
 identifyLoners.factor <- function(v) identifyLonersF(v)
+#' @export
 identifyLoners.character <- function(v) identifyLonersC(v)
