@@ -1,17 +1,18 @@
-#' @title Produce distribution plots using \code{\link{ggplot}} from ggplot2
+#' Produce distribution plots using ggplot from ggplot2.
 #'
-#' @description Plot the distribution of a variable, depending on its data class, by use of ggplot2.
+#' Plot the distribution of a variable, depending on its data class, by use of ggplot2.
+#'
+#' For character, factor, logical and labelled variables, a barplot is produced. For numeric
+#' or integer variables, \code{standardVisual} produces a histogram instead. Note that for
+#' integer and numeric variables, all non-finite (i.e. \code{NA}, \code{NaN}, \code{Inf}) values are
+#' removed prior to plotting. For character, factor, labelled and logical variables, only \code{NA}
+#' values are removed.
+#'
 #'
 #' @param v The variable (vector) to be plotted.
 #' @param vnam The name of the variable which will appear as the title of the plot.
 #' @param doEval If TRUE, the plot itself is returned. Otherwise, the function returns
 #' a character string containing standalone R code for producing the plot.
-#' 
-#' @details For character, factor, logical and labelled variables, a barplot is produced. For numeric
-#' or integer variables, \code{standardVisual} produces a histogram instead. Note that for
-#' integer and numeric variables, all non-finite (i.e. \code{NA}, \code{NaN}, \code{Inf}) values are
-#' removed prior to plotting. For character, factor, labelled and logical variables, only \code{NA}
-#' values are removed.
 #'
 #' @examples
 #' \dontrun{

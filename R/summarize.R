@@ -1,6 +1,6 @@
-#' @title Make summary matrix
+#' Make summary matrix
 #'
-#' @description Generic shell function that produces a summary matrix for a variable \code{v},
+#' Generic shell function that produces a summary matrix for a variable \code{v},
 #' given a number of summary functions and depending on its data class.
 #'
 #' @param v The variable (vector) which is to be summarized.
@@ -37,19 +37,19 @@
 #' \code{\link{defaultCharacterDescriptions}}, \code{\link{defaultFactorDescriptions}},
 #' \code{\link{defaultLabelledDescriptions}}, \code{\link{defaultLabelledDescriptions}},
 #' \code{\link{defaultNumericDescriptions}}, \code{\link{defaultIntegerDescriptions}},
-#' \code{\link{defaultLogicalDescriptions}}, 
-#' 
-#' @examples 
-#' #Default summary for a character vector: 
+#' \code{\link{defaultLogicalDescriptions}},
+#'
+#' @examples
+#' #Default summary for a character vector:
 #'    charV <- c("a", "b", "c", "a", "a", NA, "b", "0")
 #'    summarize(charV)
-#'  
+#'
 #' #Add default description functions:
 #'    summarize(charV, descriptive = TRUE)
-#' 
+#'
 #' #Inspect default character summary functions:
 #'    defaultCharacterSummaries()
-#'    
+#'
 #' #Define a new summary function and add it to the summary for character vectors:
 #'    countZeros <- function(v) {
 #'      res <- length(which(v == 0))
@@ -71,10 +71,10 @@ summarize <- function(v, descriptive = FALSE, ...) UseMethod("summarize")
 
 
 
-#' @title Default summary functions for character variables
-#' 
-#' @description Returns vector of names of default summary functions for character variables.  
-#' 
+#' Default summary functions for character variables
+#'
+#' Returns vector of names of default summary functions for character variables.
+#'
 #' @return A list of function names (as character strings).
 #'
 #' @seealso \code{\link{defaultCharacterDescriptions}}, \code{\link{variableType}},
@@ -87,10 +87,10 @@ summarize <- function(v, descriptive = FALSE, ...) UseMethod("summarize")
 defaultCharacterSummaries <- function() c("variableType", "countMissing", "uniqueValues")
 
 
-#' @title Default description functions for character variables
-#' 
-#' @description Returns vector of names of default description functions for character variables.  
-#' 
+#' Default description functions for character variables
+#'
+#' Returns vector of names of default description functions for character variables.
+#'
 #' @return A list of function names (as character strings).
 #'
 #' @seealso \code{\link{defaultCharacterSummaries}}, \code{\link{centralValue}}
@@ -102,10 +102,10 @@ defaultCharacterSummaries <- function() c("variableType", "countMissing", "uniqu
 defaultCharacterDescriptions <- function() "centralValue"
 
 
-#' @title Default summary functions for factor variables
-#' 
-#' @description Returns vector of names of default summary functions for factor variables.  
-#' 
+#' Default summary functions for factor variables
+#'
+#' Returns vector of names of default summary functions for factor variables.
+#'
 #' @return A list of function names (as character strings).
 #'
 #' @seealso \code{\link{defaultFactorDescriptions}}, \code{\link{variableType}},
@@ -118,10 +118,10 @@ defaultCharacterDescriptions <- function() "centralValue"
 defaultFactorSummaries <- function() c("variableType", "countMissing", "uniqueValues")
 
 
-#' @title Default description functions for factor variables
-#' 
-#' @description Returns vector of names of default description functions for factor variables.  
-#' 
+#' Default description functions for factor variables
+#'
+#' Returns vector of names of default description functions for factor variables.
+#'
 #' @return A list of function names (as character strings).
 #'
 #' @seealso \code{\link{defaultFactorSummaries}}, \code{\link{centralValue}}
@@ -133,10 +133,10 @@ defaultFactorSummaries <- function() c("variableType", "countMissing", "uniqueVa
 defaultFactorDescriptions <- function() "centralValue"
 
 
-#' @title Default summary functions for labelled variables
-#' 
-#' @description Returns vector of names of default summary functions for labelled variables.  
-#' 
+#' Default summary functions for labelled variables
+#'
+#' Returns vector of names of default summary functions for labelled variables.
+#'
 #' @return A list of function names (as character strings).
 #'
 #' @seealso \code{\link{defaultLabelledDescriptions}}, \code{\link{variableType}},
@@ -149,10 +149,10 @@ defaultFactorDescriptions <- function() "centralValue"
 defaultLabelledSummaries <- function() c("variableType", "countMissing", "uniqueValues")
 
 
-#' @title Default description functions for labelled variables
-#' 
-#' @description Returns vector of names of default description functions for labelled variables.  
-#' 
+#' Default description functions for labelled variables
+#'
+#' Returns vector of names of default description functions for labelled variables.
+#'
 #' @return A list of function names (as character strings).
 #'
 #' @seealso \code{\link{defaultLabelledSummaries}}, \code{\link{centralValue}}
@@ -164,10 +164,10 @@ defaultLabelledSummaries <- function() c("variableType", "countMissing", "unique
 defaultLabelledDescriptions <- function() "centralValue"
 
 
-#' @title Default summary functions for numeric variables
-#' 
-#' @description Returns vector of names of default summary functions for numeric variables.  
-#' 
+#' Default summary functions for numeric variables
+#'
+#' Returns vector of names of default summary functions for numeric variables.
+#'
 #' @return A list of function names (as character strings).
 #'
 #' @seealso \code{\link{defaultNumericDescriptions}}, \code{\link{variableType}},
@@ -180,10 +180,10 @@ defaultLabelledDescriptions <- function() "centralValue"
 defaultNumericSummaries <- function() c("variableType", "countMissing", "uniqueValues")
 
 
-#' @title Default description functions for numeric variables
-#' 
-#' @description Returns vector of names of default description functions for numeric variables.  
-#' 
+#' Default description functions for numeric variables
+#'
+#' Returns vector of names of default description functions for numeric variables.
+#'
 #' @return A list of function names (as character strings).
 #'
 #' @seealso \code{\link{defaultNumericSummaries}}, \code{\link{centralValue}},
@@ -196,10 +196,10 @@ defaultNumericSummaries <- function() c("variableType", "countMissing", "uniqueV
 defaultNumericDescriptions <- function() c("centralValue", "quartiles", "minMax")
 
 
-#' @title Default summary functions for integer variables
-#' 
-#' @description Returns vector of names of default summary functions for integer variables.  
-#' 
+#' Default summary functions for integer variables
+#'
+#' Returns vector of names of default summary functions for integer variables.
+#'
 #' @return A list of function names (as character strings).
 #'
 #' @seealso \code{\link{defaultIntegerDescriptions}}, \code{\link{variableType}},
@@ -212,13 +212,13 @@ defaultNumericDescriptions <- function() c("centralValue", "quartiles", "minMax"
 defaultIntegerSummaries <- function() c("variableType", "countMissing", "uniqueValues")
 
 
-#' @title Default description functions for integer variables
-#' 
-#' @description Returns vector of names of default description functions for integer variables.  
-#' 
+#' Default description functions for integer variables
+#'
+#' Returns vector of names of default description functions for integer variables.
+#'
 #' @return A list of function names (as character strings).
 #'
-#' @seealso \code{\link{defaultIntgerSummaries}}, \code{\link{centralValue}},
+#' @seealso \code{\link{defaultIntegerSummaries}}, \code{\link{centralValue}},
 #' \code{\link{quartiles}}, \code{\link{minMax}}
 #'
 #' @examples
@@ -228,10 +228,10 @@ defaultIntegerSummaries <- function() c("variableType", "countMissing", "uniqueV
 defaultIntegerDescriptions <- function() c("centralValue", "quartiles", "minMax")
 
 
-#' @title Default summary functions for logical variables
-#' 
-#' @description Returns vector of names of default summary functions for logical variables.  
-#' 
+#' Default summary functions for logical variables
+#'
+#' Returns vector of names of default summary functions for logical variables.
+#'
 #' @return A list of function names (as character strings).
 #'
 #' @seealso \code{\link{defaultLogicalDescriptions}}, \code{\link{variableType}},
@@ -244,10 +244,10 @@ defaultIntegerDescriptions <- function() c("centralValue", "quartiles", "minMax"
 defaultLogicalSummaries <- function() c("variableType", "countMissing", "uniqueValues")
 
 
-#' @title Default description functions for logical variables
-#' 
-#' @description Returns vector of names of default description functions for logical variables.  
-#' 
+#' Default description functions for logical variables
+#'
+#' Returns vector of names of default description functions for logical variables.
+#'
 #' @return A list of function names (as character strings).
 #'
 #' @seealso \code{\link{defaultLogicalSummaries}}, \code{\link{centralValue}}
@@ -262,7 +262,7 @@ defaultLogicalDescriptions <- function() "centralValue"
 #methods for each data type
 
 #' @export
-summarize.character <- function(v, descriptive = FALSE, 
+summarize.character <- function(v, descriptive = FALSE,
                                 characterSummaries = defaultCharacterSummaries(),
                                 characterDescriptions = defaultCharacterDescriptions(), ...) {
   characterCalls <- if (descriptive) c(characterSummaries, characterDescriptions)
@@ -272,7 +272,7 @@ summarize.character <- function(v, descriptive = FALSE,
 
 
 #' @export
-summarize.factor <- function(v, descriptive = FALSE, 
+summarize.factor <- function(v, descriptive = FALSE,
                              factorSummaries = defaultFactorSummaries(),
                              factorDescriptions = defaultFactorDescriptions(), ...) {
   factorCalls <- if (descriptive) c(factorSummaries, factorDescriptions)
@@ -282,7 +282,7 @@ summarize.factor <- function(v, descriptive = FALSE,
 
 
 #' @export
-summarize.labelled <- function(v, descriptive = FALSE, 
+summarize.labelled <- function(v, descriptive = FALSE,
                                labelledSummaries = defaultLabelledSummaries(),
                                labelledDescriptions = defaultLabelledDescriptions(), ...) {
   labelledCalls <- if (descriptive) c(labelledSummaries, labelledDescriptions)
@@ -292,7 +292,7 @@ summarize.labelled <- function(v, descriptive = FALSE,
 
 
 #' @export
-summarize.numeric <- function(v, descriptive = FALSE, 
+summarize.numeric <- function(v, descriptive = FALSE,
                               numericSummaries = defaultNumericSummaries(),
                               numericDescriptions = defaultNumericDescriptions(), ...) {
   numericCalls <- if (descriptive) c(numericSummaries, numericDescriptions)
@@ -302,7 +302,7 @@ summarize.numeric <- function(v, descriptive = FALSE,
 
 
 #' @export
-summarize.integer <- function(v, descriptive = FALSE,  
+summarize.integer <- function(v, descriptive = FALSE,
                               integerSummaries = defaultIntegerSummaries(),
                               integerDescriptions = defaultIntegerDescriptions(), ...) {
   integerCalls <- if (descriptive) c(integerSummaries, integerDescriptions)
@@ -312,7 +312,7 @@ summarize.integer <- function(v, descriptive = FALSE,
 
 
 #' @export
-summarize.logical <- function(v, descriptive = FALSE, 
+summarize.logical <- function(v, descriptive = FALSE,
                               logicalSummaries = defaultLogicalSummaries(),
                               logicalDescriptions = defaultLogicalDescriptions(), ...) {
   logicalCalls <- if (descriptive) c(logicalSummaries, logicalDescriptions)

@@ -2,7 +2,7 @@
 % Please edit documentation in R/standardVisual.R
 \name{standardVisual}
 \alias{standardVisual}
-\title{Produce distribution plots using \code{\link{ggplot}} from ggplot2}
+\title{Produce distribution plots using ggplot from ggplot2.}
 \usage{
 standardVisual(v, vnam, doEval = TRUE)
 }

@@ -25,12 +25,12 @@ R standards. These include special words (NaN and Inf (no matter the cases)), on
 ("", " ", "-", "NA" miscoded as character).
 }
 \examples{
- data(testData)
- testData$miscodedMissingVar
- identifyMissing(testData$miscodedMissingVar)
+##data(testData)
+##testData$miscodedMissingVar
+##identifyMissing(testData$miscodedMissingVar)
 
 }
 \seealso{
-\code{\link{check}}, \code{\link[clean]{checkFunction}}
+\code{\link{check}}, \code{\link{checkFunction}}
 }
 

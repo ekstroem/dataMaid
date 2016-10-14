@@ -43,16 +43,16 @@ however that it should take a vector as argument and return a list on the form
 an example of a summary function.
 }
 \examples{
-#Default summary for a character vector: 
+#Default summary for a character vector:
    charV <- c("a", "b", "c", "a", "a", NA, "b", "0")
    summarize(charV)
- 
+
 #Add default description functions:
    summarize(charV, descriptive = TRUE)
 
 #Inspect default character summary functions:
    defaultCharacterSummaries()
-   
+
 #Define a new summary function and add it to the summary for character vectors:
    countZeros <- function(v) {
      res <- length(which(v == 0))

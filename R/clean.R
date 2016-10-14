@@ -25,6 +25,9 @@
 #' @param integerChecks a list of error-checking functions to apply to integer vectors
 #' @param numericChecks a list of error-checking functions to apply to integer vectors
 #' @param logicalChecks a list of error-checking functions to apply to integer vectors
+#' @param allChecks Vector of function names that should be used as check-functions for all variable types.
+#' See ???? for more details OR SOMETHING? Note that this option overwrites the options characterChekcs,
+#' factorChecks, etc.
 #' @param smartNum If TRUE, numeric and integer variables with less than maxLevels (defaults to 5) unique
 #' values are treated as factor variables in the checking, visualization and summary functions. A
 #' message is printed in the data summary as well.
@@ -37,15 +40,6 @@
 #' @param vol Extra text string that is appended on the end of the output file name(s). For example, if the data
 #' set is called "myData", no file argument is supplied and vol="2", the output file will be called
 #' "cleanR_myData2.Rmd"
-#' @param characterChecks STUFF
-#' @param factorChecks STUFF
-#' @param labelledChecks STUFF
-#' @param numericChecks STUFF
-#' @param integerChecks STUFF
-#' @param logicalChecks STUFF
-#' @param allChecks Vector of function names that should be used as check-functions for all variable types.
-#' See ???? for more details OR SOMETHING? Note that this option overwrites the options characterChekcs,
-#' factorChecks, etc.
 #' @param characterSummaries STUFF
 #' @param factorSummaries STUFF
 #' @param labelledSummaries STUFF
@@ -95,6 +89,7 @@
 #' clean(testData, characterChecks=c(defaultCharacterChecks(), "characterFoo"))
 #' }
 #'
+#' @importFrom methods is
 #' @importFrom pander pander_return panderOptions pandoc.table.return
 #' @export
 clean <- function(o,
@@ -625,6 +620,8 @@ doSmartNum <- function(v, maxLevels = 5, ...) {
   v
 }
 
+
+#' @export
 smartNum <- function(v) {
   oriClass <- class(v)
   v <- factor(v)

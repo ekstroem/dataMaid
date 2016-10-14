@@ -17,7 +17,7 @@ defaultIntegerDescriptions()
 
 }
 \seealso{
-\code{\link{defaultIntgerSummaries}}, \code{\link{centralValue}},
+\code{\link{defaultIntegerSummaries}}, \code{\link{centralValue}},
 \code{\link{quartiles}}, \code{\link{minMax}}
 }
 

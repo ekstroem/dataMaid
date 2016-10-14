@@ -19,11 +19,9 @@ A checkFunction to be called from \code{\link{check}} that identifies outlier va
 in a numeric/integer variable.
 }
 \details{
-DOES LATEX WORK HERE? IT SHOULD, SHOULDN'T IT?
 Outliers are defined in the style of Turkey Boxplots (consistent with the
-\code{\link{boxplot}} function), i.e. as values v such that $v < Q_1 - 1.5*IQR$ or
-$v > Q_3 + 1.5*IQR$ where $Q_1$, $Q_3$ and IQR is the 1st quartile,
-3rd quartile and inter quartile range, respectively.
+\code{\link{boxplot}} function), i.e. as values  that are smaller than the 1st quartile minus
+the inter quartile range (IQR) or greater than  the third quartile plus the IQR.
 }
 \examples{
  identifyOutliers(c(1:10, 200, 200, 700))

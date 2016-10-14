@@ -1,6 +1,6 @@
-#' @title A checkFunction for identifying miscoded missing values.
+#' A checkFunction for identifying miscoded missing values.
 #'
-#' @description A checkFunction to be called from \code{\link{check}} that identifies values that
+#' A checkFunction to be called from \code{\link{check}} that identifies values that
 #' appear to be miscoded missing values.
 #'
 #' @param v A variable to check.
@@ -14,12 +14,12 @@
 #' FALSE otherwise, and $message A message describing which values in \code{v} were miscoded missing
 #' values. Note that only unique values are listed and that they appear in alphabetical order.
 #'
-#' @seealso \code{\link{check}}, \code{\link[clean]{checkFunction}}
+#' @seealso \code{\link{check}}, \code{\link{checkFunction}}
 #'
 #' @examples
-#'  data(testData)
-#'  testData$miscodedMissingVar
-#'  identifyMissing(testData$miscodedMissingVar)
+#' ##data(testData)
+#' ##testData$miscodedMissingVar
+#' ##identifyMissing(testData$miscodedMissingVar)
 #'
 #' @importFrom stats na.omit
 #' @export

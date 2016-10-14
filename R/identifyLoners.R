@@ -1,6 +1,6 @@
-#' @title A checkFunction for identifying sparsely represented values (loners)
+#' A checkFunction for identifying sparsely represented values (loners)
 #'
-#' @description A checkFunction to be called from \code{\link{check}} that identifies values that
+#' A checkFunction to be called from \code{\link{check}} that identifies values that
 #' only occur less than 6 times in factor or character variables (that is, loners).
 #'
 #' @param v A character or factor variable to check.

@@ -1,6 +1,6 @@
-#' @title A checkFunction for identifying outliers
+#' A checkFunction for identifying outliers
 #'
-#' @description A checkFunction to be called from \code{\link{check}} that identifies outlier values
+#' A checkFunction to be called from \code{\link{check}} that identifies outlier values
 #' in a numeric/integer variable.
 #'
 #' @param v A character or factor variable to check

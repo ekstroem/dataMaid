@@ -19,13 +19,6 @@ a character string containing standalone R code for producing the plot.}
 Plot the distribution of a variable, depending on its data class, using the base R
 plotting functions.
 }
-\details{
-For character, factor, logical and labelled variables, a barplot is produced. For numeric
-or integer variables, \code{basicVisual} produces a histogram instead. Note that for
-integer and numeric variables, all non-finite (i.e. \code{NA}, \code{NaN}, \code{Inf}) values are
-removed prior to plotting. For character, factor, labelled and logical variables, only \code{NA}
-values are removed.
-}
 \examples{
  \dontrun{
  #Save a variable
