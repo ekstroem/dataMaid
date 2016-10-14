@@ -18,6 +18,25 @@
 uniqueValues <- function(v) UseMethod("uniqueValues")
 
 
+#assign methods to generic uniqueValues function
+
+#' @export
+uniqueValues.character <- function(v) uniqueValuesCFLBI(v)
+
+#' @export
+uniqueValues.factor <- function(v) uniqueValuesCFLBI(v)
+
+#' @export
+uniqueValues.labelled <- function(v) uniqueValuesCFLBI(v) #?PROBLEM?
+
+#' @export
+uniqueValues.numeric <- function(v) uniqueValuesN(v)
+
+#' @export
+uniqueValues.integer <- function(v) uniqueValuesCFLBI(v)
+
+#' @export
+uniqueValues.logical <- function(v) uniqueValuesCFLBI(v)
 
 
 ##########################################Not exported below#########################################
@@ -39,10 +58,3 @@ uniqueValuesN <- function(v) {
 }
 
 
-#assign methods to generic uniqueValues function
-uniqueValues.character <- function(v) uniqueValuesCFLBI(v)
-uniqueValues.factor <- function(v) uniqueValuesCFLBI(v)
-uniqueValues.labelled <- function(v) uniqueValuesCFLBI(v) #?PROBLEM?
-uniqueValues.numeric <- function(v) uniqueValuesN(v)
-uniqueValues.integer <- function(v) uniqueValuesCFLBI(v)
-uniqueValues.logical <- function(v) uniqueValuesCFLBI(v)

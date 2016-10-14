@@ -259,6 +259,68 @@ defaultLogicalSummaries <- function() c("variableType", "countMissing", "uniqueV
 defaultLogicalDescriptions <- function() "centralValue"
 
 
+#methods for each data type
+
+#' @export
+summarize.character <- function(v, descriptive = FALSE, 
+                                characterSummaries = defaultCharacterSummaries(),
+                                characterDescriptions = defaultCharacterDescriptions(), ...) {
+  characterCalls <- if (descriptive) c(characterSummaries, characterDescriptions)
+  else characterSummaries
+  sumMatGenerator(v, characterCalls)
+}
+
+
+#' @export
+summarize.factor <- function(v, descriptive = FALSE, 
+                             factorSummaries = defaultFactorSummaries(),
+                             factorDescriptions = defaultFactorDescriptions(), ...) {
+  factorCalls <- if (descriptive) c(factorSummaries, factorDescriptions)
+  else factorSummaries
+  sumMatGenerator(v, factorCalls)
+}
+
+
+#' @export
+summarize.labelled <- function(v, descriptive = FALSE, 
+                               labelledSummaries = defaultLabelledSummaries(),
+                               labelledDescriptions = defaultLabelledDescriptions(), ...) {
+  labelledCalls <- if (descriptive) c(labelledSummaries, labelledDescriptions)
+  else labelledSummaries
+  sumMatGenerator(v, labelledCalls)
+}
+
+
+#' @export
+summarize.numeric <- function(v, descriptive = FALSE, 
+                              numericSummaries = defaultNumericSummaries(),
+                              numericDescriptions = defaultNumericDescriptions(), ...) {
+  numericCalls <- if (descriptive) c(numericSummaries, numericDescriptions)
+  else numericSummaries
+  sumMatGenerator(v, numericCalls)
+}
+
+
+#' @export
+summarize.integer <- function(v, descriptive = FALSE,  
+                              integerSummaries = defaultIntegerSummaries(),
+                              integerDescriptions = defaultIntegerDescriptions(), ...) {
+  integerCalls <- if (descriptive) c(integerSummaries, integerDescriptions)
+  else integerSummaries
+  sumMatGenerator(v, integerCalls)
+}
+
+
+#' @export
+summarize.logical <- function(v, descriptive = FALSE, 
+                              logicalSummaries = defaultLogicalSummaries(),
+                              logicalDescriptions = defaultLogicalDescriptions(), ...) {
+  logicalCalls <- if (descriptive) c(logicalSummaries, logicalDescriptions)
+  else logicalSummaries
+  sumMatGenerator(v, logicalCalls)
+}
+
+
 
 
 
@@ -275,61 +337,6 @@ sumMatGenerator <- function(v, summaries) {
     outMat[i, "Result"] <- res$result
   }
   outMat
-}
-
-
-#methods for each data type
-summarize.character <- function(v, descriptive = FALSE, 
-                                characterSummaries = defaultCharacterSummaries(),
-                                characterDescriptions = defaultCharacterDescriptions(), ...) {
-  characterCalls <- if (descriptive) c(characterSummaries, characterDescriptions)
-                    else characterSummaries
-  sumMatGenerator(v, characterCalls)
-}
-
-
-summarize.factor <- function(v, descriptive = FALSE, 
-                             factorSummaries = defaultFactorSummaries(),
-                             factorDescriptions = defaultFactorDescriptions(), ...) {
-  factorCalls <- if (descriptive) c(factorSummaries, factorDescriptions)
-                 else factorSummaries
-  sumMatGenerator(v, factorCalls)
-}
-
-
-summarize.labelled <- function(v, descriptive = FALSE, 
-                               labelledSummaries = defaultLabelledSummaries(),
-                               labelledDescriptions = defaultLabelledDescriptions(), ...) {
-  labelledCalls <- if (descriptive) c(labelledSummaries, labelledDescriptions)
-                  else labelledSummaries
-  sumMatGenerator(v, labelledCalls)
-}
-
-
-summarize.numeric <- function(v, descriptive = FALSE, 
-                              numericSummaries = defaultNumericSummaries(),
-                              numericDescriptions = defaultNumericDescriptions(), ...) {
-  numericCalls <- if (descriptive) c(numericSummaries, numericDescriptions)
-                  else numericSummaries
-  sumMatGenerator(v, numericCalls)
-}
-
-
-summarize.integer <- function(v, descriptive = FALSE,  
-                              integerSummaries = defaultIntegerSummaries(),
-                              integerDescriptions = defaultIntegerDescriptions(), ...) {
-  integerCalls <- if (descriptive) c(integerSummaries, integerDescriptions)
-                  else integerSummaries
-  sumMatGenerator(v, integerCalls)
-}
-
-
-summarize.logical <- function(v, descriptive = FALSE, 
-                              logicalSummaries = defaultLogicalSummaries(),
-                              logicalDescriptions = defaultLogicalDescriptions(), ...) {
-  logicalCalls <- if (descriptive) c(logicalSummaries, logicalDescriptions)
-                  else logicalSummaries
-  sumMatGenerator(v, logicalCalls)
 }
 
 

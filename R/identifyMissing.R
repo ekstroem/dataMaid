@@ -28,6 +28,23 @@ identifyMissing <- checkFunction(identifyMissing, "Identify miscoded missing val
 
 
 
+
+#Add methods to generic identifyMiss
+#' @export
+identifyMissing.character <- function(v) identifyMissingCF(v)
+#' @export
+identifyMissing.factor <- function(v) identifyMissingCF(v)
+#' @export
+identifyMissing.labelled <- function(v) identifyMissingL(v)
+#' @export
+identifyMissing.numeric <- function(v) identifyMissingNI(v)
+#' @export
+identifyMissing.integer <- function(v) identifyMissingNI(v)
+#' @export
+identifyMissing.logical <- function(v) identifyMissingB(v)
+
+
+
 ##########################################Not exported below#########################################
 
 
@@ -130,18 +147,3 @@ identifyMissingNI <- function(v) {
 identifyMissingB <- function(v) {
   list(problem = FALSE, message = "")
 }
-
-#Add methods to generic identifyMiss
-#' @export
-identifyMissing.character <- function(v) identifyMissingCF(v)
-#' @export
-identifyMissing.factor <- function(v) identifyMissingCF(v)
-#' @export
-identifyMissing.labelled <- function(v) identifyMissingL(v)
-#' @export
-identifyMissing.numeric <- function(v) identifyMissingNI(v)
-#' @export
-identifyMissing.integer <- function(v) identifyMissingNI(v)
-#' @export
-identifyMissing.logical <- function(v) identifyMissingB(v)
-

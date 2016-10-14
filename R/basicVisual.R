@@ -30,6 +30,26 @@
 basicVisual <- function(v, vnam, doEval = TRUE) UseMethod("basicVisual")
 
 
+#assign methods to generic standardVisual function
+
+#' @export
+basicVisual.character <- function(v, vnam, doEval = TRUE) basicVisualCFLB(v, vnam, doEval=doEval)
+
+#' @export
+basicVisual.factor <- function(v, vnam, doEval = TRUE) basicVisualCFLB(v, vnam, doEval=doEval)
+
+#' @export
+basicVisual.labelled <- function(v, vnam, doEval = TRUE) basicVisualCFLB(v, vnam, doEval=doEval)
+
+#' @export
+basicVisual.numeric <- function(v, vnam, doEval = TRUE) basicVisualIN(v, vnam, doEval=doEval)
+
+#' @export
+basicVisual.integer <- function(v, vnam, doEval = TRUE) basicVisualIN(v, vnam, doEval=doEval)
+
+#' @export
+basicVisual.logical <- function(v, vnam, doEval = TRUE) basicVisualCFLB(v, vnam, doEval=doEval)
+
 
 
 
@@ -53,13 +73,5 @@ basicVisualIN <- function(v, vnam, doEval = TRUE) {
     return(eval(thisCall))
   } else return(deparse(thisCall))
 }
-
-#assign methods to generic standardVisual function
-basicVisual.character <- function(v, vnam, doEval = TRUE) basicVisualCFLB(v, vnam, doEval=doEval)
-basicVisual.factor <- function(v, vnam, doEval = TRUE) basicVisualCFLB(v, vnam, doEval=doEval)
-basicVisual.labelled <- function(v, vnam, doEval = TRUE) basicVisualCFLB(v, vnam, doEval=doEval)
-basicVisual.numeric <- function(v, vnam, doEval = TRUE) basicVisualIN(v, vnam, doEval=doEval)
-basicVisual.integer <- function(v, vnam, doEval = TRUE) basicVisualIN(v, vnam, doEval=doEval)
-basicVisual.logical <- function(v, vnam, doEval = TRUE) basicVisualCFLB(v, vnam, doEval=doEval)
 
 
