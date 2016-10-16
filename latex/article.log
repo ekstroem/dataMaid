@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.11.26)  11 OCT 2016 03:46
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.11.26)  15 OCT 2016 02:10
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1124,73 +1124,485 @@ Overfull \hbox (5.47499pt too wide) has occurred while \output is active
  []
 
 [2]
+! Undefined control sequence.
+l.268 ... In fact, the main function of cleanR, \R
+                                                  {clean}, is mainly a tool ...
+
+? 
+! Undefined control sequence.
+l.268 ..., summary- and visualizaion functions \hl
+                                                  {as described... blabla}. ...
+
+? 
+! Undefined control sequence.
+l.268 ... - depending on the arguments given to \R
+                                                  {clean}. This section cons...
+
+? 
+! Undefined control sequence.
+l.268 ...view of how contents are controlled in \R
+                                                  {cleanR} in terms of what ...
+
+? 
+
 Overfull \hbox (5.47499pt too wide) has occurred while \output is active
 [] \T1/aer/m/n/10.95 3
  []
 
 [3]
+! Undefined control sequence.
+l.271 ...are three stages in which this occurs \hl
+                                                  {(with ref. to figure/flow...
 
-Package xcolor Warning: Incompatible color definition on input line 269.
+? 
+! Undefined control sequence.
+l.275 ...m In the multivariate visuzalizations \hl
+                                                  {Or whatever, in the stuff...
 
-
-Package xcolor Warning: Incompatible color definition on input line 269.
-
-LaTeX Font Info:    Font shape `T1/pzc/m/n' in size <13> not available
-(Font)              Font shape `T1/pzc/mb/it' tried instead on input line 269.
-
-Package xcolor Warning: Incompatible color definition on input line 269.
-
-
-Package xcolor Warning: Incompatible color definition on input line 269.
-
-
-Package xcolor Warning: Incompatible color definition on input line 269.
-
+? 
 
 Overfull \hbox (5.47499pt too wide) has occurred while \output is active
 \T1/aer/m/n/10.95 4 []
  []
 
 [4]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 269.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 269.
- (./article.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 269.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 269.
-Package rerunfilecheck Info: File `article.out' has not changed.
-(rerunfilecheck)             Checksum: 8A32098A03F43CBCA6B66FC4C17D7670;458.
+! Undefined control sequence.
+l.277 ...ing appropriate function parameters in \R
+                                                  {clean}. In the above, we ...
 
+? 
+! Undefined control sequence.
+l.277 ...In the above, we presented the default \R
+                                                  {cleanR} settings and how ...
+
+? 
+! Undefined control sequence.
+l.277 ...isualizations, more control is needed. \R
+                                                  {cleanR} uses three differ...
+
+? 
+! Undefined control sequence.
+l.277 ...orming all stages in the above, namely \R
+                                                  {summaryFunction}s, \R{vis...
+
+? 
+! Undefined control sequence.
+l.277 ...he above, namely \R{summaryFunction}s, \R
+                                                  {visualFunction}s and \R{c...
+
+? 
+! Undefined control sequence.
+l.277 ...aryFunction}s, \R{visualFunction}s and \R
+                                                  {checkFunction}s. They eac...
+
+? 
+! Undefined control sequence.
+l.277 ...nstances of the functions are build as \R
+                                                  {S3} generics with methods...
+
+? 
+! Undefined control sequence.
+l.277 ... understanding how to construct proper \R
+                                                  {summaryFunction}s, \R{vis...
+
+? 
+! Undefined control sequence.
+l.277 ...construct proper \R{summaryFunction}s, \R
+                                                  {visualFunction}s and \R{c...
+
+? 
+! Undefined control sequence.
+l.277 ...aryFunction}s, \R{visualFunction}s and \R
+                                                  {checkFunction}s, the enti...
+
+? 
+! Undefined control sequence.
+l.277 ...Function}s, the entire contents of the \R
+                                                  {cleanR} output is at your...
+
+? 
+
+Underfull \hbox (badness 10000) in paragraph at lines 277--278
+
+ []
+
+! Undefined control sequence.
+l.279 \hl
+         {Something like a figure that gives an overview of all summaryFunct...
+
+? 
+! Undefined control sequence.
+l.283 Though \R
+               {cleanR} provides a special class for \R{summaryFunction}s, t...
+
+? 
+! Undefined control sequence.
+l.283 ...R{cleanR} provides a special class for \R
+                                                  {summaryFunction}s, there ...
+
+? 
+! Undefined control sequence.
+l.290 ...functions by converting them to proper \R
+                                                  {summaryFunction} objects:
+? 
+! Undefined control sequence.
+l.295 ...adds the new function to the output of \R
+                                                  {allSummaryFunctions()}. N...
+
+? 
+! Undefined control sequence.
+l.295 ...f \R{allSummaryFunctions()}. Note that \R
+                                                  {v} is a vector and that \...
+
+? 
+! Undefined control sequence.
+l.295 .... Note that \R{v} is a vector and that \R
+                                                  {res} should be either a c...
+
+? 
+! Undefined control sequence.
+l.295 ...ot of different things can go into the \R
+                                                  {summaryFunction} template...
+
+? 
+! Undefined control sequence.
+l.295 ..., and leaving tests and checks for the \R
+                                                  {checkFunction}s (presente...
+
+? 
+! Undefined control sequence.
+<recently read> \R 
+                   
+l.298 \R
+        {visualFunction}s are the functions that produce the figures of a \R...
+
+? 
+! Undefined control sequence.
+l.298 ...unctions that produce the figures of a \R
+                                                  {cleanR} output document. ...
+
+? 
+! Undefined control sequence.
+l.298 ...standalone code for plots in order for \R
+                                                  {clean} to build standalon...
+
+? 
+
+Overfull \hbox (5.47499pt too wide) has occurred while \output is active
+[] \T1/aer/m/n/10.95 5
+ []
+
+[5]
+! Undefined control sequence.
+l.311 In this function, \R
+                          {v} is the variable to be visualized, \R{vnam} is ...
+
+? 
+! Undefined control sequence.
+l.311 ...R{v} is the variable to be visualized, \R
+                                                  {vnam} is its name (which ...
+
+? 
+! Undefined control sequence.
+l.311 ...e (which should generally be passed to \R
+                                                  {title} or \R{main} argume...
+
+? 
+! Undefined control sequence.
+l.311 ...ld generally be passed to \R{title} or \R
+                                                  {main} arguments in plotti...
+
+? 
+! Undefined control sequence.
+l.311 ...} arguments in plotting functions) and \R
+                                                  {doEval} controls whether ...
+
+? 
+! Undefined control sequence.
+l.311 ...trols whether the output is a plot (if \R
+                                                  {TRUE}) or a character str...
+
+? 
+! Undefined control sequence.
+l.311 ...andalone code for producing a plot (if \R
+                                                  {FALSE}). The latter \R{do...
+
+? 
+! Undefined control sequence.
+l.311 ...cing a plot (if \R{FALSE}). The latter \R
+                                                  {doEval} setting is not st...
+
+? 
+! Undefined control sequence.
+l.311 ... not strictly necessary for its use in \R
+                                                  {clean}, but it makes it e...
+
+? 
+! Undefined control sequence.
+l.311 ... that all the parameters listed above, \R
+                                                  {v}, \R{vnam} and \R{doEva...
+
+? 
+! Undefined control sequence.
+l.311 ...ll the parameters listed above, \R{v}, \R
+                                                  {vnam} and \R{doEval}, are...
+
+? 
+! Undefined control sequence.
+l.311 ...ters listed above, \R{v}, \R{vnam} and \R
+                                                  {doEval}, are mandatory, s...
+
+? 
+! Undefined control sequence.
+l.311 ...datory, so they should be left as is (\hl
+                                                  {as are?}), even if you do...
+
+? 
+! Undefined control sequence.
+l.311 ...f you do not want to use them. As with \R
+                                                  {summaryFunction}s, an ove...
+
+? 
+! Undefined control sequence.
+l.311 ...nction}s, an overview of all available \R
+                                                  {visualFunction}s in the e...
+
+? 
+! Undefined control sequence.
+l.319 ...iew of all plotting options applied on \R
+                                                  {v} is produced and opened...
+
+? 
+! Undefined control sequence.
+l.319 ... a html document for easy comparison. \hl
+                                                  {Should we mention the sid...
+
+? 
+! Undefined control sequence.
+l.323 The last, but also most important, \R
+                                           {cleanR} function type is the \R{...
+
+? 
+! Undefined control sequence.
+l.323 ...rtant, \R{cleanR} function type is the \R
+                                                  {checkFunction}. These are...
+
+? 
+! Undefined control sequence.
+l.323 ...aning process in the precheck stage. A \R
+                                                  {checkFunction} can be wri...
+
+? 
+
+Overfull \hbox (5.47499pt too wide) has occurred while \output is active
+\T1/aer/m/n/10.95 6 []
+ []
+
+[6]
+! Undefined control sequence.
+l.343 Only the input parameter (\R
+                                  {v}) and the output format strictly has to...
+
+? 
+! Undefined control sequence.
+l.343 ...structure. However, we recommend using \R
+                                                  {messageGenerator} for con...
+
+? 
+! Undefined control sequence.
+l.343 ...nerator} for consistent styling of all \R
+                                                  {checkFunction} messages. ...
+
+? 
+! Undefined control sequence.
+l.343 ...is function simply pastes together the \R
+                                                  {problemMessage} and the \...
+
+? 
+! Undefined control sequence.
+l.343 ...ogether the \R{problemMessage} and the \R
+                                                  {problemValues}, with the ...
+
+? 
+! Undefined control sequence.
+l.343 ...t of character escaping, so opting for \R
+                                                  {messageGenerator} really ...
+
+? 
+! Undefined control sequence.
+l.345 While the descriptions of \R
+                                  {summaryFunction}s and \R{visualFunction}s...
+
+? 
+! Undefined control sequence.
+l.345 ...scriptions of \R{summaryFunction}s and \R
+                                                  {visualFunction}s are only...
+
+? 
+! Undefined control sequence.
+l.345 ...ion}s are only for internal use in the \R
+                                                  {allSummaryFunctions()} an...
+
+? 
+! Undefined control sequence.
+l.345 ...e in the \R{allSummaryFunctions()} and \R
+                                                  {allVisualFunctions()} out...
+
+? 
+! Undefined control sequence.
+l.345 ...ualFunctions()} outputs, respectively, \R
+                                                  {checkFunction} descriptio...
+
+? 
+! Undefined control sequence.
+l.345 ...scriptions are actually visible in the \R
+                                                  {cleanR} output document. ...
+
+? 
+! Undefined control sequence.
+l.345 ...rief descriptions presented in Part 1 \hl
+                                                  {eh? Is this clear? Whatev...
+
+? 
+! Undefined control sequence.
+l.345 ...he above} in the output document. If a \R
+                                                  {checkFunction} does not h...
+
+? 
+! Undefined control sequence.
+l.345 ...(for instance, if it is just a regular \R
+                                                  {function} using the \R{ch...
+
+? 
+! Undefined control sequence.
+l.345 ... just a regular \R{function} using the \R
+                                                  {checkFunction} input/outp...
+
+? 
+! Undefined control sequence.
+<recently read> \hl 
+                    
+l.353 \hl
+         {Something about how to control what is printed where. Should be mu...
+
+? 
+! Undefined control sequence.
+<recently read> \hl 
+                    
+l.362 \hl
+         {I feel like we maybe need yet another section about customization....
+
+? 
+LaTeX Font Info:    Try loading font information for TS1+aer on input line 364.
+
+(/Users/cld189/Library/texmf/tex/latex/Sweave/tex/latex/ts1aer.fd
+File: ts1aer.fd 
+)
+LaTeX Font Info:    Font shape `TS1/aer/m/n' in size <10.95> not available
+(Font)              Font shape `TS1/cmr/m/n' tried instead on input line 364.
+
+! Undefined control sequence.
+<recently read> \hl 
+                    
+l.371 \hl
+         {Maybe use the examples from the documentation to construct new sum...
+
+? 
+
+Overfull \hbox (5.47499pt too wide) has occurred while \output is active
+[] \T1/aer/m/n/10.95 7
+ []
+
+[7]
+! Undefined control sequence.
+<recently read> \hl 
+                    
+l.374 \hl
+         { ...  introduced by discrepancy between what I say we have done an...
+
+? 
+
+Package xcolor Warning: Incompatible color definition on input line 408.
+
+
+Package xcolor Warning: Incompatible color definition on input line 408.
+
+LaTeX Font Info:    Font shape `T1/pzc/m/n' in size <13> not available
+(Font)              Font shape `T1/pzc/mb/it' tried instead on input line 408.
+
+Package xcolor Warning: Incompatible color definition on input line 408.
+
+
+Package xcolor Warning: Incompatible color definition on input line 408.
+
+
+Package xcolor Warning: Incompatible color definition on input line 408.
+
+
+Underfull \vbox (badness 2285) has occurred while \output is active []
+
+
+Overfull \hbox (5.47499pt too wide) has occurred while \output is active
+\T1/aer/m/n/10.95 8 []
+ []
+
+[8]
+Overfull \hbox (5.47499pt too wide) has occurred while \output is active
+[] \T1/aer/m/n/10.95 9
+ []
+
+[9]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 408.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 408.
+ (./article.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 408.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 408.
+
+
+Package rerunfilecheck Warning: File `article.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `article.out':
+(rerunfilecheck)             Before: 8A32098A03F43CBCA6B66FC4C17D7670;458
+(rerunfilecheck)             After:  37352BD275DB49901B2ADFC96CF673A9;1518.
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 269.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 408.
  ) 
 Here is how much of TeX's memory you used:
- 18758 strings out of 493054
- 354399 string characters out of 6134759
+ 18820 strings out of 493054
+ 355509 string characters out of 6134759
  416011 words of memory out of 5000000
- 21872 multiletter control sequences out of 15000+600000
- 53489 words of font info for 90 fonts, out of 8000000 for 9000
+ 21893 multiletter control sequences out of 15000+600000
+ 57588 words of font info for 98 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,9n,56p,429b,750s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
-exlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmb10.pfb></usr/local/tex
-live/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texl
-ive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texli
-ve/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxsl10.pfb></usr/local/texl
-ive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texli
-ve/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive
-/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl10.pfb></usr/local/texlive/
-2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsltt10.pfb></usr/local/texlive
-/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/texlive/
-2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/local/texlive
-/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/
-2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2
-015/texmf-dist/fonts/type1/urw/zapfchan/uzcmi8a.pfb>
-Output written on article.pdf (4 pages, 189594 bytes).
+ 55i,9n,56p,915b,750s stack positions out of 5000i,500n,10000p,200000b,80000s
+pdfTeX warning (dest): name{Section.4.Using\040the\040online\040web-app.1} ha
+s been referenced but does not exist, replaced by a fixed one
+
+{/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}{
+/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/texl
+ive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmb10.pfb></usr/local/texliv
+e/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive
+/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/
+2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxsl10.pfb></usr/local/texlive
+/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/
+2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/20
+15/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl10.pfb></usr/local/texlive/201
+5/texmf-dist/fonts/type1/public/amsfonts/cm/cmsltt10.pfb></usr/local/texlive/20
+15/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/texlive/201
+5/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/local/texlive/20
+15/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/201
+5/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2015
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2015/
+texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/local/texlive/2015/te
+xmf-dist/fonts/type1/urw/zapfchan/uzcmi8a.pfb>
+Output written on article.pdf (9 pages, 225010 bytes).
 PDF statistics:
- 123 PDF objects out of 1000 (max. 8388607)
- 101 compressed objects within 2 object streams
- 17 named destinations out of 1000 (max. 500000)
+ 186 PDF objects out of 1000 (max. 8388607)
+ 157 compressed objects within 2 object streams
+ 47 named destinations out of 1000 (max. 500000)
  58 words of extra memory for PDF output out of 10000 (max. 10000000)
 

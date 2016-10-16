@@ -8,7 +8,6 @@
 #' removed prior to plotting. For character, factor, labelled and logical variables, only \code{NA}
 #' values are removed.
 #'
-#'
 #' @param v The variable (vector) to be plotted.
 #' @param vnam The name of the variable which will appear as the title of the plot.
 #' @param doEval If TRUE, the plot itself is returned. Otherwise, the function returns

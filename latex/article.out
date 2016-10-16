@@ -2,4 +2,13 @@
 \BOOKMARK [1][-]{Section.1.Checking a dataset for errors.1}{Checking a dataset for errors}{}% 2
 \BOOKMARK [1][-]{Section.2.The structure of cleanR.1}{The structure of cleanR}{}% 3
 \BOOKMARK [1][-]{Section.3.Extending cleanR by adding custom error checks.1}{Extending cleanR by adding custom error checks}{}% 4
-\BOOKMARK [1][-]{Section.4.Using the online web-app.1}{Using the online web-app}{}% 5
+\BOOKMARK [1][-]{Section.4.Customizing the cleanR output.1}{Customizing the cleanR output}{}% 5
+\BOOKMARK [2][-]{Subsection.5.0.Controlling contents.2}{Controlling contents}{Section.4.Customizing the cleanR output.1}% 6
+\BOOKMARK [3][-]{Subsubsection.5.1.0.Writing a summaryFunction.3}{Writing a summaryFunction}{Subsection.5.0.Controlling contents.2}% 7
+\BOOKMARK [3][-]{Subsubsection.5.1.1.Writing a visualFunction.3}{Writing a visualFunction}{Subsection.5.0.Controlling contents.2}% 8
+\BOOKMARK [3][-]{Subsubsection.5.1.2.Writing a checkFunction.3}{Writing a checkFunction}{Subsection.5.0.Controlling contents.2}% 9
+\BOOKMARK [2][-]{Subsection.5.1.Controlling formatting.2}{Controlling formatting}{Section.4.Customizing the cleanR output.1}% 10
+\BOOKMARK [2][-]{Subsection.5.2.Controlling flow?.2}{Controlling flow?}{Section.4.Customizing the cleanR output.1}% 11
+\BOOKMARK [2][-]{Subsection.5.3.A worked example.2}{A worked example}{Section.4.Customizing the cleanR output.1}% 12
+\BOOKMARK [1][-]{Section.5.To-dos in the code.1}{To-dos in the code}{}% 13
+\BOOKMARK [1][-]{Section.6.Using the online web-app.1}{Using the online web-app}{}% 14
