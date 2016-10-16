@@ -10,6 +10,10 @@
 \tikzstyle{decision} = [diamond, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=green!30]
 \tikzstyle{arrow} = [thick,->,>=stealth]
 
+
+\newcommand{\hl}[1]{\textcolor{magenta}{#1}}
+\newcommand{\R}{\proglang{R}}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% declarations for jss.cls %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -162,45 +166,52 @@ the package are described in Section 8.
 
 \section{Checking a dataset for errors} \label{sec:example1}
 
-In \pkg{cleanR} the clean function
+In \pkg{cleanR} the clean function is the primary workhorse and it
+should be an ideal starting place
 
+
+First we
 \begin{Schunk}
 \begin{Sinput}
 > library(cleanR)
-> data(testData)
-> head(testData)
+> data(diamonds)
+> head(diamonds)
 \end{Sinput}
 \begin{Soutput}
-  charVar factorVar numVar intVar boolVar keyVar emptyVar _joeVar jack__var
-1       a         a      1      1    TRUE      1        1       1         1
-2       b         b      2      2   FALSE      2        1       2         2
-3       c         c      3      3    TRUE      3        1       3         3
-4       a         a      4      4    TRUE      4        1       4         4
-5       b         b      5      5    TRUE      5        1       5         5
-6       d         d      6      6   FALSE      6        1       6         6
-  numOutlierVar smartNumVar      cprVar   cprKeyVar miscodedMissingVar
-1             1           0 010101-1111 010101-1111                  .
-2             2           0 020102-2929 020102-2929                   
-3             3           0 121201-1902 121201-1902                nan
-4             4           0 030729-2222 030729-2222                NaN
-5             5           0 080909-1212 080909-1212                NAN
-6             6           0 010101-1111 020202-0101                 na
+  carat       cut color clarity depth table price    x    y    z
+1  0.23     Ideal     E     SI2  61.5    55   326 3.95 3.98 2.43
+2  0.21   Premium     E     SI1  59.8    61   326 3.89 3.84 2.31
+3  0.23      Good     E     VS1  56.9    65   327 4.05 4.07 2.31
+4  0.29   Premium     I     VS2  62.4    58   334 4.20 4.23 2.63
+5  0.31      Good     J     SI2  63.3    58   335 4.34 4.35 2.75
+6  0.24 Very Good     J    VVS2  62.8    57   336 3.94 3.96 2.48
 \end{Soutput}
+\begin{Sinput}
+> data(testData)
+> #head(testData)
+\end{Sinput}
 \end{Schunk}
 
+To produce summary data-cleaning document
 
 \begin{Schunk}
 \begin{Sinput}
->                                         # clean(testData)
-> 2+3
+> clean(testData, replace=TRUE, openResult=FALSE)
 \end{Sinput}
-\begin{Soutput}
-[1] 5
-\end{Soutput}
 \end{Schunk}
 
+By default, a ... is produced and the result is shown in
+Figure~\ref{fig:example1}.
 
-% \includepdf[fitpaper=true, pages=-]{test.pdf}
+\begin{figure}[!htp]
+\begin{center}
+\includegraphics[page=2]{cleanR_testData.pdf}
+%\includepdf[pages={2}, pagecommand={}]{cleanR_testData.pdf}
+\end{center}
+\label{fig:example1}
+\caption{Example output from running XXXX on the testData
+  dataset. First a summary of the full dataset, }
+\end{figure}
 
 Arguments
 

@@ -10,6 +10,10 @@
 \tikzstyle{decision} = [diamond, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=green!30]
 \tikzstyle{arrow} = [thick,->,>=stealth]
 
+
+\newcommand{\hl}[1]{\textcolor{magenta}{#1}}
+\newcommand{\R}{\proglang{R}}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% declarations for jss.cls %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -162,22 +166,37 @@ the package are described in Section 8.
 
 \section{Checking a dataset for errors} \label{sec:example1}
 
-In \pkg{cleanR} the clean function
+In \pkg{cleanR} the clean function is the primary workhorse and it
+should be an ideal starting place
 
+
+First we
 <<>>=
 library(cleanR)
+data(diamonds)
+head(diamonds)
 data(testData)
-head(testData)
+#head(testData)
 @
 
+To produce summary data-cleaning document
 
 <<>>=
-                                        # clean(testData)
-2+3
+clean(testData, replace=TRUE, openResult=FALSE)
 @
 
+By default, a ... is produced and the result is shown in
+Figure~\ref{fig:example1}.
 
-% \includepdf[fitpaper=true, pages=-]{test.pdf}
+\begin{figure}[!htp]
+\begin{center}
+\includegraphics[page=2]{cleanR_testData.pdf}
+%\includepdf[pages={2}, pagecommand={}]{cleanR_testData.pdf}
+\end{center}
+\label{fig:example1}
+\caption{Example output from running XXXX on the testData
+  dataset. First a summary of the full dataset, }
+\end{figure}
 
 Arguments
 
