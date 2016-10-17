@@ -64,7 +64,7 @@ identifyWhitespaceF <- function(v) {
 identifyWhitespaceL <- function(v) {
   v <- na.omit(v)
   v <- unpackLabelled(v)
-  identifyWhiteSpaceC(v)
+  identifyWhitespaceC(v)
 }
 
 

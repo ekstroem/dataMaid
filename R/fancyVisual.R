@@ -46,6 +46,7 @@ myDistrPlots <- function(data, var, labels=NULL,
       }
       thisTab <- table(data[, thisVar])
       thisCount <- as.numeric(c(thisTab))
+      ## Possibly define freq and lab as NULL so the devtools::check function does not complain
       tpDat <- data.frame(freq=thisCount/sum(thisCount),
                           lab=factor(names(thisTab), levels=levels(data[, thisVar])))
       if (catStyle == "stacked") {
