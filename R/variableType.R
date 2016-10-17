@@ -22,7 +22,12 @@
 #'    class(smartX)
 #'    variableType(smartX)
 #' 
+#'  #Something with multiple classes, like ordered factor... 
+#' 
 #' @export
 variableType <- function(v) {
   list(feature="Variable type", result = oClass(v)[1])
 }
+variableType <- summaryFunction(variableType, "Data class of variable",
+                                c("character", "factor", "integer", "labelled", "logical", 
+                                  "numeric"))

@@ -20,3 +20,6 @@ countMissing <- function(v) {
   list(feature="No. missing obs." ,
        result=paste(noMissing, " (", percentMissing," %)", sep=""))
 }
+countMissing <- summaryFunction(countMissing, "Compute ratio of missing observations",
+                                c("character", "factor", "integer", "labelled", "logical", 
+                                  "numeric"))

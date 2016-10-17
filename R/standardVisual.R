@@ -28,7 +28,7 @@
 #' @importFrom stats na.omit
 #' @export
 standardVisual <- function(v, vnam, doEval = TRUE) UseMethod("standardVisual")
-
+standardVisual <- visualFunction(standardVisual, "Histograms and barplots using ggplot2")
 
 #assign methods to generic standardVisual function
 

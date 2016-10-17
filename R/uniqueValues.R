@@ -16,7 +16,7 @@
 #' @importFrom stats na.omit
 #' @export
 uniqueValues <- function(v) UseMethod("uniqueValues")
-
+uniqueValues <- summaryFunction(uniqueValues, "Count number of unique values")
 
 #assign methods to generic uniqueValues function
 

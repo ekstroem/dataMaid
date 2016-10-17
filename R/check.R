@@ -132,17 +132,25 @@ check.logical <- function(v, logicalChecks = defaultLogicalChecks(), ...) {
   } else return(list(list(problem = FALSE, message="")))
 }
 
+
+#' document me!
 #' @export
-checkFunction <- function(f, description) {
-  class(f) <- c("checkFunction", "function")
-  attr(f, "description") <- description
-  f
+checkFunction <- function(f, description, classes=NULL) {
+  f <- deparse(substitute(f))
+  makeXFunction(f, description, classes, "checkFunction")
 }
+
   #to do: change it such that a checkFunction is constructed e.g. like
   # foo <- checkFunction(.description, x) {
   #   x + 2
   #}
 
+
+#' document me!
+#' @export
+allCheckFunctions <- function() {
+  allXFunctions("checkFunction")
+}
 
 
 

@@ -29,7 +29,7 @@
 #' @importFrom graphics plot hist
 #' @export
 basicVisual <- function(v, vnam, doEval = TRUE) UseMethod("basicVisual")
-
+basicVisual <- visualFunction(basicVisual, "Histograms and barplots using graphics")
 
 #assign methods to generic standardVisual function
 
