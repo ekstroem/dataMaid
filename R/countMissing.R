@@ -17,6 +17,6 @@
 countMissing <- function(v) {
   noMissing <- sum(is.na(v))
   percentMissing <- round(100*noMissing/length(v),2)
-  list(feature="No. missing obs." ,
+  list(feature="Number of missing obs." ,
        result=paste(noMissing, " (", percentMissing," %)", sep=""))
 }

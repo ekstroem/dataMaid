@@ -8,3 +8,4 @@ R/makeData.R
 ^.*\.html
 ^.*\.Rmd
 ^.*\.rda
+^.*\.pdf
