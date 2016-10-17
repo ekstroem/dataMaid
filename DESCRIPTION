@@ -23,26 +23,3 @@ Encoding: UTF-8
 ByteCompile: true
 License: GPL-2
 RoxygenNote: 5.0.1
-Collate:
-    'clean.R'
-    'visualFunction.R'
-    'basicVisual.R'
-    'summaryFunction.R'
-    'centralValue.R'
-    'check.R'
-    'cleanR-package.R'
-    'countMissing.R'
-    'fancyVisual.R'
-    'identifyCaseissues.R'
-    'identifyLoners.R'
-    'identifyMissing.R'
-    'identifyOutliers.R'
-    'identifyWhitespace.R'
-    'makeData.R'
-    'minMax.R'
-    'quartiles.R'
-    'standardVisual.R'
-    'summarize.R'
-    'uniqueValues.R'
-    'variableType.R'
-    'visualize.R'
