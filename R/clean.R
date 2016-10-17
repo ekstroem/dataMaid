@@ -53,7 +53,9 @@
 #' @param standAlone If TRUE, the document begins with a markdown preamble such that it
 #' can be rendered as a stand alone R markdown file.
 #' @param twoCol Should the results be presented in two columns (if output is "html" or "pdf")? Defaults to TRUE.
-#' @param quiet Should clean run completely silently?
+#' @param quiet If \code{TRUE} (the default), only a few messages is printed to the screen as \code{clean} runs. 
+#' If \code{FALSE} no messages are suppressed. The third option, \code{silent}, renders the function 
+#' completely silent such that only fatal errors are printed.
 #' @param openResult If TRUE, the file produced by clean() is automatically opened by the end of
 #' the function run.
 #' @param nagUser Remove at some point
@@ -100,7 +102,9 @@ clean <- function(o,
                   mode=c("summarize", "visualize", "check"),
                   smartNum=TRUE, preChecks=c("isSpecial", "isCPR"),
                   file=NULL, replace=FALSE, vol="",
-                  standAlone=TRUE, twoCol=TRUE, quiet=TRUE, openResult=TRUE,
+                  standAlone=TRUE, twoCol=TRUE, 
+                  quiet = TRUE,
+                  openResult=TRUE,
                   nagUser=TRUE,
                   checkDetails=FALSE,
                   characterChecks = defaultCharacterChecks(),
@@ -134,6 +138,7 @@ clean <- function(o,
     ##Match arguments
     ordering <- match.arg(ordering)
     output <- match.arg(output)
+      #quiet <- match.arg(quiet)
 
     ## Extract the dataframe name
     dfname <- deparse(substitute(o))
@@ -239,8 +244,17 @@ clean <- function(o,
       #}
       #}
 
-    if (quiet) nagUser <- FALSE
-
+    
+    #handle quiet argument
+    if (identical(quiet, "silent")) {
+      silent <- TRUE
+      quiet <- TRUE
+    } else {
+      silent <- FALSE
+      
+      #perhaps check if quiet argument is valid (i.e. TRUE/FALSE) here?
+    }
+    if (silent) nagUser <- FALSE
 
     ## Figure out which classes of output that the user requests.
     ## By default we want both checks, graphics, and summarize.
@@ -248,7 +262,7 @@ clean <- function(o,
     doVisualize <- "visualize" %in% mode
     doSummarize <- "summarize" %in% mode
 
-    if (!doCheck & !doVisualize & !doSummarize) {
+    if (!doCheck & !doVisualize & !doSummarize & !silent) {
         warning("Note that no proper arguments were supplied to \"mode\" - no data cleaning performed")
     } #rewrite warning message
 
@@ -267,6 +281,9 @@ clean <- function(o,
       characterSummaries <- factorSummaries <- labelledSummaries <- allSummaries
       numericSummaries <- integerSummaries <- logicalSummaries <- allSummaries
     }
+    
+    
+    
 
    # if (!(output %in% c("html", "pdf"))) twoCol <- FALSE
     #what is this line supposed to do and when will it happen?
@@ -416,7 +433,7 @@ clean <- function(o,
      checkMat[integerChecks, "integer"] <- y
      checkMat[logicalChecks, "logical"] <- y
 
-    rownames(checkMat) <- sapply(rownames(checkMat), funSum)
+    rownames(checkMat) <- sapply(rownames(checkMat), function(x) description(get(x)))
 
 
     writer("### Checks performed")
@@ -445,7 +462,7 @@ clean <- function(o,
         preCheckMessages <- sapply(preCheckRes, function(x) x$message)
 
         ## use smartNum
-        if (smartNum & class(v) %in% c("numeric", "integer")) {
+        if (smartNum & any(class(v) %in% c("numeric", "integer"))) {
             v <- doSmartNum(v, ...)
             if ("smartNum" %in% class(v)) {
                 extraMessages$do <- TRUE
@@ -550,14 +567,14 @@ clean <- function(o,
       ###or maybe just check if it is open and then not try and render.
       #fileName <- paste(substring(fileName, 1, nchar(fileName)-4), ".",
       #                  output, sep="")
-        if (!quiet) {
+        if (!silent) {
             message("Data cleaning is finished. Please wait while your output file is rendered.")
         }
         if (nagUser && output=="pdf" && identical(as.character(Sys.info()["sysname"]),"Windows")) {
             message(paste("\n Is", outFile,
                           "open on your computer? Please close it as fast as possible to avoid problems! \n"))
         }
-        render(file, quiet=quiet)
+        render(file, quiet = quiet)
     }
 
     if (output=="screen") {
@@ -598,7 +615,7 @@ isSpecial <- function(v) {
     out <- list(problem=T, status="empty",
                 message=paste("The variable only takes one value: \"", v[1],
                                          "\".", sep=""))
-  } else if (nVals == length(v) & !(class(v) %in% c("numeric", "integer"))) {
+  } else if (nVals == length(v) & !any(class(v) %in% c("numeric", "integer"))) {
     out <- list(problem=T, status="key",
                 message="The variable is a key (distinct values for each observation).")
   }
@@ -704,16 +721,70 @@ isDanishDate <- function(strs) {
 }
 
 
+
+################DELETE AT SOME POINT##################################
 #Extract a function summary/description from checkFunction objects and
 #return the function name for other function types.
 #NOTE: fName is a string containing the function name and therefore,
 #this function cannot be implemented as a generic function with
 #methods.
-funSum <- function(fName) {
-  foo <- get(fName)
-  if ("checkFunction" %in% class(foo)) {
-    out <- attr(foo, "description")
-  } else out <- fName
+#funSum <- function(fName) {
+#  foo <- get(fName)
+#  if ("checkFunction" %in% class(foo)) {
+#    out <- attr(foo, "description")
+#  } else out <- fName
+#  out
+#}
+#####################################################################
+
+
+
+#replaces funSum
+description <- function(x) UseMethod("description")
+description.default <- function(x) deparse(substitute(x))
+description.checkFunction <- function(x) attr(x, "description")
+description.summaryFunction <- function(x) attr(x, "description")
+description.visualFunction <- function(x) attr(x, "description")
+
+  
+classes <- function(x) UseMethod("classes")
+classes.defualt <- function(x) NULL
+classes.checkFunction <- function(x) attr(x, "classes")
+classes.summaryFunction <- function(x) attr(x, "classes")
+classes.visualFunction <- function(x) attr(x, "classes")
+  
+
+
+print.functionSummary <- function(x) {
+  x$classes <- sapply(x$classes, function(x) paste(x, collapse=", "))
+  pander(data.frame(x, row.names = NULL), justify="left")
+}
+
+
+
+
+allXFunctions <- function(X) {
+  allF <- Filter(function(x) X %in% class(get(x)), ls(envir = .GlobalEnv))
+  out <- list(name = allF, description = sapply(allF, function(x) description(get(x))),
+              classes = lapply(allF, function(x) classes(get(x))))
+  class(out) <- c("functionSummary", "list")
   out
 }
+
+makeXFunction <- function(fName, description, classes, X) {
+  f <- get(fName)
+  if (is.null(classes)) {
+    methods <- as.character(methods(fName)) #methods() needs the name in order
+    #to work inside the function
+    if (length(methods) > 0) {
+      classes <- sub(paste(fName, ".", sep=""), 
+                     "", methods)
+    } else classes <- character()
+  }
+  class(f) <- c(X, "function")
+  attr(f, "description") <- description
+  attr(f, "classes") <- classes
+  f
+}
+
 

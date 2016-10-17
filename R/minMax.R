@@ -19,3 +19,5 @@ minMax <- function(v) {
   v <- na.omit(v) #maybe keep Inf's?
   list(feature="Min. and max.", result=paste(min(v), max(v), sep=", "))
 }
+minMax <- summaryFunction(minMax, "Find minimum and maximum values", 
+                          c("integer", "numeric"))

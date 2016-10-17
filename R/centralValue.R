@@ -25,7 +25,7 @@
 #' @importFrom stats na.omit median
 #' @export
 centralValue <- function(v) UseMethod("centralValue")
-
+centralValue <- summaryFunction(centralValue, "Compute median or mode")
 
 #assign methods to generic centralValue function
 

@@ -19,6 +19,7 @@ quartiles <- function(v) {
   v <- na.omit(v) #maybe keep Inf's?
   list(feature="1st and 3rd quartiles", result = paste(quantile(v, c(0.25, 0.75)), collapse=", "))
 }
-
+quartiles <- summaryFunction(quartiles, "Compute 1st and 3rd quartiles", 
+                             classes = c("integer", "numeric"))
 
 
