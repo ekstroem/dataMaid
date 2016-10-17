@@ -53,8 +53,8 @@
 #' @param standAlone If TRUE, the document begins with a markdown preamble such that it
 #' can be rendered as a stand alone R markdown file.
 #' @param twoCol Should the results be presented in two columns (if output is "html" or "pdf")? Defaults to TRUE.
-#' @param quiet If \code{TRUE} (the default), only a few messages is printed to the screen as \code{clean} runs. 
-#' If \code{FALSE} no messages are suppressed. The third option, \code{silent}, renders the function 
+#' @param quiet If \code{TRUE} (the default), only a few messages is printed to the screen as \code{clean} runs.
+#' If \code{FALSE} no messages are suppressed. The third option, \code{silent}, renders the function
 #' completely silent such that only fatal errors are printed.
 #' @param openResult If TRUE, the file produced by clean() is automatically opened by the end of
 #' the function run.
@@ -102,7 +102,7 @@ clean <- function(o,
                   mode=c("summarize", "visualize", "check"),
                   smartNum=TRUE, preChecks=c("isSpecial", "isCPR"),
                   file=NULL, replace=FALSE, vol="",
-                  standAlone=TRUE, twoCol=TRUE, 
+                  standAlone=TRUE, twoCol=TRUE,
                   quiet = TRUE,
                   openResult=TRUE,
                   nagUser=TRUE,
@@ -244,14 +244,14 @@ clean <- function(o,
       #}
       #}
 
-    
+
     #handle quiet argument
     if (identical(quiet, "silent")) {
       silent <- TRUE
       quiet <- TRUE
     } else {
       silent <- FALSE
-      
+
       #perhaps check if quiet argument is valid (i.e. TRUE/FALSE) here?
     }
     if (silent) nagUser <- FALSE
@@ -281,9 +281,9 @@ clean <- function(o,
       characterSummaries <- factorSummaries <- labelledSummaries <- allSummaries
       numericSummaries <- integerSummaries <- logicalSummaries <- allSummaries
     }
-    
-    
-    
+
+
+
 
    # if (!(output %in% c("html", "pdf"))) twoCol <- FALSE
     #what is this line supposed to do and when will it happen?
@@ -746,13 +746,13 @@ description.checkFunction <- function(x) attr(x, "description")
 description.summaryFunction <- function(x) attr(x, "description")
 description.visualFunction <- function(x) attr(x, "description")
 
-  
+
 classes <- function(x) UseMethod("classes")
 classes.defualt <- function(x) NULL
 classes.checkFunction <- function(x) attr(x, "classes")
 classes.summaryFunction <- function(x) attr(x, "classes")
 classes.visualFunction <- function(x) attr(x, "classes")
-  
+
 
 
 print.functionSummary <- function(x) {
@@ -777,7 +777,7 @@ makeXFunction <- function(fName, description, classes, X) {
     methods <- as.character(methods(fName)) #methods() needs the name in order
     #to work inside the function
     if (length(methods) > 0) {
-      classes <- sub(paste(fName, ".", sep=""), 
+      classes <- sub(paste(fName, ".", sep=""),
                      "", methods)
     } else classes <- character()
   }

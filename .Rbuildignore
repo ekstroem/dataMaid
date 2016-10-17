@@ -1,6 +1,6 @@
 latex/
-.RData
-.Rhistory
+\.RData
+\.Rhistory
 R/makeData.R
 ^README*
 ^.*\.Rproj$

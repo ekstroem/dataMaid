@@ -70,7 +70,9 @@ can be rendered as a stand alone R markdown file.}
 
 \item{twoCol}{Should the results be presented in two columns (if output is "html" or "pdf")? Defaults to TRUE.}
 
-\item{quiet}{Should clean run completely silently?}
+\item{quiet}{If \code{TRUE} (the default), only a few messages is printed to the screen as \code{clean} runs.
+If \code{FALSE} no messages are suppressed. The third option, \code{silent}, renders the function
+completely silent such that only fatal errors are printed.}
 
 \item{openResult}{If TRUE, the file produced by clean() is automatically opened by the end of
 the function run.}

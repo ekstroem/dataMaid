@@ -29,7 +29,7 @@ ignored for logical variables.
 
  #central value of a character variable:
    centralValue(as.character(c(rep(1, 20), rep(2, 10), rep(3, 20))))
-   
+
 }
 \seealso{
 \code{\link{summarize}}

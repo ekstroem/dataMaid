@@ -29,6 +29,8 @@ smartNum.
    class(smartX)
    variableType(smartX)
 
+ #Something with multiple classes, like ordered factor... 
+
 }
 \seealso{
 \code{\link{summarize}}

@@ -1,4 +1,7 @@
-#'document me!
+#'
+#' Visual funtction
+#'
+#' document me!
 #'
 #' @export
 visualFunction <- function(f, description, classes = NULL) {
@@ -7,7 +10,9 @@ visualFunction <- function(f, description, classes = NULL) {
 }
 
 
+#'
 #' document me!
+#'
 #' @export
 allVisualFunctions <- function() {
   allXFunctions("visualFunction")

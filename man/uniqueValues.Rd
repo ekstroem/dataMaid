@@ -10,7 +10,7 @@ uniqueValues(v)
 \item{v}{A variable (vector).}
 }
 \value{
-A list with $feature: "No. unique values" and 
+A list with $feature: "No. unique values" and
 $result: [the number of unique values].
 }
 \description{
