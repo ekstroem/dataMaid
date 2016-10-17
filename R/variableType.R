@@ -24,5 +24,5 @@
 #' 
 #' @export
 variableType <- function(v) {
-  list(feature="Variable type", result=oClass(v))
+  list(feature="Variable type", result = oClass(v)[1])
 }

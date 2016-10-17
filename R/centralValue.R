@@ -48,6 +48,8 @@ centralValue.integer <- function(v) centralValueIN(v)
 centralValue.logical <- function(v) centralValueB(v)
 
 
+#deleteMe
+
 
 
 ##########################################Not exported below#########################################
