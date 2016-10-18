@@ -43,3 +43,6 @@ Collate:
   'identifyLoners.R'
   'identifyWhitespace.R'
   'identifyMissing.R'
+  'fancyVisual.R'
+  'makeData.R'
+  'cleanR-package.R'
