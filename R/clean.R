@@ -740,13 +740,14 @@ isDanishDate <- function(strs) {
 
 
 #replaces funSum
+#' @export
 description <- function(x) UseMethod("description")
 description.default <- function(x) deparse(substitute(x))
 description.checkFunction <- function(x) attr(x, "description")
 description.summaryFunction <- function(x) attr(x, "description")
 description.visualFunction <- function(x) attr(x, "description")
 
-
+#' @export
 classes <- function(x) UseMethod("classes")
 classes.defualt <- function(x) NULL
 classes.checkFunction <- function(x) attr(x, "classes")
@@ -754,7 +755,7 @@ classes.summaryFunction <- function(x) attr(x, "classes")
 classes.visualFunction <- function(x) attr(x, "classes")
 
 
-
+#' @export
 print.functionSummary <- function(x) {
   x$classes <- sapply(x$classes, function(x) paste(x, collapse=", "))
   pander(data.frame(x, row.names = NULL), justify="left")
@@ -762,7 +763,7 @@ print.functionSummary <- function(x) {
 
 
 
-
+#' @export
 allXFunctions <- function(X) {
   allF <- Filter(function(x) X %in% class(get(x)), ls(envir = .GlobalEnv))
   out <- list(name = allF, description = sapply(allF, function(x) description(get(x))),
@@ -771,6 +772,7 @@ allXFunctions <- function(X) {
   out
 }
 
+#' @export
 makeXFunction <- function(fName, description, classes, X) {
   f <- get(fName)
   if (is.null(classes)) {
