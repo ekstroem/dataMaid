@@ -21,7 +21,7 @@
 #'
 #'  #central value of a character variable:
 #'    centralValue(as.character(c(rep(1, 20), rep(2, 10), rep(3, 20))))
-#'    
+#'
 #' @importFrom stats na.omit median
 #' @export
 centralValue <- function(v) UseMethod("centralValue")

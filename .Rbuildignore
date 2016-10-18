@@ -1,6 +1,6 @@
 latex/
-.RData
-.Rhistory
+\.RData
+\.Rhistory
 R/makeData.R
 ^README*
 ^.*\.Rproj$
@@ -8,3 +8,4 @@ R/makeData.R
 ^.*\.html
 ^.*\.Rmd
 ^.*\.rda
+^.*\.pdf

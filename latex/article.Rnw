@@ -2,6 +2,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[nogin]{Sweave}
 \usepackage{pdfpages}
+\usepackage{xspace}
 \usepackage{tikz}
 \usetikzlibrary{shapes.geometric, arrows}
 
@@ -12,22 +13,21 @@
 
 
 \newcommand{\hl}[1]{\textcolor{magenta}{#1}}
-\newcommand{\R}{\proglang{R}}
+\newcommand{\R}{\proglang{R}\xspace}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% declarations for jss.cls %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% almost as usual
-\author{Claus Thorn Ekstr\o m\\Biostatistics\\Department of Public
-  Health\\University of Copenhagen \And
-        Anne Helby Petersen\\Biostatistics\\Department of Public
+\author{Anne Helby Petersen\\Biostatistics\\Department of Public
+  Health\\University of Copenhagen \And Claus Thorn Ekstr\o m\\Biostatistics\\Department of Public
   Health\\University of Copenhagen}
-\title{\pkg{cleanR}: Your Personal Maid for Cleaning Datasets in \proglang{R}}
+\title{\pkg{cleanR}: Maid for Cleaning Datasets in \proglang{R}}
 
 %% for pretty printing and a nice hypersummary also set:
-\Plainauthor{Claus Thorn Ekstr\o m, Anne Helby Petersen} %% comma-separated
-\Plaintitle{{cleanR}: Your maid for cleaning datasets in R} %% without formatting
+\Plainauthor{Anne Helby Petersen, Claus Thorn Ekstr\o m} %% comma-separated
+\Plaintitle{{cleanR}: maid for cleaning datasets in R} %% without formatting
 \Shorttitle{\pkg{cleanR}: maid for cleaning datasets in R} %% a short title (if necessary)
 
 %% an abstract and keywords
@@ -70,7 +70,7 @@
   University of Copenhagen\\
   Denmark\\
   E-mail: \email{ekstrom@sund.ku.dk}\\
-  URL: \url{http://eeecon.uibk.ac.at/~zeileis/}
+  URL: \url{http://staff.pubhealth.ku.dk/~ekstrom/}
 }
 %% It is also possible to add a telephone and fax number
 %% before the e-mail in the following format:
@@ -149,14 +149,12 @@ rendered into html or pdf.
 The manusccript is organized as follows. Section \ref{sec:example1}
 presents a worked example and tutorial on how to use the \pkg{cleanR}
 package to create a summary of potential errors. Section
-\ref{sec:internals} illustrates the methodology of modeling
-proportional data using simplex generalized regression. The
-generalized estimating equations for longitudinal proportional
-outcomes are given in Section 4. Then we address model diagnostics in
-Section 5. Section 6 presents the details of the simplexreg
-package. Section 7 further conducts analyses based on the simplex
-distribution in R with real data sets. Finally, plans for extending
-the package are described in Section 8.
+\ref{sec:internals} presents the steps that comprise the creation of
+the automated data cleaning that is part of the \code{clean} function,
+while the \ref{sec:extending} Section explains how the set of checks
+and graphical visualisations that are part of the cleaning suite are
+extended by custom, used-written additions. Finally, plans for
+extending the package are described in Section \ref{sec:conclusion}.
 
 
 %% include your article here, just as usual
@@ -166,9 +164,8 @@ the package are described in Section 8.
 
 \section{Checking a dataset for errors} \label{sec:example1}
 
-In \pkg{cleanR} the clean function is the primary workhorse and it
-should be an ideal starting place
-
+In \pkg{cleanR} the \code{clean} function is the primary workhorse and it
+should be the primary entry point for data cleaning.
 
 First we
 <<>>=
