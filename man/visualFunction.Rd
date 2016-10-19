@@ -2,11 +2,83 @@
 % Please edit documentation in R/visualFunction.R
 \name{visualFunction}
 \alias{visualFunction}
-\title{Visual funtction}
+\title{Construct a visualFunction}
 \usage{
 visualFunction(f, description, classes = NULL)
 }
+\arguments{
+\item{f}{A function. In order to be a valid \code{visualFunction}, \code{f} should 
+follow the structure outlined in details below.}
+
+\item{description}{A character string with a (brief!) description of \code{f}.}
+
+\item{classes}{A vector of classes that \code{f} is designed to be called on. If NULL (the default) 
+one of two standard solutions are tried: If \code{f} is a S3 generic function, the \code{classes}
+argument will automatically be filled out by checking what methods are available in the global
+environment. If \code{f} is not a S3 generic function, the \code{classes} attribute is set to an
+empty character object (i.e. \code{character(0)}).}
+}
+\value{
+A function of class \code{visualFunction}, i.e. with two attributes: A description 
+("description") and a vector of classes which the function can be called upon ("classes"). A 
+visualFunction always
+}
 \description{
-document me!
+Convert a function into class \code{visualFunction} used for creating variable 
+visualizations \code{\link{visualize}}, typically called from \code{\link{clean}}.
+}
+\details{
+We recommend using the following structure for defining new \code{visualFunction}s:
+#' \code{
+  myVisualFunction <- function(v, vnam, doEval) {
+   thisCall <- call("[the name of the function used to produce the plot]", 
+                    v, [additional arguments to the plotting function])
+   if (doEval) {
+    return(eval(thisCall))
+   } else return(deparse(thisCall)
+  }
+ }
+ followed by a class change:
+ \code{
+   myVisualFunction <- visualFunction(myVisualFunction, description = "[describe function]",
+                                        classes = c([classes]))
+ }
+ It is not strictly necessary to follow this exact template, but the input/output structure 
+ should be respected - in other words, the arguments are mandatory and the function needs
+ to return a character string containing code (if \code{doEval = FALSE}) or have the 
+ side effect of producing a plot (if \code{doEval = TRUE}). See examples below for an example
+ of how the template can be used in practice.  
+ 
+ Note that it is not necessary to formally change functions to be used by \code{\link{visualize}}
+ into \code{visualFunction}s, but it is recommended, as the functions are then added to the output 
+ of \code{allVisualFunctions()}, making it easier to gain an overview of the visualization 
+ functions available for a \code{clean()} run.
+}
+\examples{
+#Defining a new visualFunction:
+ mosaicVisual <- function(v, vnam, doEval) {
+   thisCall <- call("mosaicplot", table(v), main = vnam, xlab = "")
+   if (doEval) {
+    return(eval(thisCall))
+   } else return(deparse(thisCall))
+ }
+ mosaicVisual <- visualFunction(mosaicVisual, description = "mosaicplots from graphics",
+                                classes = c("character", "factor", "labelled", "numeric",
+                                            "integer", "logical"))
+
+#Extract or set description of a visualFunction:
+ description(mosaicVisual) 
+ description(mosaicVisual) <- "A cubist version of a pie chart" 
+ description(mosaicVisual)
+ 
+#Extract or set classes of a visualFunction:
+ classes(mosaicVisual)
+ classes(mosaicVisual) <- "factor"
+ classes(mosaicVisual)
+
+}
+\seealso{
+\code{link{allVisualFunctions}} \code{\link{visualize}} 
+\code{\link{description}} \code{\link{classes}}
 }
 
