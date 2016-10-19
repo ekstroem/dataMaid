@@ -746,6 +746,10 @@ description.default <- function(x) deparse(substitute(x))
 description.checkFunction <- function(x) attr(x, "description")
 description.summaryFunction <- function(x) attr(x, "description")
 description.visualFunction <- function(x) attr(x, "description")
+`description<-` <- function(x, value) {
+  attr(x, "description") <- value
+  x
+}
 
 #' @export
 classes <- function(x) UseMethod("classes")
@@ -753,7 +757,10 @@ classes.defualt <- function(x) NULL
 classes.checkFunction <- function(x) attr(x, "classes")
 classes.summaryFunction <- function(x) attr(x, "classes")
 classes.visualFunction <- function(x) attr(x, "classes")
-
+`classes<-` <- function(x, value) {
+  attr(x, "classes") <- value
+  x
+}
 
 #' @export
 print.functionSummary <- function(x) {
