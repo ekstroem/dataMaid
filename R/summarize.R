@@ -70,7 +70,6 @@ summarize <- function(v, descriptive = FALSE, ...) UseMethod("summarize")
 
 
 
-
 #' Default summary functions for character variables
 #'
 #' Returns vector of names of default summary functions for character variables.
