@@ -86,7 +86,8 @@ identifyMissNine <- function(v) {
 
 #factor and character variables
 identifyMissingCF <- function(v) {
-    v <- na.omit(v)
+    v <- na.omit(as.character(v)) #as.character in order to be able to combine
+                                  #factor levels below without unwanted conversions
     problem <- FALSE
     problemValues <- NULL
 
