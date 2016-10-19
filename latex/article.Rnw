@@ -256,7 +256,7 @@ Lav også et eksempel med rangecheck.
 
 
 \section{Customizing the cleanR output}
-Though the discussion in the above paints a picture of cleanR as a user-friendly package which requires practically no knowledge of R, one should not be mistaken to think that it is not customizable. In fact, the main function of cleanR, \R{clean}, is mainly a tool for formatting the results from various checking-, summary- and visualizaion functions \hl{as described... blabla}. Thus, the actual work underlying a cleanR output file can be anything or nothing - depending on the arguments given to \R{clean}. This section consists of three parts. We commence this section with an overview of how contents are controlled in \R{cleanR} in terms of what cleaning steps are performed. Secondly, we turn to the possibilities of customizing what the final cleanR file looks like. Lastly, we go through an example of how to put all these customization options together in practice.
+Though the discussion in the above paints a picture of cleanR as a user-friendly package which requires practically no knowledge of R, one should not be mistaken to think that it is not customizable. In fact, the main function of cleanR, \code{clean}, is mainly a tool for formatting the results from various checking-, summary- and visualizaion functions \hl{as described... blabla}. Thus, the actual work underlying a cleanR output file can be anything or nothing - depending on the arguments given to \code{clean}. This section consists of three parts. We commence this section with an overview of how contents are controlled in \pkg{cleanR} in terms of what cleaning steps are performed. Secondly, we turn to the possibilities of customizing what the final cleanR file looks like. Lastly, we go through an example of how to put all these customization options together in practice.
 
 \subsection{Controlling contents}
 By the \textit{contents} of the cleanR output, we refer to every step that actually involves a function being called on variables from the dataset. There are three stages in which this occurs \hl{(with ref. to figure/flowchart?)}:
@@ -265,28 +265,28 @@ By the \textit{contents} of the cleanR output, we refer to every step that actua
 \item In the summarize/visualize/check (SVC) step
 \item In the multivariate visuzalizations \hl{Or whatever, in the stuff that we have not yet implemented. I'm pretending like this stage doesn't exist below.}
 \end{enumerate}
-Each of these stages are controllable using appropriate function parameters in \R{clean}. In the above, we presented the default \R{cleanR} settings and how to tweak them into providing a slightly different data cleaning outputs. However, if for instance the dataset at hand requires completely different visualizations, more control is needed. \R{cleanR} uses three different types of functions for performing all stages in the above, namely \R{summaryFunction}s, \R{visualFunction}s and \R{checkFunction}s. They each have distinct input-output structures and most instances of the functions are build as \R{S3} generics with methods for different data classes. By understanding how to construct proper \R{summaryFunction}s, \R{visualFunction}s and \R{checkFunction}s, the entire contents of the \R{cleanR} output is at your hands. Therefore, this section is dedicated to introducing each in turn.\\
+Each of these stages are controllable using appropriate function parameters in \code{clean}. In the above, we presented the default \pkg{cleanR} settings and how to tweak them into providing a slightly different data cleaning outputs. However, if for instance the dataset at hand requires completely different visualizations, more control is needed. \pkg{cleanR} uses three different types of functions for performing all stages in the above, namely \code{summaryFunction}s, \code{visualFunction}s and \code{checkFunction}s. They each have distinct input-output structures and most instances of the functions are build as \code{S3} generics with methods for different data classes. By understanding how to construct proper \code{summaryFunction}s, \code{visualFunction}s and \code{checkFunction}s, the entire contents of the \pkg{cleanR} output is at your hands. Therefore, this section is dedicated to introducing each in turn.\\
 
 \hl{Something like a figure that gives an overview of all summaryFunctions, ... available in standard cleanR, including default settings and some kind of description of where they are called (in precheck or SVC step). Also something about what datatypes they can each be called on. Also, more text here about the relationship between the two (three) stages and the three function types.}
 
 
 \subsubsection{Writing a summaryFunction}
-Though \R{cleanR} provides a special class for \R{summaryFunction}s, there really is nothing special about these functions: They are nothing but regular functions with a certain input/output-structure. Specifically, they all follow the template below:
+Though \pkg{cleanR} provides a special class for \code{summaryFunction}s, there really is nothing special about these functions: They are nothing but regular functions with a certain input/output-structure. Specifically, they all follow the template below:
 \begin{Verbatim}
 mySummaryFunction <- function(v) {
 	res <- [result of whatever summary we are doing]
 	list(feature = "Feature name", result = res)
 }
 \end{Verbatim}
-and we recommend furthermore adding them to the overview of all summary functions by converting them to proper \R{summaryFunction} objects:
+and we recommend furthermore adding them to the overview of all summary functions by converting them to proper \code{summaryFunction} objects:
 \begin{Verbatim}
 mySummaryFunction <- summaryFunction(mySummaryFunction,
 	description = "Some text describing what your summaryFunction does")
 \end{Verbatim}
-which adds the new function to the output of \R{allSummaryFunctions()}. Note that \R{v} is a vector and that \R{res} should be either a character string or something that will be printed as one. In other words, e.g. integers are allowed, but matrices are not. Though a lot of different things can go into the \R{summaryFunction} template, we recommend only using them for summarizing the features of a variable, and leaving tests and checks for the \R{checkFunction}s (presented below).
+which adds the new function to the output of \code{allSummaryFunctions()}. Note that \code{v} is a vector and that \code{res} should be either a character string or something that will be printed as one. In other words, e.g. integers are allowed, but matrices are not. Though a lot of different things can go into the \code{summaryFunction} template, we recommend only using them for summarizing the features of a variable, and leaving tests and checks for the \code{checkFunction}s (presented below).
 
 \subsubsection{Writing a visualFunction}
-\R{visualFunction}s are the functions that produce the figures of a \R{cleanR} output document. Writing a visual function is slightly more complicated than writing a summary function. This follows from the fact that visualFunctions need to be able to output standalone code for plots in order for \R{clean} to build standalone rmarkdown files. We recommend using the following structure:
+\code{visualFunction}s are the functions that produce the figures of a \pkg{cleanR} output document. Writing a visual function is slightly more complicated than writing a summary function. This follows from the fact that visualFunctions need to be able to output standalone code for plots in order for \code{clean} to build standalone rmarkdown files. We recommend using the following structure:
 \begin{Verbatim}
 myVisualFunction <- function(v, vnam, doEval) {
 	thisCall <- call("[the name of the function used to produce the plot]",
@@ -299,7 +299,7 @@ myVisualFunction <- function(v, vnam, doEval) {
 myVisualFunction <- visualFunction(myVisualFunction,
 	description = "Some text describing your visualFunction")
 \end{Verbatim}
-In this function, \R{v} is the variable to be visualized, \R{vnam} is its name (which should generally be passed to \R{title} or \R{main} arguments in plotting functions) and \R{doEval} controls whether the output is a plot (if \R{TRUE}) or a character string of standalone code for producing a plot (if \R{FALSE}). The latter \R{doEval} setting is not strictly necessary for its use in \R{clean}, but it makes it easier to assess what visualization options are available. In either case, it should be noted that all the parameters listed above, \R{v}, \R{vnam} and \R{doEval}, are mandatory, so they should be left as is (\hl{as are?}), even if you do not want to use them. As with \R{summaryFunction}s, an overview of all available \R{visualFunction}s in the environment can be obtained by calling
+In this function, \code{v} is the variable to be visualized, \code{vnam} is its name (which should generally be passed to \code{title} or \code{main} arguments in plotting functions) and \code{doEval} controls whether the output is a plot (if \code{TRUE}) or a character string of standalone code for producing a plot (if \code{FALSE}). The latter \code{doEval} setting is not strictly necessary for its use in \code{clean}, but it makes it easier to assess what visualization options are available. In either case, it should be noted that all the parameters listed above, \code{v}, \code{vnam} and \code{doEval}, are mandatory, so they should be left as is (\hl{as are?}), even if you do not want to use them. As with \code{summaryFunction}s, an overview of all available \code{visualFunction}s in the environment can be obtained by calling
 \begin{Verbatim}
 allVisualFunctions()
 \end{Verbatim}
@@ -307,11 +307,11 @@ and by calling
 \begin{Verbatim}
 allVisual(v, vnam, output = "html")
 \end{Verbatim}
-an overview of all plotting options applied on \R{v} is produced and opened as a html document for easy comparison. \hl{Should we mention the side effect of producing .rmd and .html files on disc?}
+an overview of all plotting options applied on \code{v} is produced and opened as a html document for easy comparison. \hl{Should we mention the side effect of producing .rmd and .html files on disc?}
 
 
 \subsubsection{Writing a checkFunction}
-The last, but also most important, \R{cleanR} function type is the \R{checkFunction}. These are the functions that flag issues in the data and control the flow of the overall data cleaning process in the precheck stage. A \R{checkFunction} can be written using the following template:
+The last, but also most important, \pkg{cleanR} function type is the \code{checkFunction}. These are the functions that flag issues in the data and control the flow of the overall data cleaning process in the precheck stage. A \code{checkFunction} can be written using the following template:
 \begin{Verbatim}
 myCheckFunction <- function(v) {
 	[do your check]
@@ -331,9 +331,9 @@ myCheckFunction <- function(v) {
 myCheckFunction <- checkFunction(myCheckFunction,
 	description = "[A description of your checkFunction]")
 \end{Verbatim}
-Only the input parameter (\R{v}) and the output format strictly has to follow this structure. However, we recommend using \R{messageGenerator} for consistent styling of all \R{checkFunction} messages. This function simply pastes together the \R{problemMessage} and the \R{problemValues}, with the latter being quoted and sorted alphabetically. Note that printing quotes in rmarkdown requires an extensive amount of character escaping, so opting for \R{messageGenerator} really is the easiest solution.
+Only the input parameter (\code{v}) and the output format strictly has to follow this structure. However, we recommend using \code{messageGenerator} for consistent styling of all \code{checkFunction} messages. This function simply pastes together the \code{problemMessage} and the \code{problemValues}, with the latter being quoted and sorted alphabetically. Note that printing quotes in rmarkdown requires an extensive amount of character escaping, so opting for \code{messageGenerator} really is the easiest solution.
 
-While the descriptions of \R{summaryFunction}s and \R{visualFunction}s are only for internal use in the \R{allSummaryFunctions()} and \R{allVisualFunctions()} outputs, respectively, \R{checkFunction} descriptions are actually visible in the \R{cleanR} output document. These are the brief descriptions presented in Part 1 \hl{eh? Is this clear? Whatever we call this section in the above} in the output document. If a \R{checkFunction} does not have a description (for instance, if it is just a regular \R{function} using the \R{checkFunction} input/output-structure), the function name will be printed instead of the description.
+While the descriptions of \code{summaryFunction}s and \code{visualFunction}s are only for internal use in the \code{allSummaryFunctions()} and \code{allVisualFunctions()} outputs, respectively, \code{checkFunction} descriptions are actually visible in the \pkg{cleanR} output document. These are the brief descriptions presented in Part 1 \hl{eh? Is this clear? Whatever we call this section in the above} in the output document. If a \code{checkFunction} does not have a description (for instance, if it is just a regular function using the \code{checkFunction} input/output-structure), the function name will be printed instead of the description.
 
 
 

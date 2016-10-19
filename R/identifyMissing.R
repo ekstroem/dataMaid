@@ -86,29 +86,30 @@ identifyMissNine <- function(v) {
 
 #factor and character variables
 identifyMissingCF <- function(v) {
-  v <- na.omit(v)
-  problem <- FALSE
-  problemValues <- NULL
+    v <- na.omit(v)
+    problem <- FALSE
+    problemValues <- NULL
 
-  missStrs <- c("", "nan", "NaN", "NAN", "na", "NA", "Na", "Inf", "inf",
-                "-Inf", "-inf", "-", " ", "9")
-  missStrsOcc <- intersect(v, missStrs) #what potential missing value strings occur?
+    missStrs <- c("", "nan", "NaN", "NAN", "na", "NA", "Na", "Inf", "inf",
+                  "-Inf", "-inf", "-", " ", "9")
+    missStrsOcc <- intersect(v, missStrs) #what potential missing value strings occur?
 
-  missNinesOcc <- identifyMissRepChar(v, "9") #what 99, 999, ... strings occur?
-  missSpaceOcc <- identifyMissRepChar(v, " ") #what "  ", "   ", ... strings occur?
+    missNinesOcc <- identifyMissRepChar(v, "9") #what 99, 999, ... strings occur?
+    missSpaceOcc <- identifyMissRepChar(v, " ") #what "  ", "   ", ... strings occur?
 
-  #STATA-style: .something describes a "something" type of missing value
-  missDotPrefixOcc <- unique(v[substr(v, 1, 1) == "."])
+    ## STATA-style: .something describes a "something" type of missing value
+    missDotPrefixOcc <- unique(v[substr(v, 1, 1) == "."])
 
-  allProblemOcc <- c(missStrsOcc, missNinesOcc, missSpaceOcc, missDotPrefixOcc)
+    allProblemOcc <- c(missStrsOcc, missNinesOcc, missSpaceOcc, missDotPrefixOcc)
 
-  if (length(allProblemOcc) > 0) {
-    problemValues <- allProblemOcc
-    problem <- TRUE
-  }
-  outMessage <- messageGenerator(list(problem = problem, problemValues = problemValues),
-                                 check = "identifyMiss")
-  list(problem = problem, message = outMessage)
+    if (length(allProblemOcc) > 0) {
+        problemValues <- allProblemOcc
+        problem <- TRUE
+    }
+
+    outMessage <- messageGenerator(list(problem = problem, problemValues = problemValues),
+                                   check = "identifyMiss")
+    list(problem = problem, message = outMessage)
 }
 
 #labbeled variables

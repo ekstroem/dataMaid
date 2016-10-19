@@ -293,6 +293,7 @@ clean <- function(o,
     ## panderOptions("table.alignment.default", "left")
     panderOptions('table.alignment.default', 'center')  ## XXX CE only one of these two
     panderOptions("table.split.table", Inf)
+    panderOptions("table.split.cells", Inf)
     panderOptions('table.alignment.rownames', 'left')
 
     ##
@@ -505,8 +506,10 @@ clean <- function(o,
                 if (extraMessages$do) writer(paste("* ", extraMessages$messages, "\n", collapse=" \n ",
                                                    sep=""))
 
-            ## make Summary table
-            if (doSummarize) sumTable <- pander_return(summarize(v, characterSummaries = characterSummaries,
+
+
+                ## make Summary table
+                if (doSummarize) sumTable <- pander_return(summarize(v, characterSummaries = characterSummaries,
                                                                  factorSummaries = factorSummaries,
                                                                  labelledSummaries = labelledSummaries,
                                                                  numericSummaries = numericSummaries,
@@ -514,7 +517,7 @@ clean <- function(o,
                                                                  logicalSummaries = logicalSummaries,
                                                                  ...), justify="lr")
               #if (doSummarize) sumTable <- pandoc.table.return(summarize(v, ...))
-                #exactly the same result as with pander_return()
+                                        #exactly the same result as with pander_return()
 
                 ## Label information
                 ## Right now we are not doing anything besides wirint the label above
