@@ -44,6 +44,12 @@ identifyOutliersNI <- function(v) {
   qs <- quantile(v, c(0.25, 0.75))
   IQR <- qs[2] - qs[1]
   outlierPlaces <- v < qs[1]-1.5*IQR | v > qs[2]+1.5*IQR
+
+  ## Medcouple adjusted area
+  ## [Q1 – c * exp(-b * MC) * IQD, Q3 + c * exp(-a * MC) * IQD
+  ## c=1.5, a=-4, b=3
+  ## outlierPlaces <- v < qs[1]-1.5*exp(-(-4)*MC)*IQR | v > qs[2]+1.5*exp(3*MC)*IQR
+
   if (any(outlierPlaces)) {
     problem <- TRUE
     problemValues <- v[outlierPlaces] #if outlier value occurs multiple times,
