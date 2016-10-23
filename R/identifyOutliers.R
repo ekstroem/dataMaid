@@ -46,9 +46,17 @@ identifyOutliersNI <- function(v) {
   outlierPlaces <- v < qs[1]-1.5*IQR | v > qs[2]+1.5*IQR
 
   ## Medcouple adjusted area
+  ## CE: This block can be removed to use standard outlier detection
   ## [Q1 – c * exp(-b * MC) * IQD, Q3 + c * exp(-a * MC) * IQD
   ## c=1.5, a=-4, b=3
-  ## outlierPlaces <- v < qs[1]-1.5*exp(-(-4)*MC)*IQR | v > qs[2]+1.5*exp(3*MC)*IQR
+  lowConst <- -4
+  highConst <- 3
+  MC <- robustbase::mc(v)
+  if (MC<0) {
+      lowConst <- -3
+      highConst <- 4
+  }
+  outlierPlaces <- v < qs[1]-1.5*exp(lowConst*MC)*IQR | v > qs[2]+1.5*exp(highConst*MC)*IQR
 
   if (any(outlierPlaces)) {
     problem <- TRUE

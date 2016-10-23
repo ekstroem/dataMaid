@@ -15,7 +15,8 @@ Imports:
     methods
 Depends:
     pander,
-    ggplot2
+    ggplot2,
+    robustbase
 Suggests:
     stringi,
     rmarkdown
