@@ -38,7 +38,8 @@ identifyOutliers.integer <- function(v) identifyOutliersNI(v)
 ##########################################Not exported below#########################################
 
 
-#numerical and integer variables
+##numerical and integer variables
+#' @importFrom robustbase mc
 identifyOutliersNI <- function(v) {
   v <- na.omit(v)
   qs <- quantile(v, c(0.25, 0.75))
@@ -65,8 +66,9 @@ identifyOutliersNI <- function(v) {
     ## it will be printed multiple times
 
     ## CE: Alternatively print it fewer times but with a multiplier
-##    xx <- table(problemValues)
-##    problemValues <- paste0(attributes(xx)$dimnames[[1]], " (x ", xx, ")")
+    ## Gives two problems: 1) values become text so sorted lexicographically (not nice), and 2) values and multiplers are part of the same string which is also not that nice
+    ## xx <- table(problemValues)
+    ## problemValues <- paste0(attributes(xx)$dimnames[[1]], " (x ", xx, ")")
 
   } else {
     problem <- FALSE

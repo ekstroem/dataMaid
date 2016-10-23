@@ -1,7 +1,7 @@
 latex/
 \.RData
 \.Rhistory
-R/makeData\.R
+^makeData\.R
 ^README*
 ^.*\.Rproj$
 ^\.Rproj\.user$
@@ -9,3 +9,4 @@ R/makeData\.R
 ^.*\.Rmd
 ^.*\.rda
 ^.*\.pdf
+^.*\.tex

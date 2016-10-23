@@ -765,6 +765,7 @@ classes.visualFunction <- function(x) attr(x, "classes")
   x
 }
 
+#' @importFrom pander pander
 #' @export
 print.functionSummary <- function(x) {
   x$classes <- sapply(x$classes, function(x) paste(x, collapse=", "))
