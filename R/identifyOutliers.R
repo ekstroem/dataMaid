@@ -60,8 +60,14 @@ identifyOutliersNI <- function(v) {
 
   if (any(outlierPlaces)) {
     problem <- TRUE
-    problemValues <- v[outlierPlaces] #if outlier value occurs multiple times,
-    #it will be printed multiple times
+    problemValues <- v[outlierPlaces]
+    ## if outlier value occurs multiple times,
+    ## it will be printed multiple times
+
+    ## CE: Alternatively print it fewer times but with a multiplier
+##    xx <- table(problemValues)
+##    problemValues <- paste0(attributes(xx)$dimnames[[1]], " (x ", xx, ")")
+
   } else {
     problem <- FALSE
     problemValues <- NULL
