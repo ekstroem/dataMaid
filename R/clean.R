@@ -571,7 +571,7 @@ clean <- function(o,
       #fileName <- paste(substring(fileName, 1, nchar(fileName)-4), ".",
       #                  output, sep="")
         if (!silent) {
-            message("Data cleaning is finished. Please wait while your output file is rendered.")
+            message("Data cleaning is finished. Please wait while your output file is being rendered.")
         }
         if (nagUser && output=="pdf" && identical(as.character(Sys.info()["sysname"]),"Windows")) {
             message(paste("\n Is", outFile,
@@ -768,7 +768,7 @@ classes.visualFunction <- function(x) attr(x, "classes")
 
 #' @importFrom pander pander
 #' @export
-print.functionSummary <- function(x) {
+print.functionSummary <- function(x, ...) {
   x$classes <- sapply(x$classes, function(x) paste(x, collapse=", "))
   pander(data.frame(x, row.names = NULL), justify="left")
 }
