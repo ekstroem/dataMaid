@@ -668,6 +668,9 @@ isCPR <- function(v) {
   out <- list(problem=FALSE, message="")
   m <- "Warning: The variable seems to consist of Danish civil regristration (CPR) numbers."
   v <- as.character(na.omit(v))
+  
+  if (length(v) == 0) return(out) #if v consists only of NAs
+  
   posCPR <- FALSE
   chars <- nchar(v)
 
