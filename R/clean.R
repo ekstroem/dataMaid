@@ -746,10 +746,20 @@ isDanishDate <- function(strs) {
 #replaces funSum
 #' @export
 description <- function(x) UseMethod("description")
+
+#' @export
 description.default <- function(x) deparse(substitute(x))
+
+#' @export
 description.checkFunction <- function(x) attr(x, "description")
+
+#' @export
 description.summaryFunction <- function(x) attr(x, "description")
+
+#' @export
 description.visualFunction <- function(x) attr(x, "description")
+
+#' @export
 `description<-` <- function(x, value) {
   attr(x, "description") <- value
   x
@@ -757,10 +767,20 @@ description.visualFunction <- function(x) attr(x, "description")
 
 #' @export
 classes <- function(x) UseMethod("classes")
-classes.defualt <- function(x) NULL
+
+#' @export
+classes.default <- function(x) NULL
+
+#' @export
 classes.checkFunction <- function(x) attr(x, "classes")
+
+#' @export
 classes.summaryFunction <- function(x) attr(x, "classes")
+
+#' @export
 classes.visualFunction <- function(x) attr(x, "classes")
+
+#' @export
 `classes<-` <- function(x, value) {
   attr(x, "classes") <- value
   x
@@ -777,6 +797,8 @@ print.functionSummary <- function(x, ...) {
 
 #' @export
 allXFunctions <- function(X) {
+    #.GlobalEnv isn't the right place to look. Got to add stuff loaded
+    #from packages too!
   allF <- Filter(function(x) X %in% class(get(x)), ls(envir = .GlobalEnv))
   out <- list(name = allF, description = sapply(allF, function(x) description(get(x))),
               classes = lapply(allF, function(x) classes(get(x))))
@@ -802,3 +824,18 @@ makeXFunction <- function(fName, description, classes, X) {
 }
 
 
+
+identifyNums <- function(v) {
+  out <- list(problem = FALSE, message = "")
+  v <- as.character(na.omit(v))
+  if (length(unique(v)) <= 11) {
+    return(out)
+  }
+  v[v==""] <- "a" 
+  v <- gsub("[[:digit:]]", "", v)
+  if (sum(nchar(v)) == 0) {
+    out$problem <- TRUE
+    out$message <- "Note: The variable consists only of numbers and has a lot of different unique values. Is it perhaps a misclassified numeric variable?"
+  }
+  out
+}

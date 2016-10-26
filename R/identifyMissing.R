@@ -90,7 +90,7 @@ identifyMissingCF <- function(v) {
                                   #factor levels below without unwanted conversions
     problem <- FALSE
     problemValues <- NULL
-
+    
     missStrs <- c("", "nan", "NaN", "NAN", "na", "NA", "Na", "Inf", "inf",
                   "-Inf", "-inf", "-", " ", "9")
     missStrsOcc <- intersect(v, missStrs) #what potential missing value strings occur?
@@ -103,6 +103,11 @@ identifyMissingCF <- function(v) {
 
     allProblemOcc <- c(missStrsOcc, missNinesOcc, missSpaceOcc, missDotPrefixOcc)
 
+    if (length(missNinesOcc) > 0) {
+      #sc
+      
+    }
+    
     if (length(allProblemOcc) > 0) {
         problemValues <- allProblemOcc
         problem <- TRUE
