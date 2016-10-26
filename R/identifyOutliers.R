@@ -38,7 +38,8 @@ identifyOutliers.integer <- function(v) identifyOutliersNI(v)
 ##########################################Not exported below#########################################
 
 
-#numerical and integer variables
+##numerical and integer variables
+#' @importFrom robustbase mc
 identifyOutliersNI <- function(v) {
   v <- na.omit(v)
   qs <- quantile(v, c(0.25, 0.75))
@@ -46,14 +47,29 @@ identifyOutliersNI <- function(v) {
   outlierPlaces <- v < qs[1]-1.5*IQR | v > qs[2]+1.5*IQR
 
   ## Medcouple adjusted area
+  ## CE: This block can be removed to use standard outlier detection
   ## [Q1 – c * exp(-b * MC) * IQD, Q3 + c * exp(-a * MC) * IQD
   ## c=1.5, a=-4, b=3
-  ## outlierPlaces <- v < qs[1]-1.5*exp(-(-4)*MC)*IQR | v > qs[2]+1.5*exp(3*MC)*IQR
+  lowConst <- -4
+  highConst <- 3
+  MC <- robustbase::mc(v)
+  if (MC<0) {
+      lowConst <- -3
+      highConst <- 4
+  }
+  outlierPlaces <- v < qs[1]-1.5*exp(lowConst*MC)*IQR | v > qs[2]+1.5*exp(highConst*MC)*IQR
 
   if (any(outlierPlaces)) {
     problem <- TRUE
-    problemValues <- v[outlierPlaces] #if outlier value occurs multiple times,
-    #it will be printed multiple times
+    problemValues <- v[outlierPlaces]
+    ## if outlier value occurs multiple times,
+    ## it will be printed multiple times
+
+    ## CE: Alternatively print it fewer times but with a multiplier
+    ## Gives two problems: 1) values become text so sorted lexicographically (not nice), and 2) values and multiplers are part of the same string which is also not that nice
+    ## xx <- table(problemValues)
+    ## problemValues <- paste0(attributes(xx)$dimnames[[1]], " (x ", xx, ")")
+
   } else {
     problem <- FALSE
     problemValues <- NULL

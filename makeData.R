@@ -11,7 +11,7 @@ makeCPR <- function(bday) {
   if (year <= 2007 & year >= 2000) {
     done <- F
     while(!done) {
-      f3d <- c(sample(4:9, 1), sample(0:9, 1), sample(0:9, 1))  
+      f3d <- c(sample(4:9, 1), sample(0:9, 1), sample(0:9, 1))
       outty <- mVec %*% c(day, month, as.numeric(strsplit(substr(year, 3, 4),"")[[1]]), f3d)
       d10 <- outty %% 11
       if (d10 != 1) {
@@ -24,11 +24,11 @@ makeCPR <- function(bday) {
   if (year <= 1999 & year >= 1900) {
     done <- F
     while(!done) {
-      f3d <- c(sample(0:3, 1), sample(0:9, 1), sample(0:9, 1))  
+      f3d <- c(sample(0:3, 1), sample(0:9, 1), sample(0:9, 1))
       outty <- mVec %*% c(day, month, as.numeric(strsplit(substr(year, 3, 4),"")[[1]]), f3d)
       d10 <- outty %% 11
       if (d10 != 1) {
-        out <- paste(c(day, month, as.numeric(strsplit(substr(year, 3, 4),"")[[1]]), 
+        out <- paste(c(day, month, as.numeric(strsplit(substr(year, 3, 4),"")[[1]]),
                                               "-", f3d, ifelse(d10==0, 0, 11-d10)), collapse="")
         done <- T
       }
@@ -45,7 +45,7 @@ vC <- c("a", "b", "c", "a", "b", "d", "a")
 vF <- as.factor(vC)
 vN <- c(1:10, 1, 1, 1, 5, 5)
 vI <- as.integer(vN)
-vB <- c(T, F, T, T, T, F) 
+vB <- c(T, F, T, T, T, F)
 
 set.seed(1)
 vCPRKey <- sapply(c("01011988", "02011987", "04052006", "01021990", "01021991",
@@ -54,7 +54,7 @@ vCPRKey <- sapply(c("01011988", "02011987", "04052006", "01021990", "01021991",
 vCPR <- rep(vCPRKey[1:5], 3)
 
 vMiss <- c(".", "", "nan", "NaN", "NAN", "na", "NA", "Na", "Inf", "inf",
-           "-Inf", "-inf", "-", "9", "9") #there are more missing strings, add them 
+           "-Inf", "-inf", "-", "9", "9") #there are more missing strings, add them
 #when data is expanded to have more obs.
 
 stringsAsFactorsOption <- getOption("stringsAsFactors")
@@ -76,4 +76,4 @@ options(stringsAsFactors = stringsAsFactorsOption)
 
 testData <- data
 
-save(testData, file="testData.Rda")
+save(testData, file="data/testData.Rda")

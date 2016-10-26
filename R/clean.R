@@ -571,7 +571,7 @@ clean <- function(o,
       #fileName <- paste(substring(fileName, 1, nchar(fileName)-4), ".",
       #                  output, sep="")
         if (!silent) {
-            message("Data cleaning is finished. Please wait while your output file is rendered.")
+            message("Data cleaning is finished. Please wait while your output file is being rendered.")
         }
         if (nagUser && output=="pdf" && identical(as.character(Sys.info()["sysname"]),"Windows")) {
             message(paste("\n Is", outFile,
@@ -668,9 +668,7 @@ isCPR <- function(v) {
   out <- list(problem=FALSE, message="")
   m <- "Warning: The variable seems to consist of Danish civil regristration (CPR) numbers."
   v <- as.character(na.omit(v))
-  
   if (length(v) == 0) return(out) #if v consists only of NAs
-  
   posCPR <- FALSE
   chars <- nchar(v)
 
@@ -768,8 +766,9 @@ classes.visualFunction <- function(x) attr(x, "classes")
   x
 }
 
+#' @importFrom pander pander
 #' @export
-print.functionSummary <- function(x) {
+print.functionSummary <- function(x, ...) {
   x$classes <- sapply(x$classes, function(x) paste(x, collapse=", "))
   pander(data.frame(x, row.names = NULL), justify="left")
 }

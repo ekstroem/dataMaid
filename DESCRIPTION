@@ -15,14 +15,15 @@ Imports:
     methods
 Depends:
     pander,
-    ggplot2
+    ggplot2,
+    robustbase
 Suggests:
     stringi,
     rmarkdown
 Encoding: UTF-8
 ByteCompile: true
 License: GPL-2
-RoxygenNote: 5.0.1
+RoxygenNote: 5.0.1.9000
 Collate: 
   'clean.R'
   'summaryFunction.R'
@@ -44,5 +45,4 @@ Collate:
   'identifyWhitespace.R'
   'identifyMissing.R'
   'fancyVisual.R'
-  'makeData.R'
   'cleanR-package.R'
