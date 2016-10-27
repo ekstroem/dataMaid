@@ -71,8 +71,11 @@
 #' @keywords misc
 #' @examples
 #'
-#' clean(data.frame(x=1:15))
-#'
+#'  \dontrun{
+#' DF <- data.frame(x = 1:15)
+#' clean(DF)
+#' }
+#' 
 #' \dontrun{
 #' data(testData)
 #' clean(testData)
