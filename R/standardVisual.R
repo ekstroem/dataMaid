@@ -26,9 +26,8 @@
 #'
 #' @importFrom ggplot2 qplot
 #' @importFrom stats na.omit
-#' @export
+## #' @export
 standardVisual <- function(v, vnam, doEval = TRUE) UseMethod("standardVisual")
-standardVisual <- visualFunction(standardVisual, "Histograms and barplots using ggplot2")
 
 #assign methods to generic standardVisual function
 
@@ -51,6 +50,11 @@ standardVisual.integer <- function(v, vnam, doEval = TRUE) standardVisualIN(v, v
 standardVisual.logical <- function(v, vnam, doEval = TRUE) standardVisualCFLB(v, vnam, doEval=doEval)
 
 
+
+
+
+#' @export
+standardVisual <- visualFunction(standardVisual, "Histograms and barplots using ggplot2")
 
 
 ##########################################Not exported below#########################################

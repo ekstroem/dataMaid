@@ -16,7 +16,6 @@
 #' @importFrom stats na.omit
 #' @export
 uniqueValues <- function(v) UseMethod("uniqueValues")
-uniqueValues <- summaryFunction(uniqueValues, "Count number of unique values")
 
 #assign methods to generic uniqueValues function
 
@@ -37,6 +36,11 @@ uniqueValues.integer <- function(v) uniqueValuesCFLBI(v)
 
 #' @export
 uniqueValues.logical <- function(v) uniqueValuesCFLBI(v)
+
+
+#Make it a summaryFunction
+#' @export
+uniqueValues <- summaryFunction(uniqueValues, "Count number of unique values")
 
 
 ##########################################Not exported below#########################################
