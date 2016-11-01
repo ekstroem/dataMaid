@@ -25,12 +25,28 @@ ByteCompile: true
 License: GPL-2
 RoxygenNote: 5.0.1.9000
 Collate: 
-  'clean.R'
+  'leftover_functions_split_us.R'
+  'classes.R'
+  'description.R'
+  'isCPR.R'
+  'smartNum.R'
+  'messageGenerator.R'
+  'isSpecial.R'
+  'oClass.R'
+  'render.R'
+  'allXFunctions.R'
+  'makeXFunction.R'
+  'identifyNums.R'
   'summaryFunction.R'
   'visualFunction.R'
+  'checkFunction.R'
+  'allSummaryFunctions.R'
+  'allVisualFunctions.R'
+  'allCheckFunctions.R'
   'visualize.R'
   'standardVisual.R'
   'basicVisual.R'
+  'fancyVisual.R'
   'summarize.R'
   'quartiles.R'
   'minMax.R'
@@ -44,5 +60,8 @@ Collate:
   'identifyLoners.R'
   'identifyWhitespace.R'
   'identifyMissing.R'
-  'fancyVisual.R'
+  'clean.R'
   'cleanR-package.R'
+
+
+
