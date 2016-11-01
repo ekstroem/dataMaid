@@ -609,24 +609,13 @@ clean <- function(o,
 }
 
 
+#################################################################################################
+##################################Not exported below#############################################
+#################################################################################################
+
 #MOVE THESE FUNCTIONS ELSEWHERE
 
-#Check if a variable is a key (all observations have unique values) or
-#"empty" (only one unique value)
-#Maybe deal with missing values? They count as distinct values right now...
-isSpecial <- function(v) {
-  out <- list(problem=F, status="", message="")
-  nVals <- length(unique(v))
-  if (nVals == 1) {
-    out <- list(problem=T, status="empty",
-                message=paste("The variable only takes one value: \"", v[1],
-                                         "\".", sep=""))
-  } else if (nVals == length(v) & !any(class(v) %in% c("numeric", "integer"))) {
-    out <- list(problem=T, status="key",
-                message="The variable is a key (distinct values for each observation).")
-  }
-  out
-}
+
 
 
 #Check if a numeric/integer variable has less than maxLevel unique
@@ -644,88 +633,10 @@ doSmartNum <- function(v, maxLevels = 5, ...) {
 }
 
 
-#' @export
-smartNum <- function(v) {
-  oriClass <- class(v)
-  v <- factor(v)
-  attr(v, "originalClass") <- oriClass
-  class(v) <- c("smartNum", "factor")
-  v
-}
-
-
-oClass <- function(v) UseMethod("oClass")
-oClass.default <- function(v) class(v)
-oClass.smartNum <- function(v) attr(v, "originalClass")
-
-
-#make pdf/html from a .Rmd file
-render <- function(file, quiet) rmarkdown::render(file, quiet=quiet)
 
 
 
-#Check if v contains only (except for NAs) values that look like Danish
-#civil registration numbers
-#works until 2036...
-isCPR <- function(v) {
-  out <- list(problem=FALSE, message="")
-  m <- "Warning: The variable seems to consist of Danish civil regristration (CPR) numbers."
-  v <- as.character(na.omit(v))
-  if (length(v) == 0) return(out) #if v consists only of NAs
-  posCPR <- FALSE
-  chars <- nchar(v)
 
-  if (!all(chars %in% c(10,11))) return(out)
-
-  if (all(chars == 10)) {
-    posCPR <- grepl("[0-9]{10}", v)
-  }
-  if (all(chars== 11)) {
-    posCPR <- grepl("[0-9]{6}-[0-9]{4}", v)
-  }
-
-  if (!all(posCPR)) return(out)
-
-  if (!all(isDanishDate(substring(v, 1, 6)))) return(out)
-
-  v <- gsub("-", "", v)
-
-  year <- as.numeric(substring(v, 5, 6))
-  digit7 <- substring(v, 7, 7)
-
-  noCheckPl <- year<36 & year>=7 & digit7 >= 4 #is this right?
-
-  if (!all(noCheckPl)) {
-    check <- function(x) {
-      x <- as.numeric(strsplit(x, "")[[1]])
-      a <- c(4, 3, 2, 7, 6, 5, 4, 3, 2, 1)
-      (x %*% a) %% 11 == 0 #note: x %*% a = a %*% x for 1 x n vectors in R
-    }
-    res <- sapply(v[!noCheckPl], check)
-    if (!all(res)) return(out)
-  } else if (!all(digit7[noCheckPl]>3)) return(out)
-
-  out$problem <- TRUE
-  out$message <- m
-  out
-}
-
-#Checks whether strs contains only entries on the form DDMMYY
-isDanishDate <- function(strs) {
-  if (!(all(nchar(strs) == 6) & all(grepl("[0-9]{6}", strs)))) return(FALSE)
-
-  ds <- as.numeric(substring(strs, 1, 2))
-  ms <- as.numeric(substring(strs, 3, 4))
-
-  if (any(ms > 13)) return(FALSE)
-
-  mds <- c(31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
-  maxDs <- mds[ms]
-
-  if (any(ds > maxDs)) return(FALSE)
-
-  TRUE
-}
 
 
 
@@ -746,105 +657,6 @@ isDanishDate <- function(strs) {
 
 
 
-#replaces funSum
-#' @export
-description <- function(x) UseMethod("description")
-
-#' @export
-description.default <- function(x) deparse(substitute(x))
-
-#' @export
-description.checkFunction <- function(x) attr(x, "description")
-
-#' @export
-description.summaryFunction <- function(x) attr(x, "description")
-
-#' @export
-description.visualFunction <- function(x) attr(x, "description")
-
-#' @export
-`description<-` <- function(x, value) {
-  attr(x, "description") <- value
-  x
-}
-
-#' @export
-classes <- function(x) UseMethod("classes")
-
-#' @export
-classes.default <- function(x) NULL
-
-#' @export
-classes.checkFunction <- function(x) attr(x, "classes")
-
-#' @export
-classes.summaryFunction <- function(x) attr(x, "classes")
-
-#' @export
-classes.visualFunction <- function(x) attr(x, "classes")
-
-#' @export
-`classes<-` <- function(x, value) {
-  attr(x, "classes") <- value
-  x
-}
-
-#' @importFrom pander pander
-#' @export
-print.functionSummary <- function(x, ...) {
-  x$classes <- sapply(x$classes, function(x) paste(x, collapse=", "))
-  pander(data.frame(x, row.names = NULL), justify="left")
-}
 
 
 
-#' @export
-allXFunctions <- function(X) {
-    #.GlobalEnv isn't the right place to look. Got to add stuff loaded
-    #from packages too!
-  #e <- as.environment("package:cleanR")
-  #parent.env(e) <- .GlobalEnv
-  allF <- Filter(function(x) X %in% class(get(x)), union(ls(envir = .GlobalEnv), 
-                                                         ls("package:cleanR")))
-  out <- list(name = allF, description = sapply(allF, function(x) description(get(x))),
-              classes = lapply(allF, function(x) classes(get(x))))
-  class(out) <- c("functionSummary", "list")
-  out
-}
-
-#' @export
-makeXFunction <- function(fName, description, classes, X) {
-  f <- get(fName)
-  if (is.null(classes)) {
-    methods <- as.character(methods(fName)) #methods() needs the name in order
-    #to work inside the function
-    browser()
-    print(fName)
-    print(methods)
-    if (length(methods) > 0) {
-      classes <- sub(paste(fName, ".", sep=""),
-                     "", methods)
-    } else classes <- character()
-  }
-  class(f) <- c(X, "function")
-  attr(f, "description") <- description
-  attr(f, "classes") <- classes
-  f
-}
-
-
-
-identifyNums <- function(v) {
-  out <- list(problem = FALSE, message = "")
-  v <- as.character(na.omit(v))
-  if (length(unique(v)) <= 11) {
-    return(out)
-  }
-  v[v==""] <- "a" 
-  v <- gsub("[[:digit:]]", "", v)
-  if (sum(nchar(v)) == 0) {
-    out$problem <- TRUE
-    out$message <- "Note: The variable consists only of numbers and has a lot of different unique values. Is it perhaps a misclassified numeric variable?"
-  }
-  out
-}

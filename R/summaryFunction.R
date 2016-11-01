@@ -69,10 +69,4 @@ summaryFunction <- function(f, description, classes = NULL) {
 }
 
 
-#' document me!
-#' @export
-allSummaryFunctions <- function() {
-  allXFunctions("summaryFunction")
-}
-
 
