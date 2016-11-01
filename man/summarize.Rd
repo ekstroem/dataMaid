@@ -4,13 +4,13 @@
 \alias{summarize}
 \title{Make summary matrix}
 \usage{
-summarize(v, descriptive = FALSE, ...)
+summarize(v, descriptive = TRUE, ...)
 }
 \arguments{
 \item{v}{The variable (vector) which is to be summarized.}
 
-\item{descriptive}{If TRUE, descriptive functions are added to the summary matrix
-(see details).}
+\item{descriptive}{If TRUE (the default) then descriptive functions are added to the summary matrix
+(see details). They are not included if set to FALSE.}
 
 \item{...}{Additional argument passed to data class specific methods. First and foremost,
 this is where to supply the summary functions and description functions (see details).}
@@ -29,7 +29,7 @@ names (in character strings) in the class-specific argument, e.g.
 \code{characterSummaries = c("countMissing", "uniqueValues")} for character variables and
 similarly for the remaining 5 data classes (factor, labelled, numeric, integer, logical).
 Secondly, additional functions can be added using the "descriptions"-arguments, e.g.
-\code{characterDescriptions = "centralValue"}. If \code{descriptive = T} the results of
+\code{characterDescriptions = "centralValue"}. If \code{descriptive = TRUE} the results of
 these functions are added to the outputted summary matrix. Note that this is nothing
 more than a convenient way to add an extra category of summary functions to the output.
 Summary functions and description functions are treated in the exact same way.
@@ -47,8 +47,8 @@ an example of a summary function.
    charV <- c("a", "b", "c", "a", "a", NA, "b", "0")
    summarize(charV)
 
-#Add default description functions:
-   summarize(charV, descriptive = TRUE)
+# Remove default description functions:
+   summarize(charV, descriptive = FALSE)
 
 #Inspect default character summary functions:
    defaultCharacterSummaries()

@@ -2,8 +2,8 @@ Package: cleanR
 Type: Package
 Title: A Suite of Checks for Identification of Potential Errors in a Data Frame
     as Part of the Data Cleaning Process
-Version: 0.4
-Date: 2016-10-08
+Version: 0.5
+Date: 2016-10-28
 Author: Anne Helby Petersen <ahpe@sund.ku.dk> and Claus Thorn Ekstrøm
     <ekstrom@sund.ku.dk>
 Maintainer: Claus Thorn Ekstrøm <ekstrom@sund.ku.dk>

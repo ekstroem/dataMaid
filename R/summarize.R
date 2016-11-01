@@ -4,8 +4,8 @@
 #' given a number of summary functions and depending on its data class.
 #'
 #' @param v The variable (vector) which is to be summarized.
-#' @param descriptive If TRUE, descriptive functions are added to the summary matrix
-#' (see details).
+#' @param descriptive If TRUE (the default) then descriptive functions are added to the summary matrix
+#' (see details). They are not included if set to FALSE.
 #' @param ... Additional argument passed to data class specific methods. First and foremost,
 #' this is where to supply the summary functions and description functions (see details).
 #'
@@ -14,7 +14,7 @@
 #' \code{characterSummaries = c("countMissing", "uniqueValues")} for character variables and
 #' similarly for the remaining 5 data classes (factor, labelled, numeric, integer, logical).
 #' Secondly, additional functions can be added using the "descriptions"-arguments, e.g.
-#' \code{characterDescriptions = "centralValue"}. If \code{descriptive = T} the results of
+#' \code{characterDescriptions = "centralValue"}. If \code{descriptive = TRUE} the results of
 #' these functions are added to the outputted summary matrix. Note that this is nothing
 #' more than a convenient way to add an extra category of summary functions to the output.
 #' Summary functions and description functions are treated in the exact same way.
@@ -44,8 +44,8 @@
 #'    charV <- c("a", "b", "c", "a", "a", NA, "b", "0")
 #'    summarize(charV)
 #'
-#' #Add default description functions:
-#'    summarize(charV, descriptive = TRUE)
+#' # Remove default description functions:
+#'    summarize(charV, descriptive = FALSE)
 #'
 #' #Inspect default character summary functions:
 #'    defaultCharacterSummaries()
@@ -65,7 +65,7 @@
 #'    summarize(intV, integerSummaries = "countZeros")
 #'
 #' @export
-summarize <- function(v, descriptive = FALSE, ...) UseMethod("summarize")
+summarize <- function(v, descriptive = TRUE, ...) UseMethod("summarize")
 
 
 
@@ -261,7 +261,7 @@ defaultLogicalDescriptions <- function() "centralValue"
 #methods for each data type
 
 #' @export
-summarize.character <- function(v, descriptive = FALSE,
+summarize.character <- function(v, descriptive = TRUE,
                                 characterSummaries = defaultCharacterSummaries(),
                                 characterDescriptions = defaultCharacterDescriptions(), ...) {
   characterCalls <- if (descriptive) c(characterSummaries, characterDescriptions)
@@ -271,7 +271,7 @@ summarize.character <- function(v, descriptive = FALSE,
 
 
 #' @export
-summarize.factor <- function(v, descriptive = FALSE,
+summarize.factor <- function(v, descriptive = TRUE,
                              factorSummaries = defaultFactorSummaries(),
                              factorDescriptions = defaultFactorDescriptions(), ...) {
   factorCalls <- if (descriptive) c(factorSummaries, factorDescriptions)
@@ -281,7 +281,7 @@ summarize.factor <- function(v, descriptive = FALSE,
 
 
 #' @export
-summarize.labelled <- function(v, descriptive = FALSE,
+summarize.labelled <- function(v, descriptive = TRUE,
                                labelledSummaries = defaultLabelledSummaries(),
                                labelledDescriptions = defaultLabelledDescriptions(), ...) {
   labelledCalls <- if (descriptive) c(labelledSummaries, labelledDescriptions)
@@ -291,7 +291,7 @@ summarize.labelled <- function(v, descriptive = FALSE,
 
 
 #' @export
-summarize.numeric <- function(v, descriptive = FALSE,
+summarize.numeric <- function(v, descriptive = TRUE,
                               numericSummaries = defaultNumericSummaries(),
                               numericDescriptions = defaultNumericDescriptions(), ...) {
   numericCalls <- if (descriptive) c(numericSummaries, numericDescriptions)
@@ -301,7 +301,7 @@ summarize.numeric <- function(v, descriptive = FALSE,
 
 
 #' @export
-summarize.integer <- function(v, descriptive = FALSE,
+summarize.integer <- function(v, descriptive = TRUE,
                               integerSummaries = defaultIntegerSummaries(),
                               integerDescriptions = defaultIntegerDescriptions(), ...) {
   integerCalls <- if (descriptive) c(integerSummaries, integerDescriptions)
@@ -311,7 +311,7 @@ summarize.integer <- function(v, descriptive = FALSE,
 
 
 #' @export
-summarize.logical <- function(v, descriptive = FALSE,
+summarize.logical <- function(v, descriptive = TRUE,
                               logicalSummaries = defaultLogicalSummaries(),
                               logicalDescriptions = defaultLogicalDescriptions(), ...) {
   logicalCalls <- if (descriptive) c(logicalSummaries, logicalDescriptions)

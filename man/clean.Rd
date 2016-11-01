@@ -132,7 +132,10 @@ The checks are saved to an R markdown file which can rendered into an easy-to-re
 }
 \examples{
 
-clean(data.frame(x=1:15))
+ \dontrun{
+DF <- data.frame(x = 1:15)
+clean(DF)
+}
 
 \dontrun{
 data(testData)
