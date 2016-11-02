@@ -77,7 +77,7 @@ check <- function(v, ...) UseMethod("check")
 
 #' @export
 defaultCharacterChecks <- function() c("identifyMissing", "identifyWhitespace", "identifyLoners",
-                                       "identifyCaseIssues")
+                                       "identifyCaseIssues", "identifyNums")
 #' @export
 check.character <- function(v, characterChecks=defaultCharacterChecks(), ...) {
   lapply(characterChecks, function(x) eval(call(x, v)))
@@ -86,7 +86,7 @@ check.character <- function(v, characterChecks=defaultCharacterChecks(), ...) {
 
 #' @export
 defaultFactorChecks <- function() c("identifyMissing", "identifyWhitespace", "identifyLoners",
-                                       "identifyCaseIssues")
+                                       "identifyCaseIssues", "identifyNums")
 #' @export
 check.factor <- function(v, factorChecks = defaultFactorChecks(), ...) {
   lapply(factorChecks, function(x) eval(call(x, v)))

@@ -4,7 +4,7 @@ Title: A Suite of Checks for Identification of Potential Errors in a Data Frame
     as Part of the Data Cleaning Process
 Version: 0.5
 Date: 2016-10-28
-Author: Anne Helby Petersen <ahpe@sund.ku.dk> and Claus Thorn Ekstrøm
+Author: Anne H. Petersen <ahpe@sund.ku.dk> and Claus Thorn Ekstrøm
     <ekstrom@sund.ku.dk>
 Maintainer: Claus Thorn Ekstrøm <ekstrom@sund.ku.dk>
 Description: Data cleaning is an important first step of any statistical
@@ -23,45 +23,42 @@ Suggests:
 Encoding: UTF-8
 ByteCompile: true
 License: GPL-2
-RoxygenNote: 5.0.1.9000
-Collate: 
-  'leftover_functions_split_us.R'
-  'classes.R'
-  'description.R'
-  'isCPR.R'
-  'smartNum.R'
-  'messageGenerator.R'
-  'isSpecial.R'
-  'oClass.R'
-  'render.R'
-  'allXFunctions.R'
-  'makeXFunction.R'
-  'identifyNums.R'
-  'summaryFunction.R'
-  'visualFunction.R'
-  'checkFunction.R'
-  'allSummaryFunctions.R'
-  'allVisualFunctions.R'
-  'allCheckFunctions.R'
-  'visualize.R'
-  'standardVisual.R'
-  'basicVisual.R'
-  'fancyVisual.R'
-  'summarize.R'
-  'quartiles.R'
-  'minMax.R'
-  'centralValue.R'
-  'variableType.R'
-  'countMissing.R'
-  'uniqueValues.R'
-  'check.R'
-  'identifyCaseissues.R'
-  'identifyOutliers.R'
-  'identifyLoners.R'
-  'identifyWhitespace.R'
-  'identifyMissing.R'
-  'clean.R'
-  'cleanR-package.R'
-
-
-
+RoxygenNote: 5.0.1
+Collate:
+    'leftover_functions_split_us.R'
+    'classes.R'
+    'description.R'
+    'smartNum.R'
+    'messageGenerator.R'
+    'oClass.R'
+    'render.R'
+    'allXFunctions.R'
+    'makeXFunction.R'
+    'summaryFunction.R'
+    'visualFunction.R'
+    'checkFunction.R'
+    'allSummaryFunctions.R'
+    'allVisualFunctions.R'
+    'allCheckFunctions.R'
+    'isCPR.R'
+    'isSpecial.R'
+    'identifyNums.R'
+    'visualize.R'
+    'standardVisual.R'
+    'basicVisual.R'
+    'fancyVisual.R'
+    'summarize.R'
+    'quartiles.R'
+    'minMax.R'
+    'centralValue.R'
+    'variableType.R'
+    'countMissing.R'
+    'uniqueValues.R'
+    'check.R'
+    'identifyCaseissues.R'
+    'identifyOutliers.R'
+    'identifyLoners.R'
+    'identifyWhitespace.R'
+    'identifyMissing.R'
+    'clean.R'
+    'cleanR-package.R'

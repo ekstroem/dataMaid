@@ -70,7 +70,8 @@ data <- data.frame(charVar=c(rep(vC, 2), NA),
                    smartNumVar = c(rep(0, 7), rep(1, 8)),
                    cprVar=vCPR,
                    cprKeyVar=vCPRKey,
-                   miscodedMissingVar=vMiss)
+                   miscodedMissingVar=vMiss,
+                   misclassifiedNumVar=factor(1:15))
 names(data)[names(data)=="joeVar"] <- "_joeVar"
 options(stringsAsFactors = stringsAsFactorsOption)
 
