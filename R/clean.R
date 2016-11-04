@@ -4,7 +4,8 @@
 #' Performs checking steps according to user input and/or data type of the inputted variable.
 #' The checks are saved to an R markdown file which can rendered into an easy-to-read document.
 #'
-#' @param o the data frame object to be checked.
+#' @param data the dataset to be checked [LIST ALL ALLOWED OBJECT CLASSES, INCLUDING data.frame, 
+#' matrix, data.table, ... (more?)].
 #' @param output Output format. Options are "markdown" (the default), "pdf", "html", and "screen".
 #' All but the "screen" option produces an R markdown file which can be rendered.
 #' The "screen" option prints a small summary on the screen.
@@ -63,6 +64,8 @@
 #' to the document (if available)
 #' @param garbageCollection A logical. If TRUE (the default) then garbage collection code is added to
 #' the R markdown file that is output. This is useful for larger dataset to prevent memory problems.
+#' @param maxProbVals Maximum number of unique values printed from check-functions (integer > 0). 
+#' Defaults to \code{Inf}, which means that all values are printed.
 #' @param \dots other arguments that are passed on the to precheck, checking, summary and visualization functions
 #' @return The function does not return anything. It's side effect (the production of the Rmd file summary)
 #' is the reason for running the function.
@@ -97,7 +100,7 @@
 #' @importFrom methods is
 #' @importFrom pander pander_return panderOptions pandoc.table.return
 #' @export
-clean <- function(o,
+clean <- function(data,
                   output=c("pdf", "html", "screen"), render=TRUE,
                       #note: output cannot just be markdown. Either it's pdf-markdown or html-markdown.
                       #what files are produced is controlled using render.
@@ -128,13 +131,14 @@ clean <- function(o,
                   garbageCollection=TRUE,
                   listChecks = TRUE,
                   brag=FALSE, #remove me
+                  maxProbVals = Inf,
                   ...) {
 
     ## Start by doing a few sanity checks of the input
-    if (! (is(o, "data.frame") )) {
+    if (! (is(data, "data.frame") )) {
         ## tibble is automatically a data frame
-        if (is.matrix(o)) {
-            o <- as.data.frame(o)
+        if (is.matrix(data)) {
+            data <- as.data.frame(data)
         } else stop("clean requires a data.frame, tibble or matrix as input")
     }
 
@@ -144,7 +148,7 @@ clean <- function(o,
       #quiet <- match.arg(quiet)
 
     ## Extract the dataframe name
-    dfname <- deparse(substitute(o))
+    dfname <- deparse(substitute(data))
 
     ## What variables should be used?
     if (!is.null(useVar)) {
@@ -155,7 +159,7 @@ clean <- function(o,
         ##around creating a local copy of o, as we do NOT want to change the version of o in the
         ##global environment.
 
-      o <- o[, useVar, drop=FALSE]  #warning here if this doesn't work + overwrite stuff?
+      data <- data[, useVar, drop=FALSE]  #warning here if this doesn't work + overwrite stuff?
 
       ###this does not work, it produces an error!:########################
       #o[names(o)[! names(o) %in% useVar]] <- NULL
@@ -163,12 +167,12 @@ clean <- function(o,
     }
 
     ## Background variables
-    nvariables <- ncol(o)
+    nvariables <- ncol(data)
     if (ordering == "alphabetical") {
-        index <- order(names(o))
+        index <- order(names(data))
     } else index <- 1:nvariables
-    n <- nrow(o)
-    vnames <- names(o)
+    n <- nrow(data)
+    vnames <- names(data)
     dots <- list(...)
 
     ## Set the output file name if input is NULL or not Rmd
@@ -457,7 +461,7 @@ clean <- function(o,
         problems <- FALSE
 
         ## How to order the variables
-        v <- o[[idx]]
+        v <- data[[idx]]
         vnam <- vnames[idx]
 
         ## Check if variable is key/empty
@@ -482,7 +486,7 @@ clean <- function(o,
                             labelledChecks = labelledChecks,
                             numericChecks = numericChecks,
                             integerChecks = integerChecks,
-                            logicalChecks = logicalChecks, ...)
+                            logicalChecks = logicalChecks, nMax = maxProbVals, ...)
           problems <- sapply(checkRes, function(x) x[[1]])
         }
 
@@ -604,8 +608,7 @@ clean <- function(o,
                       #accidentially shuts down the pdf/html/rmd-file.)
     }
 
-    if (openResult) system(paste("open", outFile)) #tjek: virker det på linux?
-
+    if (openResult) system(paste("open", outFile)) 
 }
 
 

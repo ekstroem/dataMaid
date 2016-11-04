@@ -16,15 +16,15 @@
 #'
 #' @importFrom stats na.omit
 #' @export
-identifyLoners <- function(v) UseMethod("identifyLoners")
+identifyLoners <- function(v, nMax) UseMethod("identifyLoners")
 identifyLoners <- checkFunction(identifyLoners, "Identify levels with < 6 obs.")
 
 
 #add methods to generic identifyLoners function
 #' @export
-identifyLoners.factor <- function(v) identifyLonersF(v)
+identifyLoners.factor <- function(v, nMax) identifyLonersF(v, nMax = nMax)
 #' @export
-identifyLoners.character <- function(v) identifyLonersC(v)
+identifyLoners.character <- function(v, nMax) identifyLonersC(v, nMax = nMax)
 
 ##########################################Not exported below#########################################
 
@@ -41,7 +41,7 @@ identifyLoners.character <- function(v) identifyLonersC(v)
 
 
 #factor variables
-identifyLonersF <- function(v) {
+identifyLonersF <- function(v, nMax) {
   vLev <- levels(v)
   v <- factor(na.omit(v)) #drop unused levels
   lonerOcc <- vLev[which(table(v) <= 5)]
@@ -54,14 +54,14 @@ identifyLonersF <- function(v) {
   }
   outMessage <- messageGenerator(list(problem=problem,
                                       problemValues=problemValues),
-                                 "identifyLoners")
+                                 "identifyLoners", nMax = nMax)
   list(problem=problem, message=outMessage)
 }
 
 #character variables
-identifyLonersC <- function(v) {
+identifyLonersC <- function(v, nMax) {
   v <- factor(v)
-  identifyLonersF(v)
+  identifyLonersF(v, nMax)
 }
 
 

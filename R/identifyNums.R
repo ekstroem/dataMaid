@@ -1,5 +1,5 @@
 #' @export
-identifyNums <- function(v) {
+identifyNums <- function(v, ...) {
   out <- list(problem = FALSE, message = "")
   v <- as.character(na.omit(v))
   if (length(unique(v)) <= 11) {

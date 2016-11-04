@@ -7,7 +7,7 @@
 #make more suitable for users to call this function
 #' @export
 messageGenerator <- function(problemStatus, check = NULL, messages = NULL, 
-                             message = NULL) {
+                             message = NULL, nMax = Inf) {
   if (is.null(messages) & !is.null(check)) {
     messages <- list(identifyMiss =
                        "The following suspected missing value codes enter as regular values:",
@@ -28,7 +28,32 @@ messageGenerator <- function(problemStatus, check = NULL, messages = NULL,
   }
   
   ifelse(problemStatus$problem,
-         paste(messages[[check]], paste(paste("\\\"", sort(problemStatus$problemValues), "\\\"", sep=""),
-                                        collapse=", ")),
+         paste(messages[[check]], printProblemValues(problemStatus$problemValues, nMax)),
          "")
 }
+
+
+
+#############################Not exported below##################################################
+
+#only called when there is at least one problemValue
+printProblemValues <- function(problemValues, nMax = Inf) {
+  problemValues <- gsub("\\", "\\\\", problemValues, fixed = TRUE)
+  problemValues <- sort(problemValues) 
+  nVals <- length(problemValues)
+  extraStr <- ""
+  if (nMax < nVals) {
+    problemValues <- problemValues[1:nMax]
+    extraStr <- paste("(", nVals-nMax, " additional values omitted)", sep="")
+  } 
+  paste(paste(paste("\\\"", sort(problemValues), "\\\"", sep=""),
+        collapse=", "), extraStr)
+}
+
+
+#joe <- testData[, 5]
+#joe[1] <- "a\\b"
+#joe[2] <- "c\\\\d"
+#joe[3] <- "e\""
+#d <- data.frame(joe = joe)
+#clean(d, replace =T)

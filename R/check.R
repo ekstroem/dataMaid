@@ -49,7 +49,7 @@
 #'
 #' @importFrom utils packageVersion tail
 #' @export
-check <- function(v, ...) UseMethod("check")
+check <- function(v, nMax = Inf, ...) UseMethod("check")
 
 #characterChecks <- function() {
 #    list(identifyMissing, identifyWhitespace, identifyLoners, identifyCaseIssues)
@@ -79,8 +79,8 @@ check <- function(v, ...) UseMethod("check")
 defaultCharacterChecks <- function() c("identifyMissing", "identifyWhitespace", "identifyLoners",
                                        "identifyCaseIssues", "identifyNums")
 #' @export
-check.character <- function(v, characterChecks=defaultCharacterChecks(), ...) {
-  lapply(characterChecks, function(x) eval(call(x, v)))
+check.character <- function(v, nMax =  Inf, characterChecks=defaultCharacterChecks(), ...) {
+  lapply(characterChecks, function(x) eval(call(x, v=v, nMax = nMax)))
 }
 
 
@@ -88,8 +88,8 @@ check.character <- function(v, characterChecks=defaultCharacterChecks(), ...) {
 defaultFactorChecks <- function() c("identifyMissing", "identifyWhitespace", "identifyLoners",
                                        "identifyCaseIssues", "identifyNums")
 #' @export
-check.factor <- function(v, factorChecks = defaultFactorChecks(), ...) {
-  lapply(factorChecks, function(x) eval(call(x, v)))
+check.factor <- function(v, nMax =  Inf, factorChecks = defaultFactorChecks(), ...) {
+  lapply(factorChecks, function(x) eval(call(x, v=v, nMax = nMax)))
 }
 
 
@@ -97,8 +97,8 @@ check.factor <- function(v, factorChecks = defaultFactorChecks(), ...) {
 defaultLabelledChecks <- function() c("identifyMissing", "identifyWhitespace")
 
 #' @export
-check.labelled <- function(v, labelledChecks = defaultLabelledChecks(), ...) {
-  lapply(labelledChecks, function(x) eval(call(x, v)))
+check.labelled <- function(v, nMax =  Inf, labelledChecks = defaultLabelledChecks(), ...) {
+  lapply(labelledChecks, function(x) eval(call(x, v=v, nMax = nMax)))
 }
 
 
@@ -106,8 +106,8 @@ check.labelled <- function(v, labelledChecks = defaultLabelledChecks(), ...) {
 defaultNumericChecks <- function() c("identifyMissing", "identifyOutliers")
 
 #' @export
-check.numeric <- function(v, numericChecks = defaultNumericChecks(), ...) {
-  lapply(numericChecks, function(x) eval(call(x, v)))
+check.numeric <- function(v, nMax =  Inf, numericChecks = defaultNumericChecks(), ...) {
+  lapply(numericChecks, function(x) eval(call(x, v=v, nMax = nMax)))
 }
 
 
@@ -115,8 +115,8 @@ check.numeric <- function(v, numericChecks = defaultNumericChecks(), ...) {
 defaultIntegerChecks <- function() c("identifyMissing", "identifyOutliers")
 
 #' @export
-check.integer <- function(v, integerChecks = defaultIntegerChecks(), ...) {
-  lapply(integerChecks, function(x) eval(call(x, v)))
+check.integer <- function(v, nMax =  Inf, integerChecks = defaultIntegerChecks(), ...) {
+  lapply(integerChecks, function(x) eval(call(x, v=v, nMax = nMax)))
 }
 
 
@@ -126,9 +126,9 @@ check.integer <- function(v, integerChecks = defaultIntegerChecks(), ...) {
 defaultLogicalChecks <- function() NULL #NOTE: we don't actually do any logical checks...
 
 #' @export
-check.logical <- function(v, logicalChecks = defaultLogicalChecks(), ...) {
+check.logical <- function(v, nMax =  Inf, logicalChecks = defaultLogicalChecks(), ...) {
   if (! is.null(logicalChecks)) {
-    return(lapply(logicalChecks, function(x) eval(call(x, v))))
+    return(lapply(logicalChecks, function(x) eeval(call(x, v=v, nMax = nMax))))
   } else return(list(list(problem = FALSE, message="")))
 }
 

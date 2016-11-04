@@ -17,27 +17,27 @@
 #' @importFrom stats na.omit
 #' @importFrom utils tail
 #' @export
-identifyWhitespace <- function(v) UseMethod("identifyWhitespace")
+identifyWhitespace <- function(v, nMax) UseMethod("identifyWhitespace")
 identifyWhitespace <- checkFunction(identifyWhitespace, "Identify prefixed and suffixed whitespace")
 
 
 #add methods to generic identifyWhitespace function
 
 #'@export
-identifyWhitespace.character <- function(v) identifyWhitespaceC(v)
+identifyWhitespace.character <- function(v, nMax) identifyWhitespaceC(v, nMax = nMax)
 
 #'@export
-identifyWhitespace.factor <- function(v) identifyWhitespaceF(v)
+identifyWhitespace.factor <- function(v, nMax) identifyWhitespaceF(v, nMax = nMax)
 
 #'@export
-identifyWhitespace.labelled <- function(v) identifyWhitespaceL(v)
+identifyWhitespace.labelled <- function(v, nMax) identifyWhitespaceL(v, nMax = nMax)
 
 
 ##########################################Not exported below#########################################
 
 
 #character variables
-identifyWhitespaceC <- function(v) {
+identifyWhitespaceC <- function(v, nMax) {
   v <- na.omit(v)
   wsPrefixPlaces <- sapply(v, substr, 1, 1) == " "
   wsSuffixPlaces <- sapply(v, function(x) {tail(strsplit(x, "")[[1]], 1)}) == " "
@@ -51,20 +51,20 @@ identifyWhitespaceC <- function(v) {
   }
   outMessage <- messageGenerator(list(problem=problem,
                                       problemValues=problemValues),
-                                 "identifyWhitespace")
+                                 "identifyWhitespace", nMax = nMax)
   list(problem=problem, message=outMessage)
 }
 
 #factor variables
-identifyWhitespaceF <- function(v) {
-  identifyWhitespaceC(as.character(v))
+identifyWhitespaceF <- function(v, nMax) {
+  identifyWhitespaceC(as.character(v), nMax)
 }
 
 #labelled variables
-identifyWhitespaceL <- function(v) {
+identifyWhitespaceL <- function(v, nMax) {
   v <- na.omit(v)
   v <- unpackLabelled(v)
-  identifyWhitespaceC(v)
+  identifyWhitespaceC(v, nMax = nMax)
 }
 
 

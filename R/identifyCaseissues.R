@@ -16,15 +16,15 @@
 #'
 #' @importFrom stats na.omit
 #' @export
-identifyCaseIssues <- function(v) UseMethod("identifyCaseIssues")
+identifyCaseIssues <- function(v, nMax) UseMethod("identifyCaseIssues")
 identifyCaseIssues <- checkFunction(identifyCaseIssues, "Identify case issues")
 
 
 #add methods to generic identifyCaseIssues function
 #' @export
-identifyCaseIssues.character <- function(v) identifyCaseIssuesC(v)
+identifyCaseIssues.character <- function(v, nMax) identifyCaseIssuesC(v, nMax = nMax)
 #' @export
-identifyCaseIssues.factor <- function(v) identifyCaseIssuesF(v)
+identifyCaseIssues.factor <- function(v, nMax) identifyCaseIssuesF(v, nMax = nMax)
 
 
 
@@ -32,7 +32,7 @@ identifyCaseIssues.factor <- function(v) identifyCaseIssuesF(v)
 ##########################################Not exported below#########################################
 
 #character variable
-identifyCaseIssuesC <- function(v) {
+identifyCaseIssuesC <- function(v, nMax) {
   v <- na.omit(v)
   vLevs <- unique(v)
   vLevsLower <- tolower(vLevs)
@@ -46,15 +46,15 @@ identifyCaseIssuesC <- function(v) {
   }
   outMessage <- messageGenerator(list(problem = problem,
                                       problemValues = problemValues),
-                                 "identifyCaseIssues")
+                                 "identifyCaseIssues", nMax = nMax)
   list(problem = problem, message = outMessage)
 }
 
 
 #factor variable
-identifyCaseIssuesF <- function(v) {
+identifyCaseIssuesF <- function(v, nMax) {
   v <- as.character(v)
-  identifyCaseIssuesC(v)
+  identifyCaseIssuesC(v, nMax = nMax)
 }
 
 

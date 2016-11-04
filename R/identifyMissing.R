@@ -36,7 +36,7 @@
 #'
 #' @importFrom stats na.omit
 #' @export
-identifyMissing <- function(v) UseMethod("identifyMissing")
+identifyMissing <- function(v, nMax) UseMethod("identifyMissing")
 identifyMissing <- checkFunction(identifyMissing, "Identify miscoded missing values")
 
 
@@ -44,17 +44,17 @@ identifyMissing <- checkFunction(identifyMissing, "Identify miscoded missing val
 
 #Add methods to generic identifyMiss
 #' @export
-identifyMissing.character <- function(v) identifyMissingCF(v)
+identifyMissing.character <- function(v, nMax) identifyMissingCF(v, nMax = nMax)
 #' @export
-identifyMissing.factor <- function(v) identifyMissingCF(v)
+identifyMissing.factor <- function(v, nMax) identifyMissingCF(v, nMax = nMax)
 #' @export
-identifyMissing.labelled <- function(v) identifyMissingL(v)
+identifyMissing.labelled <- function(v, nMax) identifyMissingL(v, nMax = nMax)
 #' @export
-identifyMissing.numeric <- function(v) identifyMissingNI(v)
+identifyMissing.numeric <- function(v, nMax) identifyMissingNI(v, nMax = nMax)
 #' @export
-identifyMissing.integer <- function(v) identifyMissingNI(v)
+identifyMissing.integer <- function(v, nMax) identifyMissingNI(v, nMax = nMax)
 #' @export
-identifyMissing.logical <- function(v) identifyMissingB(v)
+identifyMissing.logical <- function(v, nMax) identifyMissingB(v, nMax = nMax)
 
 
 
@@ -144,7 +144,7 @@ identifyMissNumber <- function(v, num, allOcc = TRUE) {
       
 
 #factor and character variables
-identifyMissingCF <- function(v) {
+identifyMissingCF <- function(v, nMax) {
     v <- na.omit(as.character(v)) #as.character in order to be able to combine
                                   #factor levels below without unwanted conversions
     problem <- FALSE
@@ -187,19 +187,19 @@ identifyMissingCF <- function(v) {
     }
 
     outMessage <- messageGenerator(list(problem = problem, problemValues = problemValues),
-                                   check = "identifyMiss")
+                                   check = "identifyMiss", nMax = nMax)
     list(problem = problem, message = outMessage)
 }
 
 #labbeled variables
-identifyMissingL <- function(v) {
+identifyMissingL <- function(v, nMax) {
   v <- na.omit(v)
   v <- unpackLabelled(v)
-  identifyMissingCF(v)
+  identifyMissingCF(v, nMax = nMax)
 }
 
 #numerical and integer variables
-identifyMissingNI <- function(v) {
+identifyMissingNI <- function(v, nMax) {
   v <- na.omit(v)
   problem <- FALSE
   problemValues <- NULL
@@ -215,7 +215,7 @@ identifyMissingNI <- function(v) {
     problem <- TRUE
   }
   outMessage <- messageGenerator(list(problem = problem, problemValues = problemValues),
-                                 check = "identifyMiss")
+                                 check = "identifyMiss", nMax = nMax)
   list(problem = problem, message = outMessage)
 }
 
@@ -224,6 +224,6 @@ identifyMissingNI <- function(v) {
 #no potentially miscoded missing values.
 #Note: this function catches variables that only consist of NA's, thus it is
 #safe to omit NAs in the other functions, without risking obtaining an empty vector
-identifyMissingB <- function(v) {
+identifyMissingB <- function(v, nMax) {
   list(problem = FALSE, message = "")
 }

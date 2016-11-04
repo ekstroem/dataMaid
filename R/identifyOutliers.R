@@ -7,11 +7,11 @@
 #'
 #' @details Outliers are defined in the style of Turkey Boxplots (consistent with the
 #' \code{\link{boxplot}} function), i.e. as values  that are smaller than the 1st quartile minus
-#' the inter quartile range (IQR) or greater than  the third quartile plus the IQR.
+#' the inter quartile range (IQR) or greater than  the third quartile plus the IQR. NOT TRUE(?)
 #'
 #' @return A list with two elements, $problem: TRUE if any outliers were found, FALSE otherwise, and
 #' $message A message describing which values in \code{v} were outliers. Note that outlier values
-#' are printed the number of times they appear, but sorted alphabetically.
+#' are printed the number of times they appear, but sorted alphabetically. NOT TRUE(?)
 #'
 #' @seealso \code{\link{check}}, \code{\link{checkFunction}}
 #'
@@ -20,16 +20,16 @@
 #'
 #' @importFrom stats na.omit quantile
 #' @export
-identifyOutliers <- function(v) UseMethod("identifyOutliers")
+identifyOutliers <- function(v, nMax) UseMethod("identifyOutliers")
 identifyOutliers <- checkFunction(identifyOutliers, "Identify outliers")
 
 
 #add methods to generic identifyOutliers function
 #' @export
-identifyOutliers.numeric <- function(v) identifyOutliersNI(v)
+identifyOutliers.numeric <- function(v, nMax) identifyOutliersNI(v, nMax = nMax)
 
 #' @export
-identifyOutliers.integer <- function(v) identifyOutliersNI(v)
+identifyOutliers.integer <- function(v, nMax) identifyOutliersNI(v, nMax = nMax)
 
 
 
@@ -40,7 +40,7 @@ identifyOutliers.integer <- function(v) identifyOutliersNI(v)
 
 ##numerical and integer variables
 #' @importFrom robustbase mc
-identifyOutliersNI <- function(v) {
+identifyOutliersNI <- function(v, nMax) {
   v <- na.omit(v)
   qs <- quantile(v, c(0.25, 0.75))
   IQR <- qs[2] - qs[1]
@@ -62,6 +62,10 @@ identifyOutliersNI <- function(v) {
   if (any(outlierPlaces)) {
     problem <- TRUE
     problemValues <- v[outlierPlaces]
+    
+    #only print each outlier value once:
+    problemValues <- unique(problemValues)
+    
     ## if outlier value occurs multiple times,
     ## it will be printed multiple times
 
@@ -76,6 +80,6 @@ identifyOutliersNI <- function(v) {
   }
   outMessage <- messageGenerator(list(problem=problem,
                                       problemValues=problemValues),
-                                 "identifyOutliers")
+                                 "identifyOutliers", nMax = nMax)
   list(problem=problem, message=outMessage)
 }
