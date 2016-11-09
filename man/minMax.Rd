@@ -14,7 +14,7 @@ A list with $feature: "Min. and max." and $result: [the minimum and maximum of \
 }
 \description{
 A description type function to be called from \code{\link{summarize}}, which returns
-the minimum and maximum value of a variable. NA, NaN and Inf values are removed prior to  the 
+the minimum and maximum value of a variable. NA, NaN and Inf values are removed prior to  the
 computations.
 }
 \examples{

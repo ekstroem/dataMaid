@@ -4,7 +4,7 @@
 \alias{identifyCaseIssues}
 \title{A checkFunction for identifying case issues}
 \usage{
-identifyCaseIssues(v)
+identifyCaseIssues(v, nMax)
 }
 \arguments{
 \item{v}{A character or factor variable to check}

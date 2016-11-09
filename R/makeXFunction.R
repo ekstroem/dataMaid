@@ -5,7 +5,7 @@ makeXFunction <- function(fName, description, classes, X) {
   if (is.null(classes)) {
     methods <- as.character(methods(fName)) #methods() needs the name in order
     #to work inside the function
-    browser()
+##    browser()
     print(fName)
     print(methods)
     if (length(methods) > 0) {

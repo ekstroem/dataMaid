@@ -4,7 +4,7 @@
 \alias{identifyLoners}
 \title{A checkFunction for identifying sparsely represented values (loners)}
 \usage{
-identifyLoners(v)
+identifyLoners(v, nMax)
 }
 \arguments{
 \item{v}{A character or factor variable to check.}

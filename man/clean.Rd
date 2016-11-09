@@ -4,7 +4,7 @@
 \alias{clean}
 \title{Perform a check of potential errors in a data frame}
 \usage{
-clean(o, output = c("pdf", "html", "screen"), render = TRUE,
+clean(data, output = c("pdf", "html", "screen"), render = TRUE,
   useVar = NULL, ordering = c("asIs", "alphabetical"),
   onlyProblematic = FALSE, mode = c("summarize", "visualize", "check"),
   smartNum = TRUE, preChecks = c("isSpecial", "isCPR"), file = NULL,
@@ -23,10 +23,11 @@ clean(o, output = c("pdf", "html", "screen"), render = TRUE,
   integerSummaries = defaultIntegerSummaries(),
   logicalSummaries = defaultLogicalSummaries(), allSummaries = NULL,
   allVisuals = "standardVisual", garbageCollection = TRUE,
-  listChecks = TRUE, brag = FALSE, ...)
+  listChecks = TRUE, brag = FALSE, maxProbVals = Inf, ...)
 }
 \arguments{
-\item{o}{the data frame object to be checked.}
+\item{data}{the dataset to be checked [LIST ALL ALLOWED OBJECT CLASSES, INCLUDING data.frame, 
+matrix, data.table, ... (more?)].}
 
 \item{output}{Output format. Options are "markdown" (the default), "pdf", "html", and "screen".
 All but the "screen" option produces an R markdown file which can be rendered.
@@ -118,6 +119,9 @@ factorSummaries, etc.}
 
 \item{garbageCollection}{A logical. If TRUE (the default) then garbage collection code is added to
 the R markdown file that is output. This is useful for larger dataset to prevent memory problems.}
+
+\item{maxProbVals}{Maximum number of unique values printed from check-functions (integer > 0). 
+Defaults to \code{Inf}, which means that all values are printed.}
 
 \item{\dots}{other arguments that are passed on the to precheck, checking, summary and visualization functions}
 }

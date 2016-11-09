@@ -14,7 +14,7 @@ A list with $feature: "1st and 3rd quartiles" and $result: [the quartiles of \co
 }
 \description{
 A description type function to be called from \code{\link{summarize}}, which calculates
-the 1st and 3rd quartiles of a variable. NA, NaN and Inf values are removed prior to  the 
+the 1st and 3rd quartiles of a variable. NA, NaN and Inf values are removed prior to  the
 computations.
 }
 \examples{

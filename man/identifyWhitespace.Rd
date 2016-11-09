@@ -4,7 +4,7 @@
 \alias{identifyWhitespace}
 \title{A checkFunction for identifying whitespace}
 \usage{
-identifyWhitespace(v)
+identifyWhitespace(v, nMax)
 }
 \arguments{
 \item{v}{A character, labelled or factor variable to check.}

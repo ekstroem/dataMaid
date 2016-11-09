@@ -4,7 +4,7 @@
 \alias{check}
 \title{Perform a check of potential errors in a data frame}
 \usage{
-check(v, ...)
+check(v, nMax = Inf, ...)
 }
 \arguments{
 \item{v}{the vector to be checked}
