@@ -4,6 +4,8 @@
 #' that appear multiple times with different case settings.
 #'
 #' @param v A character or factor variable to check
+#' @param nMax The maximum number of problematic values to report. Default is \code{Inf}, in which case
+#' all problematic values are included in the outputtet message.
 #'
 #' @return A list with two elements, $problem: TRUE if any case issues were found, FALSE otherwise, and
 #' $message A message describing which values in \code{v} resulted in case issues. Only unique values
@@ -16,17 +18,18 @@
 #'
 #' @importFrom stats na.omit
 #' @export
-identifyCaseIssues <- function(v, nMax) UseMethod("identifyCaseIssues")
-identifyCaseIssues <- checkFunction(identifyCaseIssues, "Identify case issues")
+identifyCaseIssues <- function(v, nMax = Inf) UseMethod("identifyCaseIssues")
 
 
 #add methods to generic identifyCaseIssues function
 #' @export
-identifyCaseIssues.character <- function(v, nMax) identifyCaseIssuesC(v, nMax = nMax)
+identifyCaseIssues.character <- function(v, nMax = Inf) identifyCaseIssuesC(v, nMax = nMax)
 #' @export
-identifyCaseIssues.factor <- function(v, nMax) identifyCaseIssuesF(v, nMax = nMax)
+identifyCaseIssues.factor <- function(v, nMax = Inf) identifyCaseIssuesF(v, nMax = nMax)
 
 
+#make it a checkFunction
+identifyCaseIssues <- checkFunction(identifyCaseIssues, "Identify case issues")
 
 
 ##########################################Not exported below#########################################
@@ -46,7 +49,7 @@ identifyCaseIssuesC <- function(v, nMax) {
   }
   outMessage <- messageGenerator(list(problem = problem,
                                       problemValues = problemValues),
-                                 "identifyCaseIssues", nMax = nMax)
+                                 nMax = nMax)
   list(problem = problem, message = outMessage)
 }
 

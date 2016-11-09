@@ -4,6 +4,8 @@
 #' appear to be miscoded missing values.
 #'
 #' @param v A variable to check.
+#' @param nMax The maximum number of problematic values to report. Default is \code{Inf}, in which case
+#' all problematic values are included in the outputtet message.
 #'
 #' @details \code{identifyMissing} tries to identify common choices of missing values outside of the
 #' R standards. These include special words (NaN and Inf (no matter the cases)), one or more -9/9's
@@ -36,27 +38,26 @@
 #'
 #' @importFrom stats na.omit
 #' @export
-identifyMissing <- function(v, nMax) UseMethod("identifyMissing")
-identifyMissing <- checkFunction(identifyMissing, "Identify miscoded missing values")
-
-
+identifyMissing <- function(v, nMax = Inf) UseMethod("identifyMissing")
 
 
 #Add methods to generic identifyMiss
 #' @export
-identifyMissing.character <- function(v, nMax) identifyMissingCF(v, nMax = nMax)
+identifyMissing.character <- function(v, nMax = Inf) identifyMissingCF(v, nMax = nMax)
 #' @export
-identifyMissing.factor <- function(v, nMax) identifyMissingCF(v, nMax = nMax)
+identifyMissing.factor <- function(v, nMax = Inf) identifyMissingCF(v, nMax = nMax)
 #' @export
-identifyMissing.labelled <- function(v, nMax) identifyMissingL(v, nMax = nMax)
+identifyMissing.labelled <- function(v, nMax = Inf) identifyMissingL(v, nMax = nMax)
 #' @export
-identifyMissing.numeric <- function(v, nMax) identifyMissingNI(v, nMax = nMax)
+identifyMissing.numeric <- function(v, nMax = Inf) identifyMissingNI(v, nMax = nMax)
 #' @export
-identifyMissing.integer <- function(v, nMax) identifyMissingNI(v, nMax = nMax)
+identifyMissing.integer <- function(v, nMax = Inf) identifyMissingNI(v, nMax = nMax)
 #' @export
-identifyMissing.logical <- function(v, nMax) identifyMissingB(v, nMax = nMax)
+identifyMissing.logical <- function(v, nMax = Inf) identifyMissingB(v, nMax = nMax)
 
 
+#make it a checkFunction
+identifyMissing <- checkFunction(identifyMissing, "Identify miscoded missing values")
 
 ##########################################Not exported below#########################################
 
@@ -187,7 +188,7 @@ identifyMissingCF <- function(v, nMax) {
     }
 
     outMessage <- messageGenerator(list(problem = problem, problemValues = problemValues),
-                                   check = "identifyMiss", nMax = nMax)
+                                   nMax = nMax)
     list(problem = problem, message = outMessage)
 }
 
@@ -215,7 +216,7 @@ identifyMissingNI <- function(v, nMax) {
     problem <- TRUE
   }
   outMessage <- messageGenerator(list(problem = problem, problemValues = problemValues),
-                                 check = "identifyMiss", nMax = nMax)
+                                 nMax = nMax)
   list(problem = problem, message = outMessage)
 }
 

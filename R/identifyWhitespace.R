@@ -4,7 +4,9 @@
 #' suffixed whitespace(s) in character, labelled or factor variables.
 #'
 #' @param v A character, labelled or factor variable to check.
-#'
+#' @param nMax The maximum number of problematic values to report. Default is \code{Inf}, in which case
+#' all problematic values are included in the outputtet message.
+#' 
 #' @return A list with two elements, $problem: TRUE if any whitespaces were found, FALSE otherwise, and
 #' $message A message describing which values in \code{v} were prefixed or suffixed with whitespace.
 #' Note that only unique values are printed and that they are sorted alphabetically.
@@ -17,20 +19,23 @@
 #' @importFrom stats na.omit
 #' @importFrom utils tail
 #' @export
-identifyWhitespace <- function(v, nMax) UseMethod("identifyWhitespace")
-identifyWhitespace <- checkFunction(identifyWhitespace, "Identify prefixed and suffixed whitespace")
+identifyWhitespace <- function(v, nMax = Inf) UseMethod("identifyWhitespace")
 
 
 #add methods to generic identifyWhitespace function
 
 #'@export
-identifyWhitespace.character <- function(v, nMax) identifyWhitespaceC(v, nMax = nMax)
+identifyWhitespace.character <- function(v, nMax = Inf) identifyWhitespaceC(v, nMax = nMax)
 
 #'@export
-identifyWhitespace.factor <- function(v, nMax) identifyWhitespaceF(v, nMax = nMax)
+identifyWhitespace.factor <- function(v, nMax = Inf) identifyWhitespaceF(v, nMax = nMax)
 
 #'@export
-identifyWhitespace.labelled <- function(v, nMax) identifyWhitespaceL(v, nMax = nMax)
+identifyWhitespace.labelled <- function(v, nMax = Inf) identifyWhitespaceL(v, nMax = nMax)
+
+
+#make it a checkFunction
+identifyWhitespace <- checkFunction(identifyWhitespace, "Identify prefixed and suffixed whitespace")
 
 
 ##########################################Not exported below#########################################
@@ -51,7 +56,7 @@ identifyWhitespaceC <- function(v, nMax) {
   }
   outMessage <- messageGenerator(list(problem=problem,
                                       problemValues=problemValues),
-                                 "identifyWhitespace", nMax = nMax)
+                                 nMax = nMax)
   list(problem=problem, message=outMessage)
 }
 
