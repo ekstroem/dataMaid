@@ -4,7 +4,9 @@
 #' only occur less than 6 times in factor or character variables (that is, loners).
 #'
 #' @param v A character or factor variable to check.
-#'
+#' @param nMax The maximum number of problematic values to report. Default is \code{Inf}, in which case
+#' all problematic values are included in the outputtet message.
+#' 
 #' @return A list with two elements, $problem: TRUE if any loners were found, FALSE otherwise, and
 #' $message A message describing which values in \code{v} were loners. Note that loner values
 #' are listed only once (no matter how many time they occur) in alphabetical order.
@@ -12,19 +14,22 @@
 #' @seealso \code{\link{check}}, \code{\link{checkFunction}}
 #'
 #' @examples
-#' identifyLoners( c(rep(c("a", "b", "c"), 10), "d", "d") )
+#' identifyLoners(c(rep(c("a", "b", "c"), 10), "d", "d"))
 #'
 #' @importFrom stats na.omit
 #' @export
-identifyLoners <- function(v, nMax) UseMethod("identifyLoners")
-identifyLoners <- checkFunction(identifyLoners, "Identify levels with < 6 obs.")
+identifyLoners <- function(v, nMax = Inf) UseMethod("identifyLoners")
 
 
 #add methods to generic identifyLoners function
 #' @export
-identifyLoners.factor <- function(v, nMax) identifyLonersF(v, nMax = nMax)
+identifyLoners.factor <- function(v, nMax = Inf) identifyLonersF(v, nMax = nMax)
 #' @export
-identifyLoners.character <- function(v, nMax) identifyLonersC(v, nMax = nMax)
+identifyLoners.character <- function(v, nMax = Inf) identifyLonersC(v, nMax = nMax)
+
+
+#make it a checkFunction
+identifyLoners <- checkFunction(identifyLoners, "Identify levels with < 6 obs.")
 
 ##########################################Not exported below#########################################
 

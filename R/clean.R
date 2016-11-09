@@ -100,7 +100,7 @@
 #'
 #' @importFrom methods is
 #' @importFrom pander pander_return panderOptions pandoc.table.return
-#' @importFrom tools file_ext #necessary?
+#' @importFrom tools file_ext 
 #' @export
 clean <- function(data,
                   output=c("pdf", "html", "screen"), render=TRUE,
@@ -191,7 +191,9 @@ clean <- function(data,
 
     ## Set the output file name if input is NULL or not Rmd
     if (is.null(file)) {
-      file <- paste0("cleanR_", dfname, vol, ".Rmd")
+      if (substr(dfname, 1, 11) == "data.frame(") {
+        file <- paste0("cleanR_unnamedData", vol, ".Rmd")
+      } else file <- normalizeFileName(paste0("cleanR_", dfname, vol, ".Rmd"))
     } else {
       originalFile <- file
       faultyExt <- FALSE
@@ -428,7 +430,7 @@ clean <- function(data,
 
     ## Title
     writer("# Data cleaning summary")
-    writer("The data frame examined has the following dimensions:")
+    writer("The dataset examined has the following dimensions:")
 
     ## Print data frame summary
     sumMat <- matrix(c("Number of rows", "Number of variables",
@@ -444,7 +446,7 @@ clean <- function(data,
     }
     ## And the user is informed if we only show problematic variables
     if (onlyProblematic) {
-        writer("\n* Only variables that were deemed potentially problematic are included in this summary")
+        writer("\n* Only variables that were deemed potentially problematic are included in this summary.")
     }
     writer("\n")
 
