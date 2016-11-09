@@ -1,7 +1,6 @@
 Package: cleanR
 Type: Package
-Title: A Suite of Checks for Identification of Potential Errors in a Data Frame
-    as Part of the Data Cleaning Process
+Title: A Suite of Checks for Identification of Potential Errors in a Data Frame as Part of the Data Cleaning Process
 Version: 0.5
 Date: 2016-10-28
 Author: Anne H. Petersen <ahpe@sund.ku.dk> and Claus Thorn Ekstrøm
@@ -41,7 +40,6 @@ Collate:
     'allVisualFunctions.R'
     'allCheckFunctions.R'
     'isCPR.R'
-    'isSpecial.R'
     'identifyNums.R'
     'visualize.R'
     'standardVisual.R'
@@ -55,10 +53,12 @@ Collate:
     'countMissing.R'
     'uniqueValues.R'
     'check.R'
-    'identifyCaseissues.R'
+    'identifyCaseIssues.R'
     'identifyOutliers.R'
     'identifyLoners.R'
     'identifyWhitespace.R'
     'identifyMissing.R'
+    'isKey.R'
+    'isEmpty.R'
     'clean.R'
     'cleanR-package.R'

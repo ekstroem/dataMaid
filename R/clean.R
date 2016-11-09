@@ -35,7 +35,8 @@
 #' @param preChecks Variable checks that are performed before the summary/visualization/checking step. If
 #' any of these checks find problems, the variable will not be summarized nor visualized nor checked.
 #' @param file The filename of output file. If set to NULL (the default) then the filename will be
-#' the name of the data frame prefixed with "cleanR-".
+#' the name of the data frame prefixed with "cleanR_". Note that a valid file is of type rmd, hence all
+#' filenames should have a ".Rmd"-suffix.
 #' @param replace If FALSE (the default) an error is thrown if one of the files that we are about to write to
 #' already exists. If TRUE no checks are performed.
 #' @param vol Extra text string that is appended on the end of the output file name(s). For example, if the data
@@ -99,6 +100,7 @@
 #'
 #' @importFrom methods is
 #' @importFrom pander pander_return panderOptions pandoc.table.return
+#' @importFrom tools file_ext 
 #' @export
 clean <- function(data,
                   output=c("pdf", "html", "screen"), render=TRUE,
@@ -141,6 +143,18 @@ clean <- function(data,
             data <- as.data.frame(data)
         } else stop("clean requires a data.frame, tibble or matrix as input")
     }
+  
+    #handle quiet argument
+    if (identical(quiet, "silent")) {
+      silent <- TRUE
+      quiet <- TRUE
+    } else {
+      silent <- FALSE
+      
+      #perhaps check if quiet argument is valid (i.e. TRUE/FALSE) here?
+    }
+    if (silent) nagUser <- FALSE
+    
 
     ##Match arguments
     ordering <- match.arg(ordering)
@@ -176,9 +190,50 @@ clean <- function(data,
     dots <- list(...)
 
     ## Set the output file name if input is NULL or not Rmd
-    if (is.null(file) || substr(file, nchar(file)-3, nchar(file)) != ".Rmd") {
-        ## maybe try fixing the user's faulty file name instead of just overwriting it?
-        file <- paste0("cleanR_", dfname, vol, ".Rmd")
+    if (is.null(file)) {
+      if (substr(dfname, 1, 11) == "data.frame(") {
+        file <- paste0("cleanR_unnamedData", vol, ".Rmd")
+      } else file <- normalizeFileName(paste0("cleanR_", dfname, vol, ".Rmd"))
+    } else {
+      originalFile <- file
+      faultyExt <- FALSE
+      faultyName <- FALSE
+      fileExt <- tolower(tools::file_ext(file)) 
+      ncFN <- nchar(file)
+      #if (tolower(substr(file, nchar(file)-3, nchar(file))) != ".rmd") {
+      if (fileExt != "rmd") {
+        file <- paste(tools::file_path_sans_ext(file), ".Rmd", sep="")
+        faultyExt <- TRUE
+      }
+      
+      ###ADD HERE: deal with e.g. "joe..rmd" or ".rmd"#####
+      #if (substr(file, ncFN-4, ncFN-4) == ".") { 
+      #  file <- paste(substr(file, 1, ncFN-5))
+      #  faultyExt <- TRUE
+      #}
+      #####################################################
+      
+      
+      ############PROBLEM: THIS FUNCTION DOES NOT CATCH EVERYTHING WE NEED TO CATCH. WRITE 
+      ############NEW FUNCTION!###########################################################
+      normalizedFile <- normalizeFileName(file)
+      ####################################################################################
+      ####################################################################################
+      
+      if (normalizedFile != file) {
+        file <- normalizedFile
+        faultyName <- TRUE
+      }
+      if (!silent && (faultyExt || faultyName)) {
+        faultyExtMessage <- "a faulty file extension (not .Rmd)"
+        faultyNameMessage <- "reserved characters not allowed in file names"
+        message(paste("The supplied file name included",
+                      ifelse(faultyExt, faultyExtMessage, ""),
+                      ifelse(faultyExt & faultyName, "and", ""),
+                      ifelse(faultyName, faultyNameMessage, ""), 
+                      "and therefore, it was changed from", originalFile,
+                      "into", paste(file, ".", sep="")))
+      }
     }
 
     outOutput <- output #copy of output for file extension generation
@@ -252,17 +307,7 @@ clean <- function(data,
       #}
 
 
-    #handle quiet argument
-    if (identical(quiet, "silent")) {
-      silent <- TRUE
-      quiet <- TRUE
-    } else {
-      silent <- FALSE
-
-      #perhaps check if quiet argument is valid (i.e. TRUE/FALSE) here?
-    }
-    if (silent) nagUser <- FALSE
-
+    
     ## Figure out which classes of output that the user requests.
     ## By default we want both checks, graphics, and summarize.
     doCheck <- "check" %in% mode
@@ -385,7 +430,7 @@ clean <- function(data,
 
     ## Title
     writer("# Data cleaning summary")
-    writer("The data frame examined has the following dimensions:")
+    writer("The dataset examined has the following dimensions:")
 
     ## Print data frame summary
     sumMat <- matrix(c("Number of rows", "Number of variables",
@@ -401,7 +446,7 @@ clean <- function(data,
     }
     ## And the user is informed if we only show problematic variables
     if (onlyProblematic) {
-        writer("\n* Only variables that were deemed potentially problematic are included in this summary")
+        writer("\n* Only variables that were deemed potentially problematic are included in this summary.")
     }
     writer("\n")
 
@@ -616,10 +661,6 @@ clean <- function(data,
 ##################################Not exported below#############################################
 #################################################################################################
 
-#MOVE THESE FUNCTIONS ELSEWHERE
-
-
-
 
 #Check if a numeric/integer variable has less than maxLevel unique
 #values. If so, the variable is changed into a smartNum object.
@@ -628,17 +669,18 @@ clean <- function(data,
 #match factor methods.
 doSmartNum <- function(v, maxLevels = 5, ...) {
   #check if v is numeric/integer here? now we check it before the function is called
-
-  if (length(unique(v)) <= maxLevels) {
-    v <- smartNum(v)
-  }
+  v <- na.omit(v)
+  if (length(unique(v)) <= maxLevels) v <- smartNum(v)
   v
 }
 
 
-
-
-
+#Replaces characters that are not allowed in file names with "_".
+normalizeFileName <- function(fileName, replaceChar = "_") {
+  forbidChar <- "[^-_.[:alnum:]]" #note: "^" is "not"
+                #Note: I'm not allowing blankspaces atm
+  gsub(forbidChar, replaceChar, fileName)
+}
 
 
 

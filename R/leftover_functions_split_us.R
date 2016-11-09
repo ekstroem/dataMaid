@@ -1,6 +1,3 @@
-
-
-
 #"unpack" a vector of class labelled (Wickham) by concatenating the code values
 #with the labels
 
@@ -23,3 +20,9 @@ print.functionSummary <- function(x, ...) {
 }
 
 
+
+
+
+allVarClasses <- function() {
+  c("character", "factor", "labelled", "numeric", "integer", "logical")
+}

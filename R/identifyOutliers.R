@@ -4,6 +4,8 @@
 #' in a numeric/integer variable.
 #'
 #' @param v A character or factor variable to check
+#' @param nMax The maximum number of problematic values to report. Default is \code{Inf}, in which case
+#' all problematic values are included in the outputtet message.
 #'
 #' @details Outliers are defined in the style of Turkey Boxplots (consistent with the
 #' \code{\link{boxplot}} function), i.e. as values  that are smaller than the 1st quartile minus
@@ -20,19 +22,19 @@
 #'
 #' @importFrom stats na.omit quantile
 #' @export
-identifyOutliers <- function(v, nMax) UseMethod("identifyOutliers")
-identifyOutliers <- checkFunction(identifyOutliers, "Identify outliers")
+identifyOutliers <- function(v, nMax = Inf) UseMethod("identifyOutliers")
 
 
 #add methods to generic identifyOutliers function
 #' @export
-identifyOutliers.numeric <- function(v, nMax) identifyOutliersNI(v, nMax = nMax)
+identifyOutliers.numeric <- function(v, nMax = Inf) identifyOutliersNI(v, nMax = nMax)
 
 #' @export
-identifyOutliers.integer <- function(v, nMax) identifyOutliersNI(v, nMax = nMax)
+identifyOutliers.integer <- function(v, nMax = Inf) identifyOutliersNI(v, nMax = nMax)
 
 
-
+#make it a checkFunction
+identifyOutliers <- checkFunction(identifyOutliers, "Identify outliers")
 
 
 ##########################################Not exported below#########################################
