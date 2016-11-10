@@ -4,15 +4,18 @@
 \alias{identifyOutliers}
 \title{A checkFunction for identifying outliers}
 \usage{
-identifyOutliers(v)
+identifyOutliers(v, nMax = Inf)
 }
 \arguments{
 \item{v}{A character or factor variable to check}
+
+\item{nMax}{The maximum number of problematic values to report. Default is \code{Inf}, in which case
+all problematic values are included in the outputtet message.}
 }
 \value{
 A list with two elements, $problem: TRUE if any outliers were found, FALSE otherwise, and
 $message A message describing which values in \code{v} were outliers. Note that outlier values
-are printed the number of times they appear, but sorted alphabetically.
+are printed the number of times they appear, but sorted alphabetically. NOT TRUE(?)
 }
 \description{
 A checkFunction to be called from \code{\link{check}} that identifies outlier values
@@ -21,7 +24,7 @@ in a numeric/integer variable.
 \details{
 Outliers are defined in the style of Turkey Boxplots (consistent with the
 \code{\link{boxplot}} function), i.e. as values  that are smaller than the 1st quartile minus
-the inter quartile range (IQR) or greater than  the third quartile plus the IQR.
+the inter quartile range (IQR) or greater than  the third quartile plus the IQR. NOT TRUE(?)
 }
 \examples{
  identifyOutliers(c(1:10, 200, 200, 700))

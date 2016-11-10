@@ -4,10 +4,10 @@
 \alias{clean}
 \title{Perform a check of potential errors in a data frame}
 \usage{
-clean(o, output = c("pdf", "html", "screen"), render = TRUE,
+clean(data, output = c("pdf", "html", "screen"), render = TRUE,
   useVar = NULL, ordering = c("asIs", "alphabetical"),
   onlyProblematic = FALSE, mode = c("summarize", "visualize", "check"),
-  smartNum = TRUE, preChecks = c("isSpecial", "isCPR"), file = NULL,
+  smartNum = TRUE, preChecks = c("isKey", "isEmpty"), file = NULL,
   replace = FALSE, vol = "", standAlone = TRUE, twoCol = TRUE,
   quiet = TRUE, openResult = TRUE, nagUser = TRUE, checkDetails = FALSE,
   characterChecks = defaultCharacterChecks(),
@@ -23,10 +23,11 @@ clean(o, output = c("pdf", "html", "screen"), render = TRUE,
   integerSummaries = defaultIntegerSummaries(),
   logicalSummaries = defaultLogicalSummaries(), allSummaries = NULL,
   allVisuals = "standardVisual", garbageCollection = TRUE,
-  listChecks = TRUE, brag = FALSE, ...)
+  listChecks = TRUE, brag = FALSE, maxProbVals = Inf, ...)
 }
 \arguments{
-\item{o}{the data frame object to be checked.}
+\item{data}{the dataset to be checked [LIST ALL ALLOWED OBJECT CLASSES, INCLUDING data.frame,
+matrix, data.table, ... (more?)].}
 
 \item{output}{Output format. Options are "markdown" (the default), "pdf", "html", and "screen".
 All but the "screen" option produces an R markdown file which can be rendered.
@@ -56,7 +57,8 @@ message is printed in the data summary as well.}
 any of these checks find problems, the variable will not be summarized nor visualized nor checked.}
 
 \item{file}{The filename of output file. If set to NULL (the default) then the filename will be
-the name of the data frame prefixed with "cleanR-".}
+the name of the data frame prefixed with "cleanR_". Note that a valid file is of type rmd, hence all
+filenames should have a ".Rmd"-suffix.}
 
 \item{replace}{If FALSE (the default) an error is thrown if one of the files that we are about to write to
 already exists. If TRUE no checks are performed.}
@@ -119,6 +121,9 @@ factorSummaries, etc.}
 \item{garbageCollection}{A logical. If TRUE (the default) then garbage collection code is added to
 the R markdown file that is output. This is useful for larger dataset to prevent memory problems.}
 
+\item{maxProbVals}{Maximum number of unique values printed from check-functions (integer > 0).
+Defaults to \code{Inf}, which means that all values are printed.}
+
 \item{\dots}{other arguments that are passed on the to precheck, checking, summary and visualization functions}
 }
 \value{
@@ -156,11 +161,11 @@ clean(testData, characterChecks=c(defaultCharacterChecks(), "characterFoo"))
 }
 
 }
-\seealso{
-\code{\link{clean}}
-}
 \author{
 Anne H. Petersen \email{ahpe@sund.ku.dk} and Claus Thorn Ekstrom \email{ekstrom@sund.ku.dk}
+}
+\seealso{
+\code{\link{clean}}
 }
 \keyword{misc}
 

@@ -29,8 +29,9 @@ visualizations \code{\link{visualize}}, typically called from \code{\link{clean}
 }
 \details{
 We recommend using the following structure for defining new \code{visualFunction}s:
+FIND A WAY TO FIX FORMATTING HERE. GOTTA BE POSSIBLE. 
 #' \code{
-  myVisualFunction <- function(v, vnam, doEval) {
+  myVisualFunction <- function(v, vnam, doEval) { 
    thisCall <- call("[the name of the function used to produce the plot]", 
                     v, [additional arguments to the plotting function])
    if (doEval) {
@@ -38,7 +39,7 @@ We recommend using the following structure for defining new \code{visualFunction
    } else return(deparse(thisCall)
   }
  }
- followed by a class change:
+ followed by a class change: 
  \code{
    myVisualFunction <- visualFunction(myVisualFunction, description = "[describe function]",
                                         classes = c([classes]))

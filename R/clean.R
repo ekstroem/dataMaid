@@ -364,7 +364,8 @@ clean <- function(data,
     fig.wrapper <- function(x, ..., outfile=file, options=c("echo=FALSE", "fig.width=4",
                                                       "fig.height=3", "message=FALSE",
                                                       "warning=FALSE")) {
-        chunk.wrapper(x, outfile=outfile, options=options, label="wewer")
+        chunk.wrapper(x, outfile=outfile, options=options) #, label="wewer")
+            #I get an error when label stuff is there
     }
 
     secretChunk.wrapper <- function(x, ..., outfile=file, options=c("echo=FALSE", "include=FALSE",

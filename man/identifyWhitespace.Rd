@@ -4,10 +4,13 @@
 \alias{identifyWhitespace}
 \title{A checkFunction for identifying whitespace}
 \usage{
-identifyWhitespace(v)
+identifyWhitespace(v, nMax = Inf)
 }
 \arguments{
 \item{v}{A character, labelled or factor variable to check.}
+
+\item{nMax}{The maximum number of problematic values to report. Default is \code{Inf}, in which case
+all problematic values are included in the outputtet message.}
 }
 \value{
 A list with two elements, $problem: TRUE if any whitespaces were found, FALSE otherwise, and

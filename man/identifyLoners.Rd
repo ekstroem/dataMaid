@@ -4,10 +4,13 @@
 \alias{identifyLoners}
 \title{A checkFunction for identifying sparsely represented values (loners)}
 \usage{
-identifyLoners(v)
+identifyLoners(v, nMax = Inf)
 }
 \arguments{
 \item{v}{A character or factor variable to check.}
+
+\item{nMax}{The maximum number of problematic values to report. Default is \code{Inf}, in which case
+all problematic values are included in the outputtet message.}
 }
 \value{
 A list with two elements, $problem: TRUE if any loners were found, FALSE otherwise, and
@@ -19,7 +22,7 @@ A checkFunction to be called from \code{\link{check}} that identifies values tha
 only occur less than 6 times in factor or character variables (that is, loners).
 }
 \examples{
-identifyLoners( c(rep(c("a", "b", "c"), 10), "d", "d") )
+identifyLoners(c(rep(c("a", "b", "c"), 10), "d", "d"))
 
 }
 \seealso{

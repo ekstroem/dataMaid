@@ -4,7 +4,7 @@
 \alias{check}
 \title{Perform a check of potential errors in a data frame}
 \usage{
-check(v, ...)
+check(v, nMax = Inf, ...)
 }
 \arguments{
 \item{v}{the vector to be checked}
@@ -32,11 +32,11 @@ check(x)
 y <- c(rnorm(100), rep(99, 10))
 
 }
-\seealso{
-\code{\link{clean}}
-}
 \author{
 Anne H. Petersen \email{ahpe@sund.ku.dk} and Claus Thorn Ekstrom \email{ekstrom@sund.ku.dk}
+}
+\seealso{
+\code{\link{clean}}
 }
 \keyword{misc}
 
