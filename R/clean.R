@@ -670,8 +670,7 @@ clean <- function(data,
 #match factor methods.
 doSmartNum <- function(v, maxLevels = 5, ...) {
   #check if v is numeric/integer here? now we check it before the function is called
-  v <- na.omit(v)
-  if (length(unique(v)) <= maxLevels) v <- smartNum(v)
+  if (length(unique(na.omit(v))) <= maxLevels) v <- smartNum(v)
   v
 }
 

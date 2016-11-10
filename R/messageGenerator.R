@@ -128,8 +128,8 @@ printProblemValues <- function(problemValues, nMax = Inf) {
   extraStr <- ""
   if (nMax < nVals) {
     problemValues <- problemValues[1:nMax]
-    extraStr <- paste("(", nVals-nMax, " additional values omitted)", sep="")
+    extraStr <- paste(" (", nVals-nMax, " additional values omitted)", sep="")
   }
   paste(paste(paste("\\\"", sort(problemValues), "\\\"", sep=""),
-        collapse=", "), extraStr)
+        collapse=", "), extraStr, sep="")
 }
