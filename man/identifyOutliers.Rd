@@ -4,10 +4,13 @@
 \alias{identifyOutliers}
 \title{A checkFunction for identifying outliers}
 \usage{
-identifyOutliers(v, nMax)
+identifyOutliers(v, nMax = Inf)
 }
 \arguments{
 \item{v}{A character or factor variable to check}
+
+\item{nMax}{The maximum number of problematic values to report. Default is \code{Inf}, in which case
+all problematic values are included in the outputtet message.}
 }
 \value{
 A list with two elements, $problem: TRUE if any outliers were found, FALSE otherwise, and

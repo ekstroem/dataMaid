@@ -4,10 +4,13 @@
 \alias{identifyMissing}
 \title{A checkFunction for identifying miscoded missing values.}
 \usage{
-identifyMissing(v, nMax)
+identifyMissing(v, nMax = Inf)
 }
 \arguments{
 \item{v}{A variable to check.}
+
+\item{nMax}{The maximum number of problematic values to report. Default is \code{Inf}, in which case
+all problematic values are included in the outputtet message.}
 }
 \value{
 A list with two elements, $problem: TRUE if any miscoded missing values were found,

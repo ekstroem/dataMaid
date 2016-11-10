@@ -26,7 +26,7 @@ clean(data, output = c("pdf", "html", "screen"), render = TRUE,
   listChecks = TRUE, brag = FALSE, maxProbVals = Inf, ...)
 }
 \arguments{
-\item{data}{the dataset to be checked [LIST ALL ALLOWED OBJECT CLASSES, INCLUDING data.frame, 
+\item{data}{the dataset to be checked [LIST ALL ALLOWED OBJECT CLASSES, INCLUDING data.frame,
 matrix, data.table, ... (more?)].}
 
 \item{output}{Output format. Options are "markdown" (the default), "pdf", "html", and "screen".
@@ -57,7 +57,8 @@ message is printed in the data summary as well.}
 any of these checks find problems, the variable will not be summarized nor visualized nor checked.}
 
 \item{file}{The filename of output file. If set to NULL (the default) then the filename will be
-the name of the data frame prefixed with "cleanR-".}
+the name of the data frame prefixed with "cleanR_". Note that a valid file is of type rmd, hence all
+filenames should have a ".Rmd"-suffix.}
 
 \item{replace}{If FALSE (the default) an error is thrown if one of the files that we are about to write to
 already exists. If TRUE no checks are performed.}
@@ -120,7 +121,7 @@ factorSummaries, etc.}
 \item{garbageCollection}{A logical. If TRUE (the default) then garbage collection code is added to
 the R markdown file that is output. This is useful for larger dataset to prevent memory problems.}
 
-\item{maxProbVals}{Maximum number of unique values printed from check-functions (integer > 0). 
+\item{maxProbVals}{Maximum number of unique values printed from check-functions (integer > 0).
 Defaults to \code{Inf}, which means that all values are printed.}
 
 \item{\dots}{other arguments that are passed on the to precheck, checking, summary and visualization functions}
