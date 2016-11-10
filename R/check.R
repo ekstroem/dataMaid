@@ -128,7 +128,7 @@ defaultLogicalChecks <- function() NULL #NOTE: we don't actually do any logical 
 #' @export
 check.logical <- function(v, nMax =  Inf, logicalChecks = defaultLogicalChecks(), ...) {
   if (! is.null(logicalChecks)) {
-    return(lapply(logicalChecks, function(x) eeval(call(x, v=v, nMax = nMax))))
+    return(lapply(logicalChecks, function(x) eval(call(x, v=v, nMax = nMax))))
   } else return(list(list(problem = FALSE, message="")))
 }
 

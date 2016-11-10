@@ -43,9 +43,9 @@
 #'   underscorePlaces <- regexpr("_", v) > 0
 #'   problemValues <- unique(v[underscorePlaces])
 #'   problem <- any(underscorePlaces)
-#'   message <- messageGenerator(list(problemValues = problemValues,
-#'                                    "The following values contain underscores:",
-#'                                    nMax = nMax)
+#'   message <- messageGenerator(list(problemValues = problemValues, problem = problem),
+#'                               "The following values contain underscores:",
+#'                               nMax = nMax)
 #'   list(problem = problem, message = message)
 #'  }
 #'
@@ -82,7 +82,7 @@ messageGenerator <- function(problemStatus, message = NULL, nMax = Inf) {
   #standard functions do not need to specify a message when called
 
   standardCall <- intersect(callF, c("identifyMissing", "identifyWhitespace", "identifyOutliers",
-                                     "identifyLoners", "identifyCaseIssues"))
+                                     "identifyLoners", "identifyCaseIssues", "identifyOutliersTBStyle"))
 
   if (length(standardCall==1)) {
     messages <- list(identifyMissing =
@@ -94,7 +94,9 @@ messageGenerator <- function(problemStatus, message = NULL, nMax = Inf) {
                      identifyLoners =
                        "Note that the following levels have at most five observations:",
                      identifyCaseIssues =
-                       "Note that there might be case problems with the following levels:")
+                       "Note that there might be case problems with the following levels:",
+                     identifyOutliersTBStyle = 
+                       "Note that the following possible outlier values were detected:")
     check <- standardCall
   } else {
     callF <- callF[length(callF) - 2]
