@@ -4,7 +4,7 @@
 #' Performs checking steps according to user input and/or data type of the inputted variable.
 #' The checks are saved to an R markdown file which can rendered into an easy-to-read document.
 #'
-#' @param data the dataset to be checked [LIST ALL ALLOWED OBJECT CLASSES, INCLUDING data.frame, 
+#' @param data the dataset to be checked [LIST ALL ALLOWED OBJECT CLASSES, INCLUDING data.frame,
 #' matrix, data.table, ... (more?)].
 #' @param output Output format. Options are "markdown" (the default), "pdf", "html", and "screen".
 #' All but the "screen" option produces an R markdown file which can be rendered.
@@ -65,7 +65,7 @@
 #' to the document (if available)
 #' @param garbageCollection A logical. If TRUE (the default) then garbage collection code is added to
 #' the R markdown file that is output. This is useful for larger dataset to prevent memory problems.
-#' @param maxProbVals Maximum number of unique values printed from check-functions (integer > 0). 
+#' @param maxProbVals Maximum number of unique values printed from check-functions (integer > 0).
 #' Defaults to \code{Inf}, which means that all values are printed.
 #' @param \dots other arguments that are passed on the to precheck, checking, summary and visualization functions
 #' @return The function does not return anything. It's side effect (the production of the Rmd file summary)
@@ -79,7 +79,7 @@
 #' DF <- data.frame(x = 1:15)
 #' clean(DF)
 #' }
-#' 
+#'
 #' \dontrun{
 #' data(testData)
 #' clean(testData)
@@ -143,18 +143,18 @@ clean <- function(data,
             data <- as.data.frame(data)
         } else stop("clean requires a data.frame, tibble or matrix as input")
     }
-  
+
     #handle quiet argument
     if (identical(quiet, "silent")) {
       silent <- TRUE
       quiet <- TRUE
     } else {
       silent <- FALSE
-      
+
       #perhaps check if quiet argument is valid (i.e. TRUE/FALSE) here?
     }
     if (silent) nagUser <- FALSE
-    
+
 
     ##Match arguments
     ordering <- match.arg(ordering)
@@ -198,28 +198,28 @@ clean <- function(data,
       originalFile <- file
       faultyExt <- FALSE
       faultyName <- FALSE
-      fileExt <- tolower(tools::file_ext(file)) 
+      fileExt <- tolower(tools::file_ext(file))
       ncFN <- nchar(file)
       #if (tolower(substr(file, nchar(file)-3, nchar(file))) != ".rmd") {
       if (fileExt != "rmd") {
         file <- paste(tools::file_path_sans_ext(file), ".Rmd", sep="")
         faultyExt <- TRUE
       }
-      
+
       ###ADD HERE: deal with e.g. "joe..rmd" or ".rmd"#####
-      #if (substr(file, ncFN-4, ncFN-4) == ".") { 
+      #if (substr(file, ncFN-4, ncFN-4) == ".") {
       #  file <- paste(substr(file, 1, ncFN-5))
       #  faultyExt <- TRUE
       #}
       #####################################################
-      
-      
-      ############PROBLEM: THIS FUNCTION DOES NOT CATCH EVERYTHING WE NEED TO CATCH. WRITE 
+
+
+      ############PROBLEM: THIS FUNCTION DOES NOT CATCH EVERYTHING WE NEED TO CATCH. WRITE
       ############NEW FUNCTION!###########################################################
       normalizedFile <- normalizeFileName(file)
       ####################################################################################
       ####################################################################################
-      
+
       if (normalizedFile != file) {
         file <- normalizedFile
         faultyName <- TRUE
@@ -230,7 +230,7 @@ clean <- function(data,
         message(paste("The supplied file name included",
                       ifelse(faultyExt, faultyExtMessage, ""),
                       ifelse(faultyExt & faultyName, "and", ""),
-                      ifelse(faultyName, faultyNameMessage, ""), 
+                      ifelse(faultyName, faultyNameMessage, ""),
                       "and therefore, it was changed from", originalFile,
                       "into", paste(file, ".", sep="")))
       }
@@ -307,7 +307,7 @@ clean <- function(data,
       #}
 
 
-    
+
     ## Figure out which classes of output that the user requests.
     ## By default we want both checks, graphics, and summarize.
     doCheck <- "check" %in% mode
@@ -355,8 +355,8 @@ clean <- function(data,
         cat(paste0(x, ...), file=outfile, append=TRUE, sep=sep)
     }
 
-    chunk.wrapper <- function(x, ..., outfile=file, options=c("echo=FALSE", "warning=FALSE")) {
-        writer(paste("```{r", paste(options, collapse=", "), "}"))
+    chunk.wrapper <- function(x, ..., outfile=file, options=c("echo=FALSE", "warning=FALSE"), label=NULL) {
+        writer(paste("```{r", ifelse(is.null(label)," ," , paste(label, ",")) , paste(options, collapse=", "), "}"))
         writer(x, ..., outfile=outfile)
         writer("```")
     }
@@ -364,7 +364,7 @@ clean <- function(data,
     fig.wrapper <- function(x, ..., outfile=file, options=c("echo=FALSE", "fig.width=4",
                                                       "fig.height=3", "message=FALSE",
                                                       "warning=FALSE")) {
-        chunk.wrapper(x, outfile=outfile, options=options)
+        chunk.wrapper(x, outfile=outfile, options=options, label="wewer")
     }
 
     secretChunk.wrapper <- function(x, ..., outfile=file, options=c("echo=FALSE", "include=FALSE",
@@ -653,7 +653,7 @@ clean <- function(data,
                       #accidentially shuts down the pdf/html/rmd-file.)
     }
 
-    if (openResult) system(paste("open", outFile)) 
+    if (openResult) system(paste("open", outFile))
 }
 
 
