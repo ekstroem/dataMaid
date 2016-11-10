@@ -39,6 +39,8 @@ identifyOutliersTBStyle <- checkFunction(identifyOutliersTBStyle,
                                          "Identify outliers (Turkish Boxplot style)")
 
 
+
+#######################
 ##########################################Not exported below#########################################
 
 
