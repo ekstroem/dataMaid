@@ -53,7 +53,7 @@ Collate:
     'countMissing.R'
     'uniqueValues.R'
     'check.R'
-    'identifyCaseIssues.R'
+    'identifyCaseissues.R'
     'identifyOutliers.R'
     'identifyLoners.R'
     'identifyWhitespace.R'
