@@ -16,7 +16,7 @@ unpackLabelled <- function(v) {
 #' @export
 print.functionSummary <- function(x, ...) {
   x$classes <- sapply(x$classes, function(x) paste(x, collapse=", "))
-  pander(data.frame(x, row.names = NULL), justify="left")
+  pander::pander(data.frame(x, row.names = NULL), justify="left")
 }
 
 

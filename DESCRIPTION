@@ -2,28 +2,26 @@ Package: cleanR
 Type: Package
 Title: A Suite of Checks for Identification of Potential Errors in a Data Frame
     as Part of the Data Cleaning Process
-Version: 0.5
-Date: 2016-10-28
-Author: Anne H. Petersen <ahpe@sund.ku.dk> and Claus Thorn Ekstrøm
-    <ekstrom@sund.ku.dk>
-Maintainer: Claus Thorn Ekstrøm <ekstrom@sund.ku.dk>
+Version: 0.5.1
+Date: 2016-11-11
+Authors@R: as.person(c(
+    "Anne H. Petersen <ahpe@sund.ku.dk> [aut]",
+    "Claus Thorn Ekstrøm <ekstrom@sund.ku.dk> [aut, cre]"))
 Description: Data cleaning is an important first step of any statistical
     analysis. cleanR provides an extendable suite of test for common potential
     errors in a dataset. It produces a document with a thorough summary of the
     checks and the results that a human can use to identify possible errors.
 Imports:
-    methods
-Depends:
+    methods,
     pander,
-    ggplot2,
+    rmarkdown,    
     robustbase
-Suggests:
-    stringi,
-    rmarkdown
+Depends:
+    ggplot2
 Encoding: UTF-8
 ByteCompile: true
 License: GPL-2
-RoxygenNote: 5.0.1
+RoxygenNote: 5.0.1.9000
 Collate:
     'leftover_functions_split_us.R'
     'classes.R'

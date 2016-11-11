@@ -100,7 +100,7 @@
 #'
 #' @importFrom methods is
 #' @importFrom pander pander_return panderOptions pandoc.table.return
-#' @importFrom tools file_ext 
+#' @importFrom tools file_ext
 #' @export
 clean <- function(data,
                   output=c("pdf", "html", "screen"), render=TRUE,
@@ -341,12 +341,12 @@ clean <- function(data,
     #what is this line supposed to do and when will it happen?
 
     ## make tables left-aligned and allow for 6 columns
-    oldPanderOptions <- panderOptions() # Used to restore towards the end
+    oldPanderOptions <- pander::panderOptions() # Used to restore towards the end
     ## panderOptions("table.alignment.default", "left")
-    panderOptions('table.alignment.default', 'center')  ## XXX CE only one of these two
-    panderOptions("table.split.table", Inf)
-    panderOptions("table.split.cells", Inf)
-    panderOptions('table.alignment.rownames', 'left')
+    pander::panderOptions('table.alignment.default', 'center')  ## XXX CE only one of these two
+    pander::panderOptions("table.split.table", Inf)
+    pander::panderOptions("table.split.cells", Inf)
+    pander::panderOptions('table.alignment.rownames', 'left')
 
     ##
     ## Below comes a bunch of helper functions for writing the output
@@ -427,7 +427,7 @@ clean <- function(data,
 
 
     ## include packages as a first chunk
-    secretChunk.wrapper("library(ggplot2)\nlibrary(stringi)\nlibrary(pander)")
+    secretChunk.wrapper("library(ggplot2)\nlibrary(pander)")
 
     ## Title
     writer("# Data cleaning summary")
@@ -437,7 +437,7 @@ clean <- function(data,
     sumMat <- matrix(c("Number of rows", "Number of variables",
                        n, nvariables), 2,
                      dimnames= list(NULL, c("Feature", "Result")))
-    writer(pander_return(sumMat, justify="lr"))
+    writer(pander::pander_return(sumMat, justify="lr"))
 
 
     ## if useVar options are chosen, they are printed accordingly
@@ -492,7 +492,7 @@ clean <- function(data,
 
     writer("### Checks performed")
     writer("The following variable checks were performed, depending on the data type of each variable:")
-    writer(pandoc.table.return(checkMat, justify="lcccccc",
+    writer(pander::pandoc.table.return(checkMat, justify="lcccccc",
                                emphasize.rownames=FALSE)) #allows for centering in this table only
     writer("\n")
    }
@@ -562,7 +562,7 @@ clean <- function(data,
 
 
                 ## make Summary table
-                if (doSummarize) sumTable <- pander_return(summarize(v, characterSummaries = characterSummaries,
+                if (doSummarize) sumTable <- pander::pander_return(summarize(v, characterSummaries = characterSummaries,
                                                                  factorSummaries = factorSummaries,
                                                                  labelledSummaries = labelledSummaries,
                                                                  numericSummaries = numericSummaries,
@@ -594,7 +594,7 @@ clean <- function(data,
                     if (any(problems)) {
                         messages <- sapply(checkRes, function(x) x[[2]])[problems]
                         for (i in 1:length(messages)) {
-                            writer(paste0("- ", pander_return(messages[i])))
+                            writer(paste0("- ", pander::pander_return(messages[i])))
                         }
                     }
                 }
