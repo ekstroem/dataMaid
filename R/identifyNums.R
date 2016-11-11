@@ -15,5 +15,5 @@ identifyNums <- function(v, ...) {
   out
 }
 
-identifyNums <- checkFunction(identifyNums, "Identify missclassified numeric or integer variables",
+identifyNums <- checkFunction(identifyNums, "Identify misclassified numeric or integer variables",
                               c("character", "factor"))
