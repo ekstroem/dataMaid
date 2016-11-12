@@ -356,33 +356,33 @@ clean <- function(data,
     }
 
     chunk.wrapper <- function(x, ..., outfile=file, options=c("echo=FALSE", "warning=FALSE"), label=NULL) {
-        writer(paste("```{r", ifelse(is.null(label)," ," , paste(label, ",")) , paste(options, collapse=", "), "}"))
+        writer(paste("```{r", ifelse(is.null(label),"," , paste(label, ",")) , paste(options, collapse=", "), "}"))
         writer(x, ..., outfile=outfile)
         writer("```")
     }
 
     fig.wrapper <- function(x, ..., outfile=file, options=c("echo=FALSE", "fig.width=4",
                                                       "fig.height=3", "message=FALSE",
-                                                      "warning=FALSE")) {
-        chunk.wrapper(x, outfile=outfile, options=options) #, label="wewer")
+                                                      "warning=FALSE"), label=NULL) {
+        chunk.wrapper(x, outfile=outfile, options=options, label=label)
             #I get an error when label stuff is there
     }
 
     secretChunk.wrapper <- function(x, ..., outfile=file, options=c("echo=FALSE", "include=FALSE",
                                                               "warning=FALSE", "message=FALSE",
-                                                              "error=FALSE")) {
-        chunk.wrapper(x, outfile=outfile, options=options)
+                                                              "error=FALSE"), label=NULL) {
+        chunk.wrapper(x, outfile=outfile, options=options, label=label)
     }
 
     ## outputty sets the output type
-    twoCols.wrapper <- function(text, figure, outfile=file, outputty=output) {
+    twoCols.wrapper <- function(text, figure, outfile=file, outputty=output, label=NULL) {
         if (outputty=="pdf") { #note: does NOT work if there is a linebreak between the two
                                         #minipage environments!
             writer("\\bminione")
             writer(text)
             writer("\\emini")
             writer("\\bminitwo")
-            fig.wrapper(figure)
+            fig.wrapper(figure, label=label)
             writer("\\emini")
         }
         if (outputty=="html") {
@@ -391,8 +391,8 @@ clean <- function(data,
             writer(text)
             writer("</div>")
             writer("<div class = \"col-lg-4\">")
-            fig.wrapper(figure)
-        writer("</div>")
+            fig.wrapper(figure, label=label)
+            writer("</div>")
             writer("</div>")
         }
         writer("\n")
@@ -544,7 +544,8 @@ clean <- function(data,
         if (!skip) {
 
             ## Variable name
-            writer("## **", gsub("_", "\\\\_", vnam), "**\n")
+            printable_name <- gsub("_", "\\\\_", vnam)
+            writer("## **", printable_name, "**\n")
 
             ## If the variable has label information the print that below
             if ("label" %in% attributes(v)$names)
@@ -582,10 +583,10 @@ clean <- function(data,
 
                 ## add visualization + summary results to output file
                 if (twoCol) {
-                    twoCols.wrapper(sumTable, visual)
+                    twoCols.wrapper(sumTable, visual, label=printable_name)
                 } else {
                     if (doSummarize) writer(sumTable)
-                    if (doVisualize) fig.wrapper(visual)
+                    if (doVisualize) fig.wrapper(visual, label=printable_name)
                     writer("\n")
                 }
 
