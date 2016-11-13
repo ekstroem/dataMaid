@@ -581,12 +581,16 @@ clean <- function(data,
             ## make Visualization
             if (doVisualize) visual <- visualize(v, vnam, doEval=FALSE, allVisuals = allVisuals, ...)
 
+                ## Chunkname should avoid spaces and periods
+                chunk_name <- gsub(" ", "", paste0("Var-", idx, "-", printable_name))
+                chunk_name <- gsub("\\.", "-", chunk_name)
+
                 ## add visualization + summary results to output file
                 if (twoCol) {
-                    twoCols.wrapper(sumTable, visual, label=printable_name)
+                    twoCols.wrapper(sumTable, visual, label=chunk_name)
                 } else {
                     if (doSummarize) writer(sumTable)
-                    if (doVisualize) fig.wrapper(visual, label=printable_name)
+                    if (doVisualize) fig.wrapper(visual, label=chunk_name)
                     writer("\n")
                 }
 
