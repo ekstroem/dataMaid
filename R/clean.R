@@ -582,8 +582,7 @@ clean <- function(data,
             if (doVisualize) visual <- visualize(v, vnam, doEval=FALSE, allVisuals = allVisuals, ...)
 
                 ## Chunkname should avoid spaces and periods
-                chunk_name <- gsub(" ", "", paste0("Var-", idx, "-", printable_name))
-                chunk_name <- gsub("\\.", "-", chunk_name)
+                chunk_name <- paste0("Var-", idx, "-", gsub("[_:. ]", "-", vnam))
 
                 ## add visualization + summary results to output file
                 if (twoCol) {
