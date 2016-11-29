@@ -6,7 +6,7 @@
 #' @param v A character or factor variable to check
 #' @param nMax The maximum number of problematic values to report. Default is \code{Inf}, in which case
 #' all problematic values are included in the outputtet message.
-#' @inheritsParams clean 
+#' @inheritParams clean 
 #'
 #' @details Outliers are defined in the style of Turkey Boxplots (consistent with the
 #' \code{\link{boxplot}} function), i.e. as values  that are smaller than the 1st quartile minus

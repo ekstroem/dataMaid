@@ -54,7 +54,7 @@ an example of a summary function.
    defaultCharacterSummaries()
 
 #Define a new summary function and add it to the summary for character vectors:
-   countZeros <- function(v) {
+   countZeros <- function(v, ...) {
      res <- length(which(v == 0))
      list(feature="No. zeros", result = res)
    }

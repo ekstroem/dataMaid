@@ -28,6 +28,7 @@
 #' Runs a set of validation checks to check a vector for potential errors.  performs checking steps according to user input and/or data type of the inputted variable.
 #'
 #' @param v the vector to be checked
+#' @inheritParams clean
 #' @param \dots other arguments that are passed on the to checking functions
 #' @return An list object of class "checked" summarizing the result from the check of the check. As a minimum the returned class should contain the following elements
 #' \itemize{
@@ -117,7 +118,7 @@ check.numeric <- function(v, nMax =  Inf, maxDecimals = 2,
 defaultIntegerChecks <- function() c("identifyMissing", "identifyOutliers")
 
 #' @export
-check.integer <- function(v, nMax =  Inf, maxDecimals = maxDecimals, 
+check.integer <- function(v, nMax =  Inf, maxDecimals = 2, 
                           integerChecks = defaultIntegerChecks(), ...) {
   lapply(integerChecks, function(x) eval(call(x, v=v, nMax = nMax, 
                                               maxDecimals = maxDecimals)))

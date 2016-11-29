@@ -4,10 +4,12 @@
 \alias{countMissing}
 \title{Summary function for missing values}
 \usage{
-countMissing(v)
+countMissing(v, ...)
 }
 \arguments{
 \item{v}{A variable (vector).}
+
+\item{...}{Not in use.}
 }
 \value{
 A list with $feature: "No. missing obs." and

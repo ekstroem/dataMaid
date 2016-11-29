@@ -4,10 +4,12 @@
 \alias{variableType}
 \title{Summary function for original class}
 \usage{
-variableType(v)
+variableType(v, ...)
 }
 \arguments{
 \item{v}{A variable (vector).}
+
+\item{...}{Not in use.}
 }
 \value{
 A list with $feature: "Variable type" and 

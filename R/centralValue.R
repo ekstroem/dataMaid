@@ -43,13 +43,13 @@ centralValue.factor <- function(v, ...) centralValueCF(v)
 centralValue.labelled <- function(v, ...) centralValueL(v)
 
 #' @export
-centralValue.numeric <- function(v, maxDecimals = 2) centralValueIN(v, maxDecimals = maxDecimals)
+centralValue.numeric <- function(v, ...) centralValueIN(v, ...)
 
 #' @export
-centralValue.integer <- function(v, maxDecimals = 2) centralValueIN(v, maxDecimals = maxDecimals)
+centralValue.integer <- function(v, ...) centralValueIN(v, ...)
 
 #' @export
-centralValue.logical <- function(v) centralValueB(v)
+centralValue.logical <- function(v, ...) centralValueB(v)
 
 
 

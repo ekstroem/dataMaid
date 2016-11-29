@@ -14,14 +14,14 @@ Description: Data cleaning is an important first step of any statistical
 Imports:
     methods,
     pander,
-    rmarkdown,    
+    rmarkdown,
     robustbase
 Depends:
     ggplot2
 Encoding: UTF-8
 ByteCompile: true
 License: GPL-2
-RoxygenNote: 5.0.1.9000
+RoxygenNote: 5.0.1
 Collate:
     'leftover_functions_split_us.R'
     'classes.R'

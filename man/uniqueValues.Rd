@@ -4,10 +4,12 @@
 \alias{uniqueValues}
 \title{Summary function for unique values}
 \usage{
-uniqueValues(v)
+uniqueValues(v, ...)
 }
 \arguments{
 \item{v}{A variable (vector).}
+
+\item{...}{Not in use.}
 }
 \value{
 A list with $feature: "No. unique values" and

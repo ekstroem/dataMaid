@@ -4,10 +4,13 @@
 \alias{quartiles}
 \title{Description function for quartiles}
 \usage{
-quartiles(v)
+quartiles(v, maxDecimals = 2)
 }
 \arguments{
 \item{v}{A variable (vector) of type numeric or integer.}
+
+\item{maxDecimals}{Number of decimals used when printing numerical values in the data 
+summary. If \code{Inf}, no rounding is performed.}
 }
 \value{
 A list with $feature: "1st and 3rd quartiles" and $result: [the quartiles of \code{v}].

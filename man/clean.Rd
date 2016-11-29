@@ -23,7 +23,8 @@ clean(data, output = c("pdf", "html", "screen"), render = TRUE,
   integerSummaries = defaultIntegerSummaries(),
   logicalSummaries = defaultLogicalSummaries(), allSummaries = NULL,
   allVisuals = "standardVisual", garbageCollection = TRUE,
-  listChecks = TRUE, brag = FALSE, maxProbVals = Inf, ...)
+  listChecks = TRUE, brag = FALSE, maxProbVals = Inf, maxDecimals = 2,
+  ...)
 }
 \arguments{
 \item{data}{the dataset to be checked [LIST ALL ALLOWED OBJECT CLASSES, INCLUDING data.frame,
@@ -124,6 +125,9 @@ the R markdown file that is output. This is useful for larger dataset to prevent
 \item{maxProbVals}{Maximum number of unique values printed from check-functions (integer > 0).
 Defaults to \code{Inf}, which means that all values are printed.}
 
+\item{maxDecimals}{Number of decimals used when printing numerical values in the data 
+summary. If \code{Inf}, no rounding is performed.}
+
 \item{\dots}{other arguments that are passed on the to precheck, checking, summary and visualization functions}
 }
 \value{
@@ -161,11 +165,11 @@ clean(testData, characterChecks=c(defaultCharacterChecks(), "characterFoo"))
 }
 
 }
-\seealso{
-\code{\link{clean}}
-}
 \author{
 Anne H. Petersen \email{ahpe@sund.ku.dk} and Claus Thorn Ekstrom \email{ekstrom@sund.ku.dk}
+}
+\seealso{
+\code{\link{clean}}
 }
 \keyword{misc}
 

@@ -6,6 +6,7 @@
 #' @param v A variable to check.
 #' @param nMax The maximum number of problematic values to report. Default is \code{Inf}, in which case
 #' all problematic values are included in the outputtet message.
+#' @param ... Not in use.
 #'
 #' @details \code{identifyMissing} tries to identify common choices of missing values outside of the
 #' R standards. These include special words (NaN and Inf (no matter the cases)), one or more -9/9's
@@ -49,12 +50,12 @@ identifyMissing.factor <- function(v, nMax = Inf, ...) identifyMissingCF(v, nMax
 #' @export
 identifyMissing.labelled <- function(v, nMax = Inf, ...) identifyMissingL(v, nMax = nMax)
 #' @export
-identifyMissing.numeric <- function(v, nMax = Inf, maxDecimals = 2) {
-  identifyMissingNI(v, nMax = nMax, maxDecimals = maxDecimals)
+identifyMissing.numeric <- function(v, nMax = Inf, ...) {
+  identifyMissingNI(v, nMax = nMax, ...)
 }
 #' @export
-identifyMissing.integer <- function(v, nMax = Inf, maxDecimals = 2) {
-  identifyMissingNI(v, nMax = nMax, maxDecimals = maxDecimals)
+identifyMissing.integer <- function(v, nMax = Inf, ...) {
+  identifyMissingNI(v, nMax = nMax, ...)
 }
 #' @export
 identifyMissing.logical <- function(v, nMax = Inf, ...) identifyMissingB(v, nMax = nMax)

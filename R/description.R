@@ -1,5 +1,3 @@
-
-#replaces funSum
 #' @export
 description <- function(x) UseMethod("description")
 
