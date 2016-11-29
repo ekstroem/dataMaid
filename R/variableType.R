@@ -6,6 +6,8 @@
 #' 
 #' @param v A variable (vector).
 #' 
+#' @param ... Not in use.
+#' 
 #' @return A list with $feature: "Variable type" and 
 #' $result: [the (original) class of the variable]. 
 #' 
@@ -25,7 +27,7 @@
 #'  #Something with multiple classes, like ordered factor... 
 #' 
 #' @export
-variableType <- function(v) {
+variableType <- function(v, ...) {
   list(feature="Variable type", result = oClass(v)[1])
 }
 variableType <- summaryFunction(variableType, "Data class of variable",

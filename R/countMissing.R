@@ -4,6 +4,8 @@
 #' number of missing (NA) values in a variable.
 #'
 #' @param v A variable (vector).
+#' 
+#' @param ... Not in use.
 #'
 #' @return A list with $feature: "No. missing obs." and
 #' $result: [the number and percentage missing observations].
@@ -14,7 +16,7 @@
 #' countMissing(c(1:100, rep(NA, 10)))
 #'
 #' @export
-countMissing <- function(v) {
+countMissing <- function(v, ...) {
   noMissing <- sum(is.na(v))
   percentMissing <- round(100*noMissing/length(v),2)
   list(feature="Number of missing obs." ,

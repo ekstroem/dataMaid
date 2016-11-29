@@ -38,22 +38,26 @@
 #'
 #' @importFrom stats na.omit
 #' @export
-identifyMissing <- function(v, nMax = Inf) UseMethod("identifyMissing")
+identifyMissing <- function(v, nMax = Inf, ...) UseMethod("identifyMissing")
 
 
 #Add methods to generic identifyMiss
 #' @export
-identifyMissing.character <- function(v, nMax = Inf) identifyMissingCF(v, nMax = nMax)
+identifyMissing.character <- function(v, nMax = Inf, ...) identifyMissingCF(v, nMax = nMax)
 #' @export
-identifyMissing.factor <- function(v, nMax = Inf) identifyMissingCF(v, nMax = nMax)
+identifyMissing.factor <- function(v, nMax = Inf, ...) identifyMissingCF(v, nMax = nMax)
 #' @export
-identifyMissing.labelled <- function(v, nMax = Inf) identifyMissingL(v, nMax = nMax)
+identifyMissing.labelled <- function(v, nMax = Inf, ...) identifyMissingL(v, nMax = nMax)
 #' @export
-identifyMissing.numeric <- function(v, nMax = Inf) identifyMissingNI(v, nMax = nMax)
+identifyMissing.numeric <- function(v, nMax = Inf, maxDecimals = 2) {
+  identifyMissingNI(v, nMax = nMax, maxDecimals = maxDecimals)
+}
 #' @export
-identifyMissing.integer <- function(v, nMax = Inf) identifyMissingNI(v, nMax = nMax)
+identifyMissing.integer <- function(v, nMax = Inf, maxDecimals = 2) {
+  identifyMissingNI(v, nMax = nMax, maxDecimals = maxDecimals)
+}
 #' @export
-identifyMissing.logical <- function(v, nMax = Inf) identifyMissingB(v, nMax = nMax)
+identifyMissing.logical <- function(v, nMax = Inf, ...) identifyMissingB(v, nMax = nMax)
 
 
 #make it a checkFunction
@@ -200,7 +204,7 @@ identifyMissingL <- function(v, nMax) {
 }
 
 #numerical and integer variables
-identifyMissingNI <- function(v, nMax) {
+identifyMissingNI <- function(v, nMax, maxDecimals) {
   v <- na.omit(v)
   problem <- FALSE
   problemValues <- NULL
@@ -212,7 +216,7 @@ identifyMissingNI <- function(v, nMax) {
   allProblemOcc <- c(missNinesOcc, missEightsOcc, missNaNOcc)
 
   if (length(allProblemOcc) > 0) {
-    problemValues <- allProblemOcc
+    problemValues <- round(allProblemOcc, maxDecimals)
     problem <- TRUE
   }
   outMessage <- messageGenerator(list(problem = problem, problemValues = problemValues),

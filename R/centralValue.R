@@ -7,6 +7,10 @@
 #'
 #' @param v A variable (vector).
 #'
+#' @param ... Extra arguments to be passed to class-specific functions. These incluse 
+#' \code{maxDecimals} (default is 2) which controls the rounding of integer and numeric
+#' values.
+#' 
 #' @details Note that NA, NaN and Inf values are ignored for numeric and integer variables, while
 #' only NA values are ignored for factor, character and labelled variables. No values are
 #' ignored for logical variables.
@@ -24,31 +28,28 @@
 #'
 #' @importFrom stats na.omit median
 #' @export
-centralValue <- function(v) UseMethod("centralValue")
+centralValue <- function(v, ...) UseMethod("centralValue")
 centralValue <- summaryFunction(centralValue, "Compute median or mode")
 
 #assign methods to generic centralValue function
 
 #' @export
-centralValue.character <- function(v) centralValueCF(v)
+centralValue.character <- function(v, ...) centralValueCF(v)
 
 #' @export
-centralValue.factor <- function(v) centralValueCF(v)
+centralValue.factor <- function(v, ...) centralValueCF(v)
 
 #' @export
-centralValue.labelled <- function(v) centralValueL(v)
+centralValue.labelled <- function(v, ...) centralValueL(v)
 
 #' @export
-centralValue.numeric <- function(v) centralValueIN(v)
+centralValue.numeric <- function(v, maxDecimals = 2) centralValueIN(v, maxDecimals = maxDecimals)
 
 #' @export
-centralValue.integer <- function(v) centralValueIN(v)
+centralValue.integer <- function(v, maxDecimals = 2) centralValueIN(v, maxDecimals = maxDecimals)
 
 #' @export
 centralValue.logical <- function(v) centralValueB(v)
-
-
-#deleteMe
 
 
 
@@ -77,9 +78,9 @@ centralValueL <- function(v) {
 
 #integer and numeric variables
 ##' @importFrom stats median na.omit
-centralValueIN <- function(v) {
+centralValueIN <- function(v, maxDecimals = 2) {
   v <- na.omit(v)
-  list(feature="Median", result=median(v))
+  list(feature="Median", result=round(median(v), maxDecimals))
 }
 
 

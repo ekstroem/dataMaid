@@ -67,6 +67,8 @@
 #' the R markdown file that is output. This is useful for larger dataset to prevent memory problems.
 #' @param maxProbVals Maximum number of unique values printed from check-functions (integer > 0).
 #' Defaults to \code{Inf}, which means that all values are printed.
+#' @param maxDecimals Number of decimals used when printing numerical values in the data 
+#' summary. If \code{Inf}, no rounding is performed.
 #' @param \dots other arguments that are passed on the to precheck, checking, summary and visualization functions
 #' @return The function does not return anything. It's side effect (the production of the Rmd file summary)
 #' is the reason for running the function.
@@ -134,6 +136,7 @@ clean <- function(data,
                   listChecks = TRUE,
                   brag=FALSE, #remove me
                   maxProbVals = Inf,
+                  maxDecimals = 2,
                   ...) {
 
     ## Start by doing a few sanity checks of the input
@@ -495,6 +498,11 @@ clean <- function(data,
     writer(pander::pandoc.table.return(checkMat, justify="lcccccc",
                                emphasize.rownames=FALSE)) #allows for centering in this table only
     writer("\n")
+    if (maxDecimals != Inf) {
+      writer(paste("Please note that all numerical values in the following have been rounded to", 
+                   maxDecimals, "decimals."))
+      writer("\n")
+    }
    }
 
 
@@ -532,7 +540,8 @@ clean <- function(data,
                             labelledChecks = labelledChecks,
                             numericChecks = numericChecks,
                             integerChecks = integerChecks,
-                            logicalChecks = logicalChecks, nMax = maxProbVals, ...)
+                            logicalChecks = logicalChecks, nMax = maxProbVals, 
+                            maxDecimals = maxDecimals, ...)
           problems <- sapply(checkRes, function(x) x[[1]])
         }
 
@@ -563,13 +572,15 @@ clean <- function(data,
 
 
                 ## make Summary table
-                if (doSummarize) sumTable <- pander::pander_return(summarize(v, characterSummaries = characterSummaries,
+                if (doSummarize) sumTable <- pander::pander_return(summarize(v, 
+                                                                 characterSummaries = characterSummaries,
                                                                  factorSummaries = factorSummaries,
                                                                  labelledSummaries = labelledSummaries,
                                                                  numericSummaries = numericSummaries,
                                                                  integerSummaries = integerSummaries,
                                                                  logicalSummaries = logicalSummaries,
-                                                                 ...), justify="lr")
+                                                                 maxDecimals = maxDecimals, ...), 
+                                                                 justify="lr")
               #if (doSummarize) sumTable <- pandoc.table.return(summarize(v, ...))
                                         #exactly the same result as with pander_return()
 

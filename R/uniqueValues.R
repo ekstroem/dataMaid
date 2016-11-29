@@ -4,6 +4,8 @@
 #' number of unique (excluding NA) values in a variable.
 #'
 #' @param v A variable (vector).
+#' 
+#' @param ... Not in use.
 #'
 #' @return A list with $feature: "No. unique values" and
 #' $result: [the number of unique values].
@@ -15,27 +17,27 @@
 #'
 #' @importFrom stats na.omit
 #' @export
-uniqueValues <- function(v) UseMethod("uniqueValues")
+uniqueValues <- function(v, ...) UseMethod("uniqueValues")
 
 #assign methods to generic uniqueValues function
 
 #' @export
-uniqueValues.character <- function(v) uniqueValuesCFLBI(v)
+uniqueValues.character <- function(v, ...) uniqueValuesCFLBI(v)
 
 #' @export
-uniqueValues.factor <- function(v) uniqueValuesCFLBI(v)
+uniqueValues.factor <- function(v, ...) uniqueValuesCFLBI(v)
 
 #' @export
-uniqueValues.labelled <- function(v) uniqueValuesCFLBI(v) #?PROBLEM?
+uniqueValues.labelled <- function(v, ...) uniqueValuesCFLBI(v) #?PROBLEM?
 
 #' @export
-uniqueValues.numeric <- function(v) uniqueValuesN(v)
+uniqueValues.numeric <- function(v, ...) uniqueValuesN(v)
 
 #' @export
-uniqueValues.integer <- function(v) uniqueValuesCFLBI(v)
+uniqueValues.integer <- function(v, ...) uniqueValuesCFLBI(v)
 
 #' @export
-uniqueValues.logical <- function(v) uniqueValuesCFLBI(v)
+uniqueValues.logical <- function(v, ...) uniqueValuesCFLBI(v)
 
 
 #Make it a summaryFunction

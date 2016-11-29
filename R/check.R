@@ -106,8 +106,10 @@ check.labelled <- function(v, nMax =  Inf, labelledChecks = defaultLabelledCheck
 defaultNumericChecks <- function() c("identifyMissing", "identifyOutliers")
 
 #' @export
-check.numeric <- function(v, nMax =  Inf, numericChecks = defaultNumericChecks(), ...) {
-  lapply(numericChecks, function(x) eval(call(x, v=v, nMax = nMax)))
+check.numeric <- function(v, nMax =  Inf, maxDecimals = 2, 
+                          numericChecks = defaultNumericChecks(), ...) {
+  lapply(numericChecks, function(x) eval(call(x, v=v, nMax = nMax, 
+                                              maxDecimals = maxDecimals)))
 }
 
 
@@ -115,8 +117,10 @@ check.numeric <- function(v, nMax =  Inf, numericChecks = defaultNumericChecks()
 defaultIntegerChecks <- function() c("identifyMissing", "identifyOutliers")
 
 #' @export
-check.integer <- function(v, nMax =  Inf, integerChecks = defaultIntegerChecks(), ...) {
-  lapply(integerChecks, function(x) eval(call(x, v=v, nMax = nMax)))
+check.integer <- function(v, nMax =  Inf, maxDecimals = maxDecimals, 
+                          integerChecks = defaultIntegerChecks(), ...) {
+  lapply(integerChecks, function(x) eval(call(x, v=v, nMax = nMax, 
+                                              maxDecimals = maxDecimals)))
 }
 
 

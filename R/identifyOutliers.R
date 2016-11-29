@@ -6,6 +6,7 @@
 #' @param v A character or factor variable to check
 #' @param nMax The maximum number of problematic values to report. Default is \code{Inf}, in which case
 #' all problematic values are included in the outputtet message.
+#' @inheritsParams clean 
 #'
 #' @details Outliers are defined in the style of Turkey Boxplots (consistent with the
 #' \code{\link{boxplot}} function), i.e. as values  that are smaller than the 1st quartile minus
@@ -22,15 +23,19 @@
 #'
 #' @importFrom stats na.omit quantile
 #' @export
-identifyOutliers <- function(v, nMax = Inf) UseMethod("identifyOutliers")
+identifyOutliers <- function(v, nMax = Inf, maxDecimals = 2) UseMethod("identifyOutliers")
 
 
 #add methods to generic identifyOutliers function
 #' @export
-identifyOutliers.numeric <- function(v, nMax = Inf) identifyOutliersNI(v, nMax = nMax)
+identifyOutliers.numeric <- function(v, nMax = Inf, maxDecimals = 2) {
+  identifyOutliersNI(v, nMax = nMax, maxDecimals = maxDecimals)
+}
 
 #' @export
-identifyOutliers.integer <- function(v, nMax = Inf) identifyOutliersNI(v, nMax = nMax)
+identifyOutliers.integer <- function(v, nMax = Inf, maxDecimals = 2) {
+  identifyOutliersNI(v, nMax = nMax, maxDecimals = maxDecimals)
+}
 
 
 #make it a checkFunction
@@ -42,7 +47,7 @@ identifyOutliers <- checkFunction(identifyOutliers, "Identify outliers")
 
 ##numerical and integer variables
 #' @importFrom robustbase mc
-identifyOutliersNI <- function(v, nMax) {
+identifyOutliersNI <- function(v, nMax, maxDecimals) {
   v <- na.omit(v)
   qs <- quantile(v, c(0.25, 0.75))
   IQR <- qs[2] - qs[1]
@@ -65,8 +70,8 @@ identifyOutliersNI <- function(v, nMax) {
     problem <- TRUE
     problemValues <- v[outlierPlaces]
     
-    #only print each outlier value once:
-    problemValues <- unique(problemValues)
+    #only print each outlier value once (and round them):
+    problemValues <- round(unique(problemValues), maxDecimals)
     
     ## if outlier value occurs multiple times,
     ## it will be printed multiple times

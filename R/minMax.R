@@ -5,6 +5,8 @@
 #' computations.
 #'
 #' @param v A variable (vector) of type numeric or integer.
+#' 
+#' @inheritParams clean
 #'
 #' @return A list with $feature: "Min. and max." and $result: [the minimum and maximum of \code{v}].
 #'
@@ -15,9 +17,11 @@
 #'
 #' @importFrom stats na.omit
 #' @export
-minMax <- function(v) {
+minMax <- function(v, maxDecimals = 2) {
   v <- na.omit(v) #maybe keep Inf's?
-  list(feature="Min. and max.", result=paste(min(v), max(v), sep="; "))
+  list(feature="Min. and max.", result=paste(round(min(v), maxDecimals), 
+                                             round(max(v), maxDecimals),
+                                             sep="; "))
 }
 minMax <- summaryFunction(minMax, "Find minimum and maximum values",
                           c("integer", "numeric"))

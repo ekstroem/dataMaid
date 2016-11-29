@@ -293,20 +293,22 @@ summarize.labelled <- function(v, descriptive = TRUE,
 #' @export
 summarize.numeric <- function(v, descriptive = TRUE,
                               numericSummaries = defaultNumericSummaries(),
-                              numericDescriptions = defaultNumericDescriptions(), ...) {
+                              numericDescriptions = defaultNumericDescriptions(), 
+                              maxDecimals = 2, ...) {
   numericCalls <- if (descriptive) c(numericSummaries, numericDescriptions)
   else numericSummaries
-  sumMatGenerator(v, numericCalls)
+  sumMatGenerator(v, numericCalls, maxDecimals = maxDecimals)
 }
 
 
 #' @export
 summarize.integer <- function(v, descriptive = TRUE,
                               integerSummaries = defaultIntegerSummaries(),
-                              integerDescriptions = defaultIntegerDescriptions(), ...) {
+                              integerDescriptions = defaultIntegerDescriptions(), 
+                              maxDecimals = 2, ...) {
   integerCalls <- if (descriptive) c(integerSummaries, integerDescriptions)
   else integerSummaries
-  sumMatGenerator(v, integerCalls)
+  sumMatGenerator(v, integerCalls, maxDecimals = maxDecimals)
 }
 
 
@@ -326,12 +328,12 @@ summarize.logical <- function(v, descriptive = TRUE,
 ##########################################Not exported below#########################################
 
 #produces the output matrix from a summarize call. Use internally only
-sumMatGenerator <- function(v, summaries) {
+sumMatGenerator <- function(v, summaries, maxDecimals = NULL) {
   nFunctions <- length(summaries)
   outMat <- matrix(NA, nFunctions, 2,
                    dimnames=list(NULL, c("Feature", "Result")))
   for (i in 1:nFunctions) {
-    res <- eval(call(summaries[i], v))
+    res <- eval(call(summaries[i], v, maxDecimals = maxDecimals))
     outMat[i, "Feature"] <- res$feature
     outMat[i, "Result"] <- res$result
   }
