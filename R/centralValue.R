@@ -59,13 +59,12 @@ centralValue.logical <- function(v) centralValueB(v)
 
 #logical variables
 centralValueB <- function(v) {
-  vCats <- unique(v)
-  vMode <- vCats[which.max(table(v, exclude=NULL))][1]
+  vMode <- names(which.max(table(v, exclude=NULL)))[1]
   list(feature="Mode", result=paste("\"", vMode, "\"", sep=""))
 }
 
 #character and factor variables
-# #' @importFrom stats median
+##' @importFrom stats na.omit
 centralValueCF <- function(v) {
   centralValueB(na.omit(v))
 }
@@ -77,7 +76,7 @@ centralValueL <- function(v) {
 }
 
 #integer and numeric variables
-# #' @importFrom stats median
+##' @importFrom stats median na.omit
 centralValueIN <- function(v) {
   v <- na.omit(v)
   list(feature="Median", result=median(v))
