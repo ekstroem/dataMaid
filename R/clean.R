@@ -542,7 +542,7 @@ clean <- function(data,
                             integerChecks = integerChecks,
                             logicalChecks = logicalChecks, nMax = maxProbVals, 
                             maxDecimals = maxDecimals, ...)
-          problems <- sapply(checkRes, function(x) x[[1]])
+          problems <- sapply(checkRes, function(x) x[[1]]) #maybe change to index by name?
         }
 
         ## skip non problem-causing variables
@@ -607,7 +607,7 @@ clean <- function(data,
                 ## add check results to file
                 if (doCheck) {
                     if (any(problems)) {
-                        messages <- sapply(checkRes, function(x) x[[2]])[problems]
+                        messages <- sapply(checkRes, function(x) x[[2]])[problems] #maybe index by name instead?
                         for (i in 1:length(messages)) {
                             writer(paste0("- ", pander::pander_return(messages[i])))
                         }

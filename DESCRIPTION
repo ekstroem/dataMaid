@@ -24,6 +24,8 @@ License: GPL-2
 RoxygenNote: 5.0.1.9000
 Collate:
     'leftover_functions_split_us.R'
+    'checkResult.R'
+    'summaryResult.R'
     'classes.R'
     'description.R'
     'smartNum.R'
@@ -35,9 +37,6 @@ Collate:
     'summaryFunction.R'
     'visualFunction.R'
     'checkFunction.R'
-    'allSummaryFunctions.R'
-    'allVisualFunctions.R'
-    'allCheckFunctions.R'
     'isCPR.R'
     'identifyNums.R'
     'visualize.R'
@@ -61,4 +60,7 @@ Collate:
     'isKey.R'
     'isEmpty.R'
     'clean.R'
+    'allSummaryFunctions.R'
+    'allVisualFunctions.R'
+    'allCheckFunctions.R'
     'cleanR-package.R'

@@ -3,14 +3,20 @@
 makeXFunction <- function(fName, description, classes, X) {
   f <- get(fName)
   if (is.null(classes)) {
-    methods <- as.character(methods(fName)) #methods() needs the name in order
+    #browser()
+    theseMethods <- as.character(methods(fName)) #methods() needs the name in order
+    if (length(theseMethods) == 0) {
+      callEnv <- parent.env(as.environment(-1L))
+      theseMethods <- as.character(.S3methods(fName, envir = callEnv))
+    }
     #to work inside the function
+    #print(standardVisual)
     #browser()
     # print(fName)
     #print(methods)
-    if (length(methods) > 0) {
+    if (length(theseMethods) > 0) {
       classes <- sub(paste(fName, ".", sep=""),
-                     "", methods)
+                     "", theseMethods)
     } else classes <- character()
   }
   class(f) <- c(X, "function")
@@ -18,4 +24,27 @@ makeXFunction <- function(fName, description, classes, X) {
   attr(f, "classes") <- classes
   f
 }
+
+
+#foo <- function(x) UseMethod("foo")
+#
+#foo.character <- function(x) x
+#foo.numeric <- function(x) x + 1
+#
+#makeAttributedFunction <- function(fName, classes = NULL) {
+#  if (is.null(classes)) {
+#    browser()
+#    theseMethods <- as.character(methods(fName))
+#    if (length(theseMethods) > 0) {
+#      classes <- sub(paste(fName, ".", sep=""),
+#                     "", theseMethods)
+#    } else classes <- character()
+#  }
+#  f <- get(fName)
+#  attr(f, "classes") <- classes
+#  class(f) <- "attributedFunction"
+#  f
+#}
+#
+#foo <- makeAttributedFunction("foo")
 

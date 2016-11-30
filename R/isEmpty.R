@@ -17,7 +17,7 @@ isEmpty <- function(v) {
   lV <- length(v)
   v <- na.omit(v)
   pctMiss <- round(100*(lV - length(v))/lV, 2)
-  out <- list(problem = FALSE, message = "")
+  out <- list(problem = FALSE, message = "", problemValues = NULL)
   nVals <- length(unique(v))
   if (nVals <= 1) {
     allNA <- nVals == 0
@@ -32,7 +32,7 @@ isEmpty <- function(v) {
                                       "\\% missing observations.")),
                          sep="")
   }
-  out
+  checkResult(out)
 }
 
 

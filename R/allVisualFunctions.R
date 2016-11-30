@@ -6,3 +6,4 @@ allVisualFunctions <- function() {
   allXFunctions("visualFunction")
 }
 
+#allVisualFunctions()

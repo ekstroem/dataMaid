@@ -16,12 +16,12 @@
 #' 
 #' @export
 isKey <- function(v) {
-  out <- list(problem = FALSE, message = "")
+  out <- list(problem = FALSE, message = "", problemValues = NULL)
   if (length(unique(v)) == length(v) & !any(class(v) %in% c("numeric", "integer"))) {
     out$problem <- TRUE
     out$message <- "The variable is a key (distinct values for each observation)." 
   }
-  out
+  checkResult(out)
 }
 
 

@@ -24,14 +24,14 @@
 #' @importFrom stats na.omit
 #' @export
 isCPR <- function(v) { #Note: Implementation works until 2036...
-  out <- list(problem=FALSE, message="")
+  out <- list(problem=FALSE, message="", problemValues = NULL)
   m <- "Warning: The variable seems to consist of Danish civil regristration (CPR) numbers."
   v <- as.character(na.omit(v))
-  if (length(v) == 0) return(out) #if v consists only of NAs
+  if (length(v) == 0) return(checkResult(out)) #if v consists only of NAs
   posCPR <- FALSE
   chars <- nchar(v)
   
-  if (!all(chars %in% c(10,11))) return(out)
+  if (!all(chars %in% c(10,11))) return(checkResult(out))
   
   if (all(chars == 10)) {
     posCPR <- grepl("[0-9]{10}", v)
@@ -40,9 +40,9 @@ isCPR <- function(v) { #Note: Implementation works until 2036...
     posCPR <- grepl("[0-9]{6}-[0-9]{4}", v)
   }
   
-  if (!all(posCPR)) return(out)
+  if (!all(posCPR)) return(checkResult(out))
   
-  if (!all(isDanishDate(substring(v, 1, 6)))) return(out)
+  if (!all(isDanishDate(substring(v, 1, 6)))) return(checkResult(out))
   
   v <- gsub("-", "", v)
   
@@ -58,12 +58,12 @@ isCPR <- function(v) { #Note: Implementation works until 2036...
       (x %*% a) %% 11 == 0 #note: x %*% a = a %*% x for 1 x n vectors in R
     }
     res <- sapply(v[!noCheckPl], check)
-    if (!all(res)) return(out)
-  } else if (!all(digit7[noCheckPl]>3)) return(out)
+    if (!all(res)) return(checkResult(out))
+  } else if (!all(digit7[noCheckPl]>3)) return(checkResult(out))
   
   out$problem <- TRUE
   out$message <- m
-  out
+  checkResult(out)
 }
 
 

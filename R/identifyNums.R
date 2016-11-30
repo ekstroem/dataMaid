@@ -1,9 +1,9 @@
 #' @export
 identifyNums <- function(v, ...) {
-  out <- list(problem = FALSE, message = "")
+  out <- list(problem = FALSE, message = "", problemValues = NULL)
   v <- as.character(na.omit(v))
   if (length(unique(v)) <= 11) {
-    return(out)
+    return(checkResult(out))
   }
   v[v==""] <- "a" #make sure v contains no empty strings
   v <- gsub("^-{1}", "", v) #remove signs (prefixed -)
@@ -12,7 +12,7 @@ identifyNums <- function(v, ...) {
     out$problem <- TRUE
     out$message <- "Note: The variable consists exclusively of numbers and takes a lot of different values. Is it perhaps a misclassified numeric variable?"
   }
-  out
+  checkResult(out)
 }
 
 identifyNums <- checkFunction(identifyNums, "Identify misclassified numeric or integer variables",

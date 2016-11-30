@@ -19,8 +19,9 @@
 countMissing <- function(v, ...) {
   noMissing <- sum(is.na(v))
   percentMissing <- round(100*noMissing/length(v),2)
-  list(feature="Number of missing obs." ,
-       result=paste(noMissing, " (", percentMissing," %)", sep=""))
+  summaryResult(list(feature = "Number of missing obs." ,
+                     result = paste(noMissing, " (", percentMissing," %)", sep=""),
+                     value = noMissing))
 }
 countMissing <- summaryFunction(countMissing, "Compute ratio of missing observations",
                                 c("character", "factor", "integer", "labelled", "logical", 

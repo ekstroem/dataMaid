@@ -19,9 +19,13 @@
 #' @export
 minMax <- function(v, maxDecimals = 2) {
   v <- na.omit(v) #maybe keep Inf's?
-  list(feature="Min. and max.", result=paste(round(min(v), maxDecimals), 
-                                             round(max(v), maxDecimals),
-                                             sep="; "))
+  minV <- min(v)
+  maxV <- max(v)
+  summaryResult(list(feature="Min. and max.", 
+                     result=paste(round(minV, maxDecimals), 
+                                  round(maxV, maxDecimals),
+                                  sep="; "),
+                     value = c(minV, maxV)))
 }
 minMax <- summaryFunction(minMax, "Find minimum and maximum values",
                           c("integer", "numeric"))

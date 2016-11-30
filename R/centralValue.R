@@ -16,6 +16,7 @@
 #' ignored for logical variables.
 #'
 #' @return A list with $feature: [Mode/median] and $result: [the central value of \code{v}].
+#' WRITE SOMETHING ABOUT WHAT HAPPENS WHEN MODE IS NOT UNIQUE.
 #'
 #' @seealso \code{\link{summarize}}
 #'
@@ -61,7 +62,9 @@ centralValue.logical <- function(v, ...) centralValueB(v)
 #logical variables
 centralValueB <- function(v) {
   vMode <- names(which.max(table(v, exclude=NULL)))[1]
-  list(feature="Mode", result=paste("\"", vMode, "\"", sep=""))
+  summaryResult(list(feature="Mode", 
+                     result=paste("\"", vMode, "\"", sep=""), 
+                     value = vMode))
 }
 
 #character and factor variables
@@ -80,7 +83,9 @@ centralValueL <- function(v) {
 ##' @importFrom stats median na.omit
 centralValueIN <- function(v, maxDecimals = 2) {
   v <- na.omit(v)
-  list(feature="Median", result=round(median(v), maxDecimals))
+  val <- median(v)
+  summaryResult(list(feature="Median", 
+                     result=round(val, maxDecimals), value = val))
 }
 
 
