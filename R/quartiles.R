@@ -19,9 +19,11 @@
 #' @export
 quartiles <- function(v, maxDecimals = 2) {
   v <- na.omit(v) #maybe keep Inf's?
-  list(feature="1st and 3rd quartiles", result = paste(round(quantile(v, c(0.25, 0.75)), 
-                                                             maxDecimals), 
-                                                       collapse="; "))
+  quants <- quantile(v, c(0.25, 0.75))
+  summaryResult(list(feature="1st and 3rd quartiles", 
+                     result = paste(round(quants, maxDecimals), 
+                                    collapse="; "),
+                     value = as.numeric(quants)))
 }
 quartiles <- summaryFunction(quartiles, "Compute 1st and 3rd quartiles",
                              classes = c("integer", "numeric"))

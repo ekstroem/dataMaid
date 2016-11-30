@@ -15,6 +15,7 @@ values.}
 }
 \value{
 A list with $feature: [Mode/median] and $result: [the central value of \code{v}].
+WRITE SOMETHING ABOUT WHAT HAPPENS WHEN MODE IS NOT UNIQUE.
 }
 \description{
 A description type function to be called from \code{\link{summarize}}, which returns

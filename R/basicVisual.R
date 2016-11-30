@@ -29,7 +29,6 @@
 #' @importFrom graphics plot hist
 #' @export
 basicVisual <- function(v, vnam, doEval = TRUE) UseMethod("basicVisual")
-basicVisual <- visualFunction(basicVisual, "Histograms and barplots using graphics")
 
 #assign methods to generic standardVisual function
 
@@ -50,6 +49,10 @@ basicVisual.integer <- function(v, vnam, doEval = TRUE) basicVisualIN(v, vnam, d
 
 #' @export
 basicVisual.logical <- function(v, vnam, doEval = TRUE) basicVisualCFLB(v, vnam, doEval=doEval)
+
+
+#Make it a visualFunction
+basicVisual <- visualFunction(basicVisual, "Histograms and barplots using graphics")
 
 
 

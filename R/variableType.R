@@ -28,8 +28,10 @@
 #' 
 #' @export
 variableType <- function(v, ...) {
-  list(feature="Variable type", result = oClass(v)[1])
+  vClass <- oClass(v)[1]
+  summaryResult(list(feature="Variable type", result = vClass, value = vClass))
 }
+
 variableType <- summaryFunction(variableType, "Data class of variable",
                                 c("character", "factor", "integer", "labelled", "logical", 
                                   "numeric"))

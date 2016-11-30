@@ -108,7 +108,8 @@ messageGenerator <- function(problemStatus, message = NULL, nMax = Inf) {
   }
 
   ifelse(problemStatus$problem,
-         paste(messages[[check]], printProblemValues(problemStatus$problemValues, nMax)),
+         paste(paste(messages[[check]], printProblemValues(problemStatus$problemValues, nMax)), 
+               ".", sep = ""),
          "")
 }
 

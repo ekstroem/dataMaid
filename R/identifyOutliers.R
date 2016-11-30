@@ -88,5 +88,5 @@ identifyOutliersNI <- function(v, nMax, maxDecimals) {
   outMessage <- messageGenerator(list(problem=problem,
                                       problemValues=problemValues),
                                  nMax = nMax)
-  list(problem=problem, message=outMessage)
+  checkResult(list(problem = problem, message = outMessage, problemValues = problemValues))
 }

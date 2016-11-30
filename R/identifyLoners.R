@@ -60,7 +60,7 @@ identifyLonersF <- function(v, nMax) {
   outMessage <- messageGenerator(list(problem=problem,
                                       problemValues=problemValues),
                                  nMax = nMax)
-  list(problem=problem, message=outMessage)
+  checkResult(list(problem = problem, message = outMessage, problemValues = problemValues))
 }
 
 #character variables

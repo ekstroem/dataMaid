@@ -11,3 +11,4 @@ allXFunctions <- function(X) {
   class(out) <- c("functionSummary", "list")
   out
 }
+

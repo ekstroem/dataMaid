@@ -51,7 +51,9 @@ uniqueValues <- summaryFunction(uniqueValues, "Count number of unique values")
 #methods for each variable type
 uniqueValuesCFLBI <- function(v) {
   noUnique <- length(unique(na.omit(v)))
-  list(feature="Number of unique values", result = noUnique)
+  summaryResult(list(feature="Number of unique values", 
+                     result = noUnique,
+                     value = noUnique))
 }
 
 uniqueValuesN <- function(v) {

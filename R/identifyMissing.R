@@ -194,7 +194,7 @@ identifyMissingCF <- function(v, nMax) {
 
     outMessage <- messageGenerator(list(problem = problem, problemValues = problemValues),
                                    nMax = nMax)
-    list(problem = problem, message = outMessage)
+    checkResult(list(problem = problem, message = outMessage, problemValues = problemValues))
 }
 
 #labbeled variables
@@ -222,7 +222,7 @@ identifyMissingNI <- function(v, nMax, maxDecimals) {
   }
   outMessage <- messageGenerator(list(problem = problem, problemValues = problemValues),
                                  nMax = nMax)
-  list(problem = problem, message = outMessage)
+  checkResult(list(problem = problem, message = outMessage, problemValues = problemValues))
 }
 
 #logical (B = boolean) variables
@@ -231,5 +231,5 @@ identifyMissingNI <- function(v, nMax, maxDecimals) {
 #Note: this function catches variables that only consist of NA's, thus it is
 #safe to omit NAs in the other functions, without risking obtaining an empty vector
 identifyMissingB <- function(v, nMax) {
-  list(problem = FALSE, message = "")
+  checkResult(list(problem = FALSE, message = "", problemValues = NULL))
 }
