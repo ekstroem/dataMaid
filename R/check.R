@@ -81,7 +81,9 @@ defaultCharacterChecks <- function() c("identifyMissing", "identifyWhitespace", 
                                        "identifyCaseIssues", "identifyNums")
 #' @export
 check.character <- function(v, nMax =  Inf, characterChecks=defaultCharacterChecks(), ...) {
-  lapply(characterChecks, function(x) eval(call(x, v=v, nMax = nMax)))
+  out <- lapply(characterChecks, function(x) eval(call(x, v=v, nMax = nMax)))
+  names(out) <- characterChecks
+  out
 }
 
 
@@ -90,7 +92,9 @@ defaultFactorChecks <- function() c("identifyMissing", "identifyWhitespace", "id
                                        "identifyCaseIssues", "identifyNums")
 #' @export
 check.factor <- function(v, nMax =  Inf, factorChecks = defaultFactorChecks(), ...) {
-  lapply(factorChecks, function(x) eval(call(x, v=v, nMax = nMax)))
+  out <- lapply(factorChecks, function(x) eval(call(x, v=v, nMax = nMax)))
+  names(out) <- factorChecks
+  out
 }
 
 
@@ -99,7 +103,9 @@ defaultLabelledChecks <- function() c("identifyMissing", "identifyWhitespace")
 
 #' @export
 check.labelled <- function(v, nMax =  Inf, labelledChecks = defaultLabelledChecks(), ...) {
-  lapply(labelledChecks, function(x) eval(call(x, v=v, nMax = nMax)))
+  out <- lapply(labelledChecks, function(x) eval(call(x, v=v, nMax = nMax)))
+  names(out) <- labelledChecks
+  out
 }
 
 
@@ -109,8 +115,10 @@ defaultNumericChecks <- function() c("identifyMissing", "identifyOutliers")
 #' @export
 check.numeric <- function(v, nMax =  Inf, maxDecimals = 2, 
                           numericChecks = defaultNumericChecks(), ...) {
-  lapply(numericChecks, function(x) eval(call(x, v=v, nMax = nMax, 
+  out <- lapply(numericChecks, function(x) eval(call(x, v=v, nMax = nMax, 
                                               maxDecimals = maxDecimals)))
+  names(out) <- numericChecks
+  out
 }
 
 
@@ -120,8 +128,10 @@ defaultIntegerChecks <- function() c("identifyMissing", "identifyOutliers")
 #' @export
 check.integer <- function(v, nMax =  Inf, maxDecimals = 2, 
                           integerChecks = defaultIntegerChecks(), ...) {
-  lapply(integerChecks, function(x) eval(call(x, v=v, nMax = nMax, 
+  out <- lapply(integerChecks, function(x) eval(call(x, v=v, nMax = nMax, 
                                               maxDecimals = maxDecimals)))
+  names(out) <- integerChecks
+  out
 }
 
 
@@ -133,8 +143,10 @@ defaultLogicalChecks <- function() NULL #NOTE: we don't actually do any logical 
 #' @export
 check.logical <- function(v, nMax =  Inf, logicalChecks = defaultLogicalChecks(), ...) {
   if (! is.null(logicalChecks)) {
-    return(lapply(logicalChecks, function(x) eval(call(x, v=v, nMax = nMax))))
-  } else return(list(list(problem = FALSE, message="")))
+    out <- lapply(logicalChecks, function(x) eval(call(x, v=v, nMax = nMax)))
+    names(out) <- logicalChecks
+    return(out)
+  } else return(list(NoChecksPerformed=list(problem = FALSE, message="")))
 }
 
 

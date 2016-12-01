@@ -535,6 +535,7 @@ clean <- function(data,
 
         ## Make checks
         if (doCheck && !any(preCheckProblems)) {
+          #if (vnam == "numOutlierVar") browser()
           checkRes <- check(v, characterChecks = characterChecks,
                             factorChecks = factorChecks,
                             labelledChecks = labelledChecks,
@@ -565,14 +566,14 @@ clean <- function(data,
                 writer(paste("* ", preCheckMessages[preCheckProblems], "\n", collapse=" \n ", sep=""))
             } else {
 
-                ## write extra messages if any
-                if (extraMessages$do) writer(paste("* ", extraMessages$messages, "\n", collapse=" \n ",
-                                                   sep=""))
+              ## write extra messages if any
+              if (extraMessages$do) writer(paste("* ", extraMessages$messages, "\n", collapse=" \n ",
+                                                 sep=""))
 
 
 
-                ## make Summary table
-                if (doSummarize) sumTable <- pander::pander_return(summarize(v, 
+              ## make Summary table
+              if (doSummarize) sumTable <- pander::pander_return(summarize(v, 
                                                                  characterSummaries = characterSummaries,
                                                                  factorSummaries = factorSummaries,
                                                                  labelledSummaries = labelledSummaries,
@@ -584,35 +585,40 @@ clean <- function(data,
               #if (doSummarize) sumTable <- pandoc.table.return(summarize(v, ...))
                                         #exactly the same result as with pander_return()
 
-                ## Label information
-                ## Right now we are not doing anything besides wirint the label above
+              ## Label information
+              ## Right now we are not doing anything besides wirint the label above
 
 
 
-            ## make Visualization
-            if (doVisualize) visual <- visualize(v, vnam, doEval=FALSE, allVisuals = allVisuals, ...)
-
-                ## Chunkname should avoid spaces and periods
-                chunk_name <- paste0("Var-", idx, "-", gsub("[_:. ]", "-", vnam))
-
-                ## add visualization + summary results to output file
-                if (twoCol) {
-                    twoCols.wrapper(sumTable, visual, label=chunk_name)
-                } else {
-                    if (doSummarize) writer(sumTable)
-                    if (doVisualize) fig.wrapper(visual, label=chunk_name)
-                    writer("\n")
+              ## make Visualization
+              if (doVisualize) visual <- visualize(v, vnam, doEval=FALSE, allVisuals = allVisuals, ...)
+  
+              ## Chunkname should avoid spaces and periods
+              chunk_name <- paste0("Var-", idx, "-", gsub("[_:. ]", "-", vnam))
+  
+              ## add visualization + summary results to output file
+              if (twoCol) {
+                twoCols.wrapper(sumTable, visual, label=chunk_name)
+              } else {
+                if (doSummarize) writer(sumTable)
+                if (doVisualize) fig.wrapper(visual, label=chunk_name)
+                writer("\n")
+              }
+  
+              ## add check results to file
+              if (doCheck) {
+                if (any(problems)) {
+                  #browser()
+                  messages <- sapply(checkRes, function(x) x[[2]])[problems] #maybe index by name instead?
+                  for (i in 1:length(messages)) {
+                    writer(paste0("- ", messages[i], " \n"))
+                    
+                    ###Why did we use to have this line here? Do we need pander stuff ever?###
+                    #writer(paste0("- ", pander::pander_return(messages[i])))
+                    ##########################################################################
+                  }
                 }
-
-                ## add check results to file
-                if (doCheck) {
-                    if (any(problems)) {
-                        messages <- sapply(checkRes, function(x) x[[2]])[problems] #maybe index by name instead?
-                        for (i in 1:length(messages)) {
-                            writer(paste0("- ", pander::pander_return(messages[i])))
-                        }
-                    }
-                }
+              }
             }
 
             writer("\n")
