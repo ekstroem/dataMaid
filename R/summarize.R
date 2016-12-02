@@ -289,8 +289,7 @@ defaultDateSummaries <- function() c("variableType", "countMissing", "uniqueValu
 #' defaultDateDescriptions()
 #'
 #' @export
-defaultDateDescriptions <- function() c("centralValue")
-# defaultDateDescriptions <- function() c("minMax")
+defaultDateDescriptions <- function() c("centralValue", "minMax")
 
 
 
@@ -361,10 +360,11 @@ summarize.logical <- function(v, descriptive = TRUE,
 #' @export
 summarize.Date <- function(v, descriptive = TRUE,
                            dateSummaries = defaultDateSummaries(),
-                           dateDescriptions = defaultDateDescriptions(), ...) {
+                           dateDescriptions = defaultDateDescriptions(),
+                           maxDecimals = 0, ...) {
     dateCalls <- if (descriptive) c(dateSummaries, dateDescriptions)
                  else dateSummaries
-    sumMatGenerator(v, dateCalls)
+    sumMatGenerator(v, dateCalls, maxDecimals = maxDecimals)
 }
 
 
