@@ -6,6 +6,13 @@
 \usage{
 checkFunction(f, description, classes = NULL)
 }
+\arguments{
+\item{f}{XXX function}
+
+\item{description}{XXX}
+
+\item{classes}{XXX}
+}
 \description{
 document me!
 }

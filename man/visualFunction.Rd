@@ -12,7 +12,7 @@ follow the structure outlined in details below.}
 
 \item{description}{A character string with a (brief!) description of \code{f}.}
 
-\item{classes}{A vector of classes that \code{f} is designed to be called on. If NULL (the default) 
+\item{classes}{A vector of classes that \code{f} is designed to be called on. If NULL (the default)
 one of two standard solutions are tried: If \code{f} is a S3 generic function, the \code{classes}
 argument will automatically be filled out by checking what methods are available in the global
 environment. If \code{f} is not a S3 generic function, the \code{classes} attribute is set to an
