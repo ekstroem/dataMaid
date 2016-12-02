@@ -7,10 +7,10 @@
 #'
 #' @param v A variable (vector).
 #'
-#' @param ... Extra arguments to be passed to class-specific functions. These incluse 
+#' @param ... Extra arguments to be passed to class-specific functions. These incluse
 #' \code{maxDecimals} (default is 2) which controls the rounding of integer and numeric
 #' values.
-#' 
+#'
 #' @details Note that NA, NaN and Inf values are ignored for numeric and integer variables, while
 #' only NA values are ignored for factor, character and labelled variables. No values are
 #' ignored for logical variables.
@@ -52,6 +52,9 @@ centralValue.integer <- function(v, ...) centralValueIN(v, ...)
 #' @export
 centralValue.logical <- function(v, ...) centralValueB(v)
 
+#' @export
+centralValue.Date <- function(v, ...) centralValueCF(v)
+
 
 
 ##########################################Not exported below#########################################
@@ -62,8 +65,8 @@ centralValue.logical <- function(v, ...) centralValueB(v)
 #logical variables
 centralValueB <- function(v) {
   vMode <- names(which.max(table(v, exclude=NULL)))[1]
-  summaryResult(list(feature="Mode", 
-                     result=paste("\"", vMode, "\"", sep=""), 
+  summaryResult(list(feature="Mode",
+                     result=paste("\"", vMode, "\"", sep=""),
                      value = vMode))
 }
 
@@ -84,7 +87,7 @@ centralValueL <- function(v) {
 centralValueIN <- function(v, maxDecimals = 2) {
   v <- na.omit(v)
   val <- median(v)
-  summaryResult(list(feature="Median", 
+  summaryResult(list(feature="Median",
                      result=round(val, maxDecimals), value = val))
 }
 

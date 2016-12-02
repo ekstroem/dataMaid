@@ -113,9 +113,9 @@ check.labelled <- function(v, nMax =  Inf, labelledChecks = defaultLabelledCheck
 defaultNumericChecks <- function() c("identifyMissing", "identifyOutliers")
 
 #' @export
-check.numeric <- function(v, nMax =  Inf, maxDecimals = 2, 
+check.numeric <- function(v, nMax =  Inf, maxDecimals = 2,
                           numericChecks = defaultNumericChecks(), ...) {
-  out <- lapply(numericChecks, function(x) eval(call(x, v=v, nMax = nMax, 
+  out <- lapply(numericChecks, function(x) eval(call(x, v=v, nMax = nMax,
                                               maxDecimals = maxDecimals)))
   names(out) <- numericChecks
   out
@@ -126,9 +126,9 @@ check.numeric <- function(v, nMax =  Inf, maxDecimals = 2,
 defaultIntegerChecks <- function() c("identifyMissing", "identifyOutliers")
 
 #' @export
-check.integer <- function(v, nMax =  Inf, maxDecimals = 2, 
+check.integer <- function(v, nMax =  Inf, maxDecimals = 2,
                           integerChecks = defaultIntegerChecks(), ...) {
-  out <- lapply(integerChecks, function(x) eval(call(x, v=v, nMax = nMax, 
+  out <- lapply(integerChecks, function(x) eval(call(x, v=v, nMax = nMax,
                                               maxDecimals = maxDecimals)))
   names(out) <- integerChecks
   out
@@ -150,6 +150,17 @@ check.logical <- function(v, nMax =  Inf, logicalChecks = defaultLogicalChecks()
 }
 
 
+#' @export
+defaultDateChecks <- function() NULL #NOTE: we don't actually do any logical checks...
+
+#' @export
+check.Date <- function(v, nMax =  Inf, DateChecks = defaultDateChecks(), ...) {
+  if (! is.null(DateChecks)) {
+    out <- lapply(DateChecks, function(x) eval(call(x, v=v, nMax = nMax)))
+    names(out) <- DateChecks
+    return(out)
+  } else return(list(NoChecksPerformed=list(problem = FALSE, message="")))
+}
 
 
 

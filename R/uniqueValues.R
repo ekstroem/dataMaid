@@ -4,7 +4,7 @@
 #' number of unique (excluding NA) values in a variable.
 #'
 #' @param v A variable (vector).
-#' 
+#'
 #' @param ... Not in use.
 #'
 #' @return A list with $feature: "No. unique values" and
@@ -39,6 +39,9 @@ uniqueValues.integer <- function(v, ...) uniqueValuesCFLBI(v)
 #' @export
 uniqueValues.logical <- function(v, ...) uniqueValuesCFLBI(v)
 
+#' @export
+uniqueValues.Date <- function(v, ...) uniqueValuesCFLBI(v)
+
 
 #Make it a summaryFunction
 #' @export
@@ -51,7 +54,7 @@ uniqueValues <- summaryFunction(uniqueValues, "Count number of unique values")
 #methods for each variable type
 uniqueValuesCFLBI <- function(v) {
   noUnique <- length(unique(na.omit(v)))
-  summaryResult(list(feature="Number of unique values", 
+  summaryResult(list(feature="Number of unique values",
                      result = noUnique,
                      value = noUnique))
 }

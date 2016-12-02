@@ -12,7 +12,7 @@ identifyOutliers(v, nMax = Inf, maxDecimals = 2)
 \item{nMax}{The maximum number of problematic values to report. Default is \code{Inf}, in which case
 all problematic values are included in the outputtet message.}
 
-\item{maxDecimals}{Number of decimals used when printing numerical values in the data 
+\item{maxDecimals}{Number of decimals used when printing numerical values in the data
 summary. If \code{Inf}, no rounding is performed.}
 }
 \value{

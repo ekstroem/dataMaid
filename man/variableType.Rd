@@ -12,7 +12,7 @@ variableType(v, ...)
 \item{...}{Not in use.}
 }
 \value{
-A list with $feature: "Variable type" and 
+A list with $feature: "Variable type" and
 $result: [the (original) class of the variable].
 }
 \description{
@@ -25,13 +25,13 @@ smartNum.
    varX <- c(rep(c(1,2,3), each=10))
    class(varX)
    variableType(varX)
-   
+
  #For smartNum variables:
    smartX <- smartNum(varX)
    class(smartX)
    variableType(smartX)
 
- #Something with multiple classes, like ordered factor... 
+ #Something with multiple classes, like ordered factor...
 
 }
 \seealso{

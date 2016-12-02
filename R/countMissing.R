@@ -4,7 +4,7 @@
 #' number of missing (NA) values in a variable.
 #'
 #' @param v A variable (vector).
-#' 
+#'
 #' @param ... Not in use.
 #'
 #' @return A list with $feature: "No. missing obs." and
@@ -24,5 +24,5 @@ countMissing <- function(v, ...) {
                      value = noMissing))
 }
 countMissing <- summaryFunction(countMissing, "Compute ratio of missing observations",
-                                c("character", "factor", "integer", "labelled", "logical", 
-                                  "numeric"))
+                                c("character", "factor", "integer", "labelled", "logical",
+                                  "numeric", "Date"))

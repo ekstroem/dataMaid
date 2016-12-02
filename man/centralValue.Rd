@@ -9,7 +9,7 @@ centralValue(v, ...)
 \arguments{
 \item{v}{A variable (vector).}
 
-\item{...}{Extra arguments to be passed to class-specific functions. These incluse 
+\item{...}{Extra arguments to be passed to class-specific functions. These incluse
 \code{maxDecimals} (default is 2) which controls the rounding of integer and numeric
 values.}
 }

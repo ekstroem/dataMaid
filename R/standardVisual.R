@@ -50,6 +50,10 @@ standardVisual.integer <- function(v, vnam, doEval = TRUE) standardVisualIN(v, v
 standardVisual.logical <- function(v, vnam, doEval = TRUE) standardVisualCFLB(v, vnam, doEval=doEval)
 
 
+#' @export
+standardVisual.Date <- function(v, vnam, doEval = TRUE) standardVisualD(v, vnam, doEval=doEval)
+
+
 
 
 
@@ -78,4 +82,17 @@ standardVisualIN <- function(v, vnam, doEval = TRUE) {
 } #fix such that no stat_bin()-message is produced, it's annoying. And also a clever
 #choice of binwidth, how does it work in hist()?
 
+
+
+#ggplot(dates, aes(x=Date, y = ..count.. ))  + geom <- bar()
+# Dates
+standardVisualD <- function(v, vnam, doEval = TRUE) {
+      thisCall <- call("qplot", x=na.omit(v), geom="histogram", xlab="",
+                   main=vnam, bins=20)
+
+#  thisCall <- call("ggplot", data=na.omit(v), aes=geom="bar", xlab="", main=vnam)
+  if (doEval) {
+    return(eval(thisCall))
+  } else return(deparse(thisCall))
+}
 

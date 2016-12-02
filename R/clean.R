@@ -48,6 +48,7 @@
 #' @param numericSummaries STUFF
 #' @param integerSummaries STUFF
 #' @param logicalSummaries STUFF
+#' @param dateSummaries STUFF
 #' @param allSummaries Vector of function names that should be used as summary-functions for all variable types.
 #' See ???? for more details OR SOMETHING? Note that this option overwrites the options charachterSummaries,
 #' factorSummaries, etc.
@@ -67,7 +68,7 @@
 #' the R markdown file that is output. This is useful for larger dataset to prevent memory problems.
 #' @param maxProbVals Maximum number of unique values printed from check-functions (integer > 0).
 #' Defaults to \code{Inf}, which means that all values are printed.
-#' @param maxDecimals Number of decimals used when printing numerical values in the data 
+#' @param maxDecimals Number of decimals used when printing numerical values in the data
 #' summary. If \code{Inf}, no rounding is performed.
 #' @param \dots other arguments that are passed on the to precheck, checking, summary and visualization functions
 #' @return The function does not return anything. It's side effect (the production of the Rmd file summary)
@@ -123,6 +124,7 @@ clean <- function(data,
                   numericChecks = defaultNumericChecks(),
                   integerChecks = defaultIntegerChecks(),
                   logicalChecks = defaultLogicalChecks(),
+                  dateChecks = defaultDateChecks(),
                   allChecks = NULL,
                   characterSummaries = defaultCharacterSummaries(),
                   factorSummaries = defaultFactorSummaries(),
@@ -130,6 +132,7 @@ clean <- function(data,
                   numericSummaries = defaultNumericSummaries(),
                   integerSummaries = defaultIntegerSummaries(),
                   logicalSummaries = defaultLogicalSummaries(),
+                  dateSummaries = defaultDateSummaries(),
                   allSummaries = NULL,
                   allVisuals = "standardVisual",
                   garbageCollection=TRUE,
@@ -499,7 +502,7 @@ clean <- function(data,
                                emphasize.rownames=FALSE)) #allows for centering in this table only
     writer("\n")
     if (maxDecimals != Inf) {
-      writer(paste("Please note that all numerical values in the following have been rounded to", 
+      writer(paste("Please note that all numerical values in the following have been rounded to",
                    maxDecimals, "decimals."))
       writer("\n")
     }
@@ -541,14 +544,15 @@ clean <- function(data,
                             labelledChecks = labelledChecks,
                             numericChecks = numericChecks,
                             integerChecks = integerChecks,
-                            logicalChecks = logicalChecks, nMax = maxProbVals, 
+                            logicalChecks = logicalChecks,
+                            dateChecks = dateChecks,
+                            nMax = maxProbVals,
                             maxDecimals = maxDecimals, ...)
           problems <- sapply(checkRes, function(x) x[[1]]) #maybe change to index by name?
         }
 
         ## skip non problem-causing variables
         if (onlyProblematic && (!any(preCheckProblems) && !any(problems))) skip <- TRUE
-
 
         ## Now print out the information if the variable isn't skipped
         if (!skip) {
@@ -570,17 +574,16 @@ clean <- function(data,
               if (extraMessages$do) writer(paste("* ", extraMessages$messages, "\n", collapse=" \n ",
                                                  sep=""))
 
-
-
               ## make Summary table
-              if (doSummarize) sumTable <- pander::pander_return(summarize(v, 
+              if (doSummarize) sumTable <- pander::pander_return(summarize(v,
                                                                  characterSummaries = characterSummaries,
                                                                  factorSummaries = factorSummaries,
                                                                  labelledSummaries = labelledSummaries,
                                                                  numericSummaries = numericSummaries,
                                                                  integerSummaries = integerSummaries,
                                                                  logicalSummaries = logicalSummaries,
-                                                                 maxDecimals = maxDecimals, ...), 
+                                                                 dateSummaries = dateSummaries,
+                                                                 maxDecimals = maxDecimals, ...),
                                                                  justify="lr")
               #if (doSummarize) sumTable <- pandoc.table.return(summarize(v, ...))
                                         #exactly the same result as with pander_return()
@@ -592,10 +595,10 @@ clean <- function(data,
 
               ## make Visualization
               if (doVisualize) visual <- visualize(v, vnam, doEval=FALSE, allVisuals = allVisuals, ...)
-  
+
               ## Chunkname should avoid spaces and periods
               chunk_name <- paste0("Var-", idx, "-", gsub("[_:. ]", "-", vnam))
-  
+
               ## add visualization + summary results to output file
               if (twoCol) {
                 twoCols.wrapper(sumTable, visual, label=chunk_name)
@@ -604,7 +607,7 @@ clean <- function(data,
                 if (doVisualize) fig.wrapper(visual, label=chunk_name)
                 writer("\n")
               }
-  
+
               ## add check results to file
               if (doCheck) {
                 if (any(problems)) {
@@ -612,7 +615,7 @@ clean <- function(data,
                   messages <- sapply(checkRes, function(x) x[[2]])[problems] #maybe index by name instead?
                   for (i in 1:length(messages)) {
                     writer(paste0("- ", messages[i], " \n"))
-                    
+
                     ###Why did we use to have this line here? Do we need pander stuff ever?###
                     #writer(paste0("- ", pander::pander_return(messages[i])))
                     ##########################################################################
