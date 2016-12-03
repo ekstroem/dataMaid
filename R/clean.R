@@ -481,10 +481,10 @@ clean <- function(data,
     # else bChecks <- eval(formals(check.logical)$logicalChecks)
 
      everyCheck <- union(characterChecks, c(factorChecks, labelledChecks, numericChecks,
-                                           integerChecks, logicalChecks))
-     checkMat <- matrix("", length(everyCheck), 6, #6: number of different variable types
+                                           integerChecks, logicalChecks, dateChecks))
+     checkMat <- matrix("", length(everyCheck), 7, #6: number of different variable types
                         dimnames=list(everyCheck, c("character", "factor", "labelled",
-                                                   "numeric", "integer", "logical")))
+                                                   "numeric", "integer", "logical", "Date")))
      y <- "$\\times$"
      checkMat[characterChecks, "character"] <- y
      checkMat[factorChecks, "factor"] <- y
@@ -492,13 +492,14 @@ clean <- function(data,
      checkMat[numericChecks, "numeric"] <- y
      checkMat[integerChecks, "integer"] <- y
      checkMat[logicalChecks, "logical"] <- y
+     checkMat[dateChecks, "Date"] <- y
 
     rownames(checkMat) <- sapply(rownames(checkMat), function(x) description(get(x)))
 
 
     writer("### Checks performed")
     writer("The following variable checks were performed, depending on the data type of each variable:")
-    writer(pander::pandoc.table.return(checkMat, justify="lcccccc",
+    writer(pander::pandoc.table.return(checkMat, justify="lccccccc",
                                emphasize.rownames=FALSE)) #allows for centering in this table only
     writer("\n")
     if (maxDecimals != Inf) {
