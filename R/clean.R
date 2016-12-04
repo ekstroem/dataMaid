@@ -18,6 +18,7 @@
 #' @param ordering Choose the ordering of the variables in the data presentation. The options
 #' are "asIs" (ordering as in the dataset) and "alphabetical" (alphabetical order).
 #' @param onlyProblematic A logical. Set to TRUE if only the potentially problematic variables should be listed.
+#' @param labelled_as A string explaining the way to handle labelled vectors. Possibilities are either "factor" (the default), "NA" (all missing are converted to NA) or "zap" (remove all labels).
 #' @param mode Vector of tasks to perform among the three categories "summarize", "visualize" and "check".
 #' Note that... SOMETHING ABOUT HOW THE FUNCTIONS CALLED IN EACH PART ARE CONTROLLED.
 #' @param characterChecks a list of error-checking functions to apply to character vectors
@@ -110,6 +111,7 @@ clean <- function(data,
                       #note: output cannot just be markdown. Either it's pdf-markdown or html-markdown.
                       #what files are produced is controlled using render.
                   useVar=NULL, ordering=c("asIs", "alphabetical"), onlyProblematic=FALSE,
+                  labelled_as=c("factor", "NA", "zap"),
                   mode=c("summarize", "visualize", "check"),
                   smartNum=TRUE, preChecks=c("isKey", "isEmpty"),
                   file=NULL, replace=FALSE, vol="",
@@ -165,6 +167,7 @@ clean <- function(data,
     ##Match arguments
     ordering <- match.arg(ordering)
     output <- match.arg(output)
+    labelled_as <- match.arg(labelled_as)
       #quiet <- match.arg(quiet)
 
     ## Extract the dataframe name

@@ -78,8 +78,9 @@ centralValueCF <- function(v) {
 
 #labelled variables
 centralValueL <- function(v) {
-  #PLACE HOLDER
-  list(feature="Mode", result="?labelled?")
+    ##PLACE HOLDER
+    centralValueB(na.omit(v))
+    ## list(feature="Mode", result="?labelled?")
 }
 
 #integer and numeric variables

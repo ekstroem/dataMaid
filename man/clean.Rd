@@ -6,10 +6,11 @@
 \usage{
 clean(data, output = c("pdf", "html", "screen"), render = TRUE,
   useVar = NULL, ordering = c("asIs", "alphabetical"),
-  onlyProblematic = FALSE, mode = c("summarize", "visualize", "check"),
-  smartNum = TRUE, preChecks = c("isKey", "isEmpty"), file = NULL,
-  replace = FALSE, vol = "", standAlone = TRUE, twoCol = TRUE,
-  quiet = TRUE, openResult = TRUE, nagUser = TRUE, checkDetails = FALSE,
+  onlyProblematic = FALSE, labelled_as = c("factor", "NA", "zap"),
+  mode = c("summarize", "visualize", "check"), smartNum = TRUE,
+  preChecks = c("isKey", "isEmpty"), file = NULL, replace = FALSE,
+  vol = "", standAlone = TRUE, twoCol = TRUE, quiet = TRUE,
+  openResult = TRUE, nagUser = TRUE, checkDetails = FALSE,
   characterChecks = defaultCharacterChecks(),
   factorChecks = defaultFactorChecks(),
   labelledChecks = defaultLabelledChecks(),
@@ -47,6 +48,8 @@ also part of useVar are checked.}
 are "asIs" (ordering as in the dataset) and "alphabetical" (alphabetical order).}
 
 \item{onlyProblematic}{A logical. Set to TRUE if only the potentially problematic variables should be listed.}
+
+\item{labelled_as}{A string explaining the way to handle labelled vectors. Possibilities are either "factor" (the default), "NA" (all missing are converted to NA) or "zap" (remove all labels).}
 
 \item{mode}{Vector of tasks to perform among the three categories "summarize", "visualize" and "check".
 Note that... SOMETHING ABOUT HOW THE FUNCTIONS CALLED IN EACH PART ARE CONTROLLED.}

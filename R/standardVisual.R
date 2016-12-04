@@ -38,7 +38,7 @@ standardVisual.character <- function(v, vnam, doEval = TRUE) standardVisualCFLB(
 standardVisual.factor <- function(v, vnam, doEval = TRUE) standardVisualCFLB(v, vnam, doEval=doEval)
 
 #' @export
-standardVisual.labelled <- function(v, vnam, doEval = TRUE) standardVisualCFLB(v, vnam, doEval=doEval)
+standardVisual.labelled <- function(v, vnam, doEval = TRUE) standardVisualCFLB(haven::as_factor(v), vnam, doEval=doEval)
 
 #' @export
 standardVisual.numeric <- function(v, vnam, doEval = TRUE) standardVisualIN(v, vnam, doEval=doEval)
