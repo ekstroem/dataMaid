@@ -206,7 +206,7 @@ identifyMissingL <- function(v, nMax) {
 
 #numerical and integer variables
 identifyMissingNI <- function(v, nMax, maxDecimals) {
-  v <- na.omit(v)
+  v <- v[!is.na(v) | is.nan(v)]
   problem <- FALSE
   problemValues <- NULL
   finiteInd <- is.finite(v)
