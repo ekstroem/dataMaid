@@ -9,8 +9,6 @@ check(v, nMax = Inf, ...)
 \arguments{
 \item{v}{the vector to be checked}
 
-\item{...}{other arguments that are passed on the to precheck, checking, summary and visualization functions}
-
 \item{\dots}{other arguments that are passed on the to checking functions}
 }
 \value{
@@ -34,11 +32,11 @@ check(x)
 y <- c(rnorm(100), rep(99, 10))
 
 }
-\author{
-Anne H. Petersen \email{ahpe@sund.ku.dk} and Claus Thorn Ekstrom \email{ekstrom@sund.ku.dk}
-}
 \seealso{
 \code{\link{clean}}
+}
+\author{
+Anne H. Petersen \email{ahpe@sund.ku.dk} and Claus Thorn Ekstrom \email{ekstrom@sund.ku.dk}
 }
 \keyword{misc}
 

@@ -38,7 +38,7 @@ standardVisual.character <- function(v, vnam, doEval = TRUE) standardVisualCFLB(
 standardVisual.factor <- function(v, vnam, doEval = TRUE) standardVisualCFLB(v, vnam, doEval=doEval)
 
 #' @export
-standardVisual.labelled <- function(v, vnam, doEval = TRUE) standardVisualCFLB(v, vnam, doEval=doEval)
+standardVisual.labelled <- function(v, vnam, doEval = TRUE) standardVisualCFLB(haven::as_factor(v), vnam, doEval=doEval)
 
 #' @export
 standardVisual.numeric <- function(v, vnam, doEval = TRUE) standardVisualIN(v, vnam, doEval=doEval)
@@ -48,6 +48,10 @@ standardVisual.integer <- function(v, vnam, doEval = TRUE) standardVisualIN(v, v
 
 #' @export
 standardVisual.logical <- function(v, vnam, doEval = TRUE) standardVisualCFLB(v, vnam, doEval=doEval)
+
+
+#' @export
+standardVisual.Date <- function(v, vnam, doEval = TRUE) standardVisualD(v, vnam, doEval=doEval)
 
 
 
@@ -78,4 +82,17 @@ standardVisualIN <- function(v, vnam, doEval = TRUE) {
 } #fix such that no stat_bin()-message is produced, it's annoying. And also a clever
 #choice of binwidth, how does it work in hist()?
 
+
+
+#ggplot(dates, aes(x=Date, y = ..count.. ))  + geom <- bar()
+# Dates
+standardVisualD <- function(v, vnam, doEval = TRUE) {
+      thisCall <- call("qplot", x=na.omit(v), geom="histogram", xlab="",
+                   main=vnam, bins=20)
+
+#  thisCall <- call("ggplot", data=na.omit(v), aes=geom="bar", xlab="", main=vnam)
+  if (doEval) {
+    return(eval(thisCall))
+  } else return(deparse(thisCall))
+}
 

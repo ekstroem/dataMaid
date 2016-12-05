@@ -6,22 +6,24 @@
 \usage{
 clean(data, output = c("pdf", "html", "screen"), render = TRUE,
   useVar = NULL, ordering = c("asIs", "alphabetical"),
-  onlyProblematic = FALSE, mode = c("summarize", "visualize", "check"),
-  smartNum = TRUE, preChecks = c("isKey", "isEmpty"), file = NULL,
-  replace = FALSE, vol = "", standAlone = TRUE, twoCol = TRUE,
-  quiet = TRUE, openResult = TRUE, nagUser = TRUE, checkDetails = FALSE,
+  onlyProblematic = FALSE, labelled_as = c("factor", "NA", "zap"),
+  mode = c("summarize", "visualize", "check"), smartNum = TRUE,
+  preChecks = c("isKey", "isEmpty"), file = NULL, replace = FALSE,
+  vol = "", standAlone = TRUE, twoCol = TRUE, quiet = TRUE,
+  openResult = TRUE, nagUser = TRUE, checkDetails = FALSE,
   characterChecks = defaultCharacterChecks(),
   factorChecks = defaultFactorChecks(),
   labelledChecks = defaultLabelledChecks(),
   numericChecks = defaultNumericChecks(),
   integerChecks = defaultIntegerChecks(),
-  logicalChecks = defaultLogicalChecks(), allChecks = NULL,
-  characterSummaries = defaultCharacterSummaries(),
+  logicalChecks = defaultLogicalChecks(), dateChecks = defaultDateChecks(),
+  allChecks = NULL, characterSummaries = defaultCharacterSummaries(),
   factorSummaries = defaultFactorSummaries(),
   labelledSummaries = defaultLabelledSummaries(),
   numericSummaries = defaultNumericSummaries(),
   integerSummaries = defaultIntegerSummaries(),
-  logicalSummaries = defaultLogicalSummaries(), allSummaries = NULL,
+  logicalSummaries = defaultLogicalSummaries(),
+  dateSummaries = defaultDateSummaries(), allSummaries = NULL,
   allVisuals = "standardVisual", garbageCollection = TRUE,
   listChecks = TRUE, brag = FALSE, maxProbVals = Inf, maxDecimals = 2,
   ...)
@@ -46,6 +48,8 @@ also part of useVar are checked.}
 are "asIs" (ordering as in the dataset) and "alphabetical" (alphabetical order).}
 
 \item{onlyProblematic}{A logical. Set to TRUE if only the potentially problematic variables should be listed.}
+
+\item{labelled_as}{A string explaining the way to handle labelled vectors. Possibilities are either "factor" (the default), "NA" (all missing are converted to NA) or "zap" (remove all labels).}
 
 \item{mode}{Vector of tasks to perform among the three categories "summarize", "visualize" and "check".
 Note that... SOMETHING ABOUT HOW THE FUNCTIONS CALLED IN EACH PART ARE CONTROLLED.}
@@ -113,6 +117,8 @@ factorChecks, etc.}
 
 \item{logicalSummaries}{STUFF}
 
+\item{dateSummaries}{STUFF}
+
 \item{allSummaries}{Vector of function names that should be used as summary-functions for all variable types.
 See ???? for more details OR SOMETHING? Note that this option overwrites the options charachterSummaries,
 factorSummaries, etc.}
@@ -125,7 +131,7 @@ the R markdown file that is output. This is useful for larger dataset to prevent
 \item{maxProbVals}{Maximum number of unique values printed from check-functions (integer > 0).
 Defaults to \code{Inf}, which means that all values are printed.}
 
-\item{maxDecimals}{Number of decimals used when printing numerical values in the data 
+\item{maxDecimals}{Number of decimals used when printing numerical values in the data
 summary. If \code{Inf}, no rounding is performed.}
 
 \item{\dots}{other arguments that are passed on the to precheck, checking, summary and visualization functions}
@@ -165,11 +171,11 @@ clean(testData, characterChecks=c(defaultCharacterChecks(), "characterFoo"))
 }
 
 }
-\author{
-Anne H. Petersen \email{ahpe@sund.ku.dk} and Claus Thorn Ekstrom \email{ekstrom@sund.ku.dk}
-}
 \seealso{
 \code{\link{clean}}
+}
+\author{
+Anne H. Petersen \email{ahpe@sund.ku.dk} and Claus Thorn Ekstrom \email{ekstrom@sund.ku.dk}
 }
 \keyword{misc}
 

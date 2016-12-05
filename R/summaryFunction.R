@@ -1,27 +1,9 @@
-#' @title Construct a summaryFunction  
+#' Construct a summaryFunction
 #'
-#' @description Convert a function into class \code{summaryFunction} used for creating variable 
+#' Convert a function into class \code{summaryFunction} used for creating variable
 #' summaries in \code{\link{summarize}}, typically called from \code{\link{clean}}.
-#' 
-#' @param f A function. In order to be a valid \code{summaryFunction}, \code{f} should 
-#' follow the structure outlined in details below.
-#' 
-#' @param description A character string with a (brief!) description of \code{f}.
-#' 
-#' @param classes A vector of classes that \code{f} is designed to be called on. If NULL (the default) 
-#' one of two standard solutions are tried: If \code{f} is a S3 generic function, the \code{classes}
-#' argument will automatically be filled out by checking what methods are available in the global
-#' environment. If \code{f} is not a S3 generic function, the \code{classes} attribute is set to an
-#' empty character object (i.e. \code{character(0)}). 
-#' 
-#' @return A function of class \code{summaryFunction}, i.e. with two attributes: A description 
-#' ("description") and a vector of classes which the function can be called upon ("classes"). A 
-#' summary function always takes a vector (\code{v}) as its sole argument and returns a list with two
-#' slots: \code{$feature} (a character string with the name of the summary) and \code{$results} 
-#' (a character string with the result of the summary operation). See e.g. \code{\link{variableType}} or
-#' \code{\link{countMissing}} for examples of \code{summaryFunction}s.
-#' 
-#' @details The structure of a valid \code{summaryFunction} follows the following structure:
+#'
+#' The structure of a valid \code{summaryFunction} follows the following structure:
 #' \code{
 #'    mySummaryFunction <- function(v) {
 #'      res <- [result of whatever summary we are doing]
@@ -34,15 +16,30 @@
 #'                                         classes = c([classes]))
 #'  }
 #'  Note that it is not necessary to formally change functions to be used by \code{\link{summarize}}
-#'  into \code{summaryFunction}s, but it is recommended, as the functions are then added to the output 
+#'  into \code{summaryFunction}s, but it is recommended, as the functions are then added to the output
 #'  of \code{allSummaryFunctions()}, making it easier to
 #'  gain an overview of the summary functions available for a \code{clean()} run.
-#'        
+#'
+#' @param f A function. In order to be a valid \code{summaryFunction}, \code{f} should
+#' follow the structure outlined in details below.
+#' @param description A character string with a (brief!) description of \code{f}.
+#' @param classes A vector of classes that \code{f} is designed to be called on. If NULL (the default)
+#' one of two standard solutions are tried: If \code{f} is a S3 generic function, the \code{classes}
+#' argument will automatically be filled out by checking what methods are available in the global
+#' environment. If \code{f} is not a S3 generic function, the \code{classes} attribute is set to an
+#' empty character object (i.e. \code{character(0)}).
+#'
+#' @return A function of class \code{summaryFunction}, i.e. with two attributes: A description
+#' ("description") and a vector of classes which the function can be called upon ("classes"). A
+#' summary function always takes a vector (\code{v}) as its sole argument and returns a list with two
+#' slots: \code{$feature} (a character string with the name of the summary) and \code{$results}
+#' (a character string with the result of the summary operation). See e.g. \code{\link{variableType}} or
+#' \code{\link{countMissing}} for examples of \code{summaryFunction}s.
 #'
 #' @seealso \code{\link{allSummaryFunctions}} \code{\link{summarize}}
 #'  \code{\link{description}} \code{\link{classes}}
-#'   
-#' @examples 
+#'
+#' @examples
 #' #Defining a new summaryFunction:
 #'  countZeros <- function(v) {
 #'      res <- length(which(v == 0))
@@ -53,15 +50,15 @@
 #'                                            "numeric", "integer", "logical"))
 #'
 #' #Extract or set description of a summaryFunction:
-#'  description(countZeros) 
+#'  description(countZeros)
 #'  description(countZeros) <- "Count no. of 0s" #new description
 #'  description(countZeros)
-#'  
+#'
 #' #Extract or set classes of a summaryFunction:
 #'  classes(countZeros)
 #'  classes(countZeros) <- "numeric"
 #'  classes(countZeros)
-#' 
+#'
 #' @export
 summaryFunction <- function(f, description, classes = NULL) {
   f <- deparse(substitute(f))

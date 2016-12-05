@@ -1,5 +1,9 @@
 
 #' document me!
+#'
+#' @param f XXX function
+#' @param description XXX
+#' @param classes XXX
 #' @export
 checkFunction <- function(f, description, classes=NULL) {
   f <- deparse(substitute(f))

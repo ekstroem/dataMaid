@@ -18,6 +18,7 @@
 #' @param ordering Choose the ordering of the variables in the data presentation. The options
 #' are "asIs" (ordering as in the dataset) and "alphabetical" (alphabetical order).
 #' @param onlyProblematic A logical. Set to TRUE if only the potentially problematic variables should be listed.
+#' @param labelled_as A string explaining the way to handle labelled vectors. Possibilities are either "factor" (the default), "NA" (all missing are converted to NA) or "zap" (remove all labels).
 #' @param mode Vector of tasks to perform among the three categories "summarize", "visualize" and "check".
 #' Note that... SOMETHING ABOUT HOW THE FUNCTIONS CALLED IN EACH PART ARE CONTROLLED.
 #' @param characterChecks a list of error-checking functions to apply to character vectors
@@ -48,6 +49,7 @@
 #' @param numericSummaries STUFF
 #' @param integerSummaries STUFF
 #' @param logicalSummaries STUFF
+#' @param dateSummaries STUFF
 #' @param allSummaries Vector of function names that should be used as summary-functions for all variable types.
 #' See ???? for more details OR SOMETHING? Note that this option overwrites the options charachterSummaries,
 #' factorSummaries, etc.
@@ -67,7 +69,7 @@
 #' the R markdown file that is output. This is useful for larger dataset to prevent memory problems.
 #' @param maxProbVals Maximum number of unique values printed from check-functions (integer > 0).
 #' Defaults to \code{Inf}, which means that all values are printed.
-#' @param maxDecimals Number of decimals used when printing numerical values in the data 
+#' @param maxDecimals Number of decimals used when printing numerical values in the data
 #' summary. If \code{Inf}, no rounding is performed.
 #' @param \dots other arguments that are passed on the to precheck, checking, summary and visualization functions
 #' @return The function does not return anything. It's side effect (the production of the Rmd file summary)
@@ -109,6 +111,7 @@ clean <- function(data,
                       #note: output cannot just be markdown. Either it's pdf-markdown or html-markdown.
                       #what files are produced is controlled using render.
                   useVar=NULL, ordering=c("asIs", "alphabetical"), onlyProblematic=FALSE,
+                  labelled_as=c("factor", "NA", "zap"),
                   mode=c("summarize", "visualize", "check"),
                   smartNum=TRUE, preChecks=c("isKey", "isEmpty"),
                   file=NULL, replace=FALSE, vol="",
@@ -123,6 +126,7 @@ clean <- function(data,
                   numericChecks = defaultNumericChecks(),
                   integerChecks = defaultIntegerChecks(),
                   logicalChecks = defaultLogicalChecks(),
+                  dateChecks = defaultDateChecks(),
                   allChecks = NULL,
                   characterSummaries = defaultCharacterSummaries(),
                   factorSummaries = defaultFactorSummaries(),
@@ -130,6 +134,7 @@ clean <- function(data,
                   numericSummaries = defaultNumericSummaries(),
                   integerSummaries = defaultIntegerSummaries(),
                   logicalSummaries = defaultLogicalSummaries(),
+                  dateSummaries = defaultDateSummaries(),
                   allSummaries = NULL,
                   allVisuals = "standardVisual",
                   garbageCollection=TRUE,
@@ -162,6 +167,7 @@ clean <- function(data,
     ##Match arguments
     ordering <- match.arg(ordering)
     output <- match.arg(output)
+    labelled_as <- match.arg(labelled_as)
       #quiet <- match.arg(quiet)
 
     ## Extract the dataframe name
@@ -478,10 +484,10 @@ clean <- function(data,
     # else bChecks <- eval(formals(check.logical)$logicalChecks)
 
      everyCheck <- union(characterChecks, c(factorChecks, labelledChecks, numericChecks,
-                                           integerChecks, logicalChecks))
-     checkMat <- matrix("", length(everyCheck), 6, #6: number of different variable types
+                                           integerChecks, logicalChecks, dateChecks))
+     checkMat <- matrix("", length(everyCheck), 7, #6: number of different variable types
                         dimnames=list(everyCheck, c("character", "factor", "labelled",
-                                                   "numeric", "integer", "logical")))
+                                                   "numeric", "integer", "logical", "Date")))
      y <- "$\\times$"
      checkMat[characterChecks, "character"] <- y
      checkMat[factorChecks, "factor"] <- y
@@ -489,17 +495,18 @@ clean <- function(data,
      checkMat[numericChecks, "numeric"] <- y
      checkMat[integerChecks, "integer"] <- y
      checkMat[logicalChecks, "logical"] <- y
+     checkMat[dateChecks, "Date"] <- y
 
     rownames(checkMat) <- sapply(rownames(checkMat), function(x) description(get(x)))
 
 
     writer("### Checks performed")
     writer("The following variable checks were performed, depending on the data type of each variable:")
-    writer(pander::pandoc.table.return(checkMat, justify="lcccccc",
+    writer(pander::pandoc.table.return(checkMat, justify="lccccccc",
                                emphasize.rownames=FALSE)) #allows for centering in this table only
     writer("\n")
     if (maxDecimals != Inf) {
-      writer(paste("Please note that all numerical values in the following have been rounded to", 
+      writer(paste("Please note that all numerical values in the following have been rounded to",
                    maxDecimals, "decimals."))
       writer("\n")
     }
@@ -541,14 +548,15 @@ clean <- function(data,
                             labelledChecks = labelledChecks,
                             numericChecks = numericChecks,
                             integerChecks = integerChecks,
-                            logicalChecks = logicalChecks, nMax = maxProbVals, 
+                            logicalChecks = logicalChecks,
+                            dateChecks = dateChecks,
+                            nMax = maxProbVals,
                             maxDecimals = maxDecimals, ...)
           problems <- sapply(checkRes, function(x) x[[1]]) #maybe change to index by name?
         }
 
         ## skip non problem-causing variables
         if (onlyProblematic && (!any(preCheckProblems) && !any(problems))) skip <- TRUE
-
 
         ## Now print out the information if the variable isn't skipped
         if (!skip) {
@@ -570,17 +578,16 @@ clean <- function(data,
               if (extraMessages$do) writer(paste("* ", extraMessages$messages, "\n", collapse=" \n ",
                                                  sep=""))
 
-
-
               ## make Summary table
-              if (doSummarize) sumTable <- pander::pander_return(summarize(v, 
+              if (doSummarize) sumTable <- pander::pander_return(summarize(v,
                                                                  characterSummaries = characterSummaries,
                                                                  factorSummaries = factorSummaries,
                                                                  labelledSummaries = labelledSummaries,
                                                                  numericSummaries = numericSummaries,
                                                                  integerSummaries = integerSummaries,
                                                                  logicalSummaries = logicalSummaries,
-                                                                 maxDecimals = maxDecimals, ...), 
+                                                                 dateSummaries = dateSummaries,
+                                                                 maxDecimals = maxDecimals, ...),
                                                                  justify="lr")
               #if (doSummarize) sumTable <- pandoc.table.return(summarize(v, ...))
                                         #exactly the same result as with pander_return()
@@ -592,10 +599,10 @@ clean <- function(data,
 
               ## make Visualization
               if (doVisualize) visual <- visualize(v, vnam, doEval=FALSE, allVisuals = allVisuals, ...)
-  
+
               ## Chunkname should avoid spaces and periods
               chunk_name <- paste0("Var-", idx, "-", gsub("[_:. ]", "-", vnam))
-  
+
               ## add visualization + summary results to output file
               if (twoCol) {
                 twoCols.wrapper(sumTable, visual, label=chunk_name)
@@ -604,7 +611,7 @@ clean <- function(data,
                 if (doVisualize) fig.wrapper(visual, label=chunk_name)
                 writer("\n")
               }
-  
+
               ## add check results to file
               if (doCheck) {
                 if (any(problems)) {
@@ -612,7 +619,7 @@ clean <- function(data,
                   messages <- sapply(checkRes, function(x) x[[2]])[problems] #maybe index by name instead?
                   for (i in 1:length(messages)) {
                     writer(paste0("- ", messages[i], " \n"))
-                    
+
                     ###Why did we use to have this line here? Do we need pander stuff ever?###
                     #writer(paste0("- ", pander::pander_return(messages[i])))
                     ##########################################################################

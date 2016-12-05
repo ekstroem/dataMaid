@@ -12,6 +12,7 @@ Description: Data cleaning is an important first step of any statistical
     errors in a dataset. It produces a document with a thorough summary of the
     checks and the results that a human can use to identify possible errors.
 Imports:
+    haven,
     methods,
     pander,
     rmarkdown,
@@ -21,7 +22,7 @@ Depends:
 Encoding: UTF-8
 ByteCompile: true
 License: GPL-2
-RoxygenNote: 5.0.1
+RoxygenNote: 5.0.1.9000
 Collate:
     'leftover_functions_split_us.R'
     'checkResult.R'

@@ -258,6 +258,41 @@ defaultLogicalSummaries <- function() c("variableType", "countMissing", "uniqueV
 defaultLogicalDescriptions <- function() "centralValue"
 
 
+
+
+#' Default summary functions for Date variables
+#'
+#' Returns vector of names of default summary functions for Date variables.
+#'
+#' @return A list of function names (as character strings).
+#'
+#' @seealso \code{\link{defaultDateDescriptions}}, \code{\link{variableType}},
+#' \code{\link{countMissing}}, \code{\link{uniqueValues}}
+#'
+#' @examples
+#' defaultDateSummaries()
+#'
+#' @export
+#defaultDateSummaries <- function() c("variableType")
+defaultDateSummaries <- function() c("variableType", "countMissing", "uniqueValues")
+
+
+#' Default description functions for Date variables
+#'
+#' Returns vector of names of default description functions for Date variables.
+#'
+#' @return A list of function names (as character strings).
+#'
+#' @seealso \code{\link{defaultDateSummaries}},  \code{\link{minMax}}
+#'
+#' @examples
+#' defaultDateDescriptions()
+#'
+#' @export
+defaultDateDescriptions <- function() c("centralValue", "minMax")
+
+
+
 #methods for each data type
 
 #' @export
@@ -293,7 +328,7 @@ summarize.labelled <- function(v, descriptive = TRUE,
 #' @export
 summarize.numeric <- function(v, descriptive = TRUE,
                               numericSummaries = defaultNumericSummaries(),
-                              numericDescriptions = defaultNumericDescriptions(), 
+                              numericDescriptions = defaultNumericDescriptions(),
                               maxDecimals = 2, ...) {
   numericCalls <- if (descriptive) c(numericSummaries, numericDescriptions)
   else numericSummaries
@@ -304,7 +339,7 @@ summarize.numeric <- function(v, descriptive = TRUE,
 #' @export
 summarize.integer <- function(v, descriptive = TRUE,
                               integerSummaries = defaultIntegerSummaries(),
-                              integerDescriptions = defaultIntegerDescriptions(), 
+                              integerDescriptions = defaultIntegerDescriptions(),
                               maxDecimals = 2, ...) {
   integerCalls <- if (descriptive) c(integerSummaries, integerDescriptions)
   else integerSummaries
@@ -319,6 +354,17 @@ summarize.logical <- function(v, descriptive = TRUE,
   logicalCalls <- if (descriptive) c(logicalSummaries, logicalDescriptions)
   else logicalSummaries
   sumMatGenerator(v, logicalCalls)
+}
+
+
+#' @export
+summarize.Date <- function(v, descriptive = TRUE,
+                           dateSummaries = defaultDateSummaries(),
+                           dateDescriptions = defaultDateDescriptions(),
+                           maxDecimals = 0, ...) {
+    dateCalls <- if (descriptive) c(dateSummaries, dateDescriptions)
+                 else dateSummaries
+    sumMatGenerator(v, dateCalls, maxDecimals = maxDecimals)
 }
 
 
