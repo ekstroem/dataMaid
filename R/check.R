@@ -25,11 +25,12 @@
 
 #' Perform a check of potential errors in a data frame
 #'
-#' Runs a set of validation checks to check a vector for potential errors.  performs checking steps according to user input and/or data type of the inputted variable.
+#' Runs a set of validation checks to check a vector for potential errors.  Performs checking steps according to user input and/or data type of the inputted variable.
 #'
 #' @param v the vector to be checked
 #' @inheritParams clean
-#' @param \dots other arguments that are passed on the to checking functions
+#' @param nMax XXX needs documentation
+#' @param \dots other arguments that are passed on to the checking functions
 #' @return An list object of class "checked" summarizing the result from the check of the check. As a minimum the returned class should contain the following elements
 #' \itemize{
 #'   \item{"name"}{The name of the check}

@@ -99,7 +99,9 @@ to the document (if available)}
 
 \item{integerChecks}{a list of error-checking functions to apply to integer vectors}
 
-\item{logicalChecks}{a list of error-checking functions to apply to integer vectors}
+\item{logicalChecks}{a list of error-checking functions to apply to Date vectors}
+
+\item{dateChecks}{a list of error-checking functions to apply to integer vectors}
 
 \item{allChecks}{Vector of function names that should be used as check-functions for all variable types.
 See ???? for more details OR SOMETHING? Note that this option overwrites the options characterChekcs,
@@ -127,6 +129,10 @@ factorSummaries, etc.}
 
 \item{garbageCollection}{A logical. If TRUE (the default) then garbage collection code is added to
 the R markdown file that is output. This is useful for larger dataset to prevent memory problems.}
+
+\item{listChecks}{Logical. Sets whether the checks that were used for each possible variable type are shown in the output. Defaults to TRUE.}
+
+\item{brag}{A logical that determines if the name of cleanR package is printed in the output. Defaults to TRUE but should probably be removed altogether.}
 
 \item{maxProbVals}{Maximum number of unique values printed from check-functions (integer > 0).
 Defaults to \code{Inf}, which means that all values are printed.}

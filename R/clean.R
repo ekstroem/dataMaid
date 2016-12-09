@@ -26,7 +26,8 @@
 #' @param labelledChecks a list of error-checking functions to apply to character vectors
 #' @param integerChecks a list of error-checking functions to apply to integer vectors
 #' @param numericChecks a list of error-checking functions to apply to integer vectors
-#' @param logicalChecks a list of error-checking functions to apply to integer vectors
+#' @param logicalChecks a list of error-checking functions to apply to Date vectors
+#' @param dateChecks a list of error-checking functions to apply to integer vectors
 #' @param allChecks Vector of function names that should be used as check-functions for all variable types.
 #' See ???? for more details OR SOMETHING? Note that this option overwrites the options characterChekcs,
 #' factorChecks, etc.
@@ -67,6 +68,8 @@
 #' to the document (if available)
 #' @param garbageCollection A logical. If TRUE (the default) then garbage collection code is added to
 #' the R markdown file that is output. This is useful for larger dataset to prevent memory problems.
+#' @param listChecks Logical. Sets whether the checks that were used for each possible variable type are shown in the output. Defaults to TRUE.
+#' @param brag A logical that determines if the name of cleanR package is printed in the output. Defaults to TRUE but should probably be removed altogether.
 #' @param maxProbVals Maximum number of unique values printed from check-functions (integer > 0).
 #' Defaults to \code{Inf}, which means that all values are printed.
 #' @param maxDecimals Number of decimals used when printing numerical values in the data

@@ -37,7 +37,6 @@
 #' \code{\link{countMissing}} for examples of \code{summaryFunction}s.
 #'
 #' @seealso \code{\link{allSummaryFunctions}} \code{\link{summarize}}
-#'  \code{\link{description}} \code{\link{classes}}
 #'
 #' @examples
 #' #Defining a new summaryFunction:

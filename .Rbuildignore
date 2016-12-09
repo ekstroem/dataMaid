@@ -10,3 +10,4 @@ latex/
 ^.*\.rda
 ^.*\.pdf
 ^.*\.tex
+^.*\.tar\.gz

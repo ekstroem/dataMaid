@@ -1,13 +1,14 @@
 
+#' @importFrom utils .S3methods methods
 #' @export
 makeXFunction <- function(fName, description, classes, X) {
   f <- get(fName)
   if (is.null(classes)) {
     #browser()
-    theseMethods <- as.character(methods(fName)) #methods() needs the name in order
+    theseMethods <- as.character(utils::methods(fName)) #methods() needs the name in order
     if (length(theseMethods) == 0) {
       callEnv <- parent.env(as.environment(-1L))
-      theseMethods <- as.character(.S3methods(fName, envir = callEnv))
+      theseMethods <- as.character(utils::.S3methods(fName, envir = callEnv))
     }
     #to work inside the function
     #print(standardVisual)

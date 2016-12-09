@@ -71,6 +71,5 @@ The structure of a valid \code{summaryFunction} follows the following structure:
 }
 \seealso{
 \code{\link{allSummaryFunctions}} \code{\link{summarize}}
- \code{\link{description}} \code{\link{classes}}
 }
 

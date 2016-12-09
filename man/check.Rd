@@ -9,7 +9,9 @@ check(v, nMax = Inf, ...)
 \arguments{
 \item{v}{the vector to be checked}
 
-\item{\dots}{other arguments that are passed on the to checking functions}
+\item{nMax}{XXX needs documentation}
+
+\item{\dots}{other arguments that are passed on to the checking functions}
 }
 \value{
 An list object of class "checked" summarizing the result from the check of the check. As a minimum the returned class should contain the following elements
@@ -21,7 +23,7 @@ An list object of class "checked" summarizing the result from the check of the c
 }
 }
 \description{
-Runs a set of validation checks to check a vector for potential errors.  performs checking steps according to user input and/or data type of the inputted variable.
+Runs a set of validation checks to check a vector for potential errors.  Performs checking steps according to user input and/or data type of the inputted variable.
 }
 \examples{
 
