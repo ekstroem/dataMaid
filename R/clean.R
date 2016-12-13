@@ -412,7 +412,7 @@ clean <- function(data,
     }
 
 
-    ## CE
+    ## Opne file connection
     fileConn <- file(file, "w")
 
 
@@ -688,7 +688,8 @@ clean <- function(data,
                       #accidentially shuts down the pdf/html/rmd-file.)
     }
 
-    ## CE
+    ## Force flush and close connection
+    flush(fileConn)
     close(fileConn)
     if (openResult) system(paste("open", outFile))
 }
