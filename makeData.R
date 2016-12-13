@@ -78,3 +78,20 @@ options(stringsAsFactors = stringsAsFactorsOption)
 testData <- data
 
 save(testData, file="data/testData.Rda")
+
+
+#make smaller version of testData for article (toyData)
+
+toyData <- testData[, c("charVar", "factorVar", "numVar",
+                        "keyVar", "emptyVar", "numOutlierVar",
+                        "miscodedMissingVar",
+                        "misclassifiedNumVar")]
+
+set.seed(1)
+toyData <- data.frame(var1 = c(rep("red", 10), rep("blue", 3), NA, NA),
+                      var2 = c(1, 1, 1, 2, 2, 6, 6, 6, 999, NA, 4, 82, NA, NaN, 5),
+                      var3 = c(rep("a", 5), rep("b", 3), rep("c", 3), ".", " ", "other", "OTHER"),
+                      var4 = rnorm(15),
+                      var5 = as.character(1:15),
+                      var6 = rep("Irrelevant", 15))
+                      

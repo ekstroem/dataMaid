@@ -11,7 +11,7 @@
 #'functions. Note that this option is overwritten if a non-null class specific
 #'plotting function is supplied in \code{...} (see \code{details}). Two options are readily available,
 #'\code{\link{standardVisual}} and \code{\link{basicVisual}}.
-#'@param doEval If TRUE, \code{visualize} returns a plot (IS THIS THE CORRECT WAY TO SAY IT?). Otherwise,
+#'@param doEval If TRUE (the default), \code{visualize} returns a plot (IS THIS THE CORRECT WAY TO SAY IT?). Otherwise,
 #'visualize returns a character string containing R-code for producing a plot.
 #'@param ... ALLOW FOR ARGUMENTS TO BE PASSED ON TO E.G. STANDARDVISUAL AS WELL? If the plotting
 #'function to be used should differ by variable type, this can be specified by using additional arguments
@@ -65,55 +65,54 @@
 #'@seealso \code{\link{standardVisual}}, \code{\link{basicVisual}}
 #'@export
 visualize <- function(v, vnam = NULL, allVisuals = "standardVisual",
-                      doEval = FALSE, ...) UseMethod("visualize")
+                      doEval = TRUE, ...) UseMethod("visualize")
 
 
 
 
-##########################################Not exported below#########################################
 
 
 #Methods for each variable type
 
 #' @export
 visualize.character <- function(v, vnam = NULL, allVisuals = "standardVisual",
-                                doEval = FALSE, characterVisual = NULL, ...) {
+                                doEval = TRUE, characterVisual = NULL, ...) {
   if (is.null(vnam)) vnam <- deparse(substitute(v))
   useVisual <- ifelse(is.null(characterVisual), allVisuals, characterVisual)
-  eval(call(useVisual, v, vnam, doEval))
+  eval(call(useVisual, v = v, vnam = vnam, doEval = doEval))
 }
 
 #' @export
 visualize.factor <- function(v, vnam = NULL, allVisuals = "standardVisual",
-                             doEval = FALSE, factorVisual = NULL, ...) {
+                             doEval = TRUE, factorVisual = NULL, ...) {
   if (is.null(vnam)) vnam <- deparse(substitute(v))
   useVisual <- ifelse(is.null(factorVisual), allVisuals, factorVisual)
-  eval(call(useVisual, v, vnam, doEval))
+  eval(call(useVisual, v = v, vnam = vnam, doEval = doEval))
 }
 
 #' @export
 visualize.labelled <- function(v, vnam = NULL, allVisuals = "standardVisual",
-                               doEval = FALSE, labelledVisual = NULL, ...) {
+                               doEval = TRUE, labelledVisual = NULL, ...) {
   if (is.null(vnam)) vnam <- deparse(substitute(v))
   useVisual <- ifelse(is.null(labelledVisual), allVisuals, labelledVisual)
-  eval(call(useVisual, v, vnam, doEval))
+  eval(call(useVisual, v = v, vnam = vnam, doEval = doEval))
 }
 
 
 #' @export
 visualize.numeric <- function(v, vnam = NULL, allVisuals = "standardVisual",
-                              doEval = FALSE, numericVisual = NULL, ...) {
+                              doEval = TRUE, numericVisual = NULL, ...) {
   if (is.null(vnam)) vnam <- deparse(substitute(v))
   useVisual <- ifelse(is.null(numericVisual), allVisuals, numericVisual)
-  eval(call(useVisual, v, vnam, doEval=doEval))
+  eval(call(useVisual, v = v, vnam = vnam, doEval = doEval))
 }
 
 #' @export
 visualize.integer <- function(v, vnam = NULL, allVisuals = "standardVisual",
-                              doEval = FALSE, integerVisual = NULL, ...) {
+                              doEval = TRUE, integerVisual = NULL, ...) {
   if (is.null(vnam)) vnam <- deparse(substitute(v))
   useVisual <- ifelse(is.null(integerVisual), allVisuals, integerVisual)
-  eval(call(useVisual, v, vnam, doEval))
+  eval(call(useVisual, v = v, vnam = vnam, doEval = doEval))
 }
 
 #' @export
@@ -126,10 +125,27 @@ visualize.logical <- function(v, vnam = NULL, allVisuals = "standardVisual",
 
 #' @export
 visualize.Date <- function(v, vnam = NULL, allVisuals = "standardVisual",
-                           doEval = FALSE, DateVisual = NULL, ...) {
-    if (is.null(vnam)) vnam <- deparse(substitute(v))
-    useVisual <- ifelse(is.null(DateVisual), allVisuals, DateVisual)
-    eval(call(useVisual, v, vnam, doEval))
+                           doEval = TRUE, DateVisual = NULL, ...) {
+  if (is.null(vnam)) vnam <- deparse(substitute(v))
+  useVisual <- ifelse(is.null(DateVisual), allVisuals, DateVisual)
+  eval(call(useVisual, v = v, vnam = vnam, doEval = doEval))
 }
 
 
+#' @importFrom gridExtra marrangeGrob
+#' @export 
+visualize.data.frame <- function(v, vnam = NULL, allVisuals = "standardVisual", 
+                                 doEval = TRUE, ...) {
+  #plots <- lapply(v, visualize, vnam=names(v), allVisuals = allVisuals, doEval = doEval, ...)
+  plots <- lapply(names(v), function(x) {visualize(v[[x]], x, allVisuals = allVisuals,
+                  doEval = doEval, ...)})
+  if (doEval) {
+    out <- marrangeGrob(plots, nrow=3, ncol=2)
+  } else out <- plots
+  out
+}
+
+
+##########################################Not exported below#########################################
+
+#nothing
