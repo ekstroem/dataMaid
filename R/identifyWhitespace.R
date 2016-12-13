@@ -6,7 +6,7 @@
 #' @param v A character, labelled or factor variable to check.
 #' @param nMax The maximum number of problematic values to report. Default is \code{Inf}, in which case
 #' all problematic values are included in the outputtet message.
-#' 
+#'
 #' @return A list with two elements, $problem: TRUE if any whitespaces were found, FALSE otherwise, and
 #' $message A message describing which values in \code{v} were prefixed or suffixed with whitespace.
 #' Note that only unique values are printed and that they are sorted alphabetically.
@@ -44,8 +44,11 @@ identifyWhitespace <- checkFunction(identifyWhitespace, "Identify prefixed and s
 #character variables
 identifyWhitespaceC <- function(v, nMax) {
   v <- na.omit(v)
-  wsPrefixPlaces <- sapply(v, substr, 1, 1) == " "
-  wsSuffixPlaces <- sapply(v, function(x) {tail(strsplit(x, "")[[1]], 1)}) == " "
+  # wsPrefixPlaces <- sapply(v, substr, 1, 1) == " "
+  wsPrefixPlaces <- substr(v, 1, 1) == " "
+  # wsSuffixPlaces <- sapply(v, function(x) {tail(strsplit(x, "")[[1]], 1)}) == " "
+  wsSuffixPlaces <- substr(v, nchar(v), nchar(v)) == " "
+
   allWsPlaces <- wsPrefixPlaces | wsSuffixPlaces
   if (any(allWsPlaces)) {
     problem <- TRUE

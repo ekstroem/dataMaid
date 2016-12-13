@@ -104,7 +104,7 @@ to the document (if available)}
 \item{dateChecks}{a list of error-checking functions to apply to integer vectors}
 
 \item{allChecks}{Vector of function names that should be used as check-functions for all variable types.
-See ???? for more details OR SOMETHING? Note that this option overwrites the options characterChekcs,
+See ???? for more details OR SOMETHING? Note that this option overwrite the options characterChekcs,
 factorChecks, etc.}
 
 \item{characterSummaries}{STUFF}

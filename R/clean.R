@@ -29,7 +29,7 @@
 #' @param logicalChecks a list of error-checking functions to apply to Date vectors
 #' @param dateChecks a list of error-checking functions to apply to integer vectors
 #' @param allChecks Vector of function names that should be used as check-functions for all variable types.
-#' See ???? for more details OR SOMETHING? Note that this option overwrites the options characterChekcs,
+#' See ???? for more details OR SOMETHING? Note that this option overwrite the options characterChekcs,
 #' factorChecks, etc.
 #' @param smartNum If TRUE, numeric and integer variables with less than maxLevels (defaults to 5) unique
 #' values are treated as factor variables in the checking, visualization and summary functions. A
@@ -262,6 +262,7 @@ clean <- function(data,
     #outFile <- paste0(substring(file, 1, nchar(file)-4), ".Rmd")
 
 
+
 ################################################################################################
 ###ALSO: check that vol and file and dataname produces a valid file name (no strange characters)
 ################################################################################################
@@ -363,31 +364,31 @@ clean <- function(data,
     ##
     ## Below comes a bunch of helper functions for writing the output
     ##
-    writer <- function(x, ..., outfile=file, sep="\n") {
+    writer <- function(x, ..., outfile=fileConn, sep="\n") {
         cat(paste0(x, ...), file=outfile, append=TRUE, sep=sep)
     }
 
-    chunk.wrapper <- function(x, ..., outfile=file, options=c("echo=FALSE", "warning=FALSE"), label=NULL) {
+    chunk.wrapper <- function(x, ..., outfile=fileConn, options=c("echo=FALSE", "warning=FALSE"), label=NULL) {
         writer(paste("```{r", ifelse(is.null(label),"," , paste(label, ",")) , paste(options, collapse=", "), "}"))
         writer(x, ..., outfile=outfile)
         writer("```")
     }
 
-    fig.wrapper <- function(x, ..., outfile=file, options=c("echo=FALSE", "fig.width=4",
+    fig.wrapper <- function(x, ..., outfile=fileConn, options=c("echo=FALSE", "fig.width=4",
                                                       "fig.height=3", "message=FALSE",
                                                       "warning=FALSE"), label=NULL) {
         chunk.wrapper(x, outfile=outfile, options=options, label=label)
             #I get an error when label stuff is there
     }
 
-    secretChunk.wrapper <- function(x, ..., outfile=file, options=c("echo=FALSE", "include=FALSE",
+    secretChunk.wrapper <- function(x, ..., outfile=fileConn, options=c("echo=FALSE", "include=FALSE",
                                                               "warning=FALSE", "message=FALSE",
                                                               "error=FALSE"), label=NULL) {
         chunk.wrapper(x, outfile=outfile, options=options, label=label)
     }
 
     ## outputty sets the output type
-    twoCols.wrapper <- function(text, figure, outfile=file, outputty=output, label=NULL) {
+    twoCols.wrapper <- function(text, figure, outfile=fileConn, outputty=output, label=NULL) {
         if (outputty=="pdf") { #note: does NOT work if there is a linebreak between the two
                                         #minipage environments!
             writer("\\bminione")
@@ -411,6 +412,8 @@ clean <- function(data,
     }
 
 
+    ## CE
+    fileConn <- file(file, "w")
 
 
     ## write YAML preamble
@@ -685,6 +688,8 @@ clean <- function(data,
                       #accidentially shuts down the pdf/html/rmd-file.)
     }
 
+    ## CE
+    close(fileConn)
     if (openResult) system(paste("open", outFile))
 }
 
