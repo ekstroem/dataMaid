@@ -1,6 +1,6 @@
 
-#' @importFrom utils .S3methods methods
-#' @export
+# '   @e xport
+#'@importFrom utils .S3methods methods
 makeXFunction <- function(fName, description, classes, X) {
   f <- get(fName)
   if (is.null(classes)) {

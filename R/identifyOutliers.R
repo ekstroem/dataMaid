@@ -6,7 +6,7 @@
 #' @param v A character or factor variable to check
 #' @param nMax The maximum number of problematic values to report. Default is \code{Inf}, in which case
 #' all problematic values are included in the outputtet message.
-#' @inheritParams clean 
+#' @inheritParams clean
 #'
 #' @details Outliers are defined in the style of Turkey Boxplots (consistent with the
 #' \code{\link{boxplot}} function), i.e. as values  that are smaller than the 1st quartile minus
@@ -69,17 +69,9 @@ identifyOutliersNI <- function(v, nMax, maxDecimals) {
   if (any(outlierPlaces)) {
     problem <- TRUE
     problemValues <- v[outlierPlaces]
-    
+
     #only print each outlier value once (and round them):
     problemValues <- round(unique(problemValues), maxDecimals)
-    
-    ## if outlier value occurs multiple times,
-    ## it will be printed multiple times
-
-    ## CE: Alternatively print it fewer times but with a multiplier
-    ## Gives two problems: 1) values become text so sorted lexicographically (not nice), and 2) values and multiplers are part of the same string which is also not that nice
-    ## xx <- table(problemValues)
-    ## problemValues <- paste0(attributes(xx)$dimnames[[1]], " (x ", xx, ")")
 
   } else {
     problem <- FALSE

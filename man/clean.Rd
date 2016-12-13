@@ -24,9 +24,8 @@ clean(data, output = c("pdf", "html", "screen"), render = TRUE,
   integerSummaries = defaultIntegerSummaries(),
   logicalSummaries = defaultLogicalSummaries(),
   dateSummaries = defaultDateSummaries(), allSummaries = NULL,
-  allVisuals = "standardVisual", garbageCollection = TRUE,
-  listChecks = TRUE, brag = FALSE, maxProbVals = Inf, maxDecimals = 2,
-  ...)
+  allVisuals = "standardVisual", listChecks = TRUE, brag = FALSE,
+  maxProbVals = Inf, maxDecimals = 2, ...)
 }
 \arguments{
 \item{data}{the dataset to be checked [LIST ALL ALLOWED OBJECT CLASSES, INCLUDING data.frame,
@@ -104,7 +103,7 @@ to the document (if available)}
 \item{dateChecks}{a list of error-checking functions to apply to integer vectors}
 
 \item{allChecks}{Vector of function names that should be used as check-functions for all variable types.
-See ???? for more details OR SOMETHING? Note that this option overwrites the options characterChekcs,
+See ???? for more details OR SOMETHING? Note that this option overwrite the options characterChekcs,
 factorChecks, etc.}
 
 \item{characterSummaries}{STUFF}
@@ -126,9 +125,6 @@ See ???? for more details OR SOMETHING? Note that this option overwrites the opt
 factorSummaries, etc.}
 
 \item{allVisuals}{STUFF. Default: "standardVisual".}
-
-\item{garbageCollection}{A logical. If TRUE (the default) then garbage collection code is added to
-the R markdown file that is output. This is useful for larger dataset to prevent memory problems.}
 
 \item{listChecks}{Logical. Sets whether the checks that were used for each possible variable type are shown in the output. Defaults to TRUE.}
 
