@@ -95,7 +95,7 @@ messageGenerator <- function(problemStatus, message = NULL, nMax = Inf) {
                        "Note that the following levels have at most five observations:",
                      identifyCaseIssues =
                        "Note that there might be case problems with the following levels:",
-                     identifyOutliersTBStyle = 
+                     identifyOutliersTBStyle =
                        "Note that the following possible outlier values were detected:")
     check <- standardCall
   } else {
@@ -108,7 +108,7 @@ messageGenerator <- function(problemStatus, message = NULL, nMax = Inf) {
   }
 
   ifelse(problemStatus$problem,
-         paste(paste(messages[[check]], printProblemValues(problemStatus$problemValues, nMax)), 
+         paste(paste(messages[[check]], printProblemValues(problemStatus$problemValues, nMax)),
                ".", sep = ""),
          "")
 }
@@ -123,14 +123,15 @@ messageGenerator <- function(problemStatus, message = NULL, nMax = Inf) {
 #NOTE: 3 slashes escapes the espaced string [\"] such that it is printed correctly
 #(and not intepreted) in markdown.
 printProblemValues <- function(problemValues, nMax = Inf) {
-  problemValues <- gsub("\\", "\\\\", problemValues, fixed = TRUE)
-  problemValues <- sort(problemValues)
-  nVals <- length(problemValues)
-  extraStr <- ""
-  if (nMax < nVals) {
-    problemValues <- problemValues[1:nMax]
-    extraStr <- paste(" (", nVals-nMax, " additional values omitted)", sep="")
-  }
-  paste(paste(paste("\\\"", sort(problemValues), "\\\"", sep=""),
-        collapse=", "), extraStr, sep="")
+    problemValues <- gsub("\\", "\\\\", sort(problemValues), fixed = TRUE)
+
+##    problemValues <- sort(problemValues)
+    nVals <- length(problemValues)
+    extraStr <- ""
+    if (nMax < nVals) {
+        problemValues <- problemValues[1:nMax]
+        extraStr <- paste(" (", nVals-nMax, " additional values omitted)", sep="")
+    }
+    paste(paste(paste("\\\"", problemValues, "\\\"", sep=""),
+                collapse=", "), extraStr, sep="")
 }

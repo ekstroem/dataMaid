@@ -66,8 +66,6 @@
 #' @param nagUser Remove at some point
 #' @param checkDetails MAYBE ALSO IMPLEMENT THIS?: If TRUE, details about each check function are added
 #' to the document (if available)
-#' @param garbageCollection A logical. If TRUE (the default) then garbage collection code is added to
-#' the R markdown file that is output. This is useful for larger dataset to prevent memory problems.
 #' @param listChecks Logical. Sets whether the checks that were used for each possible variable type are shown in the output. Defaults to TRUE.
 #' @param brag A logical that determines if the name of cleanR package is printed in the output. Defaults to TRUE but should probably be removed altogether.
 #' @param maxProbVals Maximum number of unique values printed from check-functions (integer > 0).
@@ -140,7 +138,6 @@ clean <- function(data,
                   dateSummaries = defaultDateSummaries(),
                   allSummaries = NULL,
                   allVisuals = "standardVisual",
-                  garbageCollection=TRUE,
                   listChecks = TRUE,
                   brag=FALSE, #remove me
                   maxProbVals = Inf,
@@ -639,7 +636,8 @@ clean <- function(data,
             if (output=="pdf") writer("\\fullline\n")
 
             ## Add garbage collection. Should help with memory problems.
-            if (garbageCollection) secretChunk.wrapper("gc(verbose=FALSE)")
+            ## Removed for now
+            ## if (garbageCollection) secretChunk.wrapper("gc(verbose=FALSE)")
         }
 
     }
