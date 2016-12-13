@@ -368,7 +368,10 @@ summarize.Date <- function(v, descriptive = TRUE,
 }
 
 
-
+#' @export
+summarize.data.frame <- function(v, descriptive = TRUE, ...) {
+  lapply(v, summarize, descriptive = descriptive, ...)
+}
 
 
 ##########################################Not exported below#########################################

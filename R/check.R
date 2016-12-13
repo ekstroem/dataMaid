@@ -165,6 +165,11 @@ check.Date <- function(v, nMax =  Inf, DateChecks = defaultDateChecks(), ...) {
 
 
 
+#' @export
+check.data.frame <- function(v, nMax = Inf, maxDecimals = 2, ...) {
+  lapply(v, check, nMax = nMax, maxDecimals = maxDecimals, ...)
+}
+
 
 
 ##########################################Not exported below#########################################
