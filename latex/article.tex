@@ -13,14 +13,18 @@
 
 
 \newcommand{\hl}[1]{\textcolor{magenta}{#1}}
-\newcommand{\R}{\proglang{R}\xspace}
+
+%Virker ikke:
+%\newcommand{\R}{\proglang{R}\xspace}
+
+\newcommand{\R}[1]{\code{#1}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% declarations for jss.cls %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% almost as usual
-\author{Anne Helby Petersen\\Biostatistics\\Department of Public
+\author{Anne H. Petersen\\Biostatistics\\Department of Public
   Health\\University of Copenhagen \And Claus Thorn Ekstr\o m\\Biostatistics\\Department of Public
   Health\\University of Copenhagen}
 \title{\pkg{cleanR}: Maid for Cleaning Datasets in \proglang{R}}
@@ -90,7 +94,7 @@ Statisticians and data analysts spend a large portion of their time on
 data cleaning and on data wrangling. Packages such as
 \pkg{data.table}, and \pkg{plyr} have made data wrangling a lot easier in
 \proglang{R}, but there are only a few options available for automated data
-cleaning.
+cleaning. \hl{Hov! Er det ikke et job for autocleanR?}
 
 Data cleaning is a time consuming endeavour and it inherently requires
 human interaction since every dataset is different and the variables
@@ -164,8 +168,21 @@ extending the package are described in Section \ref{sec:conclusion}.
 
 \section{Checking a dataset for errors} \label{sec:example1}
 
-In \pkg{cleanR} the \code{clean} function is the primary workhorse and it
-should be the primary entry point for data cleaning.
+\begin{table}
+\begin{tabular}{p{0.2\linewidth}p{0.5\linewidth}p{0.2\linewidth}}
+Argument & Description & Default value \\
+\hline
+\R{output} & Type of output file to be produced (html, pdf or no file) & \R{"pdf"} \\
+\R{ordering} & Ordering of the variables in the data summary & \R{"asIs"} \\
+\R{onlyProblematic} & Should only variables flagged as problematic be included in the output? & \R{FALSE} \\
+\R{maxProbVals} & Maximum number of problematic values to print, if any are found in data checks & \R{Inf} \\
+\R{maxDecimals} & Maximum number of decimals to print for numeric problematic values & \R{2}
+\end{tabular}
+\caption{A selection of commonly used arguments of \R{clean()}.}
+\label{table.cleanFormals}
+\end{table}
+
+In \pkg{cleanR} the \code{clean} function is the primary workhorse and knowledge of nothing more than this function is required to produce data cleaning outputs in \pkg{cleanR}. The data cleaning output itself is an overview document, intended for reading by humans, in either pdf or html format. 
 
 First we
 \begin{Schunk}
@@ -202,7 +219,7 @@ Figure~\ref{fig:example1}.
 
 \begin{figure}[!htp]
 \begin{center}
-\includegraphics[page=2]{cleanR_testData.pdf}
+\includegraphics[page=2]{cleanR_testData.pdf} 
 %\includepdf[pages={2}, pagecommand={}]{cleanR_testData.pdf}
 \end{center}
 \label{fig:example1}
@@ -213,7 +230,7 @@ Figure~\ref{fig:example1}.
 Arguments
 
 
-\section{The structure of cleanR} \label{sec:internals}
+\section{Behind the scenes} \label{sec:internals}
 
 
 \begin{figure}
@@ -380,28 +397,7 @@ While the descriptions of \code{summaryFunction}s and \code{visualFunction}s are
 
 \section{To-dos in the code}
 \hl{ ...  introduced by discrepancy between what I say we have done and what we have actually done:
-\begin{itemize}
-\item summaryFunction stuff:
-	\begin{itemize}
-		\item Make constructor function
-		\item Make allSummaryFunctions()
-		\item Change class of all summary (and description) functions into summaryFunction (possibly letting description functions be a subclass?)
-		\item Maybe: Make clean check if summary functions are really summaryFunctions?
-	\end{itemize}
-\item visualFunction stuff:
-	\begin{itemize}
-		\item Make constructor function
-		\item Make allVisualFunctions()
-		\item Change class of all visual functions into visualFunction
-		\item Maybe: Make clean check if visual functions are really visual functions?
-	\end{itemize}
-\item checkFunction stuff:
-	\begin{itemize}
-		\item Make allCheckFunctions()
-		\item Work on messageGenerator() to make it better suited for being an exported function + export it
-		\item Make allVisual()
-	\end{itemize}
-\end{itemize}
+(nothing right now)
 }
 
 

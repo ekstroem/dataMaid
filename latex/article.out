@@ -1,6 +1,6 @@
 \BOOKMARK [1][-]{Section.0.Introduction.1}{Introduction}{}% 1
 \BOOKMARK [1][-]{Section.1.Checking a dataset for errors.1}{Checking a dataset for errors}{}% 2
-\BOOKMARK [1][-]{Section.2.The structure of cleanR.1}{The structure of cleanR}{}% 3
+\BOOKMARK [1][-]{Section.2.Behind the scenes.1}{Behind the scenes}{}% 3
 \BOOKMARK [1][-]{Section.3.Extending cleanR by adding custom error checks.1}{Extending cleanR by adding custom error checks}{}% 4
 \BOOKMARK [1][-]{Section.4.Customizing the cleanR output.1}{Customizing the cleanR output}{}% 5
 \BOOKMARK [2][-]{Subsection.5.0.Controlling contents.2}{Controlling contents}{Section.4.Customizing the cleanR output.1}% 6
