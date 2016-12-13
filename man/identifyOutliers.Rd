@@ -16,24 +16,36 @@ all problematic values are included in the outputtet message.}
 summary. If \code{Inf}, no rounding is performed.}
 }
 \value{
-A list with two elements, $problem: TRUE if any outliers were found, FALSE otherwise, and
-$message A message describing which values in \code{v} were outliers. Note that outlier values
-are printed the number of times they appear, but sorted alphabetically. NOT TRUE(?)
+A list with two elements: `problem`: TRUE if any outliers were found, FALSE otherwise, and
+`message` A message describing which values in \code{v} were outliers.
 }
 \description{
 A checkFunction to be called from \code{\link{check}} that identifies outlier values
 in a numeric/integer variable.
 }
 \details{
-Outliers are defined in the style of Turkey Boxplots (consistent with the
-\code{\link{boxplot}} function), i.e. as values  that are smaller than the 1st quartile minus
-the inter quartile range (IQR) or greater than  the third quartile plus the IQR. NOT TRUE(?)
+Outliers are identified based on an outlier rule that is appropriate for asymmetric data. Outliers are observations outside the range
+
+\deqn{Q1 - 1.5*exp(a*MC)*IQR ;  Q3 + 1.5*exp(b*MC)*IQR }
+
+where Q1, Q3, and IQR are the first quartile, third quartile, and
+inter-quartile range, MC is the ‘medcouple’, a robust concept and
+estimator of skewness, and a and b are appropriate constants (-4
+and 3).  The medcouple is defined as a scaled median difference of
+the left and right half of distribution, and hence not based on the
+third moment as the classical skewness.
+
+When the data are symmetric then the measure reduces to the
+standard outlier rule also used in Tukey Boxplots (consistent with
+the \code{\link{boxplot}} function), i.e. as values that are
+smaller than the 1st quartile minus the inter quartile range (IQR)
+or greater than the third quartile plus the IQR.
 }
 \examples{
  identifyOutliers(c(1:10, 200, 200, 700))
 
 }
 \seealso{
-\code{\link{check}}, \code{\link{checkFunction}}
+\code{\link{check}}, \code{\link{checkFunction}}, \code{\link{mc}}
 }
 
