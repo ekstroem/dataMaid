@@ -4,7 +4,7 @@
 \alias{visualize}
 \title{Produce marginal distribution plots}
 \usage{
-visualize(v, vnam = NULL, allVisuals = "standardVisual", doEval = FALSE,
+visualize(v, vnam = NULL, allVisuals = "standardVisual", doEval = TRUE,
   ...)
 }
 \arguments{
@@ -19,7 +19,7 @@ functions. Note that this option is overwritten if a non-null class specific
 plotting function is supplied in \code{...} (see \code{details}). Two options are readily available,
 \code{\link{standardVisual}} and \code{\link{basicVisual}}.}
 
-\item{doEval}{If TRUE, \code{visualize} returns a plot (IS THIS THE CORRECT WAY TO SAY IT?). Otherwise,
+\item{doEval}{If TRUE (the default), \code{visualize} returns a plot (IS THIS THE CORRECT WAY TO SAY IT?). Otherwise,
 visualize returns a character string containing R-code for producing a plot.}
 
 \item{...}{ALLOW FOR ARGUMENTS TO BE PASSED ON TO E.G. STANDARDVISUAL AS WELL? If the plotting
