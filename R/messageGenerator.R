@@ -123,7 +123,8 @@ messageGenerator <- function(problemStatus, message = NULL, nMax = Inf) {
 #NOTE: 3 slashes escapes the espaced string [\"] such that it is printed correctly
 #(and not intepreted) in markdown.
 printProblemValues <- function(problemValues, nMax = Inf) {
-    problemValues <- gsub("\\", "\\\\", sort(problemValues), fixed = TRUE)
+    problemValues <- gsub("\\", "\\\\", sort(problemValues, na.last = TRUE), fixed = TRUE)
+        ##NOTE: sort removes NaNs if not told explicitly not to by use of the na.last-argument
 
 ##    problemValues <- sort(problemValues)
     nVals <- length(problemValues)
