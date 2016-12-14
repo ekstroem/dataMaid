@@ -161,7 +161,7 @@ In \pkg{cleanR}, the \code{clean} function is the primary workhorse and knowledg
 \end{Sinput}
 \end{Schunk}
 
-By default, a pdf overview document is produced, saved to the disc and opened for inspection. Turning to Figure~\ref{fig:example1}, we see that a data cleaning output document consists of two parts. First, an overview of what was done is presented under the title \textit{Data cleaning summary}. Secondly, each variable in the dataset is presented in turn using (up to) three tools in the \textit{Variable list}: A table summarizing key features of the variable, a figure visualizing its distribution and potentially also a list of flagged issues. For instance, in the \R{numeric}-type variable \R{var2} from \R{toyData}, \R{clean()} has identified two values that are suspected to be miscoded missing values (\R{999} and \R{NaN}), while two values were also flagged as potential outliers that should be investigated more carefully. We can then return to Part 1, the data cleaning summary, and inspect what sorts of checks were performed on this variable. \hl{hm, delete the last part? or use different variable? Only these exact two checks were performed}. 
+By default, a pdf overview document is produced, saved to the disc and opened for inspection. Turning to Figure~\ref{fig:example1}, we see that such a data cleaning output document consists of two parts. First, an overview of what was done is presented under the title \textit{Data cleaning summary}. Secondly, each variable in the dataset is presented in turn using (up to) three tools in the \textit{Variable list}: A table summarizing key features of the variable, a figure visualizing its distribution and potentially also a list of flagged issues. For instance, in the \R{numeric}-type variable \R{var2} from \R{toyData}, \R{clean()} has identified two values that are suspected to be miscoded missing values (\R{999} and \R{NaN}), while two values were also flagged as potential outliers that should be investigated more carefully. We can then return to Part 1, the data cleaning summary, and inspect what sorts of checks were performed on this variable. \hl{hm, delete the last part? or use different variable? Only these exact two checks were performed}. 
 
 Of course, 
 \\
@@ -182,16 +182,6 @@ Of course,
   dataset. First a summary of the full dataset,.. 
   \hl{Maybe fix these pdfs such that they are one file with no blankspace? I.e. basically we want the .html-version of this file printed as pdf.}}
 \end{figure}
-
-Arguments
-
-
-
-
-
-
-
-
 
 
 
@@ -241,7 +231,7 @@ Each of these stages are controllable using appropriate function parameters in \
 
 \subsection{Something about what check, visual and summary functions are available}
 
-\begin{table}[ht]
+\begin{table}[h]
 \small
 \centering
 \begin{tabular}{p{0.3\linewidth} p{0.35\linewidth} p{0.01\linewidth} p{0.01\linewidth} p{0.01\linewidth} p{0.01\linewidth} p{0.01\linewidth}
@@ -485,9 +475,60 @@ Tools available for producing the function & \R{summaryResult()} & - & \R{messag
 
 
 \subsection{Cleaning large datasets}
+If the dataset becomes very large, the standard use of \R{clean()} outlined above might not be ideal. If there is a large number of variables, production of the \R{rmarkdown} document might be very slow, while an extensive amount of observations generally makes rendering of this document into pdf or html very slow. In this section, we give a few practical examples of ways to deal with large data, while wishing to still produce (potentially very long) data cleaning overview documents. Note that the interactive tools of \R{cleanR} can be used as usual or sequentially in small subsets of the large dataset. \\
 
+
+\subsubsection{Dropping the figures}
+Though figures give a nice overview of each variable, they are also quite heavy objects in terms of memory allocation. Therefore, it might be beneficial to not include figures in the \R{cleanR} outputs for very large datasets. This is controlled via the \R{mode} argument:
+\begin{Schunk}
+\begin{Sinput}
+> clean(toyData, mode = c("summarize", "check")
+\end{Sinput}
+\end{Schunk}
+
+
+\subsubsection{Economic memory use} 
+Another solution, which is especially relevant to Windows users due to the unfortunate combination of memory control in this operating system and RStudio \hl{And also just R, right? There's got to be a nice reference on this..?}, is simply splitting the two steps performed by \R{clean}, namely producing the \R{rmarkdown} file and rendering it afterwards. If the \R{rmarkdown} file is very long, as it will typically be in very large datasets, having this file opened in memory waists precious memory capacities. Therefore, we advice users to instead split the two steps. This can be done in the following manner:
+\begin{Schunk}
+\begin{Sinput}
+> clean(toyData, render = FALSE}
+> render("cleanR_toyData.Rmd", quiet = FALSE)
+\end{Sinput}
+\end{Schunk}
+This also deals with the fact that \R{cleanR} can produce \R{rmarkdown} files that supersedes the upper size limit of RStudio, which is currently \hl{find number} GBs (using RStudio version 1.0.44). \hl{Is this maybe too editor specific? A lot of people do use RStudio...}. 
 
 \subsection{Use cleanR for problem flagging}
+If the data is large, but memory issues and computation time are less of an issue than the human time it takes to look through the data cleaning document, a viable solution might be to not include all information about all variables. Or even for more reasonably sized datasets, sometimes a brief overview of the most pressing issues can be useful. This can be achieved by using the \R{onlyProblematic} argument in \R{clean()}. By specifying \R{onlyProblematic = TRUE}, only variables that raise a flag in the checking steps will be summarized. But perhaps we are not even interested in obtaining general information about these variables, but only in getting a quick overview of the problems, they might have. This can be done by also controlling the \R{mode} argument:
+\begin{Schunk}
+\begin{Sinput}
+> clean(toyData, onlyProblematic = TRUE, mode = c("check"))
+\end{Sinput}
+\end{Schunk}
+Now only the checking results are printed, and only for variables where problems were identified. An even more minimal output can be generated by also leaving out the checking results - then \R{clean()} essentially just produces a list of the variable names that should be investigated further:
+\begin{Schunk}
+\begin{Sinput}
+> clean(toyData, onlyProblematic = TRUE, mode = NULL)
+\end{Sinput}
+\end{Schunk}
+Of course, this can also be done without generating an overview document, by use of the \R{check()} function: 
+\begin{Schunk}
+\begin{Sinput}
+> toyChecks <- check(toyData)
+> foo <- function(x) {
+>   any(sapply(x, function(y) y[["problem"]]))
+> }
+> sapply(toyChecks, foo)
+\end{Sinput}
+\begin{Soutput}
+ var1  var2  var3  var4  var5  var6 
+ TRUE  TRUE  TRUE  TRUE  TRUE FALSE 
+\end{Soutput}
+\end{Schunk}
+\hl{drop this last bit? too technical?}
+
+
+
+
 
 \subsection{Include cleanR document in other files}
 
@@ -500,7 +541,7 @@ Tools available for producing the function & \R{summaryResult()} & - & \R{messag
 
 
 \section{Appendix Something}
-\includepdf[pages=-, pagecommand={}, frame=true, noautoscale=true, scale=0.7]{cleanR_toyData.pdf}
+\includepdf[pages=2-4, pagecommand={}, frame=true, noautoscale=true, scale=0.7]{cleanR_toyData.pdf}
 
 \end{document}
 \R{characterChecks} & What checks should be performed on character variables? & \hl{what to write here?} \\
