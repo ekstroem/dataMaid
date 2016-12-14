@@ -11,8 +11,6 @@ check(v, nMax = Inf, ...)
 
 \item{nMax}{XXX needs documentation}
 
-\item{...}{other arguments that are passed on the to precheck, checking, summary and visualization functions}
-
 \item{\dots}{other arguments that are passed on to the checking functions}
 }
 \value{
@@ -36,11 +34,11 @@ check(x)
 y <- c(rnorm(100), rep(99, 10))
 
 }
-\author{
-Anne H. Petersen \email{ahpe@sund.ku.dk} and Claus Thorn Ekstrom \email{ekstrom@sund.ku.dk}
-}
 \seealso{
 \code{\link{clean}}
+}
+\author{
+Anne H. Petersen \email{ahpe@sund.ku.dk} and Claus Thorn Ekstrom \email{ekstrom@sund.ku.dk}
 }
 \keyword{misc}
 
