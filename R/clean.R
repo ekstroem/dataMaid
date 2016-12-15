@@ -56,7 +56,9 @@
 #' factorSummaries, etc.
 #' @param allVisuals STUFF. Default: "standardVisual".
 #' @param standAlone If TRUE, the document begins with a markdown preamble such that it
-#' can be rendered as a stand alone R markdown file.
+#' can be rendered as a stand alone R markdown file. If \code{FALSE} this preamble is removed. Moreover, 
+#' no matter the input to the \code{render} argument, the document will now not be rendered, as it has
+#' no preamble.
 #' @param twoCol Should the results be presented in two columns (if output is "html" or "pdf")? Defaults to TRUE.
 #' @param quiet If \code{TRUE} (the default), only a few messages is printed to the screen as \code{clean} runs.
 #' If \code{FALSE} no messages are suppressed. The third option, \code{silent}, renders the function
@@ -172,7 +174,10 @@ clean <- function(data,
 
     ## Extract the dataframe name
     dfname <- deparse(substitute(data))
-
+    
+    #If standAlone is FALSE, the document obviously shouldn't be rendered
+    if (!standAlone) render <- FALSE
+    
     ## What variables should be used?
     if (!is.null(useVar)) {
         ## The line below is probably not efficient if we have large datasets and want to extract many variables
@@ -343,7 +348,8 @@ clean <- function(data,
       characterSummaries <- factorSummaries <- labelledSummaries <- allSummaries
       numericSummaries <- integerSummaries <- logicalSummaries <- allSummaries
     }
-
+    
+   
 
 
 
