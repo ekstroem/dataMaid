@@ -56,7 +56,7 @@
 #' factorSummaries, etc.
 #' @param allVisuals STUFF. Default: "standardVisual".
 #' @param standAlone If TRUE, the document begins with a markdown preamble such that it
-#' can be rendered as a stand alone R markdown file. If \code{FALSE} this preamble is removed. Moreover, 
+#' can be rendered as a stand alone R markdown file. If \code{FALSE} this preamble is removed. Moreover,
 #' no matter the input to the \code{render} argument, the document will now not be rendered, as it has
 #' no preamble.
 #' @param twoCol Should the results be presented in two columns (if output is "html" or "pdf")? Defaults to TRUE.
@@ -174,10 +174,10 @@ clean <- function(data,
 
     ## Extract the dataframe name
     dfname <- deparse(substitute(data))
-    
+
     #If standAlone is FALSE, the document obviously shouldn't be rendered
     if (!standAlone) render <- FALSE
-    
+
     ## What variables should be used?
     if (!is.null(useVar)) {
         ## The line below is probably not efficient if we have large datasets and want to extract many variables
@@ -348,8 +348,8 @@ clean <- function(data,
       characterSummaries <- factorSummaries <- labelledSummaries <- allSummaries
       numericSummaries <- integerSummaries <- logicalSummaries <- allSummaries
     }
-    
-   
+
+
 
 
 
@@ -418,6 +418,9 @@ clean <- function(data,
     ## Opne file connection
     fileConn <- file(file, "w")
 
+    ## This part is wrapped in a try call to ensure that the connection is closed even if something
+    ## breaks down when running the code.
+    try({
 
     ## write YAML preamble
     writer("---")
@@ -649,7 +652,7 @@ clean <- function(data,
     }
 
     ## This could be wrapped in a tryCatch for those rather weird situations where the package is not installed.
-    ## But it is indeer rather obscure
+    ## But it is indeed rather obscure
     if (brag) {
     writer("This report was created by cleanR v", paste(packageVersion("cleanR"), sep="."), ".")
     }
@@ -675,6 +678,12 @@ clean <- function(data,
         unlink(file) #delete rmd
     }
 
+    }) ## End try
+    ## Force flush and close connection
+    flush(fileConn)
+    close(fileConn)
+
+
     if (!quiet) { #whoops - version 1 only makes sense for windows, doesn't it?
                   #does version 2 work on mac/linux?
                   #also: problems if people supply their own file paths using the "file"-argument?
@@ -692,9 +701,6 @@ clean <- function(data,
                       #accidentially shuts down the pdf/html/rmd-file.)
     }
 
-    ## Force flush and close connection
-    flush(fileConn)
-    close(fileConn)
     if (openResult) system(paste("open", outFile))
 }
 
