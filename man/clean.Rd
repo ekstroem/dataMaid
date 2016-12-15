@@ -72,7 +72,9 @@ set is called "myData", no file argument is supplied and vol="2", the output fil
 "cleanR_myData2.Rmd"}
 
 \item{standAlone}{If TRUE, the document begins with a markdown preamble such that it
-can be rendered as a stand alone R markdown file.}
+can be rendered as a stand alone R markdown file. If \code{FALSE} this preamble is removed. Moreover,
+no matter the input to the \code{render} argument, the document will now not be rendered, as it has
+no preamble.}
 
 \item{twoCol}{Should the results be presented in two columns (if output is "html" or "pdf")? Defaults to TRUE.}
 
@@ -173,11 +175,11 @@ clean(testData, characterChecks=c(defaultCharacterChecks(), "characterFoo"))
 }
 
 }
-\author{
-Anne H. Petersen \email{ahpe@sund.ku.dk} and Claus Thorn Ekstrom \email{ekstrom@sund.ku.dk}
-}
 \seealso{
 \code{\link{clean}}
+}
+\author{
+Anne H. Petersen \email{ahpe@sund.ku.dk} and Claus Thorn Ekstrom \email{ekstrom@sund.ku.dk}
 }
 \keyword{misc}
 
