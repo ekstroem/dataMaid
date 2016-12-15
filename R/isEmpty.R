@@ -21,7 +21,7 @@ isEmpty <- function(v) {
   nVals <- length(unique(v))
   if (nVals <= 1) {
     allNA <- nVals == 0
-    val <- ifelse(allNA, "NA", v[1])
+    val <- ifelse(allNA, "NA", as.character(v[1]))
     out$problem <- TRUE
     out$message <- paste("The variable only takes one ",
                          ifelse(allNA, "", "(non-missing) "),

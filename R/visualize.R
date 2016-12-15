@@ -140,9 +140,17 @@ visualize.data.frame <- function(v, vnam = NULL, allVisuals = "standardVisual",
   plots <- lapply(names(v), function(x) {visualize(v[[x]], x, allVisuals = allVisuals,
                   doEval = doEval, ...)})
   if (doEval) {
-    out <- marrangeGrob(plots, nrow=3, ncol=2)
-  } else out <- plots
-  out
+    if (allVisuals == "standardVisual") {
+      out <- marrangeGrob(plots, nrow=3, ncol=2)
+      return(out)
+    } 
+    #note: if allVisuals != "standardVisual", the plots should have been produced as 
+    #a sideeffect in the lapply above
+    #in this case, nothing is returned.
+  } else {
+    out <- plots
+    return(out)
+  }
 }
 
 

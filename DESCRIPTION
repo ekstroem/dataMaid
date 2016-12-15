@@ -65,4 +65,5 @@ Collate:
     'allSummaryFunctions.R'
     'allVisualFunctions.R'
     'allCheckFunctions.R'
+    'allClasses.R'
     'cleanR-package.R'
