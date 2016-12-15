@@ -101,8 +101,8 @@ identifyColon <- checkFunction(identifyColon,
                                description = "Identify non-suffixed nor -prefixed colons",
                                classes = c("character", "factor", "labelled"))
 
-
-clean(toyData, replace = T, 
+data(testData)
+clean(testData, replace = T, 
       preChecks = c("isKey", "isEmpty", "isID"),
       allVisuals = "mosaicVisual",
       characterSummaries = c(defaultCharacterSummaries(), "countZeros"),
@@ -112,7 +112,7 @@ clean(toyData, replace = T,
       integerSummaries = c(defaultIntegerSummaries(), "countZeros"),
       characterChecks = c(defaultCharacterChecks(), "identifyColon"),
       factorChecks = c(defaultFactorChecks(), "identifyColon"),
-      lablledCheck = c(defaultLabelledChecks(), "identifyColon"))
+      labelledCheck = c(defaultLabelledChecks(), "identifyColon"))
       
       
       
