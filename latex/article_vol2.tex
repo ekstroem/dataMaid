@@ -141,6 +141,42 @@ This manuscript is structured as follows: First, we introduce the representative
   \hl{Maybe fix these pdfs such that they are one file with no blankspace? I.e. basically the .html-version of this file printed as pdf. This version is too small.}}
 \end{figure}
 
+
+\begin{figure}
+\begin{description}
+\item[Input] A dataset
+	\begin{itemize} 
+		\item This should be of type \R{data.frame} or \R{tibble}
+	\end{itemize}
+\item[Create contents] For each variable in the dataset, do the following:
+	\begin{description}
+		\item[Stage 1:] Pre-checks 
+			\begin{itemize}
+				\item Is the variable suitable for summarization, visualization and checks?
+				\begin{description}
+					\item[Yes:] Go to stage 2 
+					\item[No:] Move on to the next variable
+				\end{description}
+			\end{itemize}
+		\item[Stage 2:] SVC-steps
+			\begin{description}
+				\item[Summarize] Call \R{summarize()} to produce a summary table describing the variable. What features enter this table depends on the data class of the variable.
+				\item[Visualize]  Call \R{visualize()} to produce a plot visualizing the distribution of the variable. 
+				\item[Check]  Call \R{check()} to apply quality- and error checks to the variable. What checks are used depends on the data class of the variable.
+			\end{description}
+	\end{description}
+\item[Output] Files for a overview document 
+	\begin{itemize}
+		\item Always a \R{rmarkdown} (.Rmd) file
+		\item Possible also a html or pdf file
+	\end{itemize}
+\end{description}
+\caption{\hl{quite odd having a figure like this? maybe do a flowchart?}}
+\label{figure:cleanStructure}
+\end{figure}
+
+
+
 In \pkg{cleanR}, the \code{clean} function is the primary workhorse and knowledge of nothing more than this function is required to produce data cleaning outputs. The data cleaning output itself is an overview document, intended for reading by humans, in either pdf or html format. Appendix \hl{something} provides an example of a data cleaning output document, produced by calling \R{clean} on the dataset \R{toyData} available in  \R{cleanR}. The first two pages of this data cleaning output are also available in Figure~\ref{fig:example1}. \R{toyData} is a very small ($15$ by $6$), artificial dataset, whose only purpose is to illustrate the main capabilities of \R{cleanR}. The following commands load the dataset and produce the cleaning output:
 
 \begin{Schunk}
@@ -174,13 +210,10 @@ In \pkg{cleanR}, the \code{clean} function is the primary workhorse and knowledg
 
 By default, a pdf overview document is produced, saved to the disc (in the working directory) and opened for inspection. Turning to Figure~\ref{fig:example1}, we see that such a data cleaning output document consists of two parts. First, an overview of what was done is presented under the title \textit{Data cleaning summary}. Secondly, each variable in the dataset is presented in turn using (up to) three tools in the \textit{Variable list}: A table summarizing key features of the variable, a figure visualizing its distribution and potentially also a list of flagged issues. For instance, in the \R{numeric}-type variable \R{var2} from \R{toyData}, \R{clean()} has identified two values that are suspected to be miscoded missing values (\R{999} and \R{NaN}), while two values were also flagged as potential outliers that should be investigated more carefully. We can then return to Part 1, the data cleaning summary, and inspect what sorts of checks were performed on this variable. \hl{hm, delete the last part? or use different variable? Only these exact two checks were performed}. \\
 
+\hl{metatext here: blabla more can be done blabla...} \\
 
+Though the \R{clean()} function is very easy to use, it should not be mistaken to be inflexible. A large number of function arguments allows for the cleaning overview document to be molded as the user sees best. Below, we present a selection of these arguments in sections \hl{xx} and \hl{xxx}. We do this under two distinct headlines to emphasize that two levels of control are available when using \R{clean()}. Either, we can control the \hl{[something] - essentially, this is everything but SVC-functions - } or we can control what quality assessments and descriptions each variable are subjected to. In order to understand this distinction, a brief glimpse of the inner structure of \R{clean()} might be useful. This can be obtained from Figure~\ref{figure:cleanStructure}. \hl{segway to next bit or just something to end the paragraph}
 
-\hl{metatext here: blabla more can be done blabla...} 
-
-Though the \R{clean()} function is very easy to use, it should not be mistaken to be inflexible. A large number of function arguments allows for the cleaning overview document to be molded as the user sees best. Below, we present a selection of these arguments. We do this under two distinct headlines to emphasize that two levels of control are available when using \R{clean()}. Either, we can control the \hl{[something]. Essentially, this is everything but SVC-functions.} \\
-
-\hl{Note that the terminology "SVC"-step (referring to the summarize/visualize/check-step) needs to be introduced in this part, as it is used in Table \ref{table.cleanFormals}.}
 
 
 
