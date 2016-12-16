@@ -75,7 +75,7 @@ mosaicVisual(toyData$var1, "Variable 1", doEval = TRUE)
 dev.off()
 
 
-identifyColon <- function(v, nMax = Inf, ... ) {
+identifyColons <- function(v, nMax = Inf, ... ) {
   v <- unique(na.omit(v))
   problemMessage <- "Note: The following values include colons:"
   problem <- FALSE
@@ -97,7 +97,7 @@ identifyColon <- function(v, nMax = Inf, ... ) {
                    problemValues = problemValues))
 }
 
-identifyColon <- checkFunction(identifyColon, 
+identifyColons <- checkFunction(identifyColons,
                                description = "Identify non-suffixed nor -prefixed colons",
                                classes = c("character", "factor", "labelled"))
 
@@ -110,10 +110,12 @@ clean(testData, replace = T,
       labelledSummaries = c(defaultLabelledSummaries(), "countZeros"),
       numericSummaries = c(defaultNumericSummaries(), "countZeros"),
       integerSummaries = c(defaultIntegerSummaries(), "countZeros"),
-      characterChecks = c(defaultCharacterChecks(), "identifyColon"),
-      factorChecks = c(defaultFactorChecks(), "identifyColon"),
-      labelledCheck = c(defaultLabelledChecks(), "identifyColon"))
+      characterChecks = c(defaultCharacterChecks(), "identifyColons"),
+      factorChecks = c(defaultFactorChecks(), "identifyColons"),
+      labelledCheck = c(defaultLabelledChecks(), "identifyColons"))
       
       
+
+#benchmark CleanR after figure
       
       
