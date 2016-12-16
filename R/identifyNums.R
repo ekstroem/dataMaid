@@ -13,7 +13,7 @@
 #' a misclassified numeric variable), \code{$message} (if a problem was found, 
 #' the following message: "Note: The variable consists exclusively of numbers and takes
 #' a lot of different values. Is it perhaps a misclassified numeric variable?", 
-#' otherwise "") and \code{$problemValues} (NULL).  
+#' otherwise "") and \code{$problemValues} (always \code{NULL}).  
 #'
 #' @details A categorical variable is suspected to be a misclassified 
 #' numeric variable if it has the following two properties: First,

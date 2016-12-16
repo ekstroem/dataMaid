@@ -23,7 +23,7 @@ Depends:
 Encoding: UTF-8
 ByteCompile: true
 License: GPL-2
-RoxygenNote: 5.0.1.9000
+RoxygenNote: 5.0.1
 Collate:
     'allCheckFunctions.R'
     'allClasses.R'

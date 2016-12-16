@@ -7,36 +7,40 @@
 identifyOutliers(v, nMax = Inf, maxDecimals = 2)
 }
 \arguments{
-\item{v}{A character or factor variable to check}
+\item{v}{A numeric or integer variable to check.}
 
-\item{nMax}{The maximum number of problematic values to report. Default is \code{Inf}, in which case
-all problematic values are included in the outputtet message.}
+\item{nMax}{The maximum number of problematic values to report. 
+Default is \code{Inf}, in whichall problematic values are included 
+in the outputted message.}
 
 \item{maxDecimals}{A positive integer or \code{Inf}. Number of decimals used when 
 printing numerical values in the data summary and in problematic values from the 
 data checks. If \code{Inf}, no rounding is performed.}
 }
 \value{
-A list with two elements: `problem`: TRUE if any outliers were found, FALSE otherwise, and
-`message` A message describing which values in \code{v} were outliers.
+A \code{\link{checkResult}} with three entires: 
+\code{$problem} (a logical indicating whether outliers were found),
+\code{$message} (a message describing which values are outliers) and 
+\code{$problemValues} (the outlier values).
 }
 \description{
 A checkFunction to be called from \code{\link{check}} that identifies outlier values
 in a numeric/integer variable.
 }
 \details{
-Outliers are identified based on an outlier rule that is appropriate for asymmetric data. Outliers are observations outside the range
+Outliers are identified based on an outlier rule that is 
+appropriate for asymmetric data. Outliers are observations outside the range
 
 \deqn{Q1 - 1.5*exp(a*MC)*IQR ;  Q3 + 1.5*exp(b*MC)*IQR }
 
 where Q1, Q3, and IQR are the first quartile, third quartile, and
-inter-quartile range, MC is the ‘medcouple’, a robust concept and
+inter-quartile range, MC is the 'medcouple', a robust concept and
 estimator of skewness, and a and b are appropriate constants (-4
 and 3).  The medcouple is defined as a scaled median difference of
 the left and right half of distribution, and hence not based on the
 third moment as the classical skewness.
 
-When the data are symmetric then the measure reduces to the
+When the data are symmetric, the measure reduces to the
 standard outlier rule also used in Tukey Boxplots (consistent with
 the \code{\link{boxplot}} function), i.e. as values that are
 smaller than the 1st quartile minus the inter quartile range (IQR)
@@ -47,6 +51,7 @@ or greater than the third quartile plus the IQR.
 
 }
 \seealso{
-\code{\link{check}}, \code{\link{checkFunction}}, \code{\link{mc}}
+\code{\link{check}}, \code{\link{allCheckFunctions}}, 
+\code{\link{checkFunction}}, \code{\link{checkResult}}, \code{\link{mc}}
 }
 

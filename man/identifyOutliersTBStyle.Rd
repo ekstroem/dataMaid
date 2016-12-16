@@ -4,18 +4,23 @@
 \alias{identifyOutliersTBStyle}
 \title{A checkFunction for identifying outliers Turkey Boxstole style}
 \usage{
-identifyOutliersTBStyle(v, nMax = Inf)
+identifyOutliersTBStyle(v, nMax = Inf, maxDecimals = 2)
 }
 \arguments{
-\item{v}{A character or factor variable to check}
+\item{v}{A numeric or integer variable to check.}
 
 \item{nMax}{The maximum number of problematic values to report. Default is \code{Inf}, in which case
-all problematic values are included in the outputtet message.}
+all problematic values are included in the outputted message.}
+
+\item{maxDecimals}{A positive integer or \code{Inf}. Number of decimals used when 
+printing numerical values in the data summary and in problematic values from the 
+data checks. If \code{Inf}, no rounding is performed.}
 }
 \value{
-A list with two elements, $problem: TRUE if any outliers were found, FALSE otherwise, and
-$message A message describing which values in \code{v} were outliers. Note that outlier values
-are only printed once (even if they appear multiple times) and that they are ordered.
+A \code{\link{checkResult}} with three entires: 
+\code{$problem} (a logical indicating whether outliers were found),
+\code{$message} (a message describing which values are outliers) and 
+\code{$problemValues} (the outlier values).
 }
 \description{
 A checkFunction to be called from \code{\link{check}} that identifies outlier values
@@ -28,10 +33,11 @@ Outliers are defined in the style of Turkey Boxplots (consistent with the
 the inter quartile range (IQR) or greater than  the third quartile plus the IQR.
 }
 \examples{
- identifyOutliers(c(1:10, 200, 200, 700))
+ identifyOutliersTBStyle(c(1:10, 200, 200, 700))
 
 }
 \seealso{
-\code{\link{check}}, \code{\link{checkFunction}}
+\code{\link{check}}, \code{\link{allCheckFunctions}}, 
+\code{\link{checkFunction}}, \code{\link{checkResult}}
 }
 

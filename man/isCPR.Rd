@@ -4,19 +4,26 @@
 \alias{isCPR}
 \title{Check if a variable consists of Danish CPR numbers}
 \usage{
-isCPR(v)
+isCPR(v, ...)
 }
 \arguments{
-\item{v}{A variable (vector) to check.}
+\item{v}{A variable (vector) to check. This variable is allowed to have any class.}
+
+\item{...}{Not in use.}
 }
 \value{
-A list with two elements, $problem: \code{TRUE} if \code{v} consists of CPR numbers,
-\code{FALSE} otherwise, and $message A message that either describes the issue (if $problem is \code{TRUE}) 
-or is empty (otherwise).
+A \code{\link{checkResult}} with three entires: 
+\code{$problem} (a logical indicating whether the variable consists 
+of CPR numbers), \code{$message} (if a problem was found, 
+the following message: "Warning: The variable seems to consist of 
+Danish civil regristration (CPR) numbers.", 
+otherwise "") and \code{$problemValues} (always \code{NULL}).
 }
 \description{
-A \code{\link{checkFunction}} that checks if \code{v} consists exclusively of Dansih civil 
-registration (CPR) numbers, ignoring missing values.
+A \code{\link{checkFunction}} that checks if \code{v} consists exclusively 
+of valid Danish civil registration (CPR) numbers, ignoring missing values. This
+function is intended for use as a precheck in \code{\link{clean}}, ensuring
+that CPR numbers are not included in a \code{cleanR} output document.
 }
 \examples{
 CPRs <-  sapply(c("01011988", "02011987", "04052006", "01021990", "01021991",
@@ -34,5 +41,9 @@ isCPR(nonCPRs)
 #no problem because not ALL values are CPRs
 isCPR(mixedCPRs)
 
+}
+\seealso{
+\code{\link{check}}, \code{\link{allCheckFunctions}}, 
+\code{\link{checkFunction}}, \code{\link{checkResult}}
 }
 

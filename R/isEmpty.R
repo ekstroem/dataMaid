@@ -1,17 +1,27 @@
 #' @title Check if a variable only contains a single value
-#' @description A \code{\link{checkFunction}} that checks if \code{v} only contains a single unique value 
-#' (possibly \code{NA}).NOT TRUE - UPDATE TEXT TO REFLECT WHAT WE DO WITH NAs
-#' @param v A variable (vector) to check.
-#' @return A list with two elements, $problem: \code{TRUE} if \code{v} contains only one value,
-#' \code{FALSE} otherwise, and $message A message that either describes the issue (if $problem is \code{TRUE}) 
-#' or is empty (otherwise).
 #' 
+#' @description A \code{\link{checkFunction}} that checks if \code{v} only 
+#' contains a single unique value, aside from missing values. This
+#' function is intended for use as a precheck in \code{\link{clean}}.
+#' 
+#' @param v A variable (vector) to check. All variable types are allowed.
+#' 
+#' @return  A \code{\link{checkResult}} with three entires: 
+#' \code{$problem} (a logical indicating whether \code{v} contains only one value), 
+#' \code{$message} (if a problem was found, a message describing which single 
+#' value the variable takes and how many missing observations it contains, otherwise 
+#' ""), and \code{$problemValues} (always \code{NULL}).  
+#'  
 #' @examples 
-#' emptyVar <- rep("a", 10)
-#' notEmptyVar <- c("a", "a", "b", "c", "d", "e", "f")
+#' emptyVar <- c(rep("a", 10), NA, NA)
+#' notEmptyVar <- c("a", "a", "b", "c", "d", "e", "f", NA, NA)
 #' 
 #' isEmpty(emptyVar)
 #' isEmpty(notEmptyVar)
+#' 
+#' @seealso \code{\link{check}}, \code{\link{allCheckFunctions}}, 
+#' \code{\link{checkFunction}}, \code{\link{checkResult}}
+#' 
 #' @export
 isEmpty <- function(v) {
   lV <- length(v)
@@ -37,6 +47,8 @@ isEmpty <- function(v) {
 
 
 #make it a checkFunction
-#' @include allClasses.R
-isEmpty <- checkFunction(isEmpty, "Check if the variable contains only a single value", allClasses())
+#' @include allClasses.R allClasses.R
+isEmpty <- checkFunction(isEmpty, 
+                         "Check if the variable contains only a single value", 
+                         allClasses())
 

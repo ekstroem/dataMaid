@@ -4,49 +4,57 @@
 #' in a numeric/integer variable by use of the Turkey Boxplot method (consistent witht the
 #' \code{\link{boxplot}} function).
 #'
-#' @param v A character or factor variable to check
+#' @param v A numeric or integer variable to check.
+#' 
 #' @param nMax The maximum number of problematic values to report. Default is \code{Inf}, in which case
-#' all problematic values are included in the outputtet message.
+#' all problematic values are included in the outputted message.
+#' 
+#' @inheritParams clean
 #'
 #' @details Outliers are defined in the style of Turkey Boxplots (consistent with the
 #' \code{\link{boxplot}} function), i.e. as values  that are smaller than the 1st quartile minus
 #' the inter quartile range (IQR) or greater than  the third quartile plus the IQR. 
 #'
-#' @return A list with two elements, $problem: TRUE if any outliers were found, FALSE otherwise, and
-#' $message A message describing which values in \code{v} were outliers. Note that outlier values
-#' are only printed once (even if they appear multiple times) and that they are ordered.
+#' @return A \code{\link{checkResult}} with three entires: 
+#' \code{$problem} (a logical indicating whether outliers were found),
+#' \code{$message} (a message describing which values are outliers) and 
+#' \code{$problemValues} (the outlier values).  
 #'
-#' @seealso \code{\link{check}}, \code{\link{checkFunction}}
-#'
+#' @seealso \code{\link{check}}, \code{\link{allCheckFunctions}}, 
+#' \code{\link{checkFunction}}, \code{\link{checkResult}}
+#' 
 #' @examples
-#'  identifyOutliers(c(1:10, 200, 200, 700))
+#'  identifyOutliersTBStyle(c(1:10, 200, 200, 700))
 #'
 #' @importFrom stats na.omit quantile
 #' @export
-identifyOutliersTBStyle <- function(v, nMax = Inf) UseMethod("identifyOutliersTBStyle")
+identifyOutliersTBStyle <- function(v, nMax = Inf, maxDecimals = 2) UseMethod("identifyOutliersTBStyle")
 
 
 #add methods to generic identifyOutliers function
 #' @export
-identifyOutliersTBStyle.numeric <- function(v, nMax = Inf) identifyOutliersTBStyleNI(v, nMax = nMax)
+identifyOutliersTBStyle.numeric <- function(v, nMax = Inf, maxDecimals = 2) {
+  identifyOutliersTBStyleNI(v, nMax = nMax, maxDecimals = maxDecimals)
+}
 
 #' @export
-identifyOutliersTBStyle.integer <- function(v, nMax = Inf) identifyOutliersTBStyleNI(v, nMax = nMax)
+identifyOutliersTBStyle.integer <- function(v, nMax = Inf, maxDecimals = 2) {
+  identifyOutliersTBStyleNI(v, nMax = nMax, maxDecimals = maxDecimals)
+}
 
 
 #make it a checkFunction
+#' @include checkFunction.R
 identifyOutliersTBStyle <- checkFunction(identifyOutliersTBStyle, 
                                          "Identify outliers (Turkish Boxplot style)")
 
 
 
-#######################
 ##########################################Not exported below#########################################
 
 
 ##numerical and integer variables
-#' @importFrom robustbase mc
-identifyOutliersTBStyleNI <- function(v, nMax) {
+identifyOutliersTBStyleNI <- function(v, nMax, maxDecimals) {
   v <- na.omit(v)
   qs <- quantile(v, c(0.25, 0.75))
   IQR <- qs[2] - qs[1]
@@ -54,13 +62,15 @@ identifyOutliersTBStyleNI <- function(v, nMax) {
   
   if (any(outlierPlaces)) {
     problem <- TRUE
-    problemValues <- unique(v[outlierPlaces])
+    outProblemValues <- unique(v[outlierPlaces])
+    problemValues <- round(outProblemValues, maxDecimals)
   } else {
     problem <- FALSE
-    problemValues <- NULL
+    problemValues <- outProblemValues <- NULL
   }
-  outMessage <- messageGenerator(list(problem=problem,
-                                      problemValues=problemValues),
+  outMessage <- messageGenerator(list(problem = problem,
+                                      problemValues = problemValues),
                                  nMax = nMax)
-  checkResult(list(problem = problem, message = outMessage, problemValues = problemValues))
+  checkResult(list(problem = problem, message = outMessage, 
+                   problemValues = outProblemValues))
 }

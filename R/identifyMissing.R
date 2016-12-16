@@ -208,7 +208,11 @@ identifyMissingL <- function(v, nMax) {
 identifyMissingNI <- function(v, nMax, maxDecimals) {
   v <- v[!is.na(v) | is.nan(v)]
   problem <- FALSE
-  problemValues <- NULL
+  
+  #two types of problemvalues, so that one can
+  #be rounded
+  problemValues <- outProblemValues <- NULL
+  
   finiteInd <- is.finite(v)
   
   #what 99, -9, -999, 9, ... values occur?
@@ -223,6 +227,7 @@ identifyMissingNI <- function(v, nMax, maxDecimals) {
   allProblemOcc <- c(missNinesOcc, missEightsOcc, missNaNOcc)
 
   if (length(allProblemOcc) > 0) {
+    outProblemValues <- problemValues
     problemValues <- round(allProblemOcc, maxDecimals)
     problem <- TRUE
   }
@@ -230,7 +235,7 @@ identifyMissingNI <- function(v, nMax, maxDecimals) {
                                       problemValues = problemValues),
                                  nMax = nMax)
   checkResult(list(problem = problem, message = outMessage, 
-                   problemValues = problemValues))
+                   problemValues = outProblemValues))
 }
 
 #logical (B = boolean) variables

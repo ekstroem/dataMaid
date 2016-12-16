@@ -3,32 +3,39 @@
 #' A checkFunction to be called from \code{\link{check}} that identifies outlier values
 #' in a numeric/integer variable.
 #'
-#' @param v A character or factor variable to check
-#' @param nMax The maximum number of problematic values to report. Default is \code{Inf}, in which case
-#' all problematic values are included in the outputtet message.
+#' @param v A numeric or integer variable to check.
+#' 
+#' @param nMax The maximum number of problematic values to report. 
+#' Default is \code{Inf}, in whichall problematic values are included 
+#' in the outputted message.
+#' 
 #' @inheritParams clean
 #'
-#' @details Outliers are identified based on an outlier rule that is appropriate for asymmetric data. Outliers are observations outside the range
+#' @details Outliers are identified based on an outlier rule that is 
+#' appropriate for asymmetric data. Outliers are observations outside the range
 #'
 #' \deqn{Q1 - 1.5*exp(a*MC)*IQR ;  Q3 + 1.5*exp(b*MC)*IQR }
 #'
 #' where Q1, Q3, and IQR are the first quartile, third quartile, and
-#' inter-quartile range, MC is the ‘medcouple’, a robust concept and
+#' inter-quartile range, MC is the 'medcouple', a robust concept and
 #' estimator of skewness, and a and b are appropriate constants (-4
 #' and 3).  The medcouple is defined as a scaled median difference of
 #' the left and right half of distribution, and hence not based on the
 #' third moment as the classical skewness.
 #'
-#' When the data are symmetric then the measure reduces to the
+#' When the data are symmetric, the measure reduces to the
 #' standard outlier rule also used in Tukey Boxplots (consistent with
 #' the \code{\link{boxplot}} function), i.e. as values that are
 #' smaller than the 1st quartile minus the inter quartile range (IQR)
 #' or greater than the third quartile plus the IQR.
 #'
-#' @return A list with two elements: `problem`: TRUE if any outliers were found, FALSE otherwise, and
-#' `message` A message describing which values in \code{v} were outliers.
+#' @return A \code{\link{checkResult}} with three entires: 
+#' \code{$problem} (a logical indicating whether outliers were found),
+#' \code{$message} (a message describing which values are outliers) and 
+#' \code{$problemValues} (the outlier values).  
 #'
-#' @seealso \code{\link{check}}, \code{\link{checkFunction}}, \code{\link{mc}}
+#' @seealso \code{\link{check}}, \code{\link{allCheckFunctions}}, 
+#' \code{\link{checkFunction}}, \code{\link{checkResult}}, \code{\link{mc}}
 #'
 #' @examples
 #'  identifyOutliers(c(1:10, 200, 200, 700))
@@ -51,6 +58,7 @@ identifyOutliers.integer <- function(v, nMax = Inf, maxDecimals = 2) {
 
 
 #make it a checkFunction
+#' @include checkFunction.R
 identifyOutliers <- checkFunction(identifyOutliers, "Identify outliers")
 
 
@@ -80,17 +88,18 @@ identifyOutliersNI <- function(v, nMax, maxDecimals) {
 
   if (any(outlierPlaces)) {
     problem <- TRUE
-    problemValues <- v[outlierPlaces]
 
-    #only print each outlier value once (and round them):
-    problemValues <- round(unique(problemValues), maxDecimals)
-
+    #only print each outlier value once:
+    outProblemValues <- unique(v[outlierPlaces])
+    
+    problemValues <- round(outProblemValues, maxDecimals)
   } else {
     problem <- FALSE
-    problemValues <- NULL
+    problemValues <- outProblemValues <- NULL
   }
   outMessage <- messageGenerator(list(problem=problem,
-                                      problemValues=problemValues),
+                                      problemValues= problemValues),
                                  nMax = nMax)
-  checkResult(list(problem = problem, message = outMessage, problemValues = problemValues))
+  checkResult(list(problem = problem, message = outMessage, 
+                   problemValues = outProblemValues))
 }
