@@ -10,22 +10,34 @@ identifyLoners(v, nMax = Inf)
 \item{v}{A character or factor variable to check.}
 
 \item{nMax}{The maximum number of problematic values to report. Default is \code{Inf}, in which case
-all problematic values are included in the outputtet message.}
+all problematic values are included in the outputted message.}
 }
 \value{
-A list with two elements, $problem: TRUE if any loners were found, FALSE otherwise, and
-$message A message describing which values in \code{v} were loners. Note that loner values
-are listed only once (no matter how many time they occur) in alphabetical order.
+A \code{\link{checkResult}} with three entires: 
+\code{$problem} (a logical indicating whether case issues where found),
+\code{$message} (a message describing which values in \code{v} were loners) and 
+\code{$problemValues} (the problematic values in their original format). 
+Note that Only unique problematic values
+are listed and they are presented in alphabetical order.
 }
 \description{
-A checkFunction to be called from \code{\link{check}} that identifies values that
+A \code{\link{checkFunction}} to be called from \code{\link{check}} that identifies values that
 only occur less than 6 times in factor or character variables (that is, loners).
+}
+\details{
+For character and factor variables, identify values that only have a
+very low number of observations, as these categories might be
+problematic when conducting an analysis. Unused factor levels are
+not considered "loners". "Loners" are defined as values with 5 or less 
+observations, reflecting the commonly use rule of thumb for performing
+chi squared tests.
 }
 \examples{
 identifyLoners(c(rep(c("a", "b", "c"), 10), "d", "d"))
 
 }
 \seealso{
-\code{\link{check}}, \code{\link{checkFunction}}
+\code{\link{check}}, \code{\link{allCheckFunctions}}, 
+\code{\link{checkFunction}}, \code{\link{checkResult}}
 }
 

@@ -1,17 +1,29 @@
 #' A checkFunction for identifying sparsely represented values (loners)
 #'
-#' A checkFunction to be called from \code{\link{check}} that identifies values that
+#' A \code{\link{checkFunction}} to be called from \code{\link{check}} that identifies values that
 #' only occur less than 6 times in factor or character variables (that is, loners).
 #'
 #' @param v A character or factor variable to check.
-#' @param nMax The maximum number of problematic values to report. Default is \code{Inf}, in which case
-#' all problematic values are included in the outputtet message.
 #' 
-#' @return A list with two elements, $problem: TRUE if any loners were found, FALSE otherwise, and
-#' $message A message describing which values in \code{v} were loners. Note that loner values
-#' are listed only once (no matter how many time they occur) in alphabetical order.
+#' @param nMax The maximum number of problematic values to report. Default is \code{Inf}, in which case
+#' all problematic values are included in the outputted message.
 #'
-#' @seealso \code{\link{check}}, \code{\link{checkFunction}}
+#' @return A \code{\link{checkResult}} with three entires: 
+#' \code{$problem} (a logical indicating whether case issues where found),
+#' \code{$message} (a message describing which values in \code{v} were loners) and 
+#' \code{$problemValues} (the problematic values in their original format). 
+#' Note that Only unique problematic values
+#' are listed and they are presented in alphabetical order.
+#'
+#' @details For character and factor variables, identify values that only have a
+#' very low number of observations, as these categories might be
+#' problematic when conducting an analysis. Unused factor levels are
+#' not considered "loners". "Loners" are defined as values with 5 or less 
+#' observations, reflecting the commonly use rule of thumb for performing
+#' chi squared tests.
+#'
+#' @seealso \code{\link{check}}, \code{\link{allCheckFunctions}}, 
+#' \code{\link{checkFunction}}, \code{\link{checkResult}}
 #'
 #' @examples
 #' identifyLoners(c(rep(c("a", "b", "c"), 10), "d", "d"))
@@ -29,6 +41,7 @@ identifyLoners.character <- function(v, nMax = Inf) identifyLonersC(v, nMax = nM
 
 
 #make it a checkFunction
+#' @include checkFunction.R
 identifyLoners <- checkFunction(identifyLoners, "Identify levels with < 6 obs.")
 
 ##########################################Not exported below#########################################
@@ -38,11 +51,6 @@ identifyLoners <- checkFunction(identifyLoners, "Identify levels with < 6 obs.")
 #very low number of observations, as these categories might be
 #problematic when conducting an analysis. Unused factor levels are
 #not considered "loners". "Loners" have 5 or less observations.
-#(corresponding to the chi2-test rule of thumb)
-#NOTE: Different (or just more) loner definition(s)?
-#NOTE: Proper term for "loner"?
-#NOTE: identifyLoner for integer/numerical variables suspected to be categorical?
-#NOTE: identifyLoner for labelled variables?
 
 
 #factor variables
@@ -60,7 +68,8 @@ identifyLonersF <- function(v, nMax) {
   outMessage <- messageGenerator(list(problem=problem,
                                       problemValues=problemValues),
                                  nMax = nMax)
-  checkResult(list(problem = problem, message = outMessage, problemValues = problemValues))
+  checkResult(list(problem = problem, message = outMessage, 
+                   problemValues = problemValues))
 }
 
 #character variables

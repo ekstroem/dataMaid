@@ -5,23 +5,29 @@
 #'
 #' @param v A variable to check.
 #' @param nMax The maximum number of problematic values to report. Default is \code{Inf}, in which case
-#' all problematic values are included in the outputtet message.
+#' all problematic values are included in the outputted message.
 #' @param ... Not in use.
 #'
 #' @details \code{identifyMissing} tries to identify common choices of missing values outside of the
-#' R standards. These include special words (NaN and Inf (no matter the cases)), one or more -9/9's
-#' (e.g. 999, "99", -9, "-99"), one ore more -8/8's (e.g. -8, 888, -8888), STATA style missing values
-#' (commencing with ".") and other character strings ("", " ", "-", "NA" miscoded as character). If 
-#' the variable is numeric/integer or a character/factor variable consisting only of numbers and with
-#' more than 11 different values, the numeric miscoded missing values (999, 888, -99, -8 etc.) are 
-#' only recognized as miscoded missing if they are max or min, respectively, and the distance 
-#' between the second largest/smallest value and this max/min value is greater than one. 
+#' R standard (\code{NA}). These include special words (NaN and Inf (no matter the cases)), 
+#' one or more -9/9's (e.g. 999, "99", -9, "-99"), one ore more -8/8's (e.g. -8, 888, -8888), 
+#' Stata style missing values (commencing with ".") and other character strings 
+#' ("", " ", "-", "NA" miscoded as character). If the variable is numeric/integer or a 
+#' character/factor variable consisting only of numbers and with more than 11 different values,
+#' the numeric miscoded missing values (999, 888, -99, -8 etc.) are 
+#' only recognized as miscoded missing if they are maximum or minimum, respectively, and the distance 
+#' between the second largest/smallest value and this maximum/minimum value is greater than one. 
 #'
-#' @return A list with two elements, $problem: TRUE if any miscoded missing values were found,
-#' FALSE otherwise, and $message A message describing which values in \code{v} were miscoded missing
-#' values. Note that only unique values are listed and that they appear in alphabetical order.
+#' @return A \code{\link{checkResult}} with three entires: 
+#' \code{$problem} (a logical indicating whether midcoded missing values where found),
+#' \code{$message} (a message describing which values in \code{v} were suspected to be
+#' miscoded missing values), and \code{$problemValues} (the problematic values
+#' in their original format). Note that Only unique problematic values
+#' are listed and that they are presented in alphabetical order.
 #'
-#' @seealso \code{\link{check}}, \code{\link{checkFunction}}
+#' @seealso \code{\link{check}}, \code{\link{allCheckFunctions}}, 
+#' \code{\link{checkFunction}}, \code{\link{checkResult}}
+#'
 #'
 #' @examples
 #' ##data(testData)
@@ -62,6 +68,7 @@ identifyMissing.logical <- function(v, nMax = Inf, ...) identifyMissingB(v, nMax
 
 
 #make it a checkFunction
+#' @include checkFunction.R
 identifyMissing <- checkFunction(identifyMissing, "Identify miscoded missing values")
 
 ##########################################Not exported below#########################################
@@ -74,11 +81,12 @@ identifyMissing <- checkFunction(identifyMissing, "Identify miscoded missing val
 #Deal with 9, 99, 999, ... by converting to characterstring. Not
 #very elegant, find better way.
 #Takes a vector and returns the values that consist
-#of more than one character/digit and consist only of 9's, e.g.
-#99, 999, 999999 (but NOT 9).
-#update: also works for other characters than 9, then it finds all
-#occurances that consist of only that character, excluding a single
-#occurance, e.g. just "9" or "" or "a", but identifying "99", "   ", "aaa"
+#of more than one character/digit and consist only of "char", e.g.
+#99, 999, 999999, 9 when char = 9. Note that ignoreFirst 
+#removes 9 (a single occurrence of "char") from the outputted vector.
+#If prefix != NULL, the function looks for repeated entries after
+#removing the prefix. If e.g. prefix = "-" and char = 8, 
+#values like -88, -8, -8888 will be identified (if present).
 identifyMissRepChar <- function(v, char, prefix=NULL, ignoreFirst = FALSE) {
   v <- as.character(v)
   char <- as.character(char)
@@ -101,23 +109,13 @@ identifyMissRepChar <- function(v, char, prefix=NULL, ignoreFirst = FALSE) {
 }
 
 
-#Should only be used on numeric/integer vectors.
-#returns 9 if 9 seems to act as a missing value indicator
-#in the variable
-#identifyMissNine <- function(v) {
-#  nines <- v == 9
-#  if (!any(nines)) return(NULL)
-#  if (max(v)>9) return(NULL)
-#  if (length(unique(v))>8) return(NULL)
-#  9
-#}
-
 #For numeric/integer variables only!
-#Identify occurences of num in v. If e.g. num is 8, both 8, 88, 888, ...,  and -8, -88, ...,
-#are identified. However, an occurrence only "counts" if it is the min/max value of the variable
-#and it is seperated from the next biggest (smallest) value by at least 1. 
+#Identify occurences of num in v. If e.g. num is 8, 
+#both 8, 88, 888, ...,  and -8, -88, ...,
+#are identified. However, an occurrence only "counts" if it 
+#is the min/max value of the variable and it is seperated from 
+#the second biggest (smallest) value by at least 1. 
 identifyMissNumber <- function(v, num, allOcc = TRUE) {
-  #browser()
   v <- sort(unique(v))
   posProblemVals <- identifyMissRepChar(v, num)
   negProblemVals <- identifyMissRepChar(v, num, prefix="-")
@@ -171,7 +169,7 @@ identifyMissingCF <- function(v, nMax) {
     v <- v[!(v %in% c(missStrsOcc, missSpaceOcc, missDotPrefixOcc))]
     
     #Numeric miscoded missing values, method depending on whether v seems to be 
-    #numeric
+    #numeric (though categorical)
     if (identifyNums(v)$problem) {
       v <- as.numeric(v)
       missAllNinesOcc <- identifyMissNumber(v, 9, FALSE)
@@ -192,9 +190,11 @@ identifyMissingCF <- function(v, nMax) {
         problem <- TRUE
     }
 
-    outMessage <- messageGenerator(list(problem = problem, problemValues = problemValues),
+    outMessage <- messageGenerator(list(problem = problem, 
+                                        problemValues = problemValues),
                                    nMax = nMax)
-    checkResult(list(problem = problem, message = outMessage, problemValues = problemValues))
+    checkResult(list(problem = problem, message = outMessage, 
+                     problemValues = problemValues))
 }
 
 #labbeled variables
@@ -210,19 +210,27 @@ identifyMissingNI <- function(v, nMax, maxDecimals) {
   problem <- FALSE
   problemValues <- NULL
   finiteInd <- is.finite(v)
-
-  missNinesOcc <- identifyMissNumber(v[finiteInd], 9, FALSE) #what 99, -9, -999, 9, ... values occur?
-  missEightsOcc <- identifyMissNumber(v[finiteInd], 8, FALSE) #what -8, -88, 8, 888, ... values occur?
-  missNaNOcc <- unique(v[!finiteInd]) #what NaN, Inf, ... values occur?
+  
+  #what 99, -9, -999, 9, ... values occur?
+  missNinesOcc <- identifyMissNumber(v[finiteInd], 9, FALSE) 
+  
+  #what -8, -88, 8, 888, ... values occur?
+  missEightsOcc <- identifyMissNumber(v[finiteInd], 8, FALSE) 
+  
+  #what NaN, Inf, ... values occur?
+  missNaNOcc <- unique(v[!finiteInd])
+  
   allProblemOcc <- c(missNinesOcc, missEightsOcc, missNaNOcc)
 
   if (length(allProblemOcc) > 0) {
     problemValues <- round(allProblemOcc, maxDecimals)
     problem <- TRUE
   }
-  outMessage <- messageGenerator(list(problem = problem, problemValues = problemValues),
+  outMessage <- messageGenerator(list(problem = problem, 
+                                      problemValues = problemValues),
                                  nMax = nMax)
-  checkResult(list(problem = problem, message = outMessage, problemValues = problemValues))
+  checkResult(list(problem = problem, message = outMessage, 
+                   problemValues = problemValues))
 }
 
 #logical (B = boolean) variables
