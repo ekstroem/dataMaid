@@ -1,14 +1,13 @@
-#' @title Summary function for missing values
+#' Summary function for missing values
 #'
-#' @description A  \code{\link{summaryFunction}}, intended to be called from 
+#' A \code{\link{summaryFunction}}, intended to be called from
 #' \code{\link{summarize}} (and \code{\link{clean}}), which counts the
 #' number of missing (\code{NA}) values in a variable.
 #'
 #' @param v A variable (vector).
-#'
 #' @param ... Not in use.
 #'
-#' @return A \code{\link{summaryResult}} object with \code{$feature}: 
+#' @return A \code{\link{summaryResult}} object with \code{$feature}:
 #' "No. missing obs.", \code{$result}: [the number and percentage missing observations].
 #' and \code{$value}: [the number of missing observations].
 #'
@@ -23,12 +22,12 @@ countMissing <- function(v, ...) {
   noMissing <- sum(is.na(v))
   percentMissing <- round(100*noMissing/length(v),2)
   summaryResult(list(feature = "Number of missing obs." ,
-                     result = paste(noMissing, " (", 
+                     result = paste(noMissing, " (",
                                     percentMissing," %)", sep=""),
                      value = noMissing))
 }
 
 #' @include summaryFunction.R
-countMissing <- summaryFunction(countMissing, 
+countMissing <- summaryFunction(countMissing,
                                 "Compute ratio of missing observations",
                                 allClasses())
