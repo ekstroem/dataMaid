@@ -2,7 +2,7 @@
 % Please edit documentation in R/clean.R
 \name{clean}
 \alias{clean}
-\title{Perform a check of potential errors in a data frame}
+\title{Produce a data cleaning overview document}
 \usage{
 clean(data, output = c("pdf", "html", "screen"), render = TRUE,
   useVar = NULL, ordering = c("asIs", "alphabetical"),
@@ -10,8 +10,7 @@ clean(data, output = c("pdf", "html", "screen"), render = TRUE,
   mode = c("summarize", "visualize", "check"), smartNum = TRUE,
   preChecks = c("isKey", "isEmpty"), file = NULL, replace = FALSE,
   vol = "", standAlone = TRUE, twoCol = TRUE, quiet = TRUE,
-  openResult = TRUE, nagUser = TRUE, checkDetails = FALSE,
-  characterChecks = defaultCharacterChecks(),
+  openResult = TRUE, characterChecks = defaultCharacterChecks(),
   factorChecks = defaultFactorChecks(),
   labelledChecks = defaultLabelledChecks(),
   numericChecks = defaultNumericChecks(),
@@ -24,130 +23,173 @@ clean(data, output = c("pdf", "html", "screen"), render = TRUE,
   integerSummaries = defaultIntegerSummaries(),
   logicalSummaries = defaultLogicalSummaries(),
   dateSummaries = defaultDateSummaries(), allSummaries = NULL,
-  allVisuals = "standardVisual", listChecks = TRUE, brag = FALSE,
-  maxProbVals = Inf, maxDecimals = 2, ...)
+  allVisuals = "standardVisual", listChecks = TRUE, maxProbVals = Inf,
+  maxDecimals = 2, ...)
 }
 \arguments{
-\item{data}{the dataset to be checked [LIST ALL ALLOWED OBJECT CLASSES, INCLUDING data.frame,
-matrix, data.table, ... (more?)].}
+\item{data}{The dataset to be checked. This dataset should be of class \code{data.frame}, 
+\code{tibble} or \code{matrix}. If it is of classs \code{matrix}, it will be converted to a 
+\code{data.frame}.}
 
-\item{output}{Output format. Options are "markdown" (the default), "pdf", "html", and "screen".
+\item{output}{FIX THIS-------
+Output format. Options are \code{"markdown"} (the default), \code{"pdf"}, \code{"html"}, 
+and \code{"screen"}. 
 All but the "screen" option produces an R markdown file which can be rendered.
-The "screen" option prints a small summary on the screen.}
+The "screen" option prints a small summary on the screen. FIX, default is not correct and screen 
+should maybe be removed?-------FIX THIS}
 
-\item{render}{Should the output file be rendered (defaults to TRUE)? This argument has no
-impact unless the output is "html" or "pdf" in which case the R markdown file is rendered to
-produce the corresponding file.}
+\item{render}{FIX THIS--------Should the output file be rendered (defaults to \code{TRUE}), 
+i.e. should a pdf/html document be generated and saved to the disc? This argument has no
+impact unless the output is "html" or "pdf", in which case the R markdown file is rendered to
+produce the corresponding file. DEPENDS ON OUTPUT STUFF ---------FIX THIS}
 
-\item{useVar}{Variables to clean. If NULL (the default) then all variables in the data.frame
-o are included. If a vector of variable names is included then only the variables in o that are
-also part of useVar are checked.}
+\item{useVar}{Variables to clean. If \code{NULL} (the default), all variables in \code{data}
+are included. If a vector of variable names is supplied, only the variables in \code{data} that are
+also in \code{useVar} are included in the data cleaning overview document.}
 
-\item{ordering}{Choose the ordering of the variables in the data presentation. The options
+\item{ordering}{Choose the ordering of the variables in the variable presentation. The options
 are "asIs" (ordering as in the dataset) and "alphabetical" (alphabetical order).}
 
-\item{onlyProblematic}{A logical. Set to TRUE if only the potentially problematic variables should be listed.}
+\item{onlyProblematic}{A logical. If \code{TRUE}, only the variables flagged as
+problematic in the check step will be included in the variable list.}
 
-\item{labelled_as}{A string explaining the way to handle labelled vectors. Possibilities are either "factor" (the default), "NA" (all missing are converted to NA) or "zap" (remove all labels).}
+\item{labelled_as}{FIX THIS ----------A string explaining the way to handle labelled vectors. 
+Possibilities are either \code{"factor"} (the default), \code{"NA"} 
+(all missing are converted to \code{NA}) or \code{"zap"} (remove all labels). NOT CLEAR TO
+ME WHAT THE "NA" OPTION DOES. ------------ FIX THIS}
 
 \item{mode}{Vector of tasks to perform among the three categories "summarize", "visualize" and "check".
-Note that... SOMETHING ABOUT HOW THE FUNCTIONS CALLED IN EACH PART ARE CONTROLLED.}
+The default, \code{c("summarize", "visualize", "check")}, implies that all three steps are 
+performed. The steps selected in \code{mode} will be performed for each variable in 
+\code{data} and their results are presented in the second part of the outputtet data cleaning
+overview document. The "summarize" step is responsible for creating the summary table, 
+the "visualize" step is responsible for creating the plot and the "check" step is responsible
+for performing checks on the variable and printing the results if any problems are found.}
 
-\item{smartNum}{If TRUE, numeric and integer variables with less than maxLevels (defaults to 5) unique
-values are treated as factor variables in the checking, visualization and summary functions. A
-message is printed in the data summary as well.}
+\item{smartNum}{If \code{TRUE} (the default), numeric and integer variables with
+less than 5 unique values are treated as factor variables in the checking, 
+visualization and summary steps, and a message notifying the reader of this is
+printed in the data summary.}
 
-\item{preChecks}{Variable checks that are performed before the summary/visualization/checking step. If
-any of these checks find problems, the variable will not be summarized nor visualized nor checked.}
+\item{preChecks}{Vector of function names for check functions used in the pre-check stage.
+The pre-check stage consists of variable checks that should be performed before the 
+summary/visualization/checking step. If any of these checks find problems, the variable 
+will not be summarized nor visualized nor checked.}
 
-\item{file}{The filename of output file. If set to NULL (the default) then the filename will be
-the name of the data frame prefixed with "cleanR_". Note that a valid file is of type rmd, hence all
+\item{file}{The filename of the outputted rmarkdown (.Rmd) file. 
+If set to \code{NULL} (the default), the filename will be the name of \code{data} 
+prefixed with "cleanR_", if this qualifies as a valid file name (e.g. no special
+characters allowed). Otherwise, \code{clean()} tries to create a valid filename by 
+substituing illegal characters. Note that a valid file is of type .Rmd, hence all
 filenames should have a ".Rmd"-suffix.}
 
-\item{replace}{If FALSE (the default) an error is thrown if one of the files that we are about to write to
-already exists. If TRUE no checks are performed.}
+\item{replace}{If \code{FALSE} (the default), an error is thrown if one of the files
+that we are about to be created (.Rmd overview file and possible also a .html or .pdf 
+file) already exist. If \code{TRUE}, no checks are performed and files on disc thus
+might be overwritten.}
 
-\item{vol}{Extra text string that is appended on the end of the output file name(s). For example, if the data
-set is called "myData", no file argument is supplied and vol="2", the output file will be called
-"cleanR_myData2.Rmd"}
+\item{vol}{Extra text string or numeric that is appended on the end of the output
+file name(s). For example, if the dataset is called "myData", no file argument is
+ supplied and \code{vol=2}, the output file will be called "cleanR_myData2.Rmd"}
 
-\item{standAlone}{If TRUE, the document begins with a markdown preamble such that it
-can be rendered as a stand alone R markdown file. If \code{FALSE} this preamble is removed. Moreover,
-no matter the input to the \code{render} argument, the document will now not be rendered, as it has
-no preamble.}
+\item{standAlone}{A logical. If \code{TRUE}, the document begins with a 
+markdown YAML preamble such that it can be rendered as a stand alone rmarkdown 
+file, e.g. by calling \code{\link{render}}. If \code{FALSE}, this preamble is removed. 
+Moreover, no matter the input to the \code{render} argument, the document will now 
+not be rendered, as it has no preamble.}
 
-\item{twoCol}{Should the results be presented in two columns (if output is "html" or "pdf")? Defaults to TRUE.}
+\item{twoCol}{A logical. Should the results from the \emph{summarize} and \emph{visualize} 
+steps be presented in two columns? Defaults to \code{TRUE}.}
 
-\item{quiet}{If \code{TRUE} (the default), only a few messages is printed to the screen as \code{clean} runs.
-If \code{FALSE} no messages are suppressed. The third option, \code{silent}, renders the function
-completely silent such that only fatal errors are printed.}
+\item{quiet}{A logical. If \code{TRUE} (the default), only a few messages 
+are printed to the screen as \code{clean} runs. If \code{FALSE}, no messages are 
+suppressed. The third option, \code{silent}, renders the function completely 
+silent, such that only fatal errors are printed.}
 
-\item{openResult}{If TRUE, the file produced by clean() is automatically opened by the end of
-the function run.}
+\item{openResult}{A logical. If \code{TRUE} (the default), the last file produced 
+by \code{clean} is automatically opened by the end of the function run. This
+means that if \code{render = TRUE}, the rendered pdf or html file is opened, while
+if \code{render = FALSE}, the .Rmd file is opened.}
 
-\item{nagUser}{Remove at some point}
+\item{characterChecks}{A vector of the names of error-checking functions to apply to 
+character vectors.}
 
-\item{checkDetails}{MAYBE ALSO IMPLEMENT THIS?: If TRUE, details about each check function are added
-to the document (if available)}
+\item{factorChecks}{A vector of the names of error-checking functions to apply to 
+integer vectors.}
 
-\item{characterChecks}{a list of error-checking functions to apply to character vectors}
+\item{labelledChecks}{A vector of the names of error-checking functions to apply to 
+character vectors.}
 
-\item{factorChecks}{a list of error-checking functions to apply to integer vectors}
+\item{numericChecks}{A vector of the names of error-checking functions to apply to 
+numeric vectors.}
 
-\item{labelledChecks}{a list of error-checking functions to apply to character vectors}
+\item{integerChecks}{A vector of the names of error-checking functions to apply to 
+integer vectors.}
 
-\item{numericChecks}{a list of error-checking functions to apply to integer vectors}
+\item{logicalChecks}{A vector of the names of error-checking functions to apply to
+logical vectors.}
 
-\item{integerChecks}{a list of error-checking functions to apply to integer vectors}
+\item{dateChecks}{A vector of the names of error-checking functions to apply to 
+Date vectors.}
 
-\item{logicalChecks}{a list of error-checking functions to apply to Date vectors}
+\item{allChecks}{Vector of function names that should be used as check-functions 
+for all variable types. Note that this argument overwrites the arguments 
+\code{characterChekcs}, \code{factorChecks}, etc.}
 
-\item{dateChecks}{a list of error-checking functions to apply to integer vectors}
+\item{characterSummaries}{A vector of the names of summary functions to apply to 
+character vectors.}
 
-\item{allChecks}{Vector of function names that should be used as check-functions for all variable types.
-See ???? for more details OR SOMETHING? Note that this option overwrite the options characterChekcs,
-factorChecks, etc.}
+\item{factorSummaries}{A vector of the names of summary functions to apply to 
+factor vectors.}
 
-\item{characterSummaries}{STUFF}
+\item{labelledSummaries}{A vector of the names of summary functions to apply to 
+labelled vectors.}
 
-\item{factorSummaries}{STUFF}
+\item{numericSummaries}{A vector of the names of summary functions to apply to 
+numeric vectors.}
 
-\item{labelledSummaries}{STUFF}
+\item{integerSummaries}{A vector of the names of summary functions to apply to 
+integer vectors.}
 
-\item{numericSummaries}{STUFF}
+\item{logicalSummaries}{A vector of the names of summary functions to apply to 
+logical vectors.}
 
-\item{integerSummaries}{STUFF}
+\item{dateSummaries}{A vector of the names of summary functions to apply to 
+Date vectors.}
 
-\item{logicalSummaries}{STUFF}
+\item{allSummaries}{Vector of function names that should be used as summary 
+functions for all variable types. Note that this argument overwrites the arguments 
+\code{characterSummaries}, \code{factorSummaries}, etc.}
 
-\item{dateSummaries}{STUFF}
+\item{allVisuals}{A single function name. This funtion name is called for 
+creating the plots for each variable in the "visualize" step. The default,
+\code{"standardVisual"} thus calls the \code{link{visualFunction}} 
+\code{\link{standardVisual}} for each variable in \code{data}.}
 
-\item{allSummaries}{Vector of function names that should be used as summary-functions for all variable types.
-See ???? for more details OR SOMETHING? Note that this option overwrites the options charachterSummaries,
-factorSummaries, etc.}
+\item{listChecks}{A logical. Controls whether what checks that were used for each 
+possible variable type are summarized in the output. Defaults to \code{TRUE}.}
 
-\item{allVisuals}{STUFF. Default: "standardVisual".}
+\item{maxProbVals}{A positive integer or \code{Inf}. Maximum number of unique 
+values printed from check-functions. Defaults to \code{Inf}, which means 
+that all problematic values are printed.}
 
-\item{listChecks}{Logical. Sets whether the checks that were used for each possible variable type are shown in the output. Defaults to TRUE.}
+\item{maxDecimals}{A positive integer or \code{Inf}. Number of decimals used when 
+printing numerical values in the data summary and in problematic values from the 
+data checks. If \code{Inf}, no rounding is performed.}
 
-\item{brag}{A logical that determines if the name of cleanR package is printed in the output. Defaults to TRUE but should probably be removed altogether.}
-
-\item{maxProbVals}{Maximum number of unique values printed from check-functions (integer > 0).
-Defaults to \code{Inf}, which means that all values are printed.}
-
-\item{maxDecimals}{Number of decimals used when printing numerical values in the data
-summary. If \code{Inf}, no rounding is performed.}
-
-\item{\dots}{other arguments that are passed on the to precheck, checking, summary and visualization functions}
+\item{\dots}{FIX ME-------- Other arguments that are passed on the to precheck, 
+checking, summary and visualization functions.WHAT ARGUMENTS ARE RELEVANT TO MENTION
+ HERE? DESCRIPTIVE FOR SUMMARIZE()? ---------- FIX ME}
 }
 \value{
-The function does not return anything. It's side effect (the production of the Rmd file summary)
-is the reason for running the function.
+The function does not return anything. Its side effect (the production 
+of a data cleaning overview document) is the reason for running the function.
 }
 \description{
-Runs a set of validation checks to check the variables in a data frame for potential errors.
+Run a set of validation checks to check the variables in a dataset for potential errors.
 Performs checking steps according to user input and/or data type of the inputted variable.
 The checks are saved to an R markdown file which can rendered into an easy-to-read document.
+This document also includes summaries and visualizations of each variable in the dataset.
 }
 \examples{
 
@@ -163,23 +205,9 @@ clean(testData)
 
 #Add user defined check-function to the checks performed on character variables:
 \dontrun{
-characterFoo <- function(v) {
- if (substr(substitute(v), 1, 1) == "_") {
-   out <- list(problem=TRUE, message="Note that the variable name begins with \\\\_")
- } else out <- list(problem=FALSE, message="")
- out
-}
-class(characterFoo) <- "checkFunction"
-attr(characterFoo, "description") <- "I really hate underscores"
 clean(testData, characterChecks=c(defaultCharacterChecks(), "characterFoo"))
 }
 
-}
-\seealso{
-\code{\link{clean}}
-}
-\author{
-Anne H. Petersen \email{ahpe@sund.ku.dk} and Claus Thorn Ekstrom \email{ekstrom@sund.ku.dk}
 }
 \keyword{misc}
 

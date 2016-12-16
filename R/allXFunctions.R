@@ -1,9 +1,8 @@
- # '    @ export
+#Make a functionSummary of all functions of type X, that is, 
+#coerce their names, description attributes and classes attributes
+#into a list.
+#Called from allVisualFunction(), allSummaryFunctions(), allCheckFunctions().
 allXFunctions <- function(X) {
-  #.GlobalEnv isn't the right place to look. Got to add stuff loaded
-  #from packages too!
-  #e <- as.environment("package:cleanR")
-  #parent.env(e) <- .GlobalEnv
   allF <- Filter(function(x) X %in% class(get(x)), union(ls(envir = .GlobalEnv),
                                                          ls("package:cleanR")))
   out <- list(name = allF, description = sapply(allF, function(x) description(get(x))),

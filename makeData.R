@@ -77,16 +77,15 @@ options(stringsAsFactors = stringsAsFactorsOption)
 
 testData <- data
 
-save(testData, file="data/testData.Rda")
+save(testData, file="data/testData.rda")
+  #Note: .rda files must be written as either .rda or .Rdata (case sensitive!),
+  #otherwise, they will not be retrievable using data(), even though they are
+  #located in the correct folders.
+  #Note also: save() is not case sensitive, so it does not overwrite an identical file,
+  #that only differs by the casing of the file extension.
 
 
-#make smaller version of testData for article (toyData)
-
-toyData <- testData[, c("charVar", "factorVar", "numVar",
-                        "keyVar", "emptyVar", "numOutlierVar",
-                        "miscodedMissingVar",
-                        "misclassifiedNumVar")]
-
+#make smaller dataset for article (toyData)
 set.seed(1)
 toyData <- data.frame(var1 = c(rep("red", 10), rep("blue", 3), NA, NA),
                       var2 = c(1, 1, 1, 2, 2, 6, 6, 6, 999, NA, 4, 82, NA, NaN, 5),
@@ -95,3 +94,4 @@ toyData <- data.frame(var1 = c(rep("red", 10), rep("blue", 3), NA, NA),
                       var5 = as.character(1:15),
                       var6 = rep("Irrelevant", 15))
                       
+save(toyData, file="data/toyData.rda")

@@ -12,18 +12,21 @@ countMissing(v, ...)
 \item{...}{Not in use.}
 }
 \value{
-A list with $feature: "No. missing obs." and
-$result: [the number and percentage missing observations].
+A \code{\link{summaryResult}} object with \code{$feature}: 
+"No. missing obs.", \code{$result}: [the number and percentage missing observations].
+and \code{$value}: [the number of missing observations].
 }
 \description{
-A summary type function to be called from \code{\link{summarize}}, which counts the
-number of missing (NA) values in a variable.
+A  \code{\link{summaryFunction}}, intended to be called from 
+\code{\link{summarize}} (and \code{\link{clean}}), which counts the
+number of missing (\code{NA}) values in a variable.
 }
 \examples{
 countMissing(c(1:100, rep(NA, 10)))
 
 }
 \seealso{
-\code{\link{summarize}}
+\code{\link{summarize}}, \code{\link{allSummaryFunctions}},
+\code{\link{summaryFunction}}, \code{\link{summaryResult}}
 }
 

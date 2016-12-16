@@ -2,11 +2,28 @@
 % Please edit documentation in R/allVisualFunctions.R
 \name{allVisualFunctions}
 \alias{allVisualFunctions}
-\title{document me!}
+\title{Overview of all available visualFunctions}
 \usage{
 allVisualFunctions()
 }
+\value{
+An object of class \code{functionSummary}. This object has entries \code{$name}
+(the function names), \code{$description} (the function descriptions, as obtained from their
+\code{description} attributes) and \code{$classes} (the classes each function is indeded 
+to be called on, as obtained from their \code{classes} attributes).
+}
 \description{
-document me!
+Produce a overview of all functions of class \code{visualFunction} 
+available in the workspace or imported from packages. This overview includes
+the descriptions and a list of what classes the functions are each intended
+to be called on.
+}
+\examples{
+allVisualFunctions()
+
+}
+\seealso{
+\code{\link{visualFunction}} \code{\link{allCheckFunctions}}
+\code{\link{allSummaryFunctions}}
 }
 

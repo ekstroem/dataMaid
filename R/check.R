@@ -1,135 +1,179 @@
-#Functions called from clean.R for performing cleaning steps/checks
-#TO DO: structure: functions that are to check whether a problem is present
-#             for each variable return a checkRes object, consisting of a
-#             boolean and a message text (possibly empty) (=> define class checkRes)
-#TO DO: Consider: Should the "v <- na.omit(v)" command at the beginning of
-#       some (all?) checking functions be moved to the check-functions
-#       themselves? I.e. do we ever need to consider missing values when checking?
-#   And similarly: Should the labelled-vector unpacking also just be done once?
-#TO DO: What should check() output? Maybe a list of checkRes-objects, and then
-#       I should also implement a print() method for checkRes-lists to be used in clean()
-
 #General comments:
 # arguments: v is a variable (column) from a data.frame, i.e. a vector
 # note: labelled is Wickham's class from the haven/hmisc packages
 # note: Function names are suffixed with an indicator of the data types it
 #       is to be called on. N is numerical, I is integer, F is factor,
-#       L is labeled (Wickham), C is character. The ordering of suffix
-#       letters is arbitrary. All suffixed functions are purely internal
+#       L is labelled (Wickham), C is character, D is Date, B is logical (boolean)
+#       The ordering of suffix letters is arbitrary. 
+#       All suffixed functions are purely internal
 #       and their calling is controlled using s3 methods
 
 
-##########################################
-
-####Check#####
+####################################################################################
+###################################Check############################################
+####################################################################################
 
 #' Perform a check of potential errors in a data frame
 #'
-#' Runs a set of validation checks to check a vector for potential errors.  Performs checking steps according to user input and/or data type of the inputted variable.
-#'
-#' @param v the vector to be checked
-#' @inheritParams clean
-#' @param nMax XXX needs documentation
-#' @param \dots other arguments that are passed on to the checking functions
-#' @return An list object of class "checked" summarizing the result from the check of the check. As a minimum the returned class should contain the following elements
-#' \itemize{
-#'   \item{"name"}{The name of the check}
-#'   \item{"description"}{Slightly more information about the check}
-#'   \item{"problem"}{An integer giving an error code. 0 means no potential errors were identified}
-#'   \item{"message"}{A string giving summary information in R markdown format about the results}
-#' }
-#' @author Anne H. Petersen \email{ahpe@@sund.ku.dk} and Claus Thorn Ekstrom \email{ekstrom@@sund.ku.dk}
-#' @seealso \code{\link{clean}}
+#' Run a set of validation checks to check a variable vector or a full dataset
+#' for potential errors.  
+#' Which checks are performed depends on the class of the variable and on user
+#' inputs.
+#' 
+#' @param v the vector or the dataset (\code{data.frame}) to be checked.
+#' @param nMax If a check is supposed to identify problematic values,
+#' this argument controls if all of these should be pasted onto the outputted
+#' message, or if only the first \code{nMax} should be included. The default 
+#' (\code{Inf}) prints all problematic values.
+#' @param \dots Other arguments that are passed on to the checking functions. 
+#' These includes general parameters controlling how the check results are 
+#' formatted (e.g. \code{maxDecimals}, which controls the number of decimals 
+#' printed for numerical, problematic values), and also parameters that 
+#' control what check functions are called for each variable type. The latter
+#' arguments all follow the template \code{[class]Checks}, see examples below
+#' for more details.
+#' 
+#' @return If \code{v} is a variable, a list of objects of class 
+#' \code{\link{checkResult}}, which each summarizes the result of a 
+#' \code{\link{checkFunction}} call performed on \code{v}. 
+#' See \code{\link{checkResult}} for more details. If \code{V} is a 
+#' \code{data.frame}, a list of lists of the form above 
+#' is returned instead with one entry for each variable in \code{v}. 
+#' 
+#' @details It should be noted that the default options for each variable type
+#' are returned by calling e.g. \code{defaultCharacterChecks()}, 
+#' \code{defaultFactorChecks()}, \code{defaultNumericChecks()}, etc. Moreover,
+#' all available \code{checkFunction}s (including both locally defined 
+#' functions and functions imported from \code{cleanR} or other packages) can
+#' be viewed by calling \code{allCheckFunctions()}. 
+#' 
+#' 
+#' @seealso \code{\link{allCheckFunctions}} \code{\link{checkResult}}
+#' \code{\link{checkFunction}}, \code{\link{defaultCharacterChecks}}, 
+#' \code{\link{defaultFactorChecks}}, \code{\link{defaultLabelledChecks}},
+#' \code{\link{defaultNumericChecks}}, \code{\link{defaultIntegerChecks}},
+#' \code{\link{defaultLogicalChecks}}, \code{\link{defaultDateChecks}}
 #' @keywords misc
 #' @examples
 #'
 #' x <- 1:5
 #' check(x)
 #'
-#' # Annoyingly coded missing as 99
+#' #Annoyingly coded missing as 99
 #' y <- c(rnorm(100), rep(99, 10))
+#' check(y)
+#' 
+#' #Change what checks are performed on a variable, now only identifyMissing is called 
+#' # for numeric variables
+#' check(y, numericChecks = "identifyMissing")
 #'
+#' #Check a full data.frame at once
+#' data(cars)
+#' check(cars)
+#' 
+#' #Check a full data.frame at once, while changing the standard settings for 
+#' #several data classes at once and including all decimals in problematic
+#' #values.
+#' #Here, we ommit the check of miscoded missing values for factors 
+#' #and we only do this check for numeric variables.
+#' check(cars, factorChecks = setdiff(defaultFactorChecks(), "identifyMissing"),
+#'   numericChecks = "identifyMissing")
+#' 
 #' @importFrom utils packageVersion tail
 #' @export
 check <- function(v, nMax = Inf, ...) UseMethod("check")
 
-#characterChecks <- function() {
-#    list(identifyMissing, identifyWhitespace, identifyLoners, identifyCaseIssues)
-#}
 
-#factorChecks <- function() {
-#list(identifyMissing,
-#     identifyWhitespace,
-#     identifyLoners,
-#     identifyCaseIssues)
-#}
+#methods and default options for each variable class
 
-#Overwriting Claus' version so that it is consistent with what I did in
-#visualize and summarize. Either change everything to Claus' method
-#or keep my version everywhere.
-
-#check.character <- function(v, characterChecks=NULL, ...) {
-#    lapply(characterChecks, function( runthis ) { runthis(v, ...) })
-#}
-
-#check.factor <- function(v, factorChecks=NULL, ...) {
-#    lapply(factorChecks, function( runthis ) { runthis(v, ...) })
-#}
-
-
+#' @title Default checks for character variables
+#' 
+#' @description Default options for which checks to perform on
+#' character type variables in \code{\link{check}} and \code{\link{clean}}.
+#' 
+#' @return A vector of function names.
+#' 
 #' @export
 defaultCharacterChecks <- function() c("identifyMissing", "identifyWhitespace", "identifyLoners",
                                        "identifyCaseIssues", "identifyNums")
 #' @export
 check.character <- function(v, nMax =  Inf, characterChecks=defaultCharacterChecks(), ...) {
-  out <- lapply(characterChecks, function(x) eval(call(x, v=v, nMax = nMax)))
+  out <- lapply(characterChecks, function(x) eval(call(x, v = v, nMax = nMax)))
   names(out) <- characterChecks
   out
 }
 
 
+#' @title Default checks for factor variables
+#' 
+#' @description Default options for which checks to perform on
+#' factor type variables in \code{\link{check}} and \code{\link{clean}}.
+#' 
+#' @return A vector of function names.
+#' 
 #' @export
 defaultFactorChecks <- function() c("identifyMissing", "identifyWhitespace", "identifyLoners",
                                        "identifyCaseIssues", "identifyNums")
 #' @export
 check.factor <- function(v, nMax =  Inf, factorChecks = defaultFactorChecks(), ...) {
-  out <- lapply(factorChecks, function(x) eval(call(x, v=v, nMax = nMax)))
+  out <- lapply(factorChecks, function(x) eval(call(x, v = v, nMax = nMax)))
   names(out) <- factorChecks
   out
 }
 
 
+#' @title Default checks for labelled variables
+#' 
+#' @description Default options for which checks to perform on
+#' labelled type variables in \code{\link{check}} and \code{\link{clean}}.
+#' 
+#' @return A vector of function names.
+#' 
 #' @export
 defaultLabelledChecks <- function() c("identifyMissing", "identifyWhitespace")
 
 #' @export
 check.labelled <- function(v, nMax =  Inf, labelledChecks = defaultLabelledChecks(), ...) {
-  out <- lapply(labelledChecks, function(x) eval(call(x, v=v, nMax = nMax)))
+  out <- lapply(labelledChecks, function(x) eval(call(x, v = v, nMax = nMax)))
   names(out) <- labelledChecks
   out
 }
 
 
+#' @title Default checks for numeric variables
+#' 
+#' @description Default options for which checks to perform on
+#' numeric type variables in \code{\link{check}} and \code{\link{clean}}.
+#' 
+#' @return A vector of function names.
+#' 
 #' @export
 defaultNumericChecks <- function() c("identifyMissing", "identifyOutliers")
 
 #' @export
 check.numeric <- function(v, nMax =  Inf, maxDecimals = 2,
                           numericChecks = defaultNumericChecks(), ...) {
-  out <- lapply(numericChecks, function(x) eval(call(x, v=v, nMax = nMax,
+  out <- lapply(numericChecks, function(x) eval(call(x, v = v, nMax = nMax,
                                               maxDecimals = maxDecimals)))
   names(out) <- numericChecks
   out
 }
 
 
+#' @title Default checks for integer variables
+#' 
+#' @description Default options for which checks to perform on
+#' integer type variables in \code{\link{check}} and \code{\link{clean}}.
+#' 
+#' @return A vector of function names.
+#' 
 #' @export
 defaultIntegerChecks <- function() c("identifyMissing", "identifyOutliers")
 
 #' @export
 check.integer <- function(v, nMax =  Inf, maxDecimals = 2,
                           integerChecks = defaultIntegerChecks(), ...) {
-  out <- lapply(integerChecks, function(x) eval(call(x, v=v, nMax = nMax,
+  out <- lapply(integerChecks, function(x) eval(call(x, v = v, nMax = nMax,
                                               maxDecimals = maxDecimals)))
   names(out) <- integerChecks
   out
@@ -137,7 +181,13 @@ check.integer <- function(v, nMax =  Inf, maxDecimals = 2,
 
 
 
-
+#' @title Default checks for logical variables
+#' 
+#' @description Default options for which checks to perform on
+#' logical type variables in \code{\link{check}} and \code{\link{clean}}.
+#' 
+#' @return A vector of function names.
+#' 
 #' @export
 defaultLogicalChecks <- function() NULL #NOTE: we don't actually do any logical checks...
 
@@ -147,12 +197,21 @@ check.logical <- function(v, nMax =  Inf, logicalChecks = defaultLogicalChecks()
     out <- lapply(logicalChecks, function(x) eval(call(x, v=v, nMax = nMax)))
     names(out) <- logicalChecks
     return(out)
-  } else return(list(NoChecksPerformed=list(problem = FALSE, message="")))
+  } else return(list(NoChecksPerformed = checkResult(list(problem = FALSE, 
+                                                        message = "",
+                                                        problemValues = NULL))))
 }
 
 
+#' @title Default checks for Date variables
+#' 
+#' @description Default options for which checks to perform on
+#' Date type variables in \code{\link{check}} and \code{\link{clean}}.
+#' 
+#' @return A vector of function names.
+#' 
 #' @export
-defaultDateChecks <- function() NULL #NOTE: we don't actually do any logical checks...
+defaultDateChecks <- function() NULL #NOTE: we don't actually do any Date checks...
 
 #' @export
 check.Date <- function(v, nMax =  Inf, DateChecks = defaultDateChecks(), ...) {
@@ -160,7 +219,9 @@ check.Date <- function(v, nMax =  Inf, DateChecks = defaultDateChecks(), ...) {
     out <- lapply(DateChecks, function(x) eval(call(x, v=v, nMax = nMax)))
     names(out) <- DateChecks
     return(out)
-  } else return(list(NoChecksPerformed=list(problem = FALSE, message="")))
+  } else return(list(NoChecksPerformed = checkResult(list(problem = FALSE, 
+                                                        message = "",
+                                                        problemValues = NULL))))
 }
 
 
@@ -174,3 +235,4 @@ check.data.frame <- function(v, nMax = Inf, maxDecimals = 2, ...) {
 
 ##########################################Not exported below#########################################
 
+#empty

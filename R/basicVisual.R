@@ -30,7 +30,8 @@
 #' @export
 basicVisual <- function(v, vnam, doEval = TRUE) UseMethod("basicVisual")
 
-#assign methods to generic standardVisual function
+
+#Assign methods to generic standardVisual function
 
 #' @export
 basicVisual.character <- function(v, vnam, doEval = TRUE) basicVisualCFLB(v, vnam, doEval=doEval)
@@ -50,8 +51,11 @@ basicVisual.integer <- function(v, vnam, doEval = TRUE) basicVisualIN(v, vnam, d
 #' @export
 basicVisual.logical <- function(v, vnam, doEval = TRUE) basicVisualCFLB(v, vnam, doEval=doEval)
 
+#' @export
+basicVisual.Date <- function(v, vnam, doEval = TRUE) basicVisualD(v, vnam, doEval = doEval)
 
 #Make it a visualFunction
+#' @include visualFunction.R 
 basicVisual <- visualFunction(basicVisual, "Histograms and barplots using graphics")
 
 
@@ -64,7 +68,7 @@ basicVisual <- visualFunction(basicVisual, "Histograms and barplots using graphi
 #' @inheritParams standardVisual
 basicVisualCFLB <- function(v, vnam, doEval = TRUE) {
   v <- as.factor(v)
-  thisCall <- call("plot", x=na.omit(v), main=vnam)
+  thisCall <- call("plot", x = na.omit(v), main = vnam)
   if (doEval) {
     return(eval(thisCall))
   } else return(deparse(thisCall))
@@ -73,10 +77,19 @@ basicVisualCFLB <- function(v, vnam, doEval = TRUE) {
 #numeric and integer variables
 basicVisualIN <- function(v, vnam, doEval = TRUE) {
   v <- v[is.finite(v)]
-  thisCall <- call("hist", v, main=vnam, col="grey", xlab="")
+  thisCall <- call("hist", v, main = vnam, col = "grey", xlab = "")
   if (doEval) {
     return(eval(thisCall))
   } else return(deparse(thisCall))
 }
 
 
+#Date variables
+basicVisualD <- function(v, vnam, doEval = TRUE) {
+  thisCall <- call("hist", v, main = vnam, col = "grey", xlab = "", 
+                   breaks = 8)
+    #Note: must specify breaks in hist.Date()
+  if (doEval) {
+    return(eval(thisCall))
+  } else return(deparse(thisCall))
+}

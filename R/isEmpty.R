@@ -37,5 +37,6 @@ isEmpty <- function(v) {
 
 
 #make it a checkFunction
-isEmpty <- checkFunction(isEmpty, "Check if the variable contains only a single value", allVarClasses())
+#' @include allClasses.R
+isEmpty <- checkFunction(isEmpty, "Check if the variable contains only a single value", allClasses())
 

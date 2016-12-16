@@ -58,6 +58,8 @@
 #'  classes(countZeros) <- "numeric"
 #'  classes(countZeros)
 #'
+#' @include makeXFunction.R
+#'
 #' @export
 summaryFunction <- function(f, description, classes = NULL) {
   f <- deparse(substitute(f))

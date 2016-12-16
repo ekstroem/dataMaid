@@ -1,9 +1,10 @@
 #' @title Description function for central values
 #'
-#' @description A description type function to be called from \code{\link{summarize}}, which returns
-#' the central value of a variable. For numeric and integer variables, this is the median. For
-#' character, factor, labelled and logical variables, the central value is the mode (i.e. the
-#' value that occurs the largest number of times).
+#' @description A description type \code{summaryFunction}, intended to be called from 
+#' \code{\link{summarize}}, which returns the central value of a variable. 
+#' For numeric and integer variables, this is the median. For
+#' character, factor, labelled, Date and logical variables, the central value is the mode 
+#' (i.e. the value that occurs the largest number of times).
 #'
 #' @param v A variable (vector).
 #'
@@ -12,16 +13,17 @@
 #' values.
 #'
 #' @details Note that NA, NaN and Inf values are ignored for numeric and integer variables, while
-#' only NA values are ignored for factor, character and labelled variables. No values are
+#' only NA values are ignored for factor, character, Date and labelled variables. No values are
 #' ignored for logical variables.
 #'
-#' @return A list with $feature: [Mode/median] and $result: [the central value of \code{v}].
-#' WRITE SOMETHING ABOUT WHAT HAPPENS WHEN MODE IS NOT UNIQUE.
+#' @return A list with \code{$feature}: [Mode/median] and \code{$result}: [the central value of \code{v}].
+#' If the mode is returned and it is not uniquely determined, the first value qualifying as a mode is
+#' returned, when the variable is sorted according to \code{\link{sort}}. 
 #'
-#' @seealso \code{\link{summarize}}
+#' @seealso \code{\link{summaryFunction}}, \code{\link{summarize}}
 #'
 #' @examples
-#'  #central value of a integer variable:
+#'  #central value of an integer variable:
 #'    centralValue(c(rep(1, 25), rep(2, 10), rep(3, 20)))
 #'
 #'  #central value of a character variable:
@@ -30,6 +32,8 @@
 #' @importFrom stats na.omit median
 #' @export
 centralValue <- function(v, ...) UseMethod("centralValue")
+
+#' @include summaryFunction.R 
 centralValue <- summaryFunction(centralValue, "Compute median or mode")
 
 #assign methods to generic centralValue function
@@ -78,9 +82,7 @@ centralValueCF <- function(v) {
 
 #labelled variables
 centralValueL <- function(v) {
-    ##PLACE HOLDER
-    centralValueB(na.omit(v))
-    ## list(feature="Mode", result="?labelled?")
+  centralValueB(na.omit(v))
 }
 
 #integer and numeric variables

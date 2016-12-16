@@ -26,4 +26,5 @@ isKey <- function(v) {
 
 
 #make it a checkFunction
-isKey <- checkFunction(isKey, "Check if the variable is a key", allVarClasses())
+#' @include allClasses.R
+isKey <- checkFunction(isKey, "Check if the variable is a key", allClasses())

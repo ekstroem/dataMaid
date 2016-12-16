@@ -66,6 +66,8 @@
 #'  classes(mosaicVisual) <- "factor"
 #'  classes(mosaicVisual)
 #'
+#' @include makeXFunction.R
+#'
 #' @export
 visualFunction <- function(f, description, classes = NULL) {
   f <- deparse(substitute(f))

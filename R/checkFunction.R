@@ -1,44 +1,137 @@
-
-#' document me!
+#' @title Create an object of class checkFunction
+#' 
+#' @description convert a function, \code{f}, into an S3 
+#' \code{checkFunction} object. This adds \code{f} to the
+#' overview list returned by an \code{allCheckFunctions()} 
+#' call.
 #'
-#' @param f XXX function
-#' @param description XXX
-#' @param classes XXX
+#' @param f A function. See details and examples below for the
+#' exact requirements of this function. 
+#' 
+#' @param description A character string describing the check
+#' performed by \code{f}. If \code{NULL} (the default), the
+#' name of \code{f} will be used instead.
+#' 
+#' @param classes The classes for which \code{f} is intended to
+#' be called. If \code{NULL} (the default), one of two things happens.
+#' If \code{f} is not a S3 generic function, the \code{classes} 
+#' attribute of \code{f} will be an empty character string. If 
+#' \code{f} is a S3 generic function, an automatic look-up
+#' for methods will be conducted, and the \code{classes} attribute
+#' will then be filled out automatically. Note that the function
+#' \code{\link{allClasses}} (listing all classes used in \code{cleanR})
+#' might be useful. 
+#' 
+#' @return A function of class \code{checkFunction} which has to attributes, 
+#' namely \code{classes} and \code{description}. 
+#' 
+#' @details \code{checkFunction} represents the functions used in 
+#' \code{\link{check}} and \code{\link{clean}} for performing
+#' error checks and quality control on variables in dataset. 
+#' An example of defining a new \code{checkFunction} is given below. 
+#' Note that the minimal requirements for such a function (in order for it to be 
+#' compatible with \code{check()} and \code{clean()}) is the following 
+#' input/output-structure: It must input at least two arguments, namely 
+#' \code{v} (a vector variable) and \code{...}. Addtional implemented 
+#' arguments from \code{check()} and \code{clean()} include \code{nMax} and 
+#' \code{maxDecimals}, see e.g. the pre-defined \code{checkFunction} 
+#' \code{\link{identifyMissing}} for more details about how these arguments should
+#' be used. 
+#' The output must be a list with at least the two entries \code{$problem} 
+#' (a logical indicating whether a problem was found) and \code{$message} 
+#' (a character string message describing the problem). However, if the 
+#' result of a \code{checkFunction} is furthermore appended with a 
+#' \code{$problemValues} entry (including the values from the variable
+#' that caused the problem, if relevant) and converted to a 
+#' \code{\link{checkResult}} object, a \code{print()} method also becomes
+#' available for consistent formatting of \code{checkFunction} results.
+#' 
+#' Note that all available \code{checkFunction}s are listed by the call
+#' \code{allCheckFunctions()} and we recommed looking into these function,
+#' if more knowledge about \code{checkFunction}s is required.
+#' 
+#' @include makeXFunction.R messageGenerator.R
+#' 
+#' @seealso \code{\link{allCheckFunctions}} \code{\link{check}} \code{\link{clean}}
+#' \code{\link{messageGenerator}} \code{\link{checkResult}}
+#' 
+#' @examples 
+#' 
+#' #Define a minimal requirement checkFunction that can be called
+#' #from check() and clean(). This function checks whether all
+#' #values in a variable are of equal length and that this 
+#' #length is then also larger than 10:
+#' isID <- function(v, nMax = NULL, ...) {
+#'   out <- list(problem = FALSE, message = "")
+#'   if (class(v) %in% c("character", "factor", "labelled", "numeric", "integer")) {
+#'     v <- as.character(v)
+#'     lengths <- nchar(v)
+#'     if (all(lengths > 10) & length(unique(lengths)) == 1) {
+#'       out$problem <- TRUE
+#'       out$message <- "Warning: This variable seems to contain ID codes!"
+#'      }
+#'    }
+#'   out
+#' }
+#' 
+#' #Convert it into a checkFunction
+#' isID <- checkFunction(isID, description = "Identify ID variables (long, equal length values)",
+#'   classes = allClasses())
+#'   
+#' #Call isID
+#' isID(c("12345678901", "23456789012", "34567890123", "45678901234"))
+#'
+#' #isID now appears in a allCheckFunctions() call:
+#' allCheckFunctions()
+#' 
+#' 
+#' #Define a new checkFunction using messageGenerator() for generating
+#' #the message and checkResult() for getting a printing method
+#' #for its output. This function identifies values in a variable
+#' #that include a colon, surrounded by alphanumeric characters. If
+#' #at least one such value is found, the variable is flagged as 
+#' #having a problem:
+#' identifyColons <- function(v, nMax = Inf, ... ) {
+#'  v <- unique(na.omit(v))
+#'  problemMessage <- "Note: The following values include colons:"
+#'  problem <- FALSE
+#'  problemValues <- NULL
+#'  problemValues <- v[sapply(gregexpr("[[:xdigit:]]:[[:xdigit:]]", v),
+#'                            function(x) all(x != -1))]
+#'  if (length(problemValues) > 0) {
+#'    problem <- TRUE 
+#'  }
+#'  problemStatus <- list(problem = problem, 
+#'                        problemValues = problemValues)
+#'  outMessage <- messageGenerator(problemStatus, problemMessage, nMax)
+#'  checkResult(list(problem = problem, 
+#'                   message = outMessage,
+#'                   problemValues = problemValues))
+#' }
+#'
+#' #Make it a checkFunction:
+#' identifyColons <- checkFunction(identifyColons,
+#'      description = "Identify non-suffixed nor -prefixed colons",
+#'      classes = c("character", "factor", "labelled"))
+#' 
+#' #Call it:
+#' identifyColons(1:100)
+#' identifyColons(c("a:b", 1:10, ":b", "a:b:c:d"))
+#' 
+#' #identifyColons now appears in a allCheckFunctions() call:
+#' allCheckFunctions()
+#' 
 #' @export
-checkFunction <- function(f, description, classes=NULL) {
+checkFunction <- function(f, description = NULL, classes = NULL) {
   f <- deparse(substitute(f))
   makeXFunction(f, description, classes, "checkFunction")
 }
+
+
+
 
 #to do: change it such that a checkFunction is constructed e.g. like
 # foo <- checkFunction(.description, x) {
 #   x + 2
 #}
 
-
-#checkFunction2 <- function(fBody, description = NULL, classes = NULL, message = NULL,
-#                           f = NULL) {
-#  foo <- function(v, nMax = Inf, maxDecimals = 2) {
-#    fBody
-#  } #must return list(problem = [boolean], problemValues = [vector or NULL])
-#  
-#  foo2 <- function(fooList) {
-#    outMessage <- messageGenerator(fooList, nMax = nMax, maxDecimals = maxDecimals)
-#    checkResult(list(problem = fooList$problem, message = outMessage, 
-#                     problemValues = fooList$problemValues))
-#  }
-#  browser()
-#  foo2 <- cleanR:::makeXFunction("foo2", description = description, classes = classes, 
-#                        "checkFunction")
-#  
-#}
-#
-#dodo <- {#  print("hello")
-#}
-#fop <- function(dodo) {
-#  dodo
-#  return(1)
-#}
-
-
-#checkFunction2({list(problem = F, problemValues = NULL)})
