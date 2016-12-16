@@ -12,12 +12,12 @@ countMissing(v, ...)
 \item{...}{Not in use.}
 }
 \value{
-A \code{\link{summaryResult}} object with \code{$feature}: 
+A \code{\link{summaryResult}} object with \code{$feature}:
 "No. missing obs.", \code{$result}: [the number and percentage missing observations].
 and \code{$value}: [the number of missing observations].
 }
 \description{
-A  \code{\link{summaryFunction}}, intended to be called from 
+A \code{\link{summaryFunction}}, intended to be called from
 \code{\link{summarize}} (and \code{\link{clean}}), which counts the
 number of missing (\code{NA}) values in a variable.
 }

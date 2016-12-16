@@ -7,18 +7,23 @@
 identifyCaseIssues(v, nMax = Inf)
 }
 \arguments{
-\item{v}{A character or factor variable to check}
+\item{v}{A character or factor variable to check.}
 
-\item{nMax}{The maximum number of problematic values to report. Default is \code{Inf}, in which case
-all problematic values are included in the outputtet message.}
+\item{nMax}{The maximum number of problematic values to report. 
+Default is \code{Inf}, in which case all problematic values 
+are included in the outputted message.}
 }
 \value{
-A list with two elements, $problem: TRUE if any case issues were found, FALSE otherwise, and
-$message A message describing which values in \code{v} resulted in case issues. Only unique values
+A \code{\link{checkResult}} with three entires: 
+\code{$problem} (a logical indicating whether case issues where found),
+\code{$message} (a message describing which values in \code{v} resulted 
+in case issues) and \code{$problemValues} (the problematic values
+in their original format). Note that Only unique problematic values
 are listed and they are presented in alphabetical order.
 }
 \description{
-A checkFunction to be called from \code{\link{check}} that identifies values in a vector
+A \code{\link{checkFunction}} to be called from 
+\code{\link{check}} that identifies values in a vector
 that appear multiple times with different case settings.
 }
 \examples{
@@ -26,6 +31,7 @@ that appear multiple times with different case settings.
 
 }
 \seealso{
-\code{\link{check}}, \code{\link{checkFunction}}
+\code{\link{check}}, \code{\link{allCheckFunctions}}, 
+\code{\link{checkFunction}}, \code{\link{checkResult}}
 }
 
