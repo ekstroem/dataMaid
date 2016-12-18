@@ -1,15 +1,17 @@
 #' @title Summary function for original class
 #'
-#' @description A summary type function to be called from \code{\link{summarize}}, which finds the
+#' @description A \code{\link{summaryFunction}} type function, intended to be called from 
+#' \code{\link{summarize}} to be called from \code{\link{summarize}}, which finds the
 #' orignial class of a variable. This is just the class for all objects but those of class
-#' smartNum.
+#' \code{smartNum}.
 #'
 #' @param v A variable (vector).
 #'
 #' @param ... Not in use.
 #'
-#' @return A list with $feature: "Variable type" and
-#' $result: [the (original) class of the variable].
+#' @return An object of class \code{summaryResult} with the following entries: 
+#' \code{$feature} ("Variable type"), \code{$result} (the (original) class of 
+#' \code{v}) and \code{$value} (identical to \code{$result}).
 #'
 #' @seealso \code{\link{summarize}}
 #'
@@ -20,18 +22,16 @@
 #'    variableType(varX)
 #'
 #'  #For smartNum variables:
-#'    smartX <- smartNum(varX)
+#'    smartX <- cleanR:::smartNum(varX)
 #'    class(smartX)
 #'    variableType(smartX)
 #'
-#'  #Something with multiple classes, like ordered factor...
-#'
+#' @include smartNum.R
 #' @export
 variableType <- function(v, ...) {
   vClass <- oClass(v)[1]
   summaryResult(list(feature="Variable type", result = vClass, value = vClass))
 }
 
-variableType <- summaryFunction(variableType, "Data class of variable",
-                                c("character", "factor", "integer", "labelled", "logical",
-                                  "numeric", "Date"))
+#' @include variableType.R
+variableType <- summaryFunction(variableType, "Data class of variable", allClasses())

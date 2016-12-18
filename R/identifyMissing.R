@@ -69,7 +69,8 @@ identifyMissing.logical <- function(v, nMax = Inf, ...) identifyMissingB(v, nMax
 
 #make it a checkFunction
 #' @include checkFunction.R
-identifyMissing <- checkFunction(identifyMissing, "Identify miscoded missing values")
+identifyMissing <- checkFunction(identifyMissing, "Identify miscoded missing values",
+                                 setdiff(allClasses(), "Date"))
 
 ##########################################Not exported below#########################################
 

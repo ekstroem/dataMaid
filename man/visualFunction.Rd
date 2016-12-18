@@ -2,58 +2,63 @@
 % Please edit documentation in R/visualFunction.R
 \name{visualFunction}
 \alias{visualFunction}
-\title{Construct a visualFunction}
+\title{Create an object of class visualFunction}
 \usage{
 visualFunction(f, description, classes = NULL)
 }
 \arguments{
-\item{f}{A function. In order to be a valid \code{visualFunction}, \code{f} should
-follow the structure outlined in details below.}
+\item{f}{A function. See details and examples below for the
+exact requirements of this function.}
 
-\item{description}{A character string with a (brief!) description of \code{f}.}
+\item{description}{A character string describing the visualization
+returned by \code{f}. If \code{NULL} (the default), the name of 
+\code{f} will be used instead.}
 
-\item{classes}{A vector of classes that \code{f} is designed to be called on. If NULL (the default)
-one of two standard solutions are tried: If \code{f} is a S3 generic function, the \code{classes}
-argument will automatically be filled out by checking what methods are available in the global
-environment. If \code{f} is not a S3 generic function, the \code{classes} attribute is set to an
-empty character object (i.e. \code{character(0)}).}
+\item{classes}{The classes for which \code{f} is intended to
+be called. If \code{NULL} (the default), one of two things happens.
+If \code{f} is not a S3 generic function, the \code{classes} 
+attribute of \code{f} will be an empty character string. If 
+\code{f} is a S3 generic function, an automatic look-up
+for methods will be conducted, and the \code{classes} attribute
+will then be filled out automatically. Note that the function
+\code{\link{allClasses}} (listing all classes used in \code{cleanR})
+might be useful.}
 }
 \value{
-A function of class \code{visualFunction}, i.e. with two attributes: A description
-("description") and a vector of classes which the function can be called upon ("classes"). A
-visualFunction always
+A function of class \code{visualFunction} which has to attributes, 
+namely \code{classes} and \code{description}.
 }
 \description{
-Convert a function into class \code{visualFunction} used for creating variable
-visualizations \code{\link{visualize}}, typically called from \code{\link{clean}}.
+Convert a function, \code{f}, into an S3 
+\code{visualFunction} object. This adds \code{f} to the
+overview list returned by an \code{allVisualFunctions()} 
+call.
 }
 \details{
-We recommend using the following structure for defining new \code{visualFunction}s:
-FIND A WAY TO FIX FORMATTING HERE. GOTTA BE POSSIBLE.
-#' \code{
-  myVisualFunction <- function(v, vnam, doEval) {
-   thisCall <- call("[the name of the function used to produce the plot]",
-                    v, [additional arguments to the plotting function])
-   if (doEval) {
-    return(eval(thisCall))
-   } else return(deparse(thisCall)
-  }
- }
- followed by a class change:
- \code{
-   myVisualFunction <- visualFunction(myVisualFunction, description = "[describe function]",
-                                        classes = c([classes]))
- }
- It is not strictly necessary to follow this exact template, but the input/output structure
- should be respected - in other words, the arguments are mandatory and the function needs
- to return a character string containing code (if \code{doEval = FALSE}) or have the
- side effect of producing a plot (if \code{doEval = TRUE}). See examples below for an example
- of how the template can be used in practice.
+\code{visualFunction} represents the functions used in 
+\code{\link{visualize}} and \code{\link{clean}} for plotting the 
+distributions of the variables in a dataset.
 
- Note that it is not necessary to formally change functions to be used by \code{\link{visualize}}
- into \code{visualFunction}s, but it is recommended, as the functions are then added to the output
- of \code{allVisualFunctions()}, making it easier to gain an overview of the visualization
- functions available for a \code{clean()} run.
+An example of defining a new \code{visualFunction} is given below. 
+Note that the minimal requirements for such a function (in order for it to be 
+compatible with \code{visualize()} and \code{clean()}) is the following 
+input/output-structure: It must input exactly the following three arguments, 
+namely \code{v} (a vector variable), \code{vnam} (a character string with
+the name of the variable) and \code{doEval} (a logical). The last argument
+is supposed to control whether the function produces a plot in the 
+graphic device (if \code{doEval = TRUE}) or instead returns a character
+string including \code{R} code for generating such a plot. In the latter 
+setting, the code must be stand-alone, that is, it cannot depend on object
+available in an environment. In practice, this will typically imply that 
+the data variable is included in the code snip. 
+It is not strictly necessary to implement the \code{doEval = TRUE} setting 
+for the \code{visualFunction} to be compatible with \code{\link{clean}}, 
+but we recommend doing it anyway such that the function can also be used 
+interactively.
+
+Note that all available \code{visualFunction}s are listed by the call
+\code{allVisualFunctions()} and we recommed looking into these function,
+if more knowledge about \code{visualFunction}s is required.
 }
 \examples{
 #Defining a new visualFunction:
@@ -63,22 +68,28 @@ FIND A WAY TO FIX FORMATTING HERE. GOTTA BE POSSIBLE.
     return(eval(thisCall))
    } else return(deparse(thisCall))
  }
- mosaicVisual <- visualFunction(mosaicVisual, description = "mosaicplots from graphics",
-                                classes = c("character", "factor", "labelled", "numeric",
-                                            "integer", "logical"))
+ mosaicVisual <- visualFunction(mosaicVisual, description = "Mosaicplots from graphics",
+                                classes = allClasses())
+
+#mosaicVisual is now included in a allVisualFunctions() call:
+ allVisualFunctions()
+ 
+#Create a mosaic plot:
+ ABCvar <- c(rep("a", 10), rep("b", 20), rep("c", 5))
+ mosaicVisual(ABCvar, "ABCvar", TRUE)
+ 
+#Create a character string with the code for a mosaic plot:
+ mosaicVisual(ABCvar, "ABCVar", FALSE)
 
 #Extract or set description of a visualFunction:
  description(mosaicVisual)
  description(mosaicVisual) <- "A cubist version of a pie chart"
  description(mosaicVisual)
 
-#Extract or set classes of a visualFunction:
- classes(mosaicVisual)
- classes(mosaicVisual) <- "factor"
- classes(mosaicVisual)
 
 }
 \seealso{
-\code{link{allVisualFunctions}} \code{\link{visualize}}
+\code{\link{allVisualFunctions}}, \code{\link{visualize}}, 
+\code{\link{clean}}
 }
 

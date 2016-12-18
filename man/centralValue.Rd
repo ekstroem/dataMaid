@@ -14,7 +14,10 @@ centralValue(v, ...)
 values.}
 }
 \value{
-A list with \code{$feature}: [Mode/median] and \code{$result}: [the central value of \code{v}].
+An object of class \code{summaryResult} with the following entries: \code{$feature} 
+(the mode/median),\code{$result} (the central value of \code{v}) and \code{$value} (identical 
+to \code{$result}).
+
 If the mode is returned and it is not uniquely determined, the first value qualifying as a mode is
 returned, when the variable is sorted according to \code{\link{sort}}.
 }
@@ -39,6 +42,7 @@ ignored for logical variables.
 
 }
 \seealso{
-\code{\link{summaryFunction}}, \code{\link{summarize}}
+\code{\link{summaryFunction}}, \code{\link{summarize}}, \code{\link{summaryResult}},
+\code{\link{allSummaryFunctions}}
 }
 

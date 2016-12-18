@@ -7,37 +7,41 @@
 messageGenerator(problemStatus, message = NULL, nMax = Inf)
 }
 \arguments{
-\item{problemStatus}{A list consisting of two entries: $problem - TRUE/FALSE indicating
-whether a problem was found by the \code{checkFunction}, $problemValues - a vector of values
-from the variable that were deemed problematic. See details below.}
+\item{problemStatus}{A list consisting of two entries: 
+
+\code{$problem} - logical indicating whether a problem was found by the 
+\code{checkFunction} responsible for the making the \code{messageGenerator()} call, 
+
+\code{$problemValues} - a vector of values from the variable that were 
+deemed problematic (see details below).}
 
 \item{message}{Optional, but recommended. A message describing what problem the
 problem values are related to. If \code{NULL} a standard message is added using the name
 of the function that called \code{messageGenerator}.}
 
 \item{nMax}{Maximum number of problem values to be printed in the message. If the total
-number of problem values exceeds nMax, the number of remaining (non-printed) problem
-values are added to the message. Defaults to \code{Inf} in which case all problem
+number of problem values exceeds nMax, the number of omitted problem
+values are added to the message. Defaults to \code{Inf}, in which case all problem
 values are printed.}
 }
 \value{
-A character string.
+A character string with a problem description.
 }
 \description{
-Internal function for producing output messages in \code{\link{checkFunction}}
-type functions called by \code{\link{clean}}.
+Helper function for producing output messages for 
+\code{\link{checkFunction}} type functions.
 }
 \details{
 This function is a tool for building \code{\link{checkFunction}}s for the
-cleanR \code{\link{clean}} function. \code{checkFunction}s will often identify a number
+\code{cleanR} \code{\link{clean}} function. \code{checkFunction}s will often identify a number
 of values in a variable that are somehow problematic. \code{messageGenerator} takes
 these values, pastes them together with a problem description and makes sure that the
-formatting is appropriate for being rendered in a rmarkdown document. We recommend writing
-short at precise problem descriptions (see examples), but if no message is supplied,
-the following message is generated:
+formatting is appropriate for being rendered in a \code{rmarkdown} document. 
+We recommend writing short and precise problem descriptions (see examples),
+ but if no message is supplied, the following message is generated:
 "[function name] found the following problem values: [problem values]".
-Note that this option only works correctly when the checkFunction is called directly and e.g.
-not dispatched through a generic function.
+Note that this option only works correctly when the \code{checkFunction} is 
+called directly and e.g. not dispatched through a generic function.
 }
 \examples{
 
@@ -55,7 +59,8 @@ identifyUnderscores <- function(v, nMax = Inf) {
   message <- messageGenerator(list(problemValues = problemValues, problem = problem),
                               "The following values contain underscores:",
                               nMax = nMax)
-  list(problem = problem, message = message)
+  checkResult(list(problem = problem, message = message, 
+      problemValues = problemValues))
  }
 
  identifyUnderscores(noUSVar) #no problem
@@ -70,7 +75,8 @@ identifyUnderscores <- function(v, nMax = Inf) {
   problem <- any(underscorePlaces)
   message <- messageGenerator(list(problemValues = problemValues,
                                    problem = problem), nMax = nMax)
-  list(problem = problem, message = message)
+  checkResult(list(problem = problem, message = message, 
+      problemValues = problemValues))
  }
 
  identifyUnderscores2(noUSVar) #no problem
@@ -81,6 +87,6 @@ identifyUnderscores <- function(v, nMax = Inf) {
 
 }
 \seealso{
-\code{\link{check}} \code{\link{checkFunction}}
+\code{\link{check}}, \code{\link{checkFunction}}, \code{\link{clean}}
 }
 

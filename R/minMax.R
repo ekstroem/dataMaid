@@ -3,22 +3,28 @@
 #' @description A description type function to be called from \code{\link{summarize}}, which returns
 #' the minimum and maximum value of a variable. NA, NaN and Inf values are removed prior to  the
 #' computations.
-#'
+#' @description A description type \code{summaryFunction}, intended to be called from 
+#' \code{\link{summarize}}, which returns the minimum and maximum values of a variable.
+#' NA, NaN and Inf values are removed prior to  the computations.
+#' 
 #' @param v A variable (vector) of type numeric or integer.
 #'
 #' @inheritParams clean
+#' 
+#' @return An object of class \code{summaryResult} with the following entries: \code{$feature} 
+#' ("Min. and max."), \code{$result} (the minimum and maximum of \code{v}), and \code{$value}
+#' (minimum and maximum in their orignial format).
 #'
-#' @return A list with $feature: "Min. and max." and $result: [the minimum and maximum of \code{v}].
-#'
-#' @seealso \code{\link{summarize}}
-#'
+#' @seealso \code{\link{summaryFunction}}, \code{\link{summarize}}, \code{\link{summaryResult}},
+#' \code{\link{allSummaryFunctions}}
+#' 
 #' @examples
 #' minMax(c(1:100))
 #'
 #' @importFrom stats na.omit
 #' @export
 minMax <- function(v, maxDecimals = 2) {
-  v <- na.omit(v) #maybe keep Inf's?
+  v <- na.omit(v) #maybe keep Infs instead?
   minV <- min(v)
   maxV <- max(v)
   summaryResult(list(feature="Min. and max.",
@@ -27,5 +33,8 @@ minMax <- function(v, maxDecimals = 2) {
                                   sep="; "),
                      value = c(minV, maxV)))
 }
+
+#Make it a summaryFunction
+#' @include summaryFunction.R
 minMax <- summaryFunction(minMax, "Find minimum and maximum values",
                           c("integer", "numeric", "Date"))

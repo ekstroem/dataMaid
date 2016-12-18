@@ -7,40 +7,50 @@
 summarize(v, descriptive = TRUE, ...)
 }
 \arguments{
-\item{v}{The variable (vector) which is to be summarized.}
+\item{v}{The variable (vector) or dataset (data.frame) to be summarized.}
 
-\item{descriptive}{If TRUE (the default) then descriptive functions are added to the summary matrix
-(see details). They are not included if set to FALSE.}
+\item{descriptive}{A logical. If \code{TRUE} (the default), descriptive functions 
+are added to the summary matrix (see details). They are not included if 
+\code{descriptive} is set to \code{FALSE}.}
 
 \item{...}{Additional argument passed to data class specific methods. First and foremost,
 this is where to supply the summary functions and description functions (see details).}
 }
 \value{
-A matrix with two columns, \code{feature} and \code{result} and one row for each
-summary/description function that was called.
+If \code{v} is a single variable: A matrix with two columns, \code{feature} and 
+\code{result} and one row for each summary/description function that was called. Character
+strings in this matrix are escaped such that they are ready for Rmarkdown rendering.
+
+If \code{v} is a full dataset: A list of matrices as described above, one for each
+variable in the dataset.
 }
 \description{
-Generic shell function that produces a summary matrix for a variable \code{v},
-given a number of summary functions and depending on its data class.
+Generic shell function that produces a summary matrix for a variable (or for each
+variable in an entire dataset), given a number of summary functions and 
+depending on its data class.
 }
 \details{
 Summary functions are supplied using their
 names (in character strings) in the class-specific argument, e.g.
 \code{characterSummaries = c("countMissing", "uniqueValues")} for character variables and
-similarly for the remaining 5 data classes (factor, labelled, numeric, integer, logical).
-Secondly, additional functions can be added using the "descriptions"-arguments, e.g.
+similarly for the remaining 6 data classes (factor, Date, labelled, numeric, integer, logical).
+Note that an overview of all available \code{summaryFunction}s can be obtained by calling
+\code{\link{allSummaryFunctions}}. 
+
+Additional functions can be added using the "descriptions"-arguments, e.g.
 \code{characterDescriptions = "centralValue"}. If \code{descriptive = TRUE} the results of
 these functions are added to the outputted summary matrix. Note that this is nothing
 more than a convenient way to add an extra category of summary functions to the output.
-Summary functions and description functions are treated in the exact same way.
+Summary functions and description functions are treated in the exact same way and they
+should both ideally be of class \code{\link{summaryFunction}}. 
 
 The default summary- and character functions are available in data class specific functions, e.g.
 \code{defaultCharacterSummaries()} and \code{defaultCharacterDescriptions()}, respectively.
 
 A user defined summary (or description) function can be supplied using its function name. Note
 however that it should take a vector as argument and return a list on the form
-\code{list(feature="Feature name", result="The result")}. See e.g. \code{\link{variableType}} for
-an example of a summary function.
+\code{list(feature="Feature name", result="The result")}. More details on how to construct 
+valid summary functions are found in \code{\link{summaryFunction}}.
 }
 \examples{
 #Default summary for a character vector:
@@ -56,7 +66,7 @@ an example of a summary function.
 #Define a new summary function and add it to the summary for character vectors:
    countZeros <- function(v, ...) {
      res <- length(which(v == 0))
-     list(feature="No. zeros", result = res)
+     summaryResult(list(feature="No. zeros", result = res, value = res))
    }
    summarize(charV, characterSummaries = c(defaultCharacterSummaries(), "countZeros"))
 
@@ -66,9 +76,14 @@ an example of a summary function.
 
  #But supplying the argument for integer variables changes the summary:
    summarize(intV, integerSummaries = "countZeros")
+   
+ #Summarize a full dataset:
+  data(cars)
+  summarize(cars)
 
 }
 \seealso{
+\code{\link{summaryFunction}}, \code{\link{allSummaryFunctions}}, 
 \code{\link{defaultCharacterSummaries}}, \code{\link{defaultFactorSummaries}},
 \code{\link{defaultLabelledSummaries}}, \code{\link{defaultLabelledSummaries}},
 \code{\link{defaultNumericSummaries}}, \code{\link{defaultIntegerSummaries}},

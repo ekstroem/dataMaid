@@ -1,16 +1,19 @@
-#' @title Summary function for unique values
+#' @title summaryFunction for unique values
 #'
-#' @description A summary type function to be called from \code{\link{summarize}}, which counts the
-#' number of unique (excluding NA) values in a variable.
+#' @description A \code{\link{summaryFunction}} type function, intended to be called from 
+#' \code{\link{summarize}} to be called from \code{\link{summarize}}, which counts the
+#' number of unique (excluding \code{NA}s) values in a variable.
 #'
 #' @param v A variable (vector).
 #'
 #' @param ... Not in use.
 #'
-#' @return A list with $feature: "No. unique values" and
-#' $result: [the number of unique values].
+#' @return An object of class \code{summaryResult} with the following entries: 
+#' \code{$feature} ("No. unique values") and \code{$result} (the number of unique 
+#' values in \code{v}).
 #'
-#' @seealso \code{\link{summarize}}
+#' @seealso \code{\link{summaryFunction}}, \code{\link{summarize}}, \code{\link{summaryResult}},
+#' \code{\link{allSummaryFunctions}}
 #'
 #' @examples
 #' uniqueValues(c(1:3, rep(NA, 10), Inf, NaN))
@@ -44,8 +47,9 @@ uniqueValues.Date <- function(v, ...) uniqueValuesCFLBI(v)
 
 
 #Make it a summaryFunction
+#' @include summaryFunction.R
 #' @export
-uniqueValues <- summaryFunction(uniqueValues, "Count number of unique values")
+uniqueValues <- summaryFunction(uniqueValues, "Count number of unique values", allClasses())
 
 
 ##########################################Not exported below#########################################

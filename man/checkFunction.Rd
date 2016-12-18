@@ -29,7 +29,7 @@ A function of class \code{checkFunction} which has to attributes,
 namely \code{classes} and \code{description}.
 }
 \description{
-convert a function, \code{f}, into an S3 
+Convert a function, \code{f}, into an S3 
 \code{checkFunction} object. This adds \code{f} to the
 overview list returned by an \code{allCheckFunctions()} 
 call.
@@ -38,11 +38,12 @@ call.
 \code{checkFunction} represents the functions used in 
 \code{\link{check}} and \code{\link{clean}} for performing
 error checks and quality control on variables in dataset. 
+
 An example of defining a new \code{checkFunction} is given below. 
 Note that the minimal requirements for such a function (in order for it to be 
 compatible with \code{check()} and \code{clean()}) is the following 
 input/output-structure: It must input at least two arguments, namely 
-\code{v} (a vector variable) and \code{...}. Addtional implemented 
+\code{v} (a vector variable) and \code{...}. Additional implemented 
 arguments from \code{check()} and \code{clean()} include \code{nMax} and 
 \code{maxDecimals}, see e.g. the pre-defined \code{checkFunction} 
 \code{\link{identifyMissing}} for more details about how these arguments should
@@ -128,7 +129,7 @@ allCheckFunctions()
 
 }
 \seealso{
-\code{\link{allCheckFunctions}} \code{\link{check}} \code{\link{clean}}
-\code{\link{messageGenerator}} \code{\link{checkResult}}
+\code{\link{allCheckFunctions}}, \code{\link{check}}, \code{\link{clean}},
+\code{\link{messageGenerator}}, \code{\link{checkResult}}
 }
 

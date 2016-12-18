@@ -1,12 +1,14 @@
 #' Produce distribution plots using ggplot from ggplot2.
 #'
-#' Plot the distribution of a variable, depending on its data class, by use of ggplot2.
+#' Plot the distribution of a variable, depending on its data class, by use of ggplot2. 
+#' Note that \code{standardVisual} is a \code{\link{visualFunction}}, compatible with the 
+#' \code{\link{visualize}} and \code{\link{clean}} functions. 
 #'
-#' For character, factor, logical and labelled variables, a barplot is produced. For numeric
-#' or integer variables, \code{standardVisual} produces a histogram instead. Note that for
+#' For character, factor, logical and labelled variables, a barplot is produced. For numeric,
+#' integer or Date variables, \code{standardVisual} produces a histogram instead. Note that for
 #' integer and numeric variables, all non-finite (i.e. \code{NA}, \code{NaN}, \code{Inf}) values are
-#' removed prior to plotting. For character, factor, labelled and logical variables, only \code{NA}
-#' values are removed.
+#' removed prior to plotting. For character, Date, factor, labelled and logical variables, 
+#' only \code{NA} values are removed.
 #'
 #' @param v The variable (vector) to be plotted.
 #' @param vnam The name of the variable which will appear as the title of the plot.
@@ -16,9 +18,11 @@
 #' @examples
 #' \dontrun{
 #' #Save a variable
-#' myVar <- c(1:10)
+#' myVar <- c(1:10) 
+#' 
 #' #Plot a variable
 #' standardVisual(myVar, "MyVar")
+#' 
 #' #Produce code for plotting a variable
 #' standardVisual(myVar, "MyVar", doEval = FALSE)
 #' }
@@ -26,7 +30,7 @@
 #'
 #' @importFrom ggplot2 qplot
 #' @importFrom stats na.omit
-## #' @export
+#' @export
 standardVisual <- function(v, vnam, doEval = TRUE) UseMethod("standardVisual")
 
 #assign methods to generic standardVisual function
@@ -57,8 +61,9 @@ standardVisual.Date <- function(v, vnam, doEval = TRUE) standardVisualD(v, vnam,
 
 
 
-#' @export
-standardVisual <- visualFunction(standardVisual, "Histograms and barplots using ggplot2")
+#' @include visualFunction.R
+standardVisual <- visualFunction(standardVisual, "Histograms and barplots using ggplot2",
+                                 allClasses())
 
 
 ##########################################Not exported below#########################################
@@ -79,20 +84,20 @@ standardVisualIN <- function(v, vnam, doEval = TRUE) {
   if (doEval) {
     return(eval(thisCall))
   } else return(deparse(thisCall))
-} #fix such that no stat_bin()-message is produced, it's annoying. And also a clever
-#choice of binwidth, how does it work in hist()?
+} 
+    #change binwidth to be chosen dynamically. ggplot2 does this if 
+    #no "bins" argument is specified, but then an annoying warning
+    #is also printed.
 
 
 
-#ggplot(dates, aes(x=Date, y = ..count.. ))  + geom <- bar()
 # Dates
 standardVisualD <- function(v, vnam, doEval = TRUE) {
-      thisCall <- call("qplot", x=na.omit(v), geom="histogram", xlab="",
-                   main=vnam, bins=20)
-
-#  thisCall <- call("ggplot", data=na.omit(v), aes=geom="bar", xlab="", main=vnam)
+      thisCall <- call("qplot", x=na.omit(v), geom="bar", xlab="",
+                   main=vnam)
   if (doEval) {
     return(eval(thisCall))
   } else return(deparse(thisCall))
 }
+
 

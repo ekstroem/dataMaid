@@ -43,7 +43,8 @@ identifyWhitespace.labelled <- function(v, nMax = Inf) identifyWhitespaceL(v, nM
 
 #make it a checkFunction
 #' @include checkFunction.R
-identifyWhitespace <- checkFunction(identifyWhitespace, "Identify prefixed and suffixed whitespace")
+identifyWhitespace <- checkFunction(identifyWhitespace, "Identify prefixed and suffixed whitespace",
+                                    c("character", "factor", "labelled"))
 
 
 ##########################################Not exported below#########################################

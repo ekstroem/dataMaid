@@ -2,74 +2,93 @@
 % Please edit documentation in R/summaryFunction.R
 \name{summaryFunction}
 \alias{summaryFunction}
-\title{Construct a summaryFunction}
+\title{Create an object of class summaryFunction}
 \usage{
 summaryFunction(f, description, classes = NULL)
 }
 \arguments{
-\item{f}{A function. In order to be a valid \code{summaryFunction}, \code{f} should
-follow the structure outlined in details below.}
+\item{f}{A function. See details and examples below for the
+exact requirements of this function.}
 
-\item{description}{A character string with a (brief!) description of \code{f}.}
+\item{description}{A character string describing the summary
+returned by \code{f}. If \code{NULL} (the default), the
+name of \code{f} will be used instead.}
 
-\item{classes}{A vector of classes that \code{f} is designed to be called on. If NULL (the default)
-one of two standard solutions are tried: If \code{f} is a S3 generic function, the \code{classes}
-argument will automatically be filled out by checking what methods are available in the global
-environment. If \code{f} is not a S3 generic function, the \code{classes} attribute is set to an
-empty character object (i.e. \code{character(0)}).}
+\item{classes}{The classes for which \code{f} is intended to
+be called. If \code{NULL} (the default), one of two things happens.
+If \code{f} is not a S3 generic function, the \code{classes} 
+attribute of \code{f} will be an empty character string. If 
+\code{f} is a S3 generic function, an automatic look-up
+for methods will be conducted, and the \code{classes} attribute
+will then be filled out automatically. Note that the function
+\code{\link{allClasses}} (listing all classes used in \code{cleanR})
+might be useful.}
 }
 \value{
-A function of class \code{summaryFunction}, i.e. with two attributes: A description
-("description") and a vector of classes which the function can be called upon ("classes"). A
-summary function always takes a vector (\code{v}) as its sole argument and returns a list with two
-slots: \code{$feature} (a character string with the name of the summary) and \code{$results}
-(a character string with the result of the summary operation). See e.g. \code{\link{variableType}} or
-\code{\link{countMissing}} for examples of \code{summaryFunction}s.
+A function of class \code{summaryFunction} which has to attributes, 
+namely \code{classes} and \code{description}.
 }
 \description{
-Convert a function into class \code{summaryFunction} used for creating variable
-summaries in \code{\link{summarize}}, typically called from \code{\link{clean}}.
+Convert a function, \code{f}, into an S3 
+\code{summaryFunction} object. This adds \code{f} to the
+overview list returned by an \code{allSummaryFunctions()} 
+call.
 }
 \details{
-The structure of a valid \code{summaryFunction} follows the following structure:
-\code{
-   mySummaryFunction <- function(v) {
-     res <- [result of whatever summary we are doing]
-     list(feature = "Feature name", result = res)
-   }
- }
- followed by a class change:
- \code{
-   mySummaryFunction <- summaryFunction(mySummaryFunction, description = "[describe function]",
-                                        classes = c([classes]))
- }
- Note that it is not necessary to formally change functions to be used by \code{\link{summarize}}
- into \code{summaryFunction}s, but it is recommended, as the functions are then added to the output
- of \code{allSummaryFunctions()}, making it easier to
- gain an overview of the summary functions available for a \code{clean()} run.
+\code{summaryFunction} represents the functions used in 
+\code{\link{summarize}} and \code{\link{clean}} for summarizing the
+features of variables in a dataset.
+
+An example of defining a new \code{summaryFunction} is given below. 
+Note that the minimal requirements for such a function (in order for it to be 
+compatible with \code{summarize()} and \code{clean()}) is the following 
+input/output-structure: It must input at least two arguments, namely 
+\code{v} (a vector variable) and \code{...}. Additional implemented 
+arguments from \code{summarize()} and \code{clean()} include
+\code{maxDecimals}, see e.g. the pre-defined \code{summaryFunction} 
+\code{\link{minMax}} for more details about how this arguments should
+be used. 
+The output must be a list with at least the two entries \code{$feature} 
+(a short character string describing what was summarized) and \code{$result} 
+(a value or a character string with the result of the summarization). 
+However, if the result of a \code{summaryFunction} is furthermore 
+converted to a \code{\link{summaryResult}} object, a \code{print()} 
+method also becomes available for consistent formatting of 
+\code{summaryFunction} results.
+
+Note that all available \code{summaryFunction}s are listed by the call
+\code{allSummaryFunctions()} and we recommed looking into these function,
+if more knowledge about \code{summaryFunction}s is required.
 }
 \examples{
-#Defining a new summaryFunction:
- countZeros <- function(v) {
-     res <- length(which(v == 0))
-     list(feature="No. zeros", result = res)
-   }
- countZeros <- summaryFunction(countZeros, description = "Count no. of zeros",
-                               classes = c("character", "factor", "labelled",
-                                           "numeric", "integer", "logical"))
 
-#Extract or set description of a summaryFunction:
- description(countZeros)
- description(countZeros) <- "Count no. of 0s" #new description
- description(countZeros)
+#Define a valid summaryFunction that can be called from summarize() 
+#and clean(). This function counts how many zero entries a given 
+#variable has:
+ countZeros <- function(v, ...) {
+  res <- length(which(v == 0))
+  summaryResult(list(feature = "No. zeros", result = res, value = res))
+ }
 
-#Extract or set classes of a summaryFunction:
- classes(countZeros)
- classes(countZeros) <- "numeric"
- classes(countZeros)
+#Convert it to a summaryFunction object. We don't count zeros for 
+#logical variables, as they have a different meaning here (FALSE):   
+ countZeros <- summaryFunction(countZeros, description = "Count number of zeros",
+                             classes = setdiff(allClasses(), "logical"))
+                             
+#Call it directly :
+ countZeros(c(0, 0, 0, 1:100))
+
+#Call it via summarize():
+ data(cars)
+ summarize(cars, numericSummaries = c(defaultNumericSummaries(),
+   "countZeros"))
+
+#Note that countZeros now appears in a allSummaryFunctions() call:
+ allSummaryFunctions()
 
 }
 \seealso{
-\code{\link{allSummaryFunctions}} \code{\link{summarize}}
+\code{\link{allSummaryFunctions}}, \code{\link{summarize}}, 
+\code{\link{clean}}, \code{\link{checkResult}}
 }
 

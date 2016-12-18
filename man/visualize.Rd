@@ -2,78 +2,94 @@
 % Please edit documentation in R/visualize.R
 \name{visualize}
 \alias{visualize}
-\title{Produce marginal distribution plots}
+\title{Produce distribution plots}
 \usage{
 visualize(v, vnam = NULL, allVisuals = "standardVisual", doEval = TRUE,
   ...)
 }
 \arguments{
-\item{v}{The variable (vector) which is to be plotted.}
+\item{v}{The variable (vector) or dataset (data.frame) which is to be plotted.}
 
 \item{vnam}{The name of the variable. This name might be printed on the plots, depending on the
 choice of plotting function. If not supplied, it will default to the name of \code{v}.}
 
 \item{allVisuals}{The name (as a character string) of the actual plotting function to be used, no
-matter the class of \code{v}. See \code{details} for more details about the structure of such plotting
-functions. Note that this option is overwritten if a non-null class specific
-plotting function is supplied in \code{...} (see \code{details}). Two options are readily available,
-\code{\link{standardVisual}} and \code{\link{basicVisual}}.}
+matter the class of the variable. Note that if \code{v} is a single variable, this option is 
+overwritten if a non-null class specific plotting function is supplied in \code{...} 
+(see \emph{details} below). However, if \code{v} is a dataset, the function chosen in 
+\code{allVisuals} will decide what plots are made.}
 
-\item{doEval}{If TRUE (the default), \code{visualize} returns a plot (IS THIS THE CORRECT WAY TO SAY IT?). Otherwise,
-visualize returns a character string containing R-code for producing a plot.}
+\item{doEval}{A logical. If \code{TRUE} (the default), \code{visualize} has the side effect of
+producing a plot (or multiple plots, if \code{v} is a data.frame). Otherwise,
+visualize returns a character string containing R-code for producing the plot (or, when \code{v} is
+a data.frame, a list of such character strings).}
 
-\item{...}{ALLOW FOR ARGUMENTS TO BE PASSED ON TO E.G. STANDARDVISUAL AS WELL? If the plotting
-function to be used should differ by variable type, this can be specified by using additional arguments
-on the form \code{characterVisual = "standardVisual"}, ..., \code{logicalVisual = "standardVisual"} for
-each of the 6 data classes \code{character}, \code{factor}, \code{labelled}, \code{numeric},
-\code{integer} and \code{logical}.}
+\item{...}{Additional arguments used for class-specific choices of visual functions 
+(see \emph{details}).}
 }
 \description{
 Generic shell function that calls a plotting function in order to produce a marginal
-distribution plot for a variable, depending on the class of the variable.
+distribution plot for a variable (or for each variable in a dataset). What type of plot is made 
+might depend on the data class of the variable.
 }
 \details{
-The function supplied in \code{allVisuals} should take a variable, \code{v}, and its name,
-\code{vnam}, and an evaluation indicator, \code{doEval}, and return a character string containing
-(standalone) code for producing a plot if \code{doEval = FALSE} and a plot otherwise.
-See e.g. \code{\link{standardVisual}} for an example of such a plotting function and the example
-below.
+Visual functions can be  supplied using their names (in character strings) in 
+the class-specific arguments, e.g.\code{characterVisual = "standardVisual"}, ..., 
+\code{logicalVisual = "standardVisual"} for each of the 7 data classes \code{character}, 
+\code{Date}, \code{factor}, \code{labelled}, \code{numeric}, \code{integer} and \code{logical}. 
+
+Note that an overview of all available \code{visualFunction}s can be obtained by calling
+\code{\link{allVisualFunctions}}. 
+
+A user defined visual function can be supplied using its function name. Details on how 
+to construct valid visual functions are found in \code{\link{visualFunction}}.
 }
 \examples{
  #Standard use: Return standalone code for plotting a function:
    visualize(c(1:10), "Variable 1", doEval = FALSE)
 
-
  #Define a new visualization function and call it using visualize either
  #using allVisual or a class specific argument:
-   pieVisual <- function(v, vnam, doEval) {
-     thisCall <- call("pie", x=table(v), main=vnam)
+   mosaicVisual <- function(v, vnam, doEval) {
+     thisCall <- call("mosaicplot", table(v), main = vnam, xlab = "")
      if (doEval) {
        return(eval(thisCall))
      } else return(deparse(thisCall))
    }
+   mosaicVisual <- visualFunction(mosaicVisual, 
+                                  description = "Mosaicplots from graphics",
+                                  classes = allClasses())
 
  \dontrun{
    #use allVisual:
-   visualize(c("1", "1", "1", "2", "2", "a"), "My variable", allVisuals = "pieVisual")
+   visualize(c("1", "1", "1", "2", "2", "a"), "My variable", 
+       allVisuals = "mosaicVisual")
 
    #use characterVisual:
-   visualize(c("1", "1", "1", "2", "2", "a"), "My variable", characterVisual = "pieVisual")
+   visualize(c("1", "1", "1", "2", "2", "a"), "My variable", 
+      characterVisual = "mosaicVisual")
 
    #this will use standardVisual:
-   visualize(c("1", "1", "1", "2", "2", "a"), "My variable", numericVisual = "pieVisual")
+   visualize(c("1", "1", "1", "2", "2", "a"), "My variable", 
+       numericVisual = "mosaicVisual")
  }
 
-   #return code for a pie chart
-   visualize(c("1", "1", "1", "2", "2", "a"), "My variable", allVisuals = "pieVisual", doEval=FALSE)
+   #return code for a mosaic plot
+   visualize(c("1", "1", "1", "2", "2", "a"), "My variable", 
+       allVisuals = "mosaicVisual", doEval=FALSE)
 
  \dontrun{
- #Produce multiple plots easily, depending on data type
+ #Produce multiple plots easily by calling visualize on a full dataset:
    data(testData)
-   testData <- testData[, c("charVar", "factorVar", "numVar", "intVar")]
-   par(mfrow = c(2, 2))
-   plots <- lapply(testData, function(x) visualize(x, allVisual="basicVisual", doEval=T))
-   par(mfrow = c(1, 1))
+   testData2 <- testData[, c("charVar", "factorVar", "numVar", "intVar")]
+   visualize(testData2)
+   
+ #When using visualize on a dataset, datatype specific arguments have no
+ #influence:
+   visualize(testData2, factorVisual = "basicVisual", characterVisual = "basicVisual")
+   
+ #But the "allVisuals" argument still works:
+   visualize(testData2, allVisuals = "basicVisual")
  }
 
 }

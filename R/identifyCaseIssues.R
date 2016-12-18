@@ -38,7 +38,8 @@ identifyCaseIssues.factor <- function(v, nMax = Inf) identifyCaseIssuesF(v, nMax
 
 #make it a checkFunction
 #' @include checkFunction.R
-identifyCaseIssues <- checkFunction(identifyCaseIssues, "Identify case issues")
+identifyCaseIssues <- checkFunction(identifyCaseIssues, "Identify case issues",
+                                    c("character", "factor"))
 
 
 ##########################################Not exported below#########################################

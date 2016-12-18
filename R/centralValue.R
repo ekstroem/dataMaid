@@ -16,12 +16,16 @@
 #' only NA values are ignored for factor, character, Date and labelled variables. No values are
 #' ignored for logical variables.
 #'
-#' @return A list with \code{$feature}: [Mode/median] and \code{$result}: [the central value of \code{v}].
+#' @return An object of class \code{summaryResult} with the following entries: \code{$feature} 
+#' (the mode/median),\code{$result} (the central value of \code{v}) and \code{$value} (identical 
+#' to \code{$result}).
+#' 
 #' If the mode is returned and it is not uniquely determined, the first value qualifying as a mode is
 #' returned, when the variable is sorted according to \code{\link{sort}}. 
 #'
-#' @seealso \code{\link{summaryFunction}}, \code{\link{summarize}}
-#'
+#' @seealso \code{\link{summaryFunction}}, \code{\link{summarize}}, \code{\link{summaryResult}},
+#' \code{\link{allSummaryFunctions}}
+#' 
 #' @examples
 #'  #central value of an integer variable:
 #'    centralValue(c(rep(1, 25), rep(2, 10), rep(3, 20)))
@@ -33,8 +37,6 @@
 #' @export
 centralValue <- function(v, ...) UseMethod("centralValue")
 
-#' @include summaryFunction.R 
-centralValue <- summaryFunction(centralValue, "Compute median or mode")
 
 #assign methods to generic centralValue function
 
@@ -59,6 +61,9 @@ centralValue.logical <- function(v, ...) centralValueB(v)
 #' @export
 centralValue.Date <- function(v, ...) centralValueCF(v)
 
+
+#' @include summaryFunction.R 
+centralValue <- summaryFunction(centralValue, "Compute median or mode", allClasses())
 
 
 ##########################################Not exported below#########################################

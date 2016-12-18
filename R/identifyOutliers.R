@@ -59,7 +59,8 @@ identifyOutliers.integer <- function(v, nMax = Inf, maxDecimals = 2) {
 
 #make it a checkFunction
 #' @include checkFunction.R
-identifyOutliers <- checkFunction(identifyOutliers, "Identify outliers")
+identifyOutliers <- checkFunction(identifyOutliers, "Identify outliers",
+                                  c("integer", "numeric"))
 
 
 ##########################################Not exported below#########################################

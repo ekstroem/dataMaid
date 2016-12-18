@@ -1,34 +1,38 @@
 #' @title Produce a message for the output of a checkFunction
-#' @description Internal function for producing output messages in \code{\link{checkFunction}}
-#' type functions called by \code{\link{clean}}.
+#' @description Helper function for producing output messages for 
+#' \code{\link{checkFunction}} type functions. 
 #'
-#' @param problemStatus A list consisting of two entries: $problem - TRUE/FALSE indicating
-#' whether a problem was found by the \code{checkFunction}, $problemValues - a vector of values
-#' from the variable that were deemed problematic. See details below.
+#' @param problemStatus A list consisting of two entries: 
+#' 
+#' \code{$problem} - logical indicating whether a problem was found by the 
+#' \code{checkFunction} responsible for the making the \code{messageGenerator()} call, 
+#' 
+#' \code{$problemValues} - a vector of values from the variable that were 
+#' deemed problematic (see details below).
 #'
 #' @param message Optional, but recommended. A message describing what problem the
 #' problem values are related to. If \code{NULL} a standard message is added using the name
 #' of the function that called \code{messageGenerator}.
 #'
 #' @param nMax Maximum number of problem values to be printed in the message. If the total
-#' number of problem values exceeds nMax, the number of remaining (non-printed) problem
-#' values are added to the message. Defaults to \code{Inf} in which case all problem
+#' number of problem values exceeds nMax, the number of omitted problem
+#' values are added to the message. Defaults to \code{Inf}, in which case all problem
 #' values are printed.
 #'
 #' @details This function is a tool for building \code{\link{checkFunction}}s for the
-#' cleanR \code{\link{clean}} function. \code{checkFunction}s will often identify a number
+#' \code{cleanR} \code{\link{clean}} function. \code{checkFunction}s will often identify a number
 #' of values in a variable that are somehow problematic. \code{messageGenerator} takes
 #' these values, pastes them together with a problem description and makes sure that the
-#' formatting is appropriate for being rendered in a rmarkdown document. We recommend writing
-#' short at precise problem descriptions (see examples), but if no message is supplied,
-#' the following message is generated:
+#' formatting is appropriate for being rendered in a \code{rmarkdown} document. 
+#' We recommend writing short and precise problem descriptions (see examples),
+#'  but if no message is supplied, the following message is generated:
 #' "[function name] found the following problem values: [problem values]".
-#' Note that this option only works correctly when the checkFunction is called directly and e.g.
-#' not dispatched through a generic function.
+#' Note that this option only works correctly when the \code{checkFunction} is 
+#' called directly and e.g. not dispatched through a generic function.
 #'
-#' @return A character string.
+#' @return A character string with a problem description.
 #'
-#' @seealso \code{\link{check}} \code{\link{checkFunction}}
+#' @seealso \code{\link{check}}, \code{\link{checkFunction}}, \code{\link{clean}}
 #'
 #' @examples
 #'
@@ -46,7 +50,8 @@
 #'   message <- messageGenerator(list(problemValues = problemValues, problem = problem),
 #'                               "The following values contain underscores:",
 #'                               nMax = nMax)
-#'   list(problem = problem, message = message)
+#'   checkResult(list(problem = problem, message = message, 
+#'       problemValues = problemValues))
 #'  }
 #'
 #'  identifyUnderscores(noUSVar) #no problem
@@ -61,7 +66,8 @@
 #'   problem <- any(underscorePlaces)
 #'   message <- messageGenerator(list(problemValues = problemValues,
 #'                                    problem = problem), nMax = nMax)
-#'   list(problem = problem, message = message)
+#'   checkResult(list(problem = problem, message = message, 
+#'       problemValues = problemValues))
 #'  }
 #'
 #'  identifyUnderscores2(noUSVar) #no problem
@@ -70,6 +76,7 @@
 #' #Only print the first two problemvalues in the message:
 #'  identifyUnderscores2(USVar, nMax = 2)
 #'
+#' @include checkResult.R
 #' @export
 messageGenerator <- function(problemStatus, message = NULL, nMax = Inf) {
 
@@ -77,10 +84,7 @@ messageGenerator <- function(problemStatus, message = NULL, nMax = Inf) {
   callF <- sys.status()$sys.calls
   callF <- sapply(callF, function(x) as.character(x)[1])
 
-  #callF <- as.character(callF[[length(callF) - 2]])[1]
-
   #standard functions do not need to specify a message when called
-
   standardCall <- intersect(callF, c("identifyMissing", "identifyWhitespace", "identifyOutliers",
                                      "identifyLoners", "identifyCaseIssues", "identifyOutliersTBStyle"))
 
@@ -121,12 +125,10 @@ messageGenerator <- function(problemStatus, message = NULL, nMax = Inf) {
 #and adds quotes such that prefixed and suffixed blankspaces are visible.
 #only called when there is at least one problemValue
 #NOTE: 3 slashes escapes the espaced string [\"] such that it is printed correctly
-#(and not intepreted) in markdown.
+#(and not interpreted) in markdown.
 printProblemValues <- function(problemValues, nMax = Inf) {
     problemValues <- gsub("\\", "\\\\", sort(problemValues, na.last = TRUE), fixed = TRUE)
         ##NOTE: sort removes NaNs if not told explicitly not to by use of the na.last-argument
-
-##    problemValues <- sort(problemValues)
     nVals <- length(problemValues)
     extraStr <- ""
     if (nMax < nVals) {

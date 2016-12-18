@@ -46,7 +46,8 @@ identifyOutliersTBStyle.integer <- function(v, nMax = Inf, maxDecimals = 2) {
 #make it a checkFunction
 #' @include checkFunction.R
 identifyOutliersTBStyle <- checkFunction(identifyOutliersTBStyle, 
-                                         "Identify outliers (Turkish Boxplot style)")
+                                         "Identify outliers (Turkish Boxplot style)",
+                                         c("integer", "numeric"))
 
 
 

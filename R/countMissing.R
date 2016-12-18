@@ -7,9 +7,9 @@
 #' @param v A variable (vector).
 #' @param ... Not in use.
 #'
-#' @return A \code{\link{summaryResult}} object with \code{$feature}:
-#' "No. missing obs.", \code{$result}: [the number and percentage missing observations].
-#' and \code{$value}: [the number of missing observations].
+#' @return A \code{\link{summaryResult}} object with the following entries: 
+#' \code{$feature} ("No. missing obs."), \code{$result} (the number and percentage 
+#' missing observations) and \code{$value} (the number of missing observations).
 #'
 #' @seealso \code{\link{summarize}}, \code{\link{allSummaryFunctions}},
 #' \code{\link{summaryFunction}}, \code{\link{summaryResult}}

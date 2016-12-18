@@ -1,6 +1,6 @@
 #' @title Create object of class checkResult
 #' 
-#' @description Covert a list resulting from the checks performed in a 
+#' @description Convert a list resulting from the checks performed in a 
 #' \code{\link{checkFunction}} into a \code{checkResult} object, thereby
 #' supplying it with a \code{print()} method.
 #' 

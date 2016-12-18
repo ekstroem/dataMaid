@@ -42,7 +42,8 @@ identifyLoners.character <- function(v, nMax = Inf) identifyLonersC(v, nMax = nM
 
 #make it a checkFunction
 #' @include checkFunction.R
-identifyLoners <- checkFunction(identifyLoners, "Identify levels with < 6 obs.")
+identifyLoners <- checkFunction(identifyLoners, "Identify levels with < 6 obs.",
+                                c("character", "factor"))
 
 ##########################################Not exported below#########################################
 

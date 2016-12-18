@@ -12,13 +12,15 @@ variableType(v, ...)
 \item{...}{Not in use.}
 }
 \value{
-A list with $feature: "Variable type" and
-$result: [the (original) class of the variable].
+An object of class \code{summaryResult} with the following entries: 
+\code{$feature} ("Variable type"), \code{$result} (the (original) class of 
+\code{v}) and \code{$value} (identical to \code{$result}).
 }
 \description{
-A summary type function to be called from \code{\link{summarize}}, which finds the
+A \code{\link{summaryFunction}} type function, intended to be called from 
+\code{\link{summarize}} to be called from \code{\link{summarize}}, which finds the
 orignial class of a variable. This is just the class for all objects but those of class
-smartNum.
+\code{smartNum}.
 }
 \examples{
  #For standard variables:
@@ -27,11 +29,9 @@ smartNum.
    variableType(varX)
 
  #For smartNum variables:
-   smartX <- smartNum(varX)
+   smartX <- cleanR:::smartNum(varX)
    class(smartX)
    variableType(smartX)
-
- #Something with multiple classes, like ordered factor...
 
 }
 \seealso{

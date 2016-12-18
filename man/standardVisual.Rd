@@ -15,21 +15,25 @@ standardVisual(v, vnam, doEval = TRUE)
 a character string containing standalone R code for producing the plot.}
 }
 \description{
-Plot the distribution of a variable, depending on its data class, by use of ggplot2.
+Plot the distribution of a variable, depending on its data class, by use of ggplot2. 
+Note that \code{standardVisual} is a \code{\link{visualFunction}}, compatible with the 
+\code{\link{visualize}} and \code{\link{clean}} functions.
 }
 \details{
-For character, factor, logical and labelled variables, a barplot is produced. For numeric
-or integer variables, \code{standardVisual} produces a histogram instead. Note that for
+For character, factor, logical and labelled variables, a barplot is produced. For numeric,
+integer or Date variables, \code{standardVisual} produces a histogram instead. Note that for
 integer and numeric variables, all non-finite (i.e. \code{NA}, \code{NaN}, \code{Inf}) values are
-removed prior to plotting. For character, factor, labelled and logical variables, only \code{NA}
-values are removed.
+removed prior to plotting. For character, Date, factor, labelled and logical variables, 
+only \code{NA} values are removed.
 }
 \examples{
 \dontrun{
 #Save a variable
-myVar <- c(1:10)
+myVar <- c(1:10) 
+
 #Plot a variable
 standardVisual(myVar, "MyVar")
+
 #Produce code for plotting a variable
 standardVisual(myVar, "MyVar", doEval = FALSE)
 }

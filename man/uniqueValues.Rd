@@ -2,7 +2,7 @@
 % Please edit documentation in R/uniqueValues.R
 \name{uniqueValues}
 \alias{uniqueValues}
-\title{Summary function for unique values}
+\title{summaryFunction for unique values}
 \usage{
 uniqueValues(v, ...)
 }
@@ -12,18 +12,21 @@ uniqueValues(v, ...)
 \item{...}{Not in use.}
 }
 \value{
-A list with $feature: "No. unique values" and
-$result: [the number of unique values].
+An object of class \code{summaryResult} with the following entries: 
+\code{$feature} ("No. unique values") and \code{$result} (the number of unique 
+values in \code{v}).
 }
 \description{
-A summary type function to be called from \code{\link{summarize}}, which counts the
-number of unique (excluding NA) values in a variable.
+A \code{\link{summaryFunction}} type function, intended to be called from 
+\code{\link{summarize}} to be called from \code{\link{summarize}}, which counts the
+number of unique (excluding \code{NA}s) values in a variable.
 }
 \examples{
 uniqueValues(c(1:3, rep(NA, 10), Inf, NaN))
 
 }
 \seealso{
-\code{\link{summarize}}
+\code{\link{summaryFunction}}, \code{\link{summarize}}, \code{\link{summaryResult}},
+\code{\link{allSummaryFunctions}}
 }
 
