@@ -35,21 +35,36 @@
 \Shorttitle{\pkg{cleanR}: maid for cleaning datasets in R} %% a short title (if necessary)
 
 %% an abstract and keywords
-\Abstract{Data cleaning and -validation are the first steps in any data
-  analysis, as the validity of the conclusions from the analysis are
-  hinged on the quality of the input data. Mistakes in the data can arise for any number of reasons, including erroneous codings, malfunctioning measurement equipment, inconsistent data generation manuals and many more.  Ideally, a human investigator
-  should go through each variable in the dataset and look for
-  potential errors --- both in input values and coding.  \hl{segway: But, ...}
+\Abstract{Data cleaning and -validation are the first steps in any
+  data analysis, as the validity of the conclusions from the analysis
+  hinges on the quality of the input data. Mistakes in the data can
+  arise for any number of reasons, including erroneous codings,
+  malfunctioning measurement equipment, inconsistent data generation
+  manuals and many more.  Ideally, a human investigator should go
+  through each variable in the dataset and look for potential errors
+  --- both in input values and coding --- but that process can be very
+  time-consuming, expensive and error-prone by itself.
 
   We describe an \proglang{R} package which implements an extensive
   and customizeable suite of quality assessment tools to be applied to
-  a dataset in order to identify potential problems in its variables. The results can be presented in an auto-generated, non-technical, stand-alone
-  overview document, intended to be perused by an investigator with an
-  understanding of the variables in the data and the experimental design, but not necessarily knowledge of \R{R}. Thereby, \R{cleanR} aids the dialogue between data analysist and field experts, while also providing easy documentation of data cleaning steps and data quality control. Moreover, the \R{cleanR} solution changes the data cleaning process from the usual ad hoc approach to a systematic, well-documented endeavor. 
-  \R{cleanR} also provides a suite of more typical \R{R} tools for interactive data quality assessment and -cleaning. 
+  a dataset in order to identify potential problems in its
+  variables. The results can be presented in an auto-generated,
+  non-technical, stand-alone overview document, intended to be perused
+  by an investigator with an understanding of the variables in the
+  data and the experimental design, but not necessarily knowledge of
+  \R{R}. Thereby, \R{cleanR} aids the dialogue between data analysist
+  and field experts, while also providing easy documentation of data
+  cleaning steps and data quality control. Moreover, the \R{cleanR}
+  solution changes the data cleaning process from the usual ad hoc
+  approach to a systematic, well-documented endeavor.  \R{cleanR} also
+  provides a suite of more typical \R{R} tools for interactive data
+  quality assessment and -cleaning. \hl{Hvad menes der/henvises der
+    til  med denne sætning?}
 
-  The \pkg{cleanR} package is designed to be easily extended with custom
-  user-created checks that are relevant in particular situations. \hl{Already said that above. Either expand on it or delete this.}
+  % The \pkg{cleanR} package is designed to be easily extended with
+  % custom user-created checks that are relevant in particular
+  % situations. \hl{Already said that above. Either expand on it or
+  % delete this.}
 }
 \Keywords{data cleaning, quality control, \proglang{R}}
 \Plainkeywords{data cleaning, quality control, R} %% without formatting
@@ -88,9 +103,17 @@
 \begin{document}
 
 \section{Introduction}
-Though data cleaning might be regarded as a somewhat dull activity, adequate data cleaning is crucial in any data analysis. With ever-growing dataset sizes and complexities, statisticians and data analysts find themselves spending a large portion of their time on
+Though data cleaning might be regarded as a somewhat tedious activity,
+adequate data cleaning is crucial in any data analysis. With
+ever-growing dataset sizes and complexities, statisticians and data
+analysts find themselves spending a large portion of their time on
 data cleaning and on data wrangling. \proglang{R}-packages such as
-\pkg{data.table}, and \pkg{plyr} have made data wrangling a lot easier, but there are only a few tools available for data cleaning. \hl{What are these tools? More here about the solutions already available.}
+\pkg{data.table}, and \pkg{plyr} have made data wrangling a lot
+easier, but there are only a few tools available for data
+cleaning. \hl{What are these tools? More here about the solutions
+  already available.}
+
+
 
 \hl{A text here (with offset in what tools are already available) that
 \begin{itemize}
