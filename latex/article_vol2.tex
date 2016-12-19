@@ -52,13 +52,13 @@
   non-technical, stand-alone overview document, intended to be perused
   by an investigator with an understanding of the variables in the
   data and the experimental design, but not necessarily knowledge of
-  \R{R}. Thereby, \R{cleanR} aids the dialogue between data analysist
+  \R{R}. Thereby, \pkg{cleanR} aids the dialogue between data analysist
   and field experts, while also providing easy documentation of data
-  cleaning steps and data quality control. Moreover, the \R{cleanR}
+  cleaning steps and data quality control. Moreover, the \pkg{cleanR}
   solution changes the data cleaning process from the usual ad hoc
-  approach to a systematic, well-documented endeavor.  \R{cleanR} also
-  provides a suite of more typical \R{R} tools for interactive data
-  quality assessment and -cleaning. \hl{Hvad menes der/henvises der
+  approach to a systematic, well-documented endeavor.  \pkg{cleanR} also
+  provides a suite of more typical \proglang{R} tools for interactive data
+  quality assessment and -cleaning. \hl{Hvad henvises der
     til  med denne sætning?}
 
   % The \pkg{cleanR} package is designed to be easily extended with
@@ -107,10 +107,26 @@ Though data cleaning might be regarded as a somewhat tedious activity,
 adequate data cleaning is crucial in any data analysis. With
 ever-growing dataset sizes and complexities, statisticians and data
 analysts find themselves spending a large portion of their time on
-data cleaning and on data wrangling. \proglang{R}-packages such as
+data cleaning and on data wrangling. Online tools such as OpenRefine
+(\url{http://openrefine.org/}) and \proglang{R}-packages such as
 \pkg{data.table}, and \pkg{plyr} have made data wrangling a lot
-easier, but there are only a few tools available for data
-cleaning. \hl{What are these tools? More here about the solutions
+easier, but only a handful of packages such as \pkg{editrules},
+\pkg{validate}, \pkg{DataCombine}, and \pkg{janitor} attempt to
+implement systematic, reproducible data cleaning.  These packages use
+different approaches for data cleaning: \pkg{editrules} and
+\pkg{validate} provide frameworks for setting up and checking
+constraints on the variables, while \pkg{DataCombine} and
+\pkg{janitor} both provide a few functions for identifying problems
+(e.g, duplicates, dates coded as numbers) in data.
+
+While some of these tools ... 
+
+data cleaning is usually done in a very ad hoc manner
+
+ checking your data easy, maintainable and reproducibl
+
+
+\hl{What are these tools? More here about the solutions
   already available.}
 
 
@@ -125,23 +141,29 @@ cleaning. \hl{What are these tools? More here about the solutions
 
 Data cleaning is a time consuming endeavor, as it inherently requires
 human interaction since every dataset is different and the variables
-in the dataset can only be understood in the proper context of their origin. 
-\hl{Segway: Something like maybe this is why proper data cleaning is not always done...}
-In many situations these errors are discovered in the process of the
-data analysis (e.g., \hl{a categorical variable with numeric labels is
-wrongly classified as a numeric variable\footnote{\hl{Is that something we can fix in clean()? Not quite sure what "labels" mean in this context.}}} or a variable where all values have erroneously been coded to the same value), but in other cases a human
-with knowledge about the data context area is needed to identify
-possible mistakes in the data (e.g., if there are 4 categories for a
+in the dataset can only be understood in the proper context of their
+origin.  \hl{Segway: Something like maybe this is why proper data
+  cleaning is not always done...}  In many situations these errors are
+discovered in the process of the data analysis (e.g., \hl{a
+  categorical variable with numeric labels for each category may be 
+  wrongly classified as a quantitative variable\footnote{\hl{Is that
+      something we can fix in clean()? Not quite sure what "labels"
+      mean in this context. --- Kun i den forstand, at den skriver
+      klassen ud, så ja. Har prøvet at opdatere teksten}}} or a
+variable where all values have erroneously been coded to the same
+value), but in other cases a human with knowledge about the data
+context area is needed to identify possible mistakes in the data
+(e.g., if there are 4 categories for a
 variable that should only have 3).  \hl{segway} \\
 
 
 
-The \R{cleanR} approach to data cleaning and -quality assessment is characterized by two principles \hl{use a different term than "principles" here and below, when we refer to this sentence}. First of all, there is no need for data cleaning to be an ad hoc procedure. Often, we have a very clear idea of what flags are raisable in a given dataset before we look at it, as we were the ones to produce it in the first place. This means that data cleaning can easily be a well-documented, well-specified procedure. In order to aid this principle, \R{cleanR} provides easy-to-use, automated tools for data quality assessment in \R{R} on which data cleaning decisions can be build. This quality assessment is presented in a auto-generated overview document, readable by data analysts and field experts alike, thereby also contributing to a inter-field dialogue about the data at hand. Oftentimes, e.g. distinguishing between faulty codings of a numeric value and unusual, but correct, values requires problem-specific expertise that might not be held by the data analyst. Hopefully, having easy access to data descriptions through \R{cleanR} will help this necessary knowledge sharing. 
+The \pkg{cleanR} approach to data cleaning and -quality assessment is characterized by two principles \hl{use a different term than "principles" here and below, when we refer to this sentence}. First of all, there is no need for data cleaning to be an ad hoc procedure. Often, we have a very clear idea of what flags are raisable in a given dataset before we look at it, as we were the ones to produce it in the first place. This means that data cleaning can easily be a well-documented, well-specified procedure. In order to aid this principle, \pkg{cleanR} provides easy-to-use, automated tools for data quality assessment in \R{R} on which data cleaning decisions can be build. This quality assessment is presented in a auto-generated overview document, readable by data analysts and field experts alike, thereby also contributing to a inter-field dialogue about the data at hand. Oftentimes, e.g. distinguishing between faulty codings of a numeric value and unusual, but correct, values requires problem-specific expertise that might not be held by the data analyst. Hopefully, having easy access to data descriptions through \pkg{cleanR} will help this necessary knowledge sharing. 
 
-While \R{cleanR}s primary raison d'être is auto-generating data quality assessment overview documents, we still wish to emphasize that it is \textit{not} a tool for automatic data cleaning. This qualifies as the second principle of \R{cleanR}: Data cleaning decisions should always be made by humans. Therefore, \R{cleanR} does not supply any tools for "fixing" errors in the data. However, we do provide interactive functions that can be used to identify potentially erroneous entries in a dataset and that can make it easier to solve data issues, one variable at a time.\\
+While \pkg{cleanR}s primary raison d'être is auto-generating data quality assessment overview documents, we still wish to emphasize that it is \textit{not} a tool for automatic data cleaning. This qualifies as the second principle of \pkg{cleanR}: Data cleaning decisions should always be made by humans. Therefore, \pkg{cleanR} does not supply any tools for "fixing" errors in the data. However, we do provide interactive functions that can be used to identify potentially erroneous entries in a dataset and that can make it easier to solve data issues, one variable at a time.\\
 
 
-This manuscript is structured as follows: First, in section \hl{2}, we introduce the representative of the first \hl{principle}, namely the \R{clean()} function, which generates data cleaning overview documents. In the \R{cleanR} package, we have provided a number of default cleaning steps that cover the data cleaning challenges, we find to be most common. Next, in section \hl{3}, we present the interactive mode of \R{cleanR}, as motivated by the second \hl{principle} above. But, as any data analyst knows, every dataset is different, and some datasets might include problems that cannot be detected by our data checking functions. In Section \hl{4}, we turn to the question of how such \R{cleanR} extensions can be made, such that they are integrable with the \R{clean()} function and with the other tools available in \R{cleanR}.  At last, in Section 5 \hl{proper ref}, we discuss a number of examples of specific data cleaning challenges and how \R{cleanR} can be used to solve them. \hl{Is there a Section 6?}\\
+This manuscript is structured as follows: First, in section \hl{2}, we introduce the representative of the first \hl{principle}, namely the \R{clean()} function, which generates data cleaning overview documents. In the \pkg{cleanR} package, we have provided a number of default cleaning steps that cover the data cleaning challenges, we find to be most common. Next, in section \hl{3}, we present the interactive mode of \pkg{cleanR}, as motivated by the second \hl{principle} above. But, as any data analyst knows, every dataset is different, and some datasets might include problems that cannot be detected by our data checking functions. In Section \hl{4}, we turn to the question of how such \pkg{cleanR} extensions can be made, such that they are integrable with the \R{clean()} function and with the other tools available in \pkg{cleanR}.  At last, in Section 5 \hl{proper ref}, we discuss a number of examples of specific data cleaning challenges and how \pkg{cleanR} can be used to solve them. \hl{Is there a Section 6?}\\
 
 \hl{Do they typically discuss notation in articles like this? I try (somewhat inconsistently) to refer to functions as \R{function()} while other \R{R} objects are referred to merely as \R{object}. This is also the style adopted by Wickham in his books.}
  
@@ -199,8 +221,18 @@ This manuscript is structured as follows: First, in section \hl{2}, we introduce
 \end{figure}
 
 
-
-In \pkg{cleanR}, the function \R{clean()} is the primary workhorse and knowledge of nothing more than this tool is required to produce data cleaning outputs. The data cleaning output itself is an overview document, intended for reading by humans, in either pdf or html format. Appendix \hl{something} provides an example of a data cleaning output document, produced by calling \R{clean} on the dataset \R{toyData} available in  \R{cleanR}. The first two pages of this data cleaning output are also available in Figure~\ref{fig:example1}. \R{toyData} is a very small ($15$ by $6$), artificial dataset, whose only purpose is to illustrate the main capabilities of \R{cleanR}. The following commands load the dataset and produce the cleaning output:
+The \R{clean()} function is the primary workhorse of \pkg{cleanR} and
+this is the only function needed by the user if the standard battery
+of tests are used to output the data cleaning summaries. The data
+cleaning output itself is an overview document, intended for reading
+by humans, in either pdf or html format. Appendix \hl{something}
+provides an example of a data cleaning output document, produced by
+calling \R{clean()} on the dataset \R{toyData} available in
+\pkg{cleanR}. The first two pages of this data cleaning output are
+also available in Figure~\ref{fig:example1}. \R{toyData} is a very
+small ($15$ rows and $6$ variables), artificial dataset, whose only purpose is to
+illustrate the main capabilities of \pkg{cleanR}. The following
+commands load the dataset and produce the cleaning output:
 
 \begin{Schunk}
 \begin{Sinput}
@@ -231,7 +263,22 @@ In \pkg{cleanR}, the function \R{clean()} is the primary workhorse and knowledge
 \end{Sinput}
 \end{Schunk}
 
-By default, a pdf overview document is produced, saved to the disc (in the working directory) and opened for inspection. Turning to Figure~\ref{fig:example1}, we see that such a data cleaning output document consists of two parts. First, an overview of what was done is presented under the title \textit{Data cleaning summary}. Secondly, each variable in the dataset is presented in turn using (up to) three tools in the \textit{Variable list}: A table summarizing key features of the variable, a figure visualizing its distribution and potentially also a list of flagged issues. For instance, in the \R{numeric}-type variable \R{var2} from \R{toyData}, \R{clean()} has identified two values that are suspected to be miscoded missing values (\R{999} and \R{NaN}), while two values were also flagged as potential outliers that should be investigated more carefully. We can then return to Part 1, the data cleaning summary, and inspect what sorts of checks were performed on this variable. \hl{hm, delete the last sentence? or use different variable? Only these exact two checks were performed}. \\
+By default, a pdf overview document is produced, saved to the disc (in
+the working directory) and opened for immediate inspection. Turning to
+Figure~\ref{fig:example1}, we see that such a data cleaning output
+document consists of two parts. First, an overview of what was done is
+presented under the title \textit{Data cleaning summary}. Secondly,
+each variable in the dataset is presented in turn using (up to) three
+tools in the \textit{Variable list}: A table summarizing key features
+of the variable, a figure visualizing its distribution and potentially
+also a list of flagged issues. For instance, in the \R{numeric}-type
+variable \R{var2} from \R{toyData}, \R{clean()} has identified two
+values that are suspected to be miscoded missing values (\R{999} and
+\R{NaN}), while two values were also flagged as potential outliers
+that should be investigated more carefully. We can then return to Part
+1, the data cleaning summary, and inspect what sorts of checks were
+performed on this variable. \hl{hm, delete the last sentence? or use
+  different variable? Only these exact two checks were performed}. 
 
 Though the \R{clean()} function is very easy to use, it should not be mistaken to be inflexible. A large number of function arguments allows for the cleaning overview document to be molded as the user sees best. Below, we present a selection of these arguments in sections \hl{xx} and \hl{xxx}. We do this under two distinct headlines to emphasize that two levels of control are available when using \R{clean()}. Either, we can control the \hl{[something] - essentially, this is everything but SVC-functions - } or we can control what quality assessments and descriptions each variable are subjected to. In order to understand this distinction, a brief glimpse of the inner structure of \R{clean()} might be useful. This can be obtained from Figure~\ref{figure:cleanStructure}. \hl{segway to next bit or just something to end the paragraph}
 
@@ -336,7 +383,7 @@ Each of these stages are controllable using appropriate function parameters in \
 
 
 \section{Something about the interactive cleanR mode}
-While overview documents are great for documenting our work, they might not feel very natural for actually performing data cleaning or data wrangling based on the results we found. Therefore, \R{cleanR} also provides more standard \R{R} interactive tools, such as functions that print results to the console or saves it in a variable for later use. Or, more precisely, the functions used by \R{clean()} to do actual data summaries, visualizations and checks, as described above, can also be used interactively. \hl{segway}
+While overview documents are great for documenting our work, they might not feel very natural for actually performing data cleaning or data wrangling based on the results we found. Therefore, \pkg{cleanR} also provides more standard \R{R} interactive tools, such as functions that print results to the console or saves it in a variable for later use. Or, more precisely, the functions used by \R{clean()} to do actual data summaries, visualizations and checks, as described above, can also be used interactively. \hl{segway}
 
 \hl{Maybe write here explicitly that this section introduces the three functions: \R{summarize()}, \R{check()} and \R{visualize()}?} 
 
@@ -432,9 +479,9 @@ Tools available for producing the function & \R{summaryResult()} & - & \R{messag
 \end{table}
 
 
-Though the discussion in the above paints a picture of cleanR as a user-friendly package which requires practically no knowledge of \R{R}, one should not be mistaken to think that it is not customizable. In fact, the main function of \R{cleanR}, \code{clean}, is mainly a tool for formatting the results from various checking-, summary- and visualization functions. Thus, the actual work underlying a \R{cleanR} output file can be anything or nothing - depending on the arguments given to \code{clean}. Specfically, user made functions can be added to the SVC-function arguments discussed above, e.g. \R{factorSummaries}, \R{allVisuals} or \R{numericChecks}: All that is needed is to specify their names, just like the names of the build-in SVC functions are specified. However, not just any function can be called from these three steps, and therefore, we will now present how \R{summaryFunction}s, \R{visualFunction}s and \R{checkFunction}s are made. \hl{Mention something about the interactive mode here as well?} \\
+Though the discussion in the above paints a picture of cleanR as a user-friendly package which requires practically no knowledge of \R{R}, one should not be mistaken to think that it is not customizable. In fact, the main function of \pkg{cleanR}, \code{clean}, is mainly a tool for formatting the results from various checking-, summary- and visualization functions. Thus, the actual work underlying a \pkg{cleanR} output file can be anything or nothing - depending on the arguments given to \code{clean}. Specfically, user made functions can be added to the SVC-function arguments discussed above, e.g. \R{factorSummaries}, \R{allVisuals} or \R{numericChecks}: All that is needed is to specify their names, just like the names of the build-in SVC functions are specified. However, not just any function can be called from these three steps, and therefore, we will now present how \R{summaryFunction}s, \R{visualFunction}s and \R{checkFunction}s are made. \hl{Mention something about the interactive mode here as well?} \\
 
-This section consists of two parts. First, we describe how the \R{clean} function can be extended by adding custom prechecks, summaries, checks and visualizations. In order to do this, one needs to produce small functions that obey to the syntax of \R{cleanR}. This can be done with different levels of strictness. If the custom functions are only to be used by \R{clean()}, only the input/output structures of the functions need to be restricted. However, by adding a few extra \hl{word?} to these functions, the full machinery of \R{cleanR} becomes available for the new, user-made functions, just as it is for the build-in functions. The presentation below is given in the format of function templates, written in pseudo-code. These templates are designed for getting the full functionality, but please note that Table~\ref{table.functionTypes} serves as a reference to the minimal requirements, while also presenting the "full" versions of the function types.
+This section consists of two parts. First, we describe how the \R{clean} function can be extended by adding custom prechecks, summaries, checks and visualizations. In order to do this, one needs to produce small functions that obey to the syntax of \pkg{cleanR}. This can be done with different levels of strictness. If the custom functions are only to be used by \R{clean()}, only the input/output structures of the functions need to be restricted. However, by adding a few extra \hl{word?} to these functions, the full machinery of \pkg{cleanR} becomes available for the new, user-made functions, just as it is for the build-in functions. The presentation below is given in the format of function templates, written in pseudo-code. These templates are designed for getting the full functionality, but please note that Table~\ref{table.functionTypes} serves as a reference to the minimal requirements, while also presenting the "full" versions of the function types.
 
 
 After this abstract, templatic overview of the internals of the three SVC functions is given, we turn to a worked example of how to use custom made functions in practice in \hl{ref to worked example section}. Here, four new SVC functions are defined and used, both interactively and in \R{clean()}. 
@@ -460,7 +507,7 @@ mySummaryFunction <- summaryFunction(mySummaryFunction,
 	description = "[Some text describing what the summaryFunction does]",
 	classes = c([the data types that this function is intended to be used for]))
 \end{Verbatim}
-which adds the new function to the output of an \code{allSummaryFunctions()} call. One comment should be devoted to the two attributes of a \R{summaryFunction}. If the \R{description} argument is left unspecified, the name of the function (in this case, \R{"mySummaryFunction"}) will be filled in. What happens if the \R{classes} argument is not specified depends on the type of \R{mySummaryFunction}. If \R{mySummaryFunction} is a \R{S3} generic function with associated methods, the call to \R{summaryFunction()} will automatically produce a vector of the names of the classes for which the function can be called. If \R{mySummaryFunction} is not an \R{S3} generic and \R{classes} is left unspecified, the attribute will simply be empty. Note that the helper function \R{allClasses()} might be useful for filling out the \R{classes} argument, as it simply lists all available classes in \R{cleanR}:
+which adds the new function to the output of an \code{allSummaryFunctions()} call. One comment should be devoted to the two attributes of a \R{summaryFunction}. If the \R{description} argument is left unspecified, the name of the function (in this case, \R{"mySummaryFunction"}) will be filled in. What happens if the \R{classes} argument is not specified depends on the type of \R{mySummaryFunction}. If \R{mySummaryFunction} is a \R{S3} generic function with associated methods, the call to \R{summaryFunction()} will automatically produce a vector of the names of the classes for which the function can be called. If \R{mySummaryFunction} is not an \R{S3} generic and \R{classes} is left unspecified, the attribute will simply be empty. Note that the helper function \R{allClasses()} might be useful for filling out the \R{classes} argument, as it simply lists all available classes in \pkg{cleanR}:
 \begin{Schunk}
 \begin{Sinput}
 > allClasses()
@@ -588,7 +635,7 @@ isID <- function(v, nMax = NULL, ...) {
 \hl{Mention somewhere that  \R{mosiacplot()} is a base-R (\R{graphics}) function? Otherwise, it might not be completely clear, that we are passing a function name in the above...} This is essentially all we need to do in order to include this function as a precheck-function in \R{clean()}, so we will leave it as is and move on to the next function, namely \R{mosaicVisual}. 
 
 \subsubsection{mosiacVisual - a new visualFunction}
-We will define this function such that it gets the full \R{cleanR} functionality. This can be done using the code 
+We will define this function such that it gets the full \pkg{cleanR} functionality. This can be done using the code 
 \begin{Schunk}
 \begin{Sinput}
  mosaicVisual <- function(v, vnam, doEval) {
@@ -614,7 +661,7 @@ Even though \R{mosaicVisual}, as written above, follows the style of a \R{visual
                  classes = allClasses())
 \end{Sinput}
 \end{Schunk}
-Here, we use the function \R{allClasses()} to quickly obtain a vector of all the seven variable classes addressed in \R{cleanR}. Note that if \R{mosaicVisual} were an S3 generic function, this argument could have been left as \R{NULL} and then the classes for which methods are available would be added automatically. \hl{I'm repeating myself here, but I think it is quite a neat feature, so maybe that's okay?}
+Here, we use the function \R{allClasses()} to quickly obtain a vector of all the seven variable classes addressed in \pkg{cleanR}. Note that if \R{mosaicVisual} were an S3 generic function, this argument could have been left as \R{NULL} and then the classes for which methods are available would be added automatically. \hl{I'm repeating myself here, but I think it is quite a neat feature, so maybe that's okay?}
 
 As \R{mosaicVisual} is now a full-blooded \R{visualFunction}, it will also be included in the \R{allVisualFunctions()} output table:
 \begin{Schunk}
@@ -706,7 +753,7 @@ identifyColons <- checkFunction(identifyColons,
 As with the previous two functions, we also change its class. Note, however, that for \R{checkFunction}s, the function description will appear in the document produced by \R{clean()} (in the \textit{Data cleaning summary} section), so now this is not only done for the sake of the \R{allCheckFunctions()} output.\\
 
 \subsubsection{Calling the new SVC functions from clean()}
-Now, we are ready to use these new functions in a \R{clean()} call. \hl{do this... what dataset should we use here? Include output in appendix, maybe.}. The extended \R{cleanR} output document should have the following modifications, relative to the standard \R{cleanR} output:
+Now, we are ready to use these new functions in a \R{clean()} call. \hl{do this... what dataset should we use here? Include output in appendix, maybe.}. The extended \pkg{cleanR} output document should have the following modifications, relative to the standard \pkg{cleanR} output:
 \begin{itemize}
 \item We want to add the new pre-check function, \R{isID}, to the already existing pre-checks.
 \item We wish to change the plot type for all variables to the new mosaic plot.
@@ -732,13 +779,13 @@ These options are specified as follows:
 The outputted document is found in Appendix \hl{NUMTWO}. \hl{Comment. Make appendix. Remember to change dataSet to something else, when we decide what data to use here.}
 
 \section{Something like examples}
-Finally, we will present a few examples of how to make \R{cleanR} solve specific issues related to data cleaning. First, we discuss the challenges related to cleaning large datasets, particularly in terms of memory use and computation speed. Next, we show how \R{cleanR} can be used for problem-flagging. Lastly, we discuss how the \R{cleanR} output document can be included in other \R{rmarkdown} documents as a mean to produce clear and concise documentation of a dataset. \hl{I feel like there should be more topics here, but I'm all out of ideas...}
+Finally, we will present a few examples of how to make \pkg{cleanR} solve specific issues related to data cleaning. First, we discuss the challenges related to cleaning large datasets, particularly in terms of memory use and computation speed. Next, we show how \pkg{cleanR} can be used for problem-flagging. Lastly, we discuss how the \pkg{cleanR} output document can be included in other \R{rmarkdown} documents as a mean to produce clear and concise documentation of a dataset. \hl{I feel like there should be more topics here, but I'm all out of ideas...}
 
 \subsection{Cleaning large datasets}
-If the dataset becomes very large, the standard use of \R{clean()} outlined above might not be ideal. If there is a vast number of variables, production of the \R{rmarkdown} document might be quite slow, while an extensive amount of observations generally affects the rendering time of this document. In this section, we give a few practical examples of ways to deal with large data, while wishing to still produce (potentially very long) data cleaning overview documents. Note that the interactive tools of \R{cleanR} can be used as usual or sequentially in small subsets of the large dataset, if no such overview documents are needed. 
+If the dataset becomes very large, the standard use of \R{clean()} outlined above might not be ideal. If there is a vast number of variables, production of the \R{rmarkdown} document might be quite slow, while an extensive amount of observations generally affects the rendering time of this document. In this section, we give a few practical examples of ways to deal with large data, while wishing to still produce (potentially very long) data cleaning overview documents. Note that the interactive tools of \pkg{cleanR} can be used as usual or sequentially in small subsets of the large dataset, if no such overview documents are needed. 
 
 \subsubsection{Attacking the figures}
-Though figures give a nice overview of each variable, they are also quite heavy objects in terms of memory allocation. Therefore, it might be beneficial to not include figures in the \R{cleanR} outputs for very large datasets. This is controlled via the \R{mode} argument:
+Though figures give a nice overview of each variable, they are also quite heavy objects in terms of memory allocation. Therefore, it might be beneficial to not include figures in the \pkg{cleanR} outputs for very large datasets. This is controlled via the \R{mode} argument:
 \begin{Schunk}
 \begin{Sinput}
 > clean(toyData, mode = c("summarize", "check"))
@@ -750,7 +797,7 @@ If figures are indeed needed, a different approach is to choose the less memory 
 > clean(toyData, allVisuals = "basicVisual")
 \end{Sinput}
 \end{Schunk}
-Of course, even less heavy plots might be achieved by writing new \R{visualFunction}s, using the guidelines from section \ref{sec:functionTemplates}. For instance, a future extension of \R{cleanR} might be the inclusion of ASCII plots, as e.g. represented in the \R{R} package \R{txtplot}\hl{reference here? It's on CRAN.}. \\
+Of course, even less heavy plots might be achieved by writing new \R{visualFunction}s, using the guidelines from section \ref{sec:functionTemplates}. For instance, a future extension of \pkg{cleanR} might be the inclusion of ASCII plots, as e.g. represented in the \R{R} package \R{txtplot}\hl{reference here? It's on CRAN.}. \\
 
 \hl{I really feel like we should do some benchmarking here, maybe just on toyData, both in terms of speed and memory use. I would make the recommendations more trustworthy and serious.}
 
@@ -762,7 +809,7 @@ Another solution, which is especially relevant to Windows users due to the unfor
 > render("cleanR_toyData.Rmd", quiet = FALSE)
 \end{Sinput}
 \end{Schunk}
-This also deals with the fact that \R{cleanR} can produce \R{rmarkdown} files that supersedes the upper size limit of RStudio, which is currently \hl{find number} GBs (using RStudio version 1.0.44). \hl{Is this maybe too editor specific? On the other hand, a lot of people do use RStudio...}. 
+This also deals with the fact that \pkg{cleanR} can produce \R{rmarkdown} files that supersedes the upper size limit of RStudio, which is currently \hl{find number} GBs (using RStudio version 1.0.44). \hl{Is this maybe too editor specific? On the other hand, a lot of people do use RStudio...}. 
 
 \subsection{Using cleanR for problem flagging}
 If the data is large, but memory issues and computation time are less of an issue than the human time it takes to look through the data cleaning document, a viable solution might be not to include all information about all variables. Or even for more reasonably sized datasets, sometimes a brief overview of the most pressing issues can be useful. This can be achieved by using the \R{onlyProblematic} argument in \R{clean()}. By specifying \R{onlyProblematic = TRUE}, only variables that raise a flag in the checking steps will be summarized and visualized. But perhaps we are not even interested in obtaining general information about these variables, but only in getting a quick overview of the problems they might have. This can be done by also controlling the \R{mode} argument:
@@ -797,9 +844,9 @@ and we find that only the final variable, \R{var6}, for which all observations h
 
 
 \subsection{Include cleanR document in other files}
-Sometimes, a \R{cleanR} document might be a useful addition to a more general overview document, including also e.g. pairwise association plots, time series plots or exploratory analysis results. To this end, it is possible to produce a \R{cleanR} document that can readily be included in other \R{rmarkdown} files. This is done by using the \R{standAlone} argument in \R{clean}, which removes the preamble from the outputted \R{rmarkdown} file. Please note, that it is still necessary to indicate which \R{rmarkdown} type is being created; the pdf and html \R{rmarkdown} styles are unfortunately not identical. 
+Sometimes, a \pkg{cleanR} document might be a useful addition to a more general overview document, including also e.g. pairwise association plots, time series plots or exploratory analysis results. To this end, it is possible to produce a \pkg{cleanR} document that can readily be included in other \R{rmarkdown} files. This is done by using the \R{standAlone} argument in \R{clean}, which removes the preamble from the outputted \R{rmarkdown} file. Please note, that it is still necessary to indicate which \R{rmarkdown} type is being created; the pdf and html \R{rmarkdown} styles are unfortunately not identical. 
 
-If it is important that the embedded \R{cleanR} document can be rendered to either of these two file types, we recommend setting \R{twoCols = FALSE} and \R{output = html} in \R{clean()}, thereby essentially removing almost all output type specific formatting code from the generated \R{rmarkdown} file. 
+If it is important that the embedded \pkg{cleanR} document can be rendered to either of these two file types, we recommend setting \R{twoCols = FALSE} and \R{output = html} in \R{clean()}, thereby essentially removing almost all output type specific formatting code from the generated \R{rmarkdown} file. 
 
 On the other hand, if a pdf document is to be produced, a few extra lines need to be added to the preamble of the master \R{rmarkdown} document - otherwise, the two-column layout code will produce an error. The following is an example of how such a master document preamble might look like and how the \R{cleanR\_toyData.Rmd} file can then be included:
 \begin{Verbatim}
