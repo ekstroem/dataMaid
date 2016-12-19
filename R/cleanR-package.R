@@ -2,6 +2,8 @@
 #'
 #' A dataset of constructed data used to as test bed when identifying potential errors in a data frame.
 #'
+#' @docType data
+#' @keywords datasets
 #' @format A data frame with 15 rows and 14 variables.
 #' \describe{
 #'    \item{charVar}{a simple factor}

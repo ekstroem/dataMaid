@@ -12,8 +12,8 @@ identifyOutliersTBStyle(v, nMax = Inf, maxDecimals = 2)
 \item{nMax}{The maximum number of problematic values to report. Default is \code{Inf}, in which case
 all problematic values are included in the outputted message.}
 
-\item{maxDecimals}{A positive integer or \code{Inf}. Number of decimals used when 
-printing numerical values in the data summary and in problematic values from the 
+\item{maxDecimals}{A positive integer or \code{Inf}. Number of decimals used when
+printing numerical values in the data summary and in problematic values from the
 data checks. If \code{Inf}, no rounding is performed.}
 }
 \value{
