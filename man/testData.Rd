@@ -21,11 +21,15 @@
    \item{cprKeyVar}{a factor with levels in the format of the Danish CPR number}
    \item{miscodedMissingVar}{a factor with levels corresponding to various misssing codes}
 }}
-\usage{
-testData
+\source{
+Artificial data
 }
 \description{
 A dataset of constructed data used to as test bed when identifying potential errors in a data frame.
+}
+\examples{
+data(testData)
+
 }
 \keyword{datasets}
 

@@ -5,165 +5,162 @@
 #' The checks are saved to an R markdown file which can rendered into an easy-to-read document.
 #' This document also includes summaries and visualizations of each variable in the dataset.
 #'
-#' @param data The dataset to be checked. This dataset should be of class \code{data.frame}, 
-#' \code{tibble} or \code{matrix}. If it is of classs \code{matrix}, it will be converted to a 
-#' \code{data.frame}. 
-#' 
-#' @param output FIX THIS-------
-#' Output format. Options are \code{"markdown"} (the default), \code{"pdf"}, \code{"html"}, 
-#' and \code{"screen"}. 
-#' All but the "screen" option produces an R markdown file which can be rendered.
-#' The "screen" option prints a small summary on the screen. FIX, default is not correct and screen 
-#' should maybe be removed?-------FIX THIS
-#' 
-#' @param render FIX THIS--------Should the output file be rendered (defaults to \code{TRUE}), 
-#' i.e. should a pdf/html document be generated and saved to the disc? This argument has no
-#' impact unless the output is "html" or "pdf", in which case the R markdown file is rendered to
-#' produce the corresponding file. DEPENDS ON OUTPUT STUFF ---------FIX THIS
-#' 
+#' @param data The data frame to be checked. This dataset should be of class \code{data.frame},
+#' \code{tibble} or \code{matrix}. If it is of classs \code{matrix}, it will be converted to a
+#' \code{data.frame}.
+#'
+#' @param output
+#' Output format. Options are \code{"pdf"} (the default), and \code{"html"}
+#'
+#' @param render Should the output file be rendered (defaults to \code{TRUE}),
+#' i.e. should a pdf/html document be generated and saved to the disc?
+#'
 #' @param useVar Variables to clean. If \code{NULL} (the default), all variables in \code{data}
 #' are included. If a vector of variable names is supplied, only the variables in \code{data} that are
 #' also in \code{useVar} are included in the data cleaning overview document.
-#' 
+#'
 #' @param ordering Choose the ordering of the variables in the variable presentation. The options
 #' are "asIs" (ordering as in the dataset) and "alphabetical" (alphabetical order).
-#' 
+#'
 #' @param onlyProblematic A logical. If \code{TRUE}, only the variables flagged as
 #' problematic in the check step will be included in the variable list.
-#' 
-#' @param labelled_as FIX THIS ----------A string explaining the way to handle labelled vectors. 
-#' Possibilities are either \code{"factor"} (the default), \code{"NA"} 
-#' (all missing are converted to \code{NA}) or \code{"zap"} (remove all labels). NOT CLEAR TO
-#' ME WHAT THE "NA" OPTION DOES. ------------ FIX THIS
-#' 
+#'
+#' @param labelled_as A string explaining the way to handle labelled vectors.
+#' Currently \code{"factor"} (the default) is the only possibility.
+#'
 #' @param mode Vector of tasks to perform among the three categories "summarize", "visualize" and "check".
-#' The default, \code{c("summarize", "visualize", "check")}, implies that all three steps are 
-#' performed. The steps selected in \code{mode} will be performed for each variable in 
+#' The default, \code{c("summarize", "visualize", "check")}, implies that all three steps are
+#' performed. The steps selected in \code{mode} will be performed for each variable in
 #' \code{data} and their results are presented in the second part of the outputtet data cleaning
-#' overview document. The "summarize" step is responsible for creating the summary table, 
+#' overview document. The "summarize" step is responsible for creating the summary table,
 #' the "visualize" step is responsible for creating the plot and the "check" step is responsible
 #' for performing checks on the variable and printing the results if any problems are found.
-#' 
-#' @param characterChecks A vector of the names of error-checking functions to apply to 
-#' character vectors. 
-#' 
-#' @param factorChecks A vector of the names of error-checking functions to apply to 
-#' integer vectors. 
-#' 
-#' @param labelledChecks A vector of the names of error-checking functions to apply to 
+#'
+#' @param characterChecks A vector of the names of error-checking functions to apply to
 #' character vectors.
-#' 
-#' @param integerChecks A vector of the names of error-checking functions to apply to 
+#'
+#' @param factorChecks A vector of the names of error-checking functions to apply to
 #' integer vectors.
-#' 
-#' @param numericChecks A vector of the names of error-checking functions to apply to 
+#'
+#' @param labelledChecks A vector of the names of error-checking functions to apply to
+#' character vectors.
+#'
+#' @param integerChecks A vector of the names of error-checking functions to apply to
+#' integer vectors.
+#'
+#' @param numericChecks A vector of the names of error-checking functions to apply to
 #' numeric vectors.
-#' 
+#'
 #' @param logicalChecks A vector of the names of error-checking functions to apply to
 #' logical vectors.
-#' 
-#' @param dateChecks A vector of the names of error-checking functions to apply to 
+#'
+#' @param dateChecks A vector of the names of error-checking functions to apply to
 #' Date vectors.
-#' 
-#' @param allChecks Vector of function names that should be used as check-functions 
-#' for all variable types. Note that this argument overwrites the arguments 
+#'
+#' @param allChecks Vector of function names that should be used as check-functions
+#' for all variable types. Note that this argument overwrites the arguments
 #' \code{characterChekcs}, \code{factorChecks}, etc.
-#' 
+#'
 #' @param smartNum If \code{TRUE} (the default), numeric and integer variables with
-#' less than 5 unique values are treated as factor variables in the checking, 
+#' less than 5 unique values are treated as factor variables in the checking,
 #' visualization and summary steps, and a message notifying the reader of this is
 #' printed in the data summary.
-#' 
+#'
 #' @param preChecks Vector of function names for check functions used in the pre-check stage.
-#' The pre-check stage consists of variable checks that should be performed before the 
-#' summary/visualization/checking step. If any of these checks find problems, the variable 
-#' will not be summarized nor visualized nor checked. 
-#' 
-#' @param file The filename of the outputted rmarkdown (.Rmd) file. 
-#' If set to \code{NULL} (the default), the filename will be the name of \code{data} 
+#' The pre-check stage consists of variable checks that should be performed before the
+#' summary/visualization/checking step. If any of these checks find problems, the variable
+#' will not be summarized nor visualized nor checked.
+#'
+#' @param file The filename of the outputted rmarkdown (.Rmd) file.
+#' If set to \code{NULL} (the default), the filename will be the name of \code{data}
 #' prefixed with "cleanR_", if this qualifies as a valid file name (e.g. no special
-#' characters allowed). Otherwise, \code{clean()} tries to create a valid filename by 
+#' characters allowed). Otherwise, \code{clean()} tries to create a valid filename by
 #' substituing illegal characters. Note that a valid file is of type .Rmd, hence all
-#' filenames should have a ".Rmd"-suffix. 
-#' 
+#' filenames should have a ".Rmd"-suffix.
+#'
 #' @param replace If \code{FALSE} (the default), an error is thrown if one of the files
-#' that we are about to be created (.Rmd overview file and possible also a .html or .pdf 
+#' that we are about to be created (.Rmd overview file and possible also a .html or .pdf
 #' file) already exist. If \code{TRUE}, no checks are performed and files on disc thus
 #' might be overwritten.
-#' 
+#'
 #' @param vol Extra text string or numeric that is appended on the end of the output
 #' file name(s). For example, if the dataset is called "myData", no file argument is
 #'  supplied and \code{vol=2}, the output file will be called "cleanR_myData2.Rmd"
-#' 
-#' @param characterSummaries A vector of the names of summary functions to apply to 
+#'
+#' @param characterSummaries A vector of the names of summary functions to apply to
 #' character vectors.
-#' 
-#' @param factorSummaries A vector of the names of summary functions to apply to 
+#'
+#' @param factorSummaries A vector of the names of summary functions to apply to
 #' factor vectors.
-#' 
-#' @param labelledSummaries A vector of the names of summary functions to apply to 
+#'
+#' @param labelledSummaries A vector of the names of summary functions to apply to
 #' labelled vectors.
-#' 
-#' @param numericSummaries  A vector of the names of summary functions to apply to 
+#'
+#' @param numericSummaries  A vector of the names of summary functions to apply to
 #' numeric vectors.
-#' 
-#' @param integerSummaries A vector of the names of summary functions to apply to 
+#'
+#' @param integerSummaries A vector of the names of summary functions to apply to
 #' integer vectors.
-#' 
-#' @param logicalSummaries A vector of the names of summary functions to apply to 
+#'
+#' @param logicalSummaries A vector of the names of summary functions to apply to
 #' logical vectors.
-#' 
-#' @param dateSummaries  A vector of the names of summary functions to apply to 
+#'
+#' @param dateSummaries  A vector of the names of summary functions to apply to
 #' Date vectors.
-#' 
-#' @param allSummaries Vector of function names that should be used as summary 
-#' functions for all variable types. Note that this argument overwrites the arguments 
+#'
+#' @param allSummaries Vector of function names that should be used as summary
+#' functions for all variable types. Note that this argument overwrites the arguments
 #' \code{characterSummaries}, \code{factorSummaries}, etc.
-#' 
-#' @param allVisuals A single function name. This funtion name is called for 
+#'
+#' @param allVisuals A single function name. This funtion name is called for
 #' creating the plots for each variable in the "visualize" step. The default,
-#' \code{"standardVisual"} thus calls the \code{link{visualFunction}} 
+#' \code{"standardVisual"} thus calls the \code{\link{visualFunction}}
 #' \code{\link{standardVisual}} for each variable in \code{data}.
-#' 
-#' @param standAlone A logical. If \code{TRUE}, the document begins with a 
-#' markdown YAML preamble such that it can be rendered as a stand alone rmarkdown 
-#' file, e.g. by calling \code{\link{render}}. If \code{FALSE}, this preamble is removed. 
-#' Moreover, no matter the input to the \code{render} argument, the document will now 
+#'
+#' @param standAlone A logical. If \code{TRUE}, the document begins with a
+#' markdown YAML preamble such that it can be rendered as a stand alone rmarkdown
+#' file, e.g. by calling \code{\link{render}}. If \code{FALSE}, this preamble is removed.
+#' Moreover, no matter the input to the \code{render} argument, the document will now
 #' not be rendered, as it has no preamble.
-#' 
-#' @param twoCol A logical. Should the results from the \emph{summarize} and \emph{visualize} 
+#'
+#' @param twoCol A logical. Should the results from the \emph{summarize} and \emph{visualize}
 #' steps be presented in two columns? Defaults to \code{TRUE}.
-#' 
-#' @param quiet A logical. If \code{TRUE} (the default), only a few messages 
-#' are printed to the screen as \code{clean} runs. If \code{FALSE}, no messages are 
-#' suppressed. The third option, \code{silent}, renders the function completely 
+#'
+#' @param quiet A logical. If \code{TRUE} (the default), only a few messages
+#' are printed to the screen as \code{clean} runs. If \code{FALSE}, no messages are
+#' suppressed. The third option, \code{silent}, renders the function completely
 #' silent, such that only fatal errors are printed.
-#' 
-#' @param openResult A logical. If \code{TRUE} (the default), the last file produced 
+#'
+#' @param openResult A logical. If \code{TRUE} (the default), the last file produced
 #' by \code{clean} is automatically opened by the end of the function run. This
 #' means that if \code{render = TRUE}, the rendered pdf or html file is opened, while
 #' if \code{render = FALSE}, the .Rmd file is opened.
-#' 
-#' @param listChecks A logical. Controls whether what checks that were used for each 
+#'
+#' @param listChecks A logical. Controls whether what checks that were used for each
 #' possible variable type are summarized in the output. Defaults to \code{TRUE}.
-#' 
-#' @param maxProbVals A positive integer or \code{Inf}. Maximum number of unique 
-#' values printed from check-functions. Defaults to \code{Inf}, which means 
+#'
+#' @param maxProbVals A positive integer or \code{Inf}. Maximum number of unique
+#' values printed from check-functions. Defaults to \code{Inf}, which means
 #' that all problematic values are printed.
-#' 
-#' @param maxDecimals A positive integer or \code{Inf}. Number of decimals used when 
-#' printing numerical values in the data summary and in problematic values from the 
+#'
+#' @param maxDecimals A positive integer or \code{Inf}. Number of decimals used when
+#' printing numerical values in the data summary and in problematic values from the
 #' data checks. If \code{Inf}, no rounding is performed.
-#' 
-#' @param \dots FIX ME-------- Other arguments that are passed on the to precheck, 
+#'
+#' @param \dots FIX ME-------- Other arguments that are passed on the to precheck,
 #' checking, summary and visualization functions.WHAT ARGUMENTS ARE RELEVANT TO MENTION
-#'  HERE? DESCRIPTIVE FOR SUMMARIZE()? ---------- FIX ME 
-#' 
-#' @return The function does not return anything. Its side effect (the production 
+#'  HERE? DESCRIPTIVE FOR SUMMARIZE()? ---------- FIX ME
+#'
+#' @return The function does not return anything. Its side effect (the production
 #' of a data cleaning overview document) is the reason for running the function.
-#' 
-#' @keywords misc
+#'
 #' @examples
+#'
+#'
+#' data(testData)
+#' data(toyData)
+#'
+#' check(toyData)
 #'
 #'  \dontrun{
 #' DF <- data.frame(x = 1:15)
@@ -184,7 +181,7 @@
 #' @importFrom pander pander_return panderOptions pandoc.table.return
 #' @importFrom tools file_ext
 #' @export
-clean <- function(data, output=c("pdf", "html", "screen"), render=TRUE,
+clean <- function(data, output=c("pdf", "html"), render=TRUE,
                   useVar=NULL, ordering=c("asIs", "alphabetical"), onlyProblematic=FALSE,
                   labelled_as=c("factor", "NA", "zap"),
                   mode=c("summarize", "visualize", "check"),
@@ -245,17 +242,17 @@ clean <- function(data, output=c("pdf", "html", "screen"), render=TRUE,
 
     #If standAlone is FALSE, the document obviously shouldn't be rendered
     if (!standAlone) render <- FALSE
-    
+
     ##########################################################################################
     #######Secret arguments that were removed for the users but are still implemented#########
     ##########################################################################################
-    
+
     #If we would ever want to allow users not to append the cleanR stamp:
     brag <- TRUE
-    
-    #If we would ever want (Windows) users not to be nagged 
+
+    #If we would ever want (Windows) users not to be nagged
     nagUser <- TRUE
-    
+
     ##########################################################################################
     ##########################################################################################
     ##########################################################################################
@@ -507,7 +504,7 @@ clean <- function(data, output=c("pdf", "html", "screen"), render=TRUE,
     ## write YAML preamble
     writer("---")
     writer("cleanR: yes")
-    if (standAlone & !(identical(output, "screen"))) {
+    if (standAlone) {
         writer(paste("title:", dfname))
         writer("subtitle: \"Autogenerated data summary from cleanR\"")
         writer("date: \"`r Sys.Date()`\"")
@@ -756,9 +753,9 @@ clean <- function(data, output=c("pdf", "html", "screen"), render=TRUE,
         render(file, quiet = quiet)
     }
 
-    if (output=="screen") {
-        unlink(file) #delete rmd
-    }
+    ## if (output=="screen") {
+    ##    unlink(file) #delete rmd
+    ## }
 
     }) ## End try
     ## Force flush and close connection
@@ -798,7 +795,7 @@ clean <- function(data, output=c("pdf", "html", "screen"), render=TRUE,
 #the user does not supply specific smartNum methods, they will
 #match factor methods.
 #Note: maxLevels is not an argument of clean(), but it can be passed
-#through "...". 
+#through "...".
 doSmartNum <- function(v, maxLevels = 5, ...) {
  if (length(unique(na.omit(v))) <= maxLevels) v <- smartNum(v)
  v

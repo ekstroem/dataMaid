@@ -4,13 +4,13 @@
 \alias{clean}
 \title{Produce a data cleaning overview document}
 \usage{
-clean(data, output = c("pdf", "html", "screen"), render = TRUE,
-  useVar = NULL, ordering = c("asIs", "alphabetical"),
-  onlyProblematic = FALSE, labelled_as = c("factor", "NA", "zap"),
-  mode = c("summarize", "visualize", "check"), smartNum = TRUE,
-  preChecks = c("isKey", "isEmpty"), file = NULL, replace = FALSE,
-  vol = "", standAlone = TRUE, twoCol = TRUE, quiet = TRUE,
-  openResult = TRUE, characterChecks = defaultCharacterChecks(),
+clean(data, output = c("pdf", "html"), render = TRUE, useVar = NULL,
+  ordering = c("asIs", "alphabetical"), onlyProblematic = FALSE,
+  labelled_as = c("factor", "NA", "zap"), mode = c("summarize", "visualize",
+  "check"), smartNum = TRUE, preChecks = c("isKey", "isEmpty"),
+  file = NULL, replace = FALSE, vol = "", standAlone = TRUE,
+  twoCol = TRUE, quiet = TRUE, openResult = TRUE,
+  characterChecks = defaultCharacterChecks(),
   factorChecks = defaultFactorChecks(),
   labelledChecks = defaultLabelledChecks(),
   numericChecks = defaultNumericChecks(),
@@ -27,21 +27,14 @@ clean(data, output = c("pdf", "html", "screen"), render = TRUE,
   maxDecimals = 2, ...)
 }
 \arguments{
-\item{data}{The dataset to be checked. This dataset should be of class \code{data.frame}, 
-\code{tibble} or \code{matrix}. If it is of classs \code{matrix}, it will be converted to a 
+\item{data}{The data frame to be checked. This dataset should be of class \code{data.frame},
+\code{tibble} or \code{matrix}. If it is of classs \code{matrix}, it will be converted to a
 \code{data.frame}.}
 
-\item{output}{FIX THIS-------
-Output format. Options are \code{"markdown"} (the default), \code{"pdf"}, \code{"html"}, 
-and \code{"screen"}. 
-All but the "screen" option produces an R markdown file which can be rendered.
-The "screen" option prints a small summary on the screen. FIX, default is not correct and screen 
-should maybe be removed?-------FIX THIS}
+\item{output}{Output format. Options are \code{"pdf"} (the default), and \code{"html"}}
 
-\item{render}{FIX THIS--------Should the output file be rendered (defaults to \code{TRUE}), 
-i.e. should a pdf/html document be generated and saved to the disc? This argument has no
-impact unless the output is "html" or "pdf", in which case the R markdown file is rendered to
-produce the corresponding file. DEPENDS ON OUTPUT STUFF ---------FIX THIS}
+\item{render}{Should the output file be rendered (defaults to \code{TRUE}),
+i.e. should a pdf/html document be generated and saved to the disc?}
 
 \item{useVar}{Variables to clean. If \code{NULL} (the default), all variables in \code{data}
 are included. If a vector of variable names is supplied, only the variables in \code{data} that are
@@ -53,38 +46,36 @@ are "asIs" (ordering as in the dataset) and "alphabetical" (alphabetical order).
 \item{onlyProblematic}{A logical. If \code{TRUE}, only the variables flagged as
 problematic in the check step will be included in the variable list.}
 
-\item{labelled_as}{FIX THIS ----------A string explaining the way to handle labelled vectors. 
-Possibilities are either \code{"factor"} (the default), \code{"NA"} 
-(all missing are converted to \code{NA}) or \code{"zap"} (remove all labels). NOT CLEAR TO
-ME WHAT THE "NA" OPTION DOES. ------------ FIX THIS}
+\item{labelled_as}{A string explaining the way to handle labelled vectors.
+Currently \code{"factor"} (the default) is the only possibility.}
 
 \item{mode}{Vector of tasks to perform among the three categories "summarize", "visualize" and "check".
-The default, \code{c("summarize", "visualize", "check")}, implies that all three steps are 
-performed. The steps selected in \code{mode} will be performed for each variable in 
+The default, \code{c("summarize", "visualize", "check")}, implies that all three steps are
+performed. The steps selected in \code{mode} will be performed for each variable in
 \code{data} and their results are presented in the second part of the outputtet data cleaning
-overview document. The "summarize" step is responsible for creating the summary table, 
+overview document. The "summarize" step is responsible for creating the summary table,
 the "visualize" step is responsible for creating the plot and the "check" step is responsible
 for performing checks on the variable and printing the results if any problems are found.}
 
 \item{smartNum}{If \code{TRUE} (the default), numeric and integer variables with
-less than 5 unique values are treated as factor variables in the checking, 
+less than 5 unique values are treated as factor variables in the checking,
 visualization and summary steps, and a message notifying the reader of this is
 printed in the data summary.}
 
 \item{preChecks}{Vector of function names for check functions used in the pre-check stage.
-The pre-check stage consists of variable checks that should be performed before the 
-summary/visualization/checking step. If any of these checks find problems, the variable 
+The pre-check stage consists of variable checks that should be performed before the
+summary/visualization/checking step. If any of these checks find problems, the variable
 will not be summarized nor visualized nor checked.}
 
-\item{file}{The filename of the outputted rmarkdown (.Rmd) file. 
-If set to \code{NULL} (the default), the filename will be the name of \code{data} 
+\item{file}{The filename of the outputted rmarkdown (.Rmd) file.
+If set to \code{NULL} (the default), the filename will be the name of \code{data}
 prefixed with "cleanR_", if this qualifies as a valid file name (e.g. no special
-characters allowed). Otherwise, \code{clean()} tries to create a valid filename by 
+characters allowed). Otherwise, \code{clean()} tries to create a valid filename by
 substituing illegal characters. Note that a valid file is of type .Rmd, hence all
 filenames should have a ".Rmd"-suffix.}
 
 \item{replace}{If \code{FALSE} (the default), an error is thrown if one of the files
-that we are about to be created (.Rmd overview file and possible also a .html or .pdf 
+that we are about to be created (.Rmd overview file and possible also a .html or .pdf
 file) already exist. If \code{TRUE}, no checks are performed and files on disc thus
 might be overwritten.}
 
@@ -92,97 +83,97 @@ might be overwritten.}
 file name(s). For example, if the dataset is called "myData", no file argument is
  supplied and \code{vol=2}, the output file will be called "cleanR_myData2.Rmd"}
 
-\item{standAlone}{A logical. If \code{TRUE}, the document begins with a 
-markdown YAML preamble such that it can be rendered as a stand alone rmarkdown 
-file, e.g. by calling \code{\link{render}}. If \code{FALSE}, this preamble is removed. 
-Moreover, no matter the input to the \code{render} argument, the document will now 
+\item{standAlone}{A logical. If \code{TRUE}, the document begins with a
+markdown YAML preamble such that it can be rendered as a stand alone rmarkdown
+file, e.g. by calling \code{\link{render}}. If \code{FALSE}, this preamble is removed.
+Moreover, no matter the input to the \code{render} argument, the document will now
 not be rendered, as it has no preamble.}
 
-\item{twoCol}{A logical. Should the results from the \emph{summarize} and \emph{visualize} 
+\item{twoCol}{A logical. Should the results from the \emph{summarize} and \emph{visualize}
 steps be presented in two columns? Defaults to \code{TRUE}.}
 
-\item{quiet}{A logical. If \code{TRUE} (the default), only a few messages 
-are printed to the screen as \code{clean} runs. If \code{FALSE}, no messages are 
-suppressed. The third option, \code{silent}, renders the function completely 
+\item{quiet}{A logical. If \code{TRUE} (the default), only a few messages
+are printed to the screen as \code{clean} runs. If \code{FALSE}, no messages are
+suppressed. The third option, \code{silent}, renders the function completely
 silent, such that only fatal errors are printed.}
 
-\item{openResult}{A logical. If \code{TRUE} (the default), the last file produced 
+\item{openResult}{A logical. If \code{TRUE} (the default), the last file produced
 by \code{clean} is automatically opened by the end of the function run. This
 means that if \code{render = TRUE}, the rendered pdf or html file is opened, while
 if \code{render = FALSE}, the .Rmd file is opened.}
 
-\item{characterChecks}{A vector of the names of error-checking functions to apply to 
+\item{characterChecks}{A vector of the names of error-checking functions to apply to
 character vectors.}
 
-\item{factorChecks}{A vector of the names of error-checking functions to apply to 
+\item{factorChecks}{A vector of the names of error-checking functions to apply to
 integer vectors.}
 
-\item{labelledChecks}{A vector of the names of error-checking functions to apply to 
+\item{labelledChecks}{A vector of the names of error-checking functions to apply to
 character vectors.}
 
-\item{numericChecks}{A vector of the names of error-checking functions to apply to 
+\item{numericChecks}{A vector of the names of error-checking functions to apply to
 numeric vectors.}
 
-\item{integerChecks}{A vector of the names of error-checking functions to apply to 
+\item{integerChecks}{A vector of the names of error-checking functions to apply to
 integer vectors.}
 
 \item{logicalChecks}{A vector of the names of error-checking functions to apply to
 logical vectors.}
 
-\item{dateChecks}{A vector of the names of error-checking functions to apply to 
+\item{dateChecks}{A vector of the names of error-checking functions to apply to
 Date vectors.}
 
-\item{allChecks}{Vector of function names that should be used as check-functions 
-for all variable types. Note that this argument overwrites the arguments 
+\item{allChecks}{Vector of function names that should be used as check-functions
+for all variable types. Note that this argument overwrites the arguments
 \code{characterChekcs}, \code{factorChecks}, etc.}
 
-\item{characterSummaries}{A vector of the names of summary functions to apply to 
+\item{characterSummaries}{A vector of the names of summary functions to apply to
 character vectors.}
 
-\item{factorSummaries}{A vector of the names of summary functions to apply to 
+\item{factorSummaries}{A vector of the names of summary functions to apply to
 factor vectors.}
 
-\item{labelledSummaries}{A vector of the names of summary functions to apply to 
+\item{labelledSummaries}{A vector of the names of summary functions to apply to
 labelled vectors.}
 
-\item{numericSummaries}{A vector of the names of summary functions to apply to 
+\item{numericSummaries}{A vector of the names of summary functions to apply to
 numeric vectors.}
 
-\item{integerSummaries}{A vector of the names of summary functions to apply to 
+\item{integerSummaries}{A vector of the names of summary functions to apply to
 integer vectors.}
 
-\item{logicalSummaries}{A vector of the names of summary functions to apply to 
+\item{logicalSummaries}{A vector of the names of summary functions to apply to
 logical vectors.}
 
-\item{dateSummaries}{A vector of the names of summary functions to apply to 
+\item{dateSummaries}{A vector of the names of summary functions to apply to
 Date vectors.}
 
-\item{allSummaries}{Vector of function names that should be used as summary 
-functions for all variable types. Note that this argument overwrites the arguments 
+\item{allSummaries}{Vector of function names that should be used as summary
+functions for all variable types. Note that this argument overwrites the arguments
 \code{characterSummaries}, \code{factorSummaries}, etc.}
 
-\item{allVisuals}{A single function name. This funtion name is called for 
+\item{allVisuals}{A single function name. This funtion name is called for
 creating the plots for each variable in the "visualize" step. The default,
-\code{"standardVisual"} thus calls the \code{link{visualFunction}} 
+\code{"standardVisual"} thus calls the \code{\link{visualFunction}}
 \code{\link{standardVisual}} for each variable in \code{data}.}
 
-\item{listChecks}{A logical. Controls whether what checks that were used for each 
+\item{listChecks}{A logical. Controls whether what checks that were used for each
 possible variable type are summarized in the output. Defaults to \code{TRUE}.}
 
-\item{maxProbVals}{A positive integer or \code{Inf}. Maximum number of unique 
-values printed from check-functions. Defaults to \code{Inf}, which means 
+\item{maxProbVals}{A positive integer or \code{Inf}. Maximum number of unique
+values printed from check-functions. Defaults to \code{Inf}, which means
 that all problematic values are printed.}
 
-\item{maxDecimals}{A positive integer or \code{Inf}. Number of decimals used when 
-printing numerical values in the data summary and in problematic values from the 
+\item{maxDecimals}{A positive integer or \code{Inf}. Number of decimals used when
+printing numerical values in the data summary and in problematic values from the
 data checks. If \code{Inf}, no rounding is performed.}
 
-\item{\dots}{FIX ME-------- Other arguments that are passed on the to precheck, 
+\item{\dots}{FIX ME-------- Other arguments that are passed on the to precheck,
 checking, summary and visualization functions.WHAT ARGUMENTS ARE RELEVANT TO MENTION
  HERE? DESCRIPTIVE FOR SUMMARIZE()? ---------- FIX ME}
 }
 \value{
-The function does not return anything. Its side effect (the production 
+The function does not return anything. Its side effect (the production
 of a data cleaning overview document) is the reason for running the function.
 }
 \description{
@@ -192,6 +183,12 @@ The checks are saved to an R markdown file which can rendered into an easy-to-re
 This document also includes summaries and visualizations of each variable in the dataset.
 }
 \examples{
+
+
+data(testData)
+data(toyData)
+
+check(toyData)
 
  \dontrun{
 DF <- data.frame(x = 1:15)
@@ -209,5 +206,4 @@ clean(testData, characterChecks=c(defaultCharacterChecks(), "characterFoo"))
 }
 
 }
-\keyword{misc}
 
