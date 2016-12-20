@@ -4,13 +4,13 @@
 \alias{clean}
 \title{Produce a data cleaning overview document}
 \usage{
-clean(data, output = c("pdf", "html", "screen"), render = TRUE,
-  useVar = NULL, ordering = c("asIs", "alphabetical"),
-  onlyProblematic = FALSE, labelled_as = c("factor", "NA", "zap"),
-  mode = c("summarize", "visualize", "check"), smartNum = TRUE,
-  preChecks = c("isKey", "isEmpty"), file = NULL, replace = FALSE,
-  vol = "", standAlone = TRUE, twoCol = TRUE, quiet = TRUE,
-  openResult = TRUE, characterChecks = defaultCharacterChecks(),
+clean(data, output = c("pdf", "html"), render = TRUE, useVar = NULL,
+  ordering = c("asIs", "alphabetical"), onlyProblematic = FALSE,
+  labelled_as = c("factor", "NA", "zap"), mode = c("summarize", "visualize",
+  "check"), smartNum = TRUE, preChecks = c("isKey", "isEmpty"),
+  file = NULL, replace = FALSE, vol = "", standAlone = TRUE,
+  twoCol = TRUE, quiet = TRUE, openResult = TRUE,
+  characterChecks = defaultCharacterChecks(),
   factorChecks = defaultFactorChecks(),
   labelledChecks = defaultLabelledChecks(),
   numericChecks = defaultNumericChecks(),
@@ -31,12 +31,7 @@ clean(data, output = c("pdf", "html", "screen"), render = TRUE,
 \code{tibble} or \code{matrix}. If it is of classs \code{matrix}, it will be converted to a
 \code{data.frame}.}
 
-\item{output}{FIX THIS-------
-Output format. Options are \code{"pdf"} (the default), \code{"markdown"}, \code{"html"},
-and \code{"screen"}.
-All but the "screen" option produces an R markdown file which can be rendered.
-The "screen" option prints a small summary on the screen. FIX, default is not correct and screen
-should maybe be removed?-------FIX THIS}
+\item{output}{Output format. Options are \code{"pdf"} (the default), and \code{"html"}}
 
 \item{render}{Should the output file be rendered (defaults to \code{TRUE}),
 i.e. should a pdf/html document be generated and saved to the disc?}
@@ -159,7 +154,7 @@ functions for all variable types. Note that this argument overwrites the argumen
 
 \item{allVisuals}{A single function name. This funtion name is called for
 creating the plots for each variable in the "visualize" step. The default,
-\code{"standardVisual"} thus calls the \code{link{visualFunction}}
+\code{"standardVisual"} thus calls the \code{\link{visualFunction}}
 \code{\link{standardVisual}} for each variable in \code{data}.}
 
 \item{listChecks}{A logical. Controls whether what checks that were used for each
