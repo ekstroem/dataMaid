@@ -2,7 +2,7 @@
 % Please edit documentation in R/minMax.R
 \name{minMax}
 \alias{minMax}
-\title{Description function for minimum and maximum}
+\title{summaryFunction for minimum and maximum}
 \usage{
 minMax(v, maxDecimals = 2)
 }
@@ -19,11 +19,7 @@ An object of class \code{summaryResult} with the following entries: \code{$featu
 (minimum and maximum in their orignial format).
 }
 \description{
-A description type function to be called from \code{\link{summarize}}, which returns
-the minimum and maximum value of a variable. NA, NaN and Inf values are removed prior to  the
-computations.
-
-A description type \code{summaryFunction}, intended to be called from 
+A \code{summaryFunction}, intended to be called from 
 \code{\link{summarize}}, which returns the minimum and maximum values of a variable.
 NA, NaN and Inf values are removed prior to  the computations.
 }

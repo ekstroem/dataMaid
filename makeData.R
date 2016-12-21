@@ -41,6 +41,8 @@ makeCPR <- function(bday) {
 
 #make test dataset
 
+library(haven)
+
 vC <- c("a", "b", "c", "a", "b", "d", "a")
 vF <- as.factor(vC)
 vN <- c(1:10, 1, 1, 1, 5, 5)
@@ -64,15 +66,17 @@ data <- data.frame(charVar=c(rep(vC, 2), NA),
                    numVar=vN, intVar=vI, boolVar=c(rep(vB, 2), rep(NA, 3)),
                    keyVar=as.character(1:15),
                    emptyVar=rep(1, 15),
-                   joeVar = 1:15,
-                   jack__var = 1:15,
                    numOutlierVar = c(1:14,100),
                    smartNumVar = c(rep(0, 7), rep(1, 8)),
                    cprVar=vCPR,
                    cprKeyVar=vCPRKey,
                    miscodedMissingVar=vMiss,
-                   misclassifiedNumVar=factor(1:15))
-names(data)[names(data)=="joeVar"] <- "_joeVar"
+                   misclassifiedNumVar=factor(c(1:12, 1, 8, 9)),
+                   dateVar=as.Date(c("2012-01-01", "2013-04-02", 
+                                   rep("1997-05-10", 10),
+                                   rep("2005-12-10", 3))),
+                   labelledVar = labelled(c(rep(1, 5), rep(2, 8), NA, NA),
+                                       labels = c(Peter = 1, Joe = 2)))
 options(stringsAsFactors = stringsAsFactorsOption)
 
 testData <- data

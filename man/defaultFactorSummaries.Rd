@@ -17,7 +17,7 @@ defaultFactorSummaries()
 
 }
 \seealso{
-\code{\link{defaultFactorDescriptions}}, \code{\link{variableType}},
-\code{\link{countMissing}}, \code{\link{uniqueValues}}
+code{\link{variableType}}, \code{\link{countMissing}}, \code{\link{uniqueValues}},
+\code{\link{centralValue}}
 }
 

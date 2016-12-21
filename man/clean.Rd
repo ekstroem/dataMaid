@@ -170,7 +170,7 @@ data checks. If \code{Inf}, no rounding is performed.}
 
 \item{\dots}{FIX ME-------- Other arguments that are passed on the to precheck,
 checking, summary and visualization functions.WHAT ARGUMENTS ARE RELEVANT TO MENTION
- HERE? DESCRIPTIVE FOR SUMMARIZE()? ---------- FIX ME}
+ HERE?  ---------- FIX ME}
 }
 \value{
 The function does not return anything. Its side effect (the production

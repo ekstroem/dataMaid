@@ -17,7 +17,7 @@ defaultCharacterSummaries()
 
 }
 \seealso{
-\code{\link{defaultCharacterDescriptions}}, \code{\link{variableType}},
-\code{\link{countMissing}}, \code{\link{uniqueValues}}
+\code{\link{variableType}}, \code{\link{countMissing}}, \code{\link{uniqueValues}},
+\code{\link{centralValue}}
 }
 

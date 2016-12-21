@@ -3,7 +3,7 @@
 \docType{data}
 \name{testData}
 \alias{testData}
-\title{Example data to show the features of clean}
+\title{Exteneded example data to test the features of cleanR}
 \format{A data frame with 15 rows and 14 variables.
 \describe{
    \item{charVar}{A character vector with a single missing observation.}
@@ -33,7 +33,8 @@ Artificial data
 testData
 }
 \description{
-A dataset of constructed data used to as test bed when identifying potential errors in a data frame.
+A dataset of constructed data used as test bed when using \code{cleanR} for identifying
+potential errors in a dataset.
 }
 \examples{
 data(testData)

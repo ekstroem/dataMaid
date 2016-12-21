@@ -1,6 +1,6 @@
-#' @title Description function for central values
+#' @title summaryFunction for central values
 #'
-#' @description A description type \code{summaryFunction}, intended to be called from 
+#' @description A \code{summaryFunction}, intended to be called from 
 #' \code{\link{summarize}}, which returns the central value of a variable. 
 #' For numeric and integer variables, this is the median. For
 #' character, factor, labelled, Date and logical variables, the central value is the mode 

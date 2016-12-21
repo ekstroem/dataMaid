@@ -149,7 +149,7 @@
 #'
 #' @param \dots FIX ME-------- Other arguments that are passed on the to precheck,
 #' checking, summary and visualization functions.WHAT ARGUMENTS ARE RELEVANT TO MENTION
-#'  HERE? DESCRIPTIVE FOR SUMMARIZE()? ---------- FIX ME
+#'  HERE?  ---------- FIX ME
 #'
 #' @return The function does not return anything. Its side effect (the production
 #' of a data cleaning overview document) is the reason for running the function.
@@ -804,11 +804,21 @@ doSmartNum <- function(v, maxLevels = 5, ...) {
 
 #Replaces characters that are not allowed in file names with "_".
 normalizeFileName <- function(fileName, replaceChar = "_") {
-  forbidChar <- "[^-_./ [:alnum:]]" #note: "^" is "not"
+  forbidChar <- "[^-_.[:alnum:]]" #note: "^" is "not"
                 #Note: I have to allow blankspaces
                 #if people want their file placed in a
                 #folder with a blankspace name :(
-  gsub(forbidChar, replaceChar, fileName)
+  nName <- nchar(fileName)
+  slashPlaces <- c(gregexpr("/", fileName)[[1]])
+  if (!any(slashPlaces[[1]] == -1)) { #slash found
+    lastSlash <- slashPlaces[length(slashPlaces)]
+    justFile <- substr(fileName, lastSlash + 1, nName)
+    filePath <- substr(fileName, 1, lastSlash)
+    out <- paste(filePath, gsub(forbidChar, replaceChar, justFile), sep = "")
+  } else {
+    out <- gsub(forbidChar, replaceChar, fileName)
+  }
+  out
 }
 
 

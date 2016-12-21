@@ -2,7 +2,7 @@
 % Please edit documentation in R/quartiles.R
 \name{quartiles}
 \alias{quartiles}
-\title{Description function for quartiles}
+\title{summaryFunction for quartiles}
 \usage{
 quartiles(v, maxDecimals = 2)
 }
@@ -14,20 +14,18 @@ printing numerical values in the data summary and in problematic values from the
 data checks. If \code{Inf}, no rounding is performed.}
 }
 \value{
-A list with $feature: "1st and 3rd quartiles" and $result: [the quartiles of \code{v}].
-
 An object of class \code{summaryResult} with the following entries: \code{$feature} 
 ("1st and 3rd quartiles"), \code{$result} (the 1st and 3rd quartiles of \code{v}) and
 \code{$value} (the quartiles in their original format).
 }
 \description{
-A description type function to be called from \code{\link{summarize}}, which calculates
-the 1st and 3rd quartiles of a variable. NA, NaN and Inf values are removed prior to  the
-computations.
-
-A description type \code{summaryFunction}, intended to be called from 
-\code{\link{summarize}}, which calculates the 1st and 3rd quartiles of a variable. 
-NA, NaN and Inf values are removed prior to  the computations.
+A \code{\link{summaryFunction}}, intended to be called from \code{\link{summarize}}, 
+which calculates the 1st and 3rd quartiles of a variable. NA, NaN and Inf values are removed 
+prior to  the computations.
+}
+\details{
+The quartiles are computed using the \code{\link[stats]{quantile}} function from \code{stats}, 
+using type 7 quantiles for integer and numeric variables and type 1 quantiles for Date variables.
 }
 \examples{
 quartiles(c(1:100))

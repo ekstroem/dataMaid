@@ -2,7 +2,7 @@
 % Please edit documentation in R/centralValue.R
 \name{centralValue}
 \alias{centralValue}
-\title{Description function for central values}
+\title{summaryFunction for central values}
 \usage{
 centralValue(v, ...)
 }
@@ -22,7 +22,7 @@ If the mode is returned and it is not uniquely determined, the first value quali
 returned, when the variable is sorted according to \code{\link{sort}}.
 }
 \description{
-A description type \code{summaryFunction}, intended to be called from 
+A \code{summaryFunction}, intended to be called from 
 \code{\link{summarize}}, which returns the central value of a variable. 
 For numeric and integer variables, this is the median. For
 character, factor, labelled, Date and logical variables, the central value is the mode 
