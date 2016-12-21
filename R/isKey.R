@@ -2,7 +2,7 @@
 #' 
 #' @description A \code{\link{checkFunction}} that checks if \code{v} 
 #' is a key, that is, if every observation has a unique value in \code{v} and 
-#' \code{v} is either a factor or character variable. This
+#' \code{v} is not a numeric/integer nor a Date variable. This
 #' function is intended for use as a precheck in \code{\link{clean}}.
 #' 
 #' @param v A variable (vector) to check. All variable types are allowed.
@@ -30,7 +30,7 @@
 #' @export
 isKey <- function(v) {
   out <- list(problem = FALSE, message = "", problemValues = NULL)
-  if (length(unique(v)) == length(v) & !any(class(v) %in% c("numeric", "integer"))) {
+  if (length(unique(v)) == length(v) & !any(class(v) %in% c("numeric", "integer", "Date"))) {
     out$problem <- TRUE
     out$message <- "The variable is a key (distinct values for each observation)." 
   }

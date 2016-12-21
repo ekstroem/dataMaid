@@ -181,7 +181,7 @@ defaultLogicalSummaries <- function() c("variableType", "countMissing", "uniqueV
 #' @return A list of function names (as character strings).
 #'
 #' @seealso \code{\link{variableType}}, \code{\link{countMissing}}, \code{\link{uniqueValues}},
-#' \code{\link{centralValue}}, \code{\link{minMax}}
+#' \code{\link{centralValue}}, \code{\link{minMax}}, \code{\link{quartiles}}
 #'
 #' @examples
 #' defaultDateSummaries()
@@ -189,7 +189,7 @@ defaultLogicalSummaries <- function() c("variableType", "countMissing", "uniqueV
 #' @export
 #defaultDateSummaries <- function() c("variableType")
 defaultDateSummaries <- function() c("variableType", "countMissing", "uniqueValues",
-                                     "centralValue", "minMax")
+                                     "centralValue", "minMax", "quartiles")
 
 
 
