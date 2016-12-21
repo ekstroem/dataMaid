@@ -1,13 +1,13 @@
 latex/
-\.RData
-\.Rhistory
+^\.RData
+^\.Rhistory
 ^makeData\.R
 ^README*
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^.*\.html
 ^.*\.Rmd
-^.*\.rda
 ^.*\.pdf
 ^.*\.tex
 ^.*\.tar\.gz
+^\.rda

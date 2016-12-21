@@ -11,7 +11,6 @@
 \tikzstyle{decision} = [diamond, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=green!30]
 \tikzstyle{arrow} = [thick,->,>=stealth]
 
-
 \newcommand{\hl}[1]{\textcolor{magenta}{#1}}
 
 %Virker ikke:
@@ -116,7 +115,7 @@ down and flagging potential erroneous data and in providing
 information for humans to easier identify errors based on the context.
 
 Online tools such as OpenRefine (\url{http://openrefine.org/}) and
-\proglang{R}-packages such as \pkg{data.table}, and \pkg{plyr} have
+\proglang{R}-packages such as \pkg{plyr}, and \pkg{data.table} have
 made data wrangling a lot easier, but only a handful of packages such
 as \pkg{editrules}, \pkg{validate}, \pkg{DataCombine}, and
 \pkg{janitor} attempt to implement systematic, reproducible data
@@ -228,7 +227,7 @@ small ($15$ rows and $6$ variables), artificial dataset, whose only purpose is t
 illustrate the main capabilities of \pkg{cleanR}. The following
 commands load the dataset and produce the cleaning output:
 
-\begin{figure}
+\begin{figure}[tb]
 \begin{center}
 \frame{\includegraphics[width=7.5cm,page=2]{cleanR_toyData.pdf}} 
 \frame{\includegraphics[width=7.5cm,page=3]{cleanR_toyData.pdf}}
@@ -294,21 +293,60 @@ that should be investigated more carefully.
 Though the \R{clean()} function is very easy to use, it should not be
 mistaken to be inflexible. A large number of function arguments allows
 for the cleaning overview document to be molded according to the
-user's needs. The most common arguments are summarized in Table~\ref{}
-but in order to understand this distinction, a brief glimpse of the
-inner structure of \R{clean()} might be useful. This can be obtained
-from Figure~\ref{figure:cleanStructure}.
+user's needs. 
 
-Below, we present a selection of these arguments in
-sections \hl{xx} and \hl{xxx}. We do this under two distinct headlines
-to emphasize that two levels of control are available when using
-\R{clean()}. Either, we can control the \hl{[something] - essentially,
-  this is everything but SVC-functions - } or we can control what
-quality assessments and descriptions each variable are subjected
-to.  \hl{segway to next bit or
-  just something to end the paragraph}
+The most commonly used arguments are summarized in
+Table~\ref{table.cleanFormals} and they are grouped according to the
+part of the cleaning process they influence. In order to understand
+this distinction, a glimpse of the inner structure of \R{clean()} is
+shown in Figure~\ref{figure:cleanStructure}. In the following we give
+examples on how to use these parameters to influence the output of
+\R{clean() }.
 
-\begin{figure}
+\begin{table}
+\small
+\begin{tabular}{p{0.25\linewidth}p{0.45\linewidth}p{0.2\linewidth}}
+\hline
+Argument & Description & Default value \\
+\hline
+
+\smallskip Control input variable and summary\\
+\quad \R{useVar} & What variables should be used? & \R{NULL} (corresponding to all variables) \\
+\quad \R{ordering} & Ordering of the variables in the data summary (as is or alphabetical) & \R{"asIs"} \\
+\quad \R{onlyProblematic} & Should only variables flagged as problematic be included in the \textit{Variable list}? & \R{FALSE} \\
+\quad \R{listChecks} & Should an overview of what checks were performed by listed in the \textit{Data cleaning summary}? &  \R{TRUE} \\
+
+\smallskip Control summarize, visualize, and check steps \\
+\quad \R{mode} & What steps should be performed for each variable (out of the three possibilities \textit{summarize}, \textit{visualize}, \textit{check})? & \R{c("summarize", "visualize", "check")} \\
+\quad \R{labelled\_as} & How should variables of class \R{labelled} be handled (as factors, is missing values or by ignoring labels)? & \R{"factor"} \\
+\quad \R{smartNum} & Should numerical values with only a few unique
+                     levels be flagged and treated as a factor variable? & \R{TRUE} \\
+\quad \R{maxProbVals} & Maximum number of problematic values to print, if any are found in data checks & \R{Inf} \\
+\quad \R{maxDecimals} & Maximum number of decimals to print for numeric values in the variable list & \R{2} \\
+\quad \R{twoCol} & Should the summary table and visualizations be placed side-by-side (in two columns)? & \R{TRUE} \\
+
+\smallskip Control output and post-processing \\
+\quad \R{output} & Type of output file to be produced (html, or pdf) & \R{"pdf"} \\
+\quad \R{render} & Should the output file be rendered from markdown? & \R{TRUE} \\
+\quad \R{openResult} & If a  pdf/html file is rendered, should it automatically open afterwards, and if not, should the \R{rmarkdown} file? & \R{TRUE} \\
+
+\hline
+\end{tabular}
+\caption{A selection of commonly used arguments to \R{clean()} separated into the parts they control.}
+\label{table.cleanFormals}
+\end{table}
+
+
+% Below, we present a selection of these arguments in
+% sections \hl{xx} and \hl{xxx}. We do this under two distinct headlines
+% to emphasize that two levels of control are available when using
+% \R{clean()}. Either, we can control the \hl{[something] - essentially,
+%   this is everything but SVC-functions - } or we can control what
+% quality assessments and descriptions each variable are subjected
+% to.  \hl{segway to next bit or
+%   just something to end the paragraph}
+
+\begin{figure}[tb]
 \begin{description}
 \item[Input] A dataset
 	\begin{itemize} 
@@ -344,46 +382,35 @@ to.  \hl{segway to next bit or
 
 
 
-\subsection{Controlling [something]}
-\label{subsection:controlSomething}
+% \subsection{Controlling [something]}
+% \label{subsection:controlSomething}
 
-\begin{table}
-\small
-\begin{tabular}{p{0.25\linewidth}p{0.45\linewidth}p{0.2\linewidth}}
-\hline
-Argument & Description & Default value \\
-\hline
 
-\smallskip Control \hl{...eh?}\\
-\quad \R{useVar} & What variables should be used? & \R{NULL} (corresponding to all variables) \\
-\quad \R{ordering} & Ordering of the variables in the data summary (as is or alphabetical) & \R{"asIs"} \\
-\quad \R{onlyProblematic} & Should only variables flagged as problematic be included in the \textit{Variable list}? & \R{FALSE} \\
-\quad \R{listChecks} & Should an overview of what checks were performed by listed in the \textit{Data cleaning summary}? &  \R{TRUE} \\
+For example, to get a summary document that only contains the
+variables with potential problems, and with a limit of maximum 10
+printed potential errors, we can write (output not shown)
 
-\smallskip Control SVC-step \\
-\quad \R{mode} & What steps should be performed for each variable (out of the three possibilities \textit{summarize}, \textit{visualize}, \textit{check})? & \R{c("summarize", "visualize", "check")} \\
-\quad \R{labelled\_as} & How should variables of class \R{labelled} be handled (as factors, is missing values or by ignoring labels)? & \R{"factor"} \\
-\quad \R{smartNum} & Should numerical values with only a few unique levels be flagged an treated as factor variables? & \R{TRUE} \\
-\quad \R{maxProbVals} & Maximum number of problematic values to print, if any are found in data checks & \R{Inf} \\
-\quad \R{maxDecimals} & Maximum number of decimals to print for numeric values in the variable list & \R{2} \\
-\quad \R{twoCol} & Should the summary table and visualizations be placed side-by-side (in two columns)? & \R{TRUE} \\
+\begin{Schunk}
+\begin{Sinput}
+> clean(toyData, onlyProblematic=TRUE, maxProbVals=10)
+\end{Sinput}
+\end{Schunk}
 
-\smallskip Control output \\
-\quad \R{output} & Type of output file to be produced (html, pdf or \hl{?? what does screen mean in the documentation??}) & \R{"pdf"} \\
-\quad \R{render} & Should the output file be rendered from markdown? & \R{TRUE} \\
-\quad \R{openResult} & If a  pdf/html file is rendered, should it automatically open afterwards, and if not, should the \R{rmarkdown} file? & \R{TRUE} \\
 
-\hline
-\end{tabular}
-\caption{A selection of commonly used\hl{/useful?} arguments of \R{clean()}.  \hl{Note: I have everything here except \R{file} and \R{quiet}, replace, vol, standAlone + stuff related to selecting SVC-functions (dealt with in next subsection)}.  \hl{Fix formatting for \R{onlyProblematic}.}}
-\label{table.cleanFormals}
-\end{table}
-
-\hl{Describe arguments in Table \ref{table.cleanFormals}. Maybe do a few examples of interesting argument combinations?}
+The final rendering of the generated 
 
 
 
-\subsection{Something about what check, visual and summary functions are available}
+
+By default, \R{clean()} runs all the summary,
+visualization, and check functions that are
+implemented. Table~\ref{table.SVCfunctions} lists these functions but
+we can also use the \R{allSummaryFunctions()},
+\R{allVisualFunctions()}, and \R{allCheckFunctions()} function in
+\proglang{R} to obtain a list. For example the implemented summary
+functions are:
+
+%\subsection{Something about what check, visual and summary functions are available}
 
 \begin{table}
 \centering
@@ -435,6 +462,50 @@ Argument & Description & Default value \\
 \end{itemize}
 }
 
+
+\begin{Schunk}
+\begin{Sinput}
+> allSummaryFunctions()
+\end{Sinput}
+\begin{Soutput}
+----------------------------------------------------------------------------
+name           description                     classes                      
+-------------- ------------------------------- -----------------------------
+centralValue   Compute median or mode          character, Date,
+factor,     
+                                               integer, labelled,
+                                               logical,  
+                                               numeric                      
+
+countMissing   Compute ratio of missing        character, Date,
+factor,     
+               observations                    integer, labelled,
+               logical,  
+                                               numeric                      
+
+minMax         Find minimum and maximum        integer, numeric, Date       
+               values                                                       
+
+quartiles      Compute 1st and 3rd quartiles   integer, numeric             
+
+uniqueValues   Count number of unique values   character, Date,
+factor,     
+                                               integer, labelled,
+                                               logical,  
+                                               numeric                      
+
+variableType   Data class of variable          character, Date,
+factor,     
+                                               integer, labelled,
+                                               logical,  
+                                               numeric                      
+----------------------------------------------------------------------------
+\end{Soutput}
+\end{Schunk}
+
+
+
+
 In this section, we discuss how to control every step in \R{clean()} that actually involves a function being called on variables from the dataset. There are two stages in which this occurs, as mentioned in Figure~\ref{figure:cleanStructure}, namely:
 \begin{enumerate}
 \item In the precheck functions
@@ -443,13 +514,21 @@ In this section, we discuss how to control every step in \R{clean()} that actual
 Each of these stages are controllable using appropriate function parameters in \code{clean}. In the above, we presented the default \pkg{cleanR} settings and how to tweak them into providing a slightly different data cleaning outputs. However, if for instance the dataset at hand requires completely different visualizations, more control is needed. \pkg{cleanR} uses three different types of functions for performing all stages in the above, namely \code{summaryFunction}s, \code{visualFunction}s and \code{checkFunction}s. \hl{Something like "the avaialable options for functions used in the precheck- and check steps are obtainable by calling \R{allCheckFunction()}, blablabla, similarly with visualFunctions and summaryFunctions. Mention Section 4 and the fact that one can expand the possibilities of e.g. allVisualFunctions() by producing new functions quite easily.}
 
 
-\section{Something about the interactive cleanR mode}
-While overview documents are great for documenting our work, they might not feel very natural for actually performing data cleaning or data wrangling based on the results we found. Therefore, \pkg{cleanR} also provides more standard \R{R} interactive tools, such as functions that print results to the console or saves it in a variable for later use. Or, more precisely, the functions used by \R{clean()} to do actual data summaries, visualizations and checks, as described above, can also be used interactively. \hl{segway}
+\section{Using cleanR interactively}
+While overview documents are great for presenting and documenting the
+data cleaning checks, it may be natural to work more interactively
+through the data cleaning process. \pkg{cleanR} also
+provides more standard \proglang{R} interactive tools, such as
+functions that print results to the console or returns the information
+as an object for later use. This section describes how to use the
+functions \R{check()}, \R{summarize()} and \R{visualize()} to work
+interactively with \pkg{cleanR}. 
 
-\hl{Maybe write here explicitly that this section introduces the three functions: \R{summarize()}, \R{check()} and \R{visualize()}?} 
-
-\subsection{Cleaning by hand: An example}
-Let's say we wish to look further into a certain variable from \R{toyData}, namely \R{var2}. The data cleaning summary found some issues in this variable, and we would like to recall what these issues were. This can be done using the command
+\subsection{Data cleaning by hand: An example}
+Let's say we wish to look further into a certain variable from
+\R{toyData}, namely \R{var2}. The data cleaning summary found some
+issues in this variable, and we would like to recall what these issues
+were. This can be done using the \R{check()} command
 \begin{Schunk} 
 \begin{Sinput} 
 > check(toyData$var2)
@@ -458,12 +537,15 @@ Let's say we wish to look further into a certain variable from \R{toyData}, name
 $identifyMissing
 The following suspected missing value codes enter as regular values: 999, NaN.
 $identifyOutliers
-Note that the following possible outlier values were detected: 82, 999. $
+Note that the following possible outlier values were detected: 82, 999. 
 \end{Soutput}
 \end{Schunk}
-\hl{delete that last \$, it's only there to make my TeX editor stop highlighting everything. Note: \$s cannot be escaped here, as Schunk is verbatim.}
+% $
 
-Note that the arguments specifying which checks to perform, as described in \hl{XXXX} above, are in fact passed to \R{check()}, and thus they can also be used here. For instance, if we only want the result of the check for miscoded missing values, we write
+Note that the arguments specifying which checks to perform, as
+described in the previous section, are in fact passed to \R{check()}, and
+thus they can also be used here. For instance, if we only want the
+result of the check for miscoded missing values, we write
 \begin{Schunk}
 \begin{Sinput}
 > check(toyData$var2, numericChecks = "identifyMissing")
@@ -473,18 +555,25 @@ $identifyMissing
 The following suspected missing value codes enter as regular values: 999, NaN.
 \end{Soutput}
 \end{Schunk}
-An equivalent way to call only a single, specific \R{checkFunction} is by using it directly on the variable, i.e. 
+The \R{numericChecks} argument XXX.. ... not defined
+
+An equivalent way to call only a single, specific \R{checkFunction}
+such as \R{identifyMissing} (see \ref{table.SVCfunctions} for a list
+of check functions) is by using it directly on the variable, i.e.
 \begin{Schunk}
 \begin{Sinput}
 > identifyMissing(toyData$var2)
 \end{Sinput}
 \begin{Soutput}
-The following suspected missing value codes enter as regular values: 999, NaN. $
+The following suspected missing value codes enter as regular values: 999, NaN. 
 \end{Soutput}
 \end{Schunk}
-\hl{delete that last \$}
+% $
 
-The result of a \R{checkFunction} is an object of class \R{checkResult}. By using the structure function, \R{str()}, we can look further into its components:
+
+The result of a \R{checkFunction} is an object of class
+\R{checkResult}. By using the structure function, \R{str()}, we can
+look further into its components:
 
 \begin{Schunk}
 \begin{Sinput}
@@ -500,17 +589,22 @@ List of 3
  - attr(*, "class")= chr "checkResult"
 \end{Soutput}
 \end{Schunk}
-The most important thing to note here is that while the printed message is made for easy reading, the actual values of the variable causing the issue are still obtainable. If we for instance decide that the values \R{999} and \R{NaN} in \R{var2} are in fact miscoded missing values, we can easily replace them with \R{NA}s:
+The most important thing to note here is that while the printed
+message is made for easy reading, the actual values of the variable
+causing the issue are still obtainable in the element
+\R{problemValues}. If we for instance decide that the values \R{999}
+and \R{NaN} in \R{var2} are in fact miscoded missing values, we can
+easily replace them with \R{NA}s:
 \begin{Schunk}
 \begin{Sinput}
 > toyData$var2[toyData$var2 %in% missVar2$problemValues] <- NA
 > identifyMissing(toyData$var2}
 \end{Sinput}
 \begin{Soutput}
-No problems found. $
+No problems found.
 \end{Soutput}
 \end{Schunk}
-\hl{remove that last \$}. \hl{This is quite a practical example, but it essentially also gives the basic structure for misusing cleanR by generating a loop that does autocleaning... What do you think? Perhaps those who know how to make loops also know that they shouldn't do automatic data cleaning?}
+% $
 
 \hl{
 \begin{itemize}
@@ -524,7 +618,7 @@ No problems found. $
 \label{sec:extending}
 
 \begin{table}[ht]
-\small
+\scriptsize
 \begin{tabular}{p{0.2\linewidth}p{0.2\linewidth}p{0.2\linewidth}p{0.2\linewidth}}
 & \R{summaryFunction} & \R{visualFunction} & \R{checkFunction} \\
 \hline
