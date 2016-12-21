@@ -3,29 +3,35 @@
 \docType{data}
 \name{testData}
 \alias{testData}
-\title{Example data to show the features of clean}
-\format{A data frame with 15 rows and 14 variables.
+\title{Exteneded example data to test the features of cleanR}
+\format{A data frame with 15 rows and 15 variables.
 \describe{
-   \item{charVar}{a simple factor}
-   \item{factorVar}{a factor with a "special" level 999}
-   \item{numVar}{a numeric vector}
-   \item{intVar}{an integer vector}
-   \item{boolVar}{a logical vector}
-   \item{keyVar}{a factor}
-   \item{emptyVar}{a numeric vector where all the elements are identical}
-   \item{_joeVar}{a numeric vector}
-   \item{jack__var}{a numeric vector}
-   \item{numOutlierVar}{a numeric vector with a possible outlier}
-   \item{smartNumVar}{a numeric vector}
-   \item{cprVar}{a factor with levels in the format of the Danish CPR number (Social security number)}
-   \item{cprKeyVar}{a factor with levels in the format of the Danish CPR number}
-   \item{miscodedMissingVar}{a factor with levels corresponding to various misssing codes}
+   \item{charVar}{A character vector with a single missing observation.}
+   \item{factorVar}{A factor vector with a miscoded missing observation, \code{999}.}
+   \item{numVar}{A numeric vector}
+   \item{intVar}{An integer vector}
+   \item{boolVar}{A logical vector with three missing observations.}
+   \item{keyVar}{A character vector with unique codes for each observation.}
+   \item{emptyVar}{A numeric vector where all entries are identical.}
+   \item{numOutlierVar}{A numeric vector with a possible outlier (\code{100}).}
+   \item{smartNumVar}{A numeric vector that takes only two different values.}
+   \item{cprVar}{A character vector with levels in the format of Danish CPR numbers 
+   (social security numbers).}
+   \item{cprKeyVar}{A character vector with levels in the format of Danish CPR numbers
+   (social security numbers) with unique levels for each observation.}
+   \item{miscodedMissingVar}{A character vector with levels corresponding to 
+   various miscoded (non-\code{NA}) misssing codes.}
+   \item{misclassifiedNumVar}{A misclassified factor variable, where every level
+   is a number and a many (12) different levels are in use.}
+   \item{dateVar}{A Date vector.}
+   \item{labelledVar}{A labelled vector with two missing observations.}
 }}
 \source{
 Artificial data
 }
 \description{
-A dataset of constructed data used to as test bed when identifying potential errors in a data frame.
+A dataset of constructed data used as test bed when using \code{cleanR} for identifying 
+potential errors in a dataset.
 }
 \examples{
 data(testData)

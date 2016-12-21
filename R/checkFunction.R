@@ -56,7 +56,7 @@
 #' @seealso \code{\link{allCheckFunctions}}, \code{\link{check}}, \code{\link{clean}},
 #' \code{\link{messageGenerator}}, \code{\link{checkResult}}
 #' 
-#' @examples 
+#' @examples  
 #' 
 #' #Define a minimal requirement checkFunction that can be called
 #' #from check() and clean(). This function checks whether all
@@ -121,6 +121,36 @@
 #' 
 #' #identifyColons now appears in a allCheckFunctions() call:
 #' allCheckFunctions()
+#' 
+#' #Define a checkFunction that looks for negative values in numeric
+#' #or integer variables:
+#' identifyNeg <- function(v, nMax = Inf, maxDecimals = 2, ...) {
+#'   problem <- FALSE
+#'   problemValues <- printProblemValues <- NULL
+#'   problemMessage <- "Note: The following negative values were found:"  
+#'   negOcc <- unique(v[v < 0])
+#'   if (length(negOcc > 0)) {
+#'     problemValues <- negOcc
+#'     printProblemValues <- round(negOcc, maxDecimals)
+#'     problem <- TRUE
+#'   }
+#'   outMessage <- messageGenerator(list(problem = problem, 
+#'     problemValues = printProblemValues), problemMessage, nMax)
+#'   checkResult(list(problem = problem,
+#'                    message = outMessage,
+#'                    problemValues = problemValues))
+#' }
+#' 
+#' #Make it a checkFunction
+#' identifyNeg <- checkFunction(identifyNeg, "Identify negative values",
+#'   classes = c("integer", "numeric"))
+#'   
+#' #Call it:
+#' identifyNeg(c(0:100))
+#' identifyNeg(c(-20.1232323:20), nMax = 3, maxDecimals = 4)
+#' 
+#' #identifyNeg now appears in a allCheckFunctions() call:
+#'  allCheckFunctions()
 #' 
 #' @export
 checkFunction <- function(f, description = NULL, classes = NULL) {
