@@ -17,7 +17,7 @@ defaultLogicalSummaries()
 
 }
 \seealso{
-\code{\link{defaultLogicalDescriptions}}, \code{\link{variableType}},
-\code{\link{countMissing}}, \code{\link{uniqueValues}}
+\code{\link{variableType}},
+\code{\link{countMissing}}, \code{\link{uniqueValues}}, \code{\link{centralValue}}
 }
 

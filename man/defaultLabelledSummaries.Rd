@@ -17,7 +17,7 @@ defaultLabelledSummaries()
 
 }
 \seealso{
-\code{\link{defaultLabelledDescriptions}}, \code{\link{variableType}},
-\code{\link{countMissing}}, \code{\link{uniqueValues}}
+\code{\link{variableType}},
+\code{\link{countMissing}}, \code{\link{uniqueValues}}, \code{\link{centralValue}}
 }
 

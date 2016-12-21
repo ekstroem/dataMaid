@@ -4,21 +4,17 @@
 \alias{summarize}
 \title{Make summary matrix}
 \usage{
-summarize(v, descriptive = TRUE, ...)
+summarize(v, ...)
 }
 \arguments{
 \item{v}{The variable (vector) or dataset (data.frame) to be summarized.}
 
-\item{descriptive}{A logical. If \code{TRUE} (the default), descriptive functions 
-are added to the summary matrix (see details). They are not included if 
-\code{descriptive} is set to \code{FALSE}.}
-
 \item{...}{Additional argument passed to data class specific methods. First and foremost,
-this is where to supply the summary functions and description functions (see details).}
+this is where to supply the summary functions (see details).}
 }
 \value{
 If \code{v} is a single variable: A matrix with two columns, \code{feature} and 
-\code{result} and one row for each summary/description function that was called. Character
+\code{result} and one row for each summary function that was called. Character
 strings in this matrix are escaped such that they are ready for Rmarkdown rendering.
 
 If \code{v} is a full dataset: A list of matrices as described above, one for each
@@ -37,17 +33,10 @@ similarly for the remaining 6 data classes (factor, Date, labelled, numeric, int
 Note that an overview of all available \code{summaryFunction}s can be obtained by calling
 \code{\link{allSummaryFunctions}}. 
 
-Additional functions can be added using the "descriptions"-arguments, e.g.
-\code{characterDescriptions = "centralValue"}. If \code{descriptive = TRUE} the results of
-these functions are added to the outputted summary matrix. Note that this is nothing
-more than a convenient way to add an extra category of summary functions to the output.
-Summary functions and description functions are treated in the exact same way and they
-should both ideally be of class \code{\link{summaryFunction}}. 
+The default choices of \code{summaryFunctions} are available in data class specific functions, e.g.
+\code{defaultCharacterSummaries()} and \code{defaultNumericSummaries()}.
 
-The default summary- and character functions are available in data class specific functions, e.g.
-\code{defaultCharacterSummaries()} and \code{defaultCharacterDescriptions()}, respectively.
-
-A user defined summary (or description) function can be supplied using its function name. Note
+A user defined summary function can be supplied using its function name. Note
 however that it should take a vector as argument and return a list on the form
 \code{list(feature="Feature name", result="The result")}. More details on how to construct 
 valid summary functions are found in \code{\link{summaryFunction}}.
@@ -56,9 +45,6 @@ valid summary functions are found in \code{\link{summaryFunction}}.
 #Default summary for a character vector:
    charV <- c("a", "b", "c", "a", "a", NA, "b", "0")
    summarize(charV)
-
-# Remove default description functions:
-   summarize(charV, descriptive = FALSE)
 
 #Inspect default character summary functions:
    defaultCharacterSummaries()
@@ -87,10 +73,6 @@ valid summary functions are found in \code{\link{summaryFunction}}.
 \code{\link{defaultCharacterSummaries}}, \code{\link{defaultFactorSummaries}},
 \code{\link{defaultLabelledSummaries}}, \code{\link{defaultLabelledSummaries}},
 \code{\link{defaultNumericSummaries}}, \code{\link{defaultIntegerSummaries}},
-\code{\link{defaultLogicalSummaries}},
-\code{\link{defaultCharacterDescriptions}}, \code{\link{defaultFactorDescriptions}},
-\code{\link{defaultLabelledDescriptions}}, \code{\link{defaultLabelledDescriptions}},
-\code{\link{defaultNumericDescriptions}}, \code{\link{defaultIntegerDescriptions}},
-\code{\link{defaultLogicalDescriptions}},
+\code{\link{defaultLogicalSummaries}}
 }
 

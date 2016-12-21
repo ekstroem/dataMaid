@@ -149,7 +149,7 @@
 #'
 #' @param \dots FIX ME-------- Other arguments that are passed on the to precheck,
 #' checking, summary and visualization functions.WHAT ARGUMENTS ARE RELEVANT TO MENTION
-#'  HERE? DESCRIPTIVE FOR SUMMARIZE()? ---------- FIX ME
+#'  HERE?  ---------- FIX ME
 #'
 #' @return The function does not return anything. Its side effect (the production
 #' of a data cleaning overview document) is the reason for running the function.

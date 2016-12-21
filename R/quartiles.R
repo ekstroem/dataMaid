@@ -1,13 +1,9 @@
-#' @title Description function for quartiles
+#' @title summaryFunction for quartiles
 #'
-#' @description A description type function to be called from \code{\link{summarize}}, which calculates
-#' the 1st and 3rd quartiles of a variable. NA, NaN and Inf values are removed prior to  the
-#' computations.
+#' @description A \code{\link{summaryFunction}}, intended to be called from \code{\link{summarize}}, 
+#' which calculates the 1st and 3rd quartiles of a variable. NA, NaN and Inf values are removed 
+#' prior to  the computations.
 #' 
-#' @description A description type \code{summaryFunction}, intended to be called from 
-#' \code{\link{summarize}}, which calculates the 1st and 3rd quartiles of a variable. 
-#' NA, NaN and Inf values are removed prior to  the computations.
-#'
 #' @param v A variable (vector) of type numeric or integer.
 #' 
 #' @inheritParams clean

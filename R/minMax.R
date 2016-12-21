@@ -1,9 +1,6 @@
-#' @title Description function for minimum and maximum
+#' @title summaryFunction for minimum and maximum
 #'
-#' @description A description type function to be called from \code{\link{summarize}}, which returns
-#' the minimum and maximum value of a variable. NA, NaN and Inf values are removed prior to  the
-#' computations.
-#' @description A description type \code{summaryFunction}, intended to be called from 
+#' @description A \code{summaryFunction}, intended to be called from 
 #' \code{\link{summarize}}, which returns the minimum and maximum values of a variable.
 #' NA, NaN and Inf values are removed prior to  the computations.
 #' 
