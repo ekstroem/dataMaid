@@ -6,8 +6,15 @@
 #Note: This does not work for functions defined wihtin cleanR. As
 #of now, they must have their classes specified explicitly!
 #' @importFrom utils methods
-makeXFunction <- function(fName, description, classes, X) {
-  f <- get(fName)
+makeXFunction <- function(fName, description, classes, X)  {
+  if (exists(fName, 1)) {
+    f <- get(fName, 1)
+  } else {
+    f <- get(fName)
+  }
+   #note: default pos (-1) will look in cleanR namespace first
+   #when called interactively. This results in weird behaviour when 
+   #users try to overwrite our functions. 
 
   if (is.null(description)) description <- fName
   if (is.null(classes)) {
@@ -30,7 +37,10 @@ makeXFunction <- function(fName, description, classes, X) {
   f
 }
 
-
+#tryCatch(mget("identifyMissing", envir = as.environment(1),
+#              inherits = T), finally = print("hello"
+#                                             )
+#         )
 
 
 #foo <- function(x) UseMethod("foo")
