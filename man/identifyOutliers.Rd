@@ -7,7 +7,7 @@
 identifyOutliers(v, nMax = Inf, maxDecimals = 2)
 }
 \arguments{
-\item{v}{A numeric or integer variable to check.}
+\item{v}{A Date, numeric or integer variable to check.}
 
 \item{nMax}{The maximum number of problematic values to report. 
 Default is \code{Inf}, in whichall problematic values are included 
@@ -25,7 +25,7 @@ A \code{\link{checkResult}} with three entires:
 }
 \description{
 A checkFunction to be called from \code{\link{check}} that identifies outlier values
-in a numeric/integer variable.
+in a Date/numeric/integer variable.
 }
 \details{
 Outliers are identified based on an outlier rule that is 
@@ -45,6 +45,10 @@ standard outlier rule also used in Tukey Boxplots (consistent with
 the \code{\link{boxplot}} function), i.e. as values that are
 smaller than the 1st quartile minus the inter quartile range (IQR)
 or greater than the third quartile plus the IQR.
+
+For Date variables, the calculations are done on their raw numeric format (as 
+obtained by using \code{\link{unclass}}), after which they are translated back to Dates.
+Note that no rounding is performed for Dates, no matter the value of \code{maxDecimals}.
 }
 \examples{
  identifyOutliers(c(1:10, 200, 200, 700))

@@ -79,7 +79,6 @@
 #' check(cars, factorChecks = setdiff(defaultFactorChecks(), "identifyMissing"),
 #'   numericChecks = "identifyMissing")
 #' 
-#' @importFrom utils packageVersion tail
 #' @export
 check <- function(v, nMax = Inf, ...) UseMethod("check")
 
@@ -211,7 +210,7 @@ check.logical <- function(v, nMax =  Inf, logicalChecks = defaultLogicalChecks()
 #' @return A vector of function names.
 #' 
 #' @export
-defaultDateChecks <- function() NULL #NOTE: we don't actually do any Date checks...
+defaultDateChecks <- function() "identifyOutliers"
 
 #' @export
 check.Date <- function(v, nMax =  Inf, DateChecks = defaultDateChecks(), ...) {
