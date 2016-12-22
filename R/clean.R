@@ -180,6 +180,7 @@
 #' @importFrom methods is
 #' @importFrom pander pander_return panderOptions pandoc.table.return
 #' @importFrom tools file_ext
+#' @importFrom utils packageVersion
 #' @export
 clean <- function(data, output=c("pdf", "html"), render=TRUE,
                   useVar=NULL, ordering=c("asIs", "alphabetical"), onlyProblematic=FALSE,

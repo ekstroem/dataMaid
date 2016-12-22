@@ -79,7 +79,6 @@
 #' check(cars, factorChecks = setdiff(defaultFactorChecks(), "identifyMissing"),
 #'   numericChecks = "identifyMissing")
 #' 
-#' @importFrom utils packageVersion tail
 #' @export
 check <- function(v, nMax = Inf, ...) UseMethod("check")
 
