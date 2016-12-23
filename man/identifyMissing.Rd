@@ -15,7 +15,7 @@ all problematic values are included in the outputted message.}
 \item{...}{Not in use.}
 }
 \value{
-A \code{\link{checkResult}} with three entires: 
+A \code{\link{checkResult}} with three entires:
 \code{$problem} (a logical indicating whether midcoded missing values where found),
 \code{$message} (a message describing which values in \code{v} were suspected to be
 miscoded missing values), and \code{$problemValues} (the problematic values
@@ -28,13 +28,13 @@ appear to be miscoded missing values.
 }
 \details{
 \code{identifyMissing} tries to identify common choices of missing values outside of the
-R standard (\code{NA}). These include special words (NaN and Inf (no matter the cases)), 
-one or more -9/9's (e.g. 999, "99", -9, "-99"), one ore more -8/8's (e.g. -8, 888, -8888), 
-Stata style missing values (commencing with ".") and other character strings 
-("", " ", "-", "NA" miscoded as character). If the variable is numeric/integer or a 
+R standard (\code{NA}). These include special words (NaN and Inf (no matter the cases)),
+one or more -9/9's (e.g. 999, "99", -9, "-99"), one ore more -8/8's (e.g. -8, 888, -8888),
+Stata style missing values (commencing with ".") and other character strings
+("", " ", "-", "NA" miscoded as character). If the variable is numeric/integer or a
 character/factor variable consisting only of numbers and with more than 11 different values,
-the numeric miscoded missing values (999, 888, -99, -8 etc.) are 
-only recognized as miscoded missing if they are maximum or minimum, respectively, and the distance 
+the numeric miscoded missing values (999, 888, -99, -8 etc.) are
+only recognized as miscoded missing if they are maximum or minimum, respectively, and the distance
 between the second largest/smallest value and this maximum/minimum value is greater than one.
 }
 \examples{
@@ -46,14 +46,14 @@ between the second largest/smallest value and this maximum/minimum value is grea
 v1 <- c(1:15, 99)
 v2 <- c(v1, 98)
 v3 <- c(-999, v2, 9999)
-identifyMissing(v1) 
-identifyMissing(v2) 
+identifyMissing(v1)
+identifyMissing(v2)
 identifyMissing(v3)
 identifyMissing(factor(v3))
 
 }
 \seealso{
-\code{\link{check}}, \code{\link{allCheckFunctions}}, 
+\code{\link{check}}, \code{\link{allCheckFunctions}},
 \code{\link{checkFunction}}, \code{\link{checkResult}}
 }
 

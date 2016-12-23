@@ -9,23 +9,23 @@
 #' @param ... Not in use.
 #'
 #' @details \code{identifyMissing} tries to identify common choices of missing values outside of the
-#' R standard (\code{NA}). These include special words (NaN and Inf (no matter the cases)), 
-#' one or more -9/9's (e.g. 999, "99", -9, "-99"), one ore more -8/8's (e.g. -8, 888, -8888), 
-#' Stata style missing values (commencing with ".") and other character strings 
-#' ("", " ", "-", "NA" miscoded as character). If the variable is numeric/integer or a 
+#' R standard (\code{NA}). These include special words (NaN and Inf (no matter the cases)),
+#' one or more -9/9's (e.g. 999, "99", -9, "-99"), one ore more -8/8's (e.g. -8, 888, -8888),
+#' Stata style missing values (commencing with ".") and other character strings
+#' ("", " ", "-", "NA" miscoded as character). If the variable is numeric/integer or a
 #' character/factor variable consisting only of numbers and with more than 11 different values,
-#' the numeric miscoded missing values (999, 888, -99, -8 etc.) are 
-#' only recognized as miscoded missing if they are maximum or minimum, respectively, and the distance 
-#' between the second largest/smallest value and this maximum/minimum value is greater than one. 
+#' the numeric miscoded missing values (999, 888, -99, -8 etc.) are
+#' only recognized as miscoded missing if they are maximum or minimum, respectively, and the distance
+#' between the second largest/smallest value and this maximum/minimum value is greater than one.
 #'
-#' @return A \code{\link{checkResult}} with three entires: 
+#' @return A \code{\link{checkResult}} with three entires:
 #' \code{$problem} (a logical indicating whether midcoded missing values where found),
 #' \code{$message} (a message describing which values in \code{v} were suspected to be
 #' miscoded missing values), and \code{$problemValues} (the problematic values
 #' in their original format). Note that Only unique problematic values
 #' are listed and that they are presented in alphabetical order.
 #'
-#' @seealso \code{\link{check}}, \code{\link{allCheckFunctions}}, 
+#' @seealso \code{\link{check}}, \code{\link{allCheckFunctions}},
 #' \code{\link{checkFunction}}, \code{\link{checkResult}}
 #'
 #'
@@ -33,13 +33,13 @@
 #' ##data(testData)
 #' ##testData$miscodedMissingVar
 #' ##identifyMissing(testData$miscodedMissingVar)
-#' 
+#'
 #' #Identify miscoded numeric missing values
 #' v1 <- c(1:15, 99)
 #' v2 <- c(v1, 98)
 #' v3 <- c(-999, v2, 9999)
-#' identifyMissing(v1) 
-#' identifyMissing(v2) 
+#' identifyMissing(v1)
+#' identifyMissing(v2)
 #' identifyMissing(v3)
 #' identifyMissing(factor(v3))
 #'
@@ -83,10 +83,10 @@ identifyMissing <- checkFunction(identifyMissing, "Identify miscoded missing val
 #very elegant, find better way.
 #Takes a vector and returns the values that consist
 #of more than one character/digit and consist only of "char", e.g.
-#99, 999, 999999, 9 when char = 9. Note that ignoreFirst 
+#99, 999, 999999, 9 when char = 9. Note that ignoreFirst
 #removes 9 (a single occurrence of "char") from the outputted vector.
 #If prefix != NULL, the function looks for repeated entries after
-#removing the prefix. If e.g. prefix = "-" and char = 8, 
+#removing the prefix. If e.g. prefix = "-" and char = 8,
 #values like -88, -8, -8888 will be identified (if present).
 identifyMissRepChar <- function(v, char, prefix=NULL, ignoreFirst = FALSE) {
   v <- as.character(v)
@@ -111,11 +111,11 @@ identifyMissRepChar <- function(v, char, prefix=NULL, ignoreFirst = FALSE) {
 
 
 #For numeric/integer variables only!
-#Identify occurences of num in v. If e.g. num is 8, 
+#Identify occurences of num in v. If e.g. num is 8,
 #both 8, 88, 888, ...,  and -8, -88, ...,
-#are identified. However, an occurrence only "counts" if it 
-#is the min/max value of the variable and it is seperated from 
-#the second biggest (smallest) value by at least 1. 
+#are identified. However, an occurrence only "counts" if it
+#is the min/max value of the variable and it is seperated from
+#the second biggest (smallest) value by at least 1.
 identifyMissNumber <- function(v, num, allOcc = TRUE) {
   v <- sort(unique(v))
   posProblemVals <- identifyMissRepChar(v, num)
@@ -146,7 +146,7 @@ identifyMissNumber <- function(v, num, allOcc = TRUE) {
   }
 }
 
-      
+
 
 #factor and character variables
 identifyMissingCF <- function(v, nMax) {
@@ -154,22 +154,22 @@ identifyMissingCF <- function(v, nMax) {
                                   #factor levels below without unwanted conversions
     problem <- FALSE
     problemValues <- NULL
-    
+
     #what potential missing value strings occur?
     missStrs <- c("", "nan", "NaN", "NAN", "na", "NA", "Na", "Inf", "inf",
                   "-Inf", "-inf", "-")
-    missStrsOcc <- intersect(v, missStrs) 
-    
+    missStrsOcc <- intersect(v, missStrs)
+
     #what "  ", "   ", ... strings occur?
     missSpaceOcc <- identifyMissRepChar(v, " ")
-    
+
     ## STATA-style: .something describes a "something" type of missing value
     missDotPrefixOcc <- unique(v[substr(v, 1, 1) == "."])
 
-    #Only look at the part of v that is not suspected to be miscoded missing 
+    #Only look at the part of v that is not suspected to be miscoded missing
     v <- v[!(v %in% c(missStrsOcc, missSpaceOcc, missDotPrefixOcc))]
-    
-    #Numeric miscoded missing values, method depending on whether v seems to be 
+
+    #Numeric miscoded missing values, method depending on whether v seems to be
     #numeric (though categorical)
     if (identifyNums(v)$problem) {
       v <- as.numeric(v)
@@ -178,30 +178,31 @@ identifyMissingCF <- function(v, nMax) {
     } else {
       #what 9, -9, 99, -99, 999, -999, ... strings occur?
       missAllNinesOcc <- identifyMissNumber(v, 9, TRUE)
-      
+
       #what 8, 88, 888, ... strings occur?
       missAllEightsOcc <- identifyMissNumber(v, 8, TRUE)
     }
-    
+
     allProblemOcc <- c(missStrsOcc, missAllNinesOcc, missAllEightsOcc,
                        missSpaceOcc, missDotPrefixOcc)
-    
+
     if (length(allProblemOcc) > 0) {
         problemValues <- allProblemOcc
         problem <- TRUE
     }
 
-    outMessage <- messageGenerator(list(problem = problem, 
+    outMessage <- messageGenerator(list(problem = problem,
                                         problemValues = problemValues),
                                    nMax = nMax)
-    checkResult(list(problem = problem, message = outMessage, 
+    checkResult(list(problem = problem, message = outMessage,
                      problemValues = problemValues))
 }
 
-#labbeled variables
+#labelled variables
 identifyMissingL <- function(v, nMax) {
   v <- na.omit(v)
-  v <- unpackLabelled(v)
+  ##  v <- unpackLabelled(v)
+  v <- haven::as_factor(v)
   identifyMissingCF(v, nMax = nMax)
 }
 
@@ -209,22 +210,22 @@ identifyMissingL <- function(v, nMax) {
 identifyMissingNI <- function(v, nMax, maxDecimals) {
   v <- v[!is.na(v) | is.nan(v)]
   problem <- FALSE
-  
+
   #two types of problemvalues, so that one can
   #be rounded
   problemValues <- outProblemValues <- NULL
-  
+
   finiteInd <- is.finite(v)
-  
+
   #what 99, -9, -999, 9, ... values occur?
-  missNinesOcc <- identifyMissNumber(v[finiteInd], 9, FALSE) 
-  
+  missNinesOcc <- identifyMissNumber(v[finiteInd], 9, FALSE)
+
   #what -8, -88, 8, 888, ... values occur?
-  missEightsOcc <- identifyMissNumber(v[finiteInd], 8, FALSE) 
-  
+  missEightsOcc <- identifyMissNumber(v[finiteInd], 8, FALSE)
+
   #what NaN, Inf, ... values occur?
   missNaNOcc <- unique(v[!finiteInd])
-  
+
   allProblemOcc <- c(missNinesOcc, missEightsOcc, missNaNOcc)
 
   if (length(allProblemOcc) > 0) {
@@ -232,10 +233,10 @@ identifyMissingNI <- function(v, nMax, maxDecimals) {
     problemValues <- round(allProblemOcc, maxDecimals)
     problem <- TRUE
   }
-  outMessage <- messageGenerator(list(problem = problem, 
+  outMessage <- messageGenerator(list(problem = problem,
                                       problemValues = problemValues),
                                  nMax = nMax)
-  checkResult(list(problem = problem, message = outMessage, 
+  checkResult(list(problem = problem, message = outMessage,
                    problemValues = outProblemValues))
 }
 

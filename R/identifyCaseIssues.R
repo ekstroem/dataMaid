@@ -1,23 +1,23 @@
 #' @title A checkFunction for identifying case issues
 #'
-#' @description A \code{\link{checkFunction}} to be called from 
+#' @description A \code{\link{checkFunction}} to be called from
 #' \code{\link{check}} that identifies values in a vector
 #' that appear multiple times with different case settings.
 #'
-#' @param v A character or factor variable to check.
-#' 
-#' @param nMax The maximum number of problematic values to report. 
-#' Default is \code{Inf}, in which case all problematic values 
+#' @param v A character, factor, or labelled variable to check.
+#'
+#' @param nMax The maximum number of problematic values to report.
+#' Default is \code{Inf}, in which case all problematic values
 #' are included in the outputted message.
 #'
-#' @return A \code{\link{checkResult}} with three entires: 
+#' @return A \code{\link{checkResult}} with three entires:
 #' \code{$problem} (a logical indicating whether case issues where found),
-#' \code{$message} (a message describing which values in \code{v} resulted 
+#' \code{$message} (a message describing which values in \code{v} resulted
 #' in case issues) and \code{$problemValues} (the problematic values
 #' in their original format). Note that Only unique problematic values
 #' are listed and they are presented in alphabetical order.
 #'
-#' @seealso \code{\link{check}}, \code{\link{allCheckFunctions}}, 
+#' @seealso \code{\link{check}}, \code{\link{allCheckFunctions}},
 #' \code{\link{checkFunction}}, \code{\link{checkResult}}
 #'
 #' @examples
@@ -34,6 +34,9 @@ identifyCaseIssues.character <- function(v, nMax = Inf) identifyCaseIssuesC(v, n
 
 #' @export
 identifyCaseIssues.factor <- function(v, nMax = Inf) identifyCaseIssuesF(v, nMax = nMax)
+
+#' @export
+identifyCaseIssues.labelled <- function(v, nMax = Inf) identifyCaseIssuesF(v, nMax = nMax)
 
 
 #make it a checkFunction

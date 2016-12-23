@@ -7,28 +7,28 @@
 identifyLoners(v, nMax = Inf)
 }
 \arguments{
-\item{v}{A character or factor variable to check.}
+\item{v}{A character, labelled, or factor variable to check.}
 
 \item{nMax}{The maximum number of problematic values to report. Default is \code{Inf}, in which case
 all problematic values are included in the outputted message.}
 }
 \value{
-A \code{\link{checkResult}} with three entires: 
+A \code{\link{checkResult}} with three entires:
 \code{$problem} (a logical indicating whether case issues where found),
-\code{$message} (a message describing which values in \code{v} were loners) and 
-\code{$problemValues} (the problematic values in their original format). 
+\code{$message} (a message describing which values in \code{v} were loners) and
+\code{$problemValues} (the problematic values in their original format).
 Note that Only unique problematic values
 are listed and they are presented in alphabetical order.
 }
 \description{
 A \code{\link{checkFunction}} to be called from \code{\link{check}} that identifies values that
-only occur less than 6 times in factor or character variables (that is, loners).
+only occur less than 6 times in factor, labelled, or character variables (that is, loners).
 }
 \details{
-For character and factor variables, identify values that only have a
+For character, labelled, and factor variables, identify values that only have a
 very low number of observations, as these categories might be
 problematic when conducting an analysis. Unused factor levels are
-not considered "loners". "Loners" are defined as values with 5 or less 
+not considered "loners". "Loners" are defined as values with 5 or less
 observations, reflecting the commonly use rule of thumb for performing
 chi squared tests.
 }
@@ -37,7 +37,7 @@ identifyLoners(c(rep(c("a", "b", "c"), 10), "d", "d"))
 
 }
 \seealso{
-\code{\link{check}}, \code{\link{allCheckFunctions}}, 
+\code{\link{check}}, \code{\link{allCheckFunctions}},
 \code{\link{checkFunction}}, \code{\link{checkResult}}
 }
 

@@ -11,36 +11,36 @@ check(v, nMax = Inf, ...)
 
 \item{nMax}{If a check is supposed to identify problematic values,
 this argument controls if all of these should be pasted onto the outputted
-message, or if only the first \code{nMax} should be included. The default 
+message, or if only the first \code{nMax} should be included. The default
 (\code{Inf}) prints all problematic values.}
 
-\item{\dots}{Other arguments that are passed on to the checking functions. 
-These includes general parameters controlling how the check results are 
-formatted (e.g. \code{maxDecimals}, which controls the number of decimals 
-printed for numerical, problematic values), and also parameters that 
+\item{\dots}{Other arguments that are passed on to the checking functions.
+These includes general parameters controlling how the check results are
+formatted (e.g. \code{maxDecimals}, which controls the number of decimals
+printed for numerical, problematic values), and also parameters that
 control what check functions are called for each variable type. The latter
 arguments all follow the template \code{[class]Checks}, see examples below
 for more details.}
 }
 \value{
-If \code{v} is a variable, a list of objects of class 
-\code{\link{checkResult}}, which each summarizes the result of a 
-\code{\link{checkFunction}} call performed on \code{v}. 
-See \code{\link{checkResult}} for more details. If \code{V} is a 
-\code{data.frame}, a list of lists of the form above 
+If \code{v} is a variable, a list of objects of class
+\code{\link{checkResult}}, which each summarizes the result of a
+\code{\link{checkFunction}} call performed on \code{v}.
+See \code{\link{checkResult}} for more details. If \code{V} is a
+\code{data.frame}, a list of lists of the form above
 is returned instead with one entry for each variable in \code{v}.
 }
 \description{
 Run a set of validation checks to check a variable vector or a full dataset
-for potential errors.  
+for potential errors.
 Which checks are performed depends on the class of the variable and on user
 inputs.
 }
 \details{
 It should be noted that the default options for each variable type
-are returned by calling e.g. \code{defaultCharacterChecks()}, 
+are returned by calling e.g. \code{defaultCharacterChecks()},
 \code{defaultFactorChecks()}, \code{defaultNumericChecks()}, etc. Moreover,
-all available \code{checkFunction}s (including both locally defined 
+all available \code{checkFunction}s (including both locally defined
 functions and functions imported from \code{cleanR} or other packages) can
 be viewed by calling \code{allCheckFunctions()}.
 }
@@ -53,7 +53,7 @@ check(x)
 y <- c(rnorm(100), rep(99, 10))
 check(y)
 
-#Change what checks are performed on a variable, now only identifyMissing is called 
+#Change what checks are performed on a variable, now only identifyMissing is called
 # for numeric variables
 check(y, numericChecks = "identifyMissing")
 
@@ -61,10 +61,10 @@ check(y, numericChecks = "identifyMissing")
 data(cars)
 check(cars)
 
-#Check a full data.frame at once, while changing the standard settings for 
+#Check a full data.frame at once, while changing the standard settings for
 #several data classes at once and including all decimals in problematic
 #values.
-#Here, we ommit the check of miscoded missing values for factors 
+#Here, we ommit the check of miscoded missing values for factors
 #and we only do this check for numeric variables.
 check(cars, factorChecks = setdiff(defaultFactorChecks(), "identifyMissing"),
   numericChecks = "identifyMissing")
@@ -72,7 +72,7 @@ check(cars, factorChecks = setdiff(defaultFactorChecks(), "identifyMissing"),
 }
 \seealso{
 \code{\link{allCheckFunctions}} \code{\link{checkResult}}
-\code{\link{checkFunction}}, \code{\link{defaultCharacterChecks}}, 
+\code{\link{checkFunction}}, \code{\link{defaultCharacterChecks}},
 \code{\link{defaultFactorChecks}}, \code{\link{defaultLabelledChecks}},
 \code{\link{defaultNumericChecks}}, \code{\link{defaultIntegerChecks}},
 \code{\link{defaultLogicalChecks}}, \code{\link{defaultDateChecks}}
