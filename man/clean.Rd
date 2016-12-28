@@ -27,7 +27,7 @@ clean(data, output = c("pdf", "html"), render = TRUE, useVar = NULL,
   maxDecimals = 2, ...)
 }
 \arguments{
-\item{data}{The data frame to be checked. This dataset should be of class \code{data.frame},
+\item{data}{The dataset to be checked. This dataset should be of class \code{data.frame},
 \code{tibble} or \code{matrix}. If it is of classs \code{matrix}, it will be converted to a
 \code{data.frame}.}
 
@@ -177,10 +177,17 @@ The function does not return anything. Its side effect (the production
 of a data cleaning overview document) is the reason for running the function.
 }
 \description{
-Run a set of validation checks to check the variables in a dataset for potential errors.
-Performs checking steps according to user input and/or data type of the inputted variable.
-The checks are saved to an R markdown file which can rendered into an easy-to-read document.
-This document also includes summaries and visualizations of each variable in the dataset.
+Run a set of class-specific validation checks to check the
+variables in a dataset for potential errors.  Performs checking
+steps according to user input and/or data type of the inputted
+variable.  The checks are saved to an R markdown file which can
+rendered into an easy-to-read document.  This document also
+includes summaries and visualizations of each variable in the
+dataset.
+}
+\details{
+The checks done for each class of variable is chosen by the
+SVC ...
 }
 \examples{
 
@@ -206,4 +213,3 @@ clean(testData, characterChecks=c(defaultCharacterChecks(), "characterFoo"))
 }
 
 }
-

@@ -29,4 +29,3 @@ countMissing(c(1:100, rep(NA, 10)))
 \code{\link{summarize}}, \code{\link{allSummaryFunctions}},
 \code{\link{summaryFunction}}, \code{\link{summaryResult}}
 }
-

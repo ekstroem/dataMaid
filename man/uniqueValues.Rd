@@ -29,4 +29,3 @@ uniqueValues(c(1:3, rep(NA, 10), Inf, NaN))
 \code{\link{summaryFunction}}, \code{\link{summarize}}, \code{\link{summaryResult}},
 \code{\link{allSummaryFunctions}}
 }
-

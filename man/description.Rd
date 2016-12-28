@@ -37,4 +37,3 @@ description(minMax)
 description(basicVisual)
 
 }
-

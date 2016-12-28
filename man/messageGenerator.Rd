@@ -89,4 +89,3 @@ identifyUnderscores <- function(v, nMax = Inf) {
 \seealso{
 \code{\link{check}}, \code{\link{checkFunction}}, \code{\link{clean}}
 }
-
