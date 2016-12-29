@@ -82,7 +82,7 @@ identifyWhitespaceF <- function(v, nMax) {
 identifyWhitespaceL <- function(v, nMax) {
   v <- na.omit(v)
   v <- haven::as_factor(v)
-  identifyWhitespaceC(v, nMax = nMax)
+  identifyWhitespaceF(v, nMax = nMax)
 }
 
 

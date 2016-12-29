@@ -118,4 +118,8 @@ clean(testData, replace = T,
 
 #benchmark CleanR after figure
 
+clean(testData, replace = T,
+      preChecks = c("isKey", "isEmpty", "isID"),
+      allVisuals = "mosaicVisual",
+      labelledCheck = c(defaultLabelledChecks(), "identifyColons"))
 
