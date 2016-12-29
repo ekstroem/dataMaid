@@ -1,25 +1,25 @@
 library(xtable)
 
 #Make summaryFunction overview table
-sumTab <- data.frame(name=allSummaryFunctions()$name, 
-                     description = allSummaryFunctions()$description, 
-                     classes = sapply(allSummaryFunctions()$classes, 
+sumTab <- data.frame(name=allSummaryFunctions()$name,
+                     description = allSummaryFunctions()$description,
+                     classes = sapply(allSummaryFunctions()$classes,
                                       function (x) paste(x, collapse=", ")))
 sumTab <- as.matrix(sumTab)[,-1]
 xtable(sumTab)
 
 #Make visualFunction overview table
-visualTab <- data.frame(name=allVisualFunctions()$name, 
-                     description = allVisualFunctions()$description, 
-                     classes = sapply(allVisualFunctions()$classes, 
+visualTab <- data.frame(name=allVisualFunctions()$name,
+                     description = allVisualFunctions()$description,
+                     classes = sapply(allVisualFunctions()$classes,
                                       function (x) paste(x, collapse=", ")))
 visualTab <- as.matrix(visualTab)[,-1]
 xtable(visualTab)
 
 #Make checkFunction overview table
-checkTab <- data.frame(name=allCheckFunctions()$name, 
-                        description = allCheckFunctions()$description, 
-                        classes = sapply(allCheckFunctions()$classes, 
+checkTab <- data.frame(name=allCheckFunctions()$name,
+                        description = allCheckFunctions()$description,
+                        classes = sapply(allCheckFunctions()$classes,
                                          function (x) paste(x, collapse=", ")))
 checkTab <- as.matrix(checkTab)[,-1]
 xtable(checkTab)
@@ -55,7 +55,7 @@ countZeros <- function(v, ...) {
 }
 countZeros <- summaryFunction(countZeros, description = "Count number of zeros",
                               classes = allClasses())
-summarize(toyData, numericSummaries = c(defaultNumericSummaries))
+summarize(toyData, numericSummaries = c(defaultNumericSummaries()))
 
 
 
@@ -65,7 +65,7 @@ mosaicVisual <- function(v, vnam, doEval) {
     return(eval(thisCall))
   } else return(deparse(thisCall))
 }
-mosaicVisual <- visualFunction(mosaicVisual, 
+mosaicVisual <- visualFunction(mosaicVisual,
                                description = "Mosaic plots using graphics",
                                classes = allClasses())
 
@@ -80,19 +80,19 @@ identifyColons <- function(v, nMax = Inf, ... ) {
   problemMessage <- "Note: The following values include colons:"
   problem <- FALSE
   problemValues <- NULL
-  
+
   problemValues <- v[sapply(gregexpr("[[:xdigit:]]:[[:xdigit:]]", v),
                             function(x) all(x != -1))]
-  
+
   if (length(problemValues) > 0) {
-    problem <- TRUE 
+    problem <- TRUE
   }
-  
-  problemStatus <- list(problem = problem, 
+
+  problemStatus <- list(problem = problem,
                         problemValues = problemValues)
   outMessage <- messageGenerator(problemStatus, problemMessage, nMax)
-  
-  checkResult(list(problem = problem, 
+
+  checkResult(list(problem = problem,
                    message = outMessage,
                    problemValues = problemValues))
 }
@@ -102,7 +102,7 @@ identifyColons <- checkFunction(identifyColons,
                                classes = c("character", "factor", "labelled"))
 
 data(testData)
-clean(testData, replace = T, 
+clean(testData, replace = T,
       preChecks = c("isKey", "isEmpty", "isID"),
       allVisuals = "mosaicVisual",
       characterSummaries = c(defaultCharacterSummaries(), "countZeros"),
@@ -113,9 +113,9 @@ clean(testData, replace = T,
       characterChecks = c(defaultCharacterChecks(), "identifyColons"),
       factorChecks = c(defaultFactorChecks(), "identifyColons"),
       labelledCheck = c(defaultLabelledChecks(), "identifyColons"))
-      
-      
+
+
 
 #benchmark CleanR after figure
-      
-      
+
+
