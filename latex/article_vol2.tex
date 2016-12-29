@@ -934,13 +934,37 @@ we recommend only using it for summarizing the features of a variable,
 and leaving tests and checks for the \code{checkFunction}s (presented
 below).
 
-Though adhering to the template above is sufficient for using the freshly made \R{mySummaryFunction()} in \R{clean()}, we recommend furthermore adding it to the overview of all summary functions by converting it to a proper \code{summaryFunction} object. This is done by writing
+Adhering to the template above is sufficient for using the freshly
+made \R{mySummaryFunction()} in \R{clean()}, but we recommend
+furthermore adding the new function to the overview of all summary
+functions by converting it to a proper \code{summaryFunction}
+object. This is done by calling the \R{summaryFunction} function with
+the user-defined function as first argument, and additional arguments
+\R{description} which adds explanatory flavour text as an attribute of
+the function, and \R{classes} which determines which classes the
+user-defined function should be applied to (also stored as an
+attribute).
 \begin{Verbatim}
 mySummaryFunction <- summaryFunction(mySummaryFunction,
-	description = "[Some text describing what the summaryFunction does]",
-	classes = c([the data types that this function is intended to be used for]))
+	description = "[Text describing what the summaryFunction does]",
+	classes = c([vector of data types that the function is intended for]))
 \end{Verbatim}
-which adds the new function to the output of an \code{allSummaryFunctions()} call. One comment should be devoted to the two attributes of a \R{summaryFunction}. If the \R{description} argument is left unspecified, the name of the function (in this case, \R{"mySummaryFunction"}) will be filled in. What happens if the \R{classes} argument is not specified depends on the type of \R{mySummaryFunction}. If \R{mySummaryFunction} is a \R{S3} generic function with associated methods, the call to \R{summaryFunction()} will automatically produce a vector of the names of the classes for which the function can be called. If \R{mySummaryFunction} is not an \R{S3} generic and \R{classes} is left unspecified, the attribute will simply be empty. Note that the helper function \R{allClasses()} might be useful for filling out the \R{classes} argument, as it simply lists all available classes in \pkg{cleanR}:
+which adds the new function to the output of an
+\code{allSummaryFunctions()} call. 
+% One comment should be devoted to
+% the two attributes of a \R{summaryFunction}. 
+If the \R{description} argument is left unspecified, the name of the
+function (which in this case is \R{"mySummaryFunction"}) will be filled in and
+stored as an attribute. What happens if the \R{classes} argument is
+not specified depends on the type of \R{mySummaryFunction}. If
+\R{mySummaryFunction} is a \R{S3} generic function with associated
+methods, the call to \R{summaryFunction()} will automatically produce
+a vector of the names of the classes for which the function can be
+called. If \R{mySummaryFunction} is not an \R{S3} generic and
+\R{classes} is left unspecified, the attribute will simply be
+empty. Note that the helper function \R{allClasses()} might be useful
+for filling out the \R{classes} argument, as it simply lists all
+available classes in \pkg{cleanR}:
 \begin{Schunk}
 \begin{Sinput}
 > allClasses()
@@ -950,11 +974,35 @@ which adds the new function to the output of an \code{allSummaryFunctions()} cal
 [6] "logical"  "numeric"  
 \end{Soutput}
 \end{Schunk}
-\hl{Write something here, don't end paragraph with code. Also, maybe move the allClasses() stuff somewhere else, it doesn't really belong under this header. Not sure where to, though.}
+% \hl{Write something here, don't end paragraph with code. Also, maybe move the allClasses() stuff somewhere else, it doesn't really belong under this header. Not sure where to, though.}
+
+If we run the \R{allSummaryFunctions()} function we can see that the
+new function has been registered (output slightly appreviated):
+
+\begin{Schunk}
+\begin{Sinput}
+> allSummaryFunctions()
+\end{Sinput}
+\begin{Soutput}
+----------------------------------------------------------------------------
+name                description                                      classes
+------------------- --------------------------------------------------------
+mySummaryFunction   [Text describing what the summaryFunction does]  numeric
+.
+.
+.
+\end{Soutput}
+\end{Schunk}
+
 
 
 \subsubsection{Writing a visualFunction}
-\code{visualFunction}s are the functions that produce the figures of a \pkg{cleanR} output document. Writing a \R{visualFunction} is slightly more complicated than writing a \R{summaryFunction}. This follows from the fact that \R{visualFunctions} need to be able to output standalone code for plots in order for \code{clean()} to build standalone \R{rmarkdown} files. We recommend using the following structure:
+\code{visualFunction}s are the functions that produce the figures in a
+\pkg{cleanR} output document. Writing a \R{visualFunction} is slightly
+more complicated than writing a \R{summaryFunction}. This follows from
+the fact that \R{visualFunctions} need to be able to output standalone
+code for plots in order for \code{clean()} to build standalone
+\pkg{rmarkdown} files. We recommend using the following structure:
 \begin{Verbatim}
 myVisualFunction <- function(v, vnam, doEval) {
   thisCall <- call("[the name of the function used to produce the plot]",
@@ -963,19 +1011,58 @@ myVisualFunction <- function(v, vnam, doEval) {
     return(eval(thisCall))
   } else return(deparse(thisCall))
 }
+\end{Verbatim}
 
+In this function, \code{v} is the variable to be visualized,
+\code{vnam} is its name (which should generally be passed to
+\code{title} or \code{main} arguments in plotting functions) and
+\code{doEval} controls whether the output is a plot (if \code{TRUE})
+or a character string of standalone code for producing a plot (if
+\code{FALSE}). Implementing the \code{doEval = TRUE} setting is not
+strictly necessary for a \R{visualFunction}'s use in \code{clean()}, but
+it makes it easier to assess what visualization options are available,
+and obviously, it is crucial for interactive usage of
+\R{myVisualFunction()}. In either case, it should be noted that all
+the parameters listed above, \code{v}, \code{vnam} and \code{doEval},
+are mandatory, so they must be left as is, even if they are not in
+use. See Table~\ref{table.functionTypes}.
+
+
+Similarly to the summary function, we call \R{visualFunction()} to
+register our newly created function. Like before, it accepts the
+user-defined function as the first argument, and two additional
+arguments description which adds explanatory flavour text as an
+attribute of the function, and a vector which determines which classes
+the user-defined function should be applied to (which is also stored
+as an attribute).
+
+\begin{Verbatim}
 myVisualFunction <- visualFunction(myVisualFunction,
 	description = "[Some text describing the visualFunction]",
-	classes = c([the data types that this function is intended to be used for]))
+	classes = c([data types that this function is intended for]))
 	)
 \end{Verbatim}
-In this function, \code{v} is the variable to be visualized, \code{vnam} is its name (which should generally be passed to \code{title} or \code{main} arguments in plotting functions) and \code{doEval} controls whether the output is a plot (if \code{TRUE}) or a character string of standalone code for producing a plot (if \code{FALSE}). Implementing the \code{doEval = TRUE} setting is not strictly necessary for a \R{visualFunction}'s use in \code{clean}, but it makes it easier to assess what visualization options are available, and obviously, it is crucial for interactive usage of \R{myVisualFunction()}. In either case, it should be noted that all the parameters listed above, \code{v}, \code{vnam} and \code{doEval}, are mandatory, so they must be left as is, even if they are not in use.
+
+Again, registering the visualization function allows it to be used
+without manually adding it to the list of visualizations.
 
 
 \subsubsection{Writing a checkFunction}
-The last, but perhaps most important, \pkg{cleanR} function type is the \code{checkFunction}. These are the functions that flag issues in the data in the check step and control the overall flow of the data cleaning process in the precheck stage. A \code{checkFunction} can follow two overall structures, depending on the type of check. Either, it tries to identify problematic values in the variable (as e.g. \R{identifyMissing()} does) or it performs a check concerning the variable as a whole (e.g. the functions used for prechecks and the function \R{identifyNums()}). We present templates for both types of \R{checkFunction}s below separately, but it should be emphasized that formally, they belong to the same class. 
+The last, but perhaps most important, \pkg{cleanR} function type is
+the \code{checkFunction}. These are the functions that flag issues in
+the data in the check step and control the overall flow of the data
+cleaning process in the precheck stage. A \code{checkFunction} follows
+one of two overall structures, depending on the type of check. Either,
+it tries to identify problematic values in the variable (as
+e.g., \R{identifyMissing()} does) or it performs a check concerning the
+variable as a whole (e.g. the functions used for prechecks and the
+function \R{identifyNums()}). We present templates for both types of
+\R{checkFunction}s below separately, but it should be emphasized that
+formally, they belong to the same class.
 
-First, a template for the full-variable check function type:
+First, a template for the full-variable check function type, where we
+first define the function and subsequently register it as a check
+function using \R{checkFunction()}:
 \begin{Schunk}
 \begin{Sinput}
 myFullVarCheckFunction <- function(v, ...) {
@@ -993,69 +1080,97 @@ myFullVarCheckFunction <- checkFunction(myFullVarCheckFunction,
   )
 \end{Sinput}
 \end{Schunk}
-Again, as with \R{summaryFunction}s and \R{visualFunction}s, the change of function class by use of \R{checkFunction()} is not strictly necessary. Note however, that if \R{myFullVarCheckFunction} is to be used in the SVC step in \R{clean()}, the description attribute will be printed in the overview table in the \textit{Data cleaning summary}. 
 
-If problematic values are to be identified, the template from above should be expanded to follow a slightly more complicated structure:
+Again, as with \R{summaryFunction}s and \R{visualFunction}s, the
+change of function class by use of \R{checkFunction()} is not strictly
+necessary. Note however, that if \R{myFullVarCheckFunction} is to be
+used in the summarize/visualize/check steps in \R{clean()}, the
+description attribute will be printed in the overview table in the
+\textit{Data cleaning summary} part of the output document.
+
+If problematic values are to be identified, the template from above
+should be expanded to follow a slightly more complicated structure:
 \begin{Verbatim}
 myProbValCheckFunction <- function(v, nMax, maxDecimals, ...) {
 	[do your check]
 	problem <- [is there a problem? TRUE/FALSE]
 	problemValues <- [vector of values in v that are problematic]
 	problemStatus <- list(problem = problem, 
-	 problemValues = problemValues)
+	                      problemValues = problemValues)
 
-	problemMessage <- "[The message that should be printed prior to listing
-			problem values in the cleanR output, ending with a colon]"
+	problemMessage <- "[Message that is printed prior to listing
+			    problem values in the cleanR output, 
+                            ending with a colon]"
 
 	outMessage <- messageGenerator(problemStatus, problemMessage, nMax)
 
 	checkResult(list(problem = problem,
-	  message = outMessage,
-	  problemValues = problemValues)) 
+	                 message = outMessage,
+	                 problemValues = problemValues)) 
 }
 
 myProbValCheckFunction <- checkFunction(myProbValCheckFunction,
   description = "[Some text describing the checkFunction]",
   classes = c([the data types that this function is intended to be used for])
-  )
+)
 \end{Verbatim}
-In this template, the argument \R{maxDecimals} is not in use. This argument should be used to round off the \R{problemValues} passed to \R{messageGenerator()}, if they are numerical. This is done by substituting the \R{problemStatus} assignment above with the following code:
+For this template, the argument \R{maxDecimals} is not in use. This
+argument is used to round off the \R{problemValues} passed to
+\R{messageGenerator()}, if they are numerical.  This is done by
+substituting the \R{problemStatus} assignment above with the following
+code: \hl{Denne foregående sætning forstår jeg ikke helt. Måske skal
+  messagegenerator have en sætning eller to med på vejen? (Og det spiller lidt sammen med nedenstående)}
 \begin{Schunk}
 \begin{Sinput}
 problemStatus <- list(problem = problem, 
-  problemValues = round(problemValues, maxDecimals))
+   problemValues = round(problemValues, maxDecimals))
 \end{Sinput}
 \end{Schunk}
-Another noteworthy component of the template is the usage of the helper function \R{messageGenerator()}, which aids consistent styling of all \code{checkFunction} messages. This function simply pastes together the \code{problemMessage} and the \code{problemValues}, with the latter being quoted and sorted alphabetically. If \R{nMax} is not \R{Inf}, only the first \R{nMax} problem values will be pasted onto the message, accompanied by a comment about how many problem values were left out (if any).  Note that printing quotes in rmarkdown requires an extensive amount of character escaping, so opting for \code{messageGenerator()} really is the easiest solution.
+
+It is worth mentioning the 
+%Another noteworthy component of the template is the usage of the
+helper function \R{messageGenerator()}, which aids in consistent
+styling of all \code{checkFunction} messages. This function simply
+pastes together the \code{problemMessage} and the
+\code{problemValues}, with the latter being quoted and sorted
+alphabetically. If \R{nMax} is not \R{Inf}, only the first \R{nMax}
+problem values will be pasted onto the message, accompanied by a
+comment about how many problem values were left out (if any).  Note
+that printing quotes in \pkg{rmarkdown} requires an extensive amount
+of character escaping, so opting for \code{messageGenerator()} really
+is the easiest solution.
 
 
 \subsection{A worked example}
-\begin{figure}
-\begin{center}
-\includegraphics[scale=0.2]{mosaicPlotExample.pdf}
-\end{center}
-\label{fig:mosaicPlot}
-\caption{\hl{something, note that code for producing this plot is available in ./latex/codeForArticle.R}}
-\end{figure}
 
-We will now build four new functions and show both how they can be used interactively and how they can be integrated with the \R{clean()} function. These four new functions are:
+We will now build four new functions and show both how they can be
+used interactively and how they can be integrated with the \R{clean()}
+function. These four new functions are:
 \begin{description}
 \item[\R{isID}] A new \R{checkFunction} intended for use in the precheck-stage. This function checks whether a variable consists exclusively of long ($> 10$ characters/digits) entries that are all of equal length, as this might be personal identification codes that we do not wish to print out in the data summary.  
-\item[\R{mosaicVisual}] A new \R{visualFunction} that produces so-called mosaic plots. This function will be used in the \textit{visualize} step of \R{clean()}.
+\item[\R{mosaicVisual}] A new \R{visualFunction} that produces mosaic plots. This function will be used in the \textit{visualize} step of \R{clean()}.
 \item[\R{countZeros}] A new \R{summaryFunction} that counts the number of occurrences of the value \R{0} in a variable. This function will be used in the \textit{summarize} step of \R{clean()}.
-\item[\R{identifyColons}] A new \R{checkFunction} that flags variables in which values have colons that appear before and after alphanumerical characters. This is e.g. practical for identifying autogenerated interaction effects. This function will be used in the \textit{check} step of \R{clean()}. 
+\item[\R{identifyColons}] A new \R{checkFunction} that flags variables in which values have colons that appear before and after alphanumerical characters. This is practical for identifying autogenerated interaction effects. This function will be used in the \textit{check} step of \R{clean()}. 
 \end{description}
 These functions are defined in turn below, and afterwards, an example of how they can be called from \R{clean()} is provided.
 
-\subsubsection{isID - a new checkFunction without problem values}
-First, let's define the \R{isID} function. As this function is not supposed to list problematic values in the variable, it falls within the category of \R{checkFunctions} represented by \R{myFullVarCheckFunction()} in the above. We do not particularly wish to use this function interactively, so we will stick to the minimal requirements of a \R{checkFunction} used in \R{check()} (see Table~\ref{table.functionTypes}). The function can then be defined by
+\subsubsection{isID --- a new checkFunction without problem values}
+First, let's define the \R{isID()} function. As this function is not
+supposed to list problematic values in the variable, it falls within
+the category of \R{checkFunctions} represented by
+\R{myFullVarCheckFunction()} in the above. We do not particularly wish
+to use this function interactively, so we will stick to the minimal
+requirements of a \R{checkFunction} used in \R{check()} (see
+Table~\ref{table.functionTypes}). The function can then be defined by
 \begin{Schunk}
 \begin{Sinput}
 isID <- function(v, nMax = NULL, ...) {
   out <- list(problem = FALSE, message = "")
+  # Should work for all but logical and Date variables
   if (class(v) %in% setdiff(allClasses(), c("logical", "Date"))) {
     v <- as.character(v)
     lengths <- c(nchar(v))
+    # Check that all lengths are the same and greater than 10 characters
     if (all(lengths > 10) & length(unique(lengths)) == 1) {
       out$problem <- TRUE
       out$message <- "Warning: This variable seems to contain ID codes."
@@ -1065,36 +1180,72 @@ isID <- function(v, nMax = NULL, ...) {
 }
 \end{Sinput}
 \end{Schunk} 
-\hl{Mention somewhere that  \R{mosiacplot()} is a base-R (\R{graphics}) function? Otherwise, it might not be completely clear, that we are passing a function name in the above...} This is essentially all we need to do in order to include this function as a precheck-function in \R{clean()}, so we will leave it as is and move on to the next function, namely \R{mosaicVisual}. 
 
-\subsubsection{mosiacVisual - a new visualFunction}
-We will define this function such that it gets the full \pkg{cleanR} functionality. This can be done using the code 
+This is essentially all we need to do in order to include this
+function as a precheck-function in \R{clean()}, so we will leave it as
+is and move on to the next function, namely \R{mosaicVisual}.
+
+\subsubsection{mosiacVisual --- a new visualFunction}
+\proglang{R} contains a function, \R{mosiacplot}, which produces
+mosaic plots. We intend to use this existing high-level plotting
+function as part of the new visualization function.  We will define
+the new function such that it gets the full \pkg{cleanR}
+functionality. This can be done using the following code.
 \begin{Schunk}
 \begin{Sinput}
  mosaicVisual <- function(v, vnam, doEval) {
+   # Setup the call using the existing function mosaicplot
    thisCall <- call("mosaicplot", table(v), main = vnam, xlab = "")
-   if (doEval) {
+   if (doEval) {                     # Return the graphics
     return(eval(thisCall))
-   } else return(deparse(thisCall))
+   } else return(deparse(thisCall))  # Else return the code for the call
  }
 \end{Sinput}
 \end{Schunk}
-This function can now be called directly or used in \R{clean()}. We will return to its usage in \R{clean()} below. Depending on the argument \R{doEval}, either a text string with code or a plot is produced. The plot resulting from the following call is found in Figure~\ref{fig:mosaicPlot}:
+This function can now be called directly or used in \R{clean()} and we
+will show an example below. Depending on the \R{doEval} argument
+\hl{skal doEval have en default value ovenfor?}, either a text string
+with code or a plot is produced. The plot resulting from the following
+call is found in Figure~\ref{fig:mosaicPlot}:
 \begin{Schunk}
 \begin{Sinput}
-mosaicVisual(toyData$var1, "variable 1", doEval = TRUE)   $
+> mosaicVisual(toyData$var1, "variable 1", doEval = TRUE)   
 \end{Sinput}
 \end{Schunk}
-\hl{remove \$.}
-Even though \R{mosaicVisual}, as written above, follows the style of a \R{visualFunction}, it is not yet truly one and therefore, it will not appear in a \R{allVisualFunctions()} call. In order to get this functionality, we need to change its object class. This can be done by writing
+% $
+
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.2]{mosaicPlotExample.pdf}
+\end{center}
+
+\caption{Mosaic plot generated by the user-defined visualization
+  function \texttt{mosaicVisual}.}
+\label{fig:mosaicPlot}
+\end{figure}
+
+
+
+
+Even though \R{mosaicVisual()}, as written above, follows the style of a
+\R{visualFunction}, it is not yet truly one and therefore, it will not
+appear in a \R{allVisualFunctions()} call. In order to get this
+functionality, we need to change its object class. This can be done by
+writing
 \begin{Schunk}
 \begin{Sinput}
  mosaicVisual <- visualFunction(mosaicVisual, 
  				description = "Mosaic plots using graphics",
-                 classes = allClasses())
+                                classes = allClasses())
 \end{Sinput}
 \end{Schunk}
-Here, we use the function \R{allClasses()} to quickly obtain a vector of all the seven variable classes addressed in \pkg{cleanR}. Note that if \R{mosaicVisual} were an S3 generic function, this argument could have been left as \R{NULL} and then the classes for which methods are available would be added automatically. \hl{I'm repeating myself here, but I think it is quite a neat feature, so maybe that's okay?}
+Here, we use the function \R{allClasses()} to quickly obtain a vector
+of all the seven variable classes addressed in \pkg{cleanR}. Note that
+if \R{mosaicVisual} were an S3 generic function, this argument could
+have been left as \R{NULL} and then the classes for which methods are
+available would be added automatically. 
+%\hl{I'm repeating myself here,
+%  but I think it is quite a neat feature, so maybe that's okay?}
 
 As \R{mosaicVisual} is now a full-blooded \R{visualFunction}, it will also be included in the \R{allVisualFunctions()} output table:
 \begin{Schunk}
@@ -1109,20 +1260,21 @@ mosaicVisual   Mosaic plots using graphics   character, Date, factor,
                                              integer, labelled, logical,
                                              numeric                    
 
-basicVisual    Histograms and barplots using                            
-               graphics                                                 
-
-standardVisual Histograms and barplots using                            
-               ggplot2                                                  
+basicVisual    Histograms and barplots using character, Date, factor,   
+               graphics                      integer, labelled, logical,                           
+                                             numeric                    
+standardVisual Histograms and barplots using character, Date, factor,                              
+               ggplot2                       integer, labelled, logical,               
+                                             numeric                    
 ------------------------------------------------------------------------
 \end{Soutput}
 \end{Schunk}
-\hl{Redo this output table when makeXFunction issues are fixed.}
 
-Now, we are done with the definition of \R{mosaicVisual} and we can turn to the next function in line, \R{countZeros}. 
+Now that we are done with the definition of \R{mosaicVisual()} we can
+turn to the next function in line, \R{countZeros}.
 
-\subsubsection{countZeros - a new summaryFunction}
-This \R{summaryFunction} in spe is defined in the following lines of code:
+\subsubsection{countZeros --- a new summaryFunction}
+This \R{summaryFunction} is defined in the following lines of code:
 \begin{Schunk}
 \begin{Sinput}
 countZeros <- function(v, ...) {
@@ -1131,7 +1283,14 @@ countZeros <- function(v, ...) {
 }
 \end{Sinput}
 \end{Schunk}
-Note that as this function computes an integer (the number of zeros), there is no difference between the entires \R{\$result} and \R{\$value}. If, on the other hand, the result had been a character string, extra formatting might be required in the \R{\$result} entry (such as escaping of quotation marks), and in this scenario, the two entries would then differ. As the result is returned as a \R{summaryResult} object, a printing method is automatically called when \R{countZeros} is used interactively:
+As this function computes an integer (the number of zeros),
+there is no difference between the entries \R{\$result} and
+\R{\$value}. If, on the other hand, the result had been a character
+string, extra formatting might be required in the \R{\$result} entry
+(such as escaping of quotation marks), and in this scenario, the two
+entries would have differed. As the result is returned as a
+\R{summaryResult} object, a printing method is automatically called
+when \R{countZeros} is used interactively:
 \begin{Schunk}
 \begin{Sinput}
 > countZeros(c(rep(0, 5), 1:100))
@@ -1140,19 +1299,26 @@ Note that as this function computes an integer (the number of zeros), there is n
 No. zeros: 5
 \end{Soutput}
 \end{Schunk}
-As with \R{mosaicVisual()}, we change the class of this function in order to make it appear in \R{allSummaryFunctions()} calls. But now we wish to emphasize that the function is not intended to be called on all variable types, as zeros have different roles in \R{Date}s and in \R{logical} variables:
+As with \R{mosaicVisual()}, we change the class of this function in
+order to make it appear in \R{allSummaryFunctions()} calls. But now we
+wish to emphasize that the function is not intended to be called on
+all variable types, as zeros have different roles in \R{Date}s and in
+\R{logical} variables:
 \begin{Schunk}
 \begin{Sinput}
 > countZeros <- summaryFunction(countZeros,
 	description = "Count number of zeros",
 	classes = c("character", "factor", "integer", 
-	  "labelled", "numeric"))
+                    "labelled", "numeric"))
 \end{Sinput}
 \end{Schunk}
-\hl{more? don't end on code.}
+% \hl{more? don't end on code.}
 
 \subsubsection{identifyColons - a new checkFunction with problem values}
-The last function mentioned above is \R{identifyColons()}. We define it using the helper function \R{messageGenerator} to obtain a properly escaped message, and we use \R{checkResult} to make its output print neatly: 
+The last function mentioned above is \R{identifyColons()}. We define
+it using the helper function \R{messageGenerator()} to obtain a properly
+escaped message, and we use \R{checkResult} to make its output print
+neatly:
 \begin{Schunk}
 \begin{Sinput}
 identifyColons <- function(v, nMax = Inf, ... ) {
@@ -1160,7 +1326,8 @@ identifyColons <- function(v, nMax = Inf, ... ) {
   problemMessage <- "Note: The following values include colons:"
   problem <- FALSE
   problemValues <- NULL
-  
+
+  # Use regular expressions to identify colons between two words  
   problemValues <- v[sapply(gregexpr("[[:xdigit:]]:[[:xdigit:]]", v),
                             function(x) all(x != -1))]
   
@@ -1170,6 +1337,8 @@ identifyColons <- function(v, nMax = Inf, ... ) {
   
   problemStatus <- list(problem = problem, 
                         problemValues = problemValues)
+  # Use the messagegenerator function to produce the output 
+  # message from the problemStatus and problemMessage
   outMessage <- messageGenerator(problemStatus, problemMessage, nMax)
   
   checkResult(list(problem = problem, 
@@ -1180,13 +1349,18 @@ identifyColons <- function(v, nMax = Inf, ... ) {
 identifyColons <- checkFunction(identifyColons, 
     description = "Identify colons surrounded by alphanumeric characters",
     classes = c("character", "factor", "labelled"))
-
 \end{Sinput}
 \end{Schunk}
-As with the previous two functions, we also change its class. Note, however, that for \R{checkFunction}s, the function description will appear in the document produced by \R{clean()} (in the \textit{Data cleaning summary} section), so now this is not only done for the sake of the \R{allCheckFunctions()} output.\\
+As with the previous two functions, we also change its class. Note,
+however, that for \R{checkFunction}s, the function description will
+appear in the document produced by \R{clean()} (in the \textit{Data
+  cleaning summary} section of the output), so now this is not only
+done for the sake of the \R{allCheckFunctions()} output.
 
-\subsubsection{Calling the new SVC functions from clean()}
-Now, we are ready to use these new functions in a \R{clean()} call. \hl{do this... what dataset should we use here? Include output in appendix, maybe.}. The extended \pkg{cleanR} output document should have the following modifications, relative to the standard \pkg{cleanR} output:
+\subsubsection{Calling the new summarize/visualize/check functions from clean()}
+Now, we are ready to use these new functions in a \R{clean()}
+call. The extended \pkg{cleanR} output document should have the
+following modifications, relative to the standard \pkg{cleanR} output:
 \begin{itemize}
 \item We want to add the new pre-check function, \R{isID}, to the already existing pre-checks.
 \item We wish to change the plot type for all variables to the new mosaic plot.
@@ -1196,9 +1370,13 @@ Now, we are ready to use these new functions in a \R{clean()} call. \hl{do this.
 These options are specified as follows:
 \begin{Schunk}
 \begin{Sinput}
-> clean(dataSet, 
+> data(testData) 
+> clean(testData, 
+      # Add the new pre-check function
       preChecks = c("isKey", "isEmpty", "isID"),
+      # Change the visual
       allVisuals = "mosaicVisual",
+      # Add the new checks for specific data types
       characterSummaries = c(defaultCharacterSummaries(), "countZeros"),
       factorSummaries = c(defaultFactorSummaries(), "countZeros"),
       labelledSummaries = c(defaultLabelledSummaries(), "countZeros"),
@@ -1209,43 +1387,97 @@ These options are specified as follows:
       labelledCheck = c(defaultLabelledChecks(), "identifyColons"))
 \end{Sinput}
 \end{Schunk}
-The outputted document is found in Appendix \hl{NUMTWO}. \hl{Comment. Make appendix. Remember to change dataSet to something else, when we decide what data to use here.}
+The outputted document is found in Appendix \ref{sec:appendix2}. 
 
-\section{Something like examples}
-Finally, we will present a few examples of how to make \pkg{cleanR} solve specific issues related to data cleaning. First, we discuss the challenges related to cleaning large datasets, particularly in terms of memory use and computation speed. Next, we show how \pkg{cleanR} can be used for problem-flagging. Lastly, we discuss how the \pkg{cleanR} output document can be included in other \R{rmarkdown} documents as a mean to produce clear and concise documentation of a dataset. \hl{I feel like there should be more topics here, but I'm all out of ideas...}
+\section{Using cleanR in specific situations}
+Finally, we will present a few examples of how to make \pkg{cleanR}
+solve specific issues related to data cleaning. First, we discuss the
+challenges related to cleaning large datasets, particularly in terms
+of memory use and computation speed. Next, we show how \pkg{cleanR}
+can be used for problem-flagging. Lastly, we discuss how the
+\pkg{cleanR} output document can be included in other \pkg{rmarkdown}
+documents as a way to produce clear and concise documentation of a
+dataset. %\hl{I feel like there should be more topics here, but I'm all
+%  out of ideas...}
 
 \subsection{Cleaning large datasets}
-If the dataset becomes very large, the standard use of \R{clean()} outlined above might not be ideal. If there is a vast number of variables, production of the \R{rmarkdown} document might be quite slow, while an extensive amount of observations generally affects the rendering time of this document. In this section, we give a few practical examples of ways to deal with large data, while wishing to still produce (potentially very long) data cleaning overview documents. Note that the interactive tools of \pkg{cleanR} can be used as usual or sequentially in small subsets of the large dataset, if no such overview documents are needed. 
+If the dataset becomes very large, the standard use of \R{clean()}
+outlined above might not be ideal. If there is a vast number of
+variables, creation of the \pkg{rmarkdown} document might be quite
+slow, while a large number of observations generally will affect the
+rendering time of the document. In this section, we give a few
+practical examples of ways to deal with large data, while wishing to
+still produce (potentially very long) data cleaning overview
+documents. Note that the interactive tools of \pkg{cleanR} can be used
+as usual or sequentially in small subsets of the large dataset, if no
+such overview documents are needed.
 
-\subsubsection{Attacking the figures}
-Though figures give a nice overview of each variable, they are also quite heavy objects in terms of memory allocation. Therefore, it might be beneficial to not include figures in the \pkg{cleanR} outputs for very large datasets. This is controlled via the \R{mode} argument:
+\subsubsection{Handling the figures}
+Though figures give a nice overview of each variable, they are also
+quite heavy objects in terms of memory allocation. Therefore, it might
+be beneficial to not include figures in the \pkg{cleanR} outputs for
+very large datasets. This is controlled via the \R{mode} argument:
 \begin{Schunk}
 \begin{Sinput}
 > clean(toyData, mode = c("summarize", "check"))
 \end{Sinput}
 \end{Schunk}
-If figures are indeed needed, a different approach is to choose the less memory heavy standard \R{R} figure style instead of the \R{ggplot2}\hl{reference?} figures that are the default option in \R{clean()}. This can be done using the \R{allVisuals} argument:
+If figures are indeed needed, a different approach is to choose the
+less memory heavy standard \proglang{R} figure style instead of the
+\pkg{ggplot2} figures that are the default option in \R{clean()}. This
+can be done by setting the \R{allVisuals = "basicVisual"} argument:
 \begin{Schunk}
 \begin{Sinput}
 > clean(toyData, allVisuals = "basicVisual")
 \end{Sinput}
 \end{Schunk}
-Of course, even less heavy plots might be achieved by writing new \R{visualFunction}s, using the guidelines from section \ref{sec:functionTemplates}. For instance, a future extension of \pkg{cleanR} might be the inclusion of ASCII plots, as e.g. represented in the \R{R} package \R{txtplot}\hl{reference here? It's on CRAN.}. \\
+Of course, even less heavy plots might be achieved by writing new
+\R{visualFunction}s, using the guidelines from section
+\ref{sec:functionTemplates}. For instance, a future extension of
+\pkg{cleanR} might be the inclusion of ASCII plots, as
+e.g. represented in the \proglang{R} package \pkg{txtplot}.
 
-\hl{I really feel like we should do some benchmarking here, maybe just on toyData, both in terms of speed and memory use. I would make the recommendations more trustworthy and serious.}
+%\hl{I really feel like we should do some benchmarking here, maybe just on toyData, both in terms of speed and memory use. I would make the recommendations more trustworthy and serious.}
 
 \subsubsection{Economic memory use} 
-Another solution, which is especially relevant to Windows users due to the unfortunate combination of memory control in this operating system and RStudio \hl{And also just R, right? There's got to be a nice reference on this..?}, is simply splitting the two steps performed by \R{clean}, namely producing the \R{rmarkdown} file and rendering it afterwards. If the \R{rmarkdown} file is very long, as it will typically be in very large datasets, having this file opened in memory waists precious memory capacities. Therefore, we advice users to instead split the two steps. This can be done in the following manner:
+Another solution, which is especially relevant to Windows users due to
+the unfortunate combination of memory control in this operating system
+and RStudio %\hl{And also just R, right? There's got to be a nice
+%  reference on this..?}, 
+is simply splitting the two steps performed
+by \R{clean()}, namely producing the \pkg{rmarkdown} file and rendering it
+afterwards. If the \R{rmarkdown} file is very long, as it will
+typically be for very large datasets, having this file opened in memory
+wastes precious memory capacities. Therefore, we advice users to
+instead split the two steps. This can be done in the following manner:
+
 \begin{Schunk}
 \begin{Sinput}
 > clean(toyData, render = FALSE, openResult = FALSE}
 > render("cleanR_toyData.Rmd", quiet = FALSE)
 \end{Sinput}
 \end{Schunk}
-This also deals with the fact that \pkg{cleanR} can produce \R{rmarkdown} files that supersedes the upper size limit of RStudio, which is currently \hl{find number} GBs (using RStudio version 1.0.44). \hl{Is this maybe too editor specific? On the other hand, a lot of people do use RStudio...}. 
+This also deals with the fact that \pkg{cleanR} can produce
+\pkg{rmarkdown} files that supersedes the upper size limit.
+% of RStudio,
+%which is currently \hl{find number} GBs (using RStudio version
+%1.0.44). 
+%\hl{Is this maybe too editor specific? On the other hand, a
+%  lot of people do use RStudio...}.
 
 \subsection{Using cleanR for problem flagging}
-If the data is large, but memory issues and computation time are less of an issue than the human time it takes to look through the data cleaning document, a viable solution might be not to include all information about all variables. Or even for more reasonably sized datasets, sometimes a brief overview of the most pressing issues can be useful. This can be achieved by using the \R{onlyProblematic} argument in \R{clean()}. By specifying \R{onlyProblematic = TRUE}, only variables that raise a flag in the checking steps will be summarized and visualized. But perhaps we are not even interested in obtaining general information about these variables, but only in getting a quick overview of the problems they might have. This can be done by also controlling the \R{mode} argument:
+If the data is large, but memory issues and computation time are less
+of an issue than the human time it takes to look through the data
+cleaning document, a viable solution might be not to include all
+information about all variables. Or even for more reasonably sized
+datasets, sometimes a brief overview of the most pressing issues can
+be useful. This can be achieved by using the \R{onlyProblematic}
+argument in \R{clean()}. By specifying \R{onlyProblematic = TRUE},
+only variables that raise a flag in the checking steps will be
+summarized and visualized. But perhaps we are not even interested in
+obtaining general information about these variables, but only in
+getting a quick overview of the problems they might have. This can be
+done by also controlling the \R{mode} argument:
 \begin{Schunk}
 \begin{Sinput}
 > clean(toyData, onlyProblematic = TRUE, mode = c("check"))
@@ -1324,7 +1556,7 @@ and the more minimal, html-style \R{rmarkdown} file described above can be produ
 \section{Appendix Something} \label{sec:appendix1}
 \includepdf[pages=2-4, pagecommand={}, frame=true, noautoscale=true, scale=0.7]{cleanR_toyData.pdf}
 
-\section{Appendix NUMTWO}
+\section{Appendix NUMTWO} \label{sec:appendix2}
 \hl{Data cleaning with user supplied extensions here}
 
 \end{document}
