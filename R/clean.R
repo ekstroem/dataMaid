@@ -9,7 +9,7 @@
 #' dataset.
 #'
 #' The checks done for each class of variable is chosen by the
-#' SVC ...
+#' summarize/visualize/check functions ... XXX
 #'
 #'
 #' @param data The dataset to be checked. This dataset should be of class \code{data.frame},
@@ -788,7 +788,7 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
                       #accidentially shuts down the pdf/html/rmd-file.)
     }
 
-  if (openResult) system(paste("open", outFile))
+    if (openResult) pander::openFileInOS(outFile)     # system(paste("open", outFile))
 }
 
 

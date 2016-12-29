@@ -187,7 +187,7 @@ dataset.
 }
 \details{
 The checks done for each class of variable is chosen by the
-SVC ...
+summarize/visualize/check functions ... XXX
 }
 \examples{
 

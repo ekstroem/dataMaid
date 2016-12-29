@@ -2,8 +2,8 @@ Package: cleanR
 Type: Package
 Title: A Suite of Checks for Identification of Potential Errors in a Data Frame
     as Part of the Data Cleaning Process
-Version: 0.6.2
-Date: 2016-12-28
+Version: 0.7.0
+Date: 2016-12-30
 Authors@R: as.person(c(
     "Anne H. Petersen <ahpe@sund.ku.dk> [aut]",
     "Claus Thorn Ekstrøm <ekstrom@sund.ku.dk> [aut, cre]"))
