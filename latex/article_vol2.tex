@@ -1690,16 +1690,23 @@ document is currently planned.
 % \bibliographystyle{jss}
 \bibliography{foo}
 
-\hl{Alle pakker. Andet?}
-
 
 \appendix
+\newpage
 
-\section{Appendix A: cleaning the toyData data frame} \label{sec:appendix1}
-\includepdf[pages=2-4, pagecommand={}, frame=true, noautoscale=true, scale=0.7]{cleanR_toyData.pdf}
+%\includepdf[scale=0.8,clip,trim=0cm 0cm 0cm
+%2cm,pages={1},pagecommand={\section{appendix}\subsection{par‌​t1}}]{pdfdocument} \includepdf[sc%ale=0.8,clip,trim=0cm
+%0cm 0cm 2cm,pages={2-5},pagecommand={}]{pdfdocument}
 
-\section{Appendix B: User-extended cleaning of  testData} \label{sec:appendix2}
-\includepdf[pages=2-, pagecommand={}, frame=true, noautoscale=true, scale=0.7]{cleanR_exampleData.pdf}
+% \section{Appendix A: cleaning the toyData data frame} \label{sec:appendix1}
+\includepdf[pages=2, pagecommand={\section{Appendix A: cleaning the toyData data frame} \label{sec:appendix1}}, frame=true, noautoscale=true, scale=0.7]{cleanR_toyData.pdf}
+\includepdf[pages=3-4, pagecommand={}, frame=true, noautoscale=true, scale=0.7,pagecommand={}]{cleanR_toyData.pdf}
+
+
+
+\includepdf[pages=2, pagecommand={\section{Appendix B: User-extended cleaning of
+  exampleData} \label{sec:appendix2}}, frame=true, noautoscale=true, scale=0.7]{cleanR_toyData.pdf}
+\includepdf[pages=3-, pagecommand={}, frame=true, noautoscale=true, scale=0.7]{cleanR_exampleData.pdf}
 %\hl{Data cleaning with user supplied extensions here}
 
 \end{document}

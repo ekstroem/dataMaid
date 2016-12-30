@@ -69,10 +69,10 @@ mosaicVisual <- visualFunction(mosaicVisual,
                                description = "Mosaic plots using graphics",
                                classes = allClasses())
 
-data(toyData)
-pdf("latex/mosaicPlotExample.pdf", 5, 3)
-mosaicVisual(toyData$var1, "Variable 1", doEval = TRUE)
-dev.off()
+#data(toyData)
+#pdf("latex/mosaicPlotExample.pdf", 5, 3)
+#mosaicVisual(toyData$var1, "Variable 1", doEval = TRUE)
+#dev.off()
 
 
 identifyColons <- function(v, nMax = Inf, ... ) {
