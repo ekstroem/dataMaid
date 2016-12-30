@@ -336,7 +336,10 @@ Argument & Description & Default value \\
 \quad \R{preChecks} & What check functions should be called to determine whether a variable is suitable for summarization, visualization and checking? & \R{c("isKey", "isEmpty")}
 
 \smallskip Control summarize, visualize, and check steps \\
-\quad \R{mode} & What steps should be performed for each variable (out of the three possibilities \textit{summarize}, \textit{visualize}, \textit{check})? & \R{c("summarize", "visualize", "check")} (corresponding to all three) \\
+\quad \R{mode} & What steps should be performed for each variable (out
+                 of the three possibilities \textit{summarize},
+                 \textit{visualize}, \textit{check})? &
+                                                        \R{c("summarize", "visualize", "check")} (corresponding to all three steps) \\
 \quad \R{smartNum} & Should numerical values with only a few unique
                      levels be flagged and treated as a factor variable? & \R{TRUE} \\
 \quad \R{maxProbVals} & Maximum number of problematic values to print, if any are found in data checks & \R{Inf} \\
@@ -462,7 +465,7 @@ Argument & Description & Default value \\
 % \subsection{Controlling [something]}
 % \label{subsection:controlSomething}
 
-\subsection{Rolling out the arguments}
+\subsection{Polishing off the arguments}
 We begin with an example that is intended as an illustration of how \R{clean()} might
 be used in the very first stages of data cleaning, where we are still uncertain
 about exactly what is needed and how much times should be allocated to data
@@ -484,12 +487,12 @@ exactly which cleaning overview we want. Using the \R{toyData} dataset as a guin
 
 The final rendering of the generated markdown file is controlled by
 the \R{render} and \R{openResult} arguments, which both default to
-\R{TRUE} \hl{Bliver det ved med at være sandt?}. \R{render} determines
-if the \proglang{R} markdown file produced should be rendered using
-the \pkg{rmarkdown} package and \R{openResult} decides whether the
-output html or pdf file should be opened. The following command
-produces an \proglang{R} markdown file containing the data cleaning
-summary information, but without rendering nor opening the markdown file:
+\R{TRUE}. \R{render} determines if the \proglang{R} markdown file
+produced should be rendered using the \pkg{rmarkdown} package and
+\R{openResult} decides whether the output html or pdf file should be
+opened. The following command produces an \proglang{R} markdown file
+containing the data cleaning summary information, but without
+rendering nor opening the markdown file:
 
 \begin{Schunk}
 \begin{Sinput}
@@ -540,15 +543,24 @@ summary information, but without rendering nor opening the markdown file:
 \end{table}
 
 
-We will now move on to discuss how not only the structure of the cleaning summary is manipulated, but also its very contents. This is done through the summarize-visualize-check (SVC) step, as illustrated in Figure \ref{figure:cleanStructure}. 
-\pkg{cleanR} uses three different types of functions for performing these steps,
-namely \code{summaryFunction}s, \code{visualFunction}s and
-\code{checkFunction}s.
-By default, \R{clean()} runs selected summary, visualization and check functions on each variable in the dataset, and the exact choice of these functions depends on the classes of the variables. For instance, though detection of outlier values might be interesting for numerical variables, it holds little meaning for factor variables, and therefore, numerical and factor variables need different checks. Table~\ref{table.SVCfunctions}
-lists all available SVC functions, but we can also use the
+We will now move on to discuss how not only the structure of the
+cleaning summary is manipulated, but also its very contents. This is
+done through the summarize-visualize-check (SVC) step, as illustrated
+in Figure \ref{figure:cleanStructure}.  \pkg{cleanR} uses three
+different types of functions for performing these steps, namely
+\code{summaryFunction}s, \code{visualFunction}s and
+\code{checkFunction}s.  By default, \R{clean()} runs selected summary,
+visualization and check functions on each variable in the dataset, and
+the exact choice of these functions depends on the classes of the
+variables. For instance, though detection of outlier values might be
+interesting for numerical variables, it holds little meaning for
+factor variables, and therefore, numerical and factor variables need
+different checks. Table~\ref{table.SVCfunctions} lists all available
+summarize/visualize/check functions, but we can also use the
 \R{allSummaryFunctions()}, \R{allVisualFunctions()}, and
 \R{allCheckFunctions()} functions in \pkg{cleanR} to print overview
-lists in \proglang{R}. For example, the implemented \R{summaryFunction}s are:
+lists in \proglang{R}. For example, the implemented
+\R{summaryFunction}s are:
 
 %\subsection{Something about what check, visual and summary functions are available}
 
@@ -671,14 +683,20 @@ not be checked for any potential errors:
 \end{Sinput}
 \end{Schunk}
 
-As with \R{summaryFunction}s, a complete list of available \R{checkFunction}s is obtained by calling 
-\R{allCheckFunctions()}. Note however, that \R{checkFunction}s have a usage beyond the 
-\R{XXXChecks} arguments, namely in the \textit{pre-check} stage. In this stage, it is determined 
-whether or not each variable is suitable for the SVC-steps. The functions used in the pre-check stage
-should be \R{checkFunction}s that are applicable to all variable classes. The default pre-checks, the functions
-\R{isKey} and \R{isEmpty}, check whether a variable has unique values for all observations or only a single value for 
-all observations, respectively. If one of these statements are true, the variable will not be subjected to the SVC steps. 
-We can allow empty variables to move on to the SVC step by only checking for keys in the pre-check step:
+As with \R{summaryFunction}s, a complete list of available
+\R{checkFunction}s is obtained by calling
+\R{allCheckFunctions()}. Note however, that \R{checkFunction}s have a
+usage beyond the \R{XXXChecks} arguments, namely in the
+\textit{pre-check} stage. In this stage, it is determined whether or
+not each variable is suitable for the summarize/visualize/check (SVC)
+steps. The functions used in the pre-check stage should be
+\R{checkFunction}s that are applicable to all variable classes. The
+default pre-checks, the functions \R{isKey()} and \R{isEmpty()}, check
+whether a variable has unique values for all observations or only a
+single value for all observations, respectively. If one of these
+statements are true, the variable will not be subjected to the SVC
+steps.  We can allow empty variables to move on to the SVC step by
+only checking for keys in the pre-check step:
 
 \begin{Schunk}
 \begin{Sinput}
@@ -686,7 +704,11 @@ We can allow empty variables to move on to the SVC step by only checking for key
 \end{Sinput}
 \end{Schunk}
 
-Note that the data visualizations in the cleaning summary are also controllable, though only a single function can be provided for all variable types. If for instance, we wish to change the visualizations from the default \pkg{ggplot2} style histograms and barplots to base \proglang{R} histograms and barplots, we type
+Note that the data visualizations in the cleaning summary are also
+controllable, though only a single function can be provided for all
+variable types. If for instance, we wish to change the visualizations
+from the default \pkg{ggplot2} style histograms and barplots to base
+\proglang{R} histograms and barplots, we type
 \begin{Schunk}
 \begin{Sinput}
 > clean(toyData, allVisuals = "basicVisual")
@@ -859,7 +881,7 @@ As we saw with the \R{check()} function, the summary can be modified
 by providing the relevant \R{XXXSummaries} arguments. Setting the
 \R{numericSummaries} argument, we can control the summary output by
 providing a vector of function names to run for a particular summary. To
-only get the median, the minimum and the maximum we set
+only get the median, minimum and the maximum we set
 \R{numericSummaries=c("centralValue", "minMax")}:
 
 \begin{Schunk}
@@ -901,7 +923,7 @@ therefore, we will now present how \R{summaryFunction}s,
 \R{visualFunction}s and \R{checkFunction}s are made. 
 
 
-This section consists of two parts. First, we describe how custom \R{summaryFunction}s, 
+This section consists of two parts. First, we describe how customized \R{summaryFunction}s, 
 \R{visualFunction}s and \R{checkFunctions} can be made, including an introduction to a 
 few convenient tools available in \pkg{cleanR} for aiding SVC-function construction. 
 Table \ref{table.functionTypes} serves as an overview of the internals of these three
@@ -922,7 +944,7 @@ Purpose & Describe some aspect of the variable, e.g. a central value, its disper
 Output (required) & A list with entries: \newline \R{\$feature} - a label for the summary value (as character string); \newline \R{\$result} - the result of the summary (as character string) & A character string with \R{R} code for producing a plot. This code should be standalone, i.e. should include the data if necessary. & A list with entries: \newline \R{\$problem} - a logical identifying whether an issue was found; \newline \R{\$message} - a character string (possibly empty) decribing the issue that was found, properly escaped and ready for use in \R{rmarkdown} \\
 Output (recommended) & A \R{summaryResult} object, i.e. an attributed list with entries \R{\$feature}, \R{\$result} and \R{\$value}, the latter being the values from \R{\$result} in their original format). & \bgroup
 \def\arraystretch{1.8}% 
-\hspace*{-.2cm}\begin{tabular}[t]{p{0.45\linewidth} | p{0.45\linewidth}} \vspace*{-.9cm}If \R{doEval} is \R{TRUE}: \newline A plot that is opened by the graphic device in \R{R}. & \vspace*{-.9cm}If \R{doEval} is \R{FALSE}: \newline   A text string with \R{R} code, as described above. \end{tabular} \egroup  & A \R{checkResult} object, i.e. an attributed list with entries \R{\$problem}, \R{\$message} and \R{\$problemValues}, the latter being either \R{NULL} or the problem causing values, as they were found in \R{v}, whichever is relevant. \\
+\hspace*{-.2cm}\begin{tabular}[t]{p{0.45\linewidth} | p{0.45\linewidth}} \vspace*{-1cm}If \R{doEval} is \R{TRUE}: \newline A plot that is opened by the graphic device in \R{R}. & \vspace*{-1cm}If \R{doEval} is \R{FALSE}: \newline   A text string with \R{R} code, as described above. \end{tabular} \egroup  & A \R{checkResult} object, i.e. an attributed list with entries \R{\$problem}, \R{\$message} and \R{\$problemValues}, the latter being either \R{NULL} or the problem causing values, as they were found in \R{v}, whichever is relevant. \\
 Tools available for producing the function & \R{summaryResult()} & --- & \R{messageGenerator()} \newline \R{checkResult()} 
 \end{tabular}
 \egroup
@@ -1002,7 +1024,7 @@ If the \R{description} argument is left unspecified, the name of the
 function (which in this case is \R{"mySummaryFunction"}) will be filled in and
 stored under the \R{description} attribute. What happens if the \R{classes} argument is
 not specified depends on the type of \R{mySummaryFunction}. If
-\R{mySummaryFunction} is a \R{S3} generic function with associated
+\R{mySummaryFunction} is constructed as an \R{S3} generic function with associated
 methods, the call to \R{summaryFunction()} will automatically produce
 a vector of the names of the classes for which the function can be
 called. If \R{mySummaryFunction} is not an \R{S3} generic and
@@ -1168,17 +1190,17 @@ myProbValCheckFunction <- checkFunction(myProbValCheckFunction,
 )
 \end{Sinput}
 \end{Schunk}
-One comment should be devoted to the helper function, \R{messageGenerator}. 
-This function's sole purpose is aiding consistent
-styling of all \code{checkFunction} messages. The function simply
-pastes together the \code{problemMessage} and the
+One comment should be devoted to the helper function,
+\R{messageGenerator()}.  This function's sole purpose is aiding
+consistent styling of all \code{checkFunction} messages. The function
+simply pastes together the \code{problemMessage} and the
 \code{problemValues}, with the latter being quoted and sorted
-alphabetically. If \R{nMax} is not \R{Inf}, only the first \R{nMax}
-problem values will be pasted onto the message, accompanied by a
-comment about how many problem values were left out (if any).  Note
-that printing quotes in \pkg{rmarkdown} requires an extensive amount
-of character escaping, so opting for \code{messageGenerator()} really
-is the easiest solution.
+alphabetically. If the \R{nMax} argument to \R{messageGenerator()} is
+not \R{Inf}, only the first \R{nMax} problem values will be pasted
+onto the message, accompanied by a comment about how many problem
+values were left out (if any).  Note that printing quotes in
+\pkg{rmarkdown} requires an extensive amount of character escaping, so
+opting for \code{messageGenerator()} really is the easiest solution.
 
 In the template above, the argument \R{maxDecimals} is not in use. This
 argument should be used to round off the \R{problemValues} passed to
@@ -1203,12 +1225,6 @@ myProbValCheckFunction <- function(v, nMax, maxDecimals, ...) {
 Now, problematic values will be rounded in the outputted message, while they
 will still appear in their original format under the entry \R{\$problemValues} %$
 in the outputted \R{checkResult}.
-
-
-\hl{Jeg forstår ikke helt, hvad der var uklart her ang. messageGenerator. Jeg har nu
-stort set bare byttet om på rækkefølgen af de to sidste paragraphs her, hjælper
-det?}
-
 
 \subsection{A worked example}
 
@@ -1458,11 +1474,11 @@ These options are specified as follows: %\hl{Jeg synes ikke testData egner sig h
 \end{Schunk}
 The outputted document is found in Appendix \ref{sec:appendix2}. 
 
-\section{Zooming in on cleaning challenges}
+\section{Rubbing down data cleaning challenges}
 \label{sec:specificExamples}
-\hl{Lidt poppet titel, men den gamle ("Using cleanR in specific situations")
-fik mig til flabel at tænke "i modsætning til uspecifikke situationer?". Jeg 
-er dog meget åben for en bedre titel.}
+%\hl{Lidt poppet titel, men den gamle ("Using cleanR in specific situations")
+%fik mig til flabel at tænke "i modsætning til uspecifikke situationer?". Jeg 
+%er dog meget åben for en bedre titel.}
 
 Finally, we present a few examples of how to make \pkg{cleanR}
 solve specific issues related to data cleaning. First, we discuss the
@@ -1616,6 +1632,7 @@ document --- otherwise, the two-column layout code will produce an
 error. The following is an example of how such a master document
 preamble YAML might look like and how the \R{cleanR\_toyData.Rmd} file can
 then be included:
+{\small
 \begin{Verbatim}
 ---
 output: pdf_document
@@ -1631,6 +1648,7 @@ header-includes:
 ```{r, child = 'cleanR_toyData.Rmd'}
 ```
 \end{Verbatim}
+}
 %\hl{Use proper formatting here. How do we do non-R code?}
 
 In the this example, the \R{cleanR\_toyData.Rmd} file could have been created as follows:
