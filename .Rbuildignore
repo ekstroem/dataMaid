@@ -9,5 +9,6 @@ latex/
 ^.*\.Rmd
 ^.*\.pdf
 ^.*\.tex
+^.*\.txt
 ^.*\.tar\.gz
 ^\.rda

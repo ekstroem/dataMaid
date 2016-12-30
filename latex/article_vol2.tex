@@ -1435,11 +1435,11 @@ following modifications, relative to the standard \pkg{cleanR} output:
 \item We want the new summary function, \R{countZeros}, to be added to the summaries performed on all variable types but \R{Date} and \R{logical}.
 \item We want the new check function, \R{identifyColon}, to be added to the checks performed on \R{character}, \R{factor} and \R{labelled} variables.
 \end{itemize}
-These options are specified as follows: \hl{Jeg synes ikke testData egner sig her. Der er ingen koloner og CPRvar er et mærkeligt, internt navn, hvis ikke man kender danske CPR-numre. Langt de fleste variable har desuden ingen nuller. Måske skal der laves et nyt datasæt?}
+These options are specified as follows: %\hl{Jeg synes ikke testData egner sig her. Der er ingen koloner og CPRvar er et mærkeligt, internt navn, hvis ikke man kender danske CPR-numre. Langt de fleste variable har desuden ingen nuller. Måske skal der laves et nyt datasæt?}
 \begin{Schunk}
 \begin{Sinput}
-> data(testData) 
-> clean(testData, 
+> data(exampleData) 
+> clean(exampleData, 
       # Add the new pre-check function
       preChecks = c("isKey", "isEmpty", "isID"),
       # Change the visual
@@ -1699,7 +1699,7 @@ document is currently planned.
 \includepdf[pages=2-4, pagecommand={}, frame=true, noautoscale=true, scale=0.7]{cleanR_toyData.pdf}
 
 \section{Appendix B: User-extended cleaning of  testData} \label{sec:appendix2}
-\includepdf[pages=2-, pagecommand={}, frame=true, noautoscale=true, scale=0.7]{cleanR_testData.pdf}
+\includepdf[pages=2-, pagecommand={}, frame=true, noautoscale=true, scale=0.7]{cleanR_exampleData.pdf}
 %\hl{Data cleaning with user supplied extensions here}
 
 \end{document}

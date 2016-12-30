@@ -101,8 +101,8 @@ identifyColons <- checkFunction(identifyColons,
                                description = "Identify non-suffixed nor -prefixed colons",
                                classes = c("character", "factor", "labelled"))
 
-data(testData)
-clean(testData, replace = T,
+data(exampleData)
+clean(exampleData, replace = TRUE,
       preChecks = c("isKey", "isEmpty", "isID"),
       allVisuals = "mosaicVisual",
       characterSummaries = c(defaultCharacterSummaries(), "countZeros"),
@@ -122,4 +122,37 @@ clean(testData, replace = T,
       preChecks = c("isKey", "isEmpty", "isID"),
       allVisuals = "mosaicVisual",
       labelledCheck = c(defaultLabelledChecks(), "identifyColons"))
+
+
+
+wheresWally <- function(v, ...) {
+    res <- grepl("wally", v, ignore.case=TRUE)
+    problem <- any(res)
+    message <- "Wally was found in these data"
+    checkResult(list(problem = problem,
+                     message = message,
+                     problemValues = v[res]))
+}
+
+wheresWally <- checkFunction(wheresWally,
+                             description = "Search for the string 'wally' ignoring case",
+                             classes = c("character")
+                             )
+
+clean(testData, characterChecks=c(defaultCharacterChecks(), "wheresWally"),
+      replace=TRUE)
+
+
+set.seed(1)
+n <- 300
+
+addresses <- readLines("../addresses.txt")
+
+DF <- data.frame(addresses = addresses,
+                 binomial = rbinom(300, size=1, p=.7),
+                 poisson = rpois(300, lambda=1),
+                 gauss = rnorm(300),
+                 zigauss = c(rnorm(250), rep(0,50))
+                 )
+DF$bpinteraction <- interaction(DF$binomial, DF$poisson, sep=":")
 
