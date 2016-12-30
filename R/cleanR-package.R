@@ -71,8 +71,8 @@
 #'     \item{\code{poisson}}{a numeric vector with a Poisson distributed variable}
 #'     \item{\code{gauss}}{a numeric vector with a Gaussian distributed variable}
 #'     \item{\code{zigauss}}{a numeric vector with a zero-inflated Gaussian distributed variable}
-#'     \item{\code{bpinteraction}}{a factor with interactions between binomial and poisson}
-#'   }
+#'     \item{\code{bpinteraction}}{a factor with interactions between binomial and poisson values}
+#'  }
 #'
 #' @source Artificial data
 #' @examples
