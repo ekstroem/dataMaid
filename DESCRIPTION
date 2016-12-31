@@ -4,9 +4,9 @@ Title: A Suite of Checks for Identification of Potential Errors in a Data Frame
     as Part of the Data Cleaning Process
 Version: 0.9.2
 Date: 2016-12-31
-Authors@R: as.person(c(
-    "Anne H. Petersen <ahpe@sund.ku.dk> [aut]",
-    "Claus Thorn Ekstrøm <ekstrom@sund.ku.dk> [aut, cre]"))
+Authors@R: c(person("Anne", "Petersen", "Helby", email="ahpe@sund.ku.dk", role="aut"),
+             person("Claus", "Ekstrøm", "Thorn", email="ekstrom@sund.ku.dk", role=c("aut", "cre")))
+Maintainer: Claus Thorn Ekstrøm <ekstrom@sund.ku.dk>	     
 Description: Data cleaning is an important first step of any statistical
     analysis. cleanR provides an extendable suite of test for common potential
     errors in a dataset. It produces a document with a thorough summary of the
