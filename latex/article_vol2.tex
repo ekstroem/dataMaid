@@ -333,7 +333,7 @@ Argument & Description & Default value \\
 \quad \R{ordering} & Ordering of the variables in the data summary (as is or alphabetical) & \R{"asIs"} \\
 \quad \R{onlyProblematic} & Should only variables flagged as problematic be included in the \textit{Variable list}? & \R{FALSE} \\
 \quad \R{listChecks} & Should an overview of what checks were performed be listed in the \textit{Data cleaning summary}? &  \R{TRUE} \\
-\quad \R{preChecks} & What check functions should be called to determine whether a variable is suitable for summarization, visualization and checking? & \R{c("isKey", "isEmpty")}
+\quad \R{preChecks} & What check functions should be called to determine whether a variable is suitable for summarization, visualization and checking? & \R{c("isKey", "isEmpty")} \\
 
 \smallskip Control summarize, visualize, and check steps \\
 \quad \R{mode} & What steps should be performed for each variable (out
@@ -945,7 +945,7 @@ Output (required) & A list with entries: \newline \R{\$feature} - a label for th
 Output (recommended) & A \R{summaryResult} object, i.e. an attributed list with entries \R{\$feature}, \R{\$result} and \R{\$value}, the latter being the values from \R{\$result} in their original format). & \bgroup
 \def\arraystretch{1.8}% 
 \hspace*{-.2cm}\begin{tabular}[t]{p{0.45\linewidth} | p{0.45\linewidth}} \vspace*{-1cm}If \R{doEval} is \R{TRUE}: \newline A plot that is opened by the graphic device in \R{R}. & \vspace*{-1cm}If \R{doEval} is \R{FALSE}: \newline   A text string with \R{R} code, as described above. \end{tabular} \egroup  & A \R{checkResult} object, i.e. an attributed list with entries \R{\$problem}, \R{\$message} and \R{\$problemValues}, the latter being either \R{NULL} or the problem causing values, as they were found in \R{v}, whichever is relevant. \\
-Tools available for producing the function & \R{summaryResult()} & --- & \R{messageGenerator()} \newline \R{checkResult()} 
+Tools available for producing the function & \R{summaryResult()} & - & \R{messageGenerator()} \newline \R{checkResult()} 
 \end{tabular}
 \egroup
 \caption{Reference information for creating new functions to be used
