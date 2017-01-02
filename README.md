@@ -10,3 +10,7 @@ library(devtools)
 install_github('ekstroem/dataMaid')
 ```
 
+![Download counter](http://cranlogs.r-pkg.org/badges/grand-total/dataMaid)
+
+
+## Package overview
