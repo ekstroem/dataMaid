@@ -83,7 +83,7 @@
 #'
 #' @param file The filename of the outputted rmarkdown (.Rmd) file.
 #' If set to \code{NULL} (the default), the filename will be the name of \code{data}
-#' prefixed with "cleanR_", if this qualifies as a valid file name (e.g. no special
+#' prefixed with "dataMaid_", if this qualifies as a valid file name (e.g. no special
 #' characters allowed). Otherwise, \code{clean()} tries to create a valid filename by
 #' substituing illegal characters. Note that a valid file is of type .Rmd, hence all
 #' filenames should have a ".Rmd"-suffix.
@@ -95,7 +95,7 @@
 #'
 #' @param vol Extra text string or numeric that is appended on the end of the output
 #' file name(s). For example, if the dataset is called "myData", no file argument is
-#'  supplied and \code{vol=2}, the output file will be called "cleanR_myData2.Rmd"
+#'  supplied and \code{vol=2}, the output file will be called "dataMaid_myData2.Rmd"
 #'
 #' @param characterSummaries A vector of the names of summary functions to apply to
 #' character vectors.
@@ -282,7 +282,7 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
     #######Secret arguments that were removed for the users but are still implemented#########
     ##########################################################################################
 
-    #If we would ever want to allow users not to append the cleanR stamp:
+    #If we would ever want to allow users not to append the dataMaid stamp:
     brag <- TRUE
 
     #If we would ever want (Windows) users not to be nagged
@@ -320,8 +320,8 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
     ## Set the output file name if input is NULL or not Rmd
     if (is.null(file)) {
       if (substr(dfname, 1, 11) == "data.frame(") {
-        file <- paste0("cleanR_unnamedData", vol, ".Rmd")
-      } else file <- normalizeFileName(paste0("cleanR_", dfname, vol, ".Rmd"))
+        file <- paste0("dataMaid_unnamedData", vol, ".Rmd")
+      } else file <- normalizeFileName(paste0("dataMaid_", dfname, vol, ".Rmd"))
     } else {
       originalFile <- file
       faultyExt <- FALSE
@@ -396,10 +396,10 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
         if (fileExists & outFileExists) problemFiles <- paste(file, "and", outFile)
         if (fileExists & !outFileExists) problemFiles <- file
         if (!fileExists & outFileExists) problemFiles <- outFile
-        stop(paste("The file name(s) to be used by cleanR,", paste(problemFiles, ",", sep=""),
+        stop(paste("The file name(s) to be used by dataMaid,", paste(problemFiles, ",", sep=""),
                    "is(are) already in use.",
                    "We recommend trying one of the following solutions: \n",
-                   "- rename your cleanR output file using the \"file\" option \n",
+                   "- rename your dataMaid output file using the \"file\" option \n",
                    "- Add a volume number to your file name using the \"vol\" option \n",
                    "- check that you do not want to keep the original file and if so,",
                    "use clean() with argument replace = TRUE"))
@@ -411,11 +411,11 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
       #
       #  if (fileExists) {
       #    l12 <- readLines(file, 2, warn=FALSE)
-      #    if (!identical(l12, c("---", "cleanR: yes"))) fileProblem <- T
+      #    if (!identical(l12, c("---", "dataMaid: yes"))) fileProblem <- T
       #  }
       #  if (outFileExists) {
       #    #############################################
-      #    #check if pdf/html was produced by cleanR....
+      #    #check if pdf/html was produced by dataMaid....
       #    #############################################
       #  }
       #
@@ -424,13 +424,13 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
       #  if (!fileproblem & outFileProblem) problemFiles <- outFile
       #
       #  if (fileProblem || outFileProblem) {
-      #    stop(paste("The file name(s) to be used by cleanR,", paste(problemFiles, ",", sep=""),
-      #               "are already in use and the files do not look like they were produced by cleanR.",
+      #    stop(paste("The file name(s) to be used by dataMaid,", paste(problemFiles, ",", sep=""),
+      #               "are already in use and the files do not look like they were produced by dataMaid.",
       #               "We recommend trying one of the following solutions: \n",
-      #               "- rename your cleanR output files using the \"file\" option \n",
+      #               "- rename your dataMaid output files using the \"file\" option \n",
       #               "- Add a volume number to your file name using the \"vol\" option \n",
       #              "- check that you do not want to keep the original file and if so,",
-      #               "use cleanR with replace = \"always\""))
+      #               "use dataMaid with replace = \"always\""))
       #  }
       #}
       #}
@@ -538,10 +538,10 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
 
     ## write YAML preamble
     writer("---")
-    writer("cleanR: yes")
+    writer("dataMaid: yes")
     if (standAlone) {
         writer(paste("title:", dfname))
-        writer("subtitle: \"Autogenerated data summary from cleanR\"")
+        writer("subtitle: \"Autogenerated data summary from dataMaid\"")
         writer("date: \"`r Sys.Date()`\"")
         if (output=="pdf") {
             writer("output: pdf_document")
@@ -768,7 +768,7 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
     ## This could be wrapped in a tryCatch for those rather weird situations where the package is not installed.
     ## But it is indeed rather obscure
     if (brag) {
-    writer("This report was created by cleanR v", paste(packageVersion("cleanR"), sep="."), ".")
+    writer("This report was created by dataMaid v", paste(packageVersion("dataMaid"), sep="."), ".")
     }
     ## Now we should not write anything more to the file
 

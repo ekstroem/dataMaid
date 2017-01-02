@@ -16,12 +16,12 @@ name of \code{f} will be used instead.}
 
 \item{classes}{The classes for which \code{f} is intended to
 be called. If \code{NULL} (the default), one of two things happens.
-If \code{f} is not a S3 generic function, the \code{classes} 
-attribute of \code{f} will be an empty character string. If 
+If \code{f} is not a S3 generic function, the \code{classes}
+attribute of \code{f} will be an empty character string. If
 \code{f} is a S3 generic function, an automatic look-up
 for methods will be conducted, and the \code{classes} attribute
 will then be filled out automatically. Note that the function
-\code{\link{allClasses}} (listing all classes used in \code{cleanR})
+\code{\link{allClasses}} (listing all classes used in \code{dataMaid})
 might be useful.}
 }
 \value{

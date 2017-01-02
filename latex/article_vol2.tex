@@ -42,12 +42,12 @@
 \author{Anne H. Petersen\\Biostatistics\\Department of Public
   Health\\University of Copenhagen \And Claus Thorn Ekstr\o m\\Biostatistics\\Department of Public
   Health\\University of Copenhagen}
-\title{\pkg{cleanR}: Maid for Cleaning Datasets in \proglang{R}}
+\title{\pkg{dataMaid}: your assistant for data cleaning in \proglang{R}}
 
 %% for pretty printing and a nice hypersummary also set:
 \Plainauthor{Anne H. Petersen, Claus Thorn Ekstr\o m} %% comma-separated
-\Plaintitle{{cleanR}: maid for cleaning datasets in R} %% without formatting
-\Shorttitle{\pkg{cleanR}: maid for cleaning datasets in R} %% a short title (if necessary)
+\Plaintitle{{dataMaid}: your assistant for data cleaning in R} %% without formatting
+\Shorttitle{\pkg{dataMaid}: your data cleaning PA in R} %% a short title (if necessary)
 
 %% an abstract and keywords
 \Abstract{Data cleaning and -validation are the first steps in any
@@ -66,18 +66,18 @@
   variables. The results can be presented in an auto-generated,
   non-technical, stand-alone overview document, intended to be perused
   by an investigator with an understanding of the variables in the
-  data, but not necessarily knowledge of \R{R}. Thereby, \pkg{cleanR} 
+  data, but not necessarily knowledge of \R{R}. Thereby, \pkg{dataMaid} 
   aids the dialogue between data
   analysts and field experts, while also providing easy
   documentation of reproducible data cleaning steps and data quality
-  control. Moreover, the \pkg{cleanR} solution changes the data
+  control. Moreover, the \pkg{dataMaid} solution changes the data
   cleaning process from the usual ad hoc approach to a systematic,
-  well-documented endeavor.  \pkg{cleanR} also provides a suite of
+  well-documented endeavor.  \pkg{dataMaid} also provides a suite of
   more typical \proglang{R} tools for interactive data quality
   assessment and -cleaning, where the data inspections all live and die
   within the \proglang{R} console. 
     
-  % The \pkg{cleanR} package is designed to be easily extended with
+  % The \pkg{dataMaid} package is designed to be easily extended with
   % custom user-created checks that are relevant in particular
   % situations. \hl{Already said that above. Either expand on it or
   % delete this.}
@@ -146,7 +146,7 @@ and checking constraints on the variables, while \pkg{DataCombine} and
 While these tools attempt to alleviate the ubiquitous ad hoc approach
 to data cleaning, they are primarily intended for the data savvy users
 and less so for the general researcher with a knowledge about a specific
-field and the context of the available data. The \pkg{cleanR} package
+field and the context of the available data. The \pkg{dataMaid} package
 tries to address this by providing a framework that both allows for
 extendable, systematic, reproducible data cleaning, and summarizing
 findings for researchers from other fields such that they can act as
@@ -174,13 +174,13 @@ context area is needed to identify possible mistakes in the data
 (e.g., if there are 4 categories for a variable that should only have
 3).
 
-The \pkg{cleanR} approach to data cleaning and -quality assessment is
+The \pkg{dataMaid} approach to data cleaning and -quality assessment is
 governed by two fundamental paradigms. First of all, there is no need
 for data cleaning to be an ad hoc procedure. Often, we have a very
 clear idea of what flags are raisable in a given dataset before we
 look at it, as we were the ones to produce it in the first place. This
 means that data cleaning can easily be a well-documented,
-well-specified procedure. In order to aid this paradigm, \pkg{cleanR}
+well-specified procedure. In order to aid this paradigm, \pkg{dataMaid}
 provides easy-to-use, automated tools for data quality assessment in
 \proglang{R} on which data cleaning decisions can be made. This quality
 assessment is presented in an auto-generated overview document,
@@ -190,13 +190,13 @@ hand. Oftentimes, e.g. distinguishing between faulty codings of a
 numeric value and unusual, but correct, values requires
 problem-specific expertise that might not be held by the data
 analyst. Hopefully, having easy access to data descriptions through
-\pkg{cleanR} will help this necessary knowledge sharing.
+\pkg{dataMaid} will help this necessary knowledge sharing.
 
-While \pkg{cleanR}s primary raison d'être is auto-generating data
+While \pkg{dataMaid}s primary raison d'être is auto-generating data
 quality assessment overview documents, we still wish to emphasize that
 it is \emph{not} a tool for unsupervised data cleaning. This qualifies
-as the second paradigm of \pkg{cleanR}: Data cleaning decisions
-should always be made by humans. Therefore, \pkg{cleanR} does not
+as the second paradigm of \pkg{dataMaid}: Data cleaning decisions
+should always be made by humans. Therefore, \pkg{dataMaid} does not
 supply any tools for ``fixing'' errors in the data. However, we do
 provide interactive functions that can be used to identify potentially
 erroneous entries in a dataset and that can make it easier to solve
@@ -204,20 +204,20 @@ data issues, one variable at a time.
 
 
 This manuscript is structured as follows: First, in Section
-\ref{sec:usingcleanR}, we introduce the main representative of the first
+\ref{sec:usingdataMaid}, we introduce the main representative of the first
 paradigm, namely the \R{clean()} function, which generates data
-cleaning overview documents. In the \pkg{cleanR} package, we have
+cleaning overview documents. In the \pkg{dataMaid} package, we have
 provided a number of default cleaning steps that cover the data
 cleaning challenges, we find to be most common. Next, in Section
-\ref{sec:interactiveCleanR}, we present the interactive mode of \pkg{cleanR}, as motivated
+\ref{sec:interactiveCleanR}, we present the interactive mode of \pkg{dataMaid}, as motivated
 by the second paradigm above. But, as any data analyst knows,
 every dataset is different, and some datasets might include problems
 that cannot be detected by our data checking functions. In Section
-\ref{sec:extending}, we turn to the question of how \pkg{cleanR} extensions
+\ref{sec:extending}, we turn to the question of how \pkg{dataMaid} extensions
 can be made, such that they are integrable with the \R{clean()}
-function and with the other tools available in \pkg{cleanR}.  At last,
+function and with the other tools available in \pkg{dataMaid}.  At last,
 in Section \ref{sec:specificExamples}, we discuss a number of examples of
-specific data cleaning challenges and how \pkg{cleanR} can be used to
+specific data cleaning challenges and how \pkg{dataMaid} can be used to
 solve them.
 
 % \hl{Is there a Section 6?}
@@ -231,26 +231,26 @@ solve them.
 
 
 \section{Creating a data cleaning overview} 
-\label{sec:usingcleanR}
+\label{sec:usingdataMaid}
 
-The \R{clean()} function is the primary workhorse of \pkg{cleanR} and
+The \R{clean()} function is the primary workhorse of \pkg{dataMaid} and
 this is the only function needed if a standard battery
 of tests are used to generate data cleaning summaries. The data
 cleaning summary itself is an overview document, intended for reading
 by humans, in either pdf or html format. Appendix \ref{sec:appendix1}
 provides an example of a data cleaning output document, produced by
 calling \R{clean()} on the dataset \R{toyData} available in
-\pkg{cleanR}. The first two pages of this data cleaning output are
+\pkg{dataMaid}. The first two pages of this data cleaning output are
 shown in Figure~\ref{fig:example1}. \R{toyData} is a very
 small ($15$ rows of $6$ variables), artificial dataset which was created to
-illustrate the main capabilities of \pkg{cleanR}. The following
+illustrate the main capabilities of \pkg{dataMaid}. The following
 commands load the dataset and produce the cleaning output:
 
 \begin{figure}[tb]
 \begin{center}
 \frame{\includegraphics[width=7.5cm,page=2]{cleanR_toyData.pdf}} 
 \frame{\includegraphics[width=7.5cm,page=3]{cleanR_toyData.pdf}}
-%\includepdf[pages={2}, pagecommand={}]{cleanR_testData.pdf}
+%\includepdf[pages={2}, pagecommand={}]{dataMaid_testData.pdf}
 \end{center}
 \label{fig:example1}
 \caption{Example output from running \R{clean()} on the \R{toyData}
@@ -264,7 +264,7 @@ commands load the dataset and produce the cleaning output:
 
 \begin{Schunk}
 \begin{Sinput}
-> library(cleanR)
+> library(dataMaid)
 > data(toyData)
 > toydata
 \end{Sinput}
@@ -536,7 +536,7 @@ rendering nor opening the markdown file:
 \end{tabular}
 \caption{List of all summary functions (used in the summary table for
   each variable in the output), visual functions (used for  visualization of each variable), and
-  check functions (used for data checks for each variable) currently implemented in \pkg{cleanR}. The variable
+  check functions (used for data checks for each variable) currently implemented in \pkg{dataMaid}. The variable
   classes C, F, I, L, B, N, and D, refer to \R{character}, \R{factor},
   \R{integer}, \R{labelled}, \R{logical} (boolean), \R{numeric}, and \R{Date}, respectively.}
 \label{table.SVCfunctions}
@@ -546,7 +546,7 @@ rendering nor opening the markdown file:
 We will now move on to discuss how not only the structure of the
 cleaning summary is manipulated, but also its very contents. This is
 done through the summarize-visualize-check (SVC) step, as illustrated
-in Figure \ref{figure:cleanStructure}.  \pkg{cleanR} uses three
+in Figure \ref{figure:cleanStructure}.  \pkg{dataMaid} uses three
 different types of functions for performing these steps, namely
 \code{summaryFunction}s, \code{visualFunction}s and
 \code{checkFunction}s.  By default, \R{clean()} runs selected summary,
@@ -558,7 +558,7 @@ factor variables, and therefore, numerical and factor variables need
 different checks. Table~\ref{table.SVCfunctions} lists all available
 summarize/visualize/check functions, but we can also use the
 \R{allSummaryFunctions()}, \R{allVisualFunctions()}, and
-\R{allCheckFunctions()} functions in \pkg{cleanR} to print overview
+\R{allCheckFunctions()} functions in \pkg{dataMaid} to print overview
 lists in \proglang{R}. For example, the implemented
 \R{summaryFunction}s are:
 
@@ -598,9 +598,9 @@ variableType   Data class of variable          character, Date, factor,
 \end{Schunk}
 
 Thus we can see, for example, that for \R{numeric}, \R{integer}, or \R{Date} 
-variables, \pkg{cleanR} provides functions for adding summary information about 
+variables, \pkg{dataMaid} provides functions for adding summary information about 
 the minimum and maximum values, while all seven variable
-classes dealt with in \pkg{cleanR} have functions for central
+classes dealt with in \pkg{dataMaid} have functions for central
 tendency summaries (i.e., mode or median).
 
 We can control what summaries and checks are applied for each variable type
@@ -746,17 +746,17 @@ instance the dataset at hand requires new, additional checks, then more control 
 Section~\ref{sec:extending} explains how to modify and expand the
 possibilities by producing new summary-, visual- and check functions.
 
-\section{Using cleanR interactively}
+\section{Using dataMaid interactively}
 \label{sec:interactiveCleanR}
 
 While overview documents are great for presenting and documenting the
 data cleaning checks, it may be useful to be able to work more interactively
 through the data cleaning process as well. Aside from the \R{clean()} function 
-presented above, \pkg{cleanR} also provides more standard \proglang{R} interactive tools, such as
+presented above, \pkg{dataMaid} also provides more standard \proglang{R} interactive tools, such as
 functions that print results to the console or returns the information
 as an object for later use. This section describes how to use the
 functions \R{check()}, \R{summarize()} and \R{visualize()} to work
-interactively with \pkg{cleanR}. 
+interactively with \pkg{dataMaid}. 
 
 \subsection{Data cleaning by hand: An example}
 Let's say we wish to look further into a certain variable from
@@ -781,7 +781,7 @@ described in the previous section, are in fact passed to \R{check()},
 and thus they can also be used here. For instance, if we only want to
 check for potentially miscoded missing values, we can use the relevant
 \R{XXXChecks} argument (e.g., \R{numericChecks}, \R{factorChecks},
-etc. as described in Section~\ref{sec:usingcleanR}) to provide a
+etc. as described in Section~\ref{sec:usingdataMaid}) to provide a
 vector of the check functions that should be applied. Recall that
 Table~\ref{table.SVCfunctions} or an \R{allCheckFunctions()} call provide
 overviews of the available check functions. 
@@ -906,14 +906,14 @@ Note that the \R{summarize()}, \R{check()} and \R{visualize()} functions are als
 %\end{itemize}
 %}
 
-\section{Extending cleanR} 
+\section{Extending dataMaid} 
 \label{sec:extending}
 
-\pkg{cleanR} can be used as a user-friendly, self-contained package, as
-shown in the previous sections. However, \pkg{cleanR} is fully
+\pkg{dataMaid} can be used as a user-friendly, self-contained package, as
+shown in the previous sections. However, \pkg{dataMaid} is fully
 customizable and \R{clean()} is mainly a tool for formatting the
 results from various checking-, summary- and visualization
-functions. Thus, the actual work underlying a \pkg{cleanR} output file
+functions. Thus, the actual work underlying a \pkg{dataMaid} output file
 can be anything --- depending on the arguments given to \R{clean()}
 --- and user made functions are easily added to the
 summarize/visualize/check-function arguments, as discussed previously. 
@@ -925,7 +925,7 @@ therefore, we will now present how \R{summaryFunction}s,
 
 This section consists of two parts. First, we describe how customized \R{summaryFunction}s, 
 \R{visualFunction}s and \R{checkFunctions} can be made, including an introduction to a 
-few convenient tools available in \pkg{cleanR} for aiding SVC-function construction. 
+few convenient tools available in \pkg{dataMaid} for aiding SVC-function construction. 
 Table \ref{table.functionTypes} serves as an overview of the internals of these three
 central function types. Secondly, we turn to a 
 worked example of how to use custom made functions in practice. Here,
@@ -965,9 +965,9 @@ different levels of strictness. If
 the new custom function is only to be used as part of the SVC steps in \R{clean()},
 then only the input/output structure of the function needs special attention.
 However, new user-defined functions can also be registered locally to
-be part of the full machinery of \pkg{cleanR}, and these function will
+be part of the full machinery of \pkg{dataMaid}, and these function will
 be recognized and behave in the same way as the build-in functions in
-\pkg{cleanR}. The presentation below is given in the format of
+\pkg{dataMaid}. The presentation below is given in the format of
 function templates, written in pseudo-code. These templates are
 designed for getting the full functionality, but note that
 Table~\ref{table.functionTypes} serves as a reference to the minimal
@@ -977,7 +977,7 @@ function types.
 % \hl{metatext, mention Table \ref{table.functionTypes} again.}
 
 \subsubsection{Writing a summaryFunction}
-As mentioned above, \pkg{cleanR} provides a dedicated class for
+As mentioned above, \pkg{dataMaid} provides a dedicated class for
 \code{summaryFunction}s. However, this does not imply that they are
 particularly advanced or complicated to create; in fact, they are
 nothing but regular functions with a particular
@@ -1031,7 +1031,7 @@ called. If \R{mySummaryFunction} is not an \R{S3} generic and
 \R{classes} is left unspecified, the attribute will simply be
 left empty. Note that the helper function \R{allClasses()} might be useful
 for filling out the \R{classes} argument, as it simply lists all
-available classes in \pkg{cleanR}:
+available classes in \pkg{dataMaid}:
 \begin{Schunk}
 \begin{Sinput}
 > allClasses()
@@ -1068,7 +1068,7 @@ available classes in \pkg{cleanR}:
 
 \subsubsection{Writing a visualFunction}
 \code{visualFunction}s are the functions that produce the figures in a
-\pkg{cleanR} output document. Writing a \R{visualFunction} is slightly
+\pkg{dataMaid} output document. Writing a \R{visualFunction} is slightly
 more complicated than writing a \R{summaryFunction}. This follows from
 the fact that \R{visualFunctions} need to be able to output standalone
 code for plots in order for \code{clean()} to build standalone
@@ -1122,7 +1122,7 @@ call, just like the two build-in \R{visualFunction}s, \R{standardVisual}
 and \R{basicVisual}. 
 
 \subsubsection{Writing a checkFunction}
-The last, but perhaps most important, \pkg{cleanR} function type is
+The last, but perhaps most important, \pkg{dataMaid} function type is
 the \code{checkFunction}. These are the functions that flag issues in
 the data in the check step and control the overall flow of the data
 cleaning process in the precheck stage. A \code{checkFunction} follows
@@ -1174,7 +1174,7 @@ myProbValCheckFunction <- function(v, nMax, maxDecimals, ...) {
 	                      problemValues = problemValues)
 
 	problemMessage <- "[Message that is printed prior to listing
-			    problem values in the cleanR output, 
+			    problem values in the dataMaid output, 
                             ending with a colon]"
 
 	outMessage <- messageGenerator(problemStatus, problemMessage, nMax)
@@ -1274,7 +1274,7 @@ is and move on to the next function, namely \R{mosaicVisual()}.
 \proglang{R} contains a function, \R{mosiacplot()}, which produces
 mosaic plots. We intend to use this existing high-level plotting
 function as part of the new visualization function.  We will define
-the new function such that it gets the full \pkg{cleanR}
+the new function such that it gets the full \pkg{dataMaid}
 functionality. This can be done using the following code.
 \begin{Schunk}
 \begin{Sinput}
@@ -1324,7 +1324,7 @@ writing
 \end{Sinput}
 \end{Schunk}
 Here, we use the function \R{allClasses()} to quickly obtain a vector
-of all the seven variable classes addressed in \pkg{cleanR}. Note that
+of all the seven variable classes addressed in \pkg{dataMaid}. Note that
 if \R{mosaicVisual()} were an S3 generic function, this argument could
 have been left as \R{NULL} and then the classes for which methods are
 available would be added automatically. 
@@ -1443,8 +1443,8 @@ done for the sake of the \R{allCheckFunctions()} output.
 
 \subsubsection{Calling the new summarize/visualize/check functions from clean()}
 Now, we are ready to use these new functions in a \R{clean()}
-call. The extended \pkg{cleanR} output document should have the
-following modifications, relative to the standard \pkg{cleanR} output:
+call. The extended \pkg{dataMaid} output document should have the
+following modifications, relative to the standard \pkg{dataMaid} output:
 \begin{itemize}
 \item We want to add the new pre-check function, \R{isID}, to the already existing pre-checks.
 \item We wish to change the plot type for all variables to the new mosaic plot.
@@ -1476,16 +1476,16 @@ The outputted document is found in Appendix \ref{sec:appendix2}.
 
 \section{Rubbing down data cleaning challenges}
 \label{sec:specificExamples}
-%\hl{Lidt poppet titel, men den gamle ("Using cleanR in specific situations")
+%\hl{Lidt poppet titel, men den gamle ("Using dataMaid in specific situations")
 %fik mig til flabel at tænke "i modsætning til uspecifikke situationer?". Jeg 
 %er dog meget åben for en bedre titel.}
 
-Finally, we present a few examples of how to make \pkg{cleanR}
+Finally, we present a few examples of how to make \pkg{dataMaid}
 solve specific issues related to data cleaning. First, we discuss the
 challenges related to cleaning large datasets, particularly in terms
-of memory use and computation speed. Next, we show how \pkg{cleanR}
+of memory use and computation speed. Next, we show how \pkg{dataMaid}
 can be used for problem-flagging. Lastly, we discuss how the
-\pkg{cleanR} output document can be included in other \pkg{rmarkdown}
+\pkg{dataMaid} output document can be included in other \pkg{rmarkdown}
 documents as a way to produce clear and concise documentation of a
 dataset. %\hl{I feel like there should be more topics here, but I'm all
 %  out of ideas...}
@@ -1498,14 +1498,14 @@ slow, while a large number of observations will generally affect the
 rendering time of the document. In this section, we give a few
 practical examples of ways to deal with large data, while wishing to
 still produce (potentially very long) data cleaning overview
-documents. Note that the interactive tools of \pkg{cleanR} can be used
+documents. Note that the interactive tools of \pkg{dataMaid} can be used
 as usual or sequentially in small subsets of the large dataset, if no
 such overview documents are needed.
 
 \subsubsection{Handling the figures}
 Though figures give a nice overview of each variable, they are also
 quite heavy objects in terms of memory allocation. Therefore, it might
-be beneficial to not include figures in the \pkg{cleanR} outputs for
+be beneficial to not include figures in the \pkg{dataMaid} outputs for
 very large datasets. This is controlled via the \R{mode} argument:
 \begin{Schunk}
 \begin{Sinput}
@@ -1524,7 +1524,7 @@ can be done by setting the \R{allVisuals = "basicVisual"} argument:
 Of course, even less heavy plots might be achieved by writing new
 \R{visualFunction}s, using the guidelines from section
 \ref{sec:functionTemplates}. For instance, a future extension of
-\pkg{cleanR} might be the inclusion of ASCII plots, as
+\pkg{dataMaid} might be the inclusion of ASCII plots, as
 e.g. represented in the \proglang{R} package \pkg{txtplot}.
 
 %\hl{I really feel like we should do some benchmarking here, maybe just on toyData, both in terms of speed and memory use. I would make the recommendations more trustworthy and serious.}
@@ -1545,10 +1545,10 @@ instead split the two steps. This can be done in the following manner:
 \begin{Schunk}
 \begin{Sinput}
 > clean(toyData, render = FALSE, openResult = FALSE}
-> render("cleanR_toyData.Rmd", quiet = FALSE)
+> render("dataMaid_toyData.Rmd", quiet = FALSE)
 \end{Sinput}
 \end{Schunk}
-This also deals with the fact that \pkg{cleanR} can produce
+This also deals with the fact that \pkg{dataMaid} can produce
 \pkg{rmarkdown} files that supersedes the upper size limit. \hl{dette giver
 ingen mening uden en præcision? "upper size limit" af hvad? Se udkommenteret 
 kommentar.}
@@ -1558,7 +1558,7 @@ kommentar.}
 %\hl{Is this maybe too editor specific? On the other hand, a
 %  lot of people do use RStudio...}.
 
-\subsection{Using cleanR for problem flagging}
+\subsection{Using dataMaid for problem flagging}
 If the data is large, but memory issues and computation time are less
 of an issue than the human time it takes to look through the data
 cleaning document, a viable solution might be not to include all
@@ -1608,11 +1608,11 @@ observations have the value \R{"Irrelevant"}), is problem-free.
 
 
 
-\subsection{Including cleanR documents in other files}
-Sometimes, a \pkg{cleanR} document might be a useful addition to a
+\subsection{Including dataMaid documents in other files}
+Sometimes, a \pkg{dataMaid} document might be a useful addition to a
 more general overview document, including also for example pairwise
 association plots, time series plots, or exploratory analysis
-results. To this end, it is possible to produce a \pkg{cleanR}
+results. To this end, it is possible to produce a \pkg{dataMaid}
 document that can readily be included in other \pkg{rmarkdown}
 files. This is done by using the \R{standAlone} argument in \R{clean()},
 which removes the preamble from the outputted \pkg{rmarkdown}
@@ -1620,7 +1620,7 @@ file. Please note, that it is still necessary to indicate which
 \R{rmarkdown} type is being created; the pdf and html \pkg{rmarkdown}
 styles are unfortunately not identical.
 
-If it is important that the embedded \pkg{cleanR} document can be
+If it is important that the embedded \pkg{dataMaid} document can be
 rendered to either of these two file types, we recommend setting
 \R{twoCols = FALSE} and \R{output = html} in \R{clean()}, thereby
 essentially removing almost all output type specific formatting code
@@ -1630,7 +1630,7 @@ On the other hand, if a pdf document is to be produced, a few extra
 lines need to be added to the preamble of the master \pkg{rmarkdown}
 document --- otherwise, the two-column layout code will produce an
 error. The following is an example of how such a master document
-preamble YAML might look like and how the \R{cleanR\_toyData.Rmd} file can
+preamble YAML might look like and how the \R{dataMaid\_toyData.Rmd} file can
 then be included:
 {\small
 \begin{Verbatim}
@@ -1645,13 +1645,13 @@ header-includes:
   - \newcommand{\emini}{\end{minipage}}
 ---
 
-```{r, child = 'cleanR_toyData.Rmd'}
+```{r, child = 'dataMaid_toyData.Rmd'}
 ```
 \end{Verbatim}
 }
 %\hl{Use proper formatting here. How do we do non-R code?}
 
-In the this example, the \R{cleanR\_toyData.Rmd} file could have been created as follows:
+In the this example, the \R{dataMaid\_toyData.Rmd} file could have been created as follows:
 \begin{Schunk}
 \begin{Sinput}
 > clean(toyData, standAlone = FALSE)
@@ -1672,7 +1672,7 @@ Note that with the latter option, no special YAML preamble is needed in the \R{r
 \label{conclusion}
 %\hl{Is this a thing in this journal? Otherwise, we might want to make some final remarks in the previous sections. Feels awkward to end with a bunch of code and some super specific examples...}
 
-In this paper we have introduced the \proglang{R} package \pkg{cleanR}
+In this paper we have introduced the \proglang{R} package \pkg{dataMaid}
 for performing reproducible error detection and data cleaning
 summaries. The package provides a general and extendable framework for
 identifying potential errors and for creating human-readable summary
@@ -1681,7 +1681,7 @@ the data.
 
 
 While the the current release is stable, the authors have an interest
-in further developing the functionality of \pkg{cleanR} by providing
+in further developing the functionality of \pkg{dataMaid} by providing
 more summary, visual, and check function as part of the default
 package. We are also currently considering adding options to handle
 repeated measurement, where the visualizations --- in particular ---
@@ -1694,7 +1694,7 @@ document is currently planned.
 
 \nocite{R}
 \nocite{shiny}
-\nocite{cleanR}
+\nocite{dataMaid}
 \nocite{rmarkdown}
 \nocite{ggplot2}
 \nocite{plyr}

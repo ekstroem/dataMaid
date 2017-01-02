@@ -12,12 +12,12 @@ variableType(v, ...)
 \item{...}{Not in use.}
 }
 \value{
-An object of class \code{summaryResult} with the following entries: 
-\code{$feature} ("Variable type"), \code{$result} (the (original) class of 
+An object of class \code{summaryResult} with the following entries:
+\code{$feature} ("Variable type"), \code{$result} (the (original) class of
 \code{v}) and \code{$value} (identical to \code{$result}).
 }
 \description{
-A \code{\link{summaryFunction}} type function, intended to be called from 
+A \code{\link{summaryFunction}} type function, intended to be called from
 \code{\link{summarize}} to be called from \code{\link{summarize}}, which finds the
 orignial class of a variable. This is just the class for all objects but those of class
 \code{smartNum}.
@@ -29,7 +29,7 @@ orignial class of a variable. This is just the class for all objects but those o
    variableType(varX)
 
  #For smartNum variables:
-   smartX <- cleanR:::smartNum(varX)
+   smartX <- dataMaid:::smartNum(varX)
    class(smartX)
    variableType(smartX)
 

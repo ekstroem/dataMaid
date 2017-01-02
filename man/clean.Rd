@@ -70,7 +70,7 @@ will not be summarized nor visualized nor checked.}
 
 \item{file}{The filename of the outputted rmarkdown (.Rmd) file.
 If set to \code{NULL} (the default), the filename will be the name of \code{data}
-prefixed with "cleanR_", if this qualifies as a valid file name (e.g. no special
+prefixed with "dataMaid_", if this qualifies as a valid file name (e.g. no special
 characters allowed). Otherwise, \code{clean()} tries to create a valid filename by
 substituing illegal characters. Note that a valid file is of type .Rmd, hence all
 filenames should have a ".Rmd"-suffix.}
@@ -82,7 +82,7 @@ might be overwritten.}
 
 \item{vol}{Extra text string or numeric that is appended on the end of the output
 file name(s). For example, if the dataset is called "myData", no file argument is
- supplied and \code{vol=2}, the output file will be called "cleanR_myData2.Rmd"}
+ supplied and \code{vol=2}, the output file will be called "dataMaid_myData2.Rmd"}
 
 \item{standAlone}{A logical. If \code{TRUE}, the document begins with a
 markdown YAML preamble such that it can be rendered as a stand alone rmarkdown

@@ -1,9 +1,8 @@
-
 #Make a function of type X (among visualFunction, summaryFunction and
 #checkFunction). If classes is null, and fName is a S3 generic,
 #the function will make a look-up for all methods available in the
 #global enviroment and fill out the slot accordingly.
-#Note: This does not work for functions defined wihtin cleanR. As
+#Note: This does not work for functions defined wihtin dataMaid. As
 #of now, they must have their classes specified explicitly!
 #' @importFrom utils methods
 makeXFunction <- function(fName, description, classes, X)  {
@@ -12,9 +11,9 @@ makeXFunction <- function(fName, description, classes, X)  {
   } else {
     f <- get(fName)
   }
-   #note: default pos (-1) will look in cleanR namespace first
-   #when called interactively. This results in weird behaviour when 
-   #users try to overwrite our functions. 
+   #note: default pos (-1) will look in dataMaid namespace first
+   #when called interactively. This results in weird behaviour when
+   #users try to overwrite our functions.
 
   if (is.null(description)) description <- fName
   if (is.null(classes)) {

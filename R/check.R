@@ -44,7 +44,7 @@
 #' are returned by calling e.g. \code{defaultCharacterChecks()},
 #' \code{defaultFactorChecks()}, \code{defaultNumericChecks()}, etc. Moreover,
 #' all available \code{checkFunction}s (including both locally defined
-#' functions and functions imported from \code{cleanR} or other packages) can
+#' functions and functions imported from \code{dataMaid} or other packages) can
 #' be viewed by calling \code{allCheckFunctions()}.
 #'
 #'

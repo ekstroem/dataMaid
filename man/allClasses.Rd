@@ -2,13 +2,13 @@
 % Please edit documentation in R/allClasses.R
 \name{allClasses}
 \alias{allClasses}
-\title{Vector of all variable classes in \code{cleanR}}
+\title{Vector of all variable classes in \code{dataMaid}}
 \usage{
 allClasses()
 }
 \description{
 Returns the names of the seven data classes for which
-\code{cleanR} is implemented, namely \code{"character"}, \code{"Date"},
+\code{dataMaid} is implemented, namely \code{"character"}, \code{"Date"},
 \code{"factor"}, \code{"integer"}, \code{"labelled"}, \code{"logical"} and
 \code{"numeric"}.
 }

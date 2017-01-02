@@ -16,44 +16,44 @@ name of \code{f} will be used instead.}
 
 \item{classes}{The classes for which \code{f} is intended to
 be called. If \code{NULL} (the default), one of two things happens.
-If \code{f} is not a S3 generic function, the \code{classes} 
-attribute of \code{f} will be an empty character string. If 
+If \code{f} is not a S3 generic function, the \code{classes}
+attribute of \code{f} will be an empty character string. If
 \code{f} is a S3 generic function, an automatic look-up
 for methods will be conducted, and the \code{classes} attribute
 will then be filled out automatically. Note that the function
-\code{\link{allClasses}} (listing all classes used in \code{cleanR})
+\code{\link{allClasses}} (listing all classes used in \code{dataMaid})
 might be useful.}
 }
 \value{
-A function of class \code{checkFunction} which has to attributes, 
+A function of class \code{checkFunction} which has to attributes,
 namely \code{classes} and \code{description}.
 }
 \description{
-Convert a function, \code{f}, into an S3 
+Convert a function, \code{f}, into an S3
 \code{checkFunction} object. This adds \code{f} to the
-overview list returned by an \code{allCheckFunctions()} 
+overview list returned by an \code{allCheckFunctions()}
 call.
 }
 \details{
-\code{checkFunction} represents the functions used in 
+\code{checkFunction} represents the functions used in
 \code{\link{check}} and \code{\link{clean}} for performing
-error checks and quality control on variables in dataset. 
+error checks and quality control on variables in dataset.
 
-An example of defining a new \code{checkFunction} is given below. 
-Note that the minimal requirements for such a function (in order for it to be 
-compatible with \code{check()} and \code{clean()}) is the following 
-input/output-structure: It must input at least two arguments, namely 
-\code{v} (a vector variable) and \code{...}. Additional implemented 
-arguments from \code{check()} and \code{clean()} include \code{nMax} and 
-\code{maxDecimals}, see e.g. the pre-defined \code{checkFunction} 
+An example of defining a new \code{checkFunction} is given below.
+Note that the minimal requirements for such a function (in order for it to be
+compatible with \code{check()} and \code{clean()}) is the following
+input/output-structure: It must input at least two arguments, namely
+\code{v} (a vector variable) and \code{...}. Additional implemented
+arguments from \code{check()} and \code{clean()} include \code{nMax} and
+\code{maxDecimals}, see e.g. the pre-defined \code{checkFunction}
 \code{\link{identifyMissing}} for more details about how these arguments should
-be used. 
-The output must be a list with at least the two entries \code{$problem} 
-(a logical indicating whether a problem was found) and \code{$message} 
-(a character string message describing the problem). However, if the 
-result of a \code{checkFunction} is furthermore appended with a 
+be used.
+The output must be a list with at least the two entries \code{$problem}
+(a logical indicating whether a problem was found) and \code{$message}
+(a character string message describing the problem). However, if the
+result of a \code{checkFunction} is furthermore appended with a
 \code{$problemValues} entry (including the values from the variable
-that caused the problem, if relevant) and converted to a 
+that caused the problem, if relevant) and converted to a
 \code{\link{checkResult}} object, a \code{print()} method also becomes
 available for consistent formatting of \code{checkFunction} results.
 
@@ -62,11 +62,10 @@ Note that all available \code{checkFunction}s are listed by the call
 if more knowledge about \code{checkFunction}s is required.
 }
 \examples{
- 
 
 #Define a minimal requirement checkFunction that can be called
 #from check() and clean(). This function checks whether all
-#values in a variable are of equal length and that this 
+#values in a variable are of equal length and that this
 #length is then also larger than 10:
 isID <- function(v, nMax = NULL, ...) {
   out <- list(problem = FALSE, message = "")
@@ -84,7 +83,7 @@ isID <- function(v, nMax = NULL, ...) {
 #Convert it into a checkFunction
 isID <- checkFunction(isID, description = "Identify ID variables (long, equal length values)",
   classes = allClasses())
-  
+
 #Call isID
 isID(c("12345678901", "23456789012", "34567890123", "45678901234"))
 
@@ -96,7 +95,7 @@ allCheckFunctions()
 #the message and checkResult() for getting a printing method
 #for its output. This function identifies values in a variable
 #that include a colon, surrounded by alphanumeric characters. If
-#at least one such value is found, the variable is flagged as 
+#at least one such value is found, the variable is flagged as
 #having a problem:
 identifyColons <- function(v, nMax = Inf, ... ) {
  v <- unique(na.omit(v))
@@ -106,12 +105,12 @@ identifyColons <- function(v, nMax = Inf, ... ) {
  problemValues <- v[sapply(gregexpr("[[:xdigit:]]:[[:xdigit:]]", v),
                            function(x) all(x != -1))]
  if (length(problemValues) > 0) {
-   problem <- TRUE 
+   problem <- TRUE
  }
- problemStatus <- list(problem = problem, 
+ problemStatus <- list(problem = problem,
                        problemValues = problemValues)
  outMessage <- messageGenerator(problemStatus, problemMessage, nMax)
- checkResult(list(problem = problem, 
+ checkResult(list(problem = problem,
                   message = outMessage,
                   problemValues = problemValues))
 }
@@ -133,14 +132,14 @@ allCheckFunctions()
 identifyNeg <- function(v, nMax = Inf, maxDecimals = 2, ...) {
   problem <- FALSE
   problemValues <- printProblemValues <- NULL
-  problemMessage <- "Note: The following negative values were found:"  
+  problemMessage <- "Note: The following negative values were found:"
   negOcc <- unique(v[v < 0])
   if (length(negOcc > 0)) {
     problemValues <- negOcc
     printProblemValues <- round(negOcc, maxDecimals)
     problem <- TRUE
   }
-  outMessage <- messageGenerator(list(problem = problem, 
+  outMessage <- messageGenerator(list(problem = problem,
     problemValues = printProblemValues), problemMessage, nMax)
   checkResult(list(problem = problem,
                    message = outMessage,
@@ -150,7 +149,7 @@ identifyNeg <- function(v, nMax = Inf, maxDecimals = 2, ...) {
 #Make it a checkFunction
 identifyNeg <- checkFunction(identifyNeg, "Identify negative values",
   classes = c("integer", "numeric"))
-  
+
 #Call it:
 identifyNeg(c(0:100))
 identifyNeg(c(-20.1232323:20), nMax = 3, maxDecimals = 4)

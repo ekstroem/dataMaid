@@ -1,14 +1,13 @@
-Package: cleanR
+Package: dataMaid
 Type: Package
 Title: A Suite of Checks for Identification of Potential Errors in a Data Frame
     as Part of the Data Cleaning Process
 Version: 0.9.2
 Date: 2016-12-31
-Authors@R: c(person("Anne", "Petersen", "Helby", email="ahpe@sund.ku.dk", role="aut"),
-             person("Claus", "Ekstrøm", "Thorn", email="ekstrom@sund.ku.dk", role=c("aut", "cre")))
-Maintainer: Claus Thorn Ekstrøm <ekstrom@sund.ku.dk>	     
+Authors@R: c(person("Anne Helby", "Petersen", , email="ahpe@sund.ku.dk", role="aut"),
+             person("Claus Thorn", "Ekstrøm", , email="ekstrom@sund.ku.dk", role=c("aut", "cre")))
 Description: Data cleaning is an important first step of any statistical
-    analysis. cleanR provides an extendable suite of test for common potential
+    analysis. dataMaid provides an extendable suite of test for common potential
     errors in a dataset. It produces a document with a thorough summary of the
     checks and the results that a human can use to identify possible errors.
 Imports:
@@ -25,7 +24,7 @@ LazyData: true
 ByteCompile: true
 License: GPL-2
 RoxygenNote: 5.0.1.9000
-Collate:
+Collate: 
     'allCheckFunctions.R'
     'allClasses.R'
     'allSummaryFunctions.R'
@@ -44,8 +43,8 @@ Collate:
     'minMax.R'
     'classes.R'
     'clean.R'
-    'cleanR-package.R'
     'countMissing.R'
+    'dataMaid-package.R'
     'description.R'
     'identifyCaseIssues.R'
     'identifyLoners.R'

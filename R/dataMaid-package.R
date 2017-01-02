@@ -1,6 +1,6 @@
-#' Exteneded example data to test the features of cleanR
+#' Exteneded example data to test the features of dataMaid
 #'
-#' A dataset of constructed data used as test bed when using \code{cleanR} for identifying
+#' A dataset of constructed data used as test bed when using \code{dataMaid} for identifying
 #' potential errors in a dataset.
 #'
 #' @format A data frame with 15 rows and 14 variables.
@@ -32,9 +32,9 @@
 "testData"
 
 
-#' Small example data to show the features of cleanR
+#' Small example data to show the features of dataMaid
 #'
-#' An artificial dataset, intended for presenting the key features of \code{cleanR}, which is a
+#' An artificial dataset, intended for presenting the key features of \code{dataMaid}, which is a
 #' toolset for identifying potential errors in a dataset.
 #'
 #' @format A \code{data.frame} with 15 rows and 6 variables.
@@ -61,7 +61,7 @@
 
 #' Example data with zero-inflated variables
 #'
-#' An artificial dataset, intended for presenting the extended features of \code{cleanR},
+#' An artificial dataset, intended for presenting the extended features of \code{dataMaid},
 #' which is a toolset for identifying potential errors in a dataset.
 #'
 #' @format A \code{data.frame} with 300 observations on the following 6 variables.

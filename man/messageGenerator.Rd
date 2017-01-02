@@ -7,12 +7,12 @@
 messageGenerator(problemStatus, message = NULL, nMax = Inf)
 }
 \arguments{
-\item{problemStatus}{A list consisting of two entries: 
+\item{problemStatus}{A list consisting of two entries:
 
-\code{$problem} - logical indicating whether a problem was found by the 
-\code{checkFunction} responsible for the making the \code{messageGenerator()} call, 
+\code{$problem} - logical indicating whether a problem was found by the
+\code{checkFunction} responsible for the making the \code{messageGenerator()} call,
 
-\code{$problemValues} - a vector of values from the variable that were 
+\code{$problemValues} - a vector of values from the variable that were
 deemed problematic (see details below).}
 
 \item{message}{Optional, but recommended. A message describing what problem the
@@ -28,19 +28,19 @@ values are printed.}
 A character string with a problem description.
 }
 \description{
-Helper function for producing output messages for 
+Helper function for producing output messages for
 \code{\link{checkFunction}} type functions.
 }
 \details{
 This function is a tool for building \code{\link{checkFunction}}s for the
-\code{cleanR} \code{\link{clean}} function. \code{checkFunction}s will often identify a number
+\code{dataMaid} \code{\link{clean}} function. \code{checkFunction}s will often identify a number
 of values in a variable that are somehow problematic. \code{messageGenerator} takes
 these values, pastes them together with a problem description and makes sure that the
-formatting is appropriate for being rendered in a \code{rmarkdown} document. 
+formatting is appropriate for being rendered in a \code{rmarkdown} document.
 We recommend writing short and precise problem descriptions (see examples),
  but if no message is supplied, the following message is generated:
 "[function name] found the following problem values: [problem values]".
-Note that this option only works correctly when the \code{checkFunction} is 
+Note that this option only works correctly when the \code{checkFunction} is
 called directly and e.g. not dispatched through a generic function.
 }
 \examples{
@@ -59,7 +59,7 @@ identifyUnderscores <- function(v, nMax = Inf) {
   message <- messageGenerator(list(problemValues = problemValues, problem = problem),
                               "The following values contain underscores:",
                               nMax = nMax)
-  checkResult(list(problem = problem, message = message, 
+  checkResult(list(problem = problem, message = message,
       problemValues = problemValues))
  }
 
@@ -75,7 +75,7 @@ identifyUnderscores <- function(v, nMax = Inf) {
   problem <- any(underscorePlaces)
   message <- messageGenerator(list(problemValues = problemValues,
                                    problem = problem), nMax = nMax)
-  checkResult(list(problem = problem, message = message, 
+  checkResult(list(problem = problem, message = message,
       problemValues = problemValues))
  }
 
