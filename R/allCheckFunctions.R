@@ -1,6 +1,6 @@
 #' @title Overview of all available checkFunctions
 #' 
-#' @description Produce a overview of all functions of class \code{checkFunction} 
+#' @description Produce an overview of all functions of class \code{checkFunction} 
 #' available in the workspace or imported from packages. This overview includes
 #' the descriptions and a list of what classes the functions are each intended
 #' to be called on.
