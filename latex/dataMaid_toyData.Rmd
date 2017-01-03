@@ -8,9 +8,6 @@ documentclass: report
 header-includes:
   - \renewcommand{\chaptername}{Part}
   - \newcommand{\fullline}{\noindent\makebox[\linewidth]{\rule{\textwidth}{0.4pt}}}
-  - \newcommand{\bminione}{\begin{minipage}{0.75 \textwidth}}
-  - \newcommand{\bminitwo}{\begin{minipage}{0.25 \textwidth}}
-  - \newcommand{\emini}{\end{minipage}}
 ---
 ```{r , echo=FALSE, include=FALSE, warning=FALSE, message=FALSE, error=FALSE}
 library(ggplot2)
@@ -27,6 +24,8 @@ Number of rows              15
 Number of variables          6
 ------------------------------
 
+
+* Only variables that were deemed potentially problematic are included in this summary.
 
 
 ### Checks performed
@@ -55,151 +54,6 @@ Please note that all numerical values in the following have been rounded to 2 de
 
 
 # Variable list
-## **var1**
-
-\bminione
-
----------------------------------------
-Feature                          Result
-------------------------- -------------
-Variable type                    factor
-
-Number of missing obs.      2 (13.33 %)
-
-Number of unique values               2
-
-Mode                              "red"
----------------------------------------
-
-\emini
-\bminitwo
-```{r Var-1-var1, echo=FALSE, fig.width=4, fig.height=3, message=FALSE, warning=FALSE}
-qplot(x = structure(c(2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 
-1L, 1L, 1L), .Label = c("blue", "red"), class = "factor", na.action = structure(14:15, class = "omit")), 
-    geom = "bar", xlab = "", main = "var1")
-```
-\emini
-
-
-- Note that the following levels have at most five observations: \"blue\". 
-
-
-
-\fullline
-
-## **var2**
-
-\bminione
-
-------------------------------------
-Feature                       Result
-------------------------- ----------
-Variable type                numeric
-
-Number of missing obs.      3 (20 %)
-
-Number of unique values            8
-
-Median                           4.5
-
-1st and 3rd quartiles        1.75; 6
-
-Min. and max.                 1; 999
-------------------------------------
-
-\emini
-\bminitwo
-```{r Var-2-var2, echo=FALSE, fig.width=4, fig.height=3, message=FALSE, warning=FALSE}
-qplot(x = c(1, 1, 1, 2, 2, 6, 6, 6, 999, 4, 82, 5), geom = "histogram", 
-    xlab = "", main = "var2", bins = 20)
-```
-\emini
-
-
-- The following suspected missing value codes enter as regular values: \"999\", \"NaN\". 
-
-- Note that the following possible outlier values were detected: \"82\", \"999\". 
-
-
-
-\fullline
-
-## **var3**
-
-\bminione
-
------------------------------------
-Feature                      Result
-------------------------- ---------
-Variable type                factor
-
-Number of missing obs.      0 (0 %)
-
-Number of unique values           7
-
-Mode                            "a"
------------------------------------
-
-\emini
-\bminitwo
-```{r Var-3-var3, echo=FALSE, fig.width=4, fig.height=3, message=FALSE, warning=FALSE}
-qplot(x = structure(c(3L, 3L, 3L, 3L, 3L, 4L, 4L, 4L, 5L, 5L, 
-5L, 2L, 1L, 6L, 7L), .Label = c(" ", ".", "a", "b", "c", "other", 
-"OTHER"), class = "factor"), geom = "bar", xlab = "", main = "var3")
-```
-\emini
-
-
-- The following suspected missing value codes enter as regular values: \" \", \".\". 
-
-- The following values appear with prefixed or suffixed white space: \" \". 
-
-- Note that the following levels have at most five observations: \" \", \".\", \"a\", \"b\", \"c\", \"other\", \"OTHER\". 
-
-- Note that there might be case problems with the following levels: \"other\", \"OTHER\". 
-
-
-
-\fullline
-
-## **var4**
-
-\bminione
-
----------------------------------------
-Feature                          Result
-------------------------- -------------
-Variable type                   numeric
-
-Number of missing obs.          0 (0 %)
-
-Number of unique values              15
-
-Median                             0.33
-
-1st and 3rd quartiles       -0.62; 0.66
-
-Min. and max.                -2.21; 1.6
----------------------------------------
-
-\emini
-\bminitwo
-```{r Var-4-var4, echo=FALSE, fig.width=4, fig.height=3, message=FALSE, warning=FALSE}
-qplot(x = c(-0.626453810742332, 0.183643324222082, -0.835628612410047, 
-1.59528080213779, 0.329507771815361, -0.820468384118015, 0.487429052428485, 
-0.738324705129217, 0.575781351653492, -0.305388387156356, 1.51178116845085, 
-0.389843236411431, -0.621240580541804, -2.2146998871775, 1.12493091814311
-), geom = "histogram", xlab = "", main = "var4", bins = 20)
-```
-\emini
-
-
-- Note that the following possible outlier values were detected: \"1.12\", \"1.51\", \"1.6\". 
-
-
-
-\fullline
-
 ## **var5**
 
 * The variable is a key (distinct values for each observation).
