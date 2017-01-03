@@ -1499,7 +1499,14 @@ If the dataset becomes very large, the standard use of \R{clean()}
 outlined above might not be ideal. If there is a vast number of
 variables, creation of the \pkg{rmarkdown} document might be quite
 slow, while a large number of observations will generally affect the
-rendering time of the document. In this section, we give a few
+rendering time of the document. This issue is especially relevant to 
+Windows users, where memory usage is not very efficient. The problem is that older,
+32-bit versions of Windows generally cannot access all physical RAM,
+while newer 64-bit versions of Windows cannot access virtual memory. Therefore,
+memory allocation issues becomes even more pressing when using this operating system. 
+
+
+In this section, we give a few
 practical examples of ways to deal with large data, while wishing to
 still produce (potentially very long) data cleaning overview
 documents. Note that the interactive tools of \pkg{dataMaid} can be used
@@ -1534,18 +1541,11 @@ e.g. represented in the \proglang{R} package \pkg{txtplot}.
 %\hl{I really feel like we should do some benchmarking here, maybe just on toyData, both in terms of speed and memory use. I would make the recommendations more trustworthy and serious.}
 
 \subsubsection{Economic memory use} 
-Available memory may pose a problem with larger datasets ---
-especially on machiens running Windows. The problem is, that older,
-32-bit versions of Windows cannot necessary access all physical RAM,
-while newer 64-bit versions of Windows cannot access virtual memory,
-which makes \proglang{R} unnecessary slow.  Another solution, which is
+Another solution, which is
 especially relevant to Windows users due to %the unfortunate
-the memory control for this operating system,
+the memory handling on this operating system,
 %combination of memory control in this operating system and
 %\proglang{R},
-%\hl{And also just R, right? Du har udkommenterert denne kommentar,
-%men jeg mener stadig at det er tilfældet, og jeg mener desuden ikke vi kan skrive 
-%det uden en præcision af hvad det går ud på. Hvad tænker du?}
 is simply splitting the two steps performed
 by \R{clean()}, namely producing the \pkg{rmarkdown} file and rendering it
 afterwards. If the \R{rmarkdown} file is very long, as it will
@@ -1560,8 +1560,8 @@ instead split the two steps. This can be done in the following manner:
 \end{Sinput}
 \end{Schunk}
 This also deals with the fact that \pkg{dataMaid} can produce
-\pkg{rmarkdown} files that supersedes the upper size limit of, say,
-RStudio (which currently has an editor file size limit of 5MB). %\hl{dette giver
+\pkg{rmarkdown} files that supersedes the upper size limit of code editors, e.g.
+RStudio, which currently has an editor file size limit of 5MB. %\hl{dette giver
 %ingen mening uden en præcision? "upper size limit" af hvad? Se udkommenteret 
 %kommentar.}
 % of RStudio,
