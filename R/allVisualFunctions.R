@@ -1,6 +1,6 @@
 #' @title Overview of all available visualFunctions
 #' 
-#' @description Produce a overview of all functions of class \code{visualFunction} 
+#' @description Produce an overview of all functions of class \code{visualFunction} 
 #' available in the workspace or imported from packages. This overview includes
 #' the descriptions and a list of what classes the functions are each intended
 #' to be called on.
@@ -21,4 +21,3 @@ allVisualFunctions <- function() {
   allXFunctions("visualFunction")
 }
 
-#allVisualFunctions()
