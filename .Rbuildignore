@@ -12,3 +12,4 @@ latex/
 ^.*\.txt
 ^.*\.tar\.gz
 ^\.rda
+^\.travis\.yml$

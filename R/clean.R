@@ -636,7 +636,16 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
                    maxDecimals, "decimals."))
       writer("\n")
     }
-   }
+ }
+
+        ## Summary table
+        writer("# Summary table")
+        for (idx in index) {
+            ## How to order the variables
+            v <- data[[idx]]
+            vnam <- vnames[idx]
+
+        }
 
 
     ## List of variables
