@@ -116,6 +116,9 @@
 
 \begin{document}
 
+<<echo=FALSE>>=
+options(prompt = "R> ", width=77, continue = "+  ")
+@
 
 \section{Introduction}
 Though data cleaning might be regarded as a somewhat tedious activity,
@@ -259,14 +262,12 @@ commands load the dataset and produce the cleaning output:
   Appendix~\ref{sec:appendix1}.}
 \end{figure}
 
-\begin{Schunk}
-\begin{Sinput}
-R> library("dataMaid")
-R> data("toyData")
-R> toyData
-R> clean(toyData)
-\end{Sinput}
-\end{Schunk}
+<<eval=FALSE>>=
+library("dataMaid")
+data("toyData")
+toyData
+clean(toyData)
+@
 
 By default, an \proglang{R} markdown file and a rendered pdf overview
 document is produced, saved to the disc (in the working directory) and
@@ -455,12 +456,10 @@ order to force \R{clean()} to overwrite any existing files produced by
 \R{clean()}, as we might run this function a few times in a row before deciding
 exactly which cleaning overview we want. Using the \R{toyData} dataset as a guinea pig, we type:
 
-\begin{Schunk}
-\begin{Sinput}
-R> clean(toyData, output = "html", onlyProblematic = TRUE, maxProbVals = 10,
-+    replace = TRUE)
-\end{Sinput}
-\end{Schunk}
+<<eval=FALSE>>=
+clean(toyData, output = "html", onlyProblematic = TRUE, maxProbVals = 10,
+  replace = TRUE)
+@
 
 The final rendering of the generated markdown file is controlled by
 the \R{render} and \R{openResult} arguments, which both default to
@@ -471,11 +470,9 @@ opened. The following command produces an \proglang{R} markdown file
 containing the data cleaning summary information, but without
 rendering nor opening the markdown file:
 
-\begin{Schunk}
-\begin{Sinput}
-R> clean(toyData, output="html", render=FALSE, openResult=FALSE)
-\end{Sinput}
-\end{Schunk}
+<<eval=FALSE>>=
+clean(toyData, output="html", render=FALSE, openResult=FALSE)
+@
 
 
 \begin{table}
