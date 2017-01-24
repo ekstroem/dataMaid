@@ -64,7 +64,7 @@
   variables. The results can be presented in an auto-generated,
   non-technical, stand-alone overview document, intended to be perused
   by an investigator with an understanding of the variables in the
-  data, but not necessarily knowledge of \R{R}. Thereby, \pkg{dataMaid}
+  data, but not necessarily knowledge of \proglang{R}. Thereby, \pkg{dataMaid}
   aids the dialogue between data
   analysts and field experts, while also providing easy
   documentation of reproducible data cleaning steps and data quality
@@ -132,7 +132,7 @@ software can aid the process tremendously by giving the human investigator the
 information needed for identifying issues.
 
 Online tools such as OpenRefine (\url{http://openrefine.org/}) and
-\proglang{R}-packages such as \pkg{plyr}, and \pkg{data.table} have
+\proglang{R}-packages such as \pkg{plyr} \citep{plyr}, and \pkg{data.table} have
 made data wrangling a lot easier, but only a handful of packages such
 as \pkg{editrules}, \pkg{validate}, \pkg{DataCombine}, and
 \pkg{janitor} attempt to implement systematic, reproducible data
@@ -204,7 +204,7 @@ data issues, one variable at a time.
 
 This manuscript is structured as follows: First, in Section
 \ref{sec:usingdataMaid}, we introduce the main representative of the first
-paradigm, namely the \R{clean()} function, which generates data
+paradigm, namely the \code{clean()} function, which generates data
 cleaning overview documents. In the \pkg{dataMaid} package, we have
 provided a number of default cleaning steps that cover the data
 cleaning challenges, we find to be most common. Next, in Section
@@ -213,7 +213,7 @@ by the second paradigm above. But, as any data analyst knows,
 every dataset is different, and some datasets might include problems
 that cannot be detected by our data checking functions. In Section
 \ref{sec:extending}, we turn to the question of how \pkg{dataMaid} extensions
-can be made, such that they are integrable with the \R{clean()}
+can be made, such that they are integrable with the \code{clean()}
 function and with the other tools available in \pkg{dataMaid}.  At last,
 in Section \ref{sec:specificExamples}, we discuss a number of examples of
 specific data cleaning challenges and how \pkg{dataMaid} can be used to
@@ -232,15 +232,15 @@ solve them.
 \section{Creating a data cleaning overview}
 \label{sec:usingdataMaid}
 
-The \R{clean()} function is the primary workhorse of \pkg{dataMaid} and
+The \code{clean()} function is the primary workhorse of \pkg{dataMaid} and
 this is the only function needed if a standard battery
 of tests are used to generate data cleaning summaries. The data
 cleaning summary itself is an overview document, intended for reading
 by humans, in either pdf or html format. Appendix \ref{sec:appendix1}
 provides an example of a data cleaning output document, produced by
-calling \R{clean()} on the dataset \R{toyData} available in
+calling \code{clean()} on the dataset \code{toyData} available in
 \pkg{dataMaid}. The first two pages of this data cleaning output are
-shown in Figure~\ref{fig:example1}. \R{toyData} is a very
+shown in Figure~\ref{fig:example1}. \code{toyData} is a very
 small ($15$ rows of $6$ variables), artificial dataset which was created to
 illustrate the main capabilities of \pkg{dataMaid}. The following
 commands load the dataset and produce the cleaning output:
@@ -252,7 +252,7 @@ commands load the dataset and produce the cleaning output:
 %\includepdf[pages={2}, pagecommand={}]{dataMaid_testData.pdf}
 \end{center}
 \label{fig:example1}
-\caption{Example output from running \R{clean()} on the \R{toyData}
+\caption{Example output from running \code{clean()} on the \code{toyData}
   dataset. First a summary of the full dataset is given and then
   type-dependent information on each variable is given in a table and
   a graph. Larger versions of the pages can be seen in
@@ -299,9 +299,9 @@ title \textit{Data cleaning summary}. Secondly, each variable in the
 dataset is presented in turn using (up to) three tools in the
 \textit{Variable list}: A table summarizing key features of the
 variable, a figure visualizing its distribution and a
-list of flagged issues, if any. For instance, in the \R{numeric}-type variable
-\R{var2} from \R{toyData}, \R{clean()} has identified two values that
-are suspected to be miscoded missing values (\R{999} and \R{NaN}),
+list of flagged issues, if any. For instance, in the \code{numeric}-type variable
+\code{var2} from \code{toyData}, \code{clean()} has identified two values that
+are suspected to be miscoded missing values (\code{999} and \code{NaN}),
 while two values were also flagged as potential outliers that should
 be investigated more carefully.
 %We can then return to Part
@@ -309,16 +309,16 @@ be investigated more carefully.
 %performed on this variable. \hl{hm, delete the last sentence? or use
 %  different variable? Only these exact two checks were performed}.
 
-Though the \R{clean()} function is very easy to use, it should not be
+Though the \code{clean()} function is very easy to use, it should not be
 mistaken to be inflexible. A large number of function arguments allows
 for the cleaning overview document to be molded according to the
 user's needs. The most commonly used arguments are summarized in
 Table~\ref{table.cleanFormals} and they are grouped according to the
 part of the cleaning process they influence. In order to understand
-this distinction, a glimpse of the inner structure of \R{clean()} is
+this distinction, a glimpse of the inner structure of \code{clean()} is
 shown in Figure~\ref{figure:cleanStructure}. Below, we present a few
 examples on how to use the arguments from Table \ref{table.cleanFormals}
- to influence the output of a \R{clean()} call.
+ to influence the output of a \code{clean()} call.
 
 \begin{table}
 \small
@@ -328,34 +328,34 @@ Argument & Description & Default value \\
 \hline
 
 \smallskip Control input variables and summary\\
-\quad \R{useVar} & What variables should be used? & \R{NULL} (corresponding to all variables) \\
-\quad \R{ordering} & Ordering of the variables in the data summary (as is or alphabetical) & \R{"asIs"} \\
-\quad \R{onlyProblematic} & Should only variables flagged as problematic be included in the \textit{Variable list}? & \R{FALSE} \\
-\quad \R{listChecks} & Should an overview of what checks were performed be listed in the \textit{Data cleaning summary}? &  \R{TRUE} \\
-\quad \R{preChecks} & What check functions should be called to determine whether a variable is suitable for summarization, visualization and checking? & \R{c("isKey", "isEmpty")} \\
+\quad \code{useVar} & What variables should be used? & \code{NULL} (corresponding to all variables) \\
+\quad \code{ordering} & Ordering of the variables in the data summary (as is or alphabetical) & \code{"asIs"} \\
+\quad \code{onlyProblematic} & Should only variables flagged as problematic be included in the \textit{Variable list}? & \code{FALSE} \\
+\quad \code{listChecks} & Should an overview of what checks were performed be listed in the \textit{Data cleaning summary}? &  \code{TRUE} \\
+\quad \code{preChecks} & What check functions should be called to determine whether a variable is suitable for summarization, visualization and checking? & \code{c("isKey", "isEmpty")} \\
 
 \smallskip Control summarize, visualize, and check steps \\
-\quad \R{mode} & What steps should be performed for each variable (out
+\quad \code{mode} & What steps should be performed for each variable (out
                  of the three possibilities \textit{summarize},
                  \textit{visualize}, \textit{check})? &
-                                                        \R{c("summarize", "visualize", "check")} (corresponding to all three steps) \\
-\quad \R{smartNum} & Should numerical values with only a few unique
-                     levels be flagged and treated as a factor variable? & \R{TRUE} \\
-\quad \R{maxProbVals} & Maximum number of problematic values to print, if any are found in data checks & \R{Inf} \\
-\quad \R{maxDecimals} & Maximum number of decimals to print for numeric values in the variable list & \R{2} \\
-\quad \R{twoCol} & Should the summary table and visualizations be placed side-by-side (in two columns)? & \R{TRUE} \\
+                                                        \code{c("summarize", "visualize", "check")} (corresponding to all three steps) \\
+\quad \code{smartNum} & Should numerical values with only a few unique
+                     levels be flagged and treated as a factor variable? & \code{TRUE} \\
+\quad \code{maxProbVals} & Maximum number of problematic values to print, if any are found in data checks & \code{Inf} \\
+\quad \code{maxDecimals} & Maximum number of decimals to print for numeric values in the variable list & \code{2} \\
+\quad \code{twoCol} & Should the summary table and visualizations be placed side-by-side (in two columns)? & \code{TRUE} \\
 
 \smallskip Control output and post-processing \\
-\quad \R{output} & Type of output file to be produced (html, or pdf) & \R{"pdf"} \\
-\quad \R{render} & Should the output file be rendered from markdown? & \R{TRUE} \\
-\quad \R{openResult} & If a  pdf/html file is rendered, should it
+\quad \code{output} & Type of output file to be produced (html, or pdf) & \code{"pdf"} \\
+\quad \code{render} & Should the output file be rendered from markdown? & \code{TRUE} \\
+\quad \code{openResult} & If a  pdf/html file is rendered, should it
                        automatically open afterwards, and if not,
-                       should the \R{rmarkdown} file be opened? & \R{TRUE} \\
-\quad \R{replace} & Overwrite an existing files with the same name? & \R{FALSE} \\
+                       should the \code{rmarkdown} file be opened? & \code{TRUE} \\
+\quad \code{replace} & Overwrite an existing files with the same name? & \code{FALSE} \\
 
 \hline
 \end{tabular}
-\caption{A selection of commonly used arguments to \R{clean()} separated into the parts they control.}
+\caption{A selection of commonly used arguments to \code{clean()} separated into the parts they control.}
 \label{table.cleanFormals}
 \end{table}
 
@@ -363,7 +363,7 @@ Argument & Description & Default value \\
 % Below, we present a selection of these arguments in
 % sections \hl{xx} and \hl{xxx}. We do this under two distinct headlines
 % to emphasize that two levels of control are available when using
-% \R{clean()}. Either, we can control the \hl{[something] - essentially,
+% \code{clean()}. Either, we can control the \hl{[something] - essentially,
 %   this is everything but SVC-functions - } or we can control what
 % quality assessments and descriptions each variable are subjected
 % to.  \hl{segway to next bit or
@@ -373,7 +373,7 @@ Argument & Description & Default value \\
 % \begin{description}
 % \item[Input] A dataset
 % 	\begin{itemize}
-% 		\item This should be of type \R{data.frame} or \R{tibble} \hl{or data.table?}
+% 		\item This should be of type \code{data.frame} or \code{tibble} \hl{or data.table?}
 % 	\end{itemize}
 % \item[Create contents] For each variable in the dataset, do the following:
 % 	\begin{description}
@@ -387,14 +387,14 @@ Argument & Description & Default value \\
 % 			\end{itemize}
 % 		\item[Stage 2:] SVC-steps
 % 			\begin{description}
-% 				\item[Summarize] Call \R{summarize()} to produce a summary table describing the variable. What features enter this table depends on the data class of the variable.
-% 				\item[Visualize]  Call \R{visualize()} to produce a plot visualizing the distribution of the variable.
-% 				\item[Check]  Call \R{check()} to apply quality- and error checks to the variable. What checks are used depends on the data class of the variable.
+% 				\item[Summarize] Call \code{summarize()} to produce a summary table describing the variable. What features enter this table depends on the data class of the variable.
+% 				\item[Visualize]  Call \code{visualize()} to produce a plot visualizing the distribution of the variable.
+% 				\item[Check]  Call \code{check()} to apply quality- and error checks to the variable. What checks are used depends on the data class of the variable.
 % 			\end{description}
 % 	\end{description}
 % \item[Output] Files for a overview document are saved to the disc and possibly also opened.
 % 	\begin{itemize}
-% 		\item Always a \R{rmarkdown} (.Rmd) file
+% 		\item Always a \code{rmarkdown} (.Rmd) file
 % 		\item Possible also a html or pdf file
 % 	\end{itemize}
 % \end{description}
@@ -452,8 +452,8 @@ Argument & Description & Default value \\
 \end{center}
 
 \caption{Schematic illustration of the stages undertaken when running
-  \R{clean()}. Each variable is checked for eligibility before
-  running \R{summarize()}, \R{visualize()}, and \R{check()}, and the
+  \code{clean()}. Each variable is checked for eligibility before
+  running \code{summarize()}, \code{visualize()}, and \code{check()}, and the
   resulting \proglang{R} markdown file may be rendered and opened.}
 \label{figure:cleanStructure}
 \end{figure}
@@ -465,17 +465,17 @@ Argument & Description & Default value \\
 % \label{subsection:controlSomething}
 
 \subsection{Polishing off the arguments}
-We begin with an example that is intended as an illustration of how \R{clean()} might
+We begin with an example that is intended as an illustration of how \code{clean()} might
 be used in the very first stages of data cleaning, where we are still uncertain
 about exactly what is needed and how much times should be allocated to data
 cleaning. At this stage, what is really needed, if a very rough idea of the extends of
 errors in the dataset. In this scenario, we might wish to obtain a summary document in html format
 that only contains the variables with potential problems, and with a limit of
 maximum 10 printed potential errors for each variable we can write
-(output not shown). Also, we can add the argument \R{replace=TRUE} in
-order to force \R{clean()} to overwrite any existing files produced by
-\R{clean()}, as we might run this function a few times in a row before deciding
-exactly which cleaning overview we want. Using the \R{toyData} dataset as a guinea pig, we type:
+(output not shown). Also, we can add the argument \code{replace=TRUE} in
+order to force \code{clean()} to overwrite any existing files produced by
+\code{clean()}, as we might run this function a few times in a row before deciding
+exactly which cleaning overview we want. Using the \code{toyData} dataset as a guinea pig, we type:
 
 \begin{Schunk}
 \begin{Sinput}
@@ -485,10 +485,10 @@ R> clean(toyData, output = "html", onlyProblematic = TRUE, maxProbVals = 10,
 \end{Schunk}
 
 The final rendering of the generated markdown file is controlled by
-the \R{render} and \R{openResult} arguments, which both default to
-\R{TRUE}. \R{render} determines if the \proglang{R} markdown file
+the \code{render} and \code{openResult} arguments, which both default to
+\code{TRUE}. \code{render} determines if the \proglang{R} markdown file
 produced should be rendered using the \pkg{rmarkdown} package and
-\R{openResult} decides whether the output html or pdf file should be
+\code{openResult} decides whether the output html or pdf file should be
 opened. The following command produces an \proglang{R} markdown file
 containing the data cleaning summary information, but without
 rendering nor opening the markdown file:
@@ -508,36 +508,36 @@ R> clean(toyData, output="html", render=FALSE, openResult=FALSE)
 & Description &  \multicolumn{7}{c}{Variable classes} \\ \smallskip
  & &  C & F & I & L & B & N & D\\
   \hline \smallskip
-  \textbf{\R{summaryFunction}s}  \smallskip \\
-  \quad \R{centralValue} & Compute median or mode &  $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ \\
-  \quad \R{countMissing} & Compute ratio of missing observations &  $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$  \\
-  \quad \R{minMax} & Find minimum and maximum values &   &  & $\times$ & &  & $\times$ & $\times$  \\
-  \quad \R{quartiles} & Compute 1st and 3rd quartiles &    &  & $\times$ & &  & $\times$ & $\times$ \\
-  \quad \R{uniqueValue} & Count number of unique values &   $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$  \\
-  \quad \R{variableType} & Data class of variable & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$  \\
+  \textbf{\code{summaryFunction}s}  \smallskip \\
+  \quad \code{centralValue} & Compute median or mode &  $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ \\
+  \quad \code{countMissing} & Compute ratio of missing observations &  $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$  \\
+  \quad \code{minMax} & Find minimum and maximum values &   &  & $\times$ & &  & $\times$ & $\times$  \\
+  \quad \code{quartiles} & Compute 1st and 3rd quartiles &    &  & $\times$ & &  & $\times$ & $\times$ \\
+  \quad \code{uniqueValue} & Count number of unique values &   $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$  \\
+  \quad \code{variableType} & Data class of variable & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$  \\
   \smallskip \\
- \textbf{\R{visualFunction}s} \smallskip \\
-  \quad \R{basicVisual} & Histograms and barplots using base \proglang{R} graphics &  $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ \\
-  \quad \R{standardVisual} & Histograms and barplots using ggplot2 &  $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ \\
+ \textbf{\code{visualFunction}s} \smallskip \\
+  \quad \code{basicVisual} & Histograms and barplots using base \proglang{R} graphics &  $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ \\
+  \quad \code{standardVisual} & Histograms and barplots using ggplot2 &  $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ \\
   \smallskip \\
- \textbf{\R{checkFunction}s} \smallskip \\
- \quad \R{identifyCaseIssues} & Identify case issues &  $\times$ & $\times$ & & & & &  \\
- \quad \R{identifyLoners} & Identify levels with $<$ 6 obs. & $\times$ & $\times$ & & & & &  \\
- \quad \R{identifyMissing} & Identify miscoded missing values &  $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ &  \\
- \quad \R{identifyNums} & Identify misclassified numeric or integer variables & $\times$ & $\times$ & & & & &  \\
- \quad \R{identifyOutliers} & Identify outliers &  & & $\times$ & & $\times$ & $\times$ \\
- \quad \R{identifyOutliersTBStyle} & Identify outliers (Turkish Boxplot style) &  & & $\times$ & & $\times$ & $\times$ \\
- \quad \R{identifyWhitespace} & Identify prefixed and suffixed whitespace &  $\times$ & $\times$ & & $\times$ & & &  \\
- \quad \R{isCPR} & Identify Danish CPR numbers & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ &$\times$   \\
- \quad \R{isEmpty} & Check if the variable contains only a single value & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$  \\
- \quad \R{isKey} & Check if the variable is a key & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$\smallskip   \\
+ \textbf{\code{checkFunction}s} \smallskip \\
+ \quad \code{identifyCaseIssues} & Identify case issues &  $\times$ & $\times$ & & & & &  \\
+ \quad \code{identifyLoners} & Identify levels with $<$ 6 obs. & $\times$ & $\times$ & & & & &  \\
+ \quad \code{identifyMissing} & Identify miscoded missing values &  $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ &  \\
+ \quad \code{identifyNums} & Identify misclassified numeric or integer variables & $\times$ & $\times$ & & & & &  \\
+ \quad \code{identifyOutliers} & Identify outliers &  & & $\times$ & & $\times$ & $\times$ \\
+ \quad \code{identifyOutliersTBStyle} & Identify outliers (Turkish Boxplot style) &  & & $\times$ & & $\times$ & $\times$ \\
+ \quad \code{identifyWhitespace} & Identify prefixed and suffixed whitespace &  $\times$ & $\times$ & & $\times$ & & &  \\
+ \quad \code{isCPR} & Identify Danish CPR numbers & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ &$\times$   \\
+ \quad \code{isEmpty} & Check if the variable contains only a single value & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$  \\
+ \quad \code{isKey} & Check if the variable is a key & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$\smallskip   \\
  \hline
 \end{tabular}
 \caption{List of all summary functions (used in the summary table for
   each variable in the output), visual functions (used for  visualization of each variable), and
   check functions (used for data checks for each variable) currently implemented in \pkg{dataMaid}. The variable
-  classes C, F, I, L, B, N, and D, refer to \R{character}, \R{factor},
-  \R{integer}, \R{labelled}, \R{logical} (boolean), \R{numeric}, and \R{Date}, respectively.}
+  classes C, F, I, L, B, N, and D, refer to \code{character}, \code{factor},
+  \code{integer}, \code{labelled}, \code{logical} (boolean), \code{numeric}, and \code{Date}, respectively.}
 \label{table.SVCfunctions}
 \end{table}
 
@@ -548,7 +548,7 @@ done through the summarize-visualize-check (SVC) step, as illustrated
 in Figure \ref{figure:cleanStructure}.  \pkg{dataMaid} uses three
 different types of functions for performing these steps, namely
 \code{summaryFunction}s, \code{visualFunction}s and
-\code{checkFunction}s.  By default, \R{clean()} runs selected summary,
+\code{checkFunction}s.  By default, \code{clean()} runs selected summary,
 visualization and check functions on each variable in the dataset, and
 the exact choice of these functions depends on the classes of the
 variables. For instance, though detection of outlier values might be
@@ -556,10 +556,10 @@ interesting for numerical variables, it holds little meaning for
 factor variables, and therefore, numerical and factor variables need
 different checks. Table~\ref{table.SVCfunctions} lists all available
 summarize/visualize/check functions, but we can also use the
-\R{allSummaryFunctions()}, \R{allVisualFunctions()}, and
-\R{allCheckFunctions()} functions in \pkg{dataMaid} to print overview
+\code{allSummaryFunctions()}, \code{allVisualFunctions()}, and
+\code{allCheckFunctions()} functions in \pkg{dataMaid} to print overview
 lists in \proglang{R}. For example, the implemented
-\R{summaryFunction}s are:
+\code{summaryFunction}s are:
 
 %\subsection{Something about what check, visual and summary functions are available}
 
@@ -595,20 +595,20 @@ variableType   Data class of variable          character, Date, factor,
 \end{Soutput}
 \end{Schunk}
 
-Thus we can see, for example, that for \R{numeric}, \R{integer}, or \R{Date}
+Thus we can see, for example, that for \code{numeric}, \code{integer}, or \code{Date}
 variables, \pkg{dataMaid} provides functions for adding summary information about
 the minimum and maximum values, while all seven variable
 classes dealt with in \pkg{dataMaid} have functions for central
 tendency summaries (i.e., mode or median).
 
 We can control what summaries and checks are applied for each variable type
-through the \R{XXXSummaries} and \R{XXXChecks} arguments, where \R{XXX}
-represents a variable type, e.g., \R{factorChecks} for factors,
-\R{numericChecks} for numeric variables, etc. These arguments accept a
+through the \code{XXXSummaries} and \code{XXXChecks} arguments, where \code{XXX}
+represents a variable type, e.g., \code{factorChecks} for factors,
+\code{numericChecks} for numeric variables, etc. These arguments accept a
 vector of summary- or check function names that should be run for a
 particular variable type. The default values for each of these
-arguments can be obtained through the \R{defaultXXXChecks()}
-and \R{defaultXXXSummaries()} functions, where \R{XXX} again refers to
+arguments can be obtained through the \code{defaultXXXChecks()}
+and \code{defaultXXXSummaries()} functions, where \code{XXX} again refers to
 the variable type.
 
 For example, the default summaries being used for a factor variable is
@@ -622,7 +622,7 @@ R> defaultFactorSummaries()
 \end{Schunk}
 
 We can change the summaries (and similarly the checks) by setting the
-corresponding arguments when calling \R{clean()}. For example, to get
+corresponding arguments when calling \code{clean()}. For example, to get
 only the variable type and the central tendency listed in the summary
 table of each variable we write
 
@@ -640,7 +640,7 @@ R> clean(toyData, characterSummaries = c("variableType", "centralValue"),
 
 In this particular case, where we specify the same set of summary
 functions for each variable type, we can use the simpler argument
-\R{allSummaries} which overrides the summary functions for all
+\code{allSummaries} which overrides the summary functions for all
 variable types. Thus, the same result as above could be obtained with
 
 \begin{Schunk}
@@ -649,7 +649,7 @@ R> clean(toyData, allSummaries = c("variableType", "centralValue"))
 \end{Sinput}
 \end{Schunk}
 
-Similarly, the checks applied are set with the \R{XXXChecks}
+Similarly, the checks applied are set with the \code{XXXChecks}
 arguments. The default checks being applied to a factor is
 
 \begin{Schunk}
@@ -663,7 +663,7 @@ R> defaultFactorChecks()
 \end{Schunk}
 
 Now, if we only wanted to apply the identify whitespace function for
-factor variables, then we would need to set the \R{factorChecks} accordingly
+factor variables, then we would need to set the \code{factorChecks} accordingly
 
 \begin{Schunk}
 \begin{Sinput}
@@ -672,7 +672,7 @@ R> clean(toyData, factorChecks = c("identifyWhitespace"))
 \end{Schunk}
 
 or we could remove checks for factors altogether by setting the
-corresponding argument to \R{NULL}, in which case factor variables will
+corresponding argument to \code{NULL}, in which case factor variables will
 not be checked for any potential errors:
 
 \begin{Schunk}
@@ -681,15 +681,15 @@ R> clean(toyData, factorChecks = NULL)
 \end{Sinput}
 \end{Schunk}
 
-As with \R{summaryFunction}s, a complete list of available
-\R{checkFunction}s is obtained by calling
-\R{allCheckFunctions()}. Note however, that \R{checkFunction}s have a
-usage beyond the \R{XXXChecks} arguments, namely in the
+As with \code{summaryFunction}s, a complete list of available
+\code{checkFunction}s is obtained by calling
+\code{allCheckFunctions()}. Note however, that \code{checkFunction}s have a
+usage beyond the \code{XXXChecks} arguments, namely in the
 \textit{pre-check} stage. In this stage, it is determined whether or
 not each variable is suitable for the summarize/visualize/check (SVC)
 steps. The functions used in the pre-check stage should be
-\R{checkFunction}s that are applicable to all variable classes. The
-default pre-checks, the functions \R{isKey()} and \R{isEmpty()}, check
+\code{checkFunction}s that are applicable to all variable classes. The
+default pre-checks, the functions \code{isKey()} and \code{isEmpty()}, check
 whether a variable has unique values for all observations or only a
 single value for all observations, respectively. If one of these
 statements are true, the variable will not be subjected to the SVC
@@ -698,7 +698,7 @@ only checking for keys in the pre-check step:
 
 \begin{Schunk}
 \begin{Sinput}
-> clean(toyData, preChecks = "isKey")
+R> clean(toyData, preChecks = "isKey")
 \end{Sinput}
 \end{Schunk}
 
@@ -707,17 +707,18 @@ controllable, though only a single function can be provided for all
 variable types. If for instance, we wish to change the visualizations
 from the default \pkg{ggplot2} style histograms and barplots to base
 \proglang{R} histograms and barplots, we type
+
 \begin{Schunk}
 \begin{Sinput}
-> clean(toyData, allVisuals = "basicVisual")
+R> clean(toyData, allVisuals = "basicVisual")
 \end{Sinput}
 \end{Schunk}
 
 
 %\hl{
 %\begin{itemize}
-%\item Introduce the relevant \R{clean}-arguments and the \R{defaultWhateverSummaries} etc.-functions
-%\item Introduce \R{allSummaryFunctions()} etc. and present a table corresponding to the output of this call
+%\item Introduce the relevant \code{clean}-arguments and the \code{defaultWhateverSummaries} etc.-functions
+%\item Introduce \code{allSummaryFunctions()} etc. and present a table corresponding to the output of this call
 %\item Small examples:
 %\begin{itemize}
 %\item Add a function to one of the XXXSummaries/XXXVisuals/XXXChecks-arguments (still calling default options)
@@ -732,38 +733,39 @@ from the default \pkg{ggplot2} style histograms and barplots to base
 
 
 In summary, and as indicated in Figure~\ref{figure:cleanStructure}, there are two stages
-where \R{clean()} applies functions to each of the variables:
+where \code{clean()} applies functions to each of the variables:
 \begin{enumerate}
 \item In the pre-check stage
 \item As part of the summarize/visualize/check (SVC) steps
 \end{enumerate}
 Each of these stages are controllable using appropriate function
-arguments in \R{clean()}, and above we have shown examples of how to
+arguments in \code{clean()}, and above we have shown examples of how to
 tweak them to modify the data cleaning outputs. However, if for
 instance the dataset at hand requires new, additional checks, then more control is needed, and
 Section~\ref{sec:extending} explains how to modify and expand the
 possibilities by producing new summary-, visual- and check functions.
 
-\section{Using dataMaid interactively}
+\section[Using dataMaid interactively]{Using \pkg{dataMaid} interactively}
 \label{sec:interactiveCleanR}
 
 While overview documents are great for presenting and documenting the
 data cleaning checks, it may be useful to be able to work more interactively
-through the data cleaning process as well. Aside from the \R{clean()} function
+through the data cleaning process as well. Aside from the \code{clean()} function
 presented above, \pkg{dataMaid} also provides more standard \proglang{R} interactive tools, such as
 functions that print results to the console or returns the information
 as an object for later use. This section describes how to use the
-functions \R{check()}, \R{summarize()} and \R{visualize()} to work
+functions \code{check()}, \code{summarize()} and \code{visualize()} to work
 interactively with \pkg{dataMaid}.
 
 \subsection{Data cleaning by hand: An example}
 Let's say we wish to look further into a certain variable from
-\R{toyData}, namely \R{var2}. The data cleaning summary found some
+\code{toyData}, namely \code{var2}. The data cleaning summary found some
 issues in this variable, and we would like to recall what these issues
-were. This can be done using the \R{check()} command
+were. This can be done using the \code{check()} command
+
 \begin{Schunk}
 \begin{Sinput}
-> check(toyData$var2)
+R> check(toyData$var2)
 \end{Sinput}
 \begin{Soutput}
 $identifyMissing
@@ -772,23 +774,22 @@ $identifyOutliers
 Note that the following possible outlier values were detected: 82, 999.
 \end{Soutput}
 \end{Schunk}
-% $
 
 Note that the arguments specifying which checks to perform, as
-described in the previous section, are in fact passed to \R{check()},
+described in the previous section, are in fact passed to \code{check()},
 and thus they can also be used here. For instance, if we only want to
 check for potentially miscoded missing values, we can use the relevant
-\R{XXXChecks} argument (e.g., \R{numericChecks}, \R{factorChecks},
+\code{XXXChecks} argument (e.g., \code{numericChecks}, \code{factorChecks},
 etc. as described in Section~\ref{sec:usingdataMaid}) to provide a
 vector of the check functions that should be applied. Recall that
-Table~\ref{table.SVCfunctions} or an \R{allCheckFunctions()} call provide
+Table~\ref{table.SVCfunctions} or an \code{allCheckFunctions()} call provide
 overviews of the available check functions.
 Moving forward, we limit the numeric checks to only identify miscoded
 missing values:
 
 \begin{Schunk}
 \begin{Sinput}
-> check(toyData$var2, numericChecks = "identifyMissing")
+R> check(toyData$var2, numericChecks = "identifyMissing")
 \end{Sinput}
 \begin{Soutput}
 $identifyMissing
@@ -796,105 +797,103 @@ The following suspected missing value codes enter as regular values: 999, NaN.
 \end{Soutput}
 \end{Schunk}
 
-An equivalent way to call only a single, specific \R{checkFunction},
-such as \R{identifyMissing}, is by using it directly on the variable, e.g.,
+An equivalent way to call only a single, specific \code{checkFunction},
+such as \code{identifyMissing}, is by using it directly on the variable,
+e.g.,
+
 \begin{Schunk}
 \begin{Sinput}
-> identifyMissing(toyData$var2)
+R> identifyMissing(toyData$var2)
 \end{Sinput}
 \begin{Soutput}
 The following suspected missing value codes enter as regular values: 999, NaN.
 \end{Soutput}
 \end{Schunk}
-% $
 
-
-The result of a \R{checkFunction} is an object of class
-\R{checkResult}. By using the structure function, \R{str()}, we can
+The result of a \code{checkFunction} is an object of class
+\code{checkResult}. By using the structure function, \code{str()}, we can
 look further into its components:
 
 \begin{Schunk}
 \begin{Sinput}
-> missVar2 <- identifyMissing(toyData$var2)
-> str(missVar2)
+R> missVar2 <- identifyMissing(toyData$var2)
+R> str(missVar2)
 \end{Sinput}
 \begin{Soutput}
 List of 3
  $ problem      : logi TRUE
- $ message      : chr "The following suspected missing value codes enter as
- 		 regular values: \\\"999\\\", \\\"NaN\\\"."
- $ problemValues: num [1:2] 999 NaN
+ $ message      : chr "The following suspected missing value codes enter as regular values: \\\"999\\\", \\\"NaN\\\"."
+ $ problemValues: NULL
  - attr(*, "class")= chr "checkResult"
 \end{Soutput}
 \end{Schunk}
+
 The most important thing to note here is that while the printed
 message is made for easy reading, the actual values of the variable
 causing the issue are still obtainable in the element
-\R{problemValues}. If we for instance decide that the values \R{999}
-and \R{NaN} in \R{var2} are in fact miscoded missing values, we can
-easily replace them with \R{NA}s:
+\code{problemValues}. If we for instance decide that the values \code{999}
+and \code{NaN} in \code{var2} are in fact miscoded missing values, we can
+easily replace them with \code{NA}s:
+
 \begin{Schunk}
 \begin{Sinput}
-> toyData$var2[toyData$var2 %in% missVar2$problemValues] <- NA
-> identifyMissing(toyData$var2)
+R> toyData$var2[toyData$var2 %in% missVar2$problemValues] <- NA
+R> identifyMissing(toyData$var2)
 \end{Sinput}
 \begin{Soutput}
-No problems found.
+The following suspected missing value codes enter as regular values: 999, NaN.
 \end{Soutput}
 \end{Schunk}
-% $
 
-Similarly, the \R{visualize()} and \R{summarize()} functions can be
+Similarly, the \code{visualize()} and \code{summarize()} functions can be
 used to run the corresponding visualizations and summaries for each
 variable. See Figure~\ref{fig:example2} for the visualization output.
 
 \begin{Schunk}
 \begin{Sinput}
-> visualize(toyData$var2)
-> summarize(toyData$var2)
+R> visualize(toyData$var2)
+R> summarize(toyData$var2)
 \end{Sinput}
 \begin{Soutput}
-     Feature                   Result
-[1,] "Variable type"           "numeric"
+     Feature                   Result    
+[1,] "Variable type"           "numeric" 
 [2,] "Number of missing obs."  "3 (20 %)"
-[3,] "Number of unique values" "8"
-[4,] "Median"                  "4.5"
-[5,] "1st and 3rd quartiles"   "1.75; 6"
-[6,] "Min. and max."           "1; 999"
+[3,] "Number of unique values" "8"       
+[4,] "Median"                  "4.5"     
+[5,] "1st and 3rd quartiles"   "1.75; 6" 
+[6,] "Min. and max."           "1; 999"  
 \end{Soutput}
 \end{Schunk}
-% $
 
 \begin{figure}[tb]
 \begin{center}
 \includegraphics[width=7.5cm]{toyData-var2.pdf}
 \end{center}
 \label{fig:example2}
-\caption{Output from running \R{visualize()} on the variable \texttt{var2} from the
-\R{toyData} dataset.}
+\caption{Output from running \code{visualize()} on the variable \texttt{var2} from the
+\code{toyData} dataset.}
 \end{figure}
 
 
-As we saw with the \R{check()} function, the summary can be modified
-by providing the relevant \R{XXXSummaries} arguments. Setting the
-\R{numericSummaries} argument, we can control the summary output by
+As we saw with the \code{check()} function, the summary can be modified
+by providing the relevant \code{XXXSummaries} arguments. Setting the
+\code{numericSummaries} argument, we can control the summary output by
 providing a vector of function names to run for a particular summary. To
 only get the median, minimum and the maximum we set
-\R{numericSummaries=c("centralValue", "minMax")}:
+\code{numericSummaries=c("centralValue", "minMax")}:
 
 \begin{Schunk}
 \begin{Sinput}
-> summarize(toyData$var2, numericSummaries = c("centralValue", "minMax"))
+R> summarize(toyData$var2, numericSummaries = c("centralValue", "minMax"))
 \end{Sinput}
 \begin{Soutput}
-     Feature         Result
-[1,] "Median"        "4.5"
+     Feature         Result  
+[1,] "Median"        "4.5"   
 [2,] "Min. and max." "1; 999"
 \end{Soutput}
 \end{Schunk}
-% $
 
-Note that the \R{summarize()}, \R{check()} and \R{visualize()} functions are also available interactively for full datasets, by calling e.g., \R{summarize(toyData)}. However, this produces an extensive amount of output in the console, and therefore, we generally do not recommend it, unless working with very small datasets or subsets of datasets.
+Note that the \code{summarize()}, \code{check()} and \code{visualize()} functions are also available interactively for full datasets, by calling e.g., \code{summarize(toyData)}. However, this produces an extensive amount of output in the console, and therefore, we generally do not recommend it, unless working with very small datasets or subsets of datasets.
 
 %\hl{
 %\begin{itemize}
@@ -904,50 +903,50 @@ Note that the \R{summarize()}, \R{check()} and \R{visualize()} functions are als
 %\end{itemize}
 %}
 
-\section{Extending dataMaid}
+\section[Extending dataMaid]{Extending \pkg{dataMaid}}
 \label{sec:extending}
 
 \pkg{dataMaid} can be used as a user-friendly, self-contained package, as
 shown in the previous sections. However, \pkg{dataMaid} is fully
-customizable and \R{clean()} is mainly a tool for formatting the
+customizable and \code{clean()} is mainly a tool for formatting the
 results from various checking-, summary- and visualization
 functions. Thus, the actual work underlying a \pkg{dataMaid} output file
-can be anything --- depending on the arguments given to \R{clean()}
+can be anything --- depending on the arguments given to \code{clean()}
 --- and user made functions are easily added to the
 summarize/visualize/check-function arguments, as discussed previously.
 However, the functions used in the SVC steps must adhere
 to specific structures in order to be called from these three steps, and
-therefore, we will now present how \R{summaryFunction}s,
-\R{visualFunction}s and \R{checkFunction}s are made.
+therefore, we will now present how \code{summaryFunction}s,
+\code{visualFunction}s and \code{checkFunction}s are made.
 
 
-This section consists of two parts. First, we describe how customized \R{summaryFunction}s,
-\R{visualFunction}s and \R{checkFunctions} can be made, including an introduction to a
+This section consists of two parts. First, we describe how customized \code{summaryFunction}s,
+\code{visualFunction}s and \code{checkFunctions} can be made, including an introduction to a
 few convenient tools available in \pkg{dataMaid} for aiding SVC-function construction.
 Table \ref{table.functionTypes} serves as an overview of the internals of these three
 central function types. Secondly, we turn to a
 worked example of how to use custom made functions in practice. Here,
-four new SVC functions are defined and used, both interactively and in \R{clean()}.
+four new SVC functions are defined and used, both interactively and in \code{clean()}.
 
 \begin{table}[htbp]
 \footnotesize
 \bgroup
 \def\arraystretch{1.8}%
 \begin{tabular}{L{0.2\linewidth}L{0.2\linewidth}L{0.2\linewidth}L{0.2\linewidth}}
-& \R{summaryFunction} & \R{visualFunction} & \R{checkFunction} \\
+& \code{summaryFunction} & \code{visualFunction} & \code{checkFunction} \\
 \hline
-\vspace{0pt} Input (required) & \R{v} - a variable vector \newline \R{...}  &  \R{v} - a variable vector \newline \R{vnam} - the variable name (as character string) \newline \R{doEval} - a logical (\R{TRUE}/\R{FALSE}) controlling the output type of the function & \R{v} - a variable vector \newline \R{nMax} - an integer (or \R{Inf}), controlling how many problematic values are printed, if relevant \newline \R{...}  \\
-Input (optional) &  \R{maxDecimals} - number of decimals printed in outputted numerical values.  & - &  \R{maxDecimals}  - number of decimals printed in outputted numerical values.  \\
+\vspace{0pt} Input (required) & \code{v} - a variable vector \newline \code{...}  &  \code{v} - a variable vector \newline \code{vnam} - the variable name (as character string) \newline \code{doEval} - a logical (\code{TRUE}/\code{FALSE}) controlling the output type of the function & \code{v} - a variable vector \newline \code{nMax} - an integer (or \code{Inf}), controlling how many problematic values are printed, if relevant \newline \code{...}  \\
+Input (optional) &  \code{maxDecimals} - number of decimals printed in outputted numerical values.  & - &  \code{maxDecimals}  - number of decimals printed in outputted numerical values.  \\
 Purpose & Describe some aspect of the variable, e.g., a central value, its dispersion or level of missingness. & Produce a distribution plot. & Check a variable for a specific issue and, if relevant, identify the values in the variable that cause the issue. \\
-Output (required) & A list with entries: \newline \R{\$feature} - a label for the summary value (as character string); \newline \R{\$result} - the result of the summary (as character string) & A character string with \R{R} code for producing a plot. This code should be standalone, i.e., should include the data if necessary. & A list with entries: \newline \R{\$problem} - a logical identifying whether an issue was found; \newline \R{\$message} - a character string (possibly empty) decribing the issue that was found, properly escaped and ready for use in \R{rmarkdown} \\
-Output (recommended) & A \R{summaryResult} object, i.e., an attributed list with entries \R{\$feature}, \R{\$result} and \R{\$value}, the latter being the values from \R{\$result} in their original format). & \bgroup
+Output (required) & A list with entries: \newline \code{\$feature} - a label for the summary value (as character string); \newline \code{\$result} - the result of the summary (as character string) & A character string with \code{R} code for producing a plot. This code should be standalone, i.e., should include the data if necessary. & A list with entries: \newline \code{\$problem} - a logical identifying whether an issue was found; \newline \code{\$message} - a character string (possibly empty) decribing the issue that was found, properly escaped and ready for use in \code{rmarkdown} \\
+Output (recommended) & A \code{summaryResult} object, i.e., an attributed list with entries \code{\$feature}, \code{\$result} and \code{\$value}, the latter being the values from \code{\$result} in their original format). & \bgroup
 \def\arraystretch{1.8}%
 \hspace*{-.2cm}\begin{tabular}[t]{p{0.45\linewidth} |
                  p{0.45\linewidth}} \vspace*{-1cm}\raggedright If
-                 \R{doEval} is \R{TRUE}: \newline A plot that is
-                 opened by the graphic device in \R{R}. &
-                                                          \vspace*{-1cm}\raggedright If \R{doEval} is \R{FALSE}: \newline   A text string with \R{R} code, as described above. \end{tabular} \egroup  & A \R{checkResult} object, i.e., an attributed list with entries \R{\$problem}, \R{\$message} and \R{\$problemValues}, the latter being either \R{NULL} or the problem causing values, as they were found in \R{v}, whichever is relevant. \\
-Tools available for producing the function & \R{summaryResult()} & --- & \R{messageGenerator()} \newline \R{checkResult()}
+                 \code{doEval} is \code{TRUE}: \newline A plot that is
+                 opened by the graphic device in \code{R}. &
+                                                          \vspace*{-1cm}\raggedright If \code{doEval} is \code{FALSE}: \newline   A text string with \code{R} code, as described above. \end{tabular} \egroup  & A \code{checkResult} object, i.e., an attributed list with entries \code{\$problem}, \code{\$message} and \code{\$problemValues}, the latter being either \code{NULL} or the problem causing values, as they were found in \code{v}, whichever is relevant. \\
+Tools available for producing the function & \code{summaryResult()} & --- & \code{messageGenerator()} \newline \code{checkResult()}
 \end{tabular}
 \egroup
 \caption{Reference information for creating new functions to be used
@@ -964,7 +963,7 @@ Tools available for producing the function & \R{summaryResult()} & --- & \R{mess
 In order to construct a summary-, visual or check function, one needs
 to create a new function with a specific structure.  This can be done with
 different levels of strictness. If
-the new custom function is only to be used as part of the SVC steps in \R{clean()},
+the new custom function is only to be used as part of the SVC steps in \code{clean()},
 then only the input/output structure of the function needs special attention.
 However, new user-defined functions can also be registered locally to
 be part of the full machinery of \pkg{dataMaid}, and these function will
@@ -991,8 +990,8 @@ mySummaryFunction <- function(v, ...) {
   summaryResult(list(feature = "[Feature name]", result = res))
 }
 \end{Verbatim}
-The last function called here, \R{summaryResult()}, changes the class
-of the output, thereby making a \R{print()} method available for it.
+The last function called here, \code{summaryResult()}, changes the class
+of the output, thereby making a \code{print()} method available for it.
 Note that \code{v} is a vector and that \code{res} should be either a
 character string or something that will be printed as one. In other
 words, e.g., integers are allowed, but matrices are not. Though a lot
@@ -1002,13 +1001,13 @@ and leaving tests and checks for the \code{checkFunction}s (presented
 below).
 
 Adhering to the template above is sufficient for using the freshly
-made \R{mySummaryFunction()} in \R{clean()}, but we recommend
+made \code{mySummaryFunction()} in \code{clean()}, but we recommend
 furthermore adding the new function to the overview of all summary
 functions by converting it to a proper \code{summaryFunction}
-object. This is done by calling the \R{summaryFunction()} creator with
+object. This is done by calling the \code{summaryFunction()} creator with
 the user-defined function as the first argument, and additional arguments
-\R{description} (an explanatory text which will be added to the attributes of
-the function), and \R{classes} (a vector of variable classes the
+\code{description} (an explanatory text which will be added to the attributes of
+the function), and \code{classes} (a vector of variable classes the
 user-defined function is intended to be applied to, also stored as an
 attribute). In other words, a call on the following form should be made:
 \begin{Schunk}
@@ -1021,34 +1020,36 @@ mySummaryFunction <- summaryFunction(mySummaryFunction,
 which adds the new function to the output of an
 \code{allSummaryFunctions()} call.
 % One comment should be devoted to
-% the two attributes of a \R{summaryFunction}.
-If the \R{description} argument is left unspecified, the name of the
-function (which in this case is \R{"mySummaryFunction"}) will be filled in and
-stored under the \R{description} attribute. What happens if the \R{classes} argument is
-not specified depends on the type of \R{mySummaryFunction}. If
-\R{mySummaryFunction} is constructed as an \R{S3} generic function with associated
-methods, the call to \R{summaryFunction()} will automatically produce
+% the two attributes of a \code{summaryFunction}.
+If the \code{description} argument is left unspecified, the name of the
+function (which in this case is \code{"mySummaryFunction"}) will be filled in and
+stored under the \code{description} attribute. What happens if the \code{classes} argument is
+not specified depends on the type of \code{mySummaryFunction}. If
+\code{mySummaryFunction} is constructed as an \code{S3} generic function with associated
+methods, the call to \code{summaryFunction()} will automatically produce
 a vector of the names of the classes for which the function can be
-called. If \R{mySummaryFunction} is not an \R{S3} generic and
-\R{classes} is left unspecified, the attribute will simply be
-left empty. Note that the helper function \R{allClasses()} might be useful
-for filling out the \R{classes} argument, as it simply lists all
+called. If \code{mySummaryFunction} is not an \code{S3} generic and
+\code{classes} is left unspecified, the attribute will simply be
+left empty. Note that the helper function \code{allClasses()} might be useful
+for filling out the \code{classes} argument, as it simply lists all
 available classes in \pkg{dataMaid}:
+
 \begin{Schunk}
 \begin{Sinput}
-> allClasses()
+R> allClasses()
 \end{Sinput}
 \begin{Soutput}
-[1] "character" "Date"      "factor"   "integer"   "labelled"
-[6] "logical"  "numeric"
+[1] "character" "Date"      "factor"    "integer"   "labelled"  "logical"  
+[7] "numeric"  
 \end{Soutput}
 \end{Schunk}
+
 % \hl{Write something here, don't end paragraph with code. Also, maybe move the allClasses() stuff somewhere else, it doesn't really belong under this header. Not sure where to, though.}
 
 
 %Jeg foreslår at droppe nedenstående, da jeg synes det bliver lidt søgt i forhold
 %til at det kun er beskrevet i pseudokode. (fx. er classes = numeric meget arbitrært)
-%If we run the \R{allSummaryFunctions()} function we can see that the
+%If we run the \code{allSummaryFunctions()} function we can see that the
 %new function has been registered (output slightly appreviated):
 
 %\begin{Schunk}
@@ -1070,9 +1071,9 @@ available classes in \pkg{dataMaid}:
 
 \subsubsection{Writing a visualFunction}
 \code{visualFunction}s are the functions that produce the figures in a
-\pkg{dataMaid} output document. Writing a \R{visualFunction} is slightly
-more complicated than writing a \R{summaryFunction}. This follows from
-the fact that \R{visualFunctions} need to be able to output standalone
+\pkg{dataMaid} output document. Writing a \code{visualFunction} is slightly
+more complicated than writing a \code{summaryFunction}. This follows from
+the fact that \code{visualFunctions} need to be able to output standalone
 code for plots in order for \code{clean()} to build standalone
 \pkg{rmarkdown} files. We recommend using the following structure:
 \begin{Schunk}
@@ -1093,16 +1094,16 @@ In this function, \code{v} is the variable to be visualized,
 \code{doEval} controls whether the output is a plot (if \code{TRUE})
 or a character string of standalone code for producing a plot (if
 \code{FALSE}). Implementing the \code{doEval = TRUE} setting is not
-strictly necessary for a \R{visualFunction}'s use in \code{clean()}, but
+strictly necessary for a \code{visualFunction}'s use in \code{clean()}, but
 it makes it easier to assess what visualization options are available,
 and obviously, it is crucial for interactive usage of
-\R{myVisualFunction()}. In either case, it should be noted that all
+\code{myVisualFunction()}. In either case, it should be noted that all
 the parameters listed above, \code{v}, \code{vnam} and \code{doEval},
 are mandatory, so they must be left as is, even if they are not in
 use (c.f. Table~\ref{table.functionTypes}).
 
 
-As with the summary function, we call \R{visualFunction()} to
+As with the summary function, we call \code{visualFunction()} to
 register our newly created function:
 %. Like before, it accepts the
 %user-defined function as the first argument, and two additional
@@ -1119,9 +1120,9 @@ myVisualFunction <- visualFunction(myVisualFunction,
 \end{Sinput}
 \end{Schunk}
 
-Now, \R{myVisualFunction()} will be available in a \R{allVisualFunctions()}
-call, just like the two build-in \R{visualFunction}s, \R{standardVisual}
-and \R{basicVisual}.
+Now, \code{myVisualFunction()} will be available in a \code{allVisualFunctions()}
+call, just like the two build-in \code{visualFunction}s, \code{standardVisual}
+and \code{basicVisual}.
 
 \subsubsection{Writing a checkFunction}
 The last, but perhaps most important, \pkg{dataMaid} function type is
@@ -1130,15 +1131,15 @@ the data in the check step and control the overall flow of the data
 cleaning process in the precheck stage. A \code{checkFunction} follows
 one of two overall structures, depending on the type of check. Either,
 it tries to identify problematic values in the variable (as
-e.g., \R{identifyMissing()} does), or it performs a check concerning the
+e.g., \code{identifyMissing()} does), or it performs a check concerning the
 variable as a whole (e.g., the functions used for prechecks and the
-function \R{identifyNums()}). We present templates for both types of
-\R{checkFunction}s below separately, but it should be emphasized that
+function \code{identifyNums()}). We present templates for both types of
+\code{checkFunction}s below separately, but it should be emphasized that
 formally, they belong to the same class.
 
 First, a template for the full-variable check function type, where we
 first define the function and subsequently register it as a check
-function using \R{checkFunction()}:
+function using \code{checkFunction()}:
 \begin{Schunk}
 \begin{Sinput}
 myFullVarCheckFunction <- function(v, ...) {
@@ -1157,10 +1158,10 @@ myFullVarCheckFunction <- checkFunction(myFullVarCheckFunction,
 \end{Sinput}
 \end{Schunk}
 
-Again, as with \R{summaryFunction}s and \R{visualFunction}s, the
-change of function class by use of \R{checkFunction()} is not strictly
-necessary. Note however, that if \R{myFullVarCheckFunction} is to be
-used in the summarize/visualize/check steps in \R{clean()}, the
+Again, as with \code{summaryFunction}s and \code{visualFunction}s, the
+change of function class by use of \code{checkFunction()} is not strictly
+necessary. Note however, that if \code{myFullVarCheckFunction} is to be
+used in the summarize/visualize/check steps in \code{clean()}, the
 description attribute will be printed in the overview table in the
 \textit{Data cleaning summary} part of the output document.
 
@@ -1193,21 +1194,21 @@ myProbValCheckFunction <- checkFunction(myProbValCheckFunction,
 \end{Sinput}
 \end{Schunk}
 One comment should be devoted to the helper function,
-\R{messageGenerator()}.  This function's sole purpose is aiding
+\code{messageGenerator()}.  This function's sole purpose is aiding
 consistent styling of all \code{checkFunction} messages. The function
 simply pastes together the \code{problemMessage} and the
 \code{problemValues}, with the latter being quoted and sorted
-alphabetically. If the \R{nMax} argument to \R{messageGenerator()} is
-not \R{Inf}, only the first \R{nMax} problem values will be pasted
+alphabetically. If the \code{nMax} argument to \code{messageGenerator()} is
+not \code{Inf}, only the first \code{nMax} problem values will be pasted
 onto the message, accompanied by a comment about how many problem
 values were left out (if any).  Note that printing quotes in
 \pkg{rmarkdown} requires an extensive amount of character escaping, so
 opting for \code{messageGenerator()} really is the easiest solution.
 
-In the template above, the argument \R{maxDecimals} is not in use. This
-argument should be used to round off the \R{problemValues} passed to
-\R{messageGenerator()}, if they are numerical.  This can be done by
-adding an extra line of code after defining \R{problemStatus} in the template
+In the template above, the argument \code{maxDecimals} is not in use. This
+argument should be used to round off the \code{problemValues} passed to
+\code{messageGenerator()}, if they are numerical.  This can be done by
+adding an extra line of code after defining \code{problemStatus} in the template
 above:
 \begin{Schunk}
 \begin{Sinput}
@@ -1225,72 +1226,75 @@ myProbValCheckFunction <- function(v, nMax, maxDecimals, ...) {
 \end{Schunk}
 %$
 Now, problematic values will be rounded in the outputted message, while they
-will still appear in their original format under the entry \R{\$problemValues} %$
-in the outputted \R{checkResult}.
+will still appear in their original format under the entry \code{\$problemValues} %$
+in the outputted \code{checkResult}.
 
 \subsection{A worked example}
 
 We will now build four new functions and show both how they can be
-used interactively and how they can be integrated with the \R{clean()}
+used interactively and how they can be integrated with the \code{clean()}
 function. These four new functions are:
 \begin{description}
-\item[\R{isID}] A new \R{checkFunction} intended for use in the precheck-stage. This function checks whether a variable consists exclusively of long ($> 10$ characters/digits) entries that are all of equal length, as this might be personal identification codes that we do not wish to print out in the data summary.
-\item[\R{mosaicVisual}] A new \R{visualFunction} that produces mosaic plots. This function will be used in the \textit{visualize} step of \R{clean()}.
-\item[\R{countZeros}] A new \R{summaryFunction} that counts the number of occurrences of the value \R{0} in a variable. This function will be used in the \textit{summarize} step of \R{clean()}.
-\item[\R{identifyColons}] A new \R{checkFunction} that flags variables in which values have colons that appear before and after alphanumerical characters. This is practical for identifying autogenerated interaction effects. This function will be used in the \textit{check} step of \R{clean()}.
+\item[\code{isID}] A new \code{checkFunction} intended for use in the precheck-stage. This function checks whether a variable consists exclusively of long ($> 10$ characters/digits) entries that are all of equal length, as this might be personal identification codes that we do not wish to print out in the data summary.
+\item[\code{mosaicVisual}] A new \code{visualFunction} that produces mosaic plots. This function will be used in the \textit{visualize} step of \code{clean()}.
+\item[\code{countZeros}] A new \code{summaryFunction} that counts the number of occurrences of the value \code{0} in a variable. This function will be used in the \textit{summarize} step of \code{clean()}.
+\item[\code{identifyColons}] A new \code{checkFunction} that flags variables in which values have colons that appear before and after alphanumerical characters. This is practical for identifying autogenerated interaction effects. This function will be used in the \textit{check} step of \code{clean()}.
 \end{description}
-These functions are defined in turn below, and afterwards, an example of how they can be called from \R{clean()} is provided.
+These functions are defined in turn below, and afterwards, an example of how they can be called from \code{clean()} is provided.
 
 \subsubsection{isID --- a new checkFunction without problem values}
-First, let's define the \R{isID()} function. As this function is not
+First, let's define the \code{isID()} function. As this function is not
 supposed to list problematic values, it falls within
-the category of \R{checkFunctions} represented by
-\R{myFullVarCheckFunction()} in the above. We do not particularly wish
+the category of \code{checkFunctions} represented by
+\code{myFullVarCheckFunction()} in the above. We do not particularly wish
 to use this function interactively, so we will stick to the minimal
-requirements of a \R{checkFunction} used in \R{check()} (see
+requirements of a \code{checkFunction} used in \code{check()} (see
 Table~\ref{table.functionTypes}). The function can then be defined by
+
 \begin{Schunk}
 \begin{Sinput}
-isID <- function(v, nMax = NULL, ...) {
-  out <- list(problem = FALSE, message = "")
-  # Should work for all but logical and Date variables
-  if (class(v) %in% setdiff(allClasses(), c("logical", "Date"))) {
-    v <- as.character(v)
-    lengths <- c(nchar(v))
-    # Check that all lengths are the same and greater than 10 characters
-    if (all(lengths > 10) & length(unique(lengths)) == 1) {
-      out$problem <- TRUE
-      out$message <- "Warning: This variable seems to contain ID codes."
-    }
-  }
-  out
-}
+R> isID <- function(v, nMax = NULL, ...) {
++    out <- list(problem = FALSE, message = "")
++    # Should work for all but logical and Date variables
++    if (class(v) %in% setdiff(allClasses(), c("logical", "Date"))) {
++      v <- as.character(v)
++      lengths <- c(nchar(v))
++      # Check that all lengths are the same and greater than 10 characters
++      if (all(lengths > 10) & length(unique(lengths)) == 1) {
++        out$problem <- TRUE
++        out$message <- "Warning: This variable seems to contain ID codes."
++      }
++    }
++    out
++  }
 \end{Sinput}
 \end{Schunk}
 
 This is essentially all we need to do in order to include this
-function as a precheck-function in \R{clean()}, so we will leave it as
-is and move on to the next function, namely \R{mosaicVisual()}.
+function as a precheck-function in \code{clean()}, so we will leave it as
+is and move on to the next function, namely \code{mosaicVisual()}.
 
 \subsubsection{mosiacVisual --- a new visualFunction}
-\proglang{R} contains a function, \R{mosiacplot()}, which produces
+\proglang{R} contains a function, \code{mosiacplot()}, which produces
 mosaic plots. We intend to use this existing high-level plotting
 function as part of the new visualization function.  We will define
 the new function such that it gets the full \pkg{dataMaid}
-functionality. This can be done using the following code.
+functionality. This can be done using the following code which sets up
+the call using the existing function \code{mosaicplot}.
+
 \begin{Schunk}
 \begin{Sinput}
- mosaicVisual <- function(v, vnam, doEval) {
-   # Setup the call using the existing function mosaicplot
-   thisCall <- call("mosaicplot", table(v), main = vnam, xlab = "")
-   if (doEval) {                     # Return the graphics
-    return(eval(thisCall))
-   } else return(deparse(thisCall))  # Else return the code for the call
- }
+R> mosaicVisual <- function(v, vnam, doEval) {
++    thisCall <- call("mosaicplot", table(v), main = vnam, xlab = "")
++    if (doEval) {                     # Return the graphics
++      return(eval(thisCall))
++    } else return(deparse(thisCall))  # Else return the code for the call
++  }
 \end{Sinput}
 \end{Schunk}
-This function can now be called directly or used in \R{clean()}, as will
-presented in an example below. Depending on the \R{doEval} argument, either a text string
+
+This function can now be called directly or used in \code{clean()}, as will
+presented in an example below. Depending on the \code{doEval} argument, either a text string
 with code or a plot is produced. The plot resulting from the following
 call is found in Figure~\ref{fig:mosaicPlot}:
 \begin{Schunk}
@@ -1313,83 +1317,91 @@ call is found in Figure~\ref{fig:mosaicPlot}:
 
 
 
-Even though \R{mosaicVisual()}, as written above, follows the style of a
-\R{visualFunction}, it is not yet truly one and therefore, it will not
-appear in an \R{allVisualFunctions()} call. In order to get this
+Even though \code{mosaicVisual()}, as written above, follows the style of a
+\code{visualFunction}, it is not yet truly one and therefore, it will not
+appear in an \code{allVisualFunctions()} call. In order to get this
 functionality, we need to change its object class. This can be done by
 writing
+
 \begin{Schunk}
 \begin{Sinput}
- mosaicVisual <- visualFunction(mosaicVisual,
- 			description = "Mosaic plots using graphics",
-                                classes = allClasses())
+R> mosaicVisual <- visualFunction(mosaicVisual,
++    description = "Mosaic plots using graphics",
++    classes = allClasses())
 \end{Sinput}
 \end{Schunk}
-Here, we use the function \R{allClasses()} to quickly obtain a vector
+
+Here, we use the function \code{allClasses()} to quickly obtain a vector
 of all the seven variable classes addressed in \pkg{dataMaid}. Note that
-if \R{mosaicVisual()} were an S3 generic function, this argument could
-have been left as \R{NULL} and then the classes for which methods are
+if \code{mosaicVisual()} were an S3 generic function, this argument could
+have been left as \code{NULL} and then the classes for which methods are
 available would be added automatically.
 %\hl{I'm repeating myself here,
 %  but I think it is quite a neat feature, so maybe that's okay?}
 
-As \R{mosaicVisual} is now a full-blooded \R{visualFunction}, it will also be included in the \R{allVisualFunctions()} output table:
+As \code{mosaicVisual} is now a full-blooded \code{visualFunction}, it
+will also be included in the \code{allVisualFunctions()} output table:
 \begin{Schunk}
 \begin{Sinput}
-> allVisualFunctions()
+R> allVisualFunctions()
 \end{Sinput}
 \begin{Soutput}
-------------------------------------------------------------------------
-name           description                   classes
--------------- ----------------------------- ---------------------------
-mosaicVisual   Mosaic plots using graphics   character, Date, factor,
-                                             integer, labelled, logical,
-                                             numeric
+------------------------------------------------------------------------------
+name             description                     classes                      
+---------------- ------------------------------- -----------------------------
+mosaicVisual     Mosaic plots using graphics     character, Date, factor,     
+                                                 integer, labelled, logical,  
+                                                 numeric                      
 
-basicVisual    Histograms and barplots using character, Date, factor,
-               graphics                      integer, labelled, logical,
-                                             numeric
-standardVisual Histograms and barplots using character, Date, factor,
-               ggplot2                       integer, labelled, logical,
-                                             numeric
-------------------------------------------------------------------------
+basicVisual      Histograms and barplots using   character, Date, factor,     
+                 graphics                        integer, labelled, logical,  
+                                                 numeric                      
+
+standardVisual   Histograms and barplots using   character, Date, factor,     
+                 ggplot2                         integer, labelled, logical,  
+                                                 numeric                      
+------------------------------------------------------------------------------
 \end{Soutput}
 \end{Schunk}
 
-Now that we are done with the definition of \R{mosaicVisual()} we can
-turn to the next function in line, \R{countZeros}.
+Now that we are done with the definition of \code{mosaicVisual()} we can
+turn to the next function in line, \code{countZeros}.
 
 \subsubsection{countZeros --- a new summaryFunction}
-This \R{summaryFunction} is defined in the following lines of code:
+This \code{summaryFunction} is defined in the following lines of code:
+
 \begin{Schunk}
 \begin{Sinput}
-countZeros <- function(v, ...) {
-	res <- length(which(v == 0))
-	summaryResult(list(feature = "No. zeros", result = res, value = res))
-}
+R> countZeros <- function(v, ...) {
++    res <- length(which(v == 0))
++    summaryResult(list(feature = "No. zeros", result = res, value = res))
++  }
 \end{Sinput}
 \end{Schunk}
+
 As this function computes an integer (the number of zeros),
-there is no difference between the entries \R{\$result} and
-\R{\$value}. If, on the other hand, the result had been a character
-string, extra formatting might be required in the \R{\$result} entry
+there is no difference between the entries \code{\$result} and
+\code{\$value}. If, on the other hand, the result had been a character
+string, extra formatting might be required in the \code{\$result} entry
 (such as escaping of quotation marks), and in this scenario, the two
 entries would have differed. As the result is returned as a
-\R{summaryResult} object, a printing method is automatically called
-when \R{countZeros} is used interactively:
+\code{summaryResult} object, a printing method is automatically called
+when \code{countZeros} is used interactively:
+
 \begin{Schunk}
 \begin{Sinput}
-> countZeros(c(rep(0, 5), 1:100))
+R> countZeros(c(rep(0, 5), 1:100))
 \end{Sinput}
 \begin{Soutput}
 No. zeros: 5
 \end{Soutput}
 \end{Schunk}
-As with \R{mosaicVisual()}, we change the class of this function in
-order to make it appear in \R{allSummaryFunctions()} calls. But now we
+
+As with \code{mosaicVisual()}, we change the class of this function in
+order to make it appear in \code{allSummaryFunctions()} calls. But now we
 wish to emphasize that the function is not intended to be called on
-all variable types, as zeros have different roles in \R{Date}s and in
-\R{logical} variables:
+all variable types, as zeros have different roles in \code{Date}s and in
+\code{logical} variables:
 \begin{Schunk}
 \begin{Sinput}
 > countZeros <- summaryFunction(countZeros,
@@ -1401,9 +1413,9 @@ all variable types, as zeros have different roles in \R{Date}s and in
 % \hl{more? don't end on code.}
 
 \subsubsection{identifyColons - a new checkFunction with problem values}
-The last function mentioned above is \R{identifyColons()}. We define
-it using the helper function \R{messageGenerator()} to obtain a properly
-escaped message, and we use \R{checkResult} to make its output print
+The last function mentioned above is \code{identifyColons()}. We define
+it using the helper function \code{messageGenerator()} to obtain a properly
+escaped message, and we use \code{checkResult} to make its output print
 neatly:
 \begin{Schunk}
 \begin{Sinput}
@@ -1438,20 +1450,20 @@ identifyColons <- checkFunction(identifyColons,
 \end{Sinput}
 \end{Schunk}
 As with the previous two functions, we also change its class. Note,
-however, that for \R{checkFunction}s, the function description will
-appear in the document produced by \R{clean()} (in the \textit{Data
+however, that for \code{checkFunction}s, the function description will
+appear in the document produced by \code{clean()} (in the \textit{Data
   cleaning summary} section of the output), so now this is not only
-done for the sake of the \R{allCheckFunctions()} output.
+done for the sake of the \code{allCheckFunctions()} output.
 
 \subsubsection{Calling the new summarize/visualize/check functions from clean()}
-Now, we are ready to use these new functions in a \R{clean()}
+Now, we are ready to use these new functions in a \code{clean()}
 call. The extended \pkg{dataMaid} output document should have the
 following modifications, relative to the standard \pkg{dataMaid} output:
 \begin{itemize}
-\item We want to add the new pre-check function, \R{isID}, to the already existing pre-checks.
+\item We want to add the new pre-check function, \code{isID}, to the already existing pre-checks.
 \item We wish to change the plot type for all variables to the new mosaic plot.
-\item We want the new summary function, \R{countZeros}, to be added to the summaries performed on all variable types but \R{Date} and \R{logical}.
-\item We want the new check function, \R{identifyColon}, to be added to the checks performed on \R{character}, \R{factor} and \R{labelled} variables.
+\item We want the new summary function, \code{countZeros}, to be added to the summaries performed on all variable types but \code{Date} and \code{logical}.
+\item We want the new check function, \code{identifyColon}, to be added to the checks performed on \code{character}, \code{factor} and \code{labelled} variables.
 \end{itemize}
 These options are specified as follows: %\hl{Jeg synes ikke testData egner sig her. Der er ingen koloner og CPRvar er et mærkeligt, internt navn, hvis ikke man kender danske CPR-numre. Langt de fleste variable har desuden ingen nuller. Måske skal der laves et nyt datasæt?}
 \begin{Schunk}
@@ -1493,7 +1505,7 @@ dataset. %\hl{I feel like there should be more topics here, but I'm all
 %  out of ideas...}
 
 \subsection{Cleaning large datasets}
-If the dataset becomes very large, the standard use of \R{clean()}
+If the dataset becomes very large, the standard use of \code{clean()}
 outlined above might not be ideal. If there is a vast number of
 variables, creation of the \pkg{rmarkdown} document might be quite
 slow, while a large number of observations will generally affect the
@@ -1515,7 +1527,7 @@ such overview documents are needed.
 Though figures give a nice overview of each variable, they are also
 quite heavy objects in terms of memory allocation. Therefore, it might
 be beneficial to not include figures in the \pkg{dataMaid} outputs for
-very large datasets. This is controlled via the \R{mode} argument:
+very large datasets. This is controlled via the \code{mode} argument:
 \begin{Schunk}
 \begin{Sinput}
 > clean(toyData, mode = c("summarize", "check"))
@@ -1523,15 +1535,15 @@ very large datasets. This is controlled via the \R{mode} argument:
 \end{Schunk}
 If figures are indeed needed, a different approach is to choose the
 less memory heavy standard \proglang{R} figure style instead of the
-\pkg{ggplot2} figures that are the default option in \R{clean()}. This
-can be done by setting the \R{allVisuals = "basicVisual"} argument:
+\pkg{ggplot2} figures that are the default option in \code{clean()}. This
+can be done by setting the \code{allVisuals = "basicVisual"} argument:
 \begin{Schunk}
 \begin{Sinput}
 > clean(toyData, allVisuals = "basicVisual")
 \end{Sinput}
 \end{Schunk}
 Of course, even less heavy plots might be achieved by writing new
-\R{visualFunction}s, using the guidelines from section
+\code{visualFunction}s, using the guidelines from section
 \ref{sec:functionTemplates}. For instance, a future extension of
 \pkg{dataMaid} might be the inclusion of ASCII plots, as
 e.g., represented in the \proglang{R} package \pkg{txtplot}.
@@ -1545,8 +1557,8 @@ the memory handling on this operating system,
 %combination of memory control in this operating system and
 %\proglang{R},
 is simply splitting the two steps performed
-by \R{clean()}, namely producing the \pkg{rmarkdown} file and rendering it
-afterwards. If the \R{rmarkdown} file is very long, as it will
+by \code{clean()}, namely producing the \pkg{rmarkdown} file and rendering it
+afterwards. If the \code{rmarkdown} file is very long, as it will
 typically be for very large datasets, keeping this file open in memory
 wastes precious memory capacities. Therefore, we advice users to
 instead split the two steps. This can be done in the following manner:
@@ -1568,37 +1580,37 @@ RStudio, which currently has an editor file size limit of 5MB. %\hl{dette giver
 %\hl{Is this maybe too editor specific? On the other hand, a
 %  lot of people do use RStudio...}.
 
-\subsection{Using dataMaid for problem flagging}
+\subsection[Using dataMaid for problem flagging]{Using \pkg{dataMaid} for problem flagging}
 If the data is large, but memory issues and computation time are less
 of an issue than the human time it takes to look through the data
 cleaning document, a viable solution might be not to include all
 information about all variables. Or even for more reasonably sized
 datasets, sometimes a brief overview of the most pressing issues can
-be useful. This can be achieved by using the \R{onlyProblematic}
-argument in \R{clean()}. By specifying \R{onlyProblematic = TRUE},
+be useful. This can be achieved by using the \code{onlyProblematic}
+argument in \code{clean()}. By specifying \code{onlyProblematic = TRUE},
 only variables that raise a flag in the checking steps will be
 summarized and visualized. But perhaps we are not even interested in
 obtaining general information about these variables, but only in
 getting a quick overview of the problems they might have. This can be
-done by also controlling the \R{mode} argument:
+done by also controlling the \code{mode} argument:
 \begin{Schunk}
 \begin{Sinput}
 > clean(toyData, onlyProblematic = TRUE, mode = c("check"))
 \end{Sinput}
 \end{Schunk}
-Now only the checking results are printed, and only for variables where problems were identified. An even more minimal output can be generated by also leaving out the checking results --- then \R{clean()} essentially just produces a list of the variable names that should be investigated further:
+Now only the checking results are printed, and only for variables where problems were identified. An even more minimal output can be generated by also leaving out the checking results --- then \code{clean()} essentially just produces a list of the variable names that should be investigated further:
 \begin{Schunk}
 \begin{Sinput}
 > clean(toyData, onlyProblematic = TRUE, mode = NULL)
 \end{Sinput}
 \end{Schunk}
 Of course, this can also be done without generating an overview
-document, by direct, interactive use of the \R{check()} function. When
-called on a \R{data.frame}, this function produces a list (of
+document, by direct, interactive use of the \code{check()} function. When
+called on a \code{data.frame}, this function produces a list (of
 variables) of lists (of checks) of lists (or rather,
-\R{checkResult}s). Thus, the overall problem status of each variable
+\code{checkResult}s). Thus, the overall problem status of each variable
 can easily be unravelled using the list manipulation function
-\R{sapply()}:
+\code{sapply()}:
 \begin{Schunk}
 \begin{Sinput}
 > toyChecks <- check(toyData)
@@ -1612,27 +1624,27 @@ can easily be unravelled using the list manipulation function
  TRUE  TRUE  TRUE  TRUE  TRUE FALSE
 \end{Soutput}
 \end{Schunk}
-and we find that only a single variable in \R{toyData}, \R{var6} (for which all
-observations have the value \R{"Irrelevant"}), is problem-free.
+and we find that only a single variable in \code{toyData}, \code{var6} (for which all
+observations have the value \code{"Irrelevant"}), is problem-free.
 
 
 
 
-\subsection{Including dataMaid documents in other files}
+\subsection[Including dataMaid documents in other files]{Including \pkg{dataMaid} documents in other files}
 Sometimes, a \pkg{dataMaid} document might be a useful addition to a
 more general overview document, including also for example pairwise
 association plots, time series plots, or exploratory analysis
 results. To this end, it is possible to produce a \pkg{dataMaid}
 document that can readily be included in other \pkg{rmarkdown}
-files. This is done by using the \R{standAlone} argument in \R{clean()},
+files. This is done by using the \code{standAlone} argument in \code{clean()},
 which removes the preamble from the outputted \pkg{rmarkdown}
 file. Please note, that it is still necessary to indicate which
-\R{rmarkdown} type is being created; the pdf and html \pkg{rmarkdown}
+\code{rmarkdown} type is being created; the pdf and html \pkg{rmarkdown}
 styles are unfortunately not identical.
 
 If it is important that the embedded \pkg{dataMaid} document can be
 rendered to either of these two file types, we recommend setting
-\R{twoCols = FALSE} and \R{output = html} in \R{clean()}, thereby
+\code{twoCols = FALSE} and \code{output = html} in \code{clean()}, thereby
 essentially removing almost all output type specific formatting code
 from the generated \pkg{rmarkdown} file.
 
@@ -1640,7 +1652,7 @@ On the other hand, if a pdf document is to be produced, a few extra
 lines need to be added to the preamble of the master \pkg{rmarkdown}
 document --- otherwise, the two-column layout code will produce an
 error. The following is an example of how such a master document
-preamble YAML might look like and how the \R{dataMaid\_toyData.Rmd} file can
+preamble YAML might look like and how the \code{dataMaid\_toyData.Rmd} file can
 then be included:
 {\small
 \begin{Verbatim}
@@ -1661,7 +1673,7 @@ header-includes:
 }
 %\hl{Use proper formatting here. How do we do non-R code?}
 
-In the this example, the \R{dataMaid\_toyData.Rmd} file could have been created as follows:
+In the this example, the \code{dataMaid\_toyData.Rmd} file could have been created as follows:
 \begin{Schunk}
 \begin{Sinput}
 > clean(toyData, standAlone = FALSE)
@@ -1673,7 +1685,7 @@ and the more minimal, html-style \pkg{rmarkdown} file described above can be pro
 > clean(toyData, standAlone = FALSE, output = "html", twoCols = FALSE)
 \end{Sinput}
 \end{Schunk}
-Note that with the latter option, no special YAML preamble is needed in the \R{rmarkdown} document.
+Note that with the latter option, no special YAML preamble is needed in the \pkg{rmarkdown} document.
 % \hl{don't end on code.}
 
 
