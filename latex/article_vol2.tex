@@ -185,7 +185,7 @@ provides easy-to-use, automated tools for data quality assessment in
 assessment is presented in an auto-generated overview document,
 readable by data analysts and field experts alike, thereby also
 contributing to an inter-field dialogue about the data at
-hand. Oftentimes, e.g. distinguishing between faulty codings of a
+hand. Oftentimes, e.g., distinguishing between faulty codings of a
 numeric value and unusual, but correct, values requires
 problem-specific expertise that might not be held by the data
 analyst. Hopefully, having easy access to data descriptions through
@@ -264,6 +264,28 @@ commands load the dataset and produce the cleaning output:
 R> library("dataMaid")
 R> data("toyData")
 R> toyData
+\end{Sinput}
+\begin{Soutput}
+   var1 var2  var3       var4 var5       var6
+1   red    1     a -0.6264538    1 Irrelevant
+2   red    1     a  0.1836433    2 Irrelevant
+3   red    1     a -0.8356286    3 Irrelevant
+4   red    2     a  1.5952808    4 Irrelevant
+5   red    2     a  0.3295078    5 Irrelevant
+6   red    6     b -0.8204684    6 Irrelevant
+7   red    6     b  0.4874291    7 Irrelevant
+8   red    6     b  0.7383247    8 Irrelevant
+9   red  999     c  0.5757814    9 Irrelevant
+10  red   NA     c -0.3053884   10 Irrelevant
+11 blue    4     c  1.5117812   11 Irrelevant
+12 blue   82     .  0.3898432   12 Irrelevant
+13 blue   NA       -0.6212406   13 Irrelevant
+14 <NA>  NaN other -2.2146999   14 Irrelevant
+15 <NA>    5 OTHER  1.1249309   15 Irrelevant
+\end{Soutput}
+\end{Schunk}
+\begin{Schunk}
+\begin{Sinput}
 R> clean(toyData)
 \end{Sinput}
 \end{Schunk}
@@ -541,35 +563,34 @@ lists in \proglang{R}. For example, the implemented
 
 %\subsection{Something about what check, visual and summary functions are available}
 
-
 \begin{Schunk}
 \begin{Sinput}
-> allSummaryFunctions()
+R> allSummaryFunctions()
 \end{Sinput}
 \begin{Soutput}
 ----------------------------------------------------------------------------
-name           description                     classes
+name           description                     classes                      
 -------------- ------------------------------- -----------------------------
-centralValue   Compute median or mode          character, Date, factor,
-                                               integer, labelled, logical,
-                                               numeric
+centralValue   Compute median or mode          character, Date, factor,     
+                                               integer, labelled, logical,  
+                                               numeric                      
 
-countMissing   Compute ratio of missing        character, Date, factor,
-               observations                    integer, labelled, logical,
-                                               numeric
+countMissing   Compute ratio of missing        character, Date, factor,     
+               observations                    integer, labelled, logical,  
+                                               numeric                      
 
-minMax         Find minimum and maximum        Date, integer, numeric
-               values
+minMax         Find minimum and maximum        integer, numeric, Date       
+               values                                                       
 
-quartiles      Compute 1st and 3rd quartiles   Date, integer, numeric
+quartiles      Compute 1st and 3rd quartiles   Date, integer, numeric       
 
-uniqueValues   Count number of unique values   character, Date, factor,
-                                               integer, labelled, logical,
-                                               numeric
+uniqueValues   Count number of unique values   character, Date, factor,     
+                                               integer, labelled, logical,  
+                                               numeric                      
 
-variableType   Data class of variable          character, Date, factor,
-                                               integer, labelled, logical,
-                                               numeric
+variableType   Data class of variable          character, Date, factor,     
+                                               integer, labelled, logical,  
+                                               numeric                      
 ----------------------------------------------------------------------------
 \end{Soutput}
 \end{Schunk}
@@ -593,7 +614,7 @@ the variable type.
 For example, the default summaries being used for a factor variable is
 \begin{Schunk}
 \begin{Sinput}
-> defaultFactorSummaries()
+R> defaultFactorSummaries()
 \end{Sinput}
 \begin{Soutput}
 [1] "variableType" "countMissing" "uniqueValues" "centralValue"
@@ -607,13 +628,13 @@ table of each variable we write
 
 \begin{Schunk}
 \begin{Sinput}
-> clean(toyData, characterSummaries = c("variableType", "centralValue"),
-        factorSummaries = c("variableType", "centralValue"),
-        labelledSummaries = c("variableType", "centralValue"),
-        numericSummaries = c("variableType", "centralValue"),
-        integerSummaries = c("variableType", "centralValue"),
-        logicalSummaries = c("variableType", "centralValue"),
-        dateSummaries = c("variableType", "centralValue"))
+R> clean(toyData, characterSummaries = c("variableType", "centralValue"),
++    factorSummaries = c("variableType", "centralValue"),
++    labelledSummaries = c("variableType", "centralValue"),
++    numericSummaries = c("variableType", "centralValue"),
++    integerSummaries = c("variableType", "centralValue"),
++    logicalSummaries = c("variableType", "centralValue"),
++    dateSummaries = c("variableType", "centralValue"))
 \end{Sinput}
 \end{Schunk}
 
@@ -624,7 +645,7 @@ variable types. Thus, the same result as above could be obtained with
 
 \begin{Schunk}
 \begin{Sinput}
-> clean(toyData, allSummaries = c("variableType", "centralValue"))
+R> clean(toyData, allSummaries = c("variableType", "centralValue"))
 \end{Sinput}
 \end{Schunk}
 
@@ -633,11 +654,11 @@ arguments. The default checks being applied to a factor is
 
 \begin{Schunk}
 \begin{Sinput}
-> defaultFactorChecks()
+R> defaultFactorChecks()
 \end{Sinput}
 \begin{Soutput}
-[1] "identifyMissing"    "identifyWhitespace" "identifyLoners"
-[4] "identifyCaseIssues" "identifyNums"
+[1] "identifyMissing"    "identifyWhitespace" "identifyLoners"    
+[4] "identifyCaseIssues" "identifyNums"      
 \end{Soutput}
 \end{Schunk}
 
@@ -646,7 +667,7 @@ factor variables, then we would need to set the \R{factorChecks} accordingly
 
 \begin{Schunk}
 \begin{Sinput}
-> clean(toyData, factorChecks = c("identifyWhitespace"))
+R> clean(toyData, factorChecks = c("identifyWhitespace"))
 \end{Sinput}
 \end{Schunk}
 
@@ -656,7 +677,7 @@ not be checked for any potential errors:
 
 \begin{Schunk}
 \begin{Sinput}
-> clean(toyData, factorChecks = NULL)
+R> clean(toyData, factorChecks = NULL)
 \end{Sinput}
 \end{Schunk}
 
@@ -873,7 +894,7 @@ only get the median, minimum and the maximum we set
 \end{Schunk}
 % $
 
-Note that the \R{summarize()}, \R{check()} and \R{visualize()} functions are also available interactively for full datasets, by calling e.g. \R{summarize(toyData)}. However, this produces an extensive amount of output in the console, and therefore, we generally do not recommend it, unless working with very small datasets or subsets of datasets.
+Note that the \R{summarize()}, \R{check()} and \R{visualize()} functions are also available interactively for full datasets, by calling e.g., \R{summarize(toyData)}. However, this produces an extensive amount of output in the console, and therefore, we generally do not recommend it, unless working with very small datasets or subsets of datasets.
 
 %\hl{
 %\begin{itemize}
@@ -917,15 +938,15 @@ four new SVC functions are defined and used, both interactively and in \R{clean(
 \hline
 \vspace{0pt} Input (required) & \R{v} - a variable vector \newline \R{...}  &  \R{v} - a variable vector \newline \R{vnam} - the variable name (as character string) \newline \R{doEval} - a logical (\R{TRUE}/\R{FALSE}) controlling the output type of the function & \R{v} - a variable vector \newline \R{nMax} - an integer (or \R{Inf}), controlling how many problematic values are printed, if relevant \newline \R{...}  \\
 Input (optional) &  \R{maxDecimals} - number of decimals printed in outputted numerical values.  & - &  \R{maxDecimals}  - number of decimals printed in outputted numerical values.  \\
-Purpose & Describe some aspect of the variable, e.g. a central value, its dispersion or level of missingness. & Produce a distribution plot. & Check a variable for a specific issue and, if relevant, identify the values in the variable that cause the issue. \\
-Output (required) & A list with entries: \newline \R{\$feature} - a label for the summary value (as character string); \newline \R{\$result} - the result of the summary (as character string) & A character string with \R{R} code for producing a plot. This code should be standalone, i.e. should include the data if necessary. & A list with entries: \newline \R{\$problem} - a logical identifying whether an issue was found; \newline \R{\$message} - a character string (possibly empty) decribing the issue that was found, properly escaped and ready for use in \R{rmarkdown} \\
-Output (recommended) & A \R{summaryResult} object, i.e. an attributed list with entries \R{\$feature}, \R{\$result} and \R{\$value}, the latter being the values from \R{\$result} in their original format). & \bgroup
+Purpose & Describe some aspect of the variable, e.g., a central value, its dispersion or level of missingness. & Produce a distribution plot. & Check a variable for a specific issue and, if relevant, identify the values in the variable that cause the issue. \\
+Output (required) & A list with entries: \newline \R{\$feature} - a label for the summary value (as character string); \newline \R{\$result} - the result of the summary (as character string) & A character string with \R{R} code for producing a plot. This code should be standalone, i.e., should include the data if necessary. & A list with entries: \newline \R{\$problem} - a logical identifying whether an issue was found; \newline \R{\$message} - a character string (possibly empty) decribing the issue that was found, properly escaped and ready for use in \R{rmarkdown} \\
+Output (recommended) & A \R{summaryResult} object, i.e., an attributed list with entries \R{\$feature}, \R{\$result} and \R{\$value}, the latter being the values from \R{\$result} in their original format). & \bgroup
 \def\arraystretch{1.8}%
 \hspace*{-.2cm}\begin{tabular}[t]{p{0.45\linewidth} |
                  p{0.45\linewidth}} \vspace*{-1cm}\raggedright If
                  \R{doEval} is \R{TRUE}: \newline A plot that is
                  opened by the graphic device in \R{R}. &
-                                                          \vspace*{-1cm}\raggedright If \R{doEval} is \R{FALSE}: \newline   A text string with \R{R} code, as described above. \end{tabular} \egroup  & A \R{checkResult} object, i.e. an attributed list with entries \R{\$problem}, \R{\$message} and \R{\$problemValues}, the latter being either \R{NULL} or the problem causing values, as they were found in \R{v}, whichever is relevant. \\
+                                                          \vspace*{-1cm}\raggedright If \R{doEval} is \R{FALSE}: \newline   A text string with \R{R} code, as described above. \end{tabular} \egroup  & A \R{checkResult} object, i.e., an attributed list with entries \R{\$problem}, \R{\$message} and \R{\$problemValues}, the latter being either \R{NULL} or the problem causing values, as they were found in \R{v}, whichever is relevant. \\
 Tools available for producing the function & \R{summaryResult()} & --- & \R{messageGenerator()} \newline \R{checkResult()}
 \end{tabular}
 \egroup
@@ -974,7 +995,7 @@ The last function called here, \R{summaryResult()}, changes the class
 of the output, thereby making a \R{print()} method available for it.
 Note that \code{v} is a vector and that \code{res} should be either a
 character string or something that will be printed as one. In other
-words, e.g. integers are allowed, but matrices are not. Though a lot
+words, e.g., integers are allowed, but matrices are not. Though a lot
 of different things can go into the \code{summaryFunction} template,
 we recommend only using it for summarizing the features of a variable,
 and leaving tests and checks for the \code{checkFunction}s (presented
@@ -1110,7 +1131,7 @@ cleaning process in the precheck stage. A \code{checkFunction} follows
 one of two overall structures, depending on the type of check. Either,
 it tries to identify problematic values in the variable (as
 e.g., \R{identifyMissing()} does), or it performs a check concerning the
-variable as a whole (e.g. the functions used for prechecks and the
+variable as a whole (e.g., the functions used for prechecks and the
 function \R{identifyNums()}). We present templates for both types of
 \R{checkFunction}s below separately, but it should be emphasized that
 formally, they belong to the same class.
@@ -1513,7 +1534,7 @@ Of course, even less heavy plots might be achieved by writing new
 \R{visualFunction}s, using the guidelines from section
 \ref{sec:functionTemplates}. For instance, a future extension of
 \pkg{dataMaid} might be the inclusion of ASCII plots, as
-e.g. represented in the \proglang{R} package \pkg{txtplot}.
+e.g., represented in the \proglang{R} package \pkg{txtplot}.
 
 %\hl{I really feel like we should do some benchmarking here, maybe just on toyData, both in terms of speed and memory use. I would make the recommendations more trustworthy and serious.}
 
@@ -1537,7 +1558,7 @@ instead split the two steps. This can be done in the following manner:
 \end{Sinput}
 \end{Schunk}
 This also deals with the fact that \pkg{dataMaid} can produce
-\pkg{rmarkdown} files that supersedes the upper size limit of code editors, e.g.
+\pkg{rmarkdown} files that supersedes the upper size limit of code editors, e.g.,
 RStudio, which currently has an editor file size limit of 5MB. %\hl{dette giver
 %ingen mening uden en præcision? "upper size limit" af hvad? Se udkommenteret
 %kommentar.}
