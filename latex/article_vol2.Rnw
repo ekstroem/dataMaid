@@ -117,7 +117,8 @@
 \begin{document}
 
 <<echo=FALSE>>=
-options(prompt = "R> ", width=77, continue = "+  ")
+# options(prompt = "R> ", width=77, continue = "+  ")
+options(prompt = "R> ", continue = "+  ", width = 70, useFancyQuotes = FALSE)
 @
 
 \section{Introduction}
@@ -135,10 +136,12 @@ software can aid the process tremendously by giving the human investigator the
 information needed for identifying issues.
 
 Online tools such as OpenRefine (\url{http://openrefine.org/}) and
-\proglang{R}-packages such as \pkg{plyr} \citep{plyr}, and \pkg{data.table} have
+\proglang{R}-packages such as \pkg{plyr} \citep{plyr}, and
+\pkg{data.table} \citep{data.table} have
 made data wrangling a lot easier, but only a handful of packages such
-as \pkg{editrules}, \pkg{validate}, \pkg{DataCombine}, and
-\pkg{janitor} attempt to implement systematic, reproducible data
+as \pkg{editrules} \citep{editrules}, \pkg{validate} \citep{validate},
+\pkg{DataCombine} \citep{DataCombine}, and
+\pkg{janitor} \citep{janitor} attempt to implement systematic, reproducible data
 cleaning.  These packages use different approaches for data cleaning:
 \pkg{editrules} and \pkg{validate} provide frameworks for setting up
 and checking constraints on the variables, while \pkg{DataCombine} and
@@ -148,7 +151,8 @@ and checking constraints on the variables, while \pkg{DataCombine} and
 While these tools attempt to alleviate the ubiquitous ad hoc approach
 to data cleaning, they are primarily intended for the data savvy users
 and less so for the general researcher with a knowledge about a specific
-field and the context of the available data. The \pkg{dataMaid} package
+field and the context of the available data. The \pkg{dataMaid}
+package \citep{dataMaid}
 tries to address this by providing a framework that both allows for
 extendable, systematic, reproducible data cleaning, and summarizing
 findings for researchers from other fields such that they can act as
@@ -184,7 +188,7 @@ look at it, as we were the ones to produce it in the first place. This
 means that data cleaning can easily be a well-documented,
 well-specified procedure. In order to aid this paradigm, \pkg{dataMaid}
 provides easy-to-use, automated tools for data quality assessment in
-\proglang{R} on which data cleaning decisions can be made. This quality
+\proglang{R} \citep{R} on which data cleaning decisions can be made. This quality
 assessment is presented in an auto-generated overview document,
 readable by data analysts and field experts alike, thereby also
 contributing to an inter-field dialogue about the data at
@@ -466,7 +470,7 @@ clean(toyData, output = "html", onlyProblematic = TRUE, maxProbVals = 10,
 The final rendering of the generated markdown file is controlled by
 the \code{render} and \code{openResult} arguments, which both default to
 \code{TRUE}. \code{render} determines if the \proglang{R} markdown file
-produced should be rendered using the \pkg{rmarkdown} package and
+produced should be rendered using the \pkg{rmarkdown} \citep{rmarkdown} package and
 \code{openResult} decides whether the output html or pdf file should be
 opened. The following command produces an \proglang{R} markdown file
 containing the data cleaning summary information, but without
@@ -633,7 +637,7 @@ clean(toyData, preChecks = "isKey")
 Note that the data visualizations in the cleaning summary are also
 controllable, though only a single function can be provided for all
 variable types. If for instance, we wish to change the visualizations
-from the default \pkg{ggplot2} style histograms and barplots to base
+from the default \pkg{ggplot2} \citep{ggplot2} style histograms and barplots to base
 \proglang{R} histograms and barplots, we type
 
 <<eval=FALSE>>=
@@ -813,14 +817,14 @@ four new SVC functions are defined and used, both interactively and in \code{cle
 \vspace{0pt} Input (required) & \code{v} - a variable vector \newline \code{...}  &  \code{v} - a variable vector \newline \code{vnam} - the variable name (as character string) \newline \code{doEval} - a logical (\code{TRUE}/\code{FALSE}) controlling the output type of the function & \code{v} - a variable vector \newline \code{nMax} - an integer (or \code{Inf}), controlling how many problematic values are printed, if relevant \newline \code{...}  \\
 Input (optional) &  \code{maxDecimals} - number of decimals printed in outputted numerical values.  & - &  \code{maxDecimals}  - number of decimals printed in outputted numerical values.  \\
 Purpose & Describe some aspect of the variable, e.g., a central value, its dispersion or level of missingness. & Produce a distribution plot. & Check a variable for a specific issue and, if relevant, identify the values in the variable that cause the issue. \\
-Output (required) & A list with entries: \newline \code{\$feature} - a label for the summary value (as character string); \newline \code{\$result} - the result of the summary (as character string) & A character string with \code{R} code for producing a plot. This code should be standalone, i.e., should include the data if necessary. & A list with entries: \newline \code{\$problem} - a logical identifying whether an issue was found; \newline \code{\$message} - a character string (possibly empty) decribing the issue that was found, properly escaped and ready for use in \code{rmarkdown} \\
+Output (required) & A list with entries: \newline \code{\$feature} - a label for the summary value (as character string); \newline \code{\$result} - the result of the summary (as character string) & A character string with \proglang{R} code for producing a plot. This code should be standalone, i.e., should include the data if necessary. & A list with entries: \newline \code{\$problem} - a logical identifying whether an issue was found; \newline \code{\$message} - a character string (possibly empty) decribing the issue that was found, properly escaped and ready for use in \code{rmarkdown} \\
 Output (recommended) & A \code{summaryResult} object, i.e., an attributed list with entries \code{\$feature}, \code{\$result} and \code{\$value}, the latter being the values from \code{\$result} in their original format). & \bgroup
 \def\arraystretch{1.8}%
 \hspace*{-.2cm}\begin{tabular}[t]{p{0.45\linewidth} |
                  p{0.45\linewidth}} \vspace*{-1cm}\raggedright If
                  \code{doEval} is \code{TRUE}: \newline A plot that is
-                 opened by the graphic device in \code{R}. &
-                                                          \vspace*{-1cm}\raggedright If \code{doEval} is \code{FALSE}: \newline   A text string with \code{R} code, as described above. \end{tabular} \egroup  & A \code{checkResult} object, i.e., an attributed list with entries \code{\$problem}, \code{\$message} and \code{\$problemValues}, the latter being either \code{NULL} or the problem causing values, as they were found in \code{v}, whichever is relevant. \\
+                 opened by the graphic device in \proglang{R}. &
+                                                          \vspace*{-1cm}\raggedright If \code{doEval} is \code{FALSE}: \newline   A text string with \proglang{R} code, as described above. \end{tabular} \egroup  & A \code{checkResult} object, i.e., an attributed list with entries \code{\$problem}, \code{\$message} and \code{\$problemValues}, the latter being either \code{NULL} or the problem causing values, as they were found in \code{v}, whichever is relevant. \\
 Tools available for producing the function & \code{summaryResult()} & --- & \code{messageGenerator()} \newline \code{checkResult()}
 \end{tabular}
 \egroup
@@ -1162,12 +1166,10 @@ This function can now be called directly or used in \code{clean()}, as will
 presented in an example below. Depending on the \code{doEval} argument, either a text string
 with code or a plot is produced. The plot resulting from the following
 call is found in Figure~\ref{fig:mosaicPlot}:
-\begin{Schunk}
-\begin{Sinput}
-> mosaicVisual(toyData$var1, "variable 1", doEval = TRUE)
-\end{Sinput}
-\end{Schunk}
-% $
+
+<<fig=FALSE>>=
+mosaicVisual(toyData$var1, "variable 1", doEval = TRUE)
+@
 
 \begin{figure}
 \begin{center}
@@ -1239,23 +1241,24 @@ order to make it appear in \code{allSummaryFunctions()} calls. But now we
 wish to emphasize that the function is not intended to be called on
 all variable types, as zeros have different roles in \code{Date}s and in
 \code{logical} variables:
-\begin{Schunk}
-\begin{Sinput}
-> countZeros <- summaryFunction(countZeros,
-	description = "Count number of zeros",
-	classes = c("character", "factor", "integer",
-                    "labelled", "numeric"))
-\end{Sinput}
-\end{Schunk}
-% \hl{more? don't end on code.}
 
-\subsubsection{identifyColons - a new checkFunction with problem values}
+XXX indentation
+<<>>=
+countZeros <- summaryFunction(countZeros,
+  description = "Count number of zeros",
+  classes = c("character", "factor", "integer",
+  "labelled", "numeric"))
+@
+
+\subsubsection{identifyColons --- a new checkFunction with problem values}
 The last function mentioned above is \code{identifyColons()}. We define
 it using the helper function \code{messageGenerator()} to obtain a properly
 escaped message, and we use \code{checkResult} to make its output print
-neatly:
-\begin{Schunk}
-\begin{Sinput}
+neatly
+
+XXX comments
+
+<<>>=
 identifyColons <- function(v, nMax = Inf, ... ) {
   v <- unique(na.omit(v))
   problemMessage <- "Note: The following values include colons:"
@@ -1284,8 +1287,8 @@ identifyColons <- function(v, nMax = Inf, ... ) {
 identifyColons <- checkFunction(identifyColons,
     description = "Identify colons surrounded by alphanumeric characters",
     classes = c("character", "factor", "labelled"))
-\end{Sinput}
-\end{Schunk}
+@
+
 As with the previous two functions, we also change its class. Note,
 however, that for \code{checkFunction}s, the function description will
 appear in the document produced by \code{clean()} (in the \textit{Data
@@ -1302,27 +1305,28 @@ following modifications, relative to the standard \pkg{dataMaid} output:
 \item We want the new summary function, \code{countZeros}, to be added to the summaries performed on all variable types but \code{Date} and \code{logical}.
 \item We want the new check function, \code{identifyColon}, to be added to the checks performed on \code{character}, \code{factor} and \code{labelled} variables.
 \end{itemize}
-These options are specified as follows: %\hl{Jeg synes ikke testData egner sig her. Der er ingen koloner og CPRvar er et mærkeligt, internt navn, hvis ikke man kender danske CPR-numre. Langt de fleste variable har desuden ingen nuller. Måske skal der laves et nyt datasæt?}
-\begin{Schunk}
-\begin{Sinput}
-> data("exampleData")
-> clean(exampleData,
-      # Add the new pre-check function
-      preChecks = c("isKey", "isEmpty", "isID"),
-      # Change the visual
-      allVisuals = "mosaicVisual",
-      # Add the new summary for specified data types
-      characterSummaries = c(defaultCharacterSummaries(), "countZeros"),
-      factorSummaries = c(defaultFactorSummaries(), "countZeros"),
-      labelledSummaries = c(defaultLabelledSummaries(), "countZeros"),
-      numericSummaries = c(defaultNumericSummaries(), "countZeros"),
-      integerSummaries = c(defaultIntegerSummaries(), "countZeros"),
-      # Add the new check for specific data types
-      characterChecks = c(defaultCharacterChecks(), "identifyColons"),
-      factorChecks = c(defaultFactorChecks(), "identifyColons"),
-      labelledCheck = c(defaultLabelledChecks(), "identifyColons"))
-\end{Sinput}
-\end{Schunk}
+These options are specified as follows: %\hl{Jeg synes ikke testData
+                                %egner sig her. Der er ingen koloner
+                                %og CPRvar er et mærkeligt, internt
+                                %navn, hvis ikke man kender danske
+                                %CPR-numre. Langt de fleste variable
+                                %har desuden ingen nuller. Måske skal
+                                %der laves et nyt datasæt?}
+<<eval=FALSE>>=
+data("exampleData")
+clean(exampleData,
+  preChecks = c("isKey", "isEmpty", "isID"),
+  allVisuals = "mosaicVisual",
+  characterSummaries = c(defaultCharacterSummaries(), "countZeros"),
+  factorSummaries = c(defaultFactorSummaries(), "countZeros"),
+  labelledSummaries = c(defaultLabelledSummaries(), "countZeros"),
+  numericSummaries = c(defaultNumericSummaries(), "countZeros"),
+  integerSummaries = c(defaultIntegerSummaries(), "countZeros"),
+  characterChecks = c(defaultCharacterChecks(), "identifyColons"),
+  factorChecks = c(defaultFactorChecks(), "identifyColons"),
+  labelledCheck = c(defaultLabelledChecks(), "identifyColons"))
+@
+
 The outputted document is found in Appendix \ref{sec:appendix2}.
 
 \section{Rubbing down data cleaning challenges}
@@ -1365,25 +1369,25 @@ Though figures give a nice overview of each variable, they are also
 quite heavy objects in terms of memory allocation. Therefore, it might
 be beneficial to not include figures in the \pkg{dataMaid} outputs for
 very large datasets. This is controlled via the \code{mode} argument:
-\begin{Schunk}
-\begin{Sinput}
-> clean(toyData, mode = c("summarize", "check"))
-\end{Sinput}
-\end{Schunk}
+
+<<eval=FALSE>>=
+clean(toyData, mode = c("summarize", "check"))
+@
+
 If figures are indeed needed, a different approach is to choose the
 less memory heavy standard \proglang{R} figure style instead of the
 \pkg{ggplot2} figures that are the default option in \code{clean()}. This
 can be done by setting the \code{allVisuals = "basicVisual"} argument:
-\begin{Schunk}
-\begin{Sinput}
-> clean(toyData, allVisuals = "basicVisual")
-\end{Sinput}
-\end{Schunk}
+
+<<eval=FALSE>>=
+clean(toyData, allVisuals = "basicVisual")
+@
+
 Of course, even less heavy plots might be achieved by writing new
 \code{visualFunction}s, using the guidelines from section
 \ref{sec:functionTemplates}. For instance, a future extension of
 \pkg{dataMaid} might be the inclusion of ASCII plots, as
-e.g., represented in the \proglang{R} package \pkg{txtplot}.
+e.g., represented in the \proglang{R} package \pkg{txtplot} \citep{txtplot}.
 
 %\hl{I really feel like we should do some benchmarking here, maybe just on toyData, both in terms of speed and memory use. I would make the recommendations more trustworthy and serious.}
 
@@ -1400,12 +1404,11 @@ typically be for very large datasets, keeping this file open in memory
 wastes precious memory capacities. Therefore, we advice users to
 instead split the two steps. This can be done in the following manner:
 
-\begin{Schunk}
-\begin{Sinput}
-> clean(toyData, render = FALSE, openResult = FALSE)
-> render("dataMaid_toyData.Rmd", quiet = FALSE)
-\end{Sinput}
-\end{Schunk}
+<<eval=FALSE>>=
+clean(toyData, render = FALSE, openResult = FALSE)
+render("dataMaid_toyData.Rmd", quiet = FALSE)
+@
+
 This also deals with the fact that \pkg{dataMaid} can produce
 \pkg{rmarkdown} files that supersedes the upper size limit of code editors, e.g.,
 RStudio, which currently has an editor file size limit of 5MB. %\hl{dette giver
@@ -1430,17 +1433,21 @@ summarized and visualized. But perhaps we are not even interested in
 obtaining general information about these variables, but only in
 getting a quick overview of the problems they might have. This can be
 done by also controlling the \code{mode} argument:
-\begin{Schunk}
-\begin{Sinput}
-> clean(toyData, onlyProblematic = TRUE, mode = c("check"))
-\end{Sinput}
-\end{Schunk}
-Now only the checking results are printed, and only for variables where problems were identified. An even more minimal output can be generated by also leaving out the checking results --- then \code{clean()} essentially just produces a list of the variable names that should be investigated further:
-\begin{Schunk}
-\begin{Sinput}
-> clean(toyData, onlyProblematic = TRUE, mode = NULL)
-\end{Sinput}
-\end{Schunk}
+
+<<eval=FALSE>>=
+clean(toyData, onlyProblematic = TRUE, mode = c("check"))
+@
+
+Now only the checking results are printed, and only for variables
+where problems were identified. An even more minimal output can be
+generated by also leaving out the checking results --- then
+\code{clean()} essentially just produces a list of the variable names
+that should be investigated further:
+
+<<eval=FALSE>>=
+clean(toyData, onlyProblematic = TRUE, mode = NULL)
+@
+
 Of course, this can also be done without generating an overview
 document, by direct, interactive use of the \code{check()} function. When
 called on a \code{data.frame}, this function produces a list (of
@@ -1448,23 +1455,17 @@ variables) of lists (of checks) of lists (or rather,
 \code{checkResult}s). Thus, the overall problem status of each variable
 can easily be unravelled using the list manipulation function
 \code{sapply()}:
-\begin{Schunk}
-\begin{Sinput}
-> toyChecks <- check(toyData)
-> foo <- function(x) {
->   any(sapply(x, function(y) y[["problem"]]))
-> }
-> sapply(toyChecks, foo)
-\end{Sinput}
-\begin{Soutput}
- var1  var2  var3  var4  var5  var6
- TRUE  TRUE  TRUE  TRUE  TRUE FALSE
-\end{Soutput}
-\end{Schunk}
+
+<<>>=
+toyChecks <- check(toyData)
+foo <- function(x) {
+  any(sapply(x, function(y) y[["problem"]]))
+}
+sapply(toyChecks, foo)
+@
+
 and we find that only a single variable in \code{toyData}, \code{var6} (for which all
 observations have the value \code{"Irrelevant"}), is problem-free.
-
-
 
 
 \subsection[Including dataMaid documents in other files]{Including \pkg{dataMaid} documents in other files}
@@ -1510,18 +1511,19 @@ header-includes:
 }
 %\hl{Use proper formatting here. How do we do non-R code?}
 
-In the this example, the \code{dataMaid\_toyData.Rmd} file could have been created as follows:
-\begin{Schunk}
-\begin{Sinput}
-> clean(toyData, standAlone = FALSE)
-\end{Sinput}
-\end{Schunk}
+In the this example, the \code{dataMaid\_toyData.Rmd} file could have
+been created as follows:
+
+<<eval=FALSE>>=
+clean(toyData, standAlone = FALSE)
+@
+
 and the more minimal, html-style \pkg{rmarkdown} file described above can be produced using
-\begin{Schunk}
-\begin{Sinput}
-> clean(toyData, standAlone = FALSE, output = "html", twoCols = FALSE)
-\end{Sinput}
-\end{Schunk}
+
+<<eval=FALSE>>=
+clean(toyData, standAlone = FALSE, output = "html", twoCols = FALSE)
+@
+
 Note that with the latter option, no special YAML preamble is needed in the \pkg{rmarkdown} document.
 % \hl{don't end on code.}
 
@@ -1545,24 +1547,24 @@ more summary, visual, and check function as part of the default
 package. We are also currently considering adding options to handle
 repeated measurement, where the visualizations --- in particular ---
 might be improved by visualizing measurements over time. In addition,
-an online \pkg{shiny} application where users that are not
+an online \pkg{shiny} \citep{shiny} application where users that are not
 \proglang{R}-savvy can upload their data and get a data cleaning
 document is currently planned.
 
 
 
-\nocite{R}
-\nocite{shiny}
-\nocite{dataMaid}
-\nocite{rmarkdown}
-\nocite{ggplot2}
-\nocite{plyr}
-\nocite{data.table}
-\nocite{validate}
-\nocite{editrules}
-\nocite{janitor}
-\nocite{DataCombine}
-\nocite{txtplot}
+% \nocite{R}
+%\nocite{shiny}
+%\nocite{dataMaid}
+%\nocite{rmarkdown}
+%\nocite{ggplot2}
+%\nocite{plyr}
+%\nocite{data.table}
+%\nocite{validate}
+%\nocite{editrules}
+%\nocite{janitor}
+%\nocite{DataCombine}
+%\nocite{txtplot}
 
 % \bibliographystyle{jss}
 \bibliography{foo}
