@@ -137,16 +137,17 @@ information needed for identifying issues.
 
 Online tools such as OpenRefine (\url{http://openrefine.org/}) and
 \proglang{R}-packages such as \pkg{plyr} \citep{plyr}, and
-\pkg{data.table} \citep{data.table} have
-made data wrangling a lot easier, but only a handful of packages such
-as \pkg{editrules} \citep{editrules}, \pkg{validate} \citep{validate},
-\pkg{DataCombine} \citep{DataCombine}, and
-\pkg{janitor} \citep{janitor} attempt to implement systematic, reproducible data
-cleaning.  These packages use different approaches for data cleaning:
-\pkg{editrules} and \pkg{validate} provide frameworks for setting up
-and checking constraints on the variables, while \pkg{DataCombine} and
-\pkg{janitor} both provide a few functions for identifying problems
-(e.g, duplicates, dates coded as numbers, etc.) in data.
+\pkg{data.table} \citep{data.table} have made data wrangling a lot
+easier, but only a handful of packages such as \pkg{editrules}
+\citep{editrules}, \pkg{validate} \citep{validate}, \pkg{DataCombine}
+\citep{DataCombine}, \pkg{janitor} \citep{janitor}, and
+\pkg{DescTools} \citep{DescTools} attempt to implement systematic,
+reproducible data cleaning.  These packages use different approaches
+for data cleaning: \pkg{editrules} and \pkg{validate} provide
+frameworks for setting up and checking constraints on the variables,
+while \pkg{DataCombine} and \pkg{janitor} both provide a few functions
+for identifying problems (e.g, duplicates, dates coded as numbers,
+etc.) in data.
 
 While these tools attempt to alleviate the ubiquitous ad hoc approach
 to data cleaning, they are primarily intended for the data savvy users
@@ -258,12 +259,12 @@ commands load the dataset and produce the cleaning output:
 \frame{\includegraphics[width=7.5cm,page=3]{dataMaid_toyData.pdf}}
 %\includepdf[pages={2}, pagecommand={}]{dataMaid_testData.pdf}
 \end{center}
-\label{fig:example1}
 \caption{Example output from running \code{clean()} on the \code{toyData}
   dataset. First a summary of the full dataset is given and then
   type-dependent information on each variable is given in a table and
   a graph. Larger versions of the pages can be seen in
   Appendix~\ref{sec:appendix1}.}
+\label{fig:example1}
 \end{figure}
 
 <<>>=
@@ -400,15 +401,15 @@ Argument & Description & Default value \\
 \begin{tikzpicture}[node distance = 2cm, auto,thick,scale=0.75, every node/.style={transform shape}]
     % Place nodes
     \node [block] (init) {Get next variable and run pre-checks};
-    \node [cloud, above of=init] (input) {Input \texttt{data.frame} or \texttt{tibble}};
+    \node [cloud, above of=init] (input) {Input \code{data.frame} or \code{tibble}};
 %    \node [cloud, right of=init] (system) {system};
     \node [decision, right of=init, node distance=4cm] (precheck) {Is variable suitable for inclusion};
     \node [block, right of=precheck, node distance=4cm] (summarize)
-    {Run \texttt{summarize()} to produce summary table};
+    {Run \code{summarize()} to produce summary table};
     \node [block, below of=summarize, node distance=3cm] (visualize)
-    {Run \texttt{visualize()} to plot variable};
+    {Run \code{visualize()} to plot variable};
     \node [block, below of=visualize, node distance=2.5cm] (check)
-    {Call \texttt{check()} to run error checks};
+    {Call \code{check()} to run error checks};
     \node [decision, below of=check, node distance=2.7cm] (done) {More
       variables?};
     \node [block, right of=done, node distance=3.5cm] (stop) {Write
@@ -499,7 +500,7 @@ clean(toyData, output="html", render=FALSE, openResult=FALSE)
   \smallskip \\
  \textbf{\code{visualFunction}s} \smallskip \\
   \quad \code{basicVisual} & Histograms and barplots using base \proglang{R} graphics &  $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ \\
-  \quad \code{standardVisual} & Histograms and barplots using ggplot2 &  $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ \\
+  \quad \code{standardVisual} & Histograms and barplots using \pkg{ggplot2} &  $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ \\
   \smallskip \\
  \textbf{\code{checkFunction}s} \smallskip \\
  \quad \code{identifyCaseIssues} & Identify case issues &  $\times$ & $\times$ & & & & &  \\
@@ -665,8 +666,8 @@ clean(toyData, allVisuals = "basicVisual")
 In summary, and as indicated in Figure~\ref{figure:cleanStructure}, there are two stages
 where \code{clean()} applies functions to each of the variables:
 \begin{enumerate}
-\item In the pre-check stage
-\item As part of the summarize/visualize/check (SVC) steps
+\item In the pre-check stage.
+\item As part of the summarize/visualize/check (SVC) steps.
 \end{enumerate}
 Each of these stages are controllable using appropriate function
 arguments in \code{clean()}, and above we have shown examples of how to
@@ -755,9 +756,9 @@ summarize(toyData$var2)
 \begin{center}
 \includegraphics[width=7.5cm]{toyData-var2.pdf}
 \end{center}
-\label{fig:example2}
-\caption{Output from running \code{visualize()} on the variable \texttt{var2} from the
+\caption{Output from running \code{visualize()} on the variable \code{var2} from the
 \code{toyData} dataset.}
+\label{fig:example2}
 \end{figure}
 
 
@@ -889,13 +890,12 @@ the user-defined function as the first argument, and additional arguments
 the function), and \code{classes} (a vector of variable classes the
 user-defined function is intended to be applied to, also stored as an
 attribute). In other words, a call on the following form should be made:
-\begin{Schunk}
-\begin{Sinput}
+\begin{Verbatim}
 mySummaryFunction <- summaryFunction(mySummaryFunction,
   description = "[Text describing what the summaryFunction does]",
-  classes = c([vector of data types that the function is intended for]))
-\end{Sinput}
-\end{Schunk}
+  classes = c([vector of data types that the function is intended
+  for]))
+\end{Verbatim}
 which adds the new function to the output of an
 \code{allSummaryFunctions()} call.
 % One comment should be devoted to
@@ -949,8 +949,7 @@ more complicated than writing a \code{summaryFunction}. This follows from
 the fact that \code{visualFunctions} need to be able to output standalone
 code for plots in order for \code{clean()} to build standalone
 \pkg{rmarkdown} files. We recommend using the following structure:
-\begin{Schunk}
-\begin{Sinput}
+\begin{Verbatim}
 myVisualFunction <- function(v, vnam, doEval) {
   thisCall <- call("[the name of the function used to produce the plot]",
     v, [additional arguments for the plotting function])
@@ -958,8 +957,7 @@ myVisualFunction <- function(v, vnam, doEval) {
     return(eval(thisCall))
   } else return(deparse(thisCall))
 }
-\end{Sinput}
-\end{Schunk}
+\end{Verbatim}
 
 In this function, \code{v} is the variable to be visualized,
 \code{vnam} is its name (which should generally be passed to
@@ -984,14 +982,12 @@ register our newly created function:
 %attribute of the function, and a vector which determines which classes
 %the user-defined function should be applied to (which is also stored
 %as an attribute).
-\begin{Schunk}
-\begin{Sinput}
+\begin{Verbatim}
 myVisualFunction <- visualFunction(myVisualFunction,
   description = "[Some text describing the visualFunction]",
   classes = c([data types that this function is intended for]))
   )
-\end{Sinput}
-\end{Schunk}
+\end{Verbatim}
 
 Now, \code{myVisualFunction()} will be available in a \code{allVisualFunctions()}
 call, just like the two build-in \code{visualFunction}s, \code{standardVisual}
@@ -1013,8 +1009,7 @@ formally, they belong to the same class.
 First, a template for the full-variable check function type, where we
 first define the function and subsequently register it as a check
 function using \code{checkFunction()}:
-\begin{Schunk}
-\begin{Sinput}
+\begin{Verbatim}
 myFullVarCheckFunction <- function(v, ...) {
   [do your check]
   problem <- [is there a problem? TRUE/FALSE]
@@ -1028,8 +1023,7 @@ myFullVarCheckFunction <- checkFunction(myFullVarCheckFunction,
   description = "[Some text describing the checkFunction]",
   classes = c([the data types that this function is intended to be used for])
   )
-\end{Sinput}
-\end{Schunk}
+\end{Verbatim}
 
 Again, as with \code{summaryFunction}s and \code{visualFunction}s, the
 change of function class by use of \code{checkFunction()} is not strictly
@@ -1040,8 +1034,8 @@ description attribute will be printed in the overview table in the
 
 If problematic values are to be identified, the template from above
 should be expanded to follow a slightly more complicated structure:
-\begin{Schunk}
-\begin{Sinput}
+
+\begin{Verbatim}
 myProbValCheckFunction <- function(v, nMax, maxDecimals, ...) {
 	[do your check]
 	problem <- [is there a problem? TRUE/FALSE]
@@ -1064,8 +1058,8 @@ myProbValCheckFunction <- checkFunction(myProbValCheckFunction,
   description = "[Some text describing the checkFunction]",
   classes = c([the data types that this function is intended to be used for])
 )
-\end{Sinput}
-\end{Schunk}
+\end{Verbatim}
+
 One comment should be devoted to the helper function,
 \code{messageGenerator()}.  This function's sole purpose is aiding
 consistent styling of all \code{checkFunction} messages. The function
@@ -1083,8 +1077,8 @@ argument should be used to round off the \code{problemValues} passed to
 \code{messageGenerator()}, if they are numerical.  This can be done by
 adding an extra line of code after defining \code{problemStatus} in the template
 above:
-\begin{Schunk}
-\begin{Sinput}
+
+\begin{Verbatim}
 myProbValCheckFunction <- function(v, nMax, maxDecimals, ...) {
  ...
   problemStatus <- list(problem = problem,
@@ -1095,9 +1089,9 @@ myProbValCheckFunction <- function(v, nMax, maxDecimals, ...) {
   }
  ...
 }
-\end{Sinput}
-\end{Schunk}
-%$
+\end{Verbatim}
+% $
+
 Now, problematic values will be rounded in the outputted message, while they
 will still appear in their original format under the entry \code{\$problemValues} %$
 in the outputted \code{checkResult}.
@@ -1177,7 +1171,7 @@ mosaicVisual(toyData$var1, "variable 1", doEval = TRUE)
 \end{center}
 
 \caption{Mosaic plot generated by the user-defined visualization
-  function \texttt{mosaicVisual}.}
+  function \code{mosaicVisual()}.}
 \label{fig:mosaicPlot}
 \end{figure}
 
@@ -1251,12 +1245,12 @@ countZeros <- summaryFunction(countZeros,
 @
 
 \subsubsection{identifyColons --- a new checkFunction with problem values}
-The last function mentioned above is \code{identifyColons()}. We define
-it using the helper function \code{messageGenerator()} to obtain a properly
-escaped message, and we use \code{checkResult} to make its output print
-neatly
-
-XXX comments
+The last function mentioned above is \code{identifyColons()}. We
+define it using the helper function \code{messageGenerator()} to
+obtain a properly escaped message, and we use \code{checkResult()} to
+make its output print neatly. In the code we use regular expressions
+through the \code{gregexpr()} function to identify colons between two
+words.
 
 <<>>=
 identifyColons <- function(v, nMax = Inf, ... ) {
@@ -1265,7 +1259,6 @@ identifyColons <- function(v, nMax = Inf, ... ) {
   problem <- FALSE
   problemValues <- NULL
 
-  # Use regular expressions to identify colons between two words
   problemValues <- v[sapply(gregexpr("[[:xdigit:]]:[[:xdigit:]]", v),
                             function(x) all(x != -1))]
 
@@ -1275,15 +1268,18 @@ identifyColons <- function(v, nMax = Inf, ... ) {
 
   problemStatus <- list(problem = problem,
                         problemValues = problemValues)
-  # Use the messagegenerator function to produce the output
-  # message from the problemStatus and problemMessage
+
   outMessage <- messageGenerator(problemStatus, problemMessage, nMax)
 
   checkResult(list(problem = problem,
                    message = outMessage,
                    problemValues = problemValues))
 }
+@
 
+YYY en kommentar om noget her, hvad der sker nedenfor
+
+<<>>=
 identifyColons <- checkFunction(identifyColons,
     description = "Identify colons surrounded by alphanumeric characters",
     classes = c("character", "factor", "labelled"))
@@ -1492,6 +1488,7 @@ document --- otherwise, the two-column layout code will produce an
 error. The following is an example of how such a master document
 preamble YAML might look like and how the \code{dataMaid\_toyData.Rmd} file can
 then be included:
+
 {\small
 \begin{Verbatim}
 ---
