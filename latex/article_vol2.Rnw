@@ -141,7 +141,7 @@ Online tools such as OpenRefine (\url{http://openrefine.org/}) and
 easier, but only a handful of packages such as \pkg{editrules}
 \citep{editrules}, \pkg{validate} \citep{validate}, \pkg{DataCombine}
 \citep{DataCombine}, \pkg{janitor} \citep{janitor}, and
-\pkg{DescTools} \citep{DescTools} attempt to implement systematic,
+\pkg{DataCombine} \citep{DataCombine} attempt to implement systematic,
 reproducible data cleaning.  These packages use different approaches
 for data cleaning: \pkg{editrules} and \pkg{validate} provide
 frameworks for setting up and checking constraints on the variables,
