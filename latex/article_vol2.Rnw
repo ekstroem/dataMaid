@@ -128,7 +128,7 @@ ever-growing dataset sizes and complexities, statisticians and data
 analysts find themselves spending a large portion of their time on
 data cleaning and on data wrangling. While a computer should never
 make unsupervised decisions on what should be done to potential
-errors in the dataset, it can still be an extremely useful tool in the
+errors in a dataset, it can still be an extremely useful tool in the
 data cleaning process. Some errors can be tracked down and flagged by a
 computer without further ado, while other types of errors need an analytic
 context in order to shine through. But even in the latter case, well-designed
@@ -153,8 +153,7 @@ While these tools attempt to alleviate the ubiquitous ad hoc approach
 to data cleaning, they are primarily intended for the data savvy users
 and less so for the general researcher with a knowledge about a specific
 field and the context of the available data. The \pkg{dataMaid}
-package \citep{dataMaid}
-tries to address this by providing a framework that both allows for
+package \citep{dataMaid} tries to address this by providing a framework that both allows for
 extendable, systematic, reproducible data cleaning, and summarizing
 findings for researchers from other fields such that they can act as
 human experts when tracking down potential errors.
@@ -946,7 +945,7 @@ allClasses()
 \code{visualFunction}s are the functions that produce the figures in a
 \pkg{dataMaid} output document. Writing a \code{visualFunction} is slightly
 more complicated than writing a \code{summaryFunction}. This follows from
-the fact that \code{visualFunctions} need to be able to output standalone
+the fact that \code{visualFunction}s need to be able to output standalone
 code for plots in order for \code{clean()} to build standalone
 \pkg{rmarkdown} files. We recommend using the following structure:
 \begin{Verbatim}
@@ -1112,7 +1111,7 @@ These functions are defined in turn below, and afterwards, an example of how the
 \subsubsection{isID --- a new checkFunction without problem values}
 First, let's define the \code{isID()} function. As this function is not
 supposed to list problematic values, it falls within
-the category of \code{checkFunctions} represented by
+the category of \code{checkFunction}s represented by
 \code{myFullVarCheckFunction()} in the above. We do not particularly wish
 to use this function interactively, so we will stick to the minimal
 requirements of a \code{checkFunction} used in \code{check()} (see
@@ -1145,7 +1144,7 @@ mosaic plots. We intend to use this existing high-level plotting
 function as part of the new visualization function.  We will define
 the new function such that it gets the full \pkg{dataMaid}
 functionality. This can be done using the following code which sets up
-the call using the existing function \code{mosaicplot}.
+the call using the existing function \code{mosaicplot()}.
 
 <<>>=
 mosaicVisual <- function(v, vnam, doEval) {
@@ -1198,14 +1197,14 @@ available would be added automatically.
 %\hl{I'm repeating myself here,
 %  but I think it is quite a neat feature, so maybe that's okay?}
 
-As \code{mosaicVisual} is now a full-blooded \code{visualFunction}, it
+As \code{mosaicVisual()} is now a full-blooded \code{visualFunction}, it
 will also be included in the \code{allVisualFunctions()} output table:
 <<>>=
 allVisualFunctions()
 @
 
 Now that we are done with the definition of \code{mosaicVisual()} we can
-turn to the next function in line, \code{countZeros}.
+turn to the next function in line, \code{countZeros()}.
 
 \subsubsection{countZeros --- a new summaryFunction}
 This \code{summaryFunction} is defined in the following lines of code:
@@ -1224,7 +1223,7 @@ string, extra formatting might be required in the \code{\$result} entry
 (such as escaping of quotation marks), and in this scenario, the two
 entries would have differed. As the result is returned as a
 \code{summaryResult} object, a printing method is automatically called
-when \code{countZeros} is used interactively:
+when \code{countZeros()} is used interactively:
 
 <<>>=
 countZeros(c(rep(0, 5), 1:100))
@@ -1277,7 +1276,8 @@ identifyColons <- function(v, nMax = Inf, ... ) {
 }
 @
 
-YYY en kommentar om noget her, hvad der sker nedenfor
+Once again, we change the class of the function so that it becomes a
+proper \code{checkFunction} object:
 
 <<>>=
 identifyColons <- checkFunction(identifyColons,
@@ -1285,29 +1285,24 @@ identifyColons <- checkFunction(identifyColons,
     classes = c("character", "factor", "labelled"))
 @
 
-As with the previous two functions, we also change its class. Note,
-however, that for \code{checkFunction}s, the function description will
+Note, that for \code{checkFunction}s, the function description will
 appear in the document produced by \code{clean()} (in the \textit{Data
-  cleaning summary} section of the output), so now this is not only
-done for the sake of the \code{allCheckFunctions()} output.
+  cleaning summary} section of the output), so for this type of
+function, the change of class is not only done for the sake of the
+\code{allCheckFunctions()} output.
 
 \subsubsection{Calling the new summarize/visualize/check functions from clean()}
 Now, we are ready to use these new functions in a \code{clean()}
 call. The extended \pkg{dataMaid} output document should have the
 following modifications, relative to the standard \pkg{dataMaid} output:
 \begin{itemize}
-\item We want to add the new pre-check function, \code{isID}, to the already existing pre-checks.
+\item We want to add the new pre-check function, \code{isID()}, to the already existing pre-checks.
 \item We wish to change the plot type for all variables to the new mosaic plot.
-\item We want the new summary function, \code{countZeros}, to be added to the summaries performed on all variable types but \code{Date} and \code{logical}.
-\item We want the new check function, \code{identifyColon}, to be added to the checks performed on \code{character}, \code{factor} and \code{labelled} variables.
+\item We want the new summary function, \code{countZeros()}, to be added to the summaries performed on all variable types but \code{Date} and \code{logical}.
+\item We want the new check function, \code{identifyColons()}, to be added to the checks performed on \code{character}, \code{factor} and \code{labelled} variables.
 \end{itemize}
-These options are specified as follows: %\hl{Jeg synes ikke testData
-                                %egner sig her. Der er ingen koloner
-                                %og CPRvar er et mærkeligt, internt
-                                %navn, hvis ikke man kender danske
-                                %CPR-numre. Langt de fleste variable
-                                %har desuden ingen nuller. Måske skal
-                                %der laves et nyt datasæt?}
+These options are specified as follows:
+
 <<eval=FALSE>>=
 data("exampleData")
 clean(exampleData,
