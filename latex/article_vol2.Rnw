@@ -135,39 +135,69 @@ context in order to shine through. But even in the latter case, well-designed
 software can aid the process tremendously by giving the human investigator the
 information needed for identifying issues.
 
-Online tools such as OpenRefine (\url{http://openrefine.org/}) and
-\proglang{R}-packages such as \pkg{plyr} \citep{plyr}, and
-\pkg{data.table} \citep{data.table} have made data wrangling a lot
-easier, but only a handful of packages such as \pkg{editrules}
-\citep{editrules}, \pkg{validate} \citep{validate}, \pkg{DataCombine}
-\citep{DataCombine}, \pkg{janitor} \citep{janitor}, and
-\pkg{DataExplorer} \citep{DataExplorer} attempt to implement systematic,
-reproducible data cleaning.  These packages use different approaches
-for data cleaning: \pkg{editrules} and \pkg{validate} provide
-frameworks for setting up and checking constraints on the variables,
-while \pkg{DataCombine} and \pkg{janitor} both provide a few functions
-for identifying problems (e.g, duplicates, dates coded as numbers,
-etc.) in data.
 
-While these tools attempt to alleviate the ubiquitous ad hoc approach
-to data cleaning, they are primarily intended for the data savvy users
-and less so for the general researcher with a knowledge about a specific
-field and the context of the available data. The \pkg{dataMaid}
-package \citep{dataMaid} tries to address this by providing a framework that both allows for
-extendable, systematic, reproducible data cleaning, and summarizing
-findings for researchers from other fields such that they can act as
-human experts when tracking down potential errors.
+A number of \proglang{R} packages made for such pre-analysis tools are
+already available, including \pkg{janitor} \citep{janitor}, \pkg{plyr}
+\citep{plyr}, \pkg{data.table} \citep{data.table}, \pkg{DataCombine}
+\citep{DataCombine} , \pkg{validate} \citep{validate}, and
+\pkg{DataExplorer} \citep{DataExplorer}. These packages focus on
+different stages of the pre-analysis work, most of which are not
+really data cleaning.  \pkg{janitor} provides tools for data loading
+with a particular emphasis on the challenges of getting neat
+\code{data.frame}s from Microsoft Excel data files. \pkg{plyr},
+\pkg{data.table} and \pkg{DataCombine} go a few steps further by
+providing a wide array of extremely powerful tools for data wrangling,
+including a number of particularly useful functions for merging and
+working with very large datasets. When it comes to actual data
+cleaning, however, the options are fewer.  \pkg{validate} (and the
+similar packages \pkg{editrules} and \pkg{deducorrect} from the same
+authors) does offer a few tools for identifying and auto-correcting
+errors in a dataset, but, as the name suggests, the focus is on
+internal validity rather than general data cleaning. In practice, this
+means that quite elegant tools for e.g. linear restraints among the
+variables in a dataset can be applied, but e.g. looking for
+potentially miscoded missing values is not really feasible. The main
+difference between these two challenges is the direction in which the
+data is inspected: While linear constraints work row-wise with no
+ambiguity, determining whether or not something is a miscoded missing
+value often requires knowledge about the full variable (e.g. range or
+data type), and thus it should be performed
+column-wise. \pkg{validate} does not allow for user-defined extensions
+of the latter type, thereby limiting its data cleaning potential.
+Moreover, no tools have been made for documenting the data cleaning
+process.  As automatic cleaning options are also supplied in
+\pkg{validate}, we find quite a dangerous cocktail where all power is
+given to the the computer with no supervision, neither in real time
+nor subsequently.
 
-% \begin{itemize}
-% \item Makes the point that data cleaning is usually done in a very ad hoc manner
-% \item Maybe hints to the discussion later about poor documentation of data cleaning/quality assessment as the status quo for most analysts
-% \item Gives a specification of what we mean by data errors/mistakes/whatever. I'm not completely sure this will be clear to everyone and we should probably mention it early on to not lose readers/users.
-% \end{itemize}
-% }
+All in all, the large role of data cleaning in any data analysts
+everyday endeavors is hardly matched in the amount of available
+\proglang{R} software solutions. In particular, few packages attempt
+to implement systematic, reproducible data cleaning. And while the
+available tools attempt to alleviate the ubiquitous ad hoc approach to
+data cleaning, they are primarily intended for the data savvy users
+and less so for the general researcher with a knowledge about a
+specific field and the context of the available data. The
+\pkg{dataMaid} package \citep{dataMaid} tries to address this by
+providing a framework that both allows for extendable, systematic,
+reproducible data cleaning, and summarizing findings for researchers
+from other fields such that they can act as human experts when
+tracking down potential errors.
 
-Data cleaning is a time consuming endeavor, as it inherently requires
-human interaction since every dataset is different and the variables
-in the dataset can only be understood in the proper context of their
+
+One last package that should be mentioned in this context is
+\pkg{DataExplorer}. While this package does not address data cleaning
+issues per se, its general strategy is quite similar to that of
+\pkg{dataMaid} and to the paradigms presented below. This package
+provides a few simple, but practical, tools for exploratory data
+analysis, including automated documentation. Therefore, we find
+\pkg{DataExplorer} to be a good candidate for a next-step package
+after data cleaning is finished.
+
+But no matter how clever software tools we make, data cleaning remains
+to be a time consuming endeavor, as it inherently requires human
+interaction since every dataset is different and the variables in the
+dataset can only be understood in the proper context of their
 origin. This often requires a collaborative effort between an expert
 in the field and a statistician or data scientist, which may be why
 the process of proper data cleaning is not always undertaken. In many
@@ -902,11 +932,11 @@ which adds the new function to the output of an
 If the \code{description} argument is left unspecified, the name of the
 function (which in this case is \code{"mySummaryFunction"}) will be filled in and
 stored under the \code{description} attribute. What happens if the \code{classes} argument is
-not specified depends on the type of \code{mySummaryFunction}. If
+not specified depends on the type of \code{summaryFunction}. If
 \code{mySummaryFunction} is constructed as an \code{S3} generic function with associated
 methods, the call to \code{summaryFunction()} will automatically produce
 a vector of the names of the classes for which the function can be
-called. If \code{mySummaryFunction} is not an \code{S3} generic and
+called. If \code{mySummaryFunction()} is not an \code{S3} generic and
 \code{classes} is left unspecified, the attribute will simply be
 left empty. Note that the helper function \code{allClasses()} might be useful
 for filling out the \code{classes} argument, as it simply lists all
