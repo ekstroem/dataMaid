@@ -131,8 +131,9 @@ make unsupervised decisions on what should be done to potential
 errors in a dataset, it can still be an extremely useful tool in the
 data cleaning process. Some errors can be tracked down and flagged by a
 computer without further ado, while other types of errors need an analytic
-context in order to shine through. But even in the latter case, well-designed
-software can aid the process tremendously by giving the human investigator the
+context in order to be identified. Even in this latter case, well-designed
+software can aid the process tremendously by providing the human
+investigator with the
 information needed for identifying issues.
 
 
@@ -142,33 +143,35 @@ already available, including \pkg{janitor} \citep{janitor}, \pkg{plyr}
 \citep{DataCombine} , \pkg{validate} \citep{validate}, and
 \pkg{DataExplorer} \citep{DataExplorer}. These packages focus on
 different stages of the pre-analysis work, most of which are not
-really data cleaning.  \pkg{janitor} provides tools for data loading
-with a particular emphasis on the challenges of getting neat
-\code{data.frame}s from Microsoft Excel data files. \pkg{plyr},
-\pkg{data.table} and \pkg{DataCombine} go a few steps further by
-providing a wide array of extremely powerful tools for data wrangling,
-including a number of particularly useful functions for merging and
-working with very large datasets. When it comes to actual data
-cleaning, however, the options are fewer.  \pkg{validate} (and the
-similar packages \pkg{editrules} and \pkg{deducorrect} from the same
-authors) does offer a few tools for identifying and auto-correcting
-errors in a dataset, but, as the name suggests, the focus is on
-internal validity rather than general data cleaning. In practice, this
-means that quite elegant tools for e.g. linear restraints among the
-variables in a dataset can be applied, but e.g. looking for
-potentially miscoded missing values is not really feasible. The main
-difference between these two challenges is the direction in which the
-data is inspected: While linear constraints work row-wise with no
-ambiguity, determining whether or not something is a miscoded missing
-value often requires knowledge about the full variable (e.g. range or
-data type), and thus it should be performed
+really data cleaning.  \pkg{janitor} provides tools for data import
+with a particular emphasis on the challenges of getting neat data
+frames from Microsoft Excel data files. \pkg{plyr}, \pkg{data.table}
+and \pkg{DataCombine} go a few steps further by providing a wide array
+of extremely powerful tools for data wrangling, including a number of
+particularly useful functions for merging and working with very large
+datasets. When it comes to actual data cleaning, however, the options
+are fewer.  \pkg{validate} (and the similar packages \pkg{editrules}
+\citep{editrules} and \pkg{deducorrect} \citep{deducorrect} from the
+same authors) does offer a few tools for identifying and
+auto-correcting errors in a dataset, but, as the name suggests, the
+focus is on internal validity rather than general data cleaning. In
+practice, this means that quite elegant tools for, e.g., linear
+restraints among the variables in a dataset can be applied, but
+looking for potentially miscoded missing values is not really
+feasible. The main difference between these two challenges is the
+direction in which the data is inspected: While linear constraints
+work row-wise with no ambiguity, determining whether or not something
+is a miscoded missing value often requires knowledge about the full
+variable (e.g. range or data type), and thus it should be performed
 column-wise. \pkg{validate} does not allow for user-defined extensions
 of the latter type, thereby limiting its data cleaning potential.
-Moreover, no tools have been made for documenting the data cleaning
-process.  As automatic cleaning options are also supplied in
-\pkg{validate}, we find quite a dangerous cocktail where all power is
-given to the the computer with no supervision, neither in real time
-nor subsequently.
+Automatic data correction functions are also provided by
+\pkg{validate} which we consider to be quite a dangerous cocktail: all
+power is given to the the computer with no human supervision, and
+investigators are less likely to make an active, case-specific choice
+regarding the handling of the potential errors.  Finally, no tools
+have been made to easily document exactly which checks and preliminary
+results were used in the data cleaning process.
 
 All in all, the large role of data cleaning in any data analysts
 everyday endeavors is hardly matched in the amount of available
@@ -849,10 +852,12 @@ interactively and in \code{clean()}.
 \begin{tabular}{L{0.2\linewidth}L{0.2\linewidth}L{0.2\linewidth}L{0.2\linewidth}}
 & \code{summaryFunction} & \code{visualFunction} & \code{checkFunction} \\
 \hline
-\vspace{0pt} Input (required) & \code{v} - a variable vector \newline \code{...}  &  \code{v} - a variable vector \newline \code{vnam} - the variable name (as character string) \newline \code{doEval} - a logical (\code{TRUE}/\code{FALSE}) controlling the output type of the function & \code{v} - a variable vector \newline \code{nMax} - an integer (or \code{Inf}), controlling how many problematic values are printed, if relevant \newline \code{...}  \\
-Input (optional) &  \code{maxDecimals} - number of decimals printed in outputted numerical values.  & - &  \code{maxDecimals}  - number of decimals printed in outputted numerical values.  \\
+\vspace{0pt} Input (required) & \code{v} --- a variable vector.
+                                \newline \code{...} --- additional
+                                arguments passed to the function.  &  \code{v} --- a variable vector. \newline \code{vnam} --- the variable name (as character string). \newline \code{doEval} --- a logical (\code{TRUE}/\code{FALSE}) controlling the output type of the function. & \code{v} - a variable vector \newline \code{nMax} - an integer (or \code{Inf}), controlling how many problematic values are printed, if relevant \newline \code{...} --- additional arguments passed to the function. \\
+Input (optional) &  \code{maxDecimals} --- number of decimals printed in outputted numerical values.  & --- &  \code{maxDecimals}  --- number of decimals printed in outputted numerical values.  \\
 Purpose & Describe some aspect of the variable, e.g., a central value, its dispersion or level of missingness. & Produce a distribution plot. & Check a variable for a specific issue and, if relevant, identify the values in the variable that cause the issue. \\
-Output (required) & A list with entries: \newline \code{\$feature} - a label for the summary value (as character string); \newline \code{\$result} - the result of the summary (as character string) & A character string with \proglang{R} code for producing a plot. This code should be standalone, i.e., should include the data if necessary. & A list with entries: \newline \code{\$problem} - a logical identifying whether an issue was found; \newline \code{\$message} - a character string (possibly empty) decribing the issue that was found, properly escaped and ready for use in \code{rmarkdown} \\
+Output (required) & A list with entries: \newline \code{\$feature} --- a label for the summary value (as character string); \newline \code{\$result} --- the result of the summary (as character string). & A character string with \proglang{R} code for producing a plot. This code should be standalone, i.e., should include the data if necessary. & A list with entries: \newline \code{\$problem} --- a logical identifying whether an issue was found; \newline \code{\$message} --- a character string (possibly empty) decribing the issue that was found, properly escaped and ready for use with \code{rmarkdown}. \\
 Output (recommended) & A \code{summaryResult} object, i.e., an attributed list with entries \code{\$feature}, \code{\$result} and \code{\$value}, the latter being the values from \code{\$result} in their original format). & \bgroup
 \def\arraystretch{1.8}%
 \hspace*{-.2cm}\begin{tabular}[t]{p{0.45\linewidth} |
@@ -864,7 +869,7 @@ Tools available for producing the function & \code{summaryResult()} & --- & \cod
 \end{tabular}
 \egroup
 \caption{Reference information for creating new functions to be used
-  as part of the \mbox{summarize-,} visualize-, and check steps. The three
+  as part of the summarize, visualize, and check steps. The three
   columns correspond to each of the three function types. %\hl{I think the formatting here is still sort of chaotic. Maybe include horizontal lines everywhere? Is it allowed in JSS? It's impossible to read what's in which row right now.}
 }
 \label{table.functionTypes}
@@ -904,26 +909,26 @@ mySummaryFunction <- function(v, ...) {
   summaryResult(list(feature = "[Feature name]", result = res))
 }
 \end{Verbatim}
-The last function called here, \code{summaryResult()}, changes the class
-of the output, thereby making a \code{print()} method available for it.
-Note that \code{v} is a vector and that \code{res} should be either a
-character string or something that will be printed as one. In other
-words, e.g., integers are allowed, but matrices are not. Though a lot
-of different things can go into the \code{summaryFunction} template,
-we recommend only using it for summarizing the features of a variable,
-and leaving tests and checks for the \code{checkFunction}s (presented
-below).
+The last function called here, \code{summaryResult()}, changes the
+class of the output, thereby making a \code{print()} method available
+for it.  Note that \code{v} is an input vector and that \code{res}
+should be either a character string or something that will be printed
+as one. In other words an integer would be allowed, but a matrix will
+not. Though a lot of different things can go into the
+\code{summaryFunction} template, we recommend only using it for
+summarizing the features of a variable, and leaving tests and checks
+for the \code{checkFunction}s (presented below).
 
 Adhering to the template above is sufficient for using the freshly
 made \code{mySummaryFunction()} in \code{clean()}, but we recommend
-furthermore adding the new function to the overview of all summary
+adding the new function to the overview of all summary
 functions by converting it to a proper \code{summaryFunction}
 object. This is done by calling the \code{summaryFunction()} creator with
 the user-defined function as the first argument, and additional arguments
 \code{description} (an explanatory text which will be added to the attributes of
 the function), and \code{classes} (a vector of variable classes the
 user-defined function is intended to be applied to, also stored as an
-attribute). In other words, a call on the following form should be made:
+attribute). In other words, a call following the template below should be made:
 \begin{Verbatim}
 mySummaryFunction <- summaryFunction(mySummaryFunction,
   description = "[Text describing what the summaryFunction does]",
@@ -934,18 +939,19 @@ which adds the new function to the output of an
 \code{allSummaryFunctions()} call.
 % One comment should be devoted to
 % the two attributes of a \code{summaryFunction}.
-If the \code{description} argument is left unspecified, the name of the
-function (which in this case is \code{"mySummaryFunction"}) will be filled in and
-stored under the \code{description} attribute. What happens if the \code{classes} argument is
-not specified depends on the type of \code{summaryFunction}. If
-\code{mySummaryFunction} is constructed as an \code{S3} generic function with associated
-methods, the call to \code{summaryFunction()} will automatically produce
-a vector of the names of the classes for which the function can be
+If the \code{description} argument is left unspecified, the name of
+the function (which in this case is \code{"mySummaryFunction"}) will
+be filled in and used as the \code{description} attribute. What
+happens if the \code{classes} argument is not specified depends on the
+type of \code{summaryFunction}. If \code{mySummaryFunction} is
+constructed as an \code{S3} generic function with associated methods,
+the call to \code{summaryFunction()} will automatically produce a
+vector of the names of the classes for which the function can be
 called. If \code{mySummaryFunction()} is not an \code{S3} generic and
-\code{classes} is left unspecified, the attribute will simply be
-left empty. Note that the helper function \code{allClasses()} might be useful
-for filling out the \code{classes} argument, as it simply lists all
-available classes in \pkg{dataMaid}:
+\code{classes} is left unspecified, the attribute will simply be left
+empty. Note that the helper function \code{allClasses()} might be
+useful for filling out the \code{classes} argument, as it simply lists
+all available classes in \pkg{dataMaid}:
 
 <<>>=
 allClasses()
@@ -982,7 +988,8 @@ allClasses()
 more complicated than writing a \code{summaryFunction}. This follows from
 the fact that \code{visualFunction}s need to be able to output standalone
 code for plots in order for \code{clean()} to build standalone
-\pkg{rmarkdown} files. We recommend using the following structure:
+\pkg{rmarkdown} files. We recommend using the following structure
+(again shown as pseudo code):
 \begin{Verbatim}
 myVisualFunction <- function(v, vnam, doEval) {
   thisCall <- call("[the name of the function used to produce the plot]",
@@ -1005,7 +1012,7 @@ and obviously, it is crucial for interactive usage of
 \code{myVisualFunction()}. In either case, it should be noted that all
 the parameters listed above, \code{v}, \code{vnam} and \code{doEval},
 are mandatory, so they must be left as is, even if they are not in
-use (c.f. Table~\ref{table.functionTypes}).
+use (c.f., Table~\ref{table.functionTypes}).
 
 
 As with the summary function, we call \code{visualFunction()} to
@@ -1030,12 +1037,12 @@ and \code{basicVisual}.
 \subsubsection{Writing a checkFunction}
 The last, but perhaps most important, \pkg{dataMaid} function type is
 the \code{checkFunction}. These are the functions that flag issues in
-the data in the check step and control the overall flow of the data
-cleaning process in the precheck stage. A \code{checkFunction} follows
+the data as part of the check step and/or control the overall flow of the data
+cleaning process in the pre-check stage. A \code{checkFunction} follows
 one of two overall structures, depending on the type of check. Either,
 it tries to identify problematic values in the variable (as
 e.g., \code{identifyMissing()} does), or it performs a check concerning the
-variable as a whole (e.g., the functions used for prechecks and the
+variable as a whole (e.g., the functions used for pre-checks and the
 function \code{identifyNums()}). We present templates for both types of
 \code{checkFunction}s below separately, but it should be emphasized that
 formally, they belong to the same class.
@@ -1067,7 +1074,8 @@ description attribute will be printed in the overview table in the
 \textit{Data cleaning summary} part of the output document.
 
 If problematic values are to be identified, the template from above
-should be expanded to follow a slightly more complicated structure:
+should be expanded to follow a slightly more complicated structure
+(again shown as pseudo-code):
 
 \begin{Verbatim}
 myProbValCheckFunction <- function(v, nMax, maxDecimals, ...) {
@@ -1078,7 +1086,7 @@ myProbValCheckFunction <- function(v, nMax, maxDecimals, ...) {
                         problemValues = problemValues)
 
   problemMessage <- "[Message that is printed prior to listing
-  		     problem values in the dataMaid output,
+                     problem values in the dataMaid output,
                      ending with a colon]"
 
   outMessage <- messageGenerator(problemStatus, problemMessage, nMax)
@@ -1103,7 +1111,7 @@ alphabetically. If the \code{nMax} argument to \code{messageGenerator()} is
 not \code{Inf}, only the first \code{nMax} problem values will be pasted
 onto the message, accompanied by a comment about how many problem
 values were left out (if any).  Note that printing quotes in
-\pkg{rmarkdown} requires an extensive amount of character escaping, so
+\proglang{R} markdown requires an extensive amount of character escaping, so
 opting for \code{messageGenerator()} really is the easiest solution.
 
 In the template above, the argument \code{maxDecimals} is not in use. This
@@ -1114,52 +1122,50 @@ above:
 
 \begin{Verbatim}
 myProbValCheckFunction <- function(v, nMax, maxDecimals, ...) {
-  ...
+  [... more lines of code here ...]
   problemStatus <- list(problem = problem,
     problemValues = problemValues)
 
   if (!is.null(problemValues)) {
     problemStatus$problemValues <- round(problemValues, maxDecimals)
   }
-  ...
+  [... more lines of code here ...]
 }
 \end{Verbatim}
 % $
 
 Now, problematic values will be rounded in the outputted message, while they
 will still appear in their original format under the entry \code{\$problemValues} %$
-in the outputted \code{checkResult}.
+in the returned object.
 
 \subsection{A worked example}
 
-We will now build four new functions and show both how they can be
+As an example, we create four new functions and show both how they can be
 used interactively and how they can be integrated with the \code{clean()}
 function. These four new functions are:
 \begin{description}
-\item[\code{isID()}] A new \code{checkFunction} intended for use in the precheck-stage. This function checks whether a variable consists exclusively of long ($> 10$ characters/digits) entries that are all of equal length, as this might be personal identification codes that we do not wish to print out in the data summary.
+\item[\code{isID()}] A new \code{checkFunction} intended for use in the pre-check-stage. This function checks whether a variable consists exclusively of long ($> 10$ characters/digits) entries that are all of equal length, as this might be personal identification codes that we do not wish to print out in the data summary.
 \item[\code{mosaicVisual()}] A new \code{visualFunction} that produces mosaic plots. This function will be used in the \textit{visualize} step of \code{clean()}.
 \item[\code{countZeros()}] A new \code{summaryFunction} that counts the number of occurrences of the value \code{0} in a variable. This function will be used in the \textit{summarize} step of \code{clean()}.
 \item[\code{identifyColons()}] A new \code{checkFunction} that flags variables in which values have colons that appear before and after alphanumerical characters. This is practical for identifying autogenerated interaction effects. This function will be used in the \textit{check} step of \code{clean()}.
 \end{description}
 These functions are defined in turn below, and afterwards, an example of how they can be called from \code{clean()} is provided.
 
-\subsubsection{isID --- a new checkFunction without problem values}
-First, let's define the \code{isID()} function. As this function is not
-supposed to list problematic values, it falls within
-the category of \code{checkFunction}s represented by
-\code{myFullVarCheckFunction()} in the above. We do not particularly wish
-to use this function interactively, so we will stick to the minimal
+\subsubsection[isID --- a new checkFunction without problem values]{\code{isID} --- a new \code{checkFunction} without problem values}
+First, let's define the \code{isID()} function. As this function is
+not supposed to list problematic values, it falls within the category
+of \code{checkFunction}s represented by
+\code{myFullVarCheckFunction()} above. We do not particularly wish to
+use this function interactively, so we will stick to the minimal
 requirements of a \code{checkFunction} used in \code{check()} (see
 Table~\ref{table.functionTypes}). The function can then be defined by
 
 <<>>=
 isID <- function(v, nMax = NULL, ...) {
   out <- list(problem = FALSE, message = "")
-  # Should work for all but logical and Date variables
   if (class(v) %in% setdiff(allClasses(), c("logical", "Date"))) {
     v <- as.character(v)
     lengths <- c(nchar(v))
-    # Check that all lengths are the same and greater than 10 characters
     if (all(lengths > 10) & length(unique(lengths)) == 1) {
       out$problem <- TRUE
       out$message <- "Warning: This variable seems to contain ID codes."
@@ -1170,11 +1176,11 @@ isID <- function(v, nMax = NULL, ...) {
 @
 
 This is essentially all we need to do in order to include this
-function as a precheck-function in \code{clean()}, so we will leave it as
+function as a pre-check-function in \code{clean()}, so we will leave it as
 is and move on to the next function, namely \code{mosaicVisual()}.
 
-\subsubsection{mosiacVisual --- a new visualFunction}
-\proglang{R} contains a function, \code{mosiacplot()}, which produces
+\subsubsection[mosaicVisual --- a new visualFunction]{\code{mosaicVisual} --- a new \code{visualFunction}}
+\proglang{R} provides a function, \code{mosaicplot()}, which produces
 mosaic plots. We intend to use this existing high-level plotting
 function as part of the new visualization function.  We will define
 the new function such that it gets the full \pkg{dataMaid}
@@ -1184,9 +1190,9 @@ the call using the existing function \code{mosaicplot()}.
 <<>>=
 mosaicVisual <- function(v, vnam, doEval) {
   thisCall <- call("mosaicplot", table(v), main = vnam, xlab = "")
-  if (doEval) {                     # Return the graphics
+  if (doEval) {
     return(eval(thisCall))
-  } else return(deparse(thisCall))  # Else return the code for the call
+  } else return(deparse(thisCall))
 }
 @
 
@@ -1215,7 +1221,7 @@ mosaicVisual(toyData$var1, "variable 1", doEval = TRUE)
 Even though \code{mosaicVisual()}, as written above, follows the style of a
 \code{visualFunction}, it is not yet truly one and therefore, it will not
 appear in an \code{allVisualFunctions()} call. In order to get this
-functionality, we need to change its object class. This can be done by
+functionality we need to change its object class. This can be done by
 writing
 
 <<>>=
@@ -1241,7 +1247,7 @@ allVisualFunctions()
 Now that we are done with the definition of \code{mosaicVisual()} we can
 turn to the next function in line, \code{countZeros()}.
 
-\subsubsection{countZeros --- a new summaryFunction}
+\subsubsection[countZeros --- a new summaryFunction]{\code{countZeros} --- a new \code{summaryFunction}}
 This \code{summaryFunction} is defined in the following lines of code:
 
 <<>>=
@@ -1252,7 +1258,7 @@ countZeros <- function(v, ...) {
 @
 
 As this function computes an integer (the number of zeros),
-there is no difference between the entries \code{\$result} and
+there is no difference between the elements \code{\$result} and
 \code{\$value}. If, on the other hand, the result had been a character
 string, extra formatting might be required in the \code{\$result} entry
 (such as escaping of quotation marks), and in this scenario, the two
@@ -1277,7 +1283,7 @@ countZeros <- summaryFunction(countZeros,
   "labelled", "numeric"))
 @
 
-\subsubsection{identifyColons --- a new checkFunction with problem values}
+\subsubsection[identifyColons --- a new checkFunction with problem values]{\code{identifyColons} --- a new \code{checkFunction} with problem values}
 The last function mentioned above is \code{identifyColons()}. We
 define it using the helper function \code{messageGenerator()} to
 obtain a properly escaped message, and we use \code{checkResult()} to
@@ -1293,20 +1299,20 @@ identifyColons <- function(v, nMax = Inf, ... ) {
   problemValues <- NULL
 
   problemValues <- v[sapply(gregexpr("[[:xdigit:]]:[[:xdigit:]]", v),
-                            function(x) all(x != -1))]
+    function(x) all(x != -1))]
 
   if (length(problemValues) > 0) {
     problem <- TRUE
   }
 
   problemStatus <- list(problem = problem,
-                        problemValues = problemValues)
+    problemValues = problemValues)
 
   outMessage <- messageGenerator(problemStatus, problemMessage, nMax)
 
   checkResult(list(problem = problem,
-                   message = outMessage,
-                   problemValues = problemValues))
+    message = outMessage,
+    problemValues = problemValues))
 }
 @
 
@@ -1315,17 +1321,17 @@ proper \code{checkFunction} object:
 
 <<>>=
 identifyColons <- checkFunction(identifyColons,
-    description = "Identify colons surrounded by alphanumeric characters",
-    classes = c("character", "factor", "labelled"))
+  description = "Identify colons surrounded by alphanumeric characters",
+  classes = c("character", "factor", "labelled"))
 @
 
-Note, that for \code{checkFunction}s, the function description will
-appear in the document produced by \code{clean()} (in the \textit{Data
-  cleaning summary} section of the output), so for this type of
-function, the change of class is not only done for the sake of the
+Note, that for \code{checkFunction}s, the description will appear in
+the document produced by \code{clean()} (in the \textit{Data cleaning
+  summary} section of the output), so for this type of function, the
+change of class is not only done for the sake of the
 \code{allCheckFunctions()} output.
 
-\subsubsection{Calling the new summarize/visualize/check functions from clean()}
+\subsubsection[Calling the new summarize/visualize/check functions from clean()]{Calling the new summarize/visualize/check functions from \code{clean()}}
 Now, we are ready to use these new functions in a \code{clean()}
 call. The extended \pkg{dataMaid} output document should have the
 following modifications, relative to the standard \pkg{dataMaid} output:
@@ -1365,29 +1371,27 @@ solve specific issues related to data cleaning. First, we discuss the
 challenges related to cleaning large datasets, particularly in terms
 of memory use and computation speed. Next, we show how \pkg{dataMaid}
 can be used for problem-flagging. Lastly, we discuss how the
-\pkg{dataMaid} output document can be included in other \pkg{rmarkdown}
+\pkg{dataMaid} output document can be included in other \proglang{R} markdown
 documents as a way to produce clear and concise documentation of a
 dataset. %\hl{I feel like there should be more topics here, but I'm all
 %  out of ideas...}
 
 \subsection{Cleaning large datasets}
 If the dataset becomes very large, the standard use of \code{clean()}
-outlined above might not be ideal. If there is a vast number of
-variables, creation of the \pkg{rmarkdown} document might be quite
+outlined above might not be ideal. If there is a large number of
+variables, creation of the \proglang{R} markdown document might be quite
 slow, while a large number of observations will generally affect the
 rendering time of the document. This issue is especially relevant to
 Windows users, where memory usage is not very efficient. The problem is that older,
 32-bit versions of Windows generally cannot access all physical RAM,
 while newer 64-bit versions of Windows cannot access virtual memory. Therefore,
-memory allocation issues becomes even more pressing when using this operating system.
+memory allocation issues becomes even more pressing under Windows.
 
-
-In this section, we give a few
-practical examples of ways to deal with large data, while wishing to
-still produce (potentially very long) data cleaning overview
-documents. Note that the interactive tools of \pkg{dataMaid} can be used
-as usual or sequentially in small subsets of the large dataset, if no
-such overview documents are needed.
+Below we give a few practical examples of ways to deal with large
+data, while wishing to still produce (potentially very long) data
+cleaning overview documents. Note that the interactive tools of
+\pkg{dataMaid} can be used as usual or sequentially in small subsets
+of the large dataset, if no overview documents are needed.
 
 \subsubsection{Handling the figures}
 Though figures give a nice overview of each variable, they are also
@@ -1409,7 +1413,7 @@ clean(toyData, allVisuals = "basicVisual")
 @
 
 Of course, even less heavy plots might be achieved by writing new
-\code{visualFunction}s, using the guidelines from section
+\code{visualFunction}s, using the guidelines from Section
 \ref{sec:functionTemplates}. For instance, a future extension of
 \pkg{dataMaid} might be the inclusion of ASCII plots, as
 e.g., represented in the \proglang{R} package \pkg{txtplot} \citep{txtplot}.
@@ -1423,11 +1427,11 @@ the memory handling on this operating system,
 %combination of memory control in this operating system and
 %\proglang{R},
 is simply splitting the two steps performed
-by \code{clean()}, namely producing the \pkg{rmarkdown} file and rendering it
+by \code{clean()}, namely producing the \proglang{R} markdown file and rendering it
 afterwards. If the \code{rmarkdown} file is very long, as it will
 typically be for very large datasets, keeping this file open in memory
 wastes precious memory capacities. Therefore, we advice users to
-instead split the two steps. This can be done in the following manner:
+instead split the two steps as shown in the following.
 
 <<eval=FALSE>>=
 clean(toyData, render = FALSE, openResult = FALSE)
@@ -1435,7 +1439,7 @@ render("dataMaid_toyData.Rmd", quiet = FALSE)
 @
 
 This also deals with the fact that \pkg{dataMaid} can produce
-\pkg{rmarkdown} files that supersedes the upper size limit of code editors, e.g.,
+\proglang{R} markdown files that supersedes the upper size limit of code editors, e.g.,
 RStudio, which currently has an editor file size limit of 5MB. %\hl{dette giver
 %ingen mening uden en præcision? "upper size limit" af hvad? Se udkommenteret
 %kommentar.}
@@ -1447,17 +1451,18 @@ RStudio, which currently has an editor file size limit of 5MB. %\hl{dette giver
 
 \subsection[Using dataMaid for problem flagging]{Using \pkg{dataMaid} for problem flagging}
 If the data is large, but memory issues and computation time are less
-of an issue than the human time it takes to look through the data
+of an issue than the time it takes a human to look through the data
 cleaning document, a viable solution might be not to include all
-information about all variables. Or even for more reasonably sized
-datasets, sometimes a brief overview of the most pressing issues can
-be useful. This can be achieved by using the \code{onlyProblematic}
-argument in \code{clean()}. By specifying \code{onlyProblematic = TRUE},
-only variables that raise a flag in the checking steps will be
-summarized and visualized. But perhaps we are not even interested in
-obtaining general information about these variables, but only in
-getting a quick overview of the problems they might have. This can be
-done by also controlling the \code{mode} argument:
+information about all variables. % Or even for more reasonably sized
+% datasets, sometimes a brief overview of the most pressing issues can
+% be useful.
+This can be achieved by using the \code{onlyProblematic} argument in
+\code{clean()}. By specifying \code{onlyProblematic = TRUE}, only
+variables that raise a flag in the checking steps will be summarized
+and visualized. But perhaps we are not even interested in obtaining
+general information about these variables, but only in getting a quick
+overview of the problems they might have. This is obtained by
+controlling the \code{mode} argument:
 
 <<eval=FALSE>>=
 clean(toyData, onlyProblematic = TRUE, mode = c("check"))
@@ -1466,7 +1471,7 @@ clean(toyData, onlyProblematic = TRUE, mode = c("check"))
 Now only the checking results are printed, and only for variables
 where problems were identified. An even more minimal output can be
 generated by also leaving out the checking results --- then
-\code{clean()} essentially just produces a list of the variable names
+\code{clean()} essentially just produces a document with a list of the variable names
 that should be investigated further:
 
 <<eval=FALSE>>=
@@ -1495,24 +1500,24 @@ observations have the value \code{"Irrelevant"}), is problem-free.
 
 \subsection[Including dataMaid documents in other files]{Including \pkg{dataMaid} documents in other files}
 Sometimes, a \pkg{dataMaid} document might be a useful addition to a
-more general overview document, including also for example pairwise
-association plots, time series plots, or exploratory analysis
-results. To this end, it is possible to produce a \pkg{dataMaid}
-document that can readily be included in other \pkg{rmarkdown}
-files. This is done by using the \code{standAlone} argument in \code{clean()},
-which removes the preamble from the outputted \pkg{rmarkdown}
-file. Please note, that it is still necessary to indicate which
-\code{rmarkdown} type is being created; the pdf and html \pkg{rmarkdown}
-styles are unfortunately not identical.
+more general overview document, including additional information such
+as pairwise association plots, time series plots, or exploratory
+analysis results.  \pkg{dataMaid} can produce a document to be
+included in other \proglang{R} markdown files by setting the
+\code{standAlone} argument in \code{clean()} to remove the preamble
+from the output \proglang{R} markdown file. Note that it is still
+necessary to indicate which \proglang{R} markdown output type is
+created; the pdf and html \proglang{R} markdown styles are
+unfortunately not identical.
 
 If it is important that the embedded \pkg{dataMaid} document can be
 rendered to either of these two file types, we recommend setting
-\code{twoCols = FALSE} and \code{output = html} in \code{clean()}, thereby
+\code{twoCols = FALSE} and \code{output = "html"} in \code{clean()}, thereby
 essentially removing almost all output type specific formatting code
-from the generated \pkg{rmarkdown} file.
+from the generated \proglang{R} markdown file.
 
 On the other hand, if a pdf document is to be produced, a few extra
-lines need to be added to the preamble of the master \pkg{rmarkdown}
+lines need to be added to the preamble of the master \proglang{R} markdown
 document --- otherwise, the two-column layout code will produce an
 error. The following is an example of how such a master document
 preamble YAML might look like and how the \code{dataMaid\_toyData.Rmd} file can
@@ -1544,13 +1549,13 @@ been created as follows:
 clean(toyData, standAlone = FALSE)
 @
 
-and the more minimal, html-style \pkg{rmarkdown} file described above can be produced using
+and the more minimal, html-style \proglang{R} markdown file described above can be produced using
 
 <<eval=FALSE>>=
 clean(toyData, standAlone = FALSE, output = "html", twoCols = FALSE)
 @
 
-Note that with the latter option, no special YAML preamble is needed in the \pkg{rmarkdown} document.
+Note that with the latter option, no special YAML preamble is needed in the \proglang{R} markdown document.
 % \hl{don't end on code.}
 
 
