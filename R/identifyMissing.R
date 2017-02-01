@@ -229,7 +229,7 @@ identifyMissingNI <- function(v, nMax, maxDecimals) {
   allProblemOcc <- c(missNinesOcc, missEightsOcc, missNaNOcc)
 
   if (length(allProblemOcc) > 0) {
-    outProblemValues <- problemValues
+    outProblemValues <- allProblemOcc
     problemValues <- round(allProblemOcc, maxDecimals)
     problem <- TRUE
   }

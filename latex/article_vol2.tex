@@ -52,28 +52,28 @@
   data analysis, as the validity of the conclusions from the analysis
   hinges on the quality of the input data. Mistakes in the data can
   arise for any number of reasons, including erroneous codings,
-  malfunctioning measurement equipment, inconsistent data generation
-  manuals and many more.  Ideally, a human investigator should go
+  malfunctioning measurement equipment, and inconsistent data generation
+  manuals.  Ideally, a human investigator should go
   through each variable in the dataset and look for potential errors
   --- both in input values and codings --- but that process can be very
   time-consuming, expensive and error-prone in itself.
 
-  We describe an \proglang{R} package which implements an extensive
-  and customizeable suite of quality assessment tools that can be applied to
-  a dataset in order to identify potential problems in its
-  variables. The results can be presented in an auto-generated,
-  non-technical, stand-alone overview document, intended to be perused
-  by an investigator with an understanding of the variables in the
-  data, but not necessarily knowledge of \proglang{R}. Thereby, \pkg{dataMaid}
-  aids the dialogue between data
-  analysts and field experts, while also providing easy
+  We describe an \proglang{R} package, \pkg{dataMaid}, which
+  implements an extensive and customizeable suite of quality
+  assessment tools that can be applied to a dataset in order to
+  identify potential problems in its variables. The results can be
+  presented in an auto-generated, non-technical, stand-alone overview
+  document intended to be perused by an investigator with an
+  understanding of the variables in the data, but not necessarily
+  knowledge of \proglang{R}. Thereby, \pkg{dataMaid} aids the dialogue
+  between data analysts and field experts, while also providing easy
   documentation of reproducible data cleaning steps and data quality
   control. Moreover, the \pkg{dataMaid} solution changes the data
   cleaning process from the usual ad hoc approach to a systematic,
   well-documented endeavor.  \pkg{dataMaid} also provides a suite of
   more typical \proglang{R} tools for interactive data quality
-  assessment and -cleaning, where the data inspections all live and die
-  within the \proglang{R} console.
+  assessment and -cleaning, where the data inspections all live and
+  die within the \proglang{R} console.
 
   % The \pkg{dataMaid} package is designed to be easily extended with
   % custom user-created checks that are relevant in particular
@@ -122,7 +122,7 @@ Though data cleaning might be regarded as a somewhat tedious activity,
 adequate data cleaning is crucial in any data analysis. With
 ever-growing dataset sizes and complexities, statisticians and data
 analysts find themselves spending a large portion of their time on
-data cleaning and on data wrangling. While a computer should never
+data cleaning and data wrangling. While a computer should never
 make unsupervised decisions on what should be done to potential
 errors in a dataset, it can still be an extremely useful tool in the
 data cleaning process. Some errors can be tracked down and flagged by a
@@ -324,7 +324,7 @@ R> clean(toyData)
 \end{Schunk}
 
 By default, an \proglang{R} markdown file and a rendered pdf overview
-document is produced, saved to the disc (in the working directory) and
+document is produced, saved to the working directory and
 opened for immediate inspection. Turning to Figure~\ref{fig:example1},
 we see that such a data cleaning output document consists of two
 parts. First, an overview of what was done is presented under the
@@ -384,7 +384,7 @@ Argument & Description & Default value \\
 \quad \code{openResult} & If a  pdf/html file is rendered, should it
                        automatically open afterwards, and if not,
                        should the \code{rmarkdown} file be opened? & \code{TRUE} \\
-\quad \code{replace} & Overwrite an existing files with the same name? & \code{FALSE} \\
+\quad \code{replace} & Overwrite an existing file with the same name? & \code{FALSE} \\
 
 \hline
 \end{tabular}
@@ -498,17 +498,18 @@ Argument & Description & Default value \\
 % \label{subsection:controlSomething}
 
 \subsection{Polishing off the arguments}
-We begin with an example that is intended as an illustration of how \code{clean()} might
-be used in the very first stages of data cleaning, where we are still uncertain
-about exactly what is needed and how much times should be allocated to data
-cleaning. At this stage, what is really needed, if a very rough idea of the extends of
-errors in the dataset. In this scenario, we might wish to obtain a summary document in html format
-that only contains the variables with potential problems, and with a limit of
-maximum 10 printed potential errors for each variable we can write
-(output not shown). Also, we can add the argument \code{replace=TRUE} in
-order to force \code{clean()} to overwrite any existing files produced by
-\code{clean()}, as we might run this function a few times in a row before deciding
-exactly which cleaning overview we want. Using the \code{toyData} dataset as a guinea pig, we type:
+We begin with an example that is intended as an illustration of how
+\code{clean()} might be used in the very first stages of data
+cleaning, when the we are uncertain about the complexities of the
+errors and how much times should be allocated to data cleaning. At
+this stage, what is really needed, is a very rough idea of the
+severity of errors in the dataset. In this scenario, we might wish to
+obtain a summary document in html format that only contains the
+variables with potential problems, and with a limit of, say, maximum
+10 printed potential errors for each variable. Also, we can add the
+argument \code{replace=TRUE} in order to force \code{clean()} to
+overwrite any existing files produced by \code{clean()}.  Using the
+\code{toyData} dataset as a guinea pig, we type:
 
 \begin{Schunk}
 \begin{Sinput}
@@ -577,7 +578,7 @@ R> clean(toyData, output="html", render=FALSE, openResult=FALSE)
 
 We will now move on to discuss how not only the structure of the
 cleaning summary is manipulated, but also its very contents. This is
-done through the summarize-visualize-check (SVC) step, as illustrated
+done through the summarize/visualize/check (SVC) steps, as illustrated
 in Figure \ref{figure:cleanStructure}.  \pkg{dataMaid} uses three
 different types of functions for performing these steps, namely
 \code{summaryFunction}s, \code{visualFunction}s and
@@ -628,11 +629,11 @@ variableType   Data class of variable          character, Date, factor,
 \end{Soutput}
 \end{Schunk}
 
-Thus we can see, for example, that for \code{numeric}, \code{integer}, or \code{Date}
-variables, \pkg{dataMaid} provides functions for adding summary information about
-the minimum and maximum values, while all seven variable
-classes dealt with in \pkg{dataMaid} have functions for central
-tendency summaries (i.e., mode or median).
+Thus we can see, for example, that for \code{numeric}, \code{integer},
+and \code{Date} variables, \pkg{dataMaid} provides functions for
+adding summary information about the minimum and maximum values, while
+all seven variable classes dealt with in \pkg{dataMaid} have functions
+for central tendency summaries (i.e., mode or median).
 
 We can control what summaries and checks are applied for each variable type
 through the \code{XXXSummaries} and \code{XXXChecks} arguments, where \code{XXX}
@@ -642,9 +643,8 @@ vector of summary- or check function names that should be run for a
 particular variable type. The default values for each of these
 arguments can be obtained through the \code{defaultXXXChecks()}
 and \code{defaultXXXSummaries()} functions, where \code{XXX} again refers to
-the variable type.
+the variable type. For example, the default summaries being used for a factor variable is
 
-For example, the default summaries being used for a factor variable is
 \begin{Schunk}
 \begin{Sinput}
 R> defaultFactorSummaries()
@@ -695,8 +695,9 @@ R> defaultFactorChecks()
 \end{Soutput}
 \end{Schunk}
 
-Now, if we only wanted to apply the identify whitespace function for
-factor variables, then we would need to set the \code{factorChecks} accordingly
+Now, if we only wanted to apply the function to identify whitespace
+for factor variables, then we would need to set the
+\code{factorChecks} accordingly
 
 \begin{Schunk}
 \begin{Sinput}
@@ -718,7 +719,7 @@ As with \code{summaryFunction}s, a complete list of available
 \code{checkFunction}s is obtained by calling
 \code{allCheckFunctions()}. Note however, that \code{checkFunction}s have a
 usage beyond the \code{XXXChecks} arguments, namely in the
-\textit{pre-check} stage. In this stage, it is determined whether or
+pre-check stage. In this stage, it is determined whether or
 not each variable is suitable for the summarize/visualize/check (SVC)
 steps. The functions used in the pre-check stage should be
 \code{checkFunction}s that are applicable to all variable classes. The
@@ -737,7 +738,7 @@ R> clean(toyData, preChecks = "isKey")
 
 Note that the data visualizations in the cleaning summary are also
 controllable, though only a single function can be provided for all
-variable types. If for instance, we wish to change the visualizations
+variable types. If, for instance, we wish to change the visualizations
 from the default \pkg{ggplot2} \citep{ggplot2} style histograms and barplots to base
 \proglang{R} histograms and barplots, we type
 
@@ -765,33 +766,35 @@ R> clean(toyData, allVisuals = "basicVisual")
 
 
 
-In summary, and as indicated in Figure~\ref{figure:cleanStructure}, there are two stages
+As indicated in Figure~\ref{figure:cleanStructure}, there are two stages
 where \code{clean()} applies functions to each of the variables:
 \begin{enumerate}
 \item In the pre-check stage.
 \item As part of the summarize/visualize/check (SVC) steps.
 \end{enumerate}
 Each of these stages are controllable using appropriate function
-arguments in \code{clean()}, and above we have shown examples of how to
-tweak them to modify the data cleaning outputs. However, if for
-instance the dataset at hand requires new, additional checks, then more control is needed, and
-Section~\ref{sec:extending} explains how to modify and expand the
-possibilities by producing new summary-, visual- and check functions.
+arguments in \code{clean()}, and above we have shown examples of how
+to tweak them to modify the data cleaning outputs. However, if the
+dataset at hand requires new, additional checks, then more control is
+needed, and Section~\ref{sec:extending} explains how to modify and
+expand the possibilities by producing new summary, visual, and check
+functions.
 
 \section[Using dataMaid interactively]{Using \pkg{dataMaid} interactively}
 \label{sec:interactiveCleanR}
 
 While overview documents are great for presenting and documenting the
-data cleaning checks, it may be useful to be able to work more interactively
-through the data cleaning process as well. Aside from the \code{clean()} function
-presented above, \pkg{dataMaid} also provides more standard \proglang{R} interactive tools, such as
+data cleaning checks, it may be useful to be able to work more
+interactively through the data cleaning process. Aside from
+the \code{clean()} function presented above, \pkg{dataMaid} also
+provides more standard \proglang{R} interactive tools, such as
 functions that print results to the console or returns the information
 as an object for later use. This section describes how to use the
-functions \code{check()}, \code{summarize()} and \code{visualize()} to work
-interactively with \pkg{dataMaid}.
+functions \code{check()}, \code{summarize()} and \code{visualize()} to
+work interactively with \pkg{dataMaid}.
 
 \subsection{Data cleaning by hand: An example}
-Let's say we wish to look further into a certain variable from
+Assume that we wish to look further into a certain variable from
 \code{toyData}, namely \code{var2}. The data cleaning summary found some
 issues in this variable, and we would like to recall what these issues
 were. This can be done using the \code{check()} command
@@ -813,7 +816,7 @@ described in the previous section, are in fact passed to \code{check()},
 and thus they can also be used here. For instance, if we only want to
 check for potentially miscoded missing values, we can use the relevant
 \code{XXXChecks} argument (e.g., \code{numericChecks}, \code{factorChecks},
-etc. as described in Section~\ref{sec:usingdataMaid}) to provide a
+etc., as described in Section~\ref{sec:usingdataMaid}) to provide a
 vector of the check functions that should be applied. Recall that
 Table~\ref{table.SVCfunctions} or an \code{allCheckFunctions()} call provide
 overviews of the available check functions.
@@ -856,7 +859,7 @@ R> str(missVar2)
 List of 3
  $ problem      : logi TRUE
  $ message      : chr "The following suspected missing value codes enter as regular values: \\\"999\\\", \\\"NaN\\\"."
- $ problemValues: NULL
+ $ problemValues: num [1:2] 999 NaN
  - attr(*, "class")= chr "checkResult"
 \end{Soutput}
 \end{Schunk}
@@ -864,7 +867,7 @@ List of 3
 The most important thing to note here is that while the printed
 message is made for easy reading, the actual values of the variable
 causing the issue are still obtainable in the element
-\code{problemValues}. If we for instance decide that the values \code{999}
+\code{problemValues}. If we decide that the values \code{999}
 and \code{NaN} in \code{var2} are in fact miscoded missing values, we can
 easily replace them with \code{NA}s:
 
@@ -874,7 +877,7 @@ R> toyData$var2[toyData$var2 %in% missVar2$problemValues] <- NA
 R> identifyMissing(toyData$var2)
 \end{Sinput}
 \begin{Soutput}
-The following suspected missing value codes enter as regular values: 999, NaN.
+No problems found.
 \end{Soutput}
 \end{Schunk}
 
@@ -888,13 +891,13 @@ R> visualize(toyData$var2)
 R> summarize(toyData$var2)
 \end{Sinput}
 \begin{Soutput}
-     Feature                   Result    
-[1,] "Variable type"           "numeric" 
-[2,] "Number of missing obs."  "3 (20 %)"
-[3,] "Number of unique values" "8"       
-[4,] "Median"                  "4.5"     
-[5,] "1st and 3rd quartiles"   "1.75; 6" 
-[6,] "Min. and max."           "1; 999"  
+     Feature                   Result       
+[1,] "Variable type"           "numeric"    
+[2,] "Number of missing obs."  "4 (26.67 %)"
+[3,] "Number of unique values" "6"          
+[4,] "Median"                  "4"          
+[5,] "1st and 3rd quartiles"   "1.5; 6"     
+[6,] "Min. and max."           "1; 82"      
 \end{Soutput}
 \end{Schunk}
 
@@ -920,9 +923,9 @@ only get the median, minimum and the maximum we set
 R> summarize(toyData$var2, numericSummaries = c("centralValue", "minMax"))
 \end{Sinput}
 \begin{Soutput}
-     Feature         Result  
-[1,] "Median"        "4.5"   
-[2,] "Min. and max." "1; 999"
+     Feature         Result 
+[1,] "Median"        "4"    
+[2,] "Min. and max." "1; 82"
 \end{Soutput}
 \end{Schunk}
 
@@ -1429,7 +1432,6 @@ wish to emphasize that the function is not intended to be called on
 all variable types, as zeros have different roles in \code{Date}s and in
 \code{logical} variables:
 
-XXX indentation
 \begin{Schunk}
 \begin{Sinput}
 R> countZeros <- summaryFunction(countZeros,
