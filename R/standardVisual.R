@@ -103,17 +103,5 @@ standardVisualD <- function(v, vnam, doEval = TRUE) {
 
 
 
-#Helper function for escaping characters such that they are 
-#printed as is in the plot axis ticks.
-#All currently implemented special characters commencing 
-#with "\" are included (as of 02-08-2017)
-escapeRStyle <- function(string) {
-  string <- gsub("\\", "\\\\", string, fixed = TRUE)
-  string <- gsub("\a", "\\\\a", string)
-  string <- gsub("\f", "\\\\f", string)
-  string <- gsub("\n", "\\\\n", string)
-  string <- gsub("\r", "\\\\r", string)
-  string <- gsub("\t", "\\\\t", string)
-  string
-}
+
 

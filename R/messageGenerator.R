@@ -144,7 +144,27 @@ printProblemValues <- function(problemValues, nMax = Inf) {
 #NOTE: 3 slashes escapes the espaced string [\"] such that it is printed correctly
 #(and not interpreted) in markdown.
 escapeRMDStyle <- function(string) {
-  sub1 <- gsub("\\", "\\\\", string, fixed = TRUE)
-  sub2 <- gsub("<", "\\<", sub1, fixed = TRUE)
-  gsub(">", "\\>", sub2, fixed = TRUE)
+  string <- gsub("\\", "\\\\", string, fixed = TRUE)
+  string <- gsub("\a", "\\\\\\\\a", string)
+  string <- gsub("\f", "\\\\\\\\f", string)
+  string <- gsub("\n", "\\\\\\\\n", string)
+  string <- gsub("\r", "\\\\\\\\r", string)
+  string <- gsub("\t", "\\\\\\\\t", string)
+  string <- gsub("<", "\\<", string, fixed = TRUE)
+  gsub(">", "\\>", string, fixed = TRUE)
+}
+
+
+#Helper function for escaping characters such that they are 
+#printed as is.
+#All currently implemented special characters commencing 
+#with "\" are included (as of 02-08-2017)
+escapeRStyle <- function(string) {
+  string <- gsub("\\", "\\\\", string, fixed = TRUE)
+  string <- gsub("\a", "\\\\a", string)
+  string <- gsub("\f", "\\\\f", string)
+  string <- gsub("\n", "\\\\n", string)
+  string <- gsub("\r", "\\\\r", string)
+  string <- gsub("\t", "\\\\t", string)
+  string
 }
