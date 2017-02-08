@@ -124,10 +124,8 @@ messageGenerator <- function(problemStatus, message = NULL, nMax = Inf) {
 #Formats problems values, i.e. escapes characters appropriately for rmarkdown
 #and adds quotes such that prefixed and suffixed blankspaces are visible.
 #only called when there is at least one problemValue
-#NOTE: 3 slashes escapes the espaced string [\"] such that it is printed correctly
-#(and not interpreted) in markdown.
 printProblemValues <- function(problemValues, nMax = Inf) {
-    problemValues <- gsub("\\", "\\\\", sort(problemValues, na.last = TRUE), fixed = TRUE)
+    problemValues <- escapeRMDStyle(sort(problemValues, na.last = TRUE))
         ##NOTE: sort removes NaNs if not told explicitly not to by use of the na.last-argument
     nVals <- length(problemValues)
     extraStr <- ""
@@ -137,4 +135,16 @@ printProblemValues <- function(problemValues, nMax = Inf) {
     }
     paste(paste(paste("\\\"", problemValues, "\\\"", sep=""),
                 collapse=", "), extraStr, sep="")
+}
+
+#Does character escaping such that the text can be rendered by rmarkdown
+#without any issues. 
+#The following types of issues are addressed so far: html tags, \s
+#
+#NOTE: 3 slashes escapes the espaced string [\"] such that it is printed correctly
+#(and not interpreted) in markdown.
+escapeRMDStyle <- function(string) {
+  sub1 <- gsub("\\", "\\\\", string, fixed = TRUE)
+  sub2 <- gsub("<", "\\<", sub1, fixed = TRUE)
+  gsub(">", "\\>", sub2, fixed = TRUE)
 }

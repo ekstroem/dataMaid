@@ -70,7 +70,8 @@ standardVisual <- visualFunction(standardVisual, "Histograms and barplots using 
 
 #character, factor, labelled and logical variables
 standardVisualCFLB <- function(v, vnam, doEval = TRUE) {
-  thisCall <- call("qplot", x=na.omit(v), geom="bar", xlab="", main=vnam)
+  v <- escapeRStyle(na.omit(v))
+  thisCall <- call("qplot", x=v, geom="bar", xlab="", main=vnam)
   if (doEval) {
     return(eval(thisCall))
   } else return(deparse(thisCall))
@@ -100,4 +101,19 @@ standardVisualD <- function(v, vnam, doEval = TRUE) {
   } else return(deparse(thisCall))
 }
 
+
+
+#Helper function for escaping characters such that they are 
+#printed as is in the plot axis ticks.
+#All currently implemented special characters commencing 
+#with "\" are included (as of 02-08-2017)
+escapeRStyle <- function(string) {
+  string <- gsub("\\", "\\\\", string, fixed = TRUE)
+  string <- gsub("\a", "\\\\a", string)
+  string <- gsub("\f", "\\\\f", string)
+  string <- gsub("\n", "\\\\n", string)
+  string <- gsub("\r", "\\\\r", string)
+  string <- gsub("\t", "\\\\t", string)
+  string
+}
 

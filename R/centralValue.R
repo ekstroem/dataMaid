@@ -75,7 +75,7 @@ centralValue <- summaryFunction(centralValue, "Compute median or mode", allClass
 centralValueB <- function(v) {
   vMode <- names(which.max(table(v, exclude=NULL)))[1]
   summaryResult(list(feature="Mode",
-                     result=paste("\"", vMode, "\"", sep=""),
+                     result=paste("\"", escapeRMDStyle(vMode), "\"", sep=""),
                      value = vMode))
 }
 
