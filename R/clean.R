@@ -638,15 +638,20 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
     }
  }
 
-        ## Summary table
-        writer("# Summary table")
-        for (idx in index) {
-            ## How to order the variables
-            v <- data[[idx]]
-            vnam <- vnames[idx]
-
-        }
-
+####################################################################################    
+#######TO DO HERE: Add a summary table with overview of data issues,################
+#######e.g. concerning missing values, how many (and which) variables###############
+#######were flagged to as problematic etc.##########################################
+####################################################################################    
+#        ## Summary table
+#        writer("# Summary table")
+#        for (idx in index) {
+#            ## How to order the variables
+#            v <- data[[idx]]
+#            vnam <- vnames[idx]
+#
+#        }
+####################################################################################
 
     ## List of variables
     writer("# Variable list")
