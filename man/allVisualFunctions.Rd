@@ -13,7 +13,7 @@ An object of class \code{functionSummary}. This object has entries \code{$name}
 to be called on, as obtained from their \code{classes} attributes).
 }
 \description{
-Produce a overview of all functions of class \code{visualFunction} 
+Produce an overview of all functions of class \code{visualFunction} 
 available in the workspace or imported from packages. This overview includes
 the descriptions and a list of what classes the functions are each intended
 to be called on.
