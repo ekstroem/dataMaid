@@ -5,6 +5,10 @@
 #' been misclassified as categorical.
 #'
 #' @param v A character, factor, or labelled variable to check.
+#' 
+#' @param nVals An integer determining how many unique values a variable must have
+#' before it can potentially be determined to be a misclassified numeric variable. 
+#' The default is \code{12}.
 #'
 #' @param ... Not in use.
 #'
@@ -18,8 +22,9 @@
 #' @details A categorical variable is suspected to be a misclassified
 #' numeric variable if it has the following two properties: First,
 #' it should consist exclusively of numbers (possibly including signs
-#' and decimals points). Secondly, it must have at least 12 unique values.
-#' This means that e.g. variables including answers on a scale from 0-10 will
+#' and decimals points). Secondly, it must have at least \code{nVals} unique values.
+#' The default values of \code{nVals} is 12, which means that 
+#' e.g. variables including answers on a scale from 0-10 will
 #' not be recognized as misclassified numerics.
 #'
 #' @seealso \code{\link{check}}, \code{\link{allCheckFunctions}},
@@ -35,10 +40,10 @@
 #'
 #' @importFrom stats na.omit
 #' @export
-identifyNums <- function(v, ...) {
+identifyNums <- function(v, nVals = 12, ...) {
   out <- list(problem = FALSE, message = "", problemValues = NULL)
   v <- as.character(na.omit(v))
-  if (length(unique(v)) <= 11) {
+  if (length(unique(v)) < nVals) {
     return(checkResult(out))
   }
   v[v==""] <- "a" #make sure v contains no empty strings

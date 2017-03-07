@@ -71,6 +71,10 @@ standardVisual <- visualFunction(standardVisual, "Histograms and barplots using 
 #character, factor, labelled and logical variables
 standardVisualCFLB <- function(v, vnam, doEval = TRUE) {
   v <- escapeRStyle(na.omit(v))
+  if (identifyNums(v, nVals = 0)$problem) {
+    v <- as.numeric(as.character(v))
+  }
+  v <- factor(v)
   thisCall <- call("qplot", x=v, geom="bar", xlab="", main=vnam)
   if (doEval) {
     return(eval(thisCall))

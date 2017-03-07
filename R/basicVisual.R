@@ -69,7 +69,11 @@ basicVisual <- visualFunction(basicVisual, "Histograms and barplots using graphi
 #' importFrom stats na.omit
 #' @inheritParams standardVisual
 basicVisualCFLB <- function(v, vnam, doEval = TRUE) {
-  v <- escapeRStyle(na.omit(as.factor(v)))
+  v <- escapeRStyle(na.omit(v))
+  if (identifyNums(v, nVals = 0)$problem) {
+    v <- as.numeric(as.character(v))
+  }
+  v <- factor(v)
   thisCall <- call("plot", x = v, main = vnam)
   if (doEval) {
     return(eval(thisCall))
