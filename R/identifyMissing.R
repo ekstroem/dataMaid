@@ -200,9 +200,7 @@ identifyMissingCF <- function(v, nMax) {
 
 #labelled variables
 identifyMissingL <- function(v, nMax) {
-  v <- na.omit(v)
-  ##  v <- unpackLabelled(v)
-  v <- haven::as_factor(v)
+  v <- na.omit(haven::as_factor(v))
   identifyMissingCF(v, nMax = nMax)
 }
 

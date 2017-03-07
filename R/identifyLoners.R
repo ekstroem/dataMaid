@@ -39,7 +39,7 @@ identifyLoners.factor <- function(v, nMax = Inf) identifyLonersF(v, nMax = nMax)
 #' @export
 identifyLoners.labelled <- function(v, nMax = Inf) identifyLonersF(v, nMax = nMax)
 #' @export
-identifyLoners.character <- function(v, nMax = Inf) identifyLonersC(v, nMax = nMax)
+identifyLoners.character <- function(v, nMax = Inf) identifyLonersL(v, nMax = nMax)
 
 
 #make it a checkFunction
@@ -81,4 +81,8 @@ identifyLonersC <- function(v, nMax) {
   identifyLonersF(v, nMax)
 }
 
+identifyLonersL <- function(v, nMax) {
+  v <- as_factor(v)
+  identifyLonersF(v, nMax)
+}
 

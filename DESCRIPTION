@@ -23,8 +23,8 @@ Encoding: UTF-8
 LazyData: true
 ByteCompile: true
 License: GPL-2
-RoxygenNote: 5.0.1.9000
-Collate: 
+RoxygenNote: 5.0.1
+Collate:
     'allCheckFunctions.R'
     'allClasses.R'
     'allSummaryFunctions.R'

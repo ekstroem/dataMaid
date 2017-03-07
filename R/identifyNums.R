@@ -39,10 +39,15 @@
 #'
 #'
 #' @importFrom stats na.omit
+#' @importFrom haven as_factor
 #' @export
 identifyNums <- function(v, nVals = 12, ...) {
   out <- list(problem = FALSE, message = "", problemValues = NULL)
-  v <- as.character(na.omit(v))
+  
+  
+    #note: as_factor does nothing to factor variables and makes
+    #char and labelled variables into factors
+  v <- as.character(na.omit(as_factor(v)))
   if (length(unique(v)) < nVals) {
     return(checkResult(out))
   }
@@ -60,4 +65,4 @@ identifyNums <- function(v, nVals = 12, ...) {
 #' @include checkFunction.R
 identifyNums <- checkFunction(identifyNums,
                               "Identify misclassified numeric or integer variables",
-                              c("character", "factor"))
+                              c("character", "factor", "labelled"))

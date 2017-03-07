@@ -22,9 +22,14 @@
 #' @seealso \code{\link{check}}, \code{\link{allCheckFunctions}}, 
 #' \code{\link{checkFunction}}, \code{\link{checkResult}}
 #' 
+#' @importFrom haven as_factor
+#' 
 #' @export
 isEmpty <- function(v) {
   lV <- length(v)
+  
+  if ("labelled" %in% class(v)) v <- as_factor(v) #otherwise na.omit does not work
+  
   v <- na.omit(v)
   pctMiss <- round(100*(lV - length(v))/lV, 2)
   out <- list(problem = FALSE, message = "", problemValues = NULL)

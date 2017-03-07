@@ -25,25 +25,25 @@ uniqueValues <- function(v, ...) UseMethod("uniqueValues")
 #assign methods to generic uniqueValues function
 
 #' @export
-uniqueValues.character <- function(v, ...) uniqueValuesCFLBI(v)
+uniqueValues.character <- function(v, ...) uniqueValuesCFBI(v)
 
 #' @export
-uniqueValues.factor <- function(v, ...) uniqueValuesCFLBI(v)
+uniqueValues.factor <- function(v, ...) uniqueValuesCFBI(v)
 
 #' @export
-uniqueValues.labelled <- function(v, ...) uniqueValuesCFLBI(v) #?PROBLEM?
+uniqueValues.labelled <- function(v, ...) uniqueValuesL(v) #?PROBLEM?
 
 #' @export
 uniqueValues.numeric <- function(v, ...) uniqueValuesN(v)
 
 #' @export
-uniqueValues.integer <- function(v, ...) uniqueValuesCFLBI(v)
+uniqueValues.integer <- function(v, ...) uniqueValuesCFBI(v)
 
 #' @export
-uniqueValues.logical <- function(v, ...) uniqueValuesCFLBI(v)
+uniqueValues.logical <- function(v, ...) uniqueValuesCFBI(v)
 
 #' @export
-uniqueValues.Date <- function(v, ...) uniqueValuesCFLBI(v)
+uniqueValues.Date <- function(v, ...) uniqueValuesCFBI(v)
 
 
 #Make it a summaryFunction
@@ -56,7 +56,7 @@ uniqueValues <- summaryFunction(uniqueValues, "Count number of unique values", a
 
 
 #methods for each variable type
-uniqueValuesCFLBI <- function(v) {
+uniqueValuesCFBI <- function(v) {
   noUnique <- length(unique(na.omit(v)))
   summaryResult(list(feature="Number of unique values",
                      result = noUnique,
@@ -64,7 +64,7 @@ uniqueValuesCFLBI <- function(v) {
 }
 
 uniqueValuesN <- function(v) {
-  out <- uniqueValuesCFLBI(v)
+  out <- uniqueValuesCFBI(v)
 
   #check for NaNs
   if (any(is.nan(v))) out$result <- out$result + 1
@@ -72,4 +72,7 @@ uniqueValuesN <- function(v) {
   out
 }
 
+uniqueValuesL <- function(v) {
+  uniqueValuesCFBI(haven::as_factor(v))
+}
 

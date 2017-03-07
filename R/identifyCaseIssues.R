@@ -36,7 +36,7 @@ identifyCaseIssues.character <- function(v, nMax = Inf) identifyCaseIssuesC(v, n
 identifyCaseIssues.factor <- function(v, nMax = Inf) identifyCaseIssuesF(v, nMax = nMax)
 
 #' @export
-identifyCaseIssues.labelled <- function(v, nMax = Inf) identifyCaseIssuesF(v, nMax = nMax)
+identifyCaseIssues.labelled <- function(v, nMax = Inf) identifyCaseIssuesL(v, nMax = nMax)
 
 
 #make it a checkFunction
@@ -73,4 +73,7 @@ identifyCaseIssuesF <- function(v, nMax) {
   identifyCaseIssuesC(v, nMax = nMax)
 }
 
-
+#labelled variable
+identifyCaseIssuesL <- function(v, nMax) {
+  identifyCaseIssuesF(as_factor(v), nMax)
+}

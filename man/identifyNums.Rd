@@ -4,10 +4,14 @@
 \alias{identifyNums}
 \title{A checkFunction}
 \usage{
-identifyNums(v, ...)
+identifyNums(v, nVals = 12, ...)
 }
 \arguments{
 \item{v}{A character, factor, or labelled variable to check.}
+
+\item{nVals}{An integer determining how many unique values a variable must have
+before it can potentially be determined to be a misclassified numeric variable. 
+The default is \code{12}.}
 
 \item{...}{Not in use.}
 }
@@ -28,8 +32,9 @@ been misclassified as categorical.
 A categorical variable is suspected to be a misclassified
 numeric variable if it has the following two properties: First,
 it should consist exclusively of numbers (possibly including signs
-and decimals points). Secondly, it must have at least 12 unique values.
-This means that e.g. variables including answers on a scale from 0-10 will
+and decimals points). Secondly, it must have at least \code{nVals} unique values.
+The default values of \code{nVals} is 12, which means that 
+e.g. variables including answers on a scale from 0-10 will
 not be recognized as misclassified numerics.
 }
 \examples{
@@ -45,3 +50,4 @@ not be recognized as misclassified numerics.
 \code{\link{check}}, \code{\link{allCheckFunctions}},
 \code{\link{checkFunction}}, \code{\link{checkResult}}
 }
+

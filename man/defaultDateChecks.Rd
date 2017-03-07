@@ -13,3 +13,4 @@ A vector of function names.
 Default options for which checks to perform on
 Date type variables in \code{\link{check}} and \code{\link{clean}}.
 }
+

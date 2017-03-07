@@ -37,3 +37,4 @@ orignial class of a variable. This is just the class for all objects but those o
 \seealso{
 \code{\link{summarize}}
 }
+

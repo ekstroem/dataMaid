@@ -87,7 +87,7 @@ centralValueCF <- function(v) {
 
 #labelled variables
 centralValueL <- function(v) {
-  centralValueB(na.omit(v))
+  centralValueB(na.omit(haven::as_factor(v)))
 }
 
 #integer and numeric variables

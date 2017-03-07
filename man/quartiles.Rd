@@ -37,3 +37,4 @@ quartiles(rnorm(1000), maxDecimals = 4)
 \code{\link{summaryFunction}}, \code{\link{summarize}}, \code{\link{summaryResult}},
 \code{\link{allSummaryFunctions}}
 }
+
