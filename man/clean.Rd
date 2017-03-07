@@ -6,10 +6,10 @@
 \usage{
 clean(data, output = c("pdf", "html"), render = TRUE, useVar = NULL,
   ordering = c("asIs", "alphabetical"), onlyProblematic = FALSE,
-  labelled_as = c("factor", "NA", "zap"), mode = c("summarize", "visualize",
-  "check"), smartNum = TRUE, preChecks = c("isKey", "isEmpty"),
-  file = NULL, replace = FALSE, vol = "", standAlone = TRUE,
-  twoCol = TRUE, quiet = TRUE, openResult = TRUE,
+  labelled_as = c("factor"), mode = c("summarize", "visualize", "check"),
+  smartNum = TRUE, preChecks = c("isKey", "isEmpty"), file = NULL,
+  replace = FALSE, vol = "", standAlone = TRUE, twoCol = TRUE,
+  quiet = TRUE, openResult = TRUE,
   characterChecks = defaultCharacterChecks(),
   factorChecks = defaultFactorChecks(),
   labelledChecks = defaultLabelledChecks(),
@@ -47,8 +47,10 @@ are "asIs" (ordering as in the dataset) and "alphabetical" (alphabetical order).
 problematic in the check step will be included in the variable list.}
 
 \item{labelled_as}{A string explaining the way to handle labelled vectors.
-Currently \code{"factor"} (the default) is the only possibility and the argument
-is not currently in use.}
+Currently \code{"factor"} (the default) is the only possibility. This means that labelled 
+variables that appear factor-like (by having a non-\code{NULL} \code{labels}-attribute) will
+be treated as factors, while other labelled variables will be treated as whatever base 
+variable class they inherit from.}
 
 \item{mode}{Vector of tasks to perform among the three categories "summarize", "visualize" and "check".
 The default, \code{c("summarize", "visualize", "check")}, implies that all three steps are
@@ -241,3 +243,4 @@ clean(testData, characterChecks=c(defaultCharacterChecks(), "wheresWally"),
 }
 
 }
+

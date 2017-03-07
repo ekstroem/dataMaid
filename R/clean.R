@@ -377,8 +377,7 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
                   #outFile is the file we might want to open at the end. Should be consistent
                   #with the user's choice of output (NOT just .rmd).
 
-    ## The name of the R markdown file that is output
-    #outFile <- paste0(substring(file, 1, nchar(file)-4), ".Rmd")
+
 
 
 
@@ -386,11 +385,10 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
 ###ALSO: check that vol and file and dataname produces a valid file name (no strange characters)
 ################################################################################################
 
+    ## check if we are about to overwrite a file
     fileExists <- file.exists(file)
     outFileExists <- file.exists(outFile)
-
-
-    ## check if we are about to overwrite a file
+    
       #if (!replace %in% c("never", "onlyCleanR") && (fileExists || outFileExists)) {
     if (replace) {
         unlink(file)
@@ -407,6 +405,27 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
                    "- check that you do not want to keep the original file and if so,",
                    "use clean() with argument replace = TRUE"))
     }
+    
+    #Check if dataMaid_[fileName]_vListTmp.txt already exists and if so, try to 
+    #make a different temporary file for writing variable results to
+    OK <- FALSE
+    maxTries <- 101
+    i <- 1
+    addOns <- c("", 1:100)
+    vListFileName <- paste("dataMaid_", substring(file, 1, nchar(file)-4), 
+                           "_vListTmp", sep = "")
+    while (!OK & i <= maxTries) {
+      OK <- !file.exists(paste(vListFileName, addOns[i], ".txt", sep = ""))
+      i <- i + 1
+    }
+    if (!OK) {
+      stop(paste("No unused file names were available for producing a",
+                 "temporary file for clean(). Please clean up your",
+                 "working directory for files starting with",
+                 vListFileName, "and try again."))
+    } else vListFileName <- paste(vListFileName, addOns[i-1], ".txt", sep = "")
+    
+    
 
       #if (replace=="onlyCleanR") {
       #  fileProblem <- F
@@ -489,9 +508,11 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
     }
 
     chunk.wrapper <- function(x, ..., outfile=fileConn, options=c("echo=FALSE", "warning=FALSE"), label=NULL) {
-        writer(paste0("```{r ", ifelse(is.null(label), ", ", paste0(label, ", ")), paste0(options, collapse=", "), "}"))
-        writer(x, ..., outfile=outfile)
-        writer("```")
+        writer(paste0("```{r ", ifelse(is.null(label), ", ", paste0(label, ", ")), 
+                      paste0(options, collapse=", "), "}"),
+               outfile = outfile)
+        writer(x, ..., outfile = outfile)
+        writer("```", outfile = outfile)
     }
 
     fig.wrapper <- function(x, ..., outfile=fileConn, options=c("echo=FALSE", "fig.width=4",
@@ -511,29 +532,30 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
     twoCols.wrapper <- function(text, figure, outfile=fileConn, outputty=output, label=NULL) {
         if (outputty=="pdf") { #note: does NOT work if there is a linebreak between the two
                                         #minipage environments!
-            writer("\\bminione")
-            writer(text)
-            writer("\\emini")
-            writer("\\bminitwo")
-            fig.wrapper(figure, label=label)
-            writer("\\emini")
+            writer("\\bminione", outfile = outfile)
+            writer(text, outfile = outfile)
+            writer("\\emini", outfile = outfile)
+            writer("\\bminitwo", outfile = outfile)
+            fig.wrapper(figure, label=label, outfile = outfile)
+            writer("\\emini", outfile = outfile)
         }
         if (outputty=="html") {
-            writer("<div class = \"row\">")
-            writer("<div class = \"col-lg-8\">")
-            writer(text)
-            writer("</div>")
-            writer("<div class = \"col-lg-4\">")
-            fig.wrapper(figure, label=label)
-            writer("</div>")
-            writer("</div>")
+            writer("<div class = \"row\">", outfile = outfile)
+            writer("<div class = \"col-lg-8\">", outfile = outfile)
+            writer(text, outfile = outfile)
+            writer("</div>", outfile = outfile)
+            writer("<div class = \"col-lg-4\">", outfile = outfile)
+            fig.wrapper(figure, label=label, outfile = outfile)
+            writer("</div>", outfile = outfile)
+            writer("</div>", outfile = outfile)
         }
-        writer("\n")
+        writer("\n", outfile = outfile)
     }
 
 
-    ## Opne file connection
-    fileConn <- file(file, "w")
+    ## Open file connections
+    fileConn <- file(file, "w") #for main document
+    vListConn <- file(vListFileName, "w")
 
     ## This part is wrapped in a try call to ensure that the connection is closed even if something
     ## breaks down when running the code.
@@ -656,8 +678,13 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
 #        }
 ####################################################################################
 
+    
+    ## This part is wrapped in a try call to ensure that the connection is closed even if something
+    ## breaks down when running the code.
+    try({
+      
     ## List of variables
-    writer("# Variable list")
+    writer("# Variable list", outfile = vListConn)
 
     for (idx in index) {
         extraMessages <- list(do=FALSE, messages=NULL)
@@ -722,20 +749,22 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
 
             ## Variable name
             printable_name <- gsub("_", "\\\\_", vnam)
-            writer("## **", printable_name, "**\n")
+            writer("## **", printable_name, "**\n", outfile = vListConn)
 
             ## If the variable has label information the print that below
             if ("label" %in% attributes(v)$names)
-                writer("*",attr(v, "label"), "*\n")  # Write label
+                writer("*",attr(v, "label"), "*\n", outfile = vListConn)  # Write label
 
             ## write result of key/empty check
             if (any(preCheckProblems)) {
-                writer(paste("* ", preCheckMessages[preCheckProblems], "\n", collapse=" \n ", sep=""))
+                writer(paste("* ", preCheckMessages[preCheckProblems], "\n", collapse=" \n ", sep=""),
+                       outfile = vListConn)
             } else {
 
               ## write extra messages if any
               if (extraMessages$do) writer(paste("* ", extraMessages$messages, "\n", collapse=" \n ",
-                                                 sep=""))
+                                                 sep=""),
+                                           outfile = vListConn)
 
               ## make Summary table
               if (doSummarize) sumTable <- pander::pander_return(summarize(v,
@@ -764,10 +793,10 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
 
               ## add visualization + summary results to output file
               if (twoCol) {
-                twoCols.wrapper(sumTable, visual, label=chunk_name)
+                twoCols.wrapper(sumTable, visual, label=chunk_name, outfile = vListConn)
               } else {
-                if (doSummarize) writer(sumTable)
-                if (doVisualize) fig.wrapper(visual, label=chunk_name)
+                if (doSummarize) writer(sumTable, outfile = vListConn)
+                if (doVisualize) fig.wrapper(visual, label=chunk_name, outfile = vListConn)
                 writer("\n")
               }
 
@@ -777,7 +806,7 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
                   #browser()
                   messages <- sapply(checkRes, function(x) x[[2]])[problems] #maybe index by name instead?
                   for (i in 1:length(messages)) {
-                    writer(paste0("- ", messages[i], " \n"))
+                    writer(paste0("- ", messages[i], " \n"), outfile = vListConn)
 
                     ###Why did we use to have this line here? Do we need pander stuff ever?###
                     #writer(paste0("- ", pander::pander_return(messages[i])))
@@ -787,9 +816,9 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
               }
             }
 
-            writer("\n")
-            if (output=="html") writer("---\n")
-            if (output=="pdf") writer("\\fullline\n")
+            writer("\n", outfile = vListConn)
+            if (output=="html") writer("---\n", outfile = vListConn)
+            if (output=="pdf") writer("\\fullline\n", outfile = vListConn)
 
             ## Add garbage collection. Should help with memory problems.
             ## Removed for now
@@ -797,13 +826,34 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
         }
 
     }
-
+    }) #end inner try (vListConn)
+    
+    flush(vListConn)
+    close(vListConn)
+    
+    #Write variable list file into parent .Rmd file and delete the temporary file afterwards
+    writer(scan(vListFileName, what = "character", sep = "\n",
+                blank.lines.skip = FALSE, quiet = TRUE))
+    unlink(vListFileName)
+    
+    
+    
     ## This could be wrapped in a tryCatch for those rather weird situations where the package is not installed.
     ## But it is indeed rather obscure
     if (brag) {
-    writer("This report was created by dataMaid v", paste(packageVersion("dataMaid"), sep="."), ".")
+      writer("\n")
+      writer("This report was created by dataMaid v", paste(packageVersion("dataMaid"), sep="."), ".")
     }
-    ## Now we should not write anything more to the file
+    
+    
+    
+    
+    
+    }) ## Now we should not write anything more to the file - End try
+    ## Force flush and close connection
+    flush(fileConn)
+    close(fileConn)
+    
 
     if (output %in% c("html", "pdf") && render) {
       ##is it possible to close the file clean_data.pdf/html if it is open such
@@ -825,11 +875,7 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
     ##    unlink(file) #delete rmd
     ## }
 
-    }) ## End try
-    ## Force flush and close connection
-    flush(fileConn)
-    close(fileConn)
-
+    
 
     if (!quiet) { #whoops - version 1 only makes sense for windows, doesn't it?
                   #does version 2 work on mac/linux?
@@ -891,7 +937,7 @@ normalizeFileName <- function(fileName, replaceChar = "_") {
 
 
 #Check if a labelled variable has any labels 
-#'@importFrom 
+#'@importFrom haven is.labelled
 doCheckLabs <- function(v) {
  # browser()
   if (!is.labelled(v)) return(v)
