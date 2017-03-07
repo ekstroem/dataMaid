@@ -35,8 +35,11 @@
 #' problematic in the check step will be included in the variable list.
 #'
 #' @param labelled_as A string explaining the way to handle labelled vectors.
-#' Currently \code{"factor"} (the default) is the only possibility and the argument
-#' is not currently in use.
+#' Currently \code{"factor"} (the default) is the only possibility. This means that labelled 
+#' variables that appear factor-like (by having a non-\code{NULL} \code{labels}-attribute) will
+#' be treated as factors, while other labelled variables will be treated as whatever base 
+#' variable class they inherit from. 
+#' 
 #'
 #' @param mode Vector of tasks to perform among the three categories "summarize", "visualize" and "check".
 #' The default, \code{c("summarize", "visualize", "check")}, implies that all three steps are
@@ -218,7 +221,7 @@
 #' @export
 clean <- function(data, output=c("pdf", "html"), render=TRUE,
                   useVar=NULL, ordering=c("asIs", "alphabetical"), onlyProblematic=FALSE,
-                  labelled_as=c("factor", "NA", "zap"),
+                  labelled_as=c("factor"),
                   mode=c("summarize", "visualize", "check"),
                   smartNum=TRUE, preChecks=c("isKey", "isEmpty"),
                   file=NULL, replace=FALSE, vol="",
@@ -661,7 +664,7 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
         skip <- FALSE
         problems <- FALSE
 
-        ## How to order the variables
+        ## Choose variable
         v <- data[[idx]]
         vnam <- vnames[idx]
 
@@ -669,9 +672,23 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
         preCheckRes <- lapply(preChecks, function(x) eval(call(x, v)))
         preCheckProblems <- sapply(preCheckRes, function(x) x$problem)
         preCheckMessages <- sapply(preCheckRes, function(x) x$message)
+        
+        ## Deal with labelled variables: If they don't have any labels and 
+        ## they inherit from a base class, treat them as that base class
+        if (labelled_as == "factor") {
+          v <- doCheckLabs(v)
+          if ("fakeLabelled" %in% class(v)) {
+            extraMessages$do <- TRUE
+            extraMessages$messages <- c(extraMessages$messages,
+                                        paste("Note that this variable is treated as a",
+                                        class(v)[2], 
+                                        "variable below, rather than a labelled variable,",
+                                        "as it contains no label information."))
+          }
+        }
 
         ## use smartNum
-        if (smartNum & any(class(v) %in% c("numeric", "integer"))) {
+        if (smartNum & !("fakeLabelled" %in% class(v)) & any(class(v) %in% c("numeric", "integer"))) {
             v <- doSmartNum(v, ...)
             if ("smartNum" %in% class(v)) {
                 extraMessages$do <- TRUE
@@ -679,6 +696,8 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
                                             "Note that this variable is treated as a factor variable below, as it only takes a few unique values.")
             }
         }
+        
+        
 
         ## Make checks
         if (doCheck && !any(preCheckProblems)) {
@@ -871,6 +890,20 @@ normalizeFileName <- function(fileName, replaceChar = "_") {
 }
 
 
+#Check if a labelled variable has any labels 
+#'@importFrom 
+doCheckLabs <- function(v) {
+ # browser()
+  if (!is.labelled(v)) return(v)
+  cV <- class(v)
+  if (length(cV) > 1) {
+    if (!is.null(attr(v, "labels"))) return(v)
+    class(v) <- c("fakeLabelled", setdiff(class(v), "labelled"))
+    attr(v, "originalClass") <- "labelled"
+    return(v)
+  }
+  return(v)
+}
 
 
 
