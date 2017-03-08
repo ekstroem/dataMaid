@@ -24,7 +24,7 @@ clean(data, output = c("pdf", "html"), render = TRUE, useVar = NULL,
   logicalSummaries = defaultLogicalSummaries(),
   dateSummaries = defaultDateSummaries(), allSummaries = NULL,
   allVisuals = "standardVisual", listChecks = TRUE, maxProbVals = Inf,
-  maxDecimals = 2, ...)
+  maxDecimals = 2, addSummaryTable = TRUE, ...)
 }
 \arguments{
 \item{data}{The dataset to be checked. This dataset should be of class \code{data.frame},
@@ -170,6 +170,10 @@ that all problematic values are printed.}
 \item{maxDecimals}{A positive integer or \code{Inf}. Number of decimals used when
 printing numerical values in the data summary and in problematic values from the
 data checks. If \code{Inf}, no rounding is performed.}
+
+\item{addSummaryTable}{A logical. If \code{TRUE} (the default), a summary table
+of the variable checks is added between the Data Cleaning Summary and the 
+Variable List.}
 
 \item{\dots}{FIX ME-------- Other arguments that are passed on the to precheck,
 checking, summary and visualization functions.WHAT ARGUMENTS ARE RELEVANT TO MENTION

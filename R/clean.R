@@ -160,6 +160,10 @@
 #' printing numerical values in the data summary and in problematic values from the
 #' data checks. If \code{Inf}, no rounding is performed.
 #'
+#' @param addSummaryTable A logical. If \code{TRUE} (the default), a summary table
+#' of the variable checks is added between the Data Cleaning Summary and the 
+#' Variable List.
+#'
 #' @param \dots FIX ME-------- Other arguments that are passed on the to precheck,
 #' checking, summary and visualization functions.WHAT ARGUMENTS ARE RELEVANT TO MENTION
 #'  HERE?  ---------- FIX ME
@@ -248,6 +252,7 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
                   listChecks = TRUE,
                   maxProbVals = Inf,
                   maxDecimals = 2,
+                  addSummaryTable = TRUE,
                   ...) {
     ## Start by doing a few sanity checks of the input
     if (! (is(data, "data.frame") )) {
@@ -377,14 +382,6 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
                   #outFile is the file we might want to open at the end. Should be consistent
                   #with the user's choice of output (NOT just .rmd).
 
-
-
-
-
-################################################################################################
-###ALSO: check that vol and file and dataname produces a valid file name (no strange characters)
-################################################################################################
-
     ## check if we are about to overwrite a file
     fileExists <- file.exists(file)
     outFileExists <- file.exists(outFile)
@@ -406,13 +403,13 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
                    "use clean() with argument replace = TRUE"))
     }
     
-    #Check if dataMaid_[fileName]_vListTmp.txt already exists and if so, try to 
+    #Check if [fileName]_vListTmp.txt already exists and if so, try to 
     #make a different temporary file for writing variable results to
     OK <- FALSE
     maxTries <- 101
     i <- 1
     addOns <- c("", 1:100)
-    vListFileName <- paste("dataMaid_", substring(file, 1, nchar(file)-4), 
+    vListFileName <- paste(substring(file, 1, nchar(file)-4), 
                            "_vListTmp", sep = "")
     while (!OK & i <= maxTries) {
       OK <- !file.exists(paste(vListFileName, addOns[i], ".txt", sep = ""))
@@ -485,10 +482,6 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
       numericSummaries <- integerSummaries <- logicalSummaries <- allSummaries
     }
 
-
-
-
-
    # if (!(output %in% c("html", "pdf"))) twoCol <- FALSE
     #what is this line supposed to do and when will it happen?
 
@@ -499,6 +492,9 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
     pander::panderOptions("table.split.table", Inf)
     pander::panderOptions("table.split.cells", Inf)
     pander::panderOptions('table.alignment.rownames', 'left')
+    
+    changedPanderOptions <- c("table.alignment.default", "table.split.table", 
+                              "table.split.cells", "table.alignment.rownames")
 
     ##
     ## Below comes a bunch of helper functions for writing the output
@@ -663,37 +659,36 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
     }
  }
 
-####################################################################################    
-#######TO DO HERE: Add a summary table with overview of data issues,################
-#######e.g. concerning missing values, how many (and which) variables###############
-#######were flagged to as problematic etc.##########################################
-####################################################################################    
-#        ## Summary table
-#        writer("# Summary table")
-#        for (idx in index) {
-#            ## How to order the variables
-#            v <- data[[idx]]
-#            vnam <- vnames[idx]
-#
-#        }
-####################################################################################
-
-    
+ 
     ## This part is wrapped in a try call to ensure that the connection is closed even if something
     ## breaks down when running the code.
     try({
+      
+    allRes <- data.frame(variable = vnames[index],
+                         vClass = rep(NA, nvariables),
+                         missingPct = rep(NA, nvariables),
+                         problems = rep("", nvariables),
+                         stringsAsFactors = FALSE)
       
     ## List of variables
     writer("# Variable list", outfile = vListConn)
 
     for (idx in index) {
+      
+        #Initialize variables
         extraMessages <- list(do=FALSE, messages=NULL)
         skip <- FALSE
         problems <- FALSE
+        preCheckProblems <- FALSE
 
         ## Choose variable
         v <- data[[idx]]
         vnam <- vnames[idx]
+        
+        #Fill out vClass and missingPct entries in the results overview
+        allRes$vClass[allRes$variable == vnam] <- class(v)[1]
+        allRes$missingPct[allRes$variable == vnam] <- paste(format(round(mean(is.na(v)),2), nsmall = 2),
+                                                            "%")
 
         ## Check if variable is key/empty
         preCheckRes <- lapply(preChecks, function(x) eval(call(x, v)))
@@ -740,6 +735,11 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
                             maxDecimals = maxDecimals, ...)
           problems <- sapply(checkRes, function(x) x[[1]]) #maybe change to index by name?
         }
+        
+        #Update problem status in results overview
+        if (any(c(problems, preCheckProblems)))  {
+          allRes$problems[allRes$variable == vnam] <- "$\\times$"
+        }
 
         ## skip non problem-causing variables
         if (onlyProblematic && (!any(preCheckProblems) && !any(problems))) skip <- TRUE
@@ -749,7 +749,8 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
 
             ## Variable name
             printable_name <- gsub("_", "\\\\_", vnam)
-            writer("## **", printable_name, "**\n", outfile = vListConn)
+                  #writer("## **", printable_name, "**\n", outfile = vListConn)
+            writer("## ", printable_name, "\n", outfile = vListConn) #** makes linking complicated
 
             ## If the variable has label information the print that below
             if ("label" %in% attributes(v)$names)
@@ -828,16 +829,29 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
     }
     }) #end inner try (vListConn)
     
+    #Close VarList file
     flush(vListConn)
     close(vListConn)
+    
+    #Add variable summary table 
+   if (addSummaryTable) {
+      writer("# Summary table")
+      allRes$variable <- paste("[", allRes$variable, "]", sep = "")
+      names(allRes) <- c("", "Variable class", "Missing observations",
+                         "Any problems?")
+      #pander::panderOptions('table.alignment.default', 'left')
+      writer(pander::pandoc.table.return(allRes, justify="llrc"))
+      writer("\n")
+    }
+    
+    
     
     #Write variable list file into parent .Rmd file and delete the temporary file afterwards
     writer(scan(vListFileName, what = "character", sep = "\n",
                 blank.lines.skip = FALSE, quiet = TRUE))
     unlink(vListFileName)
     
-    
-    
+  
     ## This could be wrapped in a tryCatch for those rather weird situations where the package is not installed.
     ## But it is indeed rather obscure
     if (brag) {
@@ -853,6 +867,14 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
     ## Force flush and close connection
     flush(fileConn)
     close(fileConn)
+    
+    
+    #Make panderOptions as they were
+    for(i in 1:length(changedPanderOptions)) {
+      optName <- changedPanderOptions[i]
+      panderOptions(optName, oldPanderOptions[[optName]])
+    }
+
     
 
     if (output %in% c("html", "pdf") && render) {
