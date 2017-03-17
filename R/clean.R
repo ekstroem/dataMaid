@@ -635,7 +635,7 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
      checkMat <- matrix("", length(everyCheck), 7, #6: number of different variable types
                         dimnames=list(everyCheck, c("character", "factor", "labelled",
                                                    "numeric", "integer", "logical", "Date")))
-     y <- "$\\times$"
+     y <- ifelse(output == "pdf", "$\\times$", "&times;")
      checkMat[characterChecks, "character"] <- y
      checkMat[factorChecks, "factor"] <- y
      checkMat[labelledChecks, "labelled"] <- y
@@ -734,7 +734,7 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
         
         #Update problem status in results overview
         if (any(c(problems, preCheckProblems)))  {
-          allRes$problems[allRes$variable == vnam] <- "$\\times$"
+          allRes$problems[allRes$variable == vnam] <- y
         }
 
         ## skip non problem-causing variables
