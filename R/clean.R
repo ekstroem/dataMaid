@@ -665,6 +665,7 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
     try({
       
     allRes <- data.frame(variable = vnames[index],
+                         name = rep(NA, nvariables),
                          vClass = rep(NA, nvariables),
                          missingPct = rep(NA, nvariables),
                          problems = rep("", nvariables),
@@ -685,11 +686,6 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
         v <- data[[idx]]
         vnam <- vnames[idx]
         
-        #Fill out vClass and missingPct entries in the results overview
-        allRes$vClass[allRes$variable == vnam] <- class(v)[1]
-        allRes$missingPct[allRes$variable == vnam] <- paste(format(round(mean(is.na(v)),2), nsmall = 2),
-                                                            "%")
-
         ## Check if variable is key/empty
         preCheckRes <- lapply(preChecks, function(x) eval(call(x, v)))
         preCheckProblems <- sapply(preCheckRes, function(x) x$problem)
@@ -746,11 +742,16 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
 
         ## Now print out the information if the variable isn't skipped
         if (!skip) {
-
-            ## Variable name
+             ## Variable name
             printable_name <- gsub("_", "\\\\_", vnam)
                   #writer("## **", printable_name, "**\n", outfile = vListConn)
             writer("## ", printable_name, "\n", outfile = vListConn) #** makes linking complicated
+            
+            #Fill out name, vClass and missingPct entries in the results overview
+            allRes$name[allRes$variable == vnam] <- paste("[", printable_name, "]", sep = "")
+            allRes$vClass[allRes$variable == vnam] <- class(v)[1]
+            allRes$missingPct[allRes$variable == vnam] <- paste(format(round(mean(is.na(v)),2), 
+                                                                       nsmall = 2), "%")
 
             ## If the variable has label information the print that below
             if ("label" %in% attributes(v)$names)
@@ -836,10 +837,19 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
     #Add variable summary table 
    if (addSummaryTable) {
       writer("# Summary table")
-      allRes$variable <- paste("[", allRes$variable, "]", sep = "")
+     
+      #remove skipped variabled (e.g. due to onlyProblematic = TRUE) and
+      #drop variable with original variable names (not formatted for printing)
+      allRes <- na.omit(allRes)[, -1]
+      rownames(allRes) <- 1:nrow(allRes) #note: necessary, as pander prints
+                                         #non-trivial row names as a column
+                                         #and data.frame subsetting creates 
+                                         #rownames like c(1, 2, 4, 5, 9)... 
+      
+      #Add names used for printing
       names(allRes) <- c("", "Variable class", "Missing observations",
                          "Any problems?")
-      #pander::panderOptions('table.alignment.default', 'left')
+      
       writer(pander::pandoc.table.return(allRes, justify="llrc"))
       writer("\n")
     }
@@ -863,7 +873,10 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
     
     
     
-    }) ## Now we should not write anything more to the file - End try
+    }) ## Now we should not write anything more to the file - End try. 
+       ## Maybe include the rest of the steps in the try? As of now, we render and open
+       ## files with no contents if mistakes were found along the way...
+    
     ## Force flush and close connection
     flush(fileConn)
     close(fileConn)
