@@ -62,7 +62,7 @@ server <- function(input, output) {
   
   output$reportPage <- renderUI({
     if (cleanDone) {
-     includeHTML("dataMaid_reporty.html")
+     includeHTML("dataMaid_report.html")
     } else NULL
   })
   
@@ -87,7 +87,7 @@ server <- function(input, output) {
    output$cleanStatus <- reactive({
     if (!readyForClean) return("Please wait")
      
-     clean(data, replace = TRUE, file = "dataMaid_reporty.rmd", openResult = FALSE,
+     clean(data, replace = TRUE, file = "dataMaid_report.rmd", openResult = FALSE,
            output = "html")
      cleanDone <<- TRUE
    "Download report"
