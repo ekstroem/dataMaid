@@ -749,8 +749,8 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
             
             #Fill out name, vClass and missingPct entries in the results overview
             allRes$name[allRes$variable == vnam] <- paste("[", printable_name, "]", sep = "")
-            allRes$vClass[allRes$variable == vnam] <- class(v)[1]
-            allRes$missingPct[allRes$variable == vnam] <- paste(format(round(mean(is.na(v)),2), 
+            allRes$vClass[allRes$variable == vnam] <- oClass(v)[1]
+            allRes$missingPct[allRes$variable == vnam] <- paste(format(round(100*mean(is.na(v)),2), 
                                                                        nsmall = 2), "%")
 
             ## If the variable has label information the print that below
