@@ -21,20 +21,28 @@ ui <- shinyUI(fluidPage(
                           "Choose what your report should contain using the panel to the right."))),
       fluidRow(br(), HTML("<b> Step 3: </b> Do data cleaning.")),
       fluidRow(actionButton("doClean", textOutput("dataStatus"))),
-      fluidRow(br(), HTML("<b> Step 4: </b> Download your results or view your report below.")),
-      fluidRow(downloadButton("report", textOutput("cleanStatus")))
+      fluidRow(br(), HTML("<b> Step 4: </b> Download (if pdf) or view (if html) your report below."))
       ),
     mainPanel(tabsetPanel(
       tabPanel("Options for data inputting", 
-               radioButtons("fileType", "File format", list("Text (txt)" = "txt",
-                                                            "Comma-separated (csv) (NOT IMPLEMENTED)" = "csv",
-                                                            "Stata (dta) (NOT IMPLEMENTED)" = "stata",
-                                                            "SAS (sas7bdat) (NOT IMPLEMENTED)" = "sas")),
-               checkboxInput("headerTRUE", "First data line contains the variable names", TRUE),
-               radioButtons("decimalChar", "Decimal mark", list(". (point)" = ".", ", (comma)" = ",")),
+                fluidRow(
+                  column(6, 
+                     radioButtons("fileType", "File format", list("Text (txt)" = "txt",
+                                                                  "Comma-separated (csv) (NOT IMPLEMENTED)" = "csv",
+                                                                  "Stata (dta) (NOT IMPLEMENTED)" = "stata",
+                                                                  "SAS (sas7bdat) (NOT IMPLEMENTED)" = "sas")),
+                     checkboxInput("headerTRUE", "First data line contains the variable names", TRUE)
+                   ),
+                  column(6, 
+                    radioButtons("decimalChar", "Decimal mark", list(". (point)" = ".", ", (comma)" = ","))
+                  )
+                ),
+               hr(),
+               fluidRow(
                checkboxGroupInput("missStrStd", "Strings used to indicate missing values",
                                   list("NA", "NaN", ". (dot)"=".", " (empty string)" = ""), 
-                                  selected = "NA")#,
+                                  selected = "NA")
+               )#,
               #to do: Change such that an update is trickered by a submit button
               #if the dataset looks large...
               # radioButtons("lineSep")
@@ -43,14 +51,16 @@ ui <- shinyUI(fluidPage(
                fluidRow(
                   column(4, radioButtons("clean.output", "Output format", list("html", "pdf"))),
                   column(4, radioButtons("clean.ordering", "Variable order",
-                                        list("As is" = "asis", "Alphabetical" = "alphabetical"))),
+                                        list("As is" = "asIs", "Alphabetical" = "alphabetical"))),
                   column(4, radioButtons("clean.maxProbVals", "Number of displayed problematic values",
                                      list("0"= 0, "5" = 5, "10" = 10, "All" = Inf),
                                      selected = "10"))
                ),
+               hr(),
                fluidRow(HTML("<b> Choose what checks to perform: </b>"),
                  fluidRow(
                    column(c1_w, ""),
+                     
                    column(cRes_w, "char."),
                    column(cRes_w, "factor"),
                    column(cRes_w, "labelled"),
@@ -128,15 +138,31 @@ ui <- shinyUI(fluidPage(
   fluidRow(
     tabsetPanel(id = "dataReportPanel",
       tabPanel("Data", dataTableOutput("dataHead"), value = "dataTab"),
-      tabPanel(textOutput("reportTab"), uiOutput("reportPage"), value = "reportTab")
+      tabPanel(textOutput("reportTab"), value = "reportTab",
+               fluidRow(
+                 column(10),
+                 column(2, downloadButton("report", textOutput("cleanStatus")))),
+               uiOutput("reportPageHTML")#,
+#               tags$iframe(style="height:600px; width:100%", # src="http://www.dna.caltech.edu/Papers/DNAorigami-nature.pdf")
+ #                          src = "dataMaid_d.pdf")
+#dataMaid_report.pdf")
+              # htmlOutput("reportPagePdf")
+      )
+    )
    )
-  )
 ))
 
 allChecks <- c("identifyCaseIssues", "identifyLoners", "identifyMissing", 
                "identifyNums", "identifyOutliers", "identifyWhitespace")
 
+
+#data(toyData)
 server <- function(input, output, session) {
+  ##
+ # data <- toyData
+#  print(data)
+  ##
+  outputType <- "html"
   dataDone <- FALSE
   data <- NULL
   readyForClean <- FALSE
@@ -188,6 +214,7 @@ server <- function(input, output, session) {
   makeReactiveBinding("data")
   makeReactiveBinding("readyForClean")
   makeReactiveBinding("cleanDone")
+  makeReactiveBinding("outputType")
   
   observeEvent(input$identifyCaseIssues.c, {checks.c["identifyCaseIssues"] <<- input$identifyCaseIssues.c})
   observeEvent(input$identifyLoners.c, {checks.c["identifyLoners"] <<- input$identifyLoners.c})
@@ -248,29 +275,41 @@ server <- function(input, output, session) {
          integerChecks = allChecks[unlist(checks.i)],
          logicalChecks = allChecks[unlist(checks.b)],
          dateChecks = allChecks[unlist(checks.d)]) 
-   output$reportPage <- renderUI({
-     if (cleanDone) {
-       includeHTML("dataMaid_report.html")
+   fileName <<- paste("dataMaid_report.", ifelse(outputType == "html", "html", "pdf"), sep = "")
+   output$reportPageHTML <- renderUI({
+     if (cleanDone & outputType == "html") {
+         includeHTML(fileName)
      } else NULL
    })
+   output$report <- downloadHandler(
+     filename = fileName, 
+     content = function(file) file.copy(fileName, file)
+   )
+ #  output$reportPagePdf <- renderText({
+#     if (cleanDone & input$clean.output == "pdf") {
+#        paste('<iframe style="height:600px; width:100%" src="dataMaid_report.pdf"></iframe>')
+#     } else NULL
+#   })
    updateTabsetPanel(session, "dataReportPanel", selected = "reportTab")
   })
   
   output$dataStatus <- renderText({
     if (!dataDone) return("Please wait")
+    outputType <<- input$clean.output
     "Make report"
   })
   
   output$cleanStatus <- reactive({
-    if (!readyForClean) return("Please wait")
-    cleanDone <<- TRUE
+    if (!readyForClean) "Please wait"
+   cleanDone <<- TRUE
    "Download report"
   })
     
-  output$report <- downloadHandler(
-    filename = "dataMaid_report.html",
-    content = function(file) file.copy("dataMaid_report.html", file)
-  )
+#  fileName <- reactive({
+#    paste("dataMaid_report.", ifelse(input$clean.output == "html", "html", "pdf"), sep = "")
+#  })
+    
+  
   
   on.exit({
     unlink("dataMaid_report.html")

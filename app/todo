@@ -1,0 +1,10 @@
+To do:
+- Add pdf viewer to Report tab if pdf is chosen
+- Making a pdf report and then setting "output" to html crashes the application. Why?
+- Handle SAS, Stata and csv
+- More options for data loading?
+- Formatting of checkfunction-matrix
+- Write help-page
+- Handle e.g. when "Please wait" is clicked (tryCatch?)
+- Data-loading: If the datafile is large, do not update (reload) data without a specific command to do so
+- Find out if latex works on a shiny server at all (check texlive 2014)
