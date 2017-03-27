@@ -280,7 +280,7 @@ server <- function(input, output, session) {
   observeEvent(input$data, {
     dataDone <<- TRUE
     dataFile <<- input$data
-    print(str(input$data))
+  #  print(str(input$data))
   })
   
   output$dataHead <- renderDataTable({
@@ -351,11 +351,11 @@ server <- function(input, output, session) {
    })
   })
   
-  observeEvent(input$clean.output, {
+ # observeEvent(input$clean.output, {
    # browser()
-               print(input$clean.output)
-    print(outputType)
-  })
+  #             print(input$clean.output)
+   # print(outputType)
+  #})
   
   output$dataStatus <- renderText({
     if (!dataDone) return("Please wait")
