@@ -41,7 +41,7 @@ ui <- shinyUI(fluidPage(
                             checkboxInput("headerTRUE", "First data line contains the variable names", TRUE)
                          ),
                          conditionalPanel(condition = "input.fileType == \"csv\"",
-                                          radioButtons("csvSep", "Line separator", 
+                                          radioButtons("csvSep", "Column separator", 
                                                         list(", (comma)" = ",", "; (semicolon)" = ";"),
                                                        inline = TRUE))
                   )
@@ -280,6 +280,7 @@ server <- function(input, output, session) {
   observeEvent(input$data, {
     dataDone <<- TRUE
     dataFile <<- input$data
+    print(str(input$data))
   })
   
   output$dataHead <- renderDataTable({
@@ -328,7 +329,8 @@ server <- function(input, output, session) {
            numericChecks = allChecks[unlist(checks.n)],
            integerChecks = allChecks[unlist(checks.i)],
            logicalChecks = allChecks[unlist(checks.b)],
-           dateChecks = allChecks[unlist(checks.d)]) 
+           dateChecks = allChecks[unlist(checks.d)],
+           reportTitle = dataFile$name) 
      message("clean done!")
      fileName <<- paste("dataMaid_report.", ifelse(input$clean.output == "html", "html", "pdf"), sep = "") #OBS
      output$reportPageHTML <- renderUI({

@@ -24,7 +24,7 @@ clean(data, output = c("pdf", "html"), render = TRUE, useVar = NULL,
   logicalSummaries = defaultLogicalSummaries(),
   dateSummaries = defaultDateSummaries(), allSummaries = NULL,
   allVisuals = "standardVisual", listChecks = TRUE, maxProbVals = Inf,
-  maxDecimals = 2, addSummaryTable = TRUE, ...)
+  maxDecimals = 2, addSummaryTable = TRUE, reportTitle = NULL, ...)
 }
 \arguments{
 \item{data}{The dataset to be checked. This dataset should be of class \code{data.frame},
@@ -174,6 +174,9 @@ data checks. If \code{Inf}, no rounding is performed.}
 \item{addSummaryTable}{A logical. If \code{TRUE} (the default), a summary table
 of the variable checks is added between the Data Cleaning Summary and the 
 Variable List.}
+
+\item{reportTitle}{A text string. If supplied, this will be the printed title of the 
+report. If left unspecified, the title with the name of the supplied dataset.}
 
 \item{\dots}{FIX ME-------- Other arguments that are passed on the to precheck,
 checking, summary and visualization functions.WHAT ARGUMENTS ARE RELEVANT TO MENTION
