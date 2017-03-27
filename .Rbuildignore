@@ -13,3 +13,5 @@ latex/
 ^.*\.tar\.gz
 ^\.rda
 ^\.travis\.yml$
+^sandbox
+^app

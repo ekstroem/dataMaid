@@ -19,11 +19,13 @@ Imports:
     gridExtra
 Depends:
     ggplot2
+URL: https://github.com/ekstroem/dataMaid
+BugReports: https://github.com/ekstroem/dataMaid/issues
 Encoding: UTF-8
 LazyData: true
 ByteCompile: true
 License: GPL-2
-RoxygenNote: 5.0.1
+RoxygenNote: 5.0.1.9000
 Collate:
     'allCheckFunctions.R'
     'allClasses.R'
@@ -66,4 +68,3 @@ Collate:
     'unpackLabelled.R'
     'variableType.R'
     'visualize.R'
-    

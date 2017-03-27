@@ -50,4 +50,3 @@ not be recognized as misclassified numerics.
 \code{\link{check}}, \code{\link{allCheckFunctions}},
 \code{\link{checkFunction}}, \code{\link{checkResult}}
 }
-

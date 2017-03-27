@@ -102,4 +102,3 @@ clean(exampleData, replace = TRUE,
 
 }
 \keyword{datasets}
-

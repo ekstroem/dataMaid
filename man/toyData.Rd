@@ -34,4 +34,3 @@ data(toyData)
 
 }
 \keyword{datasets}
-
