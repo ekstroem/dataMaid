@@ -247,4 +247,3 @@ clean(testData, characterChecks=c(defaultCharacterChecks(), "wheresWally"),
 }
 
 }
-

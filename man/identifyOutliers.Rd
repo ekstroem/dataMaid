@@ -58,4 +58,3 @@ Note that no rounding is performed for Dates, no matter the value of \code{maxDe
 \code{\link{check}}, \code{\link{allCheckFunctions}}, 
 \code{\link{checkFunction}}, \code{\link{checkResult}}, \code{\link{mc}}
 }
-
