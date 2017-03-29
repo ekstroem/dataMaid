@@ -1,6 +1,13 @@
 # dataMaid
 
-Development version of the R package dataMaid
+dataMaid is an R package for creating reports on data cleanliness. 
+
+This github page contains the development version of dataMaid. For the
+latest stable version download the package from CRAN directly using
+
+```{r}
+install.packages("dataMaid")
+```
 
 To install the development version of dataMaid run the following commands
 from within R

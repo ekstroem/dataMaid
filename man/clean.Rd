@@ -47,9 +47,9 @@ are "asIs" (ordering as in the dataset) and "alphabetical" (alphabetical order).
 problematic in the check step will be included in the variable list.}
 
 \item{labelled_as}{A string explaining the way to handle labelled vectors.
-Currently \code{"factor"} (the default) is the only possibility. This means that labelled 
+Currently \code{"factor"} (the default) is the only possibility. This means that labelled
 variables that appear factor-like (by having a non-\code{NULL} \code{labels}-attribute) will
-be treated as factors, while other labelled variables will be treated as whatever base 
+be treated as factors, while other labelled variables will be treated as whatever base
 variable class they inherit from.}
 
 \item{mode}{Vector of tasks to perform among the three categories "summarize", "visualize" and "check".
@@ -172,10 +172,10 @@ printing numerical values in the data summary and in problematic values from the
 data checks. If \code{Inf}, no rounding is performed.}
 
 \item{addSummaryTable}{A logical. If \code{TRUE} (the default), a summary table
-of the variable checks is added between the Data Cleaning Summary and the 
+of the variable checks is added between the Data Cleaning Summary and the
 Variable List.}
 
-\item{reportTitle}{A text string. If supplied, this will be the printed title of the 
+\item{reportTitle}{A text string. If supplied, this will be the printed title of the
 report. If left unspecified, the title with the name of the supplied dataset.}
 
 \item{\dots}{FIX ME-------- Other arguments that are passed on the to precheck,
