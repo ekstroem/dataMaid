@@ -258,6 +258,10 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
                   addSummaryTable = TRUE,
                   reportTitle = NULL,
                   ...) {
+
+    ## Store the original call
+    orig.call <- match.call()
+
     ## Start by doing a few sanity checks of the input
     if (! (is(data, "data.frame") )) {
         ## tibble is automatically a data frame
@@ -873,11 +877,16 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
     ## This could be wrapped in a tryCatch for those rather weird situations where the package is not installed.
     ## But it is indeed rather obscure
     if (brag) {
-      writer("\n")
-      writer("This report was created by ", whoami::fullname() , " using dataMaid v", paste(packageVersion("dataMaid"), sep="."), ".\n")
-      sessioninfo <- sessionInfo()
-      writer(sessioninfo[[1]]$version.string, ".\n")
-      writer("Platform: ", sessioninfo[[2]], "(", sessioninfo[[4]], ").\n")
+        writer("\n")
+
+        writer("Report generation information:\n")
+        writer(" *  Created by ", whoami::fullname() , ".\n")
+        writer(" *  Creation time: ", format(Sys.time(), "%a %b %d %Y %H:%M:%S"),"\n")
+        writer(" *  dataMaid v", paste(packageVersion("dataMaid"), sep="."))
+        sessioninfo <- sessionInfo()
+        writer(" *  ", sessioninfo[[1]]$version.string, ".\n")
+        writer(" *  Platform: ", sessioninfo[[2]], "(", sessioninfo[[4]], ").\n")
+        writer(" *  Function call: `", capture.output(orig.call), "`\n")
     }
 
 

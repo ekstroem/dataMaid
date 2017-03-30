@@ -2,8 +2,8 @@ Package: dataMaid
 Type: Package
 Title: A Suite of Checks for Identification of Potential Errors in a Data Frame
     as Part of the Data Cleaning Process
-Version: 0.9.4
-Date: 2017-03-29
+Version: 0.9.5
+Date: 2017-03-30
 Authors@R: c(person("Anne Helby", "Petersen", , email="ahpe@sund.ku.dk", role="aut"),
              person("Claus Thorn", "Ekstrøm", , email="ekstrom@sund.ku.dk", role=c("aut", "cre")))
 Description: Data cleaning is an important first step of any statistical
@@ -69,3 +69,4 @@ Collate:
     'unpackLabelled.R'
     'variableType.R'
     'visualize.R'
+Suggests: testthat

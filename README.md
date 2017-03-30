@@ -1,20 +1,22 @@
 # dataMaid
 
-dataMaid is an R package for creating reports on data cleanliness. 
+dataMaid is an R package for documenting and creating reports on data cleanliness. 
 
-This github page contains the development version of dataMaid. For the
+
+## Installation
+
+This github page contains the *development version* of dataMaid. For the
 latest stable version download the package from CRAN directly using
 
 ```{r}
 install.packages("dataMaid")
 ```
 
-To install the development version of dataMaid run the following commands
-from within R
+To install the development version of dataMaid run the following
+commands from within R (requires that the `devtools` package is already installed)
 
 ```{r}
-library(devtools)
-install_github('ekstroem/dataMaid')
+devtools::install_github('ekstroem/dataMaid')
 ```
 
 ![Download counter](http://cranlogs.r-pkg.org/badges/grand-total/dataMaid)
@@ -35,3 +37,11 @@ clean(trees)
 
 This will create a report with summaries and error checks for each
 variable in the `trees` data frame.
+
+
+
+## Online app
+
+We are currently working on an online version of the tool, where users
+can upload their data and get a report. A prototype
+is already up and running - we just need to configure the R server correctly.
