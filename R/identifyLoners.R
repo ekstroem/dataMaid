@@ -82,7 +82,7 @@ identifyLonersC <- function(v, nMax) {
 }
 
 identifyLonersL <- function(v, nMax) {
-  v <- as_factor(v)
+  v <- haven::as_factor(v)
   identifyLonersF(v, nMax)
 }
 

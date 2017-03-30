@@ -47,7 +47,7 @@ identifyNums <- function(v, nVals = 12, ...) {
   
     #note: as_factor does nothing to factor variables and makes
     #char and labelled variables into factors
-  v <- as.character(na.omit(as_factor(v)))
+  v <- as.character(na.omit(haven::as_factor(v)))
   if (length(unique(v)) < nVals) {
     return(checkResult(out))
   }

@@ -106,7 +106,7 @@ identifyOutliersD <- function(v, nMax, maxDecimals) {
 
 
 ##Find the outliers
-#' @importFrom robustbase mc
+#' @importFrom robustbase mc mcComp
 findOutliers <- function(v, maxDecimals) {
   v <- na.omit(v)
   qs <- quantile(v, c(0.25, 0.75))

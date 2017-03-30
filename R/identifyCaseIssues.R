@@ -75,5 +75,5 @@ identifyCaseIssuesF <- function(v, nMax) {
 
 #labelled variable
 identifyCaseIssuesL <- function(v, nMax) {
-  identifyCaseIssuesF(as_factor(v), nMax)
+  identifyCaseIssuesF(haven::as_factor(v), nMax)
 }
