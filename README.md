@@ -39,6 +39,44 @@ This will create a report with summaries and error checks for each
 variable in the `trees` data frame.
 
 
+### Using dataMaid interactively
+
+The dataMaid package can also be used interactively by running checks for the individual variables
+
+```{r}
+data(toyData)
+check(toyData$var2)  # Individual check
+```
+
+By default the standard battery of tests is run depending on the
+variable type. If we just want a specific test for, say, a numeric
+variable then we can specify
+that. See
+[the documentation](https://github.com/ekstroem/dataMaid/blob/master/latex/article_vol2.pdf) for
+an overview of the checks available or how to create and include your own tests.
+
+
+```{r}
+check(toyData$var2, numericChecks = "identifyMissing")
+```
+
+We can also access the graphics or summary tables that are produced for a variable by calling the `visualize` or `summarize` functions
+
+```{r}
+visualize(toyData$var2)
+summarize(toyData$var2)  # All summarues
+summarize(toyData$var2, numericSummaries = c("centralValue", "minMax"))  ## Only two summaries
+```
+
+
+## Detailed documentation
+
+[This manuscript](https://github.com/ekstroem/dataMaid/blob/master/latex/article_vol2.pdf) draft
+provides a detailed introduction to the dataMaid package. At one point
+it will be added as a vignette.
+
+
+
 
 ## Online app
 
