@@ -167,6 +167,14 @@
 #' @param reportTitle A text string. If supplied, this will be the printed title of the
 #' report. If left unspecified, the title with the name of the supplied dataset.
 #'
+#' @param treatXasY A list that indicates how non-standard variable classes should be treated.
+#' This parameter allows you to include variables that are not of class \code{factor}, \code{character}, 
+#' \code{labelled}, \code{numeric}, \code{integer}, \code{logical} nor \code{Date} (or a class
+#' that inherits from any of these classes). The names of the list are the new classes and the entries
+#' are the names of the class, they should be treated as. If \code{clean()} should e.g. treat variables of 
+#' class \code{raw} as characters and variables of class \code{complex} as numeric, you should put
+#' \code{treatXasY = list(raw = "character", complex = "numeric")}.
+#'
 #' @param \dots FIX ME-------- Other arguments that are passed on the to precheck,
 #' checking, summary and visualization functions.WHAT ARGUMENTS ARE RELEVANT TO MENTION
 #'  HERE?  ---------- FIX ME
@@ -220,6 +228,16 @@
 #' clean(testData, characterChecks=c(defaultCharacterChecks(), "wheresWally"),
 #'       replace=TRUE)
 #' }
+#' 
+#' #Handle non-supported variable classes using treatXasY: treat raw as character and
+#' #treat complex as numeric. We also add a list variable, but as lists are not 
+#' #handled through treatXasY, this variable will be caught in the preChecks and skipped:
+#' \dontrun{
+#' toyData$rawVar <- as.raw(c(1:14, 1))
+#' toyData$compVar <- c(1:14, 1) + 2i
+#' toyData$listVar <- as.list(c(1:14, 1))
+#' clean(toyData, replace  = TRUE, treatXasY = list(raw = "character", complex = "numeric"))
+#' }
 #'
 #' @importFrom methods is
 #' @importFrom pander pander_return panderOptions pandoc.table.return
@@ -230,7 +248,7 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
                   useVar=NULL, ordering=c("asIs", "alphabetical"), onlyProblematic=FALSE,
                   labelled_as=c("factor"),
                   mode=c("summarize", "visualize", "check"),
-                  smartNum=TRUE, preChecks=c("isKey", "isEmpty"),
+                  smartNum=TRUE, preChecks=c("isKey", "isEmpty", "isSupported"),
                   file=NULL, replace=FALSE, vol="",
                   standAlone=TRUE, twoCol=TRUE,
                   quiet = TRUE,
@@ -257,6 +275,7 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
                   maxDecimals = 2,
                   addSummaryTable = TRUE,
                   reportTitle = NULL,
+                  treatXasY = NULL,
                   ...) {
 
     ## Store the original call
@@ -270,6 +289,29 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
         } else stop("clean requires a data.frame, tibble or matrix as input")
     }
 
+    #Check treatXasY argument
+      ## Supported variable classes 
+      allClasses <- c("character", "factor", "labelled", "numeric", "integer", 
+                      "logical", "Date")
+      if (!is.null(treatXasY)) {
+        if (!is.list(treatXasY)) {
+          warning("The supplied treatXasY argument was invalid and therefore, it was ignored.")
+          treatXasY <- NULL
+        } else if (!all(unlist(treatXasY) %in% allClasses)) {
+          probPl <- !(unlist(treatXasY) %in% allClasses)
+          warning(paste("The treatXasY argument specified for: ",
+                        paste(names(treatXasY)[probPl], 
+                              "variables to be treated as",
+                              unlist(treatXasY[probPl]), 
+                                     collapse =", "),
+                        ". But the right hand side classes ",
+                        "are not supported by dataMaid and therefore ",
+                        "entries of treatXasY are ignored.", sep = ""))
+          treatXasY[probPl] <- NULL
+        }
+      }
+      
+      
     #handle quiet argument
     if (identical(quiet, "silent")) {
       silent <- TRUE
@@ -674,7 +716,7 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
 
     ## This part is wrapped in a try call to ensure that the connection is closed even if something
     ## breaks down when running the code.
-    try({
+   try({
 
     allRes <- data.frame(variable = vnames[index],
                          name = rep(NA, nvariables),
@@ -685,9 +727,11 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
 
     ## List of variables
     writer("# Variable list", outfile = vListConn)
+    
+   
 
     for (idx in index) {
-
+        
         #Initialize variables
         extraMessages <- list(do=FALSE, messages=NULL)
         skip <- FALSE
@@ -697,15 +741,34 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
         ## Choose variable
         v <- data[[idx]]
         vnam <- vnames[idx]
+        
+      #  browser()
 
         ## Check if variable is key/empty
         preCheckRes <- lapply(preChecks, function(x) eval(call(x, v)))
         preCheckProblems <- sapply(preCheckRes, function(x) x$problem)
         preCheckMessages <- sapply(preCheckRes, function(x) x$message)
+        
+        ## Deal with non-supported classes whose handling is 
+        ## specified in treatXasY
+        userSuppVar <- FALSE
+        if ("isSupported" %in% preChecks && 
+            preCheckProblems[which(preChecks == "isSupported")] &&  
+            !is.null(treatXasY)) {
+          vClasses <- class(v)
+          firstUSClass <- vClasses[vClasses %in% names(treatXasY)][1]
+          if (!is.na(firstUSClass)) {
+            attr(v, "orginalClass") <- vClasses[1]
+            class(v) <- treatXasY[[firstUSClass]]
+            preCheckProblems[which(preChecks == "isSupported")] <- FALSE
+            preCheckMessages[which(preChecks == "isSupported")] <- ""
+            userSuppVar <- TRUE
+          }
+        }
 
         ## Deal with labelled variables: If they don't have any labels and
         ## they inherit from a base class, treat them as that base class
-        if (labelled_as == "factor") {
+        if (labelled_as == "factor" & !userSuppVar) {
           v <- doCheckLabs(v)
           if ("fakeLabelled" %in% class(v)) {
             extraMessages$do <- TRUE
@@ -718,7 +781,8 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
         }
 
         ## use smartNum
-        if (smartNum & !("fakeLabelled" %in% class(v)) & any(class(v) %in% c("numeric", "integer"))) {
+        if (smartNum & !("fakeLabelled" %in% class(v)) & !userSuppVar & 
+            any(class(v) %in% c("numeric", "integer"))) {
             v <- doSmartNum(v, ...)
             if ("smartNum" %in% class(v)) {
                 extraMessages$do <- TRUE
@@ -840,7 +904,7 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
         }
 
     }
-    }) #end inner try (vListConn)
+   }) #end inner try (vListConn)
 
     #Close VarList file
     flush(vListConn)

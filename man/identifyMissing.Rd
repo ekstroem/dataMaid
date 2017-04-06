@@ -56,3 +56,4 @@ identifyMissing(factor(v3))
 \code{\link{check}}, \code{\link{allCheckFunctions}},
 \code{\link{checkFunction}}, \code{\link{checkResult}}
 }
+

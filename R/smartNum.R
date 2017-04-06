@@ -14,6 +14,10 @@ smartNum <- function(v) {
 
 #Get the original class of a smartNum or fakeLabelled object. Used in clean().
 oClass <- function(v) UseMethod("oClass")
-oClass.default <- function(v) class(v)
+oClass.default <- function(v) {
+  oC <- attr(v, "orginalClass")
+  if (!is.null(oC)) return(oC)
+  else class(v)
+}
 oClass.smartNum <- function(v) attr(v, "originalClass")
 oClass.fakeLabelled <- function(v) attr(v, "originalClass")

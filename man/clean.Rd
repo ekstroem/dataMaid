@@ -7,9 +7,9 @@
 clean(data, output = c("pdf", "html"), render = TRUE, useVar = NULL,
   ordering = c("asIs", "alphabetical"), onlyProblematic = FALSE,
   labelled_as = c("factor"), mode = c("summarize", "visualize", "check"),
-  smartNum = TRUE, preChecks = c("isKey", "isEmpty"), file = NULL,
-  replace = FALSE, vol = "", standAlone = TRUE, twoCol = TRUE,
-  quiet = TRUE, openResult = TRUE,
+  smartNum = TRUE, preChecks = c("isKey", "isEmpty", "isSupported"),
+  file = NULL, replace = FALSE, vol = "", standAlone = TRUE,
+  twoCol = TRUE, quiet = TRUE, openResult = TRUE,
   characterChecks = defaultCharacterChecks(),
   factorChecks = defaultFactorChecks(),
   labelledChecks = defaultLabelledChecks(),
@@ -24,7 +24,8 @@ clean(data, output = c("pdf", "html"), render = TRUE, useVar = NULL,
   logicalSummaries = defaultLogicalSummaries(),
   dateSummaries = defaultDateSummaries(), allSummaries = NULL,
   allVisuals = "standardVisual", listChecks = TRUE, maxProbVals = Inf,
-  maxDecimals = 2, addSummaryTable = TRUE, reportTitle = NULL, ...)
+  maxDecimals = 2, addSummaryTable = TRUE, reportTitle = NULL,
+  treatXasY = NULL, ...)
 }
 \arguments{
 \item{data}{The dataset to be checked. This dataset should be of class \code{data.frame},
@@ -178,6 +179,14 @@ Variable List.}
 \item{reportTitle}{A text string. If supplied, this will be the printed title of the
 report. If left unspecified, the title with the name of the supplied dataset.}
 
+\item{treatXasY}{A list that indicates how non-standard variable classes should be treated.
+This parameter allows you to include variables that are not of class \code{factor}, \code{character}, 
+\code{labelled}, \code{numeric}, \code{integer}, \code{logical} nor \code{Date} (or a class
+that inherits from any of these classes). The names of the list are the new classes and the entries
+are the names of the class, they should be treated as. If \code{clean()} should e.g. treat variables of 
+class \code{raw} as characters and variables of class \code{complex} as numeric, you should put
+\code{treatXasY = list(raw = "character", complex = "numeric")}.}
+
 \item{\dots}{FIX ME-------- Other arguments that are passed on the to precheck,
 checking, summary and visualization functions.WHAT ARGUMENTS ARE RELEVANT TO MENTION
  HERE?  ---------- FIX ME}
@@ -249,4 +258,15 @@ clean(testData, characterChecks=c(defaultCharacterChecks(), "wheresWally"),
       replace=TRUE)
 }
 
+#Handle non-supported variable classes using treatXasY: treat raw as character and
+#treat complex as numeric. We also add a list variable, but as lists are not 
+#handled through treatXasY, this variable will be caught in the preChecks and skipped:
+\dontrun{
+toyData$rawVar <- as.raw(c(1:14, 1))
+toyData$compVar <- c(1:14, 1) + 2i
+toyData$listVar <- as.list(c(1:14, 1))
+clean(toyData, replace  = TRUE, treatXasY = list(raw = "character", complex = "numeric"))
 }
+
+}
+

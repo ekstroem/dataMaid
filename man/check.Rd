@@ -78,3 +78,4 @@ check(cars, factorChecks = setdiff(defaultFactorChecks(), "identifyMissing"),
 \code{\link{defaultLogicalChecks}}, \code{\link{defaultDateChecks}}
 }
 \keyword{misc}
+

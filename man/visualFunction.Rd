@@ -92,3 +92,4 @@ if more knowledge about \code{visualFunction}s is required.
 \code{\link{allVisualFunctions}}, \code{\link{visualize}}, 
 \code{\link{clean}}
 }
+
