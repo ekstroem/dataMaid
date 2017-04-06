@@ -162,3 +162,4 @@ identifyNeg(c(-20.1232323:20), nMax = 3, maxDecimals = 4)
 \code{\link{allCheckFunctions}}, \code{\link{check}}, \code{\link{clean}},
 \code{\link{messageGenerator}}, \code{\link{checkResult}}
 }
+

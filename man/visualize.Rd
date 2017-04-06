@@ -96,3 +96,4 @@ to construct valid visual functions are found in \code{\link{visualFunction}}.
 \seealso{
 \code{\link{standardVisual}}, \code{\link{basicVisual}}
 }
+
