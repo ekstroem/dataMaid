@@ -17,6 +17,7 @@ Imports:
     rmarkdown,
     robustbase,
     gridExtra,
+    testthat,
     whoami
 Depends:
     ggplot2
@@ -69,4 +70,7 @@ Collate:
     'unpackLabelled.R'
     'variableType.R'
     'visualize.R'
-Suggests: testthat
+Suggests: testthat,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

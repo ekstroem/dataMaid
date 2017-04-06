@@ -298,9 +298,6 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
     #######Secret arguments that were removed for the users but are still implemented#########
     ##########################################################################################
 
-    #If we would ever want to allow users not to append the dataMaid stamp:
-    brag <- TRUE
-
     #If we would ever want (Windows) users not to be nagged
     nagUser <- TRUE
 
@@ -875,23 +872,20 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
 
 
     ## This could be wrapped in a tryCatch for those rather weird situations where the package is not installed.
-    ## But it is indeed rather obscure
-    if (brag) {
-        writer("\n")
+    ## But it is indeed rather obscure.
 
-        writer("Report generation information:\n")
-        writer(" *  Created by ", whoami::fullname() , ".\n")
-        writer(" *  Creation time: ", format(Sys.time(), "%a %b %d %Y %H:%M:%S"),"\n")
-        writer(" *  dataMaid v", paste(packageVersion("dataMaid"), sep="."))
-        sessioninfo <- sessionInfo()
-        writer(" *  ", sessioninfo[[1]]$version.string, ".\n")
-        writer(" *  Platform: ", sessioninfo[[2]], "(", sessioninfo[[4]], ").\n")
-        writer(" *  Function call: `", capture.output(orig.call), "`\n")
-    }
-
-
-
-
+    ## Misc meta information
+    writer("\n")
+    
+    writer("Report generation information:\n")
+    writer(" *  Created by ", whoami::fullname() , ".\n")
+    writer(" *  Creation time: ", format(Sys.time(), "%a %b %d %Y %H:%M:%S"),"\n")
+    writer(" *  dataMaid v", paste(packageVersion("dataMaid"), sep="."))
+    sessioninfo <- sessionInfo()
+    writer(" *  ", sessioninfo[[1]]$version.string, ".\n")
+    writer(" *  Platform: ", sessioninfo[[2]], "(", sessioninfo[[4]], ").\n")
+    writer(" *  Function call: `", capture.output(orig.call), "`\n")
+    
 
     }) ## Now we should not write anything more to the file - End try.
        ## Maybe include the rest of the steps in the try? As of now, we render and open
