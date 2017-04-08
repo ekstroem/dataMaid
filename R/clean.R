@@ -943,8 +943,75 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
     
     writer("Report generation information:\n")
     writer(" *  Created by ", whoami::fullname() , ".\n")
-    writer(" *  Creation time: ", format(Sys.time(), "%a %b %d %Y %H:%M:%S"),"\n")
-    writer(" *  dataMaid v", paste(packageVersion("dataMaid"), sep="."))
+    writer(" *  Report creation time: ", format(Sys.time(), "%a %b %d %Y %H:%M:%S"),"\n")
+
+    ## Part of this was lifted from devtools
+
+    getdate <- function (desc) {
+      if (!is.null(desc$`Date/Publication`)) {
+          date <- desc$`Date/Publication`
+      }
+      else if (!is.null(desc$Built)) {
+          built <- strsplit(desc$Built, "; ")[[1]]
+          date <- built[3]
+      }
+      else {
+          date <- NA_character_
+      }
+      as.character(as.Date(strptime(date, "%Y-%m-%d")))
+    }
+    getpkgsource <- function(desc) {
+    if (!is.null(desc$GithubSHA1)) {
+        str <- paste0("Github (", desc$GithubUsername, "/", desc$GithubRepo, 
+            "@", substr(desc$GithubSHA1, 1, 7), ")")
+    }
+    else if (!is.null(desc$RemoteType)) {
+        remote_type <- desc$RemoteType
+        if (!is.null(desc$RemoteUsername) && (!is.null(desc$RemoteRepo))) {
+            user_repo <- paste0(desc$RemoteUsername, "/", desc$RemoteRepo)
+        }
+        else {
+            user_repo <- NULL
+        }
+        if (!is.null(desc$RemoteSha)) {
+            sha <- paste0("@", substr(desc$RemoteSha, 1, 7))
+        }
+        else {
+            sha <- NULL
+        }
+        if (!is.null(user_repo) || !is.null(sha)) {
+            user_repo_and_sha <- paste0(" (", user_repo, sha, 
+                ")")
+        }
+        else {
+            user_repo_and_sha <- NULL
+        }
+        str <- paste0(remote_type, user_repo_and_sha)
+    }
+    else if (!is.null(desc$Repository)) {
+        repo <- desc$Repository
+        if (!is.null(desc$Built)) {
+            built <- strsplit(desc$Built, "; ")[[1]]
+            ver <- sub("$R ", "", built[1])
+            repo <- paste0(repo, " (", ver, ")")
+        }
+        repo
+    }
+    else if (!is.null(desc$biocViews)) {
+        "Bioconductor"
+    }
+    else {
+        "local"
+    }
+}    
+        
+    
+    desc <- lapply("dataMaid", packageDescription, lib.loc = NULL)
+    version <- vapply(desc, function(x) x$Version, character(1))
+    pkgdate <- vapply(desc, getdate, character(1))
+    pkgsource <- vapply(desc, getpkgsource, character(1))
+    
+    writer(" *  dataMaid v", version, " [Pkg: ", pkgdate, " from ", pkgsource, "]\n")
     sessioninfo <- sessionInfo()
     writer(" *  ", sessioninfo[[1]]$version.string, ".\n")
     writer(" *  Platform: ", sessioninfo[[2]], "(", sessioninfo[[4]], ").\n")

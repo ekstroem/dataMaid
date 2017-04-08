@@ -20,4 +20,3 @@ defaultLabelledSummaries()
 \code{\link{variableType}},
 \code{\link{countMissing}}, \code{\link{uniqueValues}}, \code{\link{centralValue}}
 }
-

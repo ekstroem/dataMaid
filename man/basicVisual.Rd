@@ -41,4 +41,3 @@ values are removed.
 \seealso{
 \code{\link{visualize}}, \code{\link{standardVisual}}
 }
-
