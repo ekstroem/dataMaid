@@ -242,7 +242,7 @@
 #' @importFrom methods is
 #' @importFrom pander pander_return panderOptions pandoc.table.return
 #' @importFrom tools file_ext
-#' @importFrom utils packageVersion sessionInfo capture.output
+#' @importFrom utils packageVersion sessionInfo capture.output packageDescription
 #' @export
 clean <- function(data, output=c("pdf", "html"), render=TRUE,
                   useVar=NULL, ordering=c("asIs", "alphabetical"), onlyProblematic=FALSE,

@@ -14,10 +14,8 @@ Imports:
     haven,
     methods,
     pander,
-    rmarkdown,
     robustbase,
     gridExtra,
-    testthat,
     whoami
 Depends:
     ggplot2
