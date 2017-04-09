@@ -72,4 +72,4 @@ Collate:
 Suggests: testthat,
     knitr,
     rmarkdown
-VignetteBuilder: knitr
+
