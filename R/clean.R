@@ -715,12 +715,14 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
     ## breaks down when running the code.
    try({
 
-    allRes <- data.frame(variable = vnames[index],
-                         name = rep(NA, nvariables),
-                         vClass = rep(NA, nvariables),
-                         missingPct = rep(NA, nvariables),
-                         problems = rep("", nvariables),
-                         stringsAsFactors = FALSE)
+       ## allRes contains the summary table
+       allRes <- data.frame(variable = vnames[index],
+                            name = rep(NA, nvariables),
+                            vClass = rep(NA, nvariables),
+                            distinctVals = rep(NA, nvariables),
+                            missingPct = rep(NA, nvariables),
+                            problems = rep("", nvariables),
+                            stringsAsFactors = FALSE)
 
     ## List of variables
     writer("# Variable list", outfile = vListConn)
@@ -825,7 +827,8 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
             allRes$vClass[allRes$variable == vnam] <- oClass(v)[1]
             allRes$missingPct[allRes$variable == vnam] <- paste(format(round(100*mean(is.na(v)),2),
                                                                        nsmall = 2), "%")
-
+            allRes$distinctVals[allRes$variable == vnam] <- length(unique(v))
+            
             ## If the variable has label information the print that below
             if ("label" %in% attributes(v)$names)
                 writer("*",attr(v, "label"), "*\n", outfile = vListConn)  # Write label
@@ -920,10 +923,10 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
                                          #rownames like c(1, 2, 4, 5, 9)...
 
       #Add names used for printing
-      names(allRes) <- c("", "Variable class", "Missing observations",
+      names(allRes) <- c("", "Variable class", "# unique values", "Missing observations",
                          "Any problems?")
 
-      writer(pander::pandoc.table.return(allRes, justify="llrc"))
+      writer(pander::pandoc.table.return(allRes, justify="llrrc"))
       writer("\n")
     }
 
