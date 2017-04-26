@@ -23,7 +23,7 @@ clean(data, output = c("pdf", "html"), render = TRUE, useVar = NULL,
   integerSummaries = defaultIntegerSummaries(),
   logicalSummaries = defaultLogicalSummaries(),
   dateSummaries = defaultDateSummaries(), allSummaries = NULL,
-  allVisuals = "standardVisual", listChecks = TRUE, maxProbVals = Inf,
+  allVisuals = "standardVisual", listChecks = TRUE, maxProbVals = 10,
   maxDecimals = 2, addSummaryTable = TRUE, reportTitle = NULL,
   treatXasY = NULL, ...)
 }
@@ -165,8 +165,8 @@ creating the plots for each variable in the "visualize" step. The default,
 possible variable type are summarized in the output. Defaults to \code{TRUE}.}
 
 \item{maxProbVals}{A positive integer or \code{Inf}. Maximum number of unique
-values printed from check-functions. Defaults to \code{Inf}, which means
-that all problematic values are printed.}
+values printed from check-functions. In the case of \code{Inf}, all problematic 
+values are printed. Defaults to \code{10}.}
 
 \item{maxDecimals}{A positive integer or \code{Inf}. Number of decimals used when
 printing numerical values in the data summary and in problematic values from the
@@ -269,3 +269,4 @@ clean(toyData, replace  = TRUE, treatXasY = list(raw = "character", complex = "n
 }
 
 }
+
