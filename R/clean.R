@@ -153,8 +153,8 @@
 #' possible variable type are summarized in the output. Defaults to \code{TRUE}.
 #'
 #' @param maxProbVals A positive integer or \code{Inf}. Maximum number of unique
-#' values printed from check-functions. Defaults to \code{Inf}, which means
-#' that all problematic values are printed.
+#' values printed from check-functions. In the case of \code{Inf}, all problematic 
+#' values are printed. Defaults to \code{10}.
 #'
 #' @param maxDecimals A positive integer or \code{Inf}. Number of decimals used when
 #' printing numerical values in the data summary and in problematic values from the
@@ -271,7 +271,7 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
                   allSummaries = NULL,
                   allVisuals = "standardVisual",
                   listChecks = TRUE,
-                  maxProbVals = Inf,
+                  maxProbVals = 10,
                   maxDecimals = 2,
                   addSummaryTable = TRUE,
                   reportTitle = NULL,
