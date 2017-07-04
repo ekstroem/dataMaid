@@ -333,6 +333,23 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
     ## Extract the dataframe name
     dfname <- deparse(substitute(data))
 
+    the_lhs <- function() {
+        parents <- lapply(sys.frames(), parent.env)
+
+        is_magrittr_env <-
+            vapply(parents, identical, logical(1), y = environment(`%>%`))
+        
+        if (any(is_magrittr_env)) {
+            deparse(get("lhs", sys.frames()[[max(which(is_magrittr_env))]]))
+        }
+    }
+
+
+    ## Now if data are added as part of a magrittr pipe then use this "fix"
+    if (dfname==".") {
+        dfname <- the_lhs()
+    }
+  
     #If standAlone is FALSE, the document obviously shouldn't be rendered
     if (!standAlone) render <- FALSE
 
