@@ -45,9 +45,11 @@ identifyNums <- function(v, nVals = 12, ...) {
   out <- list(problem = FALSE, message = "", problemValues = NULL)
   
   
-    #note: as_factor does nothing to factor variables and makes
-    #char and labelled variables into factors
-  v <- as.character(na.omit(haven::as_factor(v)))
+    #note: update to haven made as_factor not work on character variables!
+  if ("labelled" %in% class(v)) {
+    v <- as.character(na.omit(haven::as_factor(v)))
+  } else v <- as.character(na.omit(v))
+  
   if (length(unique(v)) < nVals) {
     return(checkResult(out))
   }
