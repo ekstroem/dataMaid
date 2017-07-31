@@ -12,6 +12,7 @@ Description: Data cleaning is an important first step of any statistical
     checks and the results that a human can use to identify possible errors.
 Imports:
     haven,
+    magrittr,
     methods,
     pander,
     robustbase,

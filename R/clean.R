@@ -243,6 +243,7 @@
 #' @importFrom pander pander_return panderOptions pandoc.table.return
 #' @importFrom tools file_ext
 #' @importFrom utils packageVersion sessionInfo capture.output packageDescription
+#' @importFrom magrittr %>%
 #' @export
 clean <- function(data, output=c("pdf", "html"), render=TRUE,
                   useVar=NULL, ordering=c("asIs", "alphabetical"), onlyProblematic=FALSE,
@@ -336,8 +337,7 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
     the_lhs <- function() {
         parents <- lapply(sys.frames(), parent.env)
 
-        is_magrittr_env <-
-            vapply(parents, identical, logical(1), y = environment(`%>%`))
+        is_magrittr_env <- vapply(parents, identical, logical(1), y = environment(`%>%`))
         
         if (any(is_magrittr_env)) {
             deparse(get("lhs", sys.frames()[[max(which(is_magrittr_env))]]))
