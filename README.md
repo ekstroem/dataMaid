@@ -41,17 +41,18 @@ variable in the `trees` data frame.
 
 ### Using dataMaid interactively
 
-The dataMaid package can also be used interactively by running checks for the individual variables
+The dataMaid package can also be used interactively by running checks for the individual variables or for all variables in the dataset
 
 ```{r}
 data(toyData)
-check(toyData$var2)  # Individual check
+check(toyData$var2)  # Individual check of var2
+check(toyData) # Check all variables at once
 ```
 
 By default the standard battery of tests is run depending on the
 variable type. If we just want a specific test for, say, a numeric
 variable then we can specify
-that. See
+that. All available checks can be viewed by calling `allCheckFunctions()`. See
 [the documentation](https://github.com/ekstroem/dataMaid/blob/master/latex/article_vol2.pdf) for
 an overview of the checks available or how to create and include your own tests.
 
