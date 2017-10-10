@@ -17,8 +17,21 @@
 #'
 #' @export
 summaryResult <- function(ls) {
-  if (length(setdiff(names(ls), c("feature", "result", "value"))) != 0) {
+  entryNames <- names(ls)
+  if (length(setdiff(entryNames, c("feature", "result", "value"))) != 0) {
     stop("The inputted list does not qualify as a summaryResult")
+  } 
+  if (!("value" %in% entryNames) & !("result" %in% entryNames)) {
+    stop("A summaryResult must have a $value slot or a $res slot")
+  }
+  if (!("result" %in% entryNames)) {
+    if (is.numeric(ls$value)) {
+      ls$result <- round(ls$value, 4)
+    } else {
+      ls$result <- ls$value
+    }
+    #make sure e.g. vectors and lists are collapsed into one character string
+    ls$result <- paste(ls$result, collapse = " ") 
   }
   class(ls) <- "summaryResult"
   ls
@@ -26,12 +39,8 @@ summaryResult <- function(ls) {
 
 #' @export
 print.summaryResult <- function(x, ...) {
-  value <- x$value
-  if (is.numeric(value)) {
-    value <- round(value, 4)
-  }
   mes <- paste(x$feature, ": ",
-               paste(value, collapse = ", "),
+               paste(x$result, collapse = ", "),
                sep="")
   cat(mes)
 }
