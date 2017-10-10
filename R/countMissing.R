@@ -29,5 +29,5 @@ countMissing <- function(v, ...) {
 
 #' @include summaryFunction.R
 countMissing <- summaryFunction(countMissing,
-                                "Compute ratio of missing observations",
+                                "Compute proportion of missing observations",
                                 allClasses())
