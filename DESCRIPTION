@@ -26,8 +26,14 @@ Encoding: UTF-8
 LazyData: true
 ByteCompile: true
 License: GPL-2
-RoxygenNote: 6.0.1
+RoxygenNote: 5.0.1
+Suggests:
+    testthat,
+    knitr,
+    rmarkdown
 Collate:
+    'aggregateForBarplot.R'
+    'aggregateForHistogram.R'
     'allCheckFunctions.R'
     'allClasses.R'
     'allSummaryFunctions.R'
@@ -56,6 +62,7 @@ Collate:
     'identifyOutliersTBStyle.R'
     'identifyWhitespace.R'
     'isCPR.R'
+    'isSingular.R'
     'isEmpty.R'
     'isKey.R'
     'isSupported.R'
@@ -70,6 +77,3 @@ Collate:
     'unpackLabelled.R'
     'variableType.R'
     'visualize.R'
-Suggests: testthat,
-    knitr,
-    rmarkdown

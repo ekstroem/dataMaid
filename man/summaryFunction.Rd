@@ -91,3 +91,4 @@ if more knowledge about \code{summaryFunction}s is required.
 \code{\link{allSummaryFunctions}}, \code{\link{summarize}}, 
 \code{\link{clean}}, \code{\link{checkResult}}
 }
+

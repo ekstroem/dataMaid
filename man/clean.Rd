@@ -7,7 +7,7 @@
 clean(data, output = c("pdf", "html"), render = TRUE, useVar = NULL,
   ordering = c("asIs", "alphabetical"), onlyProblematic = FALSE,
   labelled_as = c("factor"), mode = c("summarize", "visualize", "check"),
-  smartNum = TRUE, preChecks = c("isKey", "isEmpty", "isSupported"),
+  smartNum = TRUE, preChecks = c("isKey", "isSingular", "isSupported"),
   file = NULL, replace = FALSE, vol = "", standAlone = TRUE,
   twoCol = TRUE, quiet = TRUE, openResult = TRUE,
   characterChecks = defaultCharacterChecks(),
@@ -269,3 +269,4 @@ clean(toyData, replace  = TRUE, treatXasY = list(raw = "character", complex = "n
 }
 
 }
+

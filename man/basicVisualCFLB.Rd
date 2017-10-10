@@ -17,3 +17,4 @@ a character string containing standalone R code for producing the plot.}
 \description{
 importFrom stats na.omit
 }
+
