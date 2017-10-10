@@ -75,7 +75,8 @@ basicVisualCFLB <- function(v, vnam, doEval = TRUE) {
     v <- as.numeric(as.character(v))
   }
   v <- factor(v)
-  thisCall <- call("plot", x = v, main = vnam)
+  aggrV <- table(v)
+  thisCall <- call("barplot", height = aggrV, main = vnam)
   if (doEval) {
     return(eval(thisCall))
   } else return(deparse(thisCall))
@@ -84,7 +85,8 @@ basicVisualCFLB <- function(v, vnam, doEval = TRUE) {
 #numeric and integer variables
 basicVisualIN <- function(v, vnam, doEval = TRUE) {
   v <- v[is.finite(v)]
-  thisCall <- call("hist", v, main = vnam, col = "grey", xlab = "")
+  aggrV <- hist(v, plot = FALSE)
+  thisCall <- call("plot", aggrV, main = vnam, col = "grey", xlab = "")
   if (doEval) {
     return(eval(thisCall))
   } else return(deparse(thisCall))

@@ -28,7 +28,7 @@
 #' }
 #' @seealso \code{\link{visualize}}, \code{\link{basicVisual}}
 #'
-#' @importFrom ggplot2 qplot
+#' @importFrom ggplot2 qplot geom_bar geom_rect ylab xlab aes_string ggplot 
 #' @importFrom stats na.omit
 #' @export
 standardVisual <- function(v, vnam, doEval = TRUE) UseMethod("standardVisual")
@@ -75,8 +75,8 @@ standardVisualCFLB <- function(v, vnam, doEval = TRUE) {
   if (identifyNums(v, nVals = 0)$problem) {
     v <- as.numeric(as.character(v))
   }
-  v <- factor(v)
-  thisCall <- call("qplot", x=v, geom="bar", xlab="", main=vnam)
+  pf <- aggregateForBarplot(v)
+  thisCall <- call("ggAggBarplot", data = pf, vnam = vnam)
   if (doEval) {
     return(eval(thisCall))
   } else return(deparse(thisCall))
@@ -85,8 +85,10 @@ standardVisualCFLB <- function(v, vnam, doEval = TRUE) {
 #numeric and integer variables
 standardVisualIN <- function(v, vnam, doEval = TRUE) {
   v <- v[is.finite(v)]
-  thisCall <- call("qplot", x=na.omit(v), geom="histogram", xlab="",
-                   main=vnam, bins=20)
+  pf <- aggregateForHistogram(v, bins = 20)
+  thisCall <- call("ggAggHist", data = pf, vnam = vnam)
+  #thisCall <- call("qplot", x=na.omit(v), geom="histogram", xlab="",
+   #                main=vnam, bins=20)
   if (doEval) {
     return(eval(thisCall))
   } else return(deparse(thisCall))
@@ -99,14 +101,38 @@ standardVisualIN <- function(v, vnam, doEval = TRUE) {
 
 # Dates
 standardVisualD <- function(v, vnam, doEval = TRUE) {
-      thisCall <- call("qplot", x=na.omit(v), geom="bar", xlab="",
-                   main=vnam)
+  v <- na.omit(v)
+  pf <- aggregateForHistogram(v, bins = 20)
+  thisCall <- call("ggAggHist", data = pf, vnam = vnam)
+#      thisCall <- call("qplot", x=na.omit(v), geom="bar", xlab="",
+#                   main=vnam)
   if (doEval) {
     return(eval(thisCall))
   } else return(deparse(thisCall))
 }
 
 
+#ggplot2 histogram based on aggregated data.
+#Input should be on the format of the output of 
+#aggregateForHistogram()
+ggAggHist <- function(data, vnam) {
+  p <- ggplot(data, aes_string(xmin = "xmin", xmax = "xmax", ymin = "ymin", ymax = "ymax")) +
+    geom_rect(col = "white") +
+    ylab("count") +
+    xlab(vnam)
+  p
+}
+
+#ggplot2 barplot based on aggregated data.
+#Input should be on the format of the output of 
+#aggregateForBarplot()
+ggAggBarplot <- function(data, vnam) {
+  p <- ggplot(data, aes_string(x = "x", y = "y")) +
+    geom_bar(stat = "identity") +
+    ylab("count") +
+    xlab(vnam)
+  p
+}
 
 
 
