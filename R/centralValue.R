@@ -63,7 +63,9 @@ centralValue.Date <- function(v, ...) centralValueCF(v)
 
 
 #' @include summaryFunction.R 
-centralValue <- summaryFunction(centralValue, "Compute median or mode", allClasses())
+centralValue <- summaryFunction(centralValue, 
+                                "Compute median for numeric variables, mode for categorical variables", 
+                                allClasses())
 
 
 ##########################################Not exported below#########################################
