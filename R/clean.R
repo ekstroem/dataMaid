@@ -863,6 +863,7 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
 
               ## make Summary table
               if (doSummarize) sumTable <- pander::pander_return(summarize(v,
+                                                                 reportstyleOutput = TRUE,
                                                                  characterSummaries = characterSummaries,
                                                                  factorSummaries = factorSummaries,
                                                                  labelledSummaries = labelledSummaries,

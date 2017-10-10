@@ -1,10 +1,13 @@
-#' @title Make summary matrix
+#' @title Summarize a variable
 #'
-#' @description Generic shell function that produces a summary matrix for a variable (or for each
+#' @description Generic shell function that produces a summary of a variable (or for each
 #' variable in an entire dataset), given a number of summary functions and 
 #' depending on its data class.
 #'
 #' @param v The variable (vector) or dataset (data.frame) to be summarized.
+#' 
+#' @param reportstyleOutput Logical indicating whether the output should
+#' be formatted for inclusion in the report (escaped matrix) or not. Defaults to not. 
 #' 
 #' @param ... Additional argument passed to data class specific methods. First and foremost,
 #' this is where to supply the summary functions (see details).
@@ -24,7 +27,16 @@
 #' \code{list(feature="Feature name", result="The result")}. More details on how to construct 
 #' valid summary functions are found in \code{\link{summaryFunction}}.
 #'
-#' @return If \code{v} is a single variable: A matrix with two columns, \code{feature} and 
+#' @return The return value depends on the value of \code{reportstyleOutput}. 
+#' 
+#' If \code{reportstyleOutput = FALSE} (the default): If \code{v} is a varibale, 
+#' a list of \code{summaryResult} objects, one \code{summaryResult} for each summary
+#' function called on \code{v}. If \code{v} is a dataset, then \code{summarize()} returns 
+#' a list of lists of \code{summaryResult} objects instead; one list for each variable
+#' in \code{v}.  
+#' 
+#' If \code{reportstyleOutput = TRUE}: 
+#' If \code{v} is a single variable: A matrix with two columns, \code{feature} and 
 #' \code{result} and one row for each summary function that was called. Character
 #' strings in this matrix are escaped such that they are ready for Rmarkdown rendering.
 #' 
@@ -32,6 +44,7 @@
 #' variable in the dataset.
 #'
 #' @seealso \code{\link{summaryFunction}}, \code{\link{allSummaryFunctions}}, 
+#' \code{\link{summaryResult}},
 #' \code{\link{defaultCharacterSummaries}}, \code{\link{defaultFactorSummaries}},
 #' \code{\link{defaultLabelledSummaries}}, \code{\link{defaultLabelledSummaries}},
 #' \code{\link{defaultNumericSummaries}}, \code{\link{defaultIntegerSummaries}},
@@ -62,9 +75,12 @@
 #'  #Summarize a full dataset:
 #'   data(cars)
 #'   summarize(cars)
+#'   
+#'  #Summarize a variable and obtain report-style output:
+#'   summarize(charV, reportstyleOutput = TRUE)
 #'
 #' @export
-summarize <- function(v, ...) UseMethod("summarize")
+summarize <- function(v, reportstyleOutput = FALSE, ...) UseMethod("summarize")
 
 
 
@@ -196,69 +212,121 @@ defaultDateSummaries <- function() c("variableType", "countMissing", "uniqueValu
 #methods for each data type
 
 #' @export
-summarize.character <- function(v, characterSummaries = defaultCharacterSummaries(), ...) {
-  sumMatGenerator(v, characterSummaries)
+summarize.character <- function(v, reportstyleOutput = FALSE,
+                                characterSummaries = defaultCharacterSummaries(), 
+                                ...) {
+  res <- lapply(characterSummaries, function(x) eval(call(x, v = v)))
+  if (reportstyleOutput) {
+    res <- sumMatGenerator(res)
+  } else {
+    names(res) <- characterSummaries
+  }
+  res
+}
+
+
+
+#' @export
+summarize.factor <- function(v, reportstyleOutput = FALSE, 
+                             factorSummaries = defaultFactorSummaries(), ...) {
+  res <- lapply(factorSummaries, function(x) eval(call(x, v = v)))
+  if (reportstyleOutput) {
+    res <- sumMatGenerator(res)
+  } else {
+    names(res) <- factorSummaries
+  }
+  res
 }
 
 
 #' @export
-summarize.factor <- function(v, factorSummaries = defaultFactorSummaries(), ...) {
-  sumMatGenerator(v, factorSummaries)
+summarize.labelled <- function(v,  reportstyleOutput = FALSE, 
+                               labelledSummaries = defaultLabelledSummaries(), 
+                               ...) {
+  res <- lapply(labelledSummaries, function(x) eval(call(x, v = v)))
+  if (reportstyleOutput) {
+    res <- sumMatGenerator(res)
+  } else {
+    names(res) <- labelledSummaries
+  }
+  res
 }
 
 
 #' @export
-summarize.labelled <- function(v, labelledSummaries = defaultLabelledSummaries(), ...) {
-  sumMatGenerator(v, labelledSummaries)
-}
-
-
-#' @export
-summarize.numeric <- function(v, numericSummaries = defaultNumericSummaries(),
+summarize.numeric <- function(v,  reportstyleOutput = FALSE, 
+                              numericSummaries = defaultNumericSummaries(),
                               maxDecimals = 2, ...) {
-  sumMatGenerator(v, numericSummaries, maxDecimals = maxDecimals)
+  res <- lapply(numericSummaries, function(x) eval(call(x, v = v)))
+  if (reportstyleOutput) {
+    res <- sumMatGenerator(res, maxDecimals = maxDecimals)
+  } else {
+    names(res) <- numericSummaries
+  }
+  res
 }
 
 
 #' @export
-summarize.integer <- function(v, integerSummaries = defaultIntegerSummaries(),
+summarize.integer <- function(v, reportstyleOutput = FALSE,
+                              integerSummaries = defaultIntegerSummaries(),
                               maxDecimals = 2, ...) {
-  sumMatGenerator(v, integerSummaries, maxDecimals = maxDecimals)
+  res <- lapply(integerSummaries, function(x) eval(call(x, v = v)))
+  if (reportstyleOutput) {
+    res <- sumMatGenerator(res, maxDecimals = maxDecimals)
+  } else {
+    names(res) <- integerSummaries
+  }
+  res
 }
 
 
 #' @export
-summarize.logical <- function(v, logicalSummaries = defaultLogicalSummaries(), ...) {
-  sumMatGenerator(v, logicalSummaries)
+summarize.logical <- function(v, reportstyleOutput = FALSE,
+                              logicalSummaries = defaultLogicalSummaries(), ...) {
+  res <- lapply(logicalSummaries, function(x) eval(call(x, v = v)))
+  if (reportstyleOutput) {
+    res <- sumMatGenerator(res)
+  } else {
+    names(res) <- logicalSummaries
+  }
+  res
 }
 
 
 #' @export
-summarize.Date <- function(v, dateSummaries = defaultDateSummaries(),
+summarize.Date <- function(v, reportstyleOutput = FALSE,
+                           dateSummaries = defaultDateSummaries(),
                            maxDecimals = 0, ...) {
-    sumMatGenerator(v, dateSummaries, maxDecimals = maxDecimals)
+  res <- lapply(dateSummaries, function(x) eval(call(x, v = v)))
+  if (reportstyleOutput) {
+    res <- sumMatGenerator(res, maxDecimals = maxDecimals)
+  } else {
+    names(res) <- dateSummaries
+  }
+  res
 }
 
 
 #' @export
-summarize.data.frame <- function(v, ...) {
-  lapply(v, summarize, ...)
+summarize.data.frame <- function(v, reportstyleOutput = FALSE, ...) {
+  lapply(v, summarize, reportstyleOutput, ...)
 }
 
 
 ##########################################Not exported below#########################################
 
 #produces the output matrix from a summarize call. Use internally only
-sumMatGenerator <- function(v, summaries, maxDecimals = NULL) {
-  nFunctions <- length(summaries)
+sumMatGenerator <- function(resList, maxDecimals = NULL) {
+  nFunctions <- length(resList)
   outMat <- matrix(NA, nFunctions, 2,
                    dimnames=list(NULL, c("Feature", "Result")))
   for (i in 1:nFunctions) {
-    res <- eval(call(summaries[i], v, maxDecimals = maxDecimals))
-    outMat[i, "Feature"] <- res$feature
-    outMat[i, "Result"] <- res$result
+    outMat[i, "Feature"] <- resList[[i]]$feature
+    outMat[i, "Result"] <- resList[[i]]$result
   }
   outMat
 }
+
 
 
