@@ -6,7 +6,7 @@
 #' 
 #' @param v A variable (vector) of type numeric or integer.
 #' 
-#' @inheritParams clean
+#' @inheritParams makeDataReport
 #' 
 #' @details The quartiles are computed using the \code{\link[stats]{quantile}} function from \code{stats}, 
 #' using type 7 quantiles for integer and numeric variables and type 1 quantiles for Date variables. 

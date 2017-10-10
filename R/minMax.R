@@ -6,7 +6,7 @@
 #' 
 #' @param v A variable (vector) of type numeric or integer.
 #'
-#' @inheritParams clean
+#' @inheritParams makeDataReport
 #' 
 #' @return An object of class \code{summaryResult} with the following entries: \code{$feature} 
 #' ("Min. and max."), \code{$result} (the minimum and maximum of \code{v}), and \code{$value}

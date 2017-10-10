@@ -3,7 +3,7 @@
 #' @description A \code{\link{checkFunction}} that checks if \code{v} 
 #' is a key, that is, if every observation has a unique value in \code{v} and 
 #' \code{v} is not a numeric/integer nor a Date variable. This
-#' function is intended for use as a precheck in \code{\link{clean}}.
+#' function is intended for use as a precheck in \code{\link{makeDataReport}}.
 #' 
 #' @param v A variable (vector) to check. All variable types are allowed.
 #' 

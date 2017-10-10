@@ -1,5 +1,8 @@
-#' Produce a data cleaning overview document
+#' Produce a data cleaning overview document (deprecated version)
 #'
+#' NOTE: This function has been replaced by \code{\link{makeDataReport}}. The current 
+#' function is no longer updated and it is only included for backwards compatability. 
+#' 
 #' Run a set of class-specific validation checks to check the
 #' variables in a dataset for potential errors.  Performs checking
 #' steps according to user input and/or data type of the inputted
@@ -279,6 +282,10 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
                   treatXasY = NULL,
                   ...) {
 
+    warning(paste("Please note that clean() has been replaced by makeDataReport().",
+                 "This means that clean() is no longer maintained,",
+                  "and we therefore recommend all users to use makeDataReport() instead."))
+  
     ## Store the original call
     orig.call <- match.call()
 

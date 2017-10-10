@@ -17,7 +17,7 @@ a character string containing standalone R code for producing the plot.}
 \description{
 Plot the distribution of a variable, depending on its data class, by use of ggplot2. 
 Note that \code{standardVisual} is a \code{\link{visualFunction}}, compatible with the 
-\code{\link{visualize}} and \code{\link{clean}} functions.
+\code{\link{visualize}} and \code{\link{makeDataReport}} functions.
 }
 \details{
 For character, factor, logical and labelled variables, a barplot is produced. For numeric,

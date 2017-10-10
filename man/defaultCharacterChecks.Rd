@@ -11,6 +11,6 @@ A vector of function names.
 }
 \description{
 Default options for which checks to perform on
-character type variables in \code{\link{check}} and \code{\link{clean}}.
+character type variables in \code{\link{check}} and \code{\link{makeDataReport}}.
 }
 

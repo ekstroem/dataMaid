@@ -18,7 +18,7 @@ missing observations) and \code{$value} (the number of missing observations).
 }
 \description{
 A \code{\link{summaryFunction}}, intended to be called from
-\code{\link{summarize}} (and \code{\link{clean}}), which counts the
+\code{\link{summarize}} (and \code{\link{makeDataReport}}), which counts the
 number of missing (\code{NA}) values in a variable.
 }
 \examples{

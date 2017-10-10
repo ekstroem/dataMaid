@@ -3,7 +3,7 @@
 #'
 #' Plot the distribution of a variable, depending on its data class, using the base R
 #' plotting functions. Note that \code{basicVisual} is a \code{\link{visualFunction}}, compatible with the 
-#' \code{\link{visualize}} and \code{\link{clean}} functions. 
+#' \code{\link{visualize}} and \code{\link{makeDataReport}} functions. 
 #'
 #' For character, factor, logical and labelled variables, a barplot is produced. For numeric, 
 #' integer or Date variables, \code{basicVisual} produces a histogram instead. Note that for

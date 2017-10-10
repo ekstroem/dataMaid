@@ -24,7 +24,7 @@ one of the classes supported by dataMaid, namely \code{character},
 from any of these classes). A user supported list can be provided
 in the \code{treatXasY} argument, which will let the user decide
 how unsupported classes should be treated. This
-function is intended for use as a precheck in \code{\link{clean}}.
+function is intended for use as a precheck in \code{\link{makeDataReport}}.
 }
 \examples{
 integerVar <- 1:10 #supported

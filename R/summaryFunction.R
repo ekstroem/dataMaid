@@ -15,15 +15,15 @@
 #' namely \code{classes} and \code{description}. 
 #' 
 #' @details \code{summaryFunction} represents the functions used in 
-#' \code{\link{summarize}} and \code{\link{clean}} for summarizing the
+#' \code{\link{summarize}} and \code{\link{makeDataReport}} for summarizing the
 #' features of variables in a dataset.
 #' 
 #' An example of defining a new \code{summaryFunction} is given below. 
 #' Note that the minimal requirements for such a function (in order for it to be 
-#' compatible with \code{summarize()} and \code{clean()}) is the following 
+#' compatible with \code{summarize()} and \code{makeDataReport()}) is the following 
 #' input/output-structure: It must input at least two arguments, namely 
 #' \code{v} (a vector variable) and \code{...}. Additional implemented 
-#' arguments from \code{summarize()} and \code{clean()} include
+#' arguments from \code{summarize()} and \code{makeDataReport()} include
 #' \code{maxDecimals}, see e.g. the pre-defined \code{summaryFunction} 
 #' \code{\link{minMax}} for more details about how this arguments should
 #' be used. 
@@ -42,12 +42,12 @@
 #' @include makeXFunction.R allClasses.R
 #' 
 #' @seealso \code{\link{allSummaryFunctions}}, \code{\link{summarize}}, 
-#' \code{\link{clean}}, \code{\link{checkResult}}
+#' \code{\link{makeDataReport}}, \code{\link{checkResult}}
 #' 
 #' @examples 
 #' 
 #' #Define a valid summaryFunction that can be called from summarize() 
-#' #and clean(). This function counts how many zero entries a given 
+#' #and makeDataReport(). This function counts how many zero entries a given 
 #' #variable has:
 #'  countZeros <- function(v, ...) {
 #'   res <- length(which(v == 0))

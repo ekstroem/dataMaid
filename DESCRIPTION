@@ -66,6 +66,7 @@ Collate:
     'isEmpty.R'
     'isKey.R'
     'isSupported.R'
+    'makeDataReport.R'
     'misc.R'
     'quartiles.R'
     'render.R'

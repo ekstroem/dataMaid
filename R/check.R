@@ -88,7 +88,7 @@ check <- function(v, nMax = Inf, ...) UseMethod("check")
 #' @title Default checks for character variables
 #'
 #' @description Default options for which checks to perform on
-#' character type variables in \code{\link{check}} and \code{\link{clean}}.
+#' character type variables in \code{\link{check}} and \code{\link{makeDataReport}}.
 #'
 #' @return A vector of function names.
 #'
@@ -106,7 +106,7 @@ check.character <- function(v, nMax =  Inf, characterChecks=defaultCharacterChec
 #' @title Default checks for factor variables
 #'
 #' @description Default options for which checks to perform on
-#' factor type variables in \code{\link{check}} and \code{\link{clean}}.
+#' factor type variables in \code{\link{check}} and \code{\link{makeDataReport}}.
 #'
 #' @return A vector of function names.
 #'
@@ -124,7 +124,7 @@ check.factor <- function(v, nMax =  Inf, factorChecks = defaultFactorChecks(), .
 #' @title Default checks for labelled variables
 #'
 #' @description Default options for which checks to perform on
-#' labelled type variables in \code{\link{check}} and \code{\link{clean}}.
+#' labelled type variables in \code{\link{check}} and \code{\link{makeDataReport}}.
 #'
 #' @return A vector of function names.
 #'
@@ -144,7 +144,7 @@ check.labelled <- function(v, nMax =  Inf, labelledChecks = defaultLabelledCheck
 #' @title Default checks for numeric variables
 #'
 #' @description Default options for which checks to perform on
-#' numeric type variables in \code{\link{check}} and \code{\link{clean}}.
+#' numeric type variables in \code{\link{check}} and \code{\link{makeDataReport}}.
 #'
 #' @return A vector of function names.
 #'
@@ -164,7 +164,7 @@ check.numeric <- function(v, nMax =  Inf, maxDecimals = 2,
 #' @title Default checks for integer variables
 #'
 #' @description Default options for which checks to perform on
-#' integer type variables in \code{\link{check}} and \code{\link{clean}}.
+#' integer type variables in \code{\link{check}} and \code{\link{makeDataReport}}.
 #'
 #' @return A vector of function names.
 #'
@@ -185,7 +185,7 @@ check.integer <- function(v, nMax =  Inf, maxDecimals = 2,
 #' @title Default checks for logical variables
 #'
 #' @description Default options for which checks to perform on
-#' logical type variables in \code{\link{check}} and \code{\link{clean}}.
+#' logical type variables in \code{\link{check}} and \code{\link{makeDataReport}}.
 #'
 #' @return A vector of function names.
 #'
@@ -207,7 +207,7 @@ check.logical <- function(v, nMax =  Inf, logicalChecks = defaultLogicalChecks()
 #' @title Default checks for Date variables
 #'
 #' @description Default options for which checks to perform on
-#' Date type variables in \code{\link{check}} and \code{\link{clean}}.
+#' Date type variables in \code{\link{check}} and \code{\link{makeDataReport}}.
 #'
 #' @return A vector of function names.
 #'

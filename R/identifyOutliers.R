@@ -9,7 +9,7 @@
 #' Default is \code{Inf}, in whichall problematic values are included 
 #' in the outputted message.
 #' 
-#' @inheritParams clean
+#' @inheritParams makeDataReport
 #'
 #' @details Outliers are identified based on an outlier rule that is 
 #' appropriate for asymmetric data. Outliers are observations outside the range

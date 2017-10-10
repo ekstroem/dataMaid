@@ -2,7 +2,7 @@
 % Please edit documentation in R/clean.R
 \name{clean}
 \alias{clean}
-\title{Produce a data cleaning overview document}
+\title{Produce a data cleaning overview document (deprecated version)}
 \usage{
 clean(data, output = c("pdf", "html"), render = TRUE, useVar = NULL,
   ordering = c("asIs", "alphabetical"), onlyProblematic = FALSE,
@@ -196,6 +196,10 @@ The function does not return anything. Its side effect (the production
 of a data cleaning overview document) is the reason for running the function.
 }
 \description{
+NOTE: This function has been replaced by \code{\link{makeDataReport}}. The current 
+function is no longer updated and it is only included for backwards compatability.
+}
+\details{
 Run a set of class-specific validation checks to check the
 variables in a dataset for potential errors.  Performs checking
 steps according to user input and/or data type of the inputted
@@ -203,8 +207,7 @@ variable.  The checks are saved to an R markdown file which can
 rendered into an easy-to-read document.  This document also
 includes summaries and visualizations of each variable in the
 dataset.
-}
-\details{
+
 For each variable, a set of pre-check (controlled by the
 \code{preChecks} argument) is first run and then then a battery of
 functions are applied depending on the variable class.  For each

@@ -1,7 +1,7 @@
 #' Summary function for missing values
 #'
 #' A \code{\link{summaryFunction}}, intended to be called from
-#' \code{\link{summarize}} (and \code{\link{clean}}), which counts the
+#' \code{\link{summarize}} (and \code{\link{makeDataReport}}), which counts the
 #' number of missing (\code{NA}) values in a variable.
 #'
 #' @param v A variable (vector).

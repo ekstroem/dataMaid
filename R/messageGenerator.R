@@ -20,7 +20,7 @@
 #' values are printed.
 #'
 #' @details This function is a tool for building \code{\link{checkFunction}}s for the
-#' \code{dataMaid} \code{\link{clean}} function. \code{checkFunction}s will often identify a number
+#' \code{dataMaid} \code{\link{makeDataReport}} function. \code{checkFunction}s will often identify a number
 #' of values in a variable that are somehow problematic. \code{messageGenerator} takes
 #' these values, pastes them together with a problem description and makes sure that the
 #' formatting is appropriate for being rendered in a \code{rmarkdown} document.
@@ -32,7 +32,7 @@
 #'
 #' @return A character string with a problem description.
 #'
-#' @seealso \code{\link{check}}, \code{\link{checkFunction}}, \code{\link{clean}}
+#' @seealso \code{\link{check}}, \code{\link{checkFunction}}, \code{\link{makeDataReport}}
 #'
 #' @examples
 #'

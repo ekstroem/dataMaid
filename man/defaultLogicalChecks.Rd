@@ -11,6 +11,6 @@ A vector of function names.
 }
 \description{
 Default options for which checks to perform on
-logical type variables in \code{\link{check}} and \code{\link{clean}}.
+logical type variables in \code{\link{check}} and \code{\link{makeDataReport}}.
 }
 

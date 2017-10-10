@@ -26,15 +26,15 @@
 #' namely \code{classes} and \code{description}.
 #'
 #' @details \code{checkFunction} represents the functions used in
-#' \code{\link{check}} and \code{\link{clean}} for performing
+#' \code{\link{check}} and \code{\link{makeDataReport}} for performing
 #' error checks and quality control on variables in dataset.
 #'
 #' An example of defining a new \code{checkFunction} is given below.
 #' Note that the minimal requirements for such a function (in order for it to be
-#' compatible with \code{check()} and \code{clean()}) is the following
+#' compatible with \code{check()} and \code{makeDataReport()}) is the following
 #' input/output-structure: It must input at least two arguments, namely
 #' \code{v} (a vector variable) and \code{...}. Additional implemented
-#' arguments from \code{check()} and \code{clean()} include \code{nMax} and
+#' arguments from \code{check()} and \code{makeDataReport()} include \code{nMax} and
 #' \code{maxDecimals}, see e.g. the pre-defined \code{checkFunction}
 #' \code{\link{identifyMissing}} for more details about how these arguments should
 #' be used.
@@ -53,13 +53,13 @@
 #'
 #' @include makeXFunction.R messageGenerator.R
 #'
-#' @seealso \code{\link{allCheckFunctions}}, \code{\link{check}}, \code{\link{clean}},
+#' @seealso \code{\link{allCheckFunctions}}, \code{\link{check}}, \code{\link{makeDataReport}},
 #' \code{\link{messageGenerator}}, \code{\link{checkResult}}
 #'
 #' @examples
 #'
 #' #Define a minimal requirement checkFunction that can be called
-#' #from check() and clean(). This function checks whether all
+#' #from check() and makeDataReport(). This function checks whether all
 #' #values in a variable are of equal length and that this
 #' #length is then also larger than 10:
 #' isID <- function(v, nMax = NULL, ...) {

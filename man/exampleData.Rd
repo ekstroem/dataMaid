@@ -84,7 +84,7 @@ identifyColons <- function(v, nMax = Inf, ... ) {
 identifyColons <- checkFunction(identifyColons,
                                description = "Identify non-suffixed nor -prefixed colons",
                                classes = c("character", "factor", "labelled"))
-clean(exampleData, replace = TRUE,
+makeDataReport(exampleData, replace = TRUE,
       preChecks = c("isKey", "isEmpty", "isID"),
       allVisuals = "mosaicVisual",
       characterSummaries = c(defaultCharacterSummaries(), "countZeros"),

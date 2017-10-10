@@ -2,7 +2,7 @@
 #'
 #' Plot the distribution of a variable, depending on its data class, by use of ggplot2. 
 #' Note that \code{standardVisual} is a \code{\link{visualFunction}}, compatible with the 
-#' \code{\link{visualize}} and \code{\link{clean}} functions. 
+#' \code{\link{visualize}} and \code{\link{makeDataReport}} functions. 
 #'
 #' For character, factor, logical and labelled variables, a barplot is produced. For numeric,
 #' integer or Date variables, \code{standardVisual} produces a histogram instead. Note that for

@@ -15,12 +15,12 @@
 #' namely \code{classes} and \code{description}. 
 #' 
 #' @details \code{visualFunction} represents the functions used in 
-#' \code{\link{visualize}} and \code{\link{clean}} for plotting the 
+#' \code{\link{visualize}} and \code{\link{makeDataReport}} for plotting the 
 #' distributions of the variables in a dataset.
 #' 
 #' An example of defining a new \code{visualFunction} is given below. 
 #' Note that the minimal requirements for such a function (in order for it to be 
-#' compatible with \code{visualize()} and \code{clean()}) is the following 
+#' compatible with \code{visualize()} and \code{makeDataReport()}) is the following 
 #' input/output-structure: It must input exactly the following three arguments, 
 #' namely \code{v} (a vector variable), \code{vnam} (a character string with
 #' the name of the variable) and \code{doEval} (a logical). The last argument
@@ -31,7 +31,7 @@
 #' available in an environment. In practice, this will typically imply that 
 #' the data variable is included in the code snip. 
 #' It is not strictly necessary to implement the \code{doEval = TRUE} setting 
-#' for the \code{visualFunction} to be compatible with \code{\link{clean}}, 
+#' for the \code{visualFunction} to be compatible with \code{\link{makeDataReport}}, 
 #' but we recommend doing it anyway such that the function can also be used 
 #' interactively.
 #' 
@@ -42,7 +42,7 @@
 #' @include makeXFunction.R allClasses.R
 #' 
 #' @seealso \code{\link{allVisualFunctions}}, \code{\link{visualize}}, 
-#' \code{\link{clean}}
+#' \code{\link{makeDataReport}}
 #' 
 #' @examples
 #' #Defining a new visualFunction:
