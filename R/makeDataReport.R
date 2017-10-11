@@ -50,30 +50,17 @@
 #' the "visualize" step is responsible for creating the plot and the "check" step is responsible
 #' for performing checks on the variable and printing the results if any problems are found.
 #'
-#' @param characterChecks A vector of the names of error-checking functions to apply to
-#' character vectors.
-#'
-#' @param factorChecks A vector of the names of error-checking functions to apply to
-#' integer vectors.
-#'
-#' @param labelledChecks A vector of the names of error-checking functions to apply to
-#' character vectors.
-#'
-#' @param integerChecks A vector of the names of error-checking functions to apply to
-#' integer vectors.
-#'
-#' @param numericChecks A vector of the names of error-checking functions to apply to
-#' numeric vectors.
-#'
-#' @param logicalChecks A vector of the names of error-checking functions to apply to
-#' logical vectors.
-#'
-#' @param dateChecks A vector of the names of error-checking functions to apply to
-#' Date vectors.
-#'
-#' @param allChecks Vector of function names that should be used as check-functions
-#' for all variable types. Note that this argument overwrites the arguments
-#' \code{characterChekcs}, \code{factorChecks}, etc.
+#' @param summaries A list of summaries to use on each supported variable type. We recommend
+#' using \code{\link{setSummaries}} for creating this list and refer to the documentation
+#' of this function for more details.
+#' 
+#' @param visuals A list of visual functions to use on each supported variable type. We recommend
+#' using \code{\link{setVisuals}} for creating this list and refer to the documentation
+#' of this function for more details.
+#' 
+#' @param checks A list of checks to use on each supported variable type. We recommend
+#' using \code{\link{setChecks}} for creating this list and refer to the documentation
+#' of this function for more details.
 #'
 #' @param smartNum If \code{TRUE} (the default), numeric and integer variables with
 #' less than 5 unique values are treated as factor variables in the checking,
@@ -100,36 +87,6 @@
 #' @param vol Extra text string or numeric that is appended on the end of the output
 #' file name(s). For example, if the dataset is called "myData", no file argument is
 #'  supplied and \code{vol=2}, the output file will be called "dataMaid_myData2.Rmd"
-#'
-#' @param characterSummaries A vector of the names of summary functions to apply to
-#' character vectors.
-#'
-#' @param factorSummaries A vector of the names of summary functions to apply to
-#' factor vectors.
-#'
-#' @param labelledSummaries A vector of the names of summary functions to apply to
-#' labelled vectors.
-#'
-#' @param numericSummaries  A vector of the names of summary functions to apply to
-#' numeric vectors.
-#'
-#' @param integerSummaries A vector of the names of summary functions to apply to
-#' integer vectors.
-#'
-#' @param logicalSummaries A vector of the names of summary functions to apply to
-#' logical vectors.
-#'
-#' @param dateSummaries  A vector of the names of summary functions to apply to
-#' Date vectors.
-#'
-#' @param allSummaries Vector of function names that should be used as summary
-#' functions for all variable types. Note that this argument overwrites the arguments
-#' \code{characterSummaries}, \code{factorSummaries}, etc.
-#'
-#' @param allVisuals A single function name. This funtion name is called for
-#' creating the plots for each variable in the "visualize" step. The default,
-#' \code{"standardVisual"} thus calls the \code{\link{visualFunction}}
-#' \code{\link{standardVisual}} for each variable in \code{data}.
 #'
 #' @param standAlone A logical. If \code{TRUE}, the document begins with a
 #' markdown YAML preamble such that it can be rendered as a stand alone rmarkdown
@@ -225,7 +182,7 @@
 #'                              classes = c("character")
 #'                              )
 #' # Add the newly defined function to the list of checks used for characters.
-#' makeDataReport(testData, characterChecks=c(defaultCharacterChecks(), "wheresWally"),
+#' makeDataReport(testData, checks = setChecks(character = c(defaultCharacterChecks(), "wheresWally")),
 #'       replace=TRUE)
 #' }
 #' 
@@ -254,23 +211,9 @@ makeDataReport <- function(data, output=c("pdf", "html"), render=TRUE,
                   standAlone=TRUE, twoCol=TRUE,
                   quiet = TRUE,
                   openResult=TRUE,
-                  characterChecks = defaultCharacterChecks(),
-                  factorChecks = defaultFactorChecks(),
-                  labelledChecks = defaultLabelledChecks(),
-                  numericChecks = defaultNumericChecks(),
-                  integerChecks = defaultIntegerChecks(),
-                  logicalChecks = defaultLogicalChecks(),
-                  dateChecks = defaultDateChecks(),
-                  allChecks = NULL,
-                  characterSummaries = defaultCharacterSummaries(),
-                  factorSummaries = defaultFactorSummaries(),
-                  labelledSummaries = defaultLabelledSummaries(),
-                  numericSummaries = defaultNumericSummaries(),
-                  integerSummaries = defaultIntegerSummaries(),
-                  logicalSummaries = defaultLogicalSummaries(),
-                  dateSummaries = defaultDateSummaries(),
-                  allSummaries = NULL,
-                  allVisuals = "standardVisual",
+                  summaries = setSummaries(),
+                  visuals = setVisuals(),
+                  checks = setChecks(),
                   listChecks = TRUE,
                   maxProbVals = 10,
                   maxDecimals = 2,
@@ -488,38 +431,6 @@ makeDataReport <- function(data, output=c("pdf", "html"), render=TRUE,
   
   
   
-  #if (replace=="onlyCleanR") {
-  #  fileProblem <- F
-  #  outputFileProblem <- F
-  #
-  #  if (fileExists) {
-  #    l12 <- readLines(file, 2, warn=FALSE)
-  #    if (!identical(l12, c("---", "dataMaid: yes"))) fileProblem <- T
-  #  }
-  #  if (outFileExists) {
-  #    #############################################
-  #    #check if pdf/html was produced by dataMaid....
-  #    #############################################
-  #  }
-  #
-  #  if (fileProblem & outFileProblem) problemFiles <- paste(file, "and", outFile)
-  #  if (fileProblem & !outFileProblem) problemFiles <- file
-  #  if (!fileproblem & outFileProblem) problemFiles <- outFile
-  #
-  #  if (fileProblem || outFileProblem) {
-  #    stop(paste("The file name(s) to be used by dataMaid,", paste(problemFiles, ",", sep=""),
-  #               "are already in use and the files do not look like they were produced by dataMaid.",
-  #               "We recommend trying one of the following solutions: \n",
-  #               "- rename your dataMaid output files using the \"file\" option \n",
-  #               "- Add a volume number to your file name using the \"vol\" option \n",
-  #              "- check that you do not want to keep the original file and if so,",
-  #               "use dataMaid with replace = \"always\""))
-  #  }
-  #}
-  #}
-  
-  
-  
   ## Figure out which classes of output that the user requests.
   ## By default we want both checks, graphics, and summarize.
   doCheck <- "check" %in% mode
@@ -533,18 +444,6 @@ makeDataReport <- function(data, output=c("pdf", "html"), render=TRUE,
   ## Disregard the twocolumn option if we're only asking for one of visualize and summarize
   ## If output is not html or pdf then drop the twoCol option too
   if (!doVisualize || !doSummarize) twoCol <- FALSE
-  
-  #allChecks overwrites other check-options
-  if (!is.null(allChecks)) {
-    characterChecks <- factorChecks <- labelledChecks <- allChecks
-    numericChecks <- integerChecks <- logicalChecks <- allChecks
-  }
-  
-  #allSummaries overwrites other summary-options
-  if (!is.null(allSummaries)) {
-    characterSummaries <- factorSummaries <- labelledSummaries <- allSummaries
-    numericSummaries <- integerSummaries <- logicalSummaries <- allSummaries
-  }
   
   # if (!(output %in% c("html", "pdf"))) twoCol <- FALSE
   #what is this line supposed to do and when will it happen?
@@ -560,6 +459,31 @@ makeDataReport <- function(data, output=c("pdf", "html"), render=TRUE,
   changedPanderOptions <- c("table.alignment.default", "table.split.table",
                             "table.split.cells", "table.alignment.rownames")
   
+  
+  #Unpack summary/visual/check arguments
+  characterChecks <- checks$character
+  factorChecks <- checks$factor
+  labelledChecks <- checks$labelled
+  numericChecks <- checks$numeric
+  integerChecks <- checks$integer
+  logicalChecks <- checks$logical
+  dateChecks <- checks$Date
+  
+  characterSummaries <- summaries$character
+  factorSummaries <- summaries$factor
+  labelledSummaries <- summaries$labelled
+  numericSummaries <- summaries$numeric
+  integerSummaries <- summaries$integer
+  logicalSummaries <- summaries$logical
+  dateSummaries <- summaries$Date
+  
+  characterVisual <- visuals$character
+  factorVisual <- visuals$factor
+  labelledVisual <- visuals$labelled
+  numericVisual <- visuals$numeric
+  integerVisual <- visuals$integer
+  logicalVisual <- visuals$logical
+  dateVisual <- visuals$date
   ##
   ## Below comes a bunch of helper functions for writing the output
   ##
@@ -680,24 +604,6 @@ makeDataReport <- function(data, output=c("pdf", "html"), render=TRUE,
     
     ## List the checking that were used for each possible variable type
     if (listChecks) {
-      # if ("characterChecks" %in% names(dots)) cChecks <- dots$characterChecks
-      # else cChecks <- eval(formals(check.character)$characterChecks)
-      #
-      # if ("factorChecks" %in% names(dots)) fChecks <- dots$factorChecks
-      # else fChecks <- eval(formals(check.factor)$factorChecks)
-      #
-      # if ("labelledChecks" %in% names(dots)) lChecks <- dots$labelledChecks
-      # else lChecks <- eval(formals(check.labelled)$labelledChecks)
-      #
-      # if ("numericChecks" %in% names(dots)) nChecks <- dots$numericChecks
-      # else nChecks <- eval(formals(check.numeric)$numericChecks)
-      #
-      # if ("integerChecks" %in% names(dots)) iChecks <- dots$integerChecks
-      # else iChecks <- eval(formals(check.integer)$integerChecks)
-      #
-      # if ("logicalChecks" %in% names(dots)) bChecks <- dots$logicalChecks
-      # else bChecks <- eval(formals(check.logical)$logicalChecks)
-      
       everyCheck <- union(characterChecks, c(factorChecks, labelledChecks, numericChecks,
                                              integerChecks, logicalChecks, dateChecks))
       checkMat <- matrix("", length(everyCheck), 7, #6: number of different variable types
@@ -882,7 +788,14 @@ makeDataReport <- function(data, output=c("pdf", "html"), render=TRUE,
             
             
             ## make Visualization
-            if (doVisualize) visual <- visualize(v, vnam, doEval=FALSE, allVisuals = allVisuals, ...)
+            if (doVisualize) visual <- visualize(v, vnam, doEval=FALSE, 
+                                                 characterVisual = characterVisual, 
+                                                 factorVisual = factorVisual, 
+                                                 labelledVisual = labelledVisual,
+                                                 numericVisual = numericVisual,
+                                                 integerVisual = integerVisual,
+                                                 logicalVisual = logicalVisual,
+                                                 DateVisual = dateVisual, ...)
             
             ## Chunkname should avoid spaces and periods
             chunk_name <- paste0("Var-", idx, "-", gsub("[_:. ]", "-", vnam))
@@ -1036,7 +949,8 @@ makeDataReport <- function(data, output=c("pdf", "html"), render=TRUE,
     sessioninfo <- sessionInfo()
     writer(" *  ", sessioninfo[[1]]$version.string, ".\n")
     writer(" *  Platform: ", sessioninfo[[2]], "(", sessioninfo[[4]], ").\n")
-    writer(" *  Function call: `", capture.output(orig.call), "`\n")
+    writer(" *  Function call: `", paste(capture.output(orig.call), collapse = "\n"), 
+           "`\n")
     
     
   }) ## Now we should not write anything more to the file - End try.
