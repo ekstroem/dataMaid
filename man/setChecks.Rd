@@ -66,4 +66,3 @@ makeDataReport(toyData, checks = setChecks(character = "identifyMissing",
 \code{\link{defaultNumericChecks}}, \code{\link{defaultIntegerChecks}},
 \code{\link{defaultLogicalChecks}}, \code{\link{defaultDateChecks}}
 }
-
