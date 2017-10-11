@@ -2,7 +2,7 @@
 #'
 #' @description A \code{summaryFunction}, intended to be called from 
 #' \code{\link{summarize}}, which returns the minimum and maximum values of a variable.
-#' NA, NaN and Inf values are removed prior to  the computations.
+#' NA, NaN and Inf values are removed prior to the computations.
 #' 
 #' @param v A variable (vector) of type numeric or integer.
 #'
@@ -21,14 +21,19 @@
 #' @importFrom stats na.omit
 #' @export
 minMax <- function(v, maxDecimals = 2) {
-  v <- na.omit(v) #maybe keep Infs instead?
-  minV <- min(v)
-  maxV <- max(v)
-  summaryResult(list(feature="Min. and max.",
-                     result=paste(round(minV, maxDecimals),
-                                  round(maxV, maxDecimals),
-                                  sep="; "),
-                     value = c(minV, maxV)))
+    v <- na.omit(v) #maybe keep Infs instead?
+    if(length(v)>0) {
+        minV <- min(v)
+        maxV <- max(v)
+    } else {
+        minV <- NA
+        maxV <- NA            
+    }
+    summaryResult(list(feature="Min. and max.",
+                       result=paste(round(minV, maxDecimals),
+                                    round(maxV, maxDecimals),
+                                    sep="; "),
+                       value = c(minV, maxV)))
 }
 
 #Make it a summaryFunction

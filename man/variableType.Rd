@@ -18,8 +18,8 @@ An object of class \code{summaryResult} with the following entries:
 }
 \description{
 A \code{\link{summaryFunction}} type function, intended to be called from
-\code{\link{summarize}} to be called from \code{\link{summarize}}, which finds the
-orignial class of a variable. This is just the class for all objects but those of class
+\code{\link{summarize}}, which finds the
+original class of a variable. This is just the class for all objects but those of class
 \code{smartNum}.
 }
 \examples{

@@ -1,4 +1,4 @@
-context("dataMaid checks")
+context("dataMaid check")
 
 library(dataMaid)
                                        
@@ -9,6 +9,7 @@ typed <- c(1.0, 2.3, 4.5, 6.7, 8.9)
 typec <- c(1 + 2i, 2 + 0i, 3 + 3i, 4 - 0i, 5+2i)
 types <- LETTERS[1:5]
 typer <- sapply(types, charToRaw)
+typelist <- list(a=1:3, b=1:10)
 
 ##
 ## Check that the right check are performed for each atomic type
@@ -19,9 +20,10 @@ test_that("check returns a list for (most) atomic vectors", {
     expect_is(check(typel), "list")
     expect_is(check(typei), "list")
     expect_is(check(typed), "list")
-    ##expect_is(check(typec), "list")
+    expect_error(check(typec))
     expect_is(check(types), "list")
-    ##expect_is(check(typer), "list")
+    expect_error(check(typelist))
+    expect_error(check(typer))    
 })
 
 ## Check the right number of tests. This needs to be updated 

@@ -10,7 +10,7 @@ identifyOutliers(v, nMax = Inf, maxDecimals = 2)
 \item{v}{A Date, numeric or integer variable to check.}
 
 \item{nMax}{The maximum number of problematic values to report. 
-Default is \code{Inf}, in whichall problematic values are included 
+Default is \code{Inf}, in which all problematic values are included 
 in the outputted message.}
 
 \item{maxDecimals}{A positive integer or \code{Inf}. Number of decimals used when

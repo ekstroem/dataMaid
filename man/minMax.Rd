@@ -21,7 +21,7 @@ An object of class \code{summaryResult} with the following entries: \code{$featu
 \description{
 A \code{summaryFunction}, intended to be called from 
 \code{\link{summarize}}, which returns the minimum and maximum values of a variable.
-NA, NaN and Inf values are removed prior to  the computations.
+NA, NaN and Inf values are removed prior to the computations.
 }
 \examples{
 minMax(c(1:100))

@@ -117,7 +117,7 @@ standardVisualD <- function(v, vnam, doEval = TRUE) {
 #aggregateForHistogram()
 ggAggHist <- function(data, vnam) {
   p <- ggplot(data, aes_string(xmin = "xmin", xmax = "xmax", ymin = "ymin", ymax = "ymax")) +
-    geom_rect(col = "white") +
+    geom_rect() +
     ylab("count") +
     xlab(vnam)
   p

@@ -6,7 +6,7 @@
 #' @param v A Date, numeric or integer variable to check.
 #' 
 #' @param nMax The maximum number of problematic values to report. 
-#' Default is \code{Inf}, in whichall problematic values are included 
+#' Default is \code{Inf}, in which all problematic values are included 
 #' in the outputted message.
 #' 
 #' @inheritParams makeDataReport
