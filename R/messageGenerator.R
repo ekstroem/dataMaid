@@ -26,9 +26,7 @@
 #' formatting is appropriate for being rendered in a \code{rmarkdown} document.
 #' We recommend writing short and precise problem descriptions (see examples),
 #'  but if no message is supplied, the following message is generated:
-#' "[function name] found the following problem values: [problem values]".
-#' Note that this option only works correctly when the \code{checkFunction} is
-#' called directly and e.g. not dispatched through a generic function.
+#' "Note that a check function found the following problematic values: [problem values]".
 #'
 #' @return A character string with a problem description.
 #'
@@ -56,6 +54,9 @@
 #'
 #'  identifyUnderscores(noUSVar) #no problem
 #'  identifyUnderscores(USVar) #problems
+#'  
+#' #Only print the first two problemvalues in the message:
+#'  identifyUnderscores(USVar, nMax = 2)
 #'
 #' #Define same function, but without a manual problem description in
 #' #the messageGenerator-call:
@@ -72,9 +73,6 @@
 #'
 #'  identifyUnderscores2(noUSVar) #no problem
 #'  identifyUnderscores2(USVar) #problems
-#'
-#' #Only print the first two problemvalues in the message:
-#'  identifyUnderscores2(USVar, nMax = 2)
 #'
 #' @include checkResult.R
 #' @export
