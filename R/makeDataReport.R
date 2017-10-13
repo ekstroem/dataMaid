@@ -1,15 +1,17 @@
 #' Produce a data report
 #'
-#' Run a set of class-specific validation checks to check the
-#' variables in a dataset for potential errors.  Performs checking
-#' steps according to user input and/or data type of the inputted
+#' Make a data overview report that summarizes the contents of a dataset
+#' and flags potential problems. The potential problems are identified by
+#' running a set of class-specific validation checks, so that different 
+#' checks are performed on different variables types.  The checking
+#' steps can be customized according to user input and/or data type of the inputted
 #' variable.  The checks are saved to an R markdown file which can
-#' rendered into an easy-to-read document.  This document also
-#' includes summaries and visualizations of each variable in the
+#' rendered into an easy-to-read data report in pdf, html or word formats. 
+#' This report also includes summaries and visualizations of each variable in the
 #' dataset.
 #'
-#' For each variable, a set of pre-check (controlled by the
-#' \code{preChecks} argument) is first run and then then a battery of
+#' For each variable, a set of pre-check functions (controlled by the
+#' \code{preChecks} argument) are first run and then then a battery of
 #' functions are applied depending on the variable class.  For each
 #' variable type the summarize/visualize/check functions are applied
 #' and and the results are written to an R markdown file.
@@ -19,10 +21,10 @@
 #' \code{data.frame}.
 #'
 #' @param output
-#' Output format. Options are \code{"pdf"} (the default), and \code{"html"}
+#' Output format. Options are \code{"pdf"} (the default), \code{"word"} (.docx) and \code{"html"}. 
 #'
 #' @param render Should the output file be rendered (defaults to \code{TRUE}),
-#' i.e. should a pdf/html document be generated and saved to the disc?
+#' i.e. should a pdf/word/html document be generated and saved to the disc?
 #'
 #' @param useVar Variables to describe in the report. 
 #' If \code{NULL} (the default), all variables in \code{data}
@@ -80,8 +82,8 @@
 #' filenames should have a ".Rmd"-suffix.
 #'
 #' @param replace If \code{FALSE} (the default), an error is thrown if one of the files
-#' that we are about to be created (.Rmd overview file and possible also a .html or .pdf
-#' file) already exist. If \code{TRUE}, no checks are performed and files on disc thus
+#' that we are about to be created (.Rmd overview file and possible also a .html, .pdf or 
+#' .docx file) already exist. If \code{TRUE}, no checks are performed and files on disc thus
 #' might be overwritten.
 #'
 #' @param vol Extra text string or numeric that is appended on the end of the output
@@ -104,7 +106,7 @@
 #'
 #' @param openResult A logical. If \code{TRUE} (the default), the last file produced
 #' by \code{makeDataReport} is automatically opened by the end of the function run. This
-#' means that if \code{render = TRUE}, the rendered pdf or html file is opened, while
+#' means that if \code{render = TRUE}, the rendered pdf, word or html file is opened, while
 #' if \code{render = FALSE}, the .Rmd file is opened.
 #'
 #' @param listChecks A logical. Controls whether what checks that were used for each
@@ -159,6 +161,11 @@
 #' \dontrun{
 #' makeDataReport(testData, replace=TRUE)
 #' }
+#' 
+#' # Change output format to Word/docx:
+#' \dontrun{
+#' makeDataReport(testData, replace=TRUE, output = "word")
+#' }
 #'
 #' # Only include problematic variables in the output document
 #' \dontrun{
@@ -202,7 +209,7 @@
 #' @importFrom utils packageVersion sessionInfo capture.output packageDescription
 #' @importFrom magrittr %>%
 #' @export
-makeDataReport <- function(data, output=c("pdf", "html"), render=TRUE,
+makeDataReport <- function(data, output=c("pdf", "word", "html"), render=TRUE,
                   useVar=NULL, ordering=c("asIs", "alphabetical"), onlyProblematic=FALSE,
                   labelled_as=c("factor"),
                   mode=c("summarize", "visualize", "check"),
@@ -381,7 +388,14 @@ makeDataReport <- function(data, output=c("pdf", "html"), render=TRUE,
   
   outOutput <- output #copy of output for file extension generation
   #Note: Changing output itself will cause problems as we need to know
-  #whether we are making a pdf or html .rmd file
+  #whether we are making a pdf or html .rmd file.
+  
+  #make a markdown html style file and only use word for when the file 
+  #is rendered
+  if (output == "word") {
+    output <- "html"
+    outOutput <- "docx"
+  }
   
   if (!render) outOutput <- "Rmd"
   
@@ -445,8 +459,6 @@ makeDataReport <- function(data, output=c("pdf", "html"), render=TRUE,
   ## If output is not html or pdf then drop the twoCol option too
   if (!doVisualize || !doSummarize) twoCol <- FALSE
   
-  # if (!(output %in% c("html", "pdf"))) twoCol <- FALSE
-  #what is this line supposed to do and when will it happen?
   
   ## make tables left-aligned and allow for 6 columns
   oldPanderOptions <- pander::panderOptions() # Used to restore towards the end
@@ -568,7 +580,8 @@ makeDataReport <- function(data, output=c("pdf", "html"), render=TRUE,
           writer("  - \\newcommand{\\emini}{\\end{minipage}}")
         }
       }
-      if (output=="html") writer("output: html_document")
+      if (output=="html" & !outOutput == "docx") writer("output: html_document")
+      if (outOutput=="docx") writer("output: word_document")
       
     }
     writer("---")
@@ -979,7 +992,8 @@ makeDataReport <- function(data, output=c("pdf", "html"), render=TRUE,
     if (!silent) {
       message("Data report generation is finished. Please wait while your output file is being rendered.")
     }
-    if (nagUser && output=="pdf" && identical(as.character(Sys.info()["sysname"]),"Windows")) {
+    if (nagUser && (output=="pdf" | outOutput == "docx") && 
+        identical(as.character(Sys.info()["sysname"]),"Windows")) {
       message(paste("\n Is", outFile,
                     "open on your computer? Please close it as fast as possible to avoid problems! \n"))
     }

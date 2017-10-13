@@ -36,7 +36,14 @@ makeDataReport(trees)
 ```
 
 This will create a report with summaries and error checks for each
-variable in the `trees` data frame.
+variable in the `trees` data frame. Note that the standard settings of 
+`makeDataReport()` will make a pdf report. For this to work, you
+need to have [LaTeX](https://www.latex-project.org/) installed on your machine. 
+If you don't want to install LaTex, you can produce a report in Word or html formats
+by using the `output` argument:
+```{r}
+makeDataReport(trees, output = "word", replace = TRUE)
+```
 
 
 ### Using dataMaid interactively
