@@ -64,7 +64,7 @@ identifyCaseIssuesC <- function(v, nMax) {
   }
   outMessage <- messageGenerator(list(problem = problem,
                                       problemValues = problemValues),
-                                 message = identifyCaseIsussesMessage,
+                                 message = identifyCaseIssuesMessage,
                                  nMax = nMax)
   checkResult(list(problem = problem, message = outMessage, problemValues = problemValues))
 }
