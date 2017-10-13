@@ -4,7 +4,7 @@
 \alias{check}
 \title{Perform a check of potential errors in a data frame}
 \usage{
-check(v, nMax = Inf, ...)
+check(v, nMax = Inf, checks = setChecks(), ...)
 }
 \arguments{
 \item{v}{the vector or the dataset (\code{data.frame}) to be checked.}
@@ -13,6 +13,10 @@ check(v, nMax = Inf, ...)
 this argument controls if all of these should be pasted onto the outputted
 message, or if only the first \code{nMax} should be included. The default
 (\code{Inf}) prints all problematic values.}
+
+\item{checks}{A list of checks to use on each supported variable type. We recommend
+using \code{\link{setChecks}} for creating this list and refer to the documentation
+of this function for more details.}
 
 \item{\dots}{Other arguments that are passed on to the checking functions.
 These includes general parameters controlling how the check results are
@@ -39,8 +43,9 @@ inputs.
 \details{
 It should be noted that the default options for each variable type
 are returned by calling e.g. \code{defaultCharacterChecks()},
-\code{defaultFactorChecks()}, \code{defaultNumericChecks()}, etc. Moreover,
-all available \code{checkFunction}s (including both locally defined
+\code{defaultFactorChecks()}, \code{defaultNumericChecks()}, etc. A complete 
+overview of all default options can be obtained by calling \code{setChecks()}. 
+Moreover, all available \code{checkFunction}s (including both locally defined
 functions and functions imported from \code{dataMaid} or other packages) can
 be viewed by calling \code{allCheckFunctions()}.
 }
@@ -55,7 +60,7 @@ check(y)
 
 #Change what checks are performed on a variable, now only identifyMissing is called
 # for numeric variables
-check(y, numericChecks = "identifyMissing")
+check(y, checks = setChecks(numeric = "identifyMissing"))
 
 #Check a full data.frame at once
 data(cars)
@@ -66,11 +71,12 @@ check(cars)
 #values.
 #Here, we ommit the check of miscoded missing values for factors
 #and we only do this check for numeric variables.
-check(cars, factorChecks = setdiff(defaultFactorChecks(), "identifyMissing"),
-  numericChecks = "identifyMissing")
+check(cars, checks = setChecks(factor = setdiff(defaultFactorChecks(), "identifyMissing"),
+  numeric = "identifyMissing"))
 
 }
 \seealso{
+\code{\link{setChecks}}, 
 \code{\link{allCheckFunctions}} \code{\link{checkResult}}
 \code{\link{checkFunction}}, \code{\link{defaultCharacterChecks}},
 \code{\link{defaultFactorChecks}}, \code{\link{defaultLabelledChecks}},
@@ -78,3 +84,4 @@ check(cars, factorChecks = setdiff(defaultFactorChecks(), "identifyMissing"),
 \code{\link{defaultLogicalChecks}}, \code{\link{defaultDateChecks}}
 }
 \keyword{misc}
+
