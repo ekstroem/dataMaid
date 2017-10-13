@@ -214,4 +214,3 @@ makeDataReport(toyData, replace  = TRUE, treatXasY = list(raw = "character", com
 }
 
 }
-

@@ -45,4 +45,3 @@ ignored for logical variables.
 \code{\link{summaryFunction}}, \code{\link{summarize}}, \code{\link{summaryResult}},
 \code{\link{allSummaryFunctions}}
 }
-

@@ -91,4 +91,3 @@ valid summary functions are found in \code{\link{summaryFunction}}.
 \code{\link{defaultNumericSummaries}}, \code{\link{defaultIntegerSummaries}},
 \code{\link{defaultLogicalSummaries}}
 }
-

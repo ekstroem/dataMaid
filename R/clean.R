@@ -282,10 +282,11 @@ clean <- function(data, output=c("pdf", "html"), render=TRUE,
                   treatXasY = NULL,
                   ...) {
 
-    warning(paste("Please note that clean() has been replaced by makeDataReport().",
-                 "This means that clean() is no longer maintained,",
-                  "and we therefore recommend all users to use makeDataReport() instead.",
-                 "This function will be removed from the package in the future."))
+    .Deprecated("makeDataReport")
+##    warning(paste("Please note that clean() has been replaced by makeDataReport().",
+##                 "This means that clean() is no longer maintained,",
+##                  "and we therefore recommend all users to use makeDataReport() instead.",
+##                 "This function will be removed from the package in the future."))
   
     ## Store the original call
     orig.call <- match.call()

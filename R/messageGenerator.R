@@ -80,9 +80,10 @@
 #' @export
 messageGenerator <- function(problemStatus, message = NULL, nMax = Inf) {
 
-  #what functions made the call the message generator?
+    ##what functions made the call the message generator?
+    ## This should be removed
   callF <- sys.status()$sys.calls
-  callF <- sapply(callF, function(x) as.character(x)[1])
+  callF <- sapply(callF, function(x) as.character(x[1]))
 
   #standard functions do not need to specify a message when called
   standardCall <- intersect(callF, c("identifyMissing", "identifyWhitespace", "identifyOutliers",

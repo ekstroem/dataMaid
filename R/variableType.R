@@ -1,8 +1,8 @@
 #' @title Summary function for original class
 #'
 #' @description A \code{\link{summaryFunction}} type function, intended to be called from
-#' \code{\link{summarize}} to be called from \code{\link{summarize}}, which finds the
-#' orignial class of a variable. This is just the class for all objects but those of class
+#' \code{\link{summarize}}, which finds the
+#' original class of a variable. This is just the class for all objects but those of class
 #' \code{smartNum}.
 #'
 #' @param v A variable (vector).

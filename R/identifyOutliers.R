@@ -6,8 +6,8 @@
 #' @param v A Date, numeric or integer variable to check.
 #' 
 #' @param nMax The maximum number of problematic values to report. 
-#' Default is \code{Inf}, in whichall problematic values are included 
-#' in the outputted message.
+#' Default is \code{10}. Set to \code{Inf} if all problematic values are to be included 
+#' in the outputted message, or to \code{0} for no output.
 #' 
 #' @inheritParams makeDataReport
 #'
@@ -46,7 +46,7 @@
 #'
 #' @importFrom stats na.omit quantile
 #' @export
-identifyOutliers <- function(v, nMax = Inf, maxDecimals = 2) UseMethod("identifyOutliers")
+identifyOutliers <- function(v, nMax = 10, maxDecimals = 2) UseMethod("identifyOutliers")
 
 
 #add methods to generic identifyOutliers function

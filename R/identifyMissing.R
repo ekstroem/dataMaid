@@ -116,8 +116,9 @@ identifyMissRepChar <- function(v, char, prefix=NULL, ignoreFirst = FALSE) {
 #are identified. However, an occurrence only "counts" if it
 #is the min/max value of the variable and it is seperated from
 #the second biggest (smallest) value by at least 1.
-identifyMissNumber <- function(v, num, allOcc = TRUE) {
-  v <- sort(unique(v))
+identifyMissNumber <- function(v, num, allOcc = TRUE, alreadyUniqueSorted=FALSE) {
+  if (!alreadyUniqueSorted)
+      v <- sort(unique(v))
   posProblemVals <- identifyMissRepChar(v, num)
   negProblemVals <- identifyMissRepChar(v, num, prefix="-")
   if (allOcc) {

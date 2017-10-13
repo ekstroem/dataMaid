@@ -3,6 +3,7 @@ latex/
 ^\.Rhistory
 ^makeData\.R
 ^README*
+NEWS.md
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^.*\.html
