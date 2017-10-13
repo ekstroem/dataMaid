@@ -51,17 +51,17 @@ identifyOutliers <- function(v, nMax = 10, maxDecimals = 2) UseMethod("identifyO
 
 #add methods to generic identifyOutliers function
 #' @export
-identifyOutliers.numeric <- function(v, nMax = Inf, maxDecimals = 2) {
+identifyOutliers.numeric <- function(v, nMax = 10, maxDecimals = 2) {
   identifyOutliersNI(v, nMax = nMax, maxDecimals = maxDecimals)
 }
 
 #' @export
-identifyOutliers.integer <- function(v, nMax = Inf, maxDecimals = 2) {
+identifyOutliers.integer <- function(v, nMax = 10, maxDecimals = 2) {
   identifyOutliersNI(v, nMax = nMax, maxDecimals = maxDecimals)
 }
 
 #' @export
-identifyOutliers.Date <- function(v, nMax = Inf, maxDecimals = 2) {
+identifyOutliers.Date <- function(v, nMax = 10, maxDecimals = 2) {
   identifyOutliersD(v, nMax = nMax, maxDecimals = maxDecimals)
 }
 

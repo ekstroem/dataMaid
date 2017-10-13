@@ -5,8 +5,9 @@
 #'
 #' @param v A character, labelled, or factor variable to check.
 #'
-#' @param nMax The maximum number of problematic values to report. Default is \code{Inf}, in which case
-#' all problematic values are included in the outputted message.
+#' @param nMax The maximum number of problematic values to report. 
+#' Default is \code{10}. Set to \code{Inf} if all problematic values are to be included 
+#' in the outputted message, or to \code{0} for no output.
 #'
 #' @return A \code{\link{checkResult}} with three entires:
 #' \code{$problem} (a logical indicating whether case issues where found),
@@ -30,16 +31,16 @@
 #'
 #' @importFrom stats na.omit
 #' @export
-identifyLoners <- function(v, nMax = Inf) UseMethod("identifyLoners")
+identifyLoners <- function(v, nMax = 10) UseMethod("identifyLoners")
 
 
 #add methods to generic identifyLoners function
 #' @export
-identifyLoners.factor <- function(v, nMax = Inf) identifyLonersF(v, nMax = nMax)
+identifyLoners.factor <- function(v, nMax = 10) identifyLonersF(v, nMax = nMax)
 #' @export
-identifyLoners.labelled <- function(v, nMax = Inf) identifyLonersL(v, nMax = nMax)
+identifyLoners.labelled <- function(v, nMax = 10) identifyLonersL(v, nMax = nMax)
 #' @export
-identifyLoners.character <- function(v, nMax = Inf) identifyLonersC(v, nMax = nMax)
+identifyLoners.character <- function(v, nMax = 10) identifyLonersC(v, nMax = nMax)
 
 
 #make it a checkFunction

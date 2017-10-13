@@ -4,14 +4,14 @@
 \alias{identifyCaseIssues}
 \title{A checkFunction for identifying case issues}
 \usage{
-identifyCaseIssues(v, nMax = Inf)
+identifyCaseIssues(v, nMax = 10)
 }
 \arguments{
 \item{v}{A character, factor, or labelled variable to check.}
 
-\item{nMax}{The maximum number of problematic values to report.
-Default is \code{Inf}, in which case all problematic values
-are included in the outputted message.}
+\item{nMax}{The maximum number of problematic values to report. 
+Default is \code{10}. Set to \code{Inf} if all problematic values are to be included 
+in the outputted message, or to \code{0} for no output.}
 }
 \value{
 A \code{\link{checkResult}} with three entires:
@@ -34,3 +34,4 @@ that appear multiple times with different case settings.
 \code{\link{check}}, \code{\link{allCheckFunctions}},
 \code{\link{checkFunction}}, \code{\link{checkResult}}
 }
+

@@ -6,8 +6,9 @@
 #'
 #' @param v A numeric, integer or Date variable to check.
 #' 
-#' @param nMax The maximum number of problematic values to report. Default is \code{Inf}, in which case
-#' all problematic values are included in the outputted message.
+#' @param nMax The maximum number of problematic values to report. 
+#' Default is \code{10}. Set to \code{Inf} if all problematic values are to be included 
+#' in the outputted message, or to \code{0} for no output.
 #' 
 #' @inheritParams makeDataReport
 #'
@@ -32,22 +33,22 @@
 #'
 #' @importFrom stats na.omit quantile
 #' @export
-identifyOutliersTBStyle <- function(v, nMax = Inf, maxDecimals = 2) UseMethod("identifyOutliersTBStyle")
+identifyOutliersTBStyle <- function(v, nMax = 10, maxDecimals = 2) UseMethod("identifyOutliersTBStyle")
 
 
 #add methods to generic identifyOutliers function
 #' @export
-identifyOutliersTBStyle.numeric <- function(v, nMax = Inf, maxDecimals = 2) {
+identifyOutliersTBStyle.numeric <- function(v, nMax = 10, maxDecimals = 2) {
   identifyOutliersTBStyleNI(v, nMax = nMax, maxDecimals = maxDecimals)
 }
 
 #' @export
-identifyOutliersTBStyle.integer <- function(v, nMax = Inf, maxDecimals = 2) {
+identifyOutliersTBStyle.integer <- function(v, nMax = 10, maxDecimals = 2) {
   identifyOutliersTBStyleNI(v, nMax = nMax, maxDecimals = maxDecimals)
 }
 
 #' @export
-identifyOutliersTBStyle.Date <- function(v, nMax = Inf, maxDecimals = 2) {
+identifyOutliersTBStyle.Date <- function(v, nMax = 10, maxDecimals = 2) {
   identifyOutliersTBStyleD(v, nMax = nMax, maxDecimals = maxDecimals)
 }
 

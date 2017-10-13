@@ -4,14 +4,14 @@
 \alias{identifyWhitespace}
 \title{A checkFunction for identifying whitespace}
 \usage{
-identifyWhitespace(v, nMax = Inf)
+identifyWhitespace(v, nMax = 10)
 }
 \arguments{
 \item{v}{A character, labelled or factor variable to check.}
 
-\item{nMax}{The maximum number of problematic values to report.
-Default is \code{Inf}, in which case all problematic values are
-included in the outputted message.}
+\item{nMax}{The maximum number of problematic values to report. 
+Default is \code{10}. Set to \code{Inf} if all problematic values are to be included 
+in the outputted message, or to \code{0} for no output.}
 }
 \value{
 A \code{\link{checkResult}} with three entires:
@@ -34,3 +34,4 @@ labelled or factor variables.
 \code{\link{check}}, \code{\link{allCheckFunctions}},
 \code{\link{checkFunction}}, \code{\link{checkResult}}
 }
+

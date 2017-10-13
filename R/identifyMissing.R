@@ -4,8 +4,9 @@
 #' appear to be miscoded missing values.
 #'
 #' @param v A variable to check.
-#' @param nMax The maximum number of problematic values to report. Default is \code{Inf}, in which case
-#' all problematic values are included in the outputted message.
+#' @param nMax The maximum number of problematic values to report. 
+#' Default is \code{10}. Set to \code{Inf} if all problematic values are to be included 
+#' in the outputted message, or to \code{0} for no output.
 #' @param ... Not in use.
 #'
 #' @details \code{identifyMissing} tries to identify common choices of missing values outside of the
@@ -45,26 +46,26 @@
 #'
 #' @importFrom stats na.omit
 #' @export
-identifyMissing <- function(v, nMax = Inf, ...) UseMethod("identifyMissing")
+identifyMissing <- function(v, nMax = 10, ...) UseMethod("identifyMissing")
 
 
 #Add methods to generic identifyMiss
 #' @export
-identifyMissing.character <- function(v, nMax = Inf, ...) identifyMissingCF(v, nMax = nMax)
+identifyMissing.character <- function(v, nMax = 10, ...) identifyMissingCF(v, nMax = nMax)
 #' @export
-identifyMissing.factor <- function(v, nMax = Inf, ...) identifyMissingCF(v, nMax = nMax)
+identifyMissing.factor <- function(v, nMax = 10, ...) identifyMissingCF(v, nMax = nMax)
 #' @export
-identifyMissing.labelled <- function(v, nMax = Inf, ...) identifyMissingL(v, nMax = nMax)
+identifyMissing.labelled <- function(v, nMax = 10, ...) identifyMissingL(v, nMax = nMax)
 #' @export
-identifyMissing.numeric <- function(v, nMax = Inf, ...) {
+identifyMissing.numeric <- function(v, nMax = 10, ...) {
   identifyMissingNI(v, nMax = nMax, ...)
 }
 #' @export
-identifyMissing.integer <- function(v, nMax = Inf, ...) {
+identifyMissing.integer <- function(v, nMax = 10, ...) {
   identifyMissingNI(v, nMax = nMax, ...)
 }
 #' @export
-identifyMissing.logical <- function(v, nMax = Inf, ...) identifyMissingB(v, nMax = nMax)
+identifyMissing.logical <- function(v, nMax = 10, ...) identifyMissingB(v, nMax = nMax)
 
 
 #make it a checkFunction

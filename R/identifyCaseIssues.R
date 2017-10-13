@@ -6,9 +6,9 @@
 #'
 #' @param v A character, factor, or labelled variable to check.
 #'
-#' @param nMax The maximum number of problematic values to report.
-#' Default is \code{Inf}, in which case all problematic values
-#' are included in the outputted message.
+#' @param nMax The maximum number of problematic values to report. 
+#' Default is \code{10}. Set to \code{Inf} if all problematic values are to be included 
+#' in the outputted message, or to \code{0} for no output.
 #'
 #' @return A \code{\link{checkResult}} with three entires:
 #' \code{$problem} (a logical indicating whether case issues where found),
@@ -25,18 +25,18 @@
 #'
 #' @importFrom stats na.omit
 #' @export
-identifyCaseIssues <- function(v, nMax = Inf) UseMethod("identifyCaseIssues")
+identifyCaseIssues <- function(v, nMax = 10) UseMethod("identifyCaseIssues")
 
 
 #add methods to generic identifyCaseIssues function
 #' @export
-identifyCaseIssues.character <- function(v, nMax = Inf) identifyCaseIssuesC(v, nMax = nMax)
+identifyCaseIssues.character <- function(v, nMax = 10) identifyCaseIssuesC(v, nMax = nMax)
 
 #' @export
-identifyCaseIssues.factor <- function(v, nMax = Inf) identifyCaseIssuesF(v, nMax = nMax)
+identifyCaseIssues.factor <- function(v, nMax = 10) identifyCaseIssuesF(v, nMax = nMax)
 
 #' @export
-identifyCaseIssues.labelled <- function(v, nMax = Inf) identifyCaseIssuesL(v, nMax = nMax)
+identifyCaseIssues.labelled <- function(v, nMax = 10) identifyCaseIssuesL(v, nMax = nMax)
 
 
 #make it a checkFunction

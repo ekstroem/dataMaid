@@ -4,15 +4,15 @@
 \alias{check}
 \title{Perform a check of potential errors in a data frame}
 \usage{
-check(v, nMax = Inf, checks = setChecks(), ...)
+check(v, nMax = 10, checks = setChecks(), ...)
 }
 \arguments{
 \item{v}{the vector or the dataset (\code{data.frame}) to be checked.}
 
 \item{nMax}{If a check is supposed to identify problematic values,
 this argument controls if all of these should be pasted onto the outputted
-message, or if only the first \code{nMax} should be included. The default
-(\code{Inf}) prints all problematic values.}
+message, or if only the first \code{nMax} should be included. If set to \code{Inf}, 
+all problematic values are printed.}
 
 \item{checks}{A list of checks to use on each supported variable type. We recommend
 using \code{\link{setChecks}} for creating this list and refer to the documentation
@@ -58,6 +58,9 @@ check(x)
 y <- c(rnorm(100), rep(99, 10))
 check(y)
 
+#Check y for outliers and print 4 decimals for problematic variables
+check(y, checks = setChecks(numeric = "identifyOutliers"), maxDecimals = 4)
+
 #Change what checks are performed on a variable, now only identifyMissing is called
 # for numeric variables
 check(y, checks = setChecks(numeric = "identifyMissing"))
@@ -67,10 +70,8 @@ data(cars)
 check(cars)
 
 #Check a full data.frame at once, while changing the standard settings for
-#several data classes at once and including all decimals in problematic
-#values.
-#Here, we ommit the check of miscoded missing values for factors
-#and we only do this check for numeric variables.
+#several data classes at once. Here, we ommit the check of miscoded missing values for factors
+#and we only do this check for numeric variables:
 check(cars, checks = setChecks(factor = setdiff(defaultFactorChecks(), "identifyMissing"),
   numeric = "identifyMissing"))
 
