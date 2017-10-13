@@ -48,7 +48,7 @@ identifyWhitespace <- checkFunction(identifyWhitespace, "Identify prefixed and s
 
 
 ##########################################Not exported below#########################################
-
+identifyWhitespaceMessage <- "The following values appear with prefixed or suffixed white space:"
 
 #character variables
 identifyWhitespaceC <- function(v, nMax) {
@@ -68,6 +68,7 @@ identifyWhitespaceC <- function(v, nMax) {
   }
   outMessage <- messageGenerator(list(problem=problem,
                                       problemValues=problemValues),
+                                 message = identifyWhitespaceMessage,
                                  nMax = nMax)
   checkResult(list(problem = problem, message = outMessage,
                    problemValues = problemValues))

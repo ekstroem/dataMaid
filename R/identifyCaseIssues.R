@@ -47,6 +47,8 @@ identifyCaseIssues <- checkFunction(identifyCaseIssues, "Identify case issues",
 
 ##########################################Not exported below#########################################
 
+identifyCaseIssuesMessage <- "Note that there might be case problems with the following levels:"
+
 #character variable
 identifyCaseIssuesC <- function(v, nMax) {
   v <- na.omit(v)
@@ -62,6 +64,7 @@ identifyCaseIssuesC <- function(v, nMax) {
   }
   outMessage <- messageGenerator(list(problem = problem,
                                       problemValues = problemValues),
+                                 message = identifyCaseIsussesMessage,
                                  nMax = nMax)
   checkResult(list(problem = problem, message = outMessage, problemValues = problemValues))
 }

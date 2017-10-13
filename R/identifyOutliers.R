@@ -75,12 +75,14 @@ identifyOutliers <- checkFunction(identifyOutliers, "Identify outliers",
 
 ##########################################Not exported below#########################################
 
+identifyOutliersMessage <- "Note that the following possible outlier values were detected:"
 
 ##numerical and integer variables
 identifyOutliersNI <- function(v, nMax, maxDecimals) {
   res <- findOutliers(v, maxDecimals)
   outMessage <- messageGenerator(list(problem = res$problem,
                                       problemValues = res$problemValues),
+                                 message = identifyOutliersMessage,
                                  nMax = nMax)
   checkResult(list(problem = res$problem, message = outMessage, 
                    problemValues = res$outProblemValues))
@@ -99,6 +101,7 @@ identifyOutliersD <- function(v, nMax, maxDecimals) {
   }
   outMessage <- messageGenerator(list(problem = res$problem,
                                       problemValues = res$problemValues),
+                                 message = identifyOutliersMessage,
                                  nMax = nMax)
   checkResult(list(problem = res$problem, message = outMessage, 
                    problemValues = res$outProblemValues))

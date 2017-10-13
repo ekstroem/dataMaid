@@ -63,6 +63,7 @@ identifyOutliersTBStyle <- checkFunction(identifyOutliersTBStyle,
 
 ##########################################Not exported below#########################################
 
+identifyOutliersTBStyleMessage <- "Note that the following possible outlier values were detected:"
 
 ##numerical and integer variables
 identifyOutliersTBStyleNI <- function(v, nMax, maxDecimals) {
@@ -86,6 +87,7 @@ identifyOutliersTBStyleD <- function(v, nMax, maxDecimals) {
   }
   outMessage <- messageGenerator(list(problem = res$problem,
                                       problemValues = res$problemValues),
+                                 message = "identifyOutliersTBStyleMessage",
                                  nMax = nMax)
   checkResult(list(problem = res$problem, message = outMessage, 
                    problemValues = res$outProblemValues))

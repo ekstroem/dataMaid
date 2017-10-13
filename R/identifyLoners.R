@@ -50,6 +50,7 @@ identifyLoners <- checkFunction(identifyLoners, "Identify levels with < 6 obs.",
 
 ##########################################Not exported below#########################################
 
+identifyLonersMessage <- "Note that the following levels have at most five observations:"
 
 #For character/factor variables, identify values that only have a
 #very low number of observations, as these categories might be
@@ -71,6 +72,7 @@ identifyLonersF <- function(v, nMax) {
   }
   outMessage <- messageGenerator(list(problem=problem,
                                       problemValues=problemValues),
+                                 message = identifyLonersMessage,
                                  nMax = nMax)
   checkResult(list(problem = problem, message = outMessage,
                    problemValues = problemValues))

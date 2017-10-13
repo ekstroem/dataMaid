@@ -75,7 +75,7 @@ identifyMissing <- checkFunction(identifyMissing, "Identify miscoded missing val
 
 ##########################################Not exported below#########################################
 
-
+identifyMissingMessage <- "The following suspected missing value codes enter as regular values:"
 
 #NOTE: I fill out missStrs manually to avoid having to run the same
 #bit of code each time identifyMiss is called. Better way to do it?
@@ -195,6 +195,7 @@ identifyMissingCF <- function(v, nMax) {
 
     outMessage <- messageGenerator(list(problem = problem,
                                         problemValues = problemValues),
+                                   message = identifyMissingMessage,
                                    nMax = nMax)
     checkResult(list(problem = problem, message = outMessage,
                      problemValues = problemValues))
@@ -235,6 +236,7 @@ identifyMissingNI <- function(v, nMax, maxDecimals) {
   }
   outMessage <- messageGenerator(list(problem = problem,
                                       problemValues = problemValues),
+                                 message = identifyMissingMessage,
                                  nMax = nMax)
   checkResult(list(problem = problem, message = outMessage,
                    problemValues = outProblemValues))

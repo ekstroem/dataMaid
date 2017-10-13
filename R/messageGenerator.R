@@ -78,44 +78,52 @@
 #'
 #' @include checkResult.R
 #' @export
-messageGenerator <- function(problemStatus, message = NULL, nMax = Inf) {
+messageGenerator <- function(problemStatus, 
+                             message = "Note that a check function found the following problematic values:", 
+                             nMax = 10) {
 
-    ##what functions made the call the message generator?
-    ## This should be removed
-  callF <- sys.status()$sys.calls
-  callF <- sapply(callF, function(x) as.character(x[1]))
-
-  #standard functions do not need to specify a message when called
-  standardCall <- intersect(callF, c("identifyMissing", "identifyWhitespace", "identifyOutliers",
-                                     "identifyLoners", "identifyCaseIssues", "identifyOutliersTBStyle"))
-
-  if (length(standardCall==1)) {
-    messages <- list(identifyMissing =
-                       "The following suspected missing value codes enter as regular values:",
-                     identifyWhitespace =
-                       "The following values appear with prefixed or suffixed white space:",
-                     identifyOutliers =
-                       "Note that the following possible outlier values were detected:",
-                     identifyLoners =
-                       "Note that the following levels have at most five observations:",
-                     identifyCaseIssues =
-                       "Note that there might be case problems with the following levels:",
-                     identifyOutliersTBStyle =
-                       "Note that the following possible outlier values were detected:")
-    check <- standardCall
-  } else {
-    callF <- callF[length(callF) - 2]
-    if (is.null(message)) {
-      message <- paste(callF, "found the following problem values:")
-    }
-    messages <- list(onlyMessage = message)
-    check <- "onlyMessage"
-  }
-
+#   ##what functions made the call the message generator?
+#    ## This should be removed
+#  callF <- sys.status()$sys.calls
+#  callF <- sapply(callF, function(x) as.character(x[1]))
+#
+#  #standard functions do not need to specify a message when called
+#  standardCall <- intersect(callF, c("identifyMissing", "identifyWhitespace", "identifyOutliers",
+#                                     "identifyLoners", "identifyCaseIssues", "identifyOutliersTBStyle"))
+#
+#  if (length(standardCall==1)) {
+#    messages <- list(identifyMissing =
+#                       "The following suspected missing value codes enter as regular values:",
+#                     identifyWhitespace =
+#                       "The following values appear with prefixed or suffixed white space:",
+#                     identifyOutliers =
+#                       "Note that the following possible outlier values were detected:",
+#                     identifyLoners =
+#                       "Note that the following levels have at most five observations:",
+#                     identifyCaseIssues =
+#                       "Note that there might be case problems with the following levels:",
+#                     identifyOutliersTBStyle =
+#                       "Note that the following possible outlier values were detected:")
+#    check <- standardCall
+#  } else {
+#    callF <- callF[length(callF) - 2]
+#    if (is.null(message)) {
+#      message <- paste(callF, "found the following problem values:")
+#    }
+#    messages <- list(onlyMessage = message)
+#    check <- "onlyMessage"
+#  }
+#
+#  ifelse(problemStatus$problem,
+#         paste(paste(messages[[check]], printProblemValues(problemStatus$problemValues, nMax)),
+#               ".", sep = ""),
+#         "")
+  
   ifelse(problemStatus$problem,
-         paste(paste(messages[[check]], printProblemValues(problemStatus$problemValues, nMax)),
+         paste(paste(message, printProblemValues(problemStatus$problemValues, nMax)),
                ".", sep = ""),
          "")
+  
 }
 
 
