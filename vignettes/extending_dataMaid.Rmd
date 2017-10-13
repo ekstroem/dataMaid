@@ -1,6 +1,6 @@
 ---
 title: "Extending dataMaid"
-author: "Anne Helby Petersen and Claus Ekstrøm"
+author: "Anne Helby Petersen and Claus Ekstrom"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
