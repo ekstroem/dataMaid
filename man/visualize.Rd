@@ -4,8 +4,7 @@
 \alias{visualize}
 \title{Produce distribution plots}
 \usage{
-visualize(v, vnam = NULL, allVisuals = "standardVisual", doEval = TRUE,
-  ...)
+visualize(v, vnam = NULL, visuals = setVisuals(), doEval = TRUE, ...)
 }
 \arguments{
 \item{v}{The variable (vector) or dataset (data.frame) which is to be plotted.}
@@ -13,11 +12,11 @@ visualize(v, vnam = NULL, allVisuals = "standardVisual", doEval = TRUE,
 \item{vnam}{The name of the variable. This name might be printed on the plots, depending on the
 choice of plotting function. If not supplied, it will default to the name of \code{v}.}
 
-\item{allVisuals}{The name (as a character string) of the actual plotting function to be used, no
-matter the class of the variable. Note that if \code{v} is a single variable, this option is 
-overwritten if a non-null class specific plotting function is supplied in \code{...} 
-(see \emph{details} below). However, if \code{v} is a dataset, the function chosen in 
-\code{allVisuals} will decide what plots are made.}
+\item{visuals}{A list of visual functions to use on each supported variable type. We recommend
+using \code{\link{setVisuals}} for creating this list and refer to the documentation
+of this function for more details. This function allows for choosing variable-type dependent 
+visuals. However, if \code{visualize()} is called on a full dataset, all visualizations
+must be of the same type and therefore, the \code{all} argument of \code{setVisuals} is used.}
 
 \item{doEval}{A logical. If \code{TRUE} (the default), \code{visualize} has the side effect of
 producing a plot (or multiple plots, if \code{v} is a data.frame). Otherwise,
@@ -33,12 +32,10 @@ distribution plot for a variable (or for each variable in a dataset). What type 
 might depend on the data class of the variable.
 }
 \details{
-Visual functions can be  supplied using their names (in character strings) in 
-the class-specific arguments, e.g.\code{characterVisual = "standardVisual"}, ..., 
-\code{logicalVisual = "standardVisual"} for each of the 7 data classes \code{character}, 
-\code{Date}, \code{factor}, \code{labelled}, \code{numeric}, \code{integer} and \code{logical}. 
-
-Note that an overview of all available \code{visualFunction}s can be obtained by calling
+Visual functions can be  supplied using their names (in character strings) using
+\code{setVisuals}. Note that only a single visual function is allowed for each variable class.
+The default visual settings can be inspected by calling \code{setVisuals()}.  
+An overview of all available \code{visualFunction}s can be obtained by calling
 \code{\link{allVisualFunctions}}. 
 
 A user defined visual function can be supplied using its function name. Details on how 
@@ -59,19 +56,23 @@ to construct valid visual functions are found in \code{\link{visualFunction}}.
    mosaicVisual <- visualFunction(mosaicVisual, 
                                   description = "Mosaicplots from graphics",
                                   classes = allClasses())
+  
+  #Inspect all options for visualFunctions:
+  allVisualFunctions()
+
 
  \dontrun{
-   #use allVisual:
+   #set mosaicVisual for all variable types:
    visualize(c("1", "1", "1", "2", "2", "a"), "My variable", 
-       allVisuals = "mosaicVisual")
+       visuals = setVisuals(all = "mosaicVisual"))
 
-   #use characterVisual:
+   #set mosaicVisual only for character variables:
    visualize(c("1", "1", "1", "2", "2", "a"), "My variable", 
-      characterVisual = "mosaicVisual")
+      visuals = setVisuals(character = "mosaicVisual"))
 
-   #this will use standardVisual:
+   #this will use standardVisual, as our variable is not numeric:
    visualize(c("1", "1", "1", "2", "2", "a"), "My variable", 
-       numericVisual = "mosaicVisual")
+       visuals = setVisuals(numeric = "mosaicVisual"))
  }
 
    #return code for a mosaic plot
@@ -86,13 +87,15 @@ to construct valid visual functions are found in \code{\link{visualFunction}}.
    
  #When using visualize on a dataset, datatype specific arguments have no
  #influence:
-   visualize(testData2, factorVisual = "basicVisual", characterVisual = "basicVisual")
+   visualize(testData2, setVisuals(character = "basicVisual", 
+       factor = "basicVisual"))
    
- #But the "allVisuals" argument still works:
-   visualize(testData2, allVisuals = "basicVisual")
+ #But we can still use the "all" argument in setVisuals:
+   visualize(testData2, visuals =  setVisuals(all = "basicVisual"))
  }
 
 }
 \seealso{
+\code{\link{setVisuals}}, \code{\link{allVisualFunctions}},
 \code{\link{standardVisual}}, \code{\link{basicVisual}}
 }

@@ -68,12 +68,24 @@ an overview of the checks available or how to create and include your own tests.
 check(toyData$var2, numericChecks = "identifyMissing")
 ```
 
-We can also access the graphics or summary tables that are produced for a variable by calling the `visualize` or `summarize` functions
+We can also access the graphics or summary tables that are produced for a variable by calling the `visualize` or `summarize` functions. One can visualize a single variable or a full dataset:
 
 ```{r}
+#Visualize a variable
 visualize(toyData$var2)
-summarize(toyData$var2)  # All summaries
-summarize(toyData$var2, summaries = setSummaries(numeric =  c("centralValue", "minMax"))  ## Only two numeric summaries
+
+#Visualize a dataset
+visualize(toyData)
+```  
+
+The same is true for summaries. Note also that the choice of checks/visualizations/summaries are customizable:
+
+```{r}
+#Summarize a variable with default settings:
+summarize(toyData$var2) 
+
+#Summarize a variable with user-specified settings:
+summarize(toyData$var2, summaries = setSummaries(all =  c("centralValue", "minMax"))  
 ```
 
 
