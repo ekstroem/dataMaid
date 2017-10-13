@@ -72,8 +72,8 @@ We can also access the graphics or summary tables that are produced for a variab
 
 ```{r}
 visualize(toyData$var2)
-summarize(toyData$var2)  # All summarues
-summarize(toyData$var2, numericSummaries = c("centralValue", "minMax"))  ## Only two summaries
+summarize(toyData$var2)  # All summaries
+summarize(toyData$var2, summaries = setSummaries(numeric =  c("centralValue", "minMax"))  ## Only two numeric summaries
 ```
 
 

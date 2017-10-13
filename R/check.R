@@ -13,7 +13,7 @@
 ###################################Check############################################
 ####################################################################################
 
-#' Perform a check of potential errors in a data frame
+#' Perform checks of potential errors in variable/dataset
 #'
 #' Run a set of validation checks to check a variable vector or a full dataset
 #' for potential errors.
@@ -31,10 +31,7 @@
 #' @param \dots Other arguments that are passed on to the checking functions.
 #' These includes general parameters controlling how the check results are
 #' formatted (e.g. \code{maxDecimals}, which controls the number of decimals
-#' printed for numerical, problematic values), and also parameters that
-#' control what check functions are called for each variable type. The latter
-#' arguments all follow the template \code{[class]Checks}, see examples below
-#' for more details.
+#' printed for numerical, problematic values).
 #'
 #' @return If \code{v} is a variable, a list of objects of class
 #' \code{\link{checkResult}}, which each summarizes the result of a

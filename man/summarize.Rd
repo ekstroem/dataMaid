@@ -2,9 +2,9 @@
 % Please edit documentation in R/summarize.R
 \name{summarize}
 \alias{summarize}
-\title{Summarize a variable}
+\title{Summarize a variable/dataset}
 \usage{
-summarize(v, reportstyleOutput = FALSE, ...)
+summarize(v, reportstyleOutput = FALSE, summaries = setSummaries(), ...)
 }
 \arguments{
 \item{v}{The variable (vector) or dataset (data.frame) to be summarized.}
@@ -12,8 +12,11 @@ summarize(v, reportstyleOutput = FALSE, ...)
 \item{reportstyleOutput}{Logical indicating whether the output should
 be formatted for inclusion in the report (escaped matrix) or not. Defaults to not.}
 
-\item{...}{Additional argument passed to data class specific methods. First and foremost,
-this is where to supply the summary functions (see details).}
+\item{summaries}{A list of summaries to use on each supported variable type. We recommend
+using \code{\link{setSummaries}} for creating this list and refer to the documentation
+of this function for more details.}
+
+\item{...}{Additional argument passed to data class specific methods.}
 }
 \value{
 The return value depends on the value of \code{reportstyleOutput}. 
@@ -46,7 +49,8 @@ Note that an overview of all available \code{summaryFunction}s can be obtained b
 \code{\link{allSummaryFunctions}}. 
 
 The default choices of \code{summaryFunctions} are available in data class specific functions, e.g.
-\code{defaultCharacterSummaries()} and \code{defaultNumericSummaries()}.
+\code{defaultCharacterSummaries()} and \code{defaultNumericSummaries()}. 
+A complete overview of all default options can be obtained by calling setSummaries()
 
 A user defined summary function can be supplied using its function name. Note
 however that it should take a vector as argument and return a list on the form
@@ -66,24 +70,27 @@ valid summary functions are found in \code{\link{summaryFunction}}.
      res <- length(which(v == 0))
      summaryResult(list(feature="No. zeros", result = res, value = res))
    }
-   summarize(charV, characterSummaries = c(defaultCharacterSummaries(), "countZeros"))
+   summarize(charV, 
+     summaries = setSummaries(character = c(defaultCharacterSummaries(), "countZeros")))
 
  #Does nothing, as intV is not affected by characterSummaries
    intV <- c(0:10)
-   summarize(intV, characterSummaries = c(defaultCharacterSummaries(), "countZeros"))
+   summarize(intV, 
+     summaries = setSummaries(character = c(defaultCharacterSummaries(), "countZeros")))
 
  #But supplying the argument for integer variables changes the summary:
-   summarize(intV, integerSummaries = "countZeros")
+   summarize(intV, summaries = setSummaries(integer = "countZeros"))
    
  #Summarize a full dataset:
   data(cars)
   summarize(cars)
   
- #Summarize a variable and obtain report-style output:
+ #Summarize a variable and obtain report-style output (formatted for markdown)
   summarize(charV, reportstyleOutput = TRUE)
 
 }
 \seealso{
+\code{\link{setSummaries}},
 \code{\link{summaryFunction}}, \code{\link{allSummaryFunctions}}, 
 \code{\link{summaryResult}},
 \code{\link{defaultCharacterSummaries}}, \code{\link{defaultFactorSummaries}},
