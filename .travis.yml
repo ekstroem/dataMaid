@@ -4,3 +4,12 @@ language: r
 pandoc_version: 1.17
 sudo: false
 cache: packages
+
+
+notifications:
+  email:
+    recipients:
+      - ahpe@sund.ku.dk
+      - github@ekstroem.com
+    on_success: never # default: change
+    on_failure: always # default: always
