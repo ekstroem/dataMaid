@@ -85,4 +85,3 @@ check(cars, checks = setChecks(factor = setdiff(defaultFactorChecks(), "identify
 \code{\link{defaultLogicalChecks}}, \code{\link{defaultDateChecks}}
 }
 \keyword{misc}
-

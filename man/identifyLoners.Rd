@@ -41,4 +41,3 @@ identifyLoners(c(rep(c("a", "b", "c"), 10), "d", "d"))
 \code{\link{check}}, \code{\link{allCheckFunctions}},
 \code{\link{checkFunction}}, \code{\link{checkResult}}
 }
-
