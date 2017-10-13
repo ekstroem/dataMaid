@@ -5,7 +5,7 @@ Title: A Suite of Checks for Identification of Potential Errors in a Data Frame
 Version: 0.9.7
 Date: 2017-07-04
 Authors@R: c(person("Anne Helby", "Petersen", , email="ahpe@sund.ku.dk", role="aut"),
-             person("Claus Thorn", "EkstrÃ¸m", , email="ekstrom@sund.ku.dk", role=c("aut", "cre")))
+             person("Claus Thorn", "Ekstrøm", , email="ekstrom@sund.ku.dk", role=c("aut", "cre")))
 Description: Data cleaning is an important first step of any statistical
     analysis. dataMaid provides an extendable suite of test for common potential
     errors in a dataset. It produces a document with a thorough summary of the
@@ -81,3 +81,4 @@ Collate:
     'unpackLabelled.R'
     'variableType.R'
     'visualize.R'
+VignetteBuilder: knitr
