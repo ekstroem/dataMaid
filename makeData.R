@@ -139,9 +139,9 @@ presidentData$birthday <- as.Date(presidentData$birthday, format = "%m/%d/%Y")
 presidentData$dateOfDeath <- as.Date(presidentData$dateOfDeath, format = "%m/%d/%Y")
 presidentData$presidencyBeginDate <- as.Date(presidentData$presidencyBeginDate, format = "%m/%d/%Y")
 presidentData$presidencyEndDate <- as.Date(presidentData$presidencyEndDate, format = "%m/%d/%Y")
-presidentData$precidencyYears <- round(as.numeric(presidentData$presidencyEndDate - 
+presidentData$presidencyYears <- round(as.numeric(presidentData$presidencyEndDate - 
                                                presidentData$presidencyBeginDate)/365.25,0)
-presidentData$precidencyYears[presidentData$lastName == "Obama"] <- Inf
+presidentData$presidencyYears[presidentData$lastName == "Obama"] <- Inf
 presidentData$ageAtInauguration <- round(as.numeric(presidentData$presidencyBeginDate - 
                                                 presidentData$birthday)/365.25,0)
 presidentData$orderOfPresidency <- as.factor(presidentData$orderOfPresidency)
@@ -159,7 +159,7 @@ presidentData$presidencyBeginDate <- NULL
 presidentData$presidencyEndDate <- NULL
 presidentData$dateOfDeath <- NULL
 presidentData$lastName[presidentData$lastName == "Truman"] <- " Truman"
-
+presidentData$assassinationAttempt[presidentData$lastName == "Obama"] <- 0
 save(presidentData, file="data/presidentData.rda")
 
 

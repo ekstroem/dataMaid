@@ -19,7 +19,7 @@
 #'    attempt (\code{1}) or not (\code{0}) on the president.}
 #'    \item{sex}{A factor variable with the sex of the president.}
 #'    \item{ethnicity}{A factor variable with the ethnicity of the president.}
-#'    \item{precidencyYears}{A numeric variable with the duration of the presidency, in years.}
+#'    \item{presidencyYears}{A numeric variable with the duration of the presidency, in years.}
 #'    \item{ageAtInauguration}{A character variable with the age at inauguration.}
 #'    \item{favoriteNumber}{A \code{complex} type variable with a fictional favorite number for
 #'    each president.}

@@ -597,7 +597,7 @@ makeDataReport <- function(data, output=c("pdf", "word", "html"), render=TRUE,
     writer("The dataset examined has the following dimensions:")
     
     ## Print data frame summary
-    sumMat <- matrix(c("Number of rows", "Number of variables",
+    sumMat <- matrix(c("Number of observations", "Number of variables",
                        n, nvariables), 2,
                      dimnames= list(NULL, c("Feature", "Result")))
     writer(pander::pander_return(sumMat, justify="lr"))
