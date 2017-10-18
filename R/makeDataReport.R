@@ -641,11 +641,17 @@ makeDataReport <- function(data, output=c("pdf", "word", "html"), render=TRUE,
       writer(pander::pandoc.table.return(checkMat, justify="lccccccc",
                                          emphasize.rownames=FALSE)) #allows for centering in this table only
       writer("\n")
+      if (!is.null(treatXasY)) {
+        writer("Non-supported variable types were set to be handled in the following way:")
+        writer("\n")
+        writer(paste("*", names(treatXasY), "is treated as", treatXasY))
+        writer("\n")
+      }
       if (maxDecimals != Inf) {
         writer(paste("Please note that all numerical values in the following have been rounded to",
                      maxDecimals, "decimals."))
         writer("\n")
-      }
+      } 
     }
     
     
