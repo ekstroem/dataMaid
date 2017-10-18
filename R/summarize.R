@@ -69,12 +69,12 @@
 #'      summaryResult(list(feature="No. zeros", result = res, value = res))
 #'    }
 #'    summarize(charV, 
-#'      summaries = setSummaries(character = c(defaultCharacterSummaries(), "countZeros")))
+#'      summaries = setSummaries(character = defaultCharacterSummaries(add = "countZeros")))
 #'
 #'  #Does nothing, as intV is not affected by characterSummaries
 #'    intV <- c(0:10)
 #'    summarize(intV, 
-#'      summaries = setSummaries(character = c(defaultCharacterSummaries(), "countZeros")))
+#'      summaries = setSummaries(character = defaultCharacterSummaries(add = "countZeros")))
 #'
 #'  #But supplying the argument for integer variables changes the summary:
 #'    summarize(intV, summaries = setSummaries(integer = "countZeros"))
@@ -95,24 +95,42 @@ summarize <- function(v, reportstyleOutput = FALSE, summaries = setSummaries(),
 
 #' Default summary functions for character variables
 #'
-#' Returns vector of names of default summary functions for character variables.
+#' @param remove Character vector of function names. Checks to remove from the returned vector 
+#' 
+#' @param add Character vector of function names. Checks to add to the returned vector
 #'
+#' @description Default options for which summaries to apply on
+#' character type variables in \code{\link{check}} and \code{\link{makeDataReport}},
+#' possibly user-modified by adding extra function names using \code{add} or 
+#' removing default function names with \code{remove}. 
+#' 
 #' @return A list of function names (as character strings).
 #'
 #' @seealso \code{\link{variableType}}, \code{\link{countMissing}}, \code{\link{uniqueValues}},
 #' \code{\link{centralValue}}
 #'
 #' @examples
-#' defaultCharacterSummaries()
+#' #remove "variableType" from the summaries:
+#' defaultCharacterSummaries(remove = "variableType")
 #'
 #' @export
-defaultCharacterSummaries <- function() c("variableType", "countMissing", "uniqueValues",
+defaultCharacterSummaries <- function(remove = NULL, add = NULL) {
+  defVals <- c("variableType", "countMissing", "uniqueValues",
                                           "centralValue")
+  unique(c(setdiff(defVals, remove), add))
+}
 
 
 #' Default summary functions for factor variables
 #'
-#' Returns vector of names of default summary functions for factor variables.
+#' @param remove Character vector of function names. Checks to remove from the returned vector 
+#' 
+#' @param add Character vector of function names. Checks to add to the returned vector
+#'
+#' @description Default options for which summaries to apply on
+#' factor type variables in \code{\link{check}} and \code{\link{makeDataReport}},
+#' possibly user-modified by adding extra function names using \code{add} or 
+#' removing default function names with \code{remove}. 
 #'
 #' @return A list of function names (as character strings).
 #'
@@ -120,16 +138,27 @@ defaultCharacterSummaries <- function() c("variableType", "countMissing", "uniqu
 #' \code{\link{centralValue}}
 #'
 #' @examples
-#' defaultFactorSummaries()
+#' #remove "countMissing" for the summaries:
+#' defaultFactorSummaries(remove = "countMissing")
 #'
 #' @export
-defaultFactorSummaries <- function() c("variableType", "countMissing", "uniqueValues",
+defaultFactorSummaries <- function(remove = NULL, add = NULL) {
+  defVals <- c("variableType", "countMissing", "uniqueValues",
                                        "centralValue")
+  unique(c(setdiff(defVals, remove), add))
+}
 
 
 #' Default summary functions for labelled variables
 #'
-#' Returns vector of names of default summary functions for labelled variables.
+#' @param remove Character vector of function names. Checks to remove from the returned vector 
+#' 
+#' @param add Character vector of function names. Checks to add to the returned vector
+#'
+#' @description Default options for which summaries to apply on
+#' labelled type variables in \code{\link{check}} and \code{\link{makeDataReport}},
+#' possibly user-modified by adding extra function names using \code{add} or 
+#' removing default function names with \code{remove}. 
 #'
 #' @return A list of function names (as character strings).
 #'
@@ -137,16 +166,27 @@ defaultFactorSummaries <- function() c("variableType", "countMissing", "uniqueVa
 #' \code{\link{countMissing}}, \code{\link{uniqueValues}}, \code{\link{centralValue}}
 #'
 #' @examples
-#' defaultLabelledSummaries()
+#' #remove "centralValue":
+#' defaultLabelledSummaries(remove = "centralValue")
 #'
 #' @export
-defaultLabelledSummaries <- function() c("variableType", "countMissing", "uniqueValues",
+defaultLabelledSummaries <- function(remove = NULL, add = NULL) {
+  defVals <- c("variableType", "countMissing", "uniqueValues",
                                          "centralValue")
+  unique(c(setdiff(defVals, remove), add))
+}
 
 
 #' Default summary functions for numeric variables
 #'
-#' Returns vector of names of default summary functions for numeric variables.
+#' @param remove Character vector of function names. Checks to remove from the returned vector 
+#' 
+#' @param add Character vector of function names. Checks to add to the returned vector
+#'
+#' @description Default options for which summaries to apply on
+#' numeric type variables in \code{\link{check}} and \code{\link{makeDataReport}},
+#' possibly user-modified by adding extra function names using \code{add} or 
+#' removing default function names with \code{remove}. 
 #'
 #' @return A list of function names (as character strings).
 #'
@@ -155,16 +195,27 @@ defaultLabelledSummaries <- function() c("variableType", "countMissing", "unique
 #' \code{\link{centralValue}}, \code{\link{quartiles}}, \code{\link{minMax}}
 #'
 #' @examples
-#' defaultNumericSummaries()
+#' #remove "uniqueValues":
+#' defaultNumericSummaries(remove = "uniqueValues")
 #'
 #' @export
-defaultNumericSummaries <- function() c("variableType", "countMissing", "uniqueValues",
-                                        "centralValue", "quartiles", "minMax")
+defaultNumericSummaries <- function(remove = NULL, add = NULL) {
+  defVals <- c("variableType", "countMissing", "uniqueValues",
+               "centralValue", "quartiles", "minMax")
+  unique(c(setdiff(defVals, remove), add))
+}
 
 
 #' Default summary functions for integer variables
 #'
-#' Returns vector of names of default summary functions for integer variables.
+#' @param remove Character vector of function names. Checks to remove from the returned vector 
+#' 
+#' @param add Character vector of function names. Checks to add to the returned vector
+#'
+#' @description Default options for which summaries to apply on
+#' integer type variables in \code{\link{check}} and \code{\link{makeDataReport}},
+#' possibly user-modified by adding extra function names using \code{add} or 
+#' removing default function names with \code{remove}. 
 #'
 #' @return A list of function names (as character strings).
 #'
@@ -173,16 +224,27 @@ defaultNumericSummaries <- function() c("variableType", "countMissing", "uniqueV
 #' \code{\link{centralValue}}, \code{\link{quartiles}}, \code{\link{minMax}}
 #'
 #' @examples
-#' defaultIntegerSummaries()
+#' #remove "countMissing":
+#' defaultIntegerSummaries(remove = "countMissing")
 #'
 #' @export
-defaultIntegerSummaries <- function() c("variableType", "countMissing", "uniqueValues",
-                                        "centralValue", "quartiles", "minMax")
+defaultIntegerSummaries <- function(remove = NULL, add = NULL) {
+  defVals <- c("variableType", "countMissing", "uniqueValues",
+               "centralValue", "quartiles", "minMax")
+  unique(c(setdiff(defVals, remove), add))
+}
 
 
 #' Default summary functions for logical variables
 #'
-#' Returns vector of names of default summary functions for logical variables.
+#' @param remove Character vector of function names. Checks to remove from the returned vector 
+#' 
+#' @param add Character vector of function names. Checks to add to the returned vector
+#'
+#' @description Default options for which summaries to apply on
+#' logical type variables in \code{\link{check}} and \code{\link{makeDataReport}},
+#' possibly user-modified by adding extra function names using \code{add} or 
+#' removing default function names with \code{remove}. 
 #'
 #' @return A list of function names (as character strings).
 #'
@@ -190,17 +252,28 @@ defaultIntegerSummaries <- function() c("variableType", "countMissing", "uniqueV
 #' \code{\link{countMissing}}, \code{\link{uniqueValues}}, \code{\link{centralValue}}
 #'
 #' @examples
-#' defaultLogicalSummaries()
+#' #remove "uniqueValues":
+#' defaultLogicalSummaries(remove = "uniqueValues")
 #'
 #' @export
-defaultLogicalSummaries <- function() c("variableType", "countMissing", "uniqueValues",
-                                        "centralValue")
+defaultLogicalSummaries <- function(remove = NULL, add = NULL) {
+  defVals <- c("variableType", "countMissing", "uniqueValues",
+               "centralValue")
+  unique(c(setdiff(defVals, remove), add))
+}
 
 
 
 #' Default summary functions for Date variables
 #'
-#' Returns vector of names of default summary functions for Date variables.
+#' @param remove Character vector of function names. Checks to remove from the returned vector 
+#' 
+#' @param add Character vector of function names. Checks to add to the returned vector
+#'
+#' @description Default options for which summaries to apply on
+#' Date type variables in \code{\link{check}} and \code{\link{makeDataReport}},
+#' possibly user-modified by adding extra function names using \code{add} or 
+#' removing default function names with \code{remove}. 
 #'
 #' @return A list of function names (as character strings).
 #'
@@ -211,9 +284,11 @@ defaultLogicalSummaries <- function() c("variableType", "countMissing", "uniqueV
 #' defaultDateSummaries()
 #'
 #' @export
-#defaultDateSummaries <- function() c("variableType")
-defaultDateSummaries <- function() c("variableType", "countMissing", "uniqueValues",
-                                     "centralValue", "minMax", "quartiles")
+defaultDateSummaries <- function(remove = NULL, add = NULL) {
+  defVals <- c("variableType", "countMissing", "uniqueValues",
+               "centralValue", "minMax", "quartiles") 
+  unique(c(setdiff(defVals, remove), add))
+}
 
 
 

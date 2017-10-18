@@ -69,7 +69,7 @@ check(cars)
 #Check a full data.frame at once, while changing the standard settings for
 #several data classes at once. Here, we ommit the check of miscoded missing values for factors
 #and we only do this check for numeric variables:
-check(cars, checks = setChecks(factor = setdiff(defaultFactorChecks(), "identifyMissing"),
+check(cars, checks = setChecks(factor = defaultFactorChecks(remove = "identifyMissing"),
   numeric = "identifyMissing"))
 
 }

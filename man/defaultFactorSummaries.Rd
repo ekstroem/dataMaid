@@ -4,16 +4,25 @@
 \alias{defaultFactorSummaries}
 \title{Default summary functions for factor variables}
 \usage{
-defaultFactorSummaries()
+defaultFactorSummaries(remove = NULL, add = NULL)
+}
+\arguments{
+\item{remove}{Character vector of function names. Checks to remove from the returned vector}
+
+\item{add}{Character vector of function names. Checks to add to the returned vector}
 }
 \value{
 A list of function names (as character strings).
 }
 \description{
-Returns vector of names of default summary functions for factor variables.
+Default options for which summaries to apply on
+factor type variables in \code{\link{check}} and \code{\link{makeDataReport}},
+possibly user-modified by adding extra function names using \code{add} or 
+removing default function names with \code{remove}.
 }
 \examples{
-defaultFactorSummaries()
+#remove "countMissing" for the summaries:
+defaultFactorSummaries(remove = "countMissing")
 
 }
 \seealso{

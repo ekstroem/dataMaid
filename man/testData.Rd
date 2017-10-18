@@ -3,7 +3,7 @@
 \docType{data}
 \name{testData}
 \alias{testData}
-\title{Exteneded example data to test the features of dataMaid}
+\title{Extended example data to test the features of dataMaid}
 \format{A data frame with 15 rows and 14 variables.
 \describe{
    \item{charVar}{A character vector with a single missing observation.}

@@ -4,12 +4,19 @@
 \alias{defaultCharacterChecks}
 \title{Default checks for character variables}
 \usage{
-defaultCharacterChecks()
+defaultCharacterChecks(remove = NULL, add = NULL)
+}
+\arguments{
+\item{remove}{Character vector of function names. Checks to remove from the returned vector}
+
+\item{add}{Character vector of function names. Checks to add to the returned vector}
 }
 \value{
 A vector of function names.
 }
 \description{
 Default options for which checks to perform on
-character type variables in \code{\link{check}} and \code{\link{makeDataReport}}.
+character type variables in \code{\link{check}} and \code{\link{makeDataReport}},
+possibly user-modified by adding extra function names using \code{add} or 
+removing default function names with \code{remove}.
 }

@@ -171,6 +171,11 @@ clean(toyData, standAlone = FALSE, output = "html", twoCols = FALSE)
 
 
 
+############
+makeDataReport(presidentData, replace = TRUE, treatXasY = list("Name" = "character"),
+               checks = setChecks(character = defaultCharacterChecks(remove = "identifyLoners")))
+
+
 
 
 
@@ -203,6 +208,4 @@ checkTab <- data.frame(name=allCheckFunctions()$name,
                                          function (x) paste(x, collapse=", ")))
 checkTab <- as.matrix(checkTab)[,-1]
 xtable(checkTab)
-
-
 

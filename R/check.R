@@ -79,7 +79,7 @@
 #' #Check a full data.frame at once, while changing the standard settings for
 #' #several data classes at once. Here, we ommit the check of miscoded missing values for factors
 #' #and we only do this check for numeric variables:
-#' check(cars, checks = setChecks(factor = setdiff(defaultFactorChecks(), "identifyMissing"),
+#' check(cars, checks = setChecks(factor = defaultFactorChecks(remove = "identifyMissing"),
 #'   numeric = "identifyMissing"))
 #'
 #' @export
@@ -89,15 +89,25 @@ check <- function(v, nMax = 10, checks = setChecks(), ...) UseMethod("check")
 #methods and default options for each variable class
 
 #' @title Default checks for character variables
+#' 
+#' @param remove Character vector of function names. Checks to remove from the returned vector 
+#' 
+#' @param add Character vector of function names. Checks to add to the returned vector
 #'
 #' @description Default options for which checks to perform on
-#' character type variables in \code{\link{check}} and \code{\link{makeDataReport}}.
+#' character type variables in \code{\link{check}} and \code{\link{makeDataReport}},
+#' possibly user-modified by adding extra function names using \code{add} or 
+#' removing default function names with \code{remove}. 
 #'
 #' @return A vector of function names.
 #'
 #' @export
-defaultCharacterChecks <- function() c("identifyMissing", "identifyWhitespace", "identifyLoners",
+defaultCharacterChecks <- function(remove = NULL, add = NULL) {
+  defVals <-  c("identifyMissing", "identifyWhitespace", "identifyLoners",
                                        "identifyCaseIssues", "identifyNums")
+  unique(c(setdiff(defVals, remove), add))
+}
+
 #' @export
 check.character <- function(v, nMax =  10, checks = setChecks(),
                             characterChecks = NULL, 
@@ -111,14 +121,24 @@ check.character <- function(v, nMax =  10, checks = setChecks(),
 
 #' @title Default checks for factor variables
 #'
+#' @param remove Character vector of function names. Checks to remove from the returned vector 
+#' 
+#' @param add Character vector of function names. Checks to add to the returned vector
+#'
 #' @description Default options for which checks to perform on
-#' factor type variables in \code{\link{check}} and \code{\link{makeDataReport}}.
+#' factor type variables in \code{\link{check}} and \code{\link{makeDataReport}},
+#' possibly user-modified by adding extra function names using \code{add} or 
+#' removing default function names with \code{remove}. 
 #'
 #' @return A vector of function names.
 #'
 #' @export
-defaultFactorChecks <- function() c("identifyMissing", "identifyWhitespace", "identifyLoners",
+defaultFactorChecks <- function(remove = NULL, add = NULL) {
+  defVals <- c("identifyMissing", "identifyWhitespace", "identifyLoners",
                                        "identifyCaseIssues", "identifyNums")
+  unique(c(setdiff(defVals, remove), add))
+}
+
 #' @export
 check.factor <- function(v, nMax =  10, checks = setChecks(),
                          factorChecks = NULL, ...) {
@@ -131,14 +151,23 @@ check.factor <- function(v, nMax =  10, checks = setChecks(),
 
 #' @title Default checks for labelled variables
 #'
+#' @param remove Character vector of function names. Checks to remove from the returned vector 
+#' 
+#' @param add Character vector of function names. Checks to add to the returned vector
+#'
 #' @description Default options for which checks to perform on
-#' labelled type variables in \code{\link{check}} and \code{\link{makeDataReport}}.
+#' labelled type variables in \code{\link{check}} and \code{\link{makeDataReport}},
+#' possibly user-modified by adding extra function names using \code{add} or 
+#' removing default function names with \code{remove}. 
 #'
 #' @return A vector of function names.
 #'
 #' @export
-defaultLabelledChecks <- function() c("identifyMissing", "identifyWhitespace", "identifyLoners",
+defaultLabelledChecks <- function(remove = NULL, add = NULL) {
+  defVals <- c("identifyMissing", "identifyWhitespace", "identifyLoners",
                                       "identifyCaseIssues", "identifyNums")
+  unique(c(setdiff(defVals, remove), add))
+}
 
 
 #' @export
@@ -153,13 +182,22 @@ check.labelled <- function(v, nMax =  10, checks = setChecks(),
 
 #' @title Default checks for numeric variables
 #'
+#' @param remove Character vector of function names. Checks to remove from the returned vector 
+#' 
+#' @param add Character vector of function names. Checks to add to the returned vector
+#'
 #' @description Default options for which checks to perform on
-#' numeric type variables in \code{\link{check}} and \code{\link{makeDataReport}}.
+#' numeric type variables in \code{\link{check}} and \code{\link{makeDataReport}},
+#' possibly user-modified by adding extra function names using \code{add} or 
+#' removing default function names with \code{remove}. 
 #'
 #' @return A vector of function names.
 #'
 #' @export
-defaultNumericChecks <- function() c("identifyMissing", "identifyOutliers")
+defaultNumericChecks <- function(remove = NULL, add = NULL) {
+  defVals <- c("identifyMissing", "identifyOutliers")
+  unique(c(setdiff(defVals, remove), add))
+}
 
 #' @export
 check.numeric <- function(v, nMax =  10, checks = setChecks(),
@@ -175,13 +213,22 @@ check.numeric <- function(v, nMax =  10, checks = setChecks(),
 
 #' @title Default checks for integer variables
 #'
+#' @param remove Character vector of function names. Checks to remove from the returned vector 
+#' 
+#' @param add Character vector of function names. Checks to add to the returned vector
+#'
 #' @description Default options for which checks to perform on
-#' integer type variables in \code{\link{check}} and \code{\link{makeDataReport}}.
+#' integer type variables in \code{\link{check}} and \code{\link{makeDataReport}},
+#' possibly user-modified by adding extra function names using \code{add} or 
+#' removing default function names with \code{remove}. 
 #'
 #' @return A vector of function names.
 #'
 #' @export
-defaultIntegerChecks <- function() c("identifyMissing", "identifyOutliers")
+defaultIntegerChecks <- function(remove = NULL, add = NULL) {
+  defVals <- c("identifyMissing", "identifyOutliers")
+  unique(c(setdiff(defVals, remove), add))
+}
 
 #' @export
 check.integer <- function(v, nMax =  10, checks = setChecks(),
@@ -198,13 +245,22 @@ check.integer <- function(v, nMax =  10, checks = setChecks(),
 
 #' @title Default checks for logical variables
 #'
+#' @param remove Character vector of function names. Checks to remove from the returned vector 
+#' 
+#' @param add Character vector of function names. Checks to add to the returned vector
+#'
 #' @description Default options for which checks to perform on
-#' logical type variables in \code{\link{check}} and \code{\link{makeDataReport}}.
+#' logical type variables in \code{\link{check}} and \code{\link{makeDataReport}},
+#' possibly user-modified by adding extra function names using \code{add} or 
+#' removing default function names with \code{remove}. 
 #'
 #' @return A vector of function names.
 #'
 #' @export
-defaultLogicalChecks <- function() NULL #NOTE: we don't actually do any logical checks...
+defaultLogicalChecks <- function(remove = NULL, add = NULL) {
+  defVals <- NULL 
+  unique(c(setdiff(defVals, remove), add))
+}
 
 #' @export
 check.logical <- function(v, nMax =  10, checks = setChecks(),
@@ -222,13 +278,22 @@ check.logical <- function(v, nMax =  10, checks = setChecks(),
 
 #' @title Default checks for Date variables
 #'
+#' @param remove Character vector of function names. Checks to remove from the returned vector 
+#' 
+#' @param add Character vector of function names. Checks to add to the returned vector
+#'
 #' @description Default options for which checks to perform on
-#' Date type variables in \code{\link{check}} and \code{\link{makeDataReport}}.
+#' Date type variables in \code{\link{check}} and \code{\link{makeDataReport}},
+#' possibly user-modified by adding extra function names using \code{add} or 
+#' removing default function names with \code{remove}. 
 #'
 #' @return A vector of function names.
 #'
 #' @export
-defaultDateChecks <- function() "identifyOutliers"
+defaultDateChecks <- function(remove = NULL, add = NULL) {
+  defVals <- "identifyOutliers"
+  unique(c(setdiff(defVals, remove), add))
+}
 
 #' @export
 check.Date <- function(v, nMax =  10, checks = setChecks(),

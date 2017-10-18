@@ -206,7 +206,8 @@ wheresWally <- checkFunction(wheresWally,
                              classes = c("character")
                              )
 # Add the newly defined function to the list of checks used for characters.
-makeDataReport(testData, checks = setChecks(character = c(defaultCharacterChecks(), "wheresWally")),
+makeDataReport(testData, 
+      checks = setChecks(character = defaultCharacterChecks(with = "wheresWally")),
       replace=TRUE)
 }
 
@@ -217,7 +218,8 @@ makeDataReport(testData, checks = setChecks(character = c(defaultCharacterChecks
 toyData$rawVar <- as.raw(c(1:14, 1))
 toyData$compVar <- c(1:14, 1) + 2i
 toyData$listVar <- as.list(c(1:14, 1))
-makeDataReport(toyData, replace  = TRUE, treatXasY = list(raw = "character", complex = "numeric"))
+makeDataReport(toyData, replace  = TRUE, 
+    treatXasY = list(raw = "character", complex = "numeric"))
 }
 
 }

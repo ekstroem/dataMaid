@@ -71,12 +71,12 @@ valid summary functions are found in \code{\link{summaryFunction}}.
      summaryResult(list(feature="No. zeros", result = res, value = res))
    }
    summarize(charV, 
-     summaries = setSummaries(character = c(defaultCharacterSummaries(), "countZeros")))
+     summaries = setSummaries(character = defaultCharacterSummaries(add = "countZeros")))
 
  #Does nothing, as intV is not affected by characterSummaries
    intV <- c(0:10)
    summarize(intV, 
-     summaries = setSummaries(character = c(defaultCharacterSummaries(), "countZeros")))
+     summaries = setSummaries(character = defaultCharacterSummaries(add = "countZeros")))
 
  #But supplying the argument for integer variables changes the summary:
    summarize(intV, summaries = setSummaries(integer = "countZeros"))

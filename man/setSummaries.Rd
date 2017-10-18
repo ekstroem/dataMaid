@@ -49,16 +49,16 @@ by calling \code{allSummaryFunctions()}.
 \examples{
 #Don't include central value (median/mode) summary for numerical and integer
 #variables:
-  setSummaries(numeric = setdiff(defaultNumericSummaries(), "centralValue"),
-    integer = setdiff(defaultIntegerSummaries(), "centralValue"))
+  setSummaries(numeric = defaultNumericSummaries(remove = "centralValue"),
+    integer = defaultIntegerSummaries(remove = "centralValue"))
   
      
 #Used in a call to makeDataReport():
 \dontrun{
 data(toyData)
 makeDataReport(toyData, 
-  summaries = setSummaries(numeric = setdiff(defaultNumericSummaries(),"centralValue"), 
-    integer = setdiff(defaultIntegerSummaries(), "centralValue")), replace = TRUE)
+  setSummaries(numeric = defaultNumericSummaries(remove = "centralValue"),
+    integer = defaultIntegerSummaries(remove = "centralValue")), replace = TRUE)
 }
      
 }
