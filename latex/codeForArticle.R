@@ -171,15 +171,22 @@ clean(toyData, standAlone = FALSE, output = "html", twoCols = FALSE)
 
 
 
-############
-makeDataReport(presidentData, replace = TRUE, treatXasY = list("Name" = "character"),
-               checks = setChecks(character = defaultCharacterChecks(remove = "identifyLoners")))
+###########
+makeDataReport(presidentData, replace = TRUE, treatXasY = list(Name = "character"),
+               checks = setChecks(character = defaultCharacterChecks(remove = "identifyLoners")),
+               reportTitle = "Dirty president data")
 
+presidentData$lastName[presidentData$firstName == "."] 
+presidentData$firstName[presidentData$firstName == "."]  <- "Donald"
 
-
-
-
-
+birthdayOutlierVal <- identifyOutliers(presidentData$birthday)$problemValues
+presidentData[presidentData$birthday == birthdayOutlierVal, ]
+presidentData <- presidentData[presidentData$birthday != birthdayOutlierVal, ]
+summarize(presidentData$presidencyYears)
+presidentData[is.na(presidentData$presidencyYears) | 
+                     presidentData$presidencyYears %in% 
+                    identifyOutliers(presidentData$presidencyYears)$problemValues, 
+                   c("firstName", "lastName", "presidencyYears")]
 ######################################################################################
 ##################Code used to make tables and figures in the article#################
 ######################################################################################

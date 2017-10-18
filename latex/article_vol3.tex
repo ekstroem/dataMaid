@@ -897,21 +897,181 @@ R> summarize(toyData$var2, numericSummaries = c("centralValue", "minMax"))
 
 Note that the \code{summarize()}, \code{check()} and \code{visualize()} functions are also available interactively for full datasets by calling e.g., \code{summarize(toyData)}. However, this produces an extensive amount of output in the console, and therefore, we generally do not recommend it, unless working with very small datasets or subsets of datasets.
 
-%\hl{
-%\begin{itemize}
-%\item Do an example with visualize() and summarize(), like the one with check(). Especially visualize and to doEval = T thing needs a bit of special attention.
-% \item  Mention allCheckFunctions() etc. again here
-% \item Mention check(), visualize() and summarize() modes for data.frames. Maybe also advise against it, at it will often produce a lot of information at once, and such large amounts of information really should be documented.
-%\end{itemize}
-%}
+\section{A worked example: Dirty presidents} 
+\label{sec:bigExample}
+\hl{Er titlen her for popsmart og flabet? Det er måske også et generelt tema i teksten. Ret gerne kritisk.}
 
+\begin{figure}[tb]
+\begin{center}
+\frame{\includegraphics[width=7.5cm,page=1]{dataMaid_presidentData.pdf}}
+\frame{\includegraphics[width=7.5cm,page=2]{dataMaid_presidentData.pdf}}\\
+\frame{\includegraphics[width=7.5cm,page=3]{dataMaid_presidentData.pdf}}
+\frame{\includegraphics[width=7.5cm,page=4]{dataMaid_presidentData.pdf}}
+\end{center}
+\caption{The first 4 pages of the data overview report for the \code{presidentData} dataset. Note that the report title has been customized (front page), \code{identifyLoners} has been removed from the checks performed on character variables (page 1) and that variables of class \code{Name} have been set to be treated like \code{character} variables (page 1). We see that there are two \code{Name} variables in the overview on page 2 and see that these variables are indeed treated like \code{character} variables on page 3. }
+\label{fig:bigExampleP0123}
+\end{figure}
 
+\begin{figure}[tb]
+\begin{center}
+\frame{\includegraphics[width=7.5cm,page=5]{dataMaid_presidentData.pdf}}
+\frame{\includegraphics[width=7.5cm,page=6]{dataMaid_presidentData.pdf}}
+\end{center}
+\caption{Part of the data overview report generated for the \code{presidentData} dataset. Here, we see pages 4 and 5 from the \textit{Variable list}.}
+\label{fig:bigExampleP45}
+\end{figure}
+
+We will now put the bits and pieces from above together and show how \code{makeDataReport()} can be used on a less artificial dataset to create a usefl overview report. More specifically, we will generate a report describing the \code{presidentData} dataset, which is available in \pkg{dataMaid}. This dataset is a sligtly mutilated dataset with information about the 45 first US presidents, but with a few common data issues and a blind passenger. The dataset contains one observation per president and has the following variables:
+\begin{description}
+\item[\code{lastName}] The last name of the president.
+\item[\code{firstName}] The first name of the president.
+\item[\code{orderOfPresidency}] The number in the order of presidents.
+\item[\code{birthday}] The birthday of the president.
+\item[\code{stateOfBirth}] The state in which the president was born.
+\item[\code{assassinationAttempt}] Was there an assassination attempt on the president?
+\item[\code{sex}] The sex of the president.
+\item[\code{ethnicity}] The ethnicity of the president.
+\item[\code{presidencyYears}] The duration of the presidency.
+\item[\code{ageAtInauguration}] The age of the president at inauguration.
+\item[\code{favoriteNumber}] The favourite number of the president (fictional).
+\end{description}
+We discuss the results of a data overview report generated for this dataset below, but first there are a few special features of the dataset and wishes for the data report that require us to customize it using some of the arguments for \code{makeDataReport}. We have the following points of interest:
+\begin{enumerate}
+\item A few variables are used to describe names, namely \code{lastName} and \code{firstName}. In order to use special bibliographical analysis tools on these, and only these, variables, it might be convenient to assign them a special class. Therefore, these variables have been set to have class \code{Name} by use of the base \proglang{R} function \code{class()}. When we wish to make a data report for the dataset, we have to tell \code{makeDataReport()} how to handle such \code{Name}-type variables, as they are not among the supported variable types mentioned in the above. This can be done using the \code{treatXasY} argument.
+\item We use the \code{character} class for a few categorical variables that have a lot of different levels, but where it is not a data mistake that these levels each generally have very few observations, e.g. the variable \code{stateOfBirth}. Therefore, we would like to disable the \code{identifyLoners} check for this variable type. This can be done using the \code{checks} argument.
+\item We would like the report to be called "Dirty president data" in order to reflect that it is, indeed, a report about dirty data about presidents.
+\end{enumerate}
+Incoorporating these three customizations, we can load the data and generate a report by calling:
+\begin{Schunk}
+\begin{Sinput}
+R> data(presidentData)
+R> makeDataReport(presidentData, replace = TRUE, 
+   treatXasY = list("Name" = "character"),
+   checks = setChecks(character = defaultCharacterChecks(remove = "identifyLoners")),
+   reportTitle = "Dirty president data")
+\end{Sinput}
+\end{Schunk}
+The first four pages of the resulting report can be inspected in Figure \ref{fig:bigExampleP0123}. Note that all the customized settings can be identified from the first two pages, without having to read through the report: The new title is written on the front page, the check settings are displayed in the \textit{Checks performed} table and the strategy for handling \code{Name} variables is documented below this table. 
+
+The first problem that can be spotted from these first four pages is the surprising number of observations: Anno 2017, there have only been 45 US presidents. Therefore, having 46 observations reveals that the dataset contains a blind passenger. For instance, if the dataset was constructed as a subset of a more general "World leaders" dataset, this type of problem could occur due to wrongful nationality classification. We return to the extra president issue below. 
+
+On page 3, we see the contents for the three first variables. Here, we identifify a prefixed whitespace in the lastname entry for President Truman and we find that a dot was entered as a first name; this is a typical choice for coding missing values in e.g. Stata, and therefore, it is flagged as a potential miscoded missing value. The variable \code{orderOfPresidency} is not summarized, visualized or checked because it is categorical and contains unqiue values for each observation. 
+
+Figure \ref{fig:bigExampleP45} presents the remaining two pages with variable presentations. On pages 4 and 5, we find a few remarks:
+\begin{itemize}
+\item In the birthday variable, there is a entry with the date March 1, 1300 which is a bit of an outlier. 
+\item Among the states in which the presidents were born, New York was mistakenly spelled with a lower case "Y" in at least one entry.
+\item The variable concerning assassination attempts is coded as a numeric, but the default \code{smartNum = TRUE} setting of \code{makeDataReport()} implies that such a numeric variable with only a few (less that 5) unique values is treated as a factor variable in the data report, thereby providing more relevant summaries, visualizations and checks. This is remarked in the variable presentation for \code{assassinationAttempt} and it can also be seen by the visualization being a barplot rather than a histogram.
+\item The variable concerning the sex of the president was skipped, as there is nothing to present, when all US presidents have been male so far.
+\item The report flags the variable \code{ethnicity} to have suspiciously few observations in one category, "African American". 
+\item A few presidents were found to have odd values in the variable describing the duration of their presidencies: Some had very short (outlier) presidencies of less than three years and one was registered to have an \textit{infinite} presidency. 
+\item The variable concerning age at inauguration was coded as a character variable, but consists exclusively of numbers and takes on a lot of different variables and therefore, it was flagged as a potentially misclassified numeric variable.
+\item It seems as if one or more presidents have complex numbers as their favorite numbers. As \code{complex} is not a supported variable type in \code{dataMaid} and no strategy for handling this class was provided in the \code{treatXasY} argument, the variable is simply flagged as non-supported.
+\end{itemize}
+A lot of these mistakes are easily fixable, and we will do so below. However, some of them require more delicate knowledge of the subject matter. For instance, \code{ethnicity} is very reasonably marked as a potentially problematic variable as it includes only a single observation of "African American". However, a human reading this report will know that this does \textit{not} reflect a mistake in the data, but rather a perculiarity in the real world, and as such, it should not be cleaned out. 
+
+A few of the identified problems have easy fixes that need no further attention. We remove the prefixed whitespace from Truman's name, fix the misspelling of New York, convert the binary variable \code{assasinationAttempt} to a factor and change the class of the \code{ageAtInauguration} variable to numeric:
+\begin{Schunk}
+\begin{Sinput}
+R> presidentData$lastName[presidentData$lastName == " Truman"] <- "Truman"
+R> presidentData$stateOfBirth[presidentData$stateOfBirth == "New york"] <- "New York"
+R> presidentData$assassinationAttempt <- factor(presidentData$assassinationAttempt)
+R> presidentData$ageAtInauguration <- as.numeric(presidentData$ageAtInauguration)
+\end{Sinput}
+\end{Schunk}%$
+Please note that if \code{ageAtInauguration} had been a \code{factor} rather than a \code{character} variable, an additional inner call should be added in order to ensure no conversion issues:
+\begin{Schunk}
+\begin{Sinput}
+>R presidentData$ageAtInauguration <- as.numeric(as.character(presidentData$ageAtInauguration))
+\end{Sinput}
+\end{Schunk}
+Moving forward, we might be interested in inspecting the contents of the "."-coded entry of \code{firstName} closer, as we \textit{do} know the first names of all the US presidents. We look at the last name for this president and fill it in correctly:
+\begin{Schunk}
+\begin{Sinput}
+R> presidentData$lastName[presidentData$firstName == "."]
+\end{Sinput}
+\begin{Soutput}
+[1] "Trump"
+\end{Soutput}
+\begin{Sinput}
+R> presidentData$firstName[presidentData$firstName == "."] <- "Donald"
+\end{Sinput}
+\end{Schunk}
+Next up is the unlikely US president birth day of March 1, 1300. In order to understand if this is a generally problematic observation, or if it is just a mistyped observation, we inspect the full data entry for this person. We can do this using the usual \proglang{R} selection syntax as above, or we can use the value of a \code{identifyOutliers} call to select this observation:
+\begin{Schunk}
+\begin{Sinput}
+R> birthdayOutlierVal <- identifyOutliers(presidentData$birthday)$problemValues
+\end{Sinput}
+\end{Schunk}
+Now, we have the outlier birthday stored and can use it to select and print the appropriate observation in the dataset:
+\begin{Schunk}
+\begin{Sinput}
+> presidentData[presidentData$birthday == birthdayOutlierVal, ]
+\end{Sinput}
+\begin{Soutput}
+      lastName firstName orderOfPresidency   birthday stateOfBirth
+46 Arathornson   Aragorn                 0 1300-03-01       Gondor
+   assassinationAttempt  sex ethnicity precidencyYears ageAtInauguration
+46                    1 Male Caucasian              NA              <NA>
+   favoriteNumber
+46           8+0i
+\end{Soutput}
+\end{Schunk}%$
+We see that this is not a proper US president and thus, it is likely to be explanation of the faulty number of observations in the dataset. Therefore, we drop this observation from the dataset, e.g. by overwriting the dataset with a selection of all the other observations:
+\begin{Schunk} 
+\begin{Sinput}
+R> presidentData <- presidentData[presidentData$birthday != birthdayOutlierVal, ]
+\end{Sinput}
+\end{Schunk} %$
+Now, all that is left is the \code{presidencyYears} variable. For this variable, we are concerned about three different things: First, it has some quite small outlier values. We need to identify whether these are really true. Secondly, one president is registered to have an infinite presidency, this should also be fixed. Third, we see from the summary table that there are two missing observations for this variable. One might have been fixed by removing Aragorn from the dataset, so we start by inspecting if this is indeed the case by calling \code{summarize()} interactively:
+\begin{Schunk}
+\begin{Sinput}
+>R summarize(presidentData$presidencyYears)
+\end{Sinput}
+\begin{Soutput}
+$variableType
+Variable type: numeric
+$countMissing
+Number of missing obs.: 1 (2.22 %)
+$uniqueValues
+Number of unique values: 11
+$centralValue
+Median: 4
+$quartiles
+1st and 3rd quartiles: 4; 8
+$minMax
+Min. and max.: 0; Inf
+\end{Soutput}
+\end{Schunk} %$
+We see that there is one less missing value and that the small and large values pertain. Therefore, we look at all the observations that cause worry, namely the outliers and the missing value:
+\begin{Schunk}
+\begin{Sinput}
+R> presidentData[is.na(presidentData$presidencyYears) | 
++     presidentData$presidencyYears %in% 
++     identifyOutliers(presidentData$presidencyYears)$problemValues, 
++     c("firstName", "lastName", "presidencyYears")]
+\end{Sinput}
+\begin{Soutput}
+   firstName lastName presidencyYears
+9    William Harrison               0
+12   Zachary   Taylor               1
+20     James Garfield               1
+29    Warren  Harding               2
+38    Gerald     Ford               2
+44    Barack    Obama             Inf
+45    Donald    Trump              NA
+\end{Soutput}
+\end{Schunk}
+We see that Obama is listed as being president forever, which history has proven to be wrong. Trump, on the other hand, has a missing value for his presidency duration, which is in fact reasonable as we cannot know yet. Presidents William Harrison, Zachary Taylor, James Garfield, Warren Harding and Gerald Ford were identified to have were brief presidencies, but these are not mistakes, as a textbook look-up can tell us. Thus the only mistake left to fix is Obama's infinite presidency:
+\begin{Schunk}
+\begin{Sinput}
+R> presidentData$presidencyYears[presidentData$lastName == "Obama"] <- 8
+\end{Sinput}
+\end{Schunk}
+This does not mean we are necessarily done with the data cleaning process: There might be problems that \pkg{dataMaid} was not able to identify. But we have fixed some key issues in the data and thereby given ourselves a chance of a smoother sailing in the next steps of the data analysis. 
 
 \section{Rubbing down data cleaning challenges}
 \label{sec:specificExamples}
-%\hl{Lidt poppet titel, men den gamle ("Using dataMaid in specific situations")
-%fik mig til flabel at tænke "i modsætning til uspecifikke situationer?". Jeg
-%er dog meget åben for en bedre titel.}
 
 Finally, we present a few examples of how to make \pkg{dataMaid}
 solve specific issues related to data cleaning. First, we discuss the
@@ -920,8 +1080,7 @@ of memory use and computation speed. Next, we show how \pkg{dataMaid}
 can be used for problem-flagging. Lastly, we discuss how the
 \pkg{dataMaid} output document can be included in other \proglang{R} markdown
 documents as a way to produce clear and concise documentation of a
-dataset. %\hl{I feel like there should be more topics here, but I'm all
-%  out of ideas...}
+dataset.
 
 \subsection{Cleaning large datasets}
 If the dataset becomes very large, the standard use of \code{clean()}
