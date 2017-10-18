@@ -99,3 +99,69 @@ toyData <- data.frame(var1 = c(rep("red", 10), rep("blue", 3), NA, NA),
                       var6 = rep("Irrelevant", 15))
                       
 save(toyData, file="data/toyData.rda")
+
+
+
+########Make US president data
+#Based on csv dataset from http://www.data-explorer.com/data
+library(haven)
+library(lubridate)
+presidentData <- read.csv("USPresidents.csv", na.strings = "",
+                          stringsAsFactors = FALSE)
+presidentData[, "Image.Path"] <- NULL
+presidentData[, "ID"] <- NULL
+presidentData[, "Town.or.County.of.Birth"] <- NULL
+presidentData[, "Home.State"] <- NULL 
+presidentData[, "Assassinated"] <- NULL
+presidentData[, "Religious.Affiliation"] <- NULL
+presidentData[, "Middle.Name"] <- NULL
+names(presidentData) <- c("lastName", "firstName", "orderOfPresidency", 
+                          "birthday", "dateOfDeath", "stateOfBirth",
+                          "party", "presidencyBeginDate", "presidencyEndDate",
+                          "assassinationAttempt")
+presidentData$sex <- "Male"
+presidentData$ethnicity <- "Caucasian"
+presidentData[presidentData$lastName == "Obama", "ethnicity"] <-  "African American"
+presidentData[presidentData$lastName == "Obama", "presidencyEndDate"] <-  "1/20/2017"
+presidentData <- rbind(presidentData, data.frame(lastName = c("Trump", "Arathornson"), 
+                                                 firstName = c(".", "Aragorn"), 
+                                                 orderOfPresidency = c(45, 0), 
+                                                 birthday = c("6/14/1946", "3/1/1300"),
+                                                 dateOfDeath = c(NA, "1/1/1510"), 
+                                                 stateOfBirth = c("New york", "Gondor"),
+                                                 party = c("Republican", "Dunedain"), 
+                                                 presidencyBeginDate = c("1/20/2017", NA),
+                                                 presidencyEndDate = c(NA, NA),
+                                                 assassinationAttempt = c("false", "true"),
+                                                 sex = c("Male", "Male"), 
+                                                 ethnicity = c("Caucasian", "Caucasian")))
+presidentData$birthday <- as.Date(presidentData$birthday, format = "%m/%d/%Y")
+presidentData$dateOfDeath <- as.Date(presidentData$dateOfDeath, format = "%m/%d/%Y")
+presidentData$presidencyBeginDate <- as.Date(presidentData$presidencyBeginDate, format = "%m/%d/%Y")
+presidentData$presidencyEndDate <- as.Date(presidentData$presidencyEndDate, format = "%m/%d/%Y")
+presidentData$precidencyYears <- round(as.numeric(presidentData$presidencyEndDate - 
+                                               presidentData$presidencyBeginDate)/365.25,0)
+presidentData$precidencyYears[presidentData$lastName == "Obama"] <- Inf
+presidentData$ageAtInauguration <- round(as.numeric(presidentData$presidencyBeginDate - 
+                                                presidentData$birthday)/365.25,0)
+presidentData$orderOfPresidency <- as.factor(presidentData$orderOfPresidency)
+class(presidentData$lastName) <- class(presidentData$firstName) <- "Name"
+presidentData$dayOfDeath <- NULL
+presidentData$party <- NULL
+presidentData$assassinationAttempt <- as.numeric(factor(presidentData$assassinationAttempt))-1
+set.seed(1)
+presidentData$favoriteNumber <- sample(1:10, 46, replace = TRUE)
+presidentData$favoriteNumber[presidentData$lastName == "Jefferson"] <- sqrt(as.complex(-2))
+presidentData$sex <- factor(presidentData$sex)
+presidentData$ethnicity <- factor(presidentData$ethnicity)
+presidentData$ageAtInauguration <- as.character(presidentData$ageAtInauguration)
+presidentData$presidencyBeginDate <- NULL
+presidentData$presidencyEndDate <- NULL
+presidentData$dateOfDeath <- NULL
+presidentData$lastName[presidentData$lastName == "Truman"] <- " Truman"
+
+save(presidentData, file="data/presidentData.rda")
+
+
+
+
