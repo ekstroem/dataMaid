@@ -1,0 +1,14 @@
+\BOOKMARK [1][-]{Section.0.Introduction.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{Section.1.Creating a data overview report.1}{Creating a data overview report}{}% 2
+\BOOKMARK [2][-]{Subsection.2.0.Polishing off the arguments.2}{Polishing off the arguments}{Section.1.Creating a data overview report.1}% 3
+\BOOKMARK [1][-]{Section.2.Using dataMaid interactively.1}{Using dataMaid interactively}{}% 4
+\BOOKMARK [2][-]{Subsection.3.0.Data cleaning by hand: An example.2}{Data cleaning by hand: An example}{Section.2.Using dataMaid interactively.1}% 5
+\BOOKMARK [1][-]{Section.3.Rubbing down data cleaning challenges.1}{Rubbing down data cleaning challenges}{}% 6
+\BOOKMARK [2][-]{Subsection.4.0.Cleaning large datasets.2}{Cleaning large datasets}{Section.3.Rubbing down data cleaning challenges.1}% 7
+\BOOKMARK [3][-]{Subsubsection.4.1.0.Handling the figures.3}{Handling the figures}{Subsection.4.0.Cleaning large datasets.2}% 8
+\BOOKMARK [3][-]{Subsubsection.4.1.1.Economic memory use.3}{Economic memory use}{Subsection.4.0.Cleaning large datasets.2}% 9
+\BOOKMARK [2][-]{Subsection.4.1.Using dataMaid for problem flagging.2}{Using dataMaid for problem flagging}{Section.3.Rubbing down data cleaning challenges.1}% 10
+\BOOKMARK [2][-]{Subsection.4.2.Including dataMaid documents in other files.2}{Including dataMaid documents in other files}{Section.3.Rubbing down data cleaning challenges.1}% 11
+\BOOKMARK [1][-]{Section.4.Concluding remarks.1}{Concluding remarks}{}% 12
+\BOOKMARK [1][-]{Section..Appendix A: cleaning the toyData data frame.1}{Appendix A: cleaning the toyData data frame}{}% 13
+\BOOKMARK [1][-]{Section.A.Appendix B: User-extended cleaning of exampleData.1}{Appendix B: User-extended cleaning of exampleData}{}% 14

@@ -1,0 +1,9 @@
+This is BibTeX, Version 0.99dThe top-level auxiliary file: article_vol3.aux
+The style file: jss.bst
+Database file #1: foo.bib
+You're missing a field name---line 23 of file foo.bib
+ : 
+ : %      title = {The Split-Apply-Combine Strategy for Data Analysis},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+(There was 1 error message)

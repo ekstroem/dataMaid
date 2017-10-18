@@ -19,16 +19,39 @@
 		      isbn = {978-0-387-98140-6},
 		          url = {http://ggplot2.org},
 			    }
-  @Article{plyr,
-      title = {The Split-Apply-Combine Strategy for Data Analysis},
-          author = {Hadley Wickham},
-	      journal = {Journal of Statistical Software},
-	          year = {2011},
-		      volume = {40},
-		          number = {1},
-			      pages = {1--29},
-			          url = {http://www.jstatsoft.org/v40/i01/},
-				    }
+%  @Article{plyr,
+%      title = {The Split-Apply-Combine Strategy for Data Analysis},
+%          author = {Hadley Wickham},
+%	      journal = {Journal of Statistical Software},
+%	          year = {2011},
+%		      volume = {40},
+%		          number = {1},
+%			      pages = {1--29},
+%			          url = {http://www.jstatsoft.org/v40/i01/},
+%				    }
+	@Manual{dplyr,
+      title = {\pkg{dplyr}: A Grammar of Data Manipulation},
+          author = {Hadley Wickham and Romain Francois and Lionel Henry and Kirill Müller},
+	      year = {2017},
+	          note = {\proglang{R} package version 0.7.4},
+		      url = {https://CRAN.R-project.org/package=dplyr},
+		        }
+		        
+	@Manual{assertr,
+      title = {\pkg{assertr}: Assertive Programming for R Analysis Pipelines},
+          author = {Tony Fischetti},
+	      year = {2017},
+	          note = {\proglang{R} package version 2.0.2.2},
+		      url = {https://CRAN.R-project.org/package=assertr},
+		        }
+		        		        		    
+  @Manual{tidyr,
+      title = {\pkg{tidyr}: Easily Tidy Data with 'spread()' and 'gather()' Functions},
+          author = {Hadley Wickham and Lionel Henry},
+	      year = {2017},
+	          note = {\proglang{R} package version 0.7.1},
+		      url = {https://CRAN.R-project.org/package=tidyr},
+		        }
   @Manual{data.table,
       title = {\pkg{data.table}: Extension of Data.frame},
           author = {M Dowle and A Srinivasan and T Short and S Lianoglou},
@@ -108,4 +131,12 @@
 		        }
 			
 
+  @Manual{deducorrect,
+      title = {\pkg{deducorrect}: Deductive Correction, Deductive Imputation, and Deterministic
+      Correction},
+          author = {Mark {van der Loo} and Edwin {de Jonge} and Sander Scholtus},
+	      year = {2015},
+	          note = {\proglang{R} package version 1.3.7},
+		      url = {https://CRAN.R-project.org/package=deducorrect},
+		        }
 			
