@@ -294,6 +294,24 @@ defaultDateSummaries <- function(remove = NULL, add = NULL) {
 
 #methods for each data type
 
+#Catch non-supported classes, do nothing and throw a warning:
+#' @export
+summarize.default <- function(v, reportstyleOutput = FALSE, summaries = setSummaries(), 
+                              ...) {
+  vClass <- class(v)[1]
+  warning(paste("A variable of class", vClass, 
+                "was supplied. This is not supported by dataMaid.",
+                "No summaries were made."))
+  res <- list(summaryResult(list(feature = "No summaries available", result = "-")))
+  if (reportstyleOutput) {
+    res <- sumMatGenerator(res)
+  } else {
+    names(res) <- "DataClassNotSupported"
+  }
+  res
+}
+
+
 #' @export
 summarize.character <- function(v, reportstyleOutput = FALSE,
                                 summaries = setSummaries(),

@@ -88,6 +88,20 @@ check <- function(v, nMax = 10, checks = setChecks(), ...) UseMethod("check")
 
 #methods and default options for each variable class
 
+#Catch non-supported classes, do nothing and throw a warning:
+#' @export
+check.default <- function(v, nMax = 10, checks = setChecks(), ...) {
+  vClass <- class(v)[1]
+  warning(paste("A variable of class", vClass, 
+                "was supplied. This is not supported by dataMaid.",
+                "No checks were performed."))
+  list(NoChecksPerformed = checkResult(list(problem = FALSE,
+                                            message = "",
+                                            problemValues = NULL)))
+  
+}
+
+
 #' @title Default checks for character variables
 #' 
 #' @param remove Character vector of function names. Checks to remove from the returned vector 
