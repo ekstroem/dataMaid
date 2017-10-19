@@ -5,11 +5,9 @@
 \BOOKMARK [2][-]{Subsection.3.0.Data cleaning by hand: An example.2}{Data cleaning by hand: An example}{Section.2.Using dataMaid interactively.1}% 5
 \BOOKMARK [1][-]{Section.3.A worked example: Dirty presidents.1}{A worked example: Dirty presidents}{}% 6
 \BOOKMARK [1][-]{Section.4.Rubbing down data cleaning challenges.1}{Rubbing down data cleaning challenges}{}% 7
-\BOOKMARK [2][-]{Subsection.5.0.Cleaning large datasets.2}{Cleaning large datasets}{Section.4.Rubbing down data cleaning challenges.1}% 8
-\BOOKMARK [3][-]{Subsubsection.5.1.0.Handling the figures.3}{Handling the figures}{Subsection.5.0.Cleaning large datasets.2}% 9
-\BOOKMARK [3][-]{Subsubsection.5.1.1.Economic memory use.3}{Economic memory use}{Subsection.5.0.Cleaning large datasets.2}% 10
-\BOOKMARK [2][-]{Subsection.5.1.Using dataMaid for problem flagging.2}{Using dataMaid for problem flagging}{Section.4.Rubbing down data cleaning challenges.1}% 11
-\BOOKMARK [2][-]{Subsection.5.2.Including dataMaid documents in other files.2}{Including dataMaid documents in other files}{Section.4.Rubbing down data cleaning challenges.1}% 12
-\BOOKMARK [1][-]{Section.5.Concluding remarks.1}{Concluding remarks}{}% 13
-\BOOKMARK [1][-]{Section..Appendix A: cleaning the toyData data frame.1}{Appendix A: cleaning the toyData data frame}{}% 14
-\BOOKMARK [1][-]{Section.A.Appendix B: User-extended cleaning of exampleData.1}{Appendix B: User-extended cleaning of exampleData}{}% 15
+\BOOKMARK [2][-]{Subsection.5.0.Incoorporating dataMaid in a programmer's workflow.2}{Incoorporating dataMaid in a programmer's workflow}{Section.4.Rubbing down data cleaning challenges.1}% 8
+\BOOKMARK [2][-]{Subsection.5.1.Using dataMaid for problem flagging.2}{Using dataMaid for problem flagging}{Section.4.Rubbing down data cleaning challenges.1}% 9
+\BOOKMARK [2][-]{Subsection.5.2.Including dataMaid reports in other files.2}{Including dataMaid reports in other files}{Section.4.Rubbing down data cleaning challenges.1}% 10
+\BOOKMARK [1][-]{Section.5.Concluding remarks.1}{Concluding remarks}{}% 11
+\BOOKMARK [1][-]{Section..Data report for the toyData dataset.1}{Data report for the toyData dataset}{}% 12
+\BOOKMARK [1][-]{Section.A.Data report for the presidentData dataset.1}{Data report for the presidentData dataset}{}% 13

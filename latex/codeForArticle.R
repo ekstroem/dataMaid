@@ -187,6 +187,11 @@ presidentData[is.na(presidentData$presidencyYears) |
                      presidentData$presidencyYears %in% 
                     identifyOutliers(presidentData$presidencyYears)$problemValues, 
                    c("firstName", "lastName", "presidencyYears")]
+
+
+
+
+
 ######################################################################################
 ##################Code used to make tables and figures in the article#################
 ######################################################################################
@@ -216,3 +221,58 @@ checkTab <- data.frame(name=allCheckFunctions()$name,
 checkTab <- as.matrix(checkTab)[,-1]
 xtable(checkTab)
 
+
+#########################################################################################################
+########DELETE THIS?#####################################################################################
+#########################################################################################################
+library(microbenchmark)
+data(toyData)
+microbenchmark(makeDataReport(toyData, replace = TRUE, open = FALSE, quiet = "silent"),
+               makeDataReport(toyData, replace = TRUE, mode = c("summarize", "check"), 
+                              open = FALSE, quiet = "silent"),
+               makeDataReport(toyData, replace = TRUE, 
+                              visuals = setVisuals(all = "basicVisual"), open =FALSE, quiet = "silent"),
+               times = 10)
+#Unit: seconds
+#expr
+#makeDataReport(toyData, replace = TRUE, open = FALSE)
+#makeDataReport(toyData, replace = TRUE, mode = c("summarize",      "check"), open = FALSE)
+#makeDataReport(toyData, replace = TRUE, visuals = setVisuals(all = "basicVisual"),      open = FALSE)
+#min       lq     mean   median       uq      max neval
+#8.218834 23.24083 24.59940 25.06826 27.71859 47.79230    10
+#20.093234 21.12455 22.01202 22.26677 22.95272 24.34090    10
+#5.416714 20.88525 19.63562 22.73859 24.23288 24.60682    10
+
+data(diamonds)
+microbenchmark(makeDataReport(diamonds, replace = TRUE, open = FALSE, quiet = "silent"),
+               makeDataReport(diamonds, replace = TRUE, mode = c("summarize", "check"), 
+                              open = FALSE, quiet = "silent"),
+               makeDataReport(diamonds, replace = TRUE, 
+                              visuals = setVisuals(all = "basicVisual"), open =FALSE, quiet = "silent"),
+               times = 10)
+#Unit: seconds
+#expr
+#makeDataReport(diamonds, replace = TRUE, open = FALSE, quiet = "silent")
+#makeDataReport(diamonds, replace = TRUE, mode = c("summarize",      "check"), open = FALSE, quiet = "silent")
+#makeDataReport(diamonds, replace = TRUE, visuals = setVisuals(all = "basicVisual"),      open = FALSE, quiet = "silent")
+#min       lq     mean   median       uq      max neval
+#23.142882 34.51498 37.40894 37.37907 43.68643 46.23090    10
+#7.962945 22.72135 22.51062 24.63406 25.06414 25.74711    10
+#24.569014 24.75528 26.01199 25.70402 27.36817 27.94747    10
+
+data(presidentData)
+microbenchmark(makeDataReport(presidentData, replace = TRUE, open = FALSE, quiet = "silent"),
+               makeDataReport(presidentData, replace = TRUE, mode = c("summarize", "check"), 
+                              open = FALSE, quiet = "silent"),
+               makeDataReport(presidentData, replace = TRUE, 
+                              visuals = setVisuals(all = "basicVisual"), open =FALSE, quiet = "silent"),
+               times = 10)
+#Unit: seconds
+#expr
+#makeDataReport(presidentData, replace = TRUE, open = FALSE, quiet = "silent")
+#makeDataReport(presidentData, replace = TRUE, mode = c("summarize",      "check"), open = FALSE, quiet = "silent")
+#makeDataReport(presidentData, replace = TRUE, visuals = setVisuals(all = "basicVisual"),      open = FALSE, quiet = "silent")
+#min       lq     mean   median       uq      max neval
+#7.615510 22.73315 25.53273 27.61724 30.88723 37.24841    10
+#5.002280 21.32745 20.80463 22.62078 23.46676 24.10571    10
+#7.243975 21.77199 23.88189 23.38907 27.30534 39.94023    10

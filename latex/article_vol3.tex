@@ -240,20 +240,19 @@ data issues, one variable at a time.
 
 This manuscript is structured as follows: First, in Section
 \ref{sec:usingdataMaid}, we introduce the main representative of the first
-paradigm, namely the \code{clean()} function, which generates data
+paradigm, namely the \code{makeDataReport()} function, which generates data
 overview documents. In the \pkg{dataMaid} package, we have
 provided a number of default checks that cover the data
-cleaning challenges, we find to be most common. Next, in Section
+cleaning challenges, we find to be most common and these are also summarized in Section \ref{sec:usingdataMaid}. Next, in Section
 \ref{sec:interactiveCleanR}, we present the interactive mode of \pkg{dataMaid}, as motivated
-by the second paradigm above. But, as any data analyst knows,
-every dataset is different, and some datasets might include problems
-that cannot be detected by our data checking functions. In Section
-\ref{sec:extending}, we turn to the question of how \pkg{dataMaid} extensions
-can be made, such that they are integrable with the \code{clean()}
-function and with the other tools available in \pkg{dataMaid}.  At last,
-in Section \ref{sec:specificExamples}, we discuss a number of examples of
-specific data cleaning challenges and how \pkg{dataMaid} can be used to
-solve them.
+by the second paradigm above. Next up, we show how the data report and the interactive mode of \pkg{dataMaid} can be combined step-by-step to conduct a well-documented, systematic data cleaning in Section \ref{sec:bigExample}. Here, we asses and clean a dirty dataset with information about the US presidents.  At last, in Section \ref{sec:specificExamples}, we discuss a number of examples of
+specific data cleaning- and documentation challenges and how \pkg{dataMaid} can be used to
+solve them. 
+
+Please note that this description of what \pkg{dataMaid} contains is usefully supplemented by a tutorial into how it can be extended. Every dataset is different, and some datasets might include problems that cannot be detected by our data checking functions. Therefore, \pkg{dataMaid} was designed to be easily extendend with user-supplied functions for summarizing, viusalizing and checking data. We have provided a vignette \hl{REF TO VIGNETTE} in which we describe how \pkg{dataMaid} extensions can be made, such that they are integrable with the \code{makeDataReport()}
+function and with the other tools available in \pkg{dataMaid}. 
+
+
 
 % \hl{Is there a Section 6?}
 
@@ -271,10 +270,10 @@ solve them.
 The \code{makeDataReport()} function is the primary workhorse of \pkg{dataMaid} and
 this is the only function needed if a standard battery
 of tests are used to generate data reports. The data report itself is an overview document, intended for reading
-by humans, in either pdf or html format. Appendix \ref{sec:appendix1}
+by humans, in either pdf, html or word (.docx) format. Appendix \ref{sec:appendix1}
 provides an example of a data report, produced by
 calling \code{makeDataReport()} on the dataset \code{toyData} available in
-\pkg{dataMaid}. The first two pages of this data report are
+\pkg{dataMaid}. The first two pages (excluding the frontpage) of this data report are
 shown in Figure~\ref{fig:example1}. \code{toyData} is a very
 small ($15$ observations of $6$ variables), artificial dataset which was created to
 illustrate the main capabilities of \pkg{dataMaid}. The following
@@ -286,12 +285,22 @@ commands load the dataset and produce the report:
 \frame{\includegraphics[width=7.5cm,page=3]{dataMaid_toyData.pdf}}
 %\includepdf[pages={2}, pagecommand={}]{dataMaid_testData.pdf}
 \end{center}
-\caption{Example output from running \code{makeDataReport()} on the \code{toyData}
-  dataset. First a summary of the full dataset is given and then
-  type-dependent information on each variable is given in a table and
-  a graph. Larger versions of the pages can be seen in
+\caption{The two first pages of the report created by running \code{makeDataReport()} on the \code{toyData}
+  dataset. First a summary of the full dataset is given along with an overview of what checks were performed. Next, a summary of all the variables aand whether or not they are problematic is provided. Larger versions of the pages can be seen in
   Appendix~\ref{sec:appendix1}.}
 \label{fig:example1}
+\end{figure}
+
+\begin{figure}[tb]
+\begin{center}
+\frame{\includegraphics[width=7.5cm,page=4]{dataMaid_toyData.pdf}}
+\frame{\includegraphics[width=7.5cm,page=5]{dataMaid_toyData.pdf}}
+%\includepdf[pages={2}, pagecommand={}]{dataMaid_testData.pdf}
+\end{center}
+\caption{The third and fourth pages of the report created by running \code{makeDataReport()} on the \code{toyData}
+  dataset. Here, we see a description of each variable in the dataset, consiting of a summary table, a visualization and a indication of what problems were flagged for the variable (if any). At last, a few lines of metadata about the \code{makeDataReport()} are included for enhancing reproducibility. Larger versions of the pages can be seen in
+  Appendix~\ref{sec:appendix1}.}
+\label{fig:example2}
 \end{figure}
 
 \begin{Schunk}
@@ -319,16 +328,16 @@ R> toyData
 15 <NA>    5 OTHER  1.1249309   15 Irrelevant
 \end{Soutput}
 \end{Schunk}
+
 \begin{Schunk}
 \begin{Sinput}
 R> makeDataReport(toyData)
 \end{Sinput}
 \end{Schunk}
 
-By default, an \proglang{R} markdown file and a rendered pdf overview
+By default, an \proglang{R} markdown file and a rendered pdf \hl{OBS: måske html/doc alt efter hvem der kalder funktionen?} overview
 document is produced, saved to the working directory and
-opened for immediate inspection. Turning to Figure~\ref{fig:example1},
-we see that such a data report consists of three
+opened for immediate inspection. Such a data report consists of three parts, two of which 
 parts. First, an overview of what was done is presented under the
 title \textit{Data report overview}. Secondly, an index listing each variable along with an indication of whether it was found to be problematic or not is provided. Thirdly, each variable in the
 dataset is presented in turn using (up to) three tools in the
@@ -358,12 +367,13 @@ examples on how to use the arguments from Table \ref{table.cleanFormals}
 Argument & Description & Default value \\
 \hline
 
-\smallskip Control input variables and summary\\
+\smallskip Control input variables and meta information\\
 \quad \code{useVar} & What variables should be used? & \code{NULL} (corresponding to all variables) \\
 \quad \code{ordering} & Ordering of the variables in the data summary (as is or alphabetical) & \code{"asIs"} \\
 \quad \code{onlyProblematic} & Should only variables flagged as problematic be included in the \textit{Variable list}? & \code{FALSE} \\
 \quad \code{listChecks} & Should an overview of what checks were performed be listed in the \textit{Data report overview}? &  \code{TRUE} \\
-\quad \code{preChecks} & What check functions should be called to determine whether a variable is suitable for summarization, visualization and checking? & \code{c("isKey", "isEmpty")} \\
+\quad \code{preChecks} & What check functions should be called to determine whether a variable is suitable for summarization, visualization and checking? & \code{c("isKey", "isSingular", "isSupported")} \\
+\quad \code{reportTitle} & What should the title displayed on the front page of the report be? & \code{NULL} (corresponds to the dataset name) \\
 
 \smallskip Control summarize, visualize, and check steps \\
 \quad \code{mode} & What steps should be performed for each variable (out
@@ -372,12 +382,12 @@ Argument & Description & Default value \\
                                                         \code{c("summarize", "visualize", "check")} (corresponding to all three steps) \\
 \quad \code{smartNum} & Should numerical values with only a few unique
                      levels be flagged and treated as a factor variable? & \code{TRUE} \\
-\quad \code{maxProbVals} & Maximum number of problematic values to print, if any are found in data checks & \code{Inf} \\
+\quad \code{maxProbVals} & Maximum number of problematic values to print, if any are found in data checks & \code{10} \\
 \quad \code{maxDecimals} & Maximum number of decimals to print for numeric values in the variable list & \code{2} \\
 \quad \code{twoCol} & Should the summary table and visualizations be placed side-by-side (in two columns)? & \code{TRUE} \\
 
 \smallskip Control output and post-processing \\
-\quad \code{output} & Type of output file to be produced (html, or pdf) & \code{"pdf"} \\
+\quad \code{output} & Type of output file to be produced (html, word (.docx) or pdf) & \code{"pdf"} \hl{OBS. Ændrer vi dette?}\\
 \quad \code{render} & Should the output file be rendered from markdown? & \code{TRUE} \\
 \quad \code{openResult} & If a  pdf/html file is rendered, should it
                        automatically open afterwards, and if not,
@@ -465,15 +475,15 @@ this stage, what is really needed, is a very rough idea of the
 severity of errors in the dataset. In this scenario, we might wish to
 obtain a summary document in html format that only contains the
 variables with potential problems, and with a limit of, say, maximum
-10 printed potential errors for each variable. Also, we can add the
+2 printed potential errors for each variable. Also, we can add the
 argument \code{replace=TRUE} in order to force \code{makeDataReport()} to
 overwrite any existing files produced by \code{makeDataReport()}.  Using the
 \code{toyData} dataset as a guinea pig, we type:
 
 \begin{Schunk}
 \begin{Sinput}
-R> makeDataReport(toyData, output = "html", onlyProblematic = TRUE, maxProbVals = 10,
-+    replace = TRUE)
+R> makeDataReport(toyData, output = "html", onlyProblematic = TRUE,
++    maxProbVals = 2, replace = TRUE)
 \end{Sinput}
 \end{Schunk}
 
@@ -502,7 +512,7 @@ R> makeDataReport(toyData, output="html", render=FALSE, openResult=FALSE)
  & &  C & F & I & L & B & N & D\\
   \hline \smallskip
   \textbf{\code{summaryFunction}s}  \smallskip \\
-  \quad \code{centralValue} & Compute median or mode &  $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ \\
+  \quad \code{centralValue} & Compute median for numeric variables, mode for categorical variables &  $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ \\
   \quad \code{countMissing} & Compute proportion of missing observations &  $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$  \\
   \quad \code{minMax} & Find minimum and maximum values &   &  & $\times$ & &  & $\times$ & $\times$  \\
   \quad \code{quartiles} & Compute 1st and 3rd quartiles &    &  & $\times$ & &  & $\times$ & $\times$ \\
@@ -522,8 +532,9 @@ R> makeDataReport(toyData, output="html", render=FALSE, openResult=FALSE)
  \quad \code{identifyOutliersTBStyle} & Identify outliers (Turkish Boxplot style) &  & & $\times$ & & $\times$ & $\times$ \\
  \quad \code{identifyWhitespace} & Identify prefixed and suffixed whitespace &  $\times$ & $\times$ & & $\times$ & & &  \\
  \quad \code{isCPR} & Identify Danish CPR numbers & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ &$\times$   \\
- \quad \code{isEmpty} & Check if the variable contains only a single value & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$  \\
+ \quad \code{isSingular} & Check if the variable contains only a single value & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$  \\
  \quad \code{isKey} & Check if the variable is a key & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$\smallskip   \\
+ \quad \code{isSupported} & Check if the variable is among the supported variable types & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$\smallskip   \\
  \hline
 \end{tabular}
 \caption{List of all summary functions (used in the summary table for
@@ -541,7 +552,7 @@ done through the summarize/visualize/check (SVC) steps, as illustrated
 in Figure \ref{figure:cleanStructure}.  \pkg{dataMaid} uses three
 different types of functions for performing these steps, namely
 \code{summaryFunction}s, \code{visualFunction}s and
-\code{checkFunction}s.  By default, \code{clean()} runs selected summary,
+\code{checkFunction}s.  By default, \code{makeDataReport()} runs selected summary,
 visualization and check functions on each variable in the dataset, and
 the exact choice of these functions depends on the classes of the
 variables. For instance, though detection of outlier values might be
@@ -564,11 +575,11 @@ R> allSummaryFunctions()
 ----------------------------------------------------------------------------
 name           description                     classes                      
 -------------- ------------------------------- -----------------------------
-centralValue   Compute median or mode          character, Date, factor,     
-                                               integer, labelled, logical,  
-                                               numeric                      
+centralValue   Compute median for numeric      character, Date, factor,     
+               variables, mode for             integer, labelled, logical,  
+               categorical variables           numeric                      
 
-countMissing   Compute proportion of missing        character, Date, factor,     
+countMissing   Compute proportion of missing   character, Date, factor,     
                observations                    integer, labelled, logical,  
                                                numeric                      
 
@@ -650,8 +661,8 @@ table for numeric and integer variables, we write
 \begin{Schunk}
 \begin{Sinput}
 R> makeDataReport(toyData, 
- 	summaries = setSummaries(numeric = c("variableType","centralValue),
-		integer = c("variableType", "centralValue"))
++    summaries = setSummaries(numeric = c("variableType","centralValue),
++    integer = c("variableType", "centralValue"))
 \end{Sinput}
 \end{Schunk}
 
@@ -662,7 +673,7 @@ variable types:
 \begin{Schunk}
 \begin{Sinput}
 R> makeDataReport(toyData, 
-	summaries = setSummaries(all = c("variableType", "centralValue"))
++    summaries = setSummaries(all = c("variableType", "centralValue"))
 \end{Sinput}
 \end{Schunk}
 
@@ -683,7 +694,8 @@ for factor variables, then we would need provide this information for \code{setC
 
 \begin{Schunk}
 \begin{Sinput}
-R> makeDataReport(toyData, checks = setChecks(factor = "identifyWhitespace"))
+R> makeDataReport(toyData, 
++    checks = setChecks(factor = "identifyWhitespace"))
 \end{Sinput}
 \end{Schunk}
 
@@ -705,20 +717,20 @@ pre-check stage. In this stage, it is determined whether or
 not each variable is suitable for the summarize/visualize/check (SVC)
 steps. The functions used in the pre-check stage should be
 \code{checkFunction}s that are applicable to all variable classes. The
-default pre-checks, the functions \code{isKey()} and \code{isSingular()}, check
-whether a variable has unique values for all observations or only a
-single value for all observations, respectively. If one of these
+default pre-checks, the functions \code{isKey()}, \code{isSingular()} and \code{isSupported()}, check
+whether a variable has unique values for all observations, only a
+single value for all observations, and is not among the variable types supported by \pkg{dataMaid}, respectively. If one of these
 statements are true, the variable will not be subjected to the SVC
-steps.  We can allow empty variables to move on to the SVC step by
-only checking for keys in the pre-check step:
+steps.  We can allow singular variables to move on to the SVC step by
+only checking for keys and non-supported variables in the pre-check step:
 
 \begin{Schunk}
 \begin{Sinput}
-R> makeDataReport(toyData, preChecks = "isKey")
+R> makeDataReport(toyData, preChecks = c("isKey", "isSupported"))
 \end{Sinput}
 \end{Schunk}
 
-Note that the data visualizations in the cleaning summary are also
+Note that the data visualizations in the report are also
 controllable, though only a single function can be provided for each variable type. If, for instance, we wish to change the visualizations
 from the default \pkg{ggplot2} \citep{ggplot2} style histograms and barplots to base
 \proglang{R} histograms and barplots, we type
@@ -728,7 +740,6 @@ from the default \pkg{ggplot2} \citep{ggplot2} style histograms and barplots to 
 R> makeDataReport(toyData, visuals = setVisuals(all = "basicVisual"))
 \end{Sinput}
 \end{Schunk}
-
 
 As indicated in Figure~\ref{figure:cleanStructure}, there are two stages
 where \code{makeDataReport()} applies functions to each of the variables:
@@ -744,14 +755,24 @@ needed \hl{ and we have provided a detailed vignette that explains how to modify
 expand the possibilities by producing new summary, visual, and check
 functions in [REFERENCE]}.
 
+One might also encounter datasets with variables that are not among the 7 classes mentioned in the above (\code{character}, \code{Date}, \code{factor}, \code{integer}, \code{labelled}, \code{logical} and \code{numeric}), for instance variables of type \code{complex} or user-defined classes. It is possible to tell \code{makeDataReport()} how to handle such variables by use of the argument \code{treatXasY}. This argument takes a list where the names correspond to "new" variable types, while the entries must be supported variable types. For instance, we can instruct \code{dataMaid} to treat complex variables as numerics and generate a data report for a type \code{complex} variable like this:
 
-\section[Using dataMaid interactively]{\hl{Using \pkg{dataMaid} interactively}}
+\begin{Schunk}
+\begin{Sinput}
+>R complexData <- data.frame(complexVar = complex(100, real = 1:100, 
++    imaginary = 3), numericVar = 1:100))
+>R makeDataReport(complexData, treatXasY(complex = "numeric"))
+\end{Sinput}
+\end{Schunk}
+
+
+\section[Using dataMaid interactively]{Using \pkg{dataMaid} interactively}
 \label{sec:interactiveCleanR}
 
-While overview documents are great for presenting and documenting the
-data cleaning checks, it may be useful to be able to work more
-interactively through the data cleaning process. Aside from
-the \code{clean()} function presented above, \pkg{dataMaid} also
+While overview documents are great for presenting and documenting the data at various stages 
+of the data cleaning process, it may be useful to be able to work more
+interactively when performing actual data cleaning. Aside from
+the \code{makeDataReport()} function presented above, \pkg{dataMaid} also
 provides more standard \proglang{R} interactive tools, such as
 functions that print results to the console or return the information
 as an object for later use. This section describes how to use the
@@ -779,18 +800,15 @@ Note that the following possible outlier values were detected: 82, 999.
 Note that the arguments specifying which checks to perform, as
 described in the previous section, are in fact passed to \code{check()},
 and thus they can also be used here. For instance, if we only want to
-check for potentially miscoded missing values, we can use the relevant
-\code{XXXChecks} argument (e.g., \code{numericChecks}, \code{factorChecks},
-etc., as described in Section~\ref{sec:usingdataMaid}) to provide a
-vector of the check functions that should be applied. Recall that
-Table~\ref{table.SVCfunctions} or an \code{allCheckFunctions()} call provide
+check for potentially miscoded missing values, we can use the \code{checks} argument and the \code{setChecks()} helper function to specify this.
+Recall that Table~\ref{table.SVCfunctions} or an \code{allCheckFunctions()} call provide
 overviews of the available check functions.
 Moving forward, we limit the numeric checks to only identify miscoded
 missing values:
 
 \begin{Schunk}
 \begin{Sinput}
-R> check(toyData$var2, numericChecks = "identifyMissing")
+R> check(toyData$var2, checks = setChecks(numeric = "identifyMissing"))
 \end{Sinput}
 \begin{Soutput}
 $identifyMissing
@@ -809,7 +827,7 @@ R> identifyMissing(toyData$var2)
 \begin{Soutput}
 The following suspected missing value codes enter as regular values: 999, NaN.
 \end{Soutput}
-\end{Schunk}
+\end{Schunk} %$
 
 The result of a \code{checkFunction} is an object of class
 \code{checkResult}. By using the structure function, \code{str()}, we can
@@ -832,7 +850,7 @@ List of 3
 
 The most important thing to note here is that while the printed
 message is made for easy reading, the actual values of the variable
-causing the issue are still obtainable in the element
+causing the issue are still obtainable in the entry
 \code{problemValues}. If we decide that the values \code{999}
 and \code{NaN} in \code{var2} are in fact miscoded missing values, we can
 easily replace them with \code{NA}s:
@@ -845,7 +863,7 @@ R> identifyMissing(toyData$var2)
 \begin{Soutput}
 No problems found.
 \end{Soutput}
-\end{Schunk}
+\end{Schunk} %$
 
 Similarly, the \code{visualize()} and \code{summarize()} functions can be
 used to run the corresponding visualizations and summaries for each
@@ -878,22 +896,22 @@ R> summarize(toyData$var2)
 
 
 As we saw with the \code{check()} function, the summary can be modified
-by providing the relevant \code{XXXSummaries} arguments. Setting the
-\code{numericSummaries} argument, we can control the summary output by
-providing a vector of function names to run for a particular summary. To
-only get the median, minimum and the maximum we set
-\code{numericSummaries = c("centralValue", "minMax")}:
+by using the \code{summaries} argument and the \code{setSummaries()} helper function. If we want to remove the default summaries \code{variableType} and \code{countMissing} for numeric variables, we can use the function \code{defaultNumericSummaries()} and its argument \code{remove} that excludes a vector of summaries from the usual default summaries:
 
 \begin{Schunk}
 \begin{Sinput}
-R> summarize(toyData$var2, numericSummaries = c("centralValue", "minMax"))
+R> summarize(toyData$var2, 
++    summaries = setSummaries(
++    numeric = defaultNumericSummaries(remove = c("variableType", 
++    "countMissing"))))
 \end{Sinput}
 \begin{Soutput}
      Feature         Result 
 [1,] "Median"        "4"    
 [2,] "Min. and max." "1; 82"
 \end{Soutput}
-\end{Schunk}
+\end{Schunk} %$
+Similar \code{defaultXXXSummaries()} functions are available for the other supported variable classes. For checks, the same syntax can also be used, but the helper functions are now named \code{defaultXXXChecks} with \code{XXX} as a placeholder for a supported variable class.
 
 Note that the \code{summarize()}, \code{check()} and \code{visualize()} functions are also available interactively for full datasets by calling e.g., \code{summarize(toyData)}. However, this produces an extensive amount of output in the console, and therefore, we generally do not recommend it, unless working with very small datasets or subsets of datasets.
 
@@ -905,11 +923,20 @@ Note that the \code{summarize()}, \code{check()} and \code{visualize()} function
 \begin{center}
 \frame{\includegraphics[width=7.5cm,page=1]{dataMaid_presidentData.pdf}}
 \frame{\includegraphics[width=7.5cm,page=2]{dataMaid_presidentData.pdf}}\\
+\end{center}
+\caption{The front page and the first page of the data overview report for the \code{presidentData} dataset. Note that the report title has been customized (front page), \code{identifyLoners} has been removed from the checks performed on character variables (page 1) and that variables of class \code{Name} have been set to be treated like \code{character} variables (page 1). Larger versions of the pages can be seen in
+  Appendix~\ref{sec:appendix2}.}
+\label{fig:bigExampleP01}
+\end{figure}
+
+\begin{figure}[tb]
+\begin{center}
 \frame{\includegraphics[width=7.5cm,page=3]{dataMaid_presidentData.pdf}}
 \frame{\includegraphics[width=7.5cm,page=4]{dataMaid_presidentData.pdf}}
 \end{center}
-\caption{The first 4 pages of the data overview report for the \code{presidentData} dataset. Note that the report title has been customized (front page), \code{identifyLoners} has been removed from the checks performed on character variables (page 1) and that variables of class \code{Name} have been set to be treated like \code{character} variables (page 1). We see that there are two \code{Name} variables in the overview on page 2 and see that these variables are indeed treated like \code{character} variables on page 3. }
-\label{fig:bigExampleP0123}
+\caption{The second and third pages of the \code{presidentData} data report. We see that there are two \code{Name} variables in the overview on page 2 and see that these variables are indeed treated as \code{character} variables on page 3, as specified in the \code{makeDataReport} call by use of the \code{treatXasY} argument. Larger versions of the pages can be seen in
+  Appendix~\ref{sec:appendix2}}
+\label{fig:bigExampleP23}
 \end{figure}
 
 \begin{figure}[tb]
@@ -917,7 +944,8 @@ Note that the \code{summarize()}, \code{check()} and \code{visualize()} function
 \frame{\includegraphics[width=7.5cm,page=5]{dataMaid_presidentData.pdf}}
 \frame{\includegraphics[width=7.5cm,page=6]{dataMaid_presidentData.pdf}}
 \end{center}
-\caption{Part of the data overview report generated for the \code{presidentData} dataset. Here, we see pages 4 and 5 from the \textit{Variable list}.}
+\caption{Part of the data overview report generated for the \code{presidentData} dataset. Here, we see pages 4 and 5 from the \textit{Variable list}. Larger versions of the pages can be seen in
+  Appendix~\ref{sec:appendix2}}
 \label{fig:bigExampleP45}
 \end{figure}
 
@@ -942,16 +970,18 @@ We discuss the results of a data overview report generated for this dataset belo
 \item We would like the report to be called "Dirty president data" in order to reflect that it is, indeed, a report about dirty data about presidents.
 \end{enumerate}
 Incoorporating these three customizations, we can load the data and generate a report by calling:
+
 \begin{Schunk}
 \begin{Sinput}
 R> data(presidentData)
 R> makeDataReport(presidentData, replace = TRUE, 
-   treatXasY = list("Name" = "character"),
-   checks = setChecks(character = defaultCharacterChecks(remove = "identifyLoners")),
-   reportTitle = "Dirty president data")
++    treatXasY = list("Name" = "character"),
++    checks = setChecks(character = defaultCharacterChecks(remove = "identifyLoners")),
++    reportTitle = "Dirty president data")
 \end{Sinput}
 \end{Schunk}
-The first four pages of the resulting report can be inspected in Figure \ref{fig:bigExampleP0123}. Note that all the customized settings can be identified from the first two pages, without having to read through the report: The new title is written on the front page, the check settings are displayed in the \textit{Checks performed} table and the strategy for handling \code{Name} variables is documented below this table. 
+
+The first four pages of the resulting report can be inspected in Figures \ref{fig:bigExampleP01} and \ref{fig:bigExampleP23}. Note that all the customized settings can be identified from the first two pages, without having to read through the report: The new title is written on the front page, the check settings are displayed in the \textit{Checks performed} table and the strategy for handling \code{Name} variables is documented below this table. The full data report, except for the front page, is available in Appendix \ref{sec:appendix2}. 
 
 The first problem that can be spotted from these first four pages is the surprising number of observations: Anno 2017, there have only been 45 US presidents. Therefore, having 46 observations reveals that the dataset contains a blind passenger. For instance, if the dataset was constructed as a subset of a more general "World leaders" dataset, this type of problem could occur due to wrongful nationality classification. We return to the extra president issue below. 
 
@@ -971,21 +1001,31 @@ Figure \ref{fig:bigExampleP45} presents the remaining two pages with variable pr
 A lot of these mistakes are easily fixable, and we will do so below. However, some of them require more delicate knowledge of the subject matter. For instance, \code{ethnicity} is very reasonably marked as a potentially problematic variable as it includes only a single observation of "African American". However, a human reading this report will know that this does \textit{not} reflect a mistake in the data, but rather a perculiarity in the real world, and as such, it should not be cleaned out. 
 
 A few of the identified problems have easy fixes that need no further attention. We remove the prefixed whitespace from Truman's name, fix the misspelling of New York, convert the binary variable \code{assasinationAttempt} to a factor and change the class of the \code{ageAtInauguration} variable to numeric:
+
 \begin{Schunk}
 \begin{Sinput}
-R> presidentData$lastName[presidentData$lastName == " Truman"] <- "Truman"
-R> presidentData$stateOfBirth[presidentData$stateOfBirth == "New york"] <- "New York"
-R> presidentData$assassinationAttempt <- factor(presidentData$assassinationAttempt)
-R> presidentData$ageAtInauguration <- as.numeric(presidentData$ageAtInauguration)
+R> presidentData$lastName[presidentData$lastName == " Truman"] <- 
++    "Truman"
+R> presidentData$stateOfBirth[presidentData$stateOfBirth == "New york"] <- 
++    "New York"
+R> presidentData$assassinationAttempt <- 
++    factor(presidentData$assassinationAttempt)
+R> presidentData$ageAtInauguration <- 
++    as.numeric(presidentData$ageAtInauguration)
 \end{Sinput}
 \end{Schunk}%$
+
 Please note that if \code{ageAtInauguration} had been a \code{factor} rather than a \code{character} variable, an additional inner call should be added in order to ensure no conversion issues:
+
 \begin{Schunk}
 \begin{Sinput}
->R presidentData$ageAtInauguration <- as.numeric(as.character(presidentData$ageAtInauguration))
+>R presidentData$ageAtInauguration <- 
++    as.numeric(as.character(presidentData$ageAtInauguration))
 \end{Sinput}
 \end{Schunk}
+
 Moving forward, we might be interested in inspecting the contents of the "."-coded entry of \code{firstName} closer, as we \textit{do} know the first names of all the US presidents. We look at the last name for this president and fill it in correctly:
+
 \begin{Schunk}
 \begin{Sinput}
 R> presidentData$lastName[presidentData$firstName == "."]
@@ -997,13 +1037,17 @@ R> presidentData$lastName[presidentData$firstName == "."]
 R> presidentData$firstName[presidentData$firstName == "."] <- "Donald"
 \end{Sinput}
 \end{Schunk}
+
 Next up is the unlikely US president birth day of March 1, 1300. In order to understand if this is a generally problematic observation, or if it is just a mistyped observation, we inspect the full data entry for this person. We can do this using the usual \proglang{R} selection syntax as above, or we can use the value of a \code{identifyOutliers} call to select this observation:
+
 \begin{Schunk}
 \begin{Sinput}
 R> birthdayOutlierVal <- identifyOutliers(presidentData$birthday)$problemValues
 \end{Sinput}
 \end{Schunk}
+
 Now, we have the outlier birthday stored and can use it to select and print the appropriate observation in the dataset:
+
 \begin{Schunk}
 \begin{Sinput}
 > presidentData[presidentData$birthday == birthdayOutlierVal, ]
@@ -1017,13 +1061,18 @@ Now, we have the outlier birthday stored and can use it to select and print the 
 46           8+0i
 \end{Soutput}
 \end{Schunk}%$
+
 We see that this is not a proper US president and thus, it is likely to be explanation of the faulty number of observations in the dataset. Therefore, we drop this observation from the dataset, e.g. by overwriting the dataset with a selection of all the other observations:
+
 \begin{Schunk} 
 \begin{Sinput}
-R> presidentData <- presidentData[presidentData$birthday != birthdayOutlierVal, ]
+R> presidentData <- 
++    presidentData[presidentData$birthday != birthdayOutlierVal, ]
 \end{Sinput}
 \end{Schunk} %$
+
 Now, all that is left is the \code{presidencyYears} variable. For this variable, we are concerned about three different things: First, it has some quite small outlier values. We need to identify whether these are really true. Secondly, one president is registered to have an infinite presidency, this should also be fixed. Third, we see from the summary table that there are two missing observations for this variable. One might have been fixed by removing Aragorn from the dataset, so we start by inspecting if this is indeed the case by calling \code{summarize()} interactively:
+
 \begin{Schunk}
 \begin{Sinput}
 >R summarize(presidentData$presidencyYears)
@@ -1043,7 +1092,9 @@ $minMax
 Min. and max.: 0; Inf
 \end{Soutput}
 \end{Schunk} %$
+
 We see that there is one less missing value and that the small and large values pertain. Therefore, we look at all the observations that cause worry, namely the outliers and the missing value:
+
 \begin{Schunk}
 \begin{Sinput}
 R> presidentData[is.na(presidentData$presidencyYears) | 
@@ -1062,114 +1113,60 @@ R> presidentData[is.na(presidentData$presidencyYears) |
 45    Donald    Trump              NA
 \end{Soutput}
 \end{Schunk}
+
 We see that Obama is listed as being president forever, which history has proven to be wrong. Trump, on the other hand, has a missing value for his presidency duration, which is in fact reasonable as we cannot know yet. Presidents William Harrison, Zachary Taylor, James Garfield, Warren Harding and Gerald Ford were identified to have were brief presidencies, but these are not mistakes, as a textbook look-up can tell us. Thus the only mistake left to fix is Obama's infinite presidency:
+
 \begin{Schunk}
 \begin{Sinput}
 R> presidentData$presidencyYears[presidentData$lastName == "Obama"] <- 8
 \end{Sinput}
 \end{Schunk}
-This does not mean we are necessarily done with the data cleaning process: There might be problems that \pkg{dataMaid} was not able to identify. But we have fixed some key issues in the data and thereby given ourselves a chance of a smoother sailing in the next steps of the data analysis. 
+
+This does not mean we are necessarily done with the data cleaning process: There might be problems that \pkg{dataMaid} was not able to identify. But we have fixed some key issues in the data and thereby given ourselves a chance of a smoother sailing in the next steps of the data analysis. Finally, we create a new data report, adding the suffix "cleaned" to the title, as well as the file name, so that we have documentation of the current state of the dataset:
+
+\begin{Schunk}
+\begin{Sinput}
+R> makeDataReport(presidentData, vol = "_cleaned", 
++   reportTitle = "Dirty president data - cleaned")
+\end{Sinput}
+\end{Schunk}
+
+This will create a new data report stored in the file \code{dataMaid_presidentData_cleaned.pdf}.  
 
 \section{Rubbing down data cleaning challenges}
 \label{sec:specificExamples}
 
 Finally, we present a few examples of how to make \pkg{dataMaid}
-solve specific issues related to data cleaning. First, we discuss the
-challenges related to cleaning large datasets, particularly in terms
-of memory use and computation speed. Next, we show how \pkg{dataMaid}
-can be used for problem-flagging. Lastly, we discuss how the
+solve specific issues related to data documentation and -cleaning. First, we discuss how the data report generation functions of \pkg{dataMaid} can be used in a data science workflow where one is not necessarily interested in inspecting the results right away and most commands are run automatically. Next, we show how \pkg{dataMaid} can be used for problem-flagging. Lastly, we discuss how the
 \pkg{dataMaid} output document can be included in other \proglang{R} markdown
 documents as a way to produce clear and concise documentation of a
 dataset.
 
-\subsection{Cleaning large datasets}
-If the dataset becomes very large, the standard use of \code{clean()}
-outlined above might not be ideal. If there is a large number of
-variables, creation of the \proglang{R} markdown document might be quite
-slow, while a large number of observations will generally affect the
-rendering time of the document. This issue is especially relevant to
-Windows users, where memory usage is not very efficient. The problem is that older,
-32-bit versions of Windows generally cannot access all physical RAM,
-while newer 64-bit versions of Windows cannot access virtual memory. Therefore,
-memory allocation issues becomes even more pressing under Windows.
-
-Below we give a few practical examples of ways to deal with large
-data, while wishing to still produce (potentially very long) data
-cleaning overview documents. Note that the interactive tools of
-\pkg{dataMaid} can be used as usual or sequentially in small subsets
-of the large dataset, if no overview documents are needed.
-
-\subsubsection{Handling the figures}
-Though figures give a nice overview of each variable, they are also
-quite heavy objects in terms of memory allocation. Therefore, it might
-be beneficial to not include figures in the \pkg{dataMaid} outputs for
-very large datasets. This is controlled via the \code{mode} argument:
+\subsection[Incoorporating dataMaid in a programmer's workflow]{Incoorporating \pkg{dataMaid} in a programmer's workflow}
+The default settings of \code{makeDataReport()} have been set to facilitate easy and quick data report generation, but unfortunately, this also means that they might not be ideal for a more programming-oriented workflow, where the function might not be called by a human, but is part of a larger scheme. For instance, one might be interested in automatically running \code{makeDataReport()} on all datasets received from a certain client and returning a data report for them to inspect and comment before ever looking at the data. In this scenario, there are a few issues with the standard data report:
+\begin{enumerate}
+\item After rendering, the report is automatically opened. This is not very useful, if the processes are supposed to run in the background.
+\item The report generation produces messages to the console while producing and rendering the report.
+\item Unless specifically told otherwise, every report created for identically named datasets will have the same file name.
+\end{enumerate}
+Please note that the data report does contain information about who, when and how concerning its generation. These three problems can easily be solved by use of the arguments of \code{makeDataReport}. Whether or not the outputted file is opened can be controlled through the argument \code{open}. How much information is printed in the console can be adjusted by using the argument \code{quiet}. And convenintely introducing small alterations of the file names can be obtained by use of the \code{vol} argument. For instance, we can make a data report for \code{toyData} that is not opened automatically, produces no output to the console and includes the date and time of its creation in the file name:
 
 \begin{Schunk}
 \begin{Sinput}
-R> clean(toyData, mode = c("summarize", "check"))
+>R makeDataReport(toyData, open = FALSE, quiet = "silent",
++   vol = paste("_", format(Sys.time(), "%m-%d%-%y_%H.%M"), sep = ""))
 \end{Sinput}
 \end{Schunk}
 
-If figures are indeed needed, a different approach is to choose the
-less memory heavy standard \proglang{R} figure style instead of the
-\pkg{ggplot2} figures that are the default option in \code{clean()}. This
-can be done by setting the \code{allVisuals = "basicVisual"} argument:
+Now, if e.g. the report is created at 3 pm on October 31, 2017, its file will be named \code{dataMaid_toyData_10-31-2017_15.00.pdf}, making it easy spot. 
 
-\begin{Schunk}
-\begin{Sinput}
-R> clean(toyData, allVisuals = "basicVisual")
-\end{Sinput}
-\end{Schunk}
-
-Of course, even less heavy plots might be achieved by writing new
-\code{visualFunction}s, using the guidelines from Section
-\ref{sec:functionTemplates}. For instance, a future extension of
-\pkg{dataMaid} might be the inclusion of ASCII plots, as
-e.g., represented in the \proglang{R} package \pkg{txtplot} \citep{txtplot}.
-
-%\hl{I really feel like we should do some benchmarking here, maybe just on toyData, both in terms of speed and memory use. I would make the recommendations more trustworthy and serious.}
-
-\subsubsection{Economic memory use}
-Another solution, which is
-especially relevant to Windows users due to %the unfortunate
-the memory handling on this operating system,
-%combination of memory control in this operating system and
-%\proglang{R},
-is simply splitting the two steps performed
-by \code{clean()}, namely producing the \proglang{R} markdown file and rendering it
-afterwards. If the \code{rmarkdown} file is very long, as it will
-typically be for very large datasets, keeping this file open in memory
-wastes precious memory capacities. Therefore, we advise users to
-instead split the two steps as shown in the following.
-
-\begin{Schunk}
-\begin{Sinput}
-R> clean(toyData, render = FALSE, openResult = FALSE)
-R> render("dataMaid_toyData.Rmd", quiet = FALSE)
-\end{Sinput}
-\end{Schunk}
-
-This also deals with the fact that \pkg{dataMaid} can produce
-\proglang{R} markdown files that supersedes the upper size limit of code editors, e.g.,
-RStudio, which currently has an editor file size limit of 5MB. %\hl{dette giver
-%ingen mening uden en præcision? "upper size limit" af hvad? Se udkommenteret
-%kommentar.}
-% of RStudio,
-%which is currently \hl{find number} GBs (using RStudio version
-%1.0.44).
-%\hl{Is this maybe too editor specific? On the other hand, a
-%  lot of people do use RStudio...}.
 
 \subsection[Using dataMaid for problem flagging]{Using \pkg{dataMaid} for problem flagging}
 If the data is large, but memory issues and computation time are less
 of an issue than the time it takes a human to look through the data
 cleaning document, a viable solution might be not to include all
-information about all variables. % Or even for more reasonably sized
-% datasets, sometimes a brief overview of the most pressing issues can
-% be useful.
-This can be achieved by using the \code{onlyProblematic} argument in
-\code{clean()}. By specifying \code{onlyProblematic = TRUE}, only
+information about all variables. This can be achieved by using the \code{onlyProblematic} argument in
+\code{makeDataReport()}. By specifying \code{onlyProblematic = TRUE}, only
 variables that raise a flag in the checking steps will be summarized
 and visualized. But perhaps we are not even interested in obtaining
 general information about these variables, but only in getting a quick
@@ -1178,19 +1175,19 @@ controlling the \code{mode} argument:
 
 \begin{Schunk}
 \begin{Sinput}
-R> clean(toyData, onlyProblematic = TRUE, mode = c("check"))
+R> makeDataReport(toyData, onlyProblematic = TRUE, mode = c("check"))
 \end{Sinput}
 \end{Schunk}
 
 Now only the checking results are printed, and only for variables
 where problems were identified. An even more minimal output can be
 generated by also leaving out the checking results --- then
-\code{clean()} essentially just produces a document with a list of the variable names
+\code{makeDataReport()} essentially just produces a document with a list of the variable names
 that should be investigated further:
 
 \begin{Schunk}
 \begin{Sinput}
-R> clean(toyData, onlyProblematic = TRUE, mode = NULL)
+R> makeDataReport(toyData, onlyProblematic = TRUE, mode = NULL)
 \end{Sinput}
 \end{Schunk}
 
@@ -1217,24 +1214,24 @@ R> sapply(toyChecks, foo)
 \end{Schunk}
 
 and we find that only a single variable in \code{toyData}, \code{var6} (for which all
-observations have the value \code{"Irrelevant"}), is problem-free.
+observations have the value \code{"Irrelevant"}), is problem-free, using the default checks.
 
 
-\subsection[Including dataMaid documents in other files]{Including \pkg{dataMaid} documents in other files}
-Sometimes, a \pkg{dataMaid} document might be a useful addition to a
+\subsection[Including dataMaid reports in other files]{Including \pkg{dataMaid} reports in other files}
+Sometimes, a \pkg{dataMaid} report might be a useful addition to a
 more general overview document, including additional information such
 as pairwise association plots, time series plots, or exploratory
 analysis results.  \pkg{dataMaid} can produce a document to be
 included in other \proglang{R} markdown files by setting the
-\code{standAlone} argument in \code{clean()} to remove the preamble
+\code{standAlone} argument in \code{makeDataReport()} to remove the preamble
 from the output \proglang{R} markdown file. Note that it is still
 necessary to indicate which \proglang{R} markdown output type is
 created; the pdf and html \proglang{R} markdown styles are
-unfortunately not identical.
+unfortunately not identical. Note that the \code{word} output option is based on the \code{html} markdown style. 
 
 If it is important that the embedded \pkg{dataMaid} document can be
-rendered to either of these two file types, we recommend setting
-\code{twoCols = FALSE} and \code{output = "html"} in \code{clean()}, thereby
+rendered to any of these three file types, we recommend setting
+\code{twoCols = FALSE} and \code{output = "html"} in \code{makeDataReport()}, thereby
 essentially removing almost all output type specific formatting code
 from the generated \proglang{R} markdown file.
 
@@ -1262,14 +1259,13 @@ header-includes:
 ```
 \end{Verbatim}
 }
-%\hl{Use proper formatting here. How do we do non-R code?}
 
 In the this example, the \code{dataMaid\_toyData.Rmd} file could have
 been created as follows:
 
 \begin{Schunk}
 \begin{Sinput}
-R> clean(toyData, standAlone = FALSE)
+R> makeDataReport(toyData, standAlone = FALSE)
 \end{Sinput}
 \end{Schunk}
 
@@ -1277,22 +1273,33 @@ and the more minimal, html-style \proglang{R} markdown file described above can 
 
 \begin{Schunk}
 \begin{Sinput}
-R> clean(toyData, standAlone = FALSE, output = "html", twoCols = FALSE)
+R> makeDataReport(toyData, standAlone = FALSE, output = "html", 
++    twoCols = FALSE)
 \end{Sinput}
 \end{Schunk}
 
-Note that with the latter option, no special YAML preamble is needed in the \proglang{R} markdown document.
-% \hl{don't end on code.}
+Note that with the latter option, no special YAML preamble is needed in the \proglang{R} markdown document. 
 
+Alternatively, one can create the usual output report, not render it and then manually edit the produced rmarkdown file as wished. This can be done with the following command:
+If one works with a dataset containing a very large number of variables, it can be practical to split up two of the procedures undertaken by the \code{makeDataReport()} function, namely creating- and rendering the data report. 
+\begin{Schunk}
+\begin{Sinput}
+R> makeDataReport(toyData, render = FALSE, openResult = FALSE)
+\end{Sinput}
+\end{Schunk}
+After editing, the file can be rendered by calling the \code{render} function:
+\begin{Schunk}
+\begin{Sinput}
+R> render("dataMaid_toyData.Rmd", quiet = FALSE)
+\end{Sinput}
+\end{Schunk}
 
 
 \section{Concluding remarks}
 \label{conclusion}
-%\hl{Is this a thing in this journal? Otherwise, we might want to make some final remarks in the previous sections. Feels awkward to end with a bunch of code and some super specific examples...}
 
 In this paper we have introduced the \proglang{R} package \pkg{dataMaid}
-for performing reproducible error detection and data cleaning
-summaries. The package provides a general and extendable framework for
+for performing reproducible error detection, data overview reports and data cleaning. The package provides a general and extendable framework for
 identifying potential errors and for creating human-readable summary
 documents that will help investigators to identify possible errors in
 the data.
@@ -1306,7 +1313,7 @@ repeated measurement, where the visualizations --- in particular ---
 might be improved by visualizing measurements over time. In addition,
 an online \pkg{shiny} \citep{shiny} application where users that are not
 \proglang{R}-savvy can upload their data and get a data cleaning
-document is currently planned.
+document is currently being developed.
 
 
 
@@ -1335,14 +1342,13 @@ document is currently planned.
 %0cm 0cm 2cm,pages={2-5},pagecommand={}]{pdfdocument}
 
 % \section{Appendix A: cleaning the toyData data frame} \label{sec:appendix1}
-\includepdf[pages=2, pagecommand={\section{Appendix A: cleaning the toyData data frame} \label{sec:appendix1}}, frame=true, noautoscale=true, scale=0.7]{dataMaid_toyData.pdf}
+\includepdf[pages=2, pagecommand={\section{Data report for the toyData dataset} \label{sec:appendix1}}, frame=true, noautoscale=true, scale=0.7]{dataMaid_toyData.pdf}
 \includepdf[pages=3-4, pagecommand={}, frame=true, noautoscale=true, scale=0.7,pagecommand={}]{dataMaid_toyData.pdf}
 
 
 
-\includepdf[pages=2, pagecommand={\section{Appendix B: User-extended cleaning of
-  exampleData} \label{sec:appendix2}}, frame=true, noautoscale=true, scale=0.7]{dataMaid_exampleData.pdf}
-\includepdf[pages=3-, pagecommand={}, frame=true, noautoscale=true, scale=0.7]{dataMaid_exampleData.pdf}
-%\hl{Data cleaning with user supplied extensions here}
+\includepdf[pages=2, pagecommand={\section{Data report for the presidentData dataset} \label{sec:appendix2}}, frame=true, noautoscale=true, scale=0.7]{dataMaid_presidentData.pdf}
+\includepdf[pages=3-6, pagecommand={}, frame=true, noautoscale=true, scale=0.7]{dataMaid_presidentData.pdf}
+
 
 \end{document}
