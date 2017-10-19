@@ -274,7 +274,7 @@ makeDataReport <- function(data, output=c("pdf", "word", "html"), render=TRUE,
     
     #perhaps check if quiet argument is valid (i.e. TRUE/FALSE) here?
   }
-  if (silent) nagUser <- FALSE
+ 
   
   
   ##Match arguments
@@ -309,8 +309,9 @@ makeDataReport <- function(data, output=c("pdf", "word", "html"), render=TRUE,
   #######Secret arguments that were removed for the users but are still implemented#########
   ##########################################################################################
   
-  #If we would ever want (Windows) users not to be nagged
+  #If the users don't ask for silence, they will be nagged.
   nagUser <- TRUE
+  if (silent) nagUser <- FALSE
   
   ##########################################################################################
   ##########################################################################################
