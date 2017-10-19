@@ -98,6 +98,16 @@ visualize <- function(v, vnam = NULL, visuals = setVisuals(),
 
 #Methods for each variable type
 
+#Catch non-supported classes, do nothing and throw a warning:
+#' @export
+visualize.default <-  function(v, vnam = NULL, visuals = setVisuals(),
+                               doEval = TRUE, ...) {
+  if (is.null(vnam)) vnam <- deparse(substitute(v))
+  useVisual <- visuals[[1]]
+  eval(call(useVisual, v = v, vnam = vnam, doEval = doEval))
+}
+
+
 #' @export
 visualize.character <- function(v, vnam = NULL, visuals = setVisuals(),
                                 doEval = TRUE, characterVisual = NULL, ...) {

@@ -27,13 +27,21 @@
 #'
 #' @inheritParams standardVisual
 #' @importFrom stats na.omit
-#' @importFrom graphics plot hist
+#' @importFrom graphics plot hist plot.new text
 #' @export
 basicVisual <- function(v, vnam, doEval = TRUE) UseMethod("basicVisual")
 
 
 #Assign methods to generic standardVisual function
 
+#' @export
+basicVisual.default <- function(v, vnam, doEval = TRUE) {
+  thisCall <- call("graphicsEmptyPlot", v = v)
+  if (doEval) {
+    return(eval(thisCall))
+  } else return(deparse(thisCall))
+}
+  
 #' @export
 basicVisual.character <- function(v, vnam, doEval = TRUE) basicVisualCFLB(v, vnam, doEval=doEval)
 
@@ -101,4 +109,13 @@ basicVisualD <- function(v, vnam, doEval = TRUE) {
   if (doEval) {
     return(eval(thisCall))
   } else return(deparse(thisCall))
+}
+
+
+#Make empty plot
+graphicsEmptyPlot <- function(v) {  
+  vClass <- class(v)[1]
+  plot.new() + text(x = 0.5, y = 0.5, offset = 0, 
+                    labels = paste("No plot available for variables",
+                                   "of class:", vClass))
 }

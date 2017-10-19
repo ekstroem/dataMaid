@@ -28,12 +28,20 @@
 #' }
 #' @seealso \code{\link{visualize}}, \code{\link{basicVisual}}
 #'
-#' @importFrom ggplot2 qplot geom_bar geom_rect ylab xlab aes_string ggplot 
+#' @importFrom ggplot2 qplot geom_bar geom_rect ylab xlab aes_string ggplot aes
 #' @importFrom stats na.omit
 #' @export
 standardVisual <- function(v, vnam, doEval = TRUE) UseMethod("standardVisual")
 
 #assign methods to generic standardVisual function
+
+#' @export 
+standardVisual.default <- function(v, vnam, doEval = TRUE) {
+  thisCall <- call("ggEmptyPlot", v = v, vnam = vnam)
+  if (doEval) {
+    return(eval(thisCall))
+  } else return(deparse(thisCall))
+}
 
 #' @export
 standardVisual.character <- function(v, vnam, doEval = TRUE) standardVisualCFLB(v, vnam, doEval=doEval)
@@ -134,5 +142,15 @@ ggAggBarplot <- function(data, vnam) {
   p
 }
 
+ggEmptyPlot <- function(v, vnam) {
+  vClass <- class(v)[1]
+  p <- ggplot(data.frame(x = 1, y = 1), aes_string(x = "x", y = "y")) +
+    geom_text(aes(label = paste("No plot available for variables",
+                                "of class:", vClass))) +
+    theme(line = element_blank(),
+          text = element_blank(),
+          title = element_blank()) 
+  p
+}
 
 
