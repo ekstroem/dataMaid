@@ -29,7 +29,10 @@
 #' @seealso \code{\link{visualize}}, \code{\link{basicVisual}}
 #'
 #' @importFrom ggplot2 qplot geom_bar geom_rect ylab xlab aes_string ggplot aes
+<<<<<<< HEAD
 #' theme element_blank geom_text 
+=======
+>>>>>>> 5cdd0679a87176f4f795f0dd82650f695b04f529
 #' @importFrom stats na.omit
 #' @export
 standardVisual <- function(v, vnam, doEval = TRUE) UseMethod("standardVisual")
@@ -153,6 +156,9 @@ ggEmptyPlot <- function(v, vnam) {
           title = element_blank()) 
   p
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5cdd0679a87176f4f795f0dd82650f695b04f529
 
 
