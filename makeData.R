@@ -139,11 +139,11 @@ presidentData$birthday <- as.Date(presidentData$birthday, format = "%m/%d/%Y")
 presidentData$dateOfDeath <- as.Date(presidentData$dateOfDeath, format = "%m/%d/%Y")
 presidentData$presidencyBeginDate <- as.Date(presidentData$presidencyBeginDate, format = "%m/%d/%Y")
 presidentData$presidencyEndDate <- as.Date(presidentData$presidencyEndDate, format = "%m/%d/%Y")
-presidentData$presidencyYears <- round(as.numeric(presidentData$presidencyEndDate - 
-                                               presidentData$presidencyBeginDate)/365.25,0)
+presidentData$presidencyYears <- floor(as.numeric(presidentData$presidencyEndDate - 
+                                               presidentData$presidencyBeginDate)/365.25)
 presidentData$presidencyYears[presidentData$lastName == "Obama"] <- Inf
-presidentData$ageAtInauguration <- round(as.numeric(presidentData$presidencyBeginDate - 
-                                                presidentData$birthday)/365.25,0)
+presidentData$ageAtInauguration <- floor(as.numeric(presidentData$presidencyBeginDate - 
+                                                presidentData$birthday)/365.25)
 presidentData$orderOfPresidency <- as.factor(presidentData$orderOfPresidency)
 class(presidentData$lastName) <- class(presidentData$firstName) <- "Name"
 presidentData$dayOfDeath <- NULL
@@ -155,7 +155,7 @@ presidentData$favoriteNumber[presidentData$lastName == "Jefferson"] <- sqrt(as.c
 presidentData$sex <- factor(presidentData$sex)
 presidentData$ethnicity <- factor(presidentData$ethnicity)
 presidentData$ageAtInauguration <- as.character(presidentData$ageAtInauguration)
-presidentData$ageAtInauguration[presidentData$firstName == "Aragorn"] <- "88"
+presidentData$ageAtInauguration[presidentData$firstName == "Aragorn"] <- "87"
 presidentData$presidencyBeginDate <- NULL
 presidentData$presidencyEndDate <- NULL
 presidentData$dateOfDeath <- NULL
