@@ -155,11 +155,13 @@ presidentData$favoriteNumber[presidentData$lastName == "Jefferson"] <- sqrt(as.c
 presidentData$sex <- factor(presidentData$sex)
 presidentData$ethnicity <- factor(presidentData$ethnicity)
 presidentData$ageAtInauguration <- as.character(presidentData$ageAtInauguration)
+presidentData$ageAtInauguration[presidentData$firstName == "Aragorn"] <- "88"
 presidentData$presidencyBeginDate <- NULL
 presidentData$presidencyEndDate <- NULL
 presidentData$dateOfDeath <- NULL
 presidentData$lastName[presidentData$lastName == "Truman"] <- " Truman"
 presidentData$assassinationAttempt[presidentData$lastName == "Obama"] <- 0
+
 save(presidentData, file="data/presidentData.rda")
 
 
