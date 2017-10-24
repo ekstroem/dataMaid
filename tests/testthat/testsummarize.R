@@ -20,10 +20,10 @@ test_that("summarize returns a list for (most) atomic vectors", {
     expect_is(summarize(typel), "list")
     expect_is(summarize(typei), "list")
     expect_is(summarize(typed), "list")
-    expect_error(summarize(typec))
+    expect_warning(summarize(typec))
     expect_is(summarize(types), "list")
-    expect_error(summarize(typelist))
-    expect_error(summarize(typer))    
+    expect_warning(summarize(typelist))
+    expect_warning(summarize(typer))    
 })
 
 ## Summarize the right number of tests. This needs to be updated 

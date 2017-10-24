@@ -20,10 +20,10 @@ test_that("check returns a list for (most) atomic vectors", {
     expect_is(check(typel), "list")
     expect_is(check(typei), "list")
     expect_is(check(typed), "list")
-    expect_error(check(typec))
+    expect_warning(check(typec))
     expect_is(check(types), "list")
-    expect_error(check(typelist))
-    expect_error(check(typer))    
+    expect_warning(check(typelist))
+    expect_warning(check(typer))    
 })
 
 ## Check the right number of tests. This needs to be updated 
