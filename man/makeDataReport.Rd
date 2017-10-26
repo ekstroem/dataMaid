@@ -4,23 +4,27 @@
 \alias{makeDataReport}
 \title{Produce a data report}
 \usage{
-makeDataReport(data, output = c("pdf", "word", "html"), render = TRUE,
-  useVar = NULL, ordering = c("asIs", "alphabetical"),
-  onlyProblematic = FALSE, labelled_as = c("factor"),
-  mode = c("summarize", "visualize", "check"), smartNum = TRUE,
-  preChecks = c("isKey", "isSingular", "isSupported"), file = NULL,
-  replace = FALSE, vol = "", standAlone = TRUE, twoCol = TRUE,
-  quiet = TRUE, openResult = TRUE, summaries = setSummaries(),
-  visuals = setVisuals(), checks = setChecks(), listChecks = TRUE,
-  maxProbVals = 10, maxDecimals = 2, addSummaryTable = TRUE,
-  reportTitle = NULL, treatXasY = NULL, ...)
+makeDataReport(data, output = NULL, render = TRUE, useVar = NULL,
+  ordering = c("asIs", "alphabetical"), onlyProblematic = FALSE,
+  labelled_as = c("factor"), mode = c("summarize", "visualize", "check"),
+  smartNum = TRUE, preChecks = c("isKey", "isSingular", "isSupported"),
+  file = NULL, replace = FALSE, vol = "", standAlone = TRUE,
+  twoCol = TRUE, quiet = TRUE, openResult = TRUE,
+  summaries = setSummaries(), visuals = setVisuals(),
+  checks = setChecks(), listChecks = TRUE, maxProbVals = 10,
+  maxDecimals = 2, addSummaryTable = TRUE, reportTitle = NULL,
+  treatXasY = NULL, ...)
 }
 \arguments{
 \item{data}{The dataset to be checked. This dataset should be of class \code{data.frame},
 \code{tibble} or \code{matrix}. If it is of classs \code{matrix}, it will be converted to a
 \code{data.frame}.}
 
-\item{output}{Output format. Options are \code{"pdf"} (the default), \code{"word"} (.docx) and \code{"html"}.}
+\item{output}{Output format. Options are \code{"pdf"}, \code{"word"} (.docx) and \code{"html"}. If \code{NULL} (the default), 
+the output format depends two sequential checks. First, whether a LaTeX installation is available, 
+in which case \code{pdf} output is chosen. Secondly, if no LaTeX installation
+is found, then if the operating system is Windows, \code{word} output is used. Lastly, if neither of these 
+checks are positive, \code{html} output is used.}
 
 \item{render}{Should the output file be rendered (defaults to \code{TRUE}),
 i.e. should a pdf/word/html document be generated and saved to the disc?}

@@ -21,8 +21,12 @@
 #' \code{data.frame}.
 #'
 #' @param output
-#' Output format. Options are \code{"pdf"} (the default), \code{"word"} (.docx) and \code{"html"}. 
-#'
+#' Output format. Options are \code{"pdf"}, \code{"word"} (.docx) and \code{"html"}. If \code{NULL} (the default), 
+#' the output format depends two sequential checks. First, whether a LaTeX installation is available, 
+#' in which case \code{pdf} output is chosen. Secondly, if no LaTeX installation
+#' is found, then if the operating system is Windows, \code{word} output is used. Lastly, if neither of these 
+#' checks are positive, \code{html} output is used. 
+#' 
 #' @param render Should the output file be rendered (defaults to \code{TRUE}),
 #' i.e. should a pdf/word/html document be generated and saved to the disc?
 #'
@@ -211,7 +215,7 @@
 #' @importFrom utils packageVersion sessionInfo capture.output packageDescription
 #' @importFrom magrittr %>%
 #' @export
-makeDataReport <- function(data, output=c("pdf", "word", "html"), render=TRUE,
+makeDataReport <- function(data, output=NULL, render=TRUE,
                   useVar=NULL, ordering=c("asIs", "alphabetical"), onlyProblematic=FALSE,
                   labelled_as=c("factor"),
                   mode=c("summarize", "visualize", "check"),
@@ -271,7 +275,6 @@ makeDataReport <- function(data, output=c("pdf", "word", "html"), render=TRUE,
     quiet <- TRUE
   } else {
     silent <- FALSE
-    
     #perhaps check if quiet argument is valid (i.e. TRUE/FALSE) here?
   }
  
@@ -279,10 +282,39 @@ makeDataReport <- function(data, output=c("pdf", "word", "html"), render=TRUE,
   
   ##Match arguments
   ordering <- match.arg(ordering)
-  output <- match.arg(output)
   labelled_as <- match.arg(labelled_as)
   #quiet <- match.arg(quiet)
   
+  
+  #Set output default if output is NULL or check for valid values otherwise
+  makeOutputWarning <- FALSE
+  if (!is.null(output)) {
+    if (length(output) > 1) {
+      output <- output[1]
+      warning("Output argument was wrongfully given as a vector. Only the first entry was used.")
+    }
+    if (!(output %in% c("pdf", "html", "word"))) {
+      output <- NULL
+      makeOutputWarning <- TRUE
+    } 
+  }
+  if (is.null(output)) {
+    xelatexTest <- suppressWarnings(system("xelatex --version", show.output.on.console = FALSE)) == 0
+    pdflatexTest <- suppressWarnings(system("pdflatex --version", show.output.on.console = FALSE)) == 0
+    lualatexTest <- suppressWarnings(system("lualatex --version", show.output.on.console = FALSE)) == 0
+    if (any(c(xelatexTest, pdflatexTest, lualatexTest))) {
+      output <- "pdf"
+    } else {
+      if (identical(as.character(Sys.info()["sysname"]),"Windows")) {
+        output <- "word"
+      } else output <- "html"
+    }
+    if (makeOutputWarning) {
+      warning(paste("No valid output option was chosen. ", 
+                    "Therefore, output was set to ", output, ".", sep = ""))
+    }
+  }
+
   ## Extract the dataframe name
   dfname <- deparse(substitute(data))
   
