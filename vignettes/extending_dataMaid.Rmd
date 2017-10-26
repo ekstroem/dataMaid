@@ -2,20 +2,27 @@
 title: "Extending dataMaid"
 author: "Anne Helby Petersen and Claus Ekstrom"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+    toc: true
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = TRUE)
+library(dataMaid)
+```
+
 
 ##Introduction
 
-`dataMaid` can be used as a user-friendly, self-contained package, as shown in the previous sections. However, `dataMaid` is fully customizable and `clean()` is mainly a tool for formatting the
+`dataMaid` can be used as a user-friendly, self-contained package, as shown in the previous sections. However, `dataMaid` is fully customizable and `makeDataReport()` is mainly a tool for formatting the
 results from various checking, summary,  and visualization
 functions. Thus, the actual work underlying a `dataMaid` output file
-can be anything --- depending on the arguments given to `clean()`
+can be anything --- depending on the arguments given to `makeDataReport()`
 --- and user made functions are easily added to the
 summarize/visualize/check-function arguments, as discussed previously.
 However, the functions used in the SVC steps must adhere
@@ -24,54 +31,35 @@ therefore, we will now present how `summaryFunction`s,
 `visualFunction`s and `checkFunction`s are made.
 
 
-This section consists of two parts. First, we describe how customized
+This vignette consists of two parts. First, we describe how customized
 `summaryFunction`s, `visualFunction`s and
 `checkFunctions` can be made, including an introduction to a few
 convenient tools available in `dataMaid` for aiding SVC-function
-construction.  Table \ref{table.functionTypes} serves as an overview
+construction.  The table below serves as an overview
 of the internals of these three central function types. Secondly, we
 turn to a worked example of how to use custom made functions in
 practice; Four new SVC functions are defined and used, both
-interactively and in `clean()`.
-
-\begin{table}[htbp]
-\footnotesize
-\bgroup
-\def\arraystretch{1.8}%
-\begin{tabular}{L{0.2\linewidth}L{0.2\linewidth}L{0.2\linewidth}L{0.2\linewidth}}
-& `summaryFunction` & `visualFunction` & `checkFunction` \\
-\hline
-\vspace{0pt} Input (required) & `v` --- a variable vector.
-                                \newline `...` --- additional
-                                arguments passed to the function.  &  `v` --- a variable vector. \newline `vnam` --- the variable name (as character string). \newline `doEval` --- a logical (`TRUE`/`FALSE`) controlling the output type of the function. & `v` - a variable vector \newline `nMax` - an integer (or `Inf`), controlling how many problematic values are printed, if relevant \newline `...` --- additional arguments passed to the function. \\
-Input (optional) &  `maxDecimals` --- number of decimals printed in outputted numerical values.  & --- &  `maxDecimals`  --- number of decimals printed in outputted numerical values.  \\
-Purpose & Describe some aspect of the variable, e.g., a central value, its dispersion or level of missingness. & Produce a distribution plot. & Check a variable for a specific issue and, if relevant, identify the values in the variable that cause the issue. \\
-Output (required) & A list with entries: \newline `\$feature` --- a label for the summary value (as character string); \newline `\$result` --- the result of the summary (as character string). & A character string with `R` code for producing a plot. This code should be standalone, i.e., should include the data if necessary. & A list with entries: \newline `\$problem` --- a logical identifying whether an issue was found; \newline `\$message` --- a character string (possibly empty) decribing the issue that was found, properly escaped and ready for use with `rmarkdown`. \\
-Output (recommended) & A `summaryResult` object, i.e., an attributed list with entries `\$feature`, `\$result` and `\$value`, the latter being the values from `\$result` in their original format). & \bgroup
-\def\arraystretch{1.8}%
-\hspace*{-.2cm}\begin{tabular}[t]{p{0.45\linewidth} |
-                 p{0.45\linewidth}} \vspace*{-1cm}\raggedright If
-                 `doEval` is `TRUE`: \newline A plot that is
-                 opened by the graphic device in `R`. &
-                                                          \vspace*{-1cm}\raggedright If `doEval` is `FALSE`: \newline   A text string with `R` code, as described above. \end{tabular} \egroup  & A `checkResult` object, i.e., an attributed list with entries `\$problem`, `\$message` and `\$problemValues`, the latter being either `NULL` or the problem causing values, as they were found in `v`, whichever is relevant. \\
-Tools available for producing the function & `summaryResult()` & --- & `messageGenerator()` \newline `checkResult()`
-\end{tabular}
-\egroup
-\caption{Reference information for creating new functions to be used
-  as part of the summarize, visualize, and check steps. The three
-  columns correspond to each of the three function types. 
-}
-\label{table.functionTypes}
-\end{table}
+interactively and in `makeDataReport()`.
 
 
 
-###Function templates
-\label{sec:functionTemplates}
+|   | `summaryFunction`    | `visualFunction`    | `checkFunction`    |
+|---|----------------------|---------------------|--------------------|
+| Input (required) | `v` - A variable vector. <br/> `...` - Additional arguments passed to the function. |  `v` - A variable vector. <br/> `vnam` - The variable name (as character string). <br/> `doEval` - A logical (`TRUE`/`FALSE`) controlling the output type of the function. | `v` - A variable vector <br/> `nMax` - An integer (or `Inf`), controlling how many problematic values are printed, if relevant <br/> `...` - Additional arguments passed to the function.|
+| Input (optional) |  `maxDecimals` - The number of decimals printed in outputted numerical values.  |  |  `maxDecimals` - The number of decimals printed in outputted numerical values.|
+|Purpose | Describe some aspect of the variable, e.g., a central value, its dispersion or level of missingness. | Produce a distribution plot. | Check a variable for a specific issue and, if relevant, identify the values in the variable that cause the issue. |
+| Output (required) | A list with entries: <br/> `feature` - A label for the summary value (as character string);  <br/> `result` - The result of the summary (as character string). | A character string with `R` code for producing a plot. This code should be standalone, i.e., should include the data if necessary. | A list with entries: <br/> `problem` - A logical identifying whether an issue was found; <br/> `message` - A character string (possibly empty) decribing the issue that was found, properly escaped and ready for use with `rmarkdown`. |
+| Output (recommended) | A `summaryResult` object, i.e., an attributed list with entries `feature`, `result` and `value`, the latter being the values from `result` in their original format). | If `doEval` is `TRUE`: A plot that is opened by the graphic device in `R`. <br/> If `doEval` is `FALSE`:  A text string with `R` code, as described above.  | A `checkResult` object, i.e., an attributed list with entries `problem`, `message` and `problemValues`, the latter being either `NULL` or the problem causing values, as they were found in `v`, whichever is relevant. |
+| Tools available for producing the function | `summaryResult()` |  | `messageGenerator()` <br/> `checkResult()`|
+
+
+
+
+##Function templates
 In order to construct a summary, visual or check function, one needs
 to create a new function with a specific structure.  This can be done with
 different levels of strictness. If
-the new custom function is only to be used as part of the SVC steps in `clean()`,
+the new custom function is only to be used as part of the SVC steps in `makeDataReport()`,
 then only the input/output structure of the function needs special attention.
 However, new user-defined functions can also be registered locally to
 be part of the full machinery of `dataMaid`, and these function will
@@ -79,17 +67,18 @@ be recognized and behave in the same way as the build-in functions in
 `dataMaid`. The presentation below is given in the format of
 function templates, written in pseudo-code. These templates are
 designed for getting the full functionality, but note that
-Table~\ref{table.functionTypes} serves as a reference to the minimal
+the table above serves as a reference to the minimal
 requirements, while also presenting the "full" versions of the
 function types.
 
-####Writing a summaryFunction
+###Writing a summaryFunction
 As mentioned above, `dataMaid` provides a dedicated class for
 `summaryFunction`s. However, this does not imply that they are
 particularly advanced or complicated to create; in fact, they are
 nothing but regular functions with a particular
 input/output-structure. Specifically, they all follow the template
 below:
+
 ```
 mySummaryFunction <- function(v, ...) {
   res <- [result of whatever summary we are doing]
@@ -107,7 +96,7 @@ summarizing the features of a variable, and leaving tests and checks
 for the `checkFunction`s (presented below).
 
 Adhering to the template above is sufficient for using the freshly
-made `mySummaryFunction()` in `clean()`, but we recommend
+made `mySummaryFunction()` in `makeDataReport()`, but we recommend
 adding the new function to the overview of all summary
 functions by converting it to a proper `summaryFunction`
 object. This is done by calling the `summaryFunction()` creator with
@@ -116,6 +105,7 @@ the user-defined function as the first argument, and additional arguments
 the function), and `classes` (a vector of variable classes the
 user-defined function is intended to be applied to, also stored as an
 attribute). In other words, a call following the template below should be made:
+
 ```
 mySummaryFunction <- summaryFunction(mySummaryFunction,
   description = "[Text describing what the summaryFunction does]",
@@ -123,14 +113,7 @@ mySummaryFunction <- summaryFunction(mySummaryFunction,
   for]))
 ``` 
 which adds the new function to the output of an
-`allSummaryFunctions()` call.
-% One comment should be devoted to
-% the two attributes of a `summaryFunction`.
-If the `description` argument is left unspecified, the name of
-the function (which in this case is `"mySummaryFunction"`) will
-be filled in and used as the `description` attribute. What
-happens if the `classes` argument is not specified depends on the
-type of `summaryFunction`. If `mySummaryFunction` is
+`allSummaryFunctions()` call. If `mySummaryFunction` is
 constructed as an `S3` generic function with associated methods,
 the call to `summaryFunction()` will automatically produce a
 vector of the names of the classes for which the function can be
@@ -145,12 +128,12 @@ allClasses()
 ```
 
 
-####Writing a visualFunction
+###Writing a visualFunction
 `visualFunction`s are the functions that produce the figures in a
 `dataMaid` output document. Writing a `visualFunction` is slightly
 more complicated than writing a `summaryFunction`. This follows from
 the fact that `visualFunction`s need to be able to output standalone
-code for plots in order for `clean()` to build standalone
+code for plots in order for `makeDataReport()` to build standalone
 `rmarkdown` files. We recommend using the following structure
 (again shown as pseudo code):
 
@@ -170,13 +153,13 @@ In this function, `v` is the variable to be visualized,
 `doEval` controls whether the output is a plot (if `TRUE`)
 or a character string of standalone code for producing a plot (if
 `FALSE`). Implementing the `doEval = TRUE` setting is not
-strictly necessary for a `visualFunction`'s use in `clean()`, but
+strictly necessary for a `visualFunction`'s use in `makeDataReport()`, but
 it makes it easier to assess what visualization options are available,
 and obviously, it is crucial for interactive usage of
 `myVisualFunction()`. In either case, it should be noted that all
 the parameters listed above, `v`, `vnam` and `doEval`,
 are mandatory, so they must be left as is, even if they are not in
-use (c.f., Table~\ref{table.functionTypes}).
+use (c.f., the table).
 
 
 As with the summary function, we call `visualFunction()` to
@@ -193,7 +176,7 @@ Now, `myVisualFunction()` will be available in a `allVisualFunctions()`
 call, just like the two build-in `visualFunction`s, `standardVisual`
 and `basicVisual`.
 
-####Writing a checkFunction
+###Writing a checkFunction
 The last, but perhaps most important, `dataMaid` function type is
 the `checkFunction`. These are the functions that flag issues in
 the data as part of the check step and/or control the overall flow of the data
@@ -229,7 +212,7 @@ myFullVarCheckFunction <- checkFunction(myFullVarCheckFunction,
 Again, as with `summaryFunction`s and `visualFunction`s, the
 change of function class by use of `checkFunction()` is not strictly
 necessary. Note however, that if `myFullVarCheckFunction` is to be
-used in the summarize/visualize/check steps in `clean()`, the
+used in the summarize/visualize/check steps in `makeDataReport()`, the
 description attribute will be printed in the overview table in the
 *Data cleaning summary* part of the output document.
 
@@ -294,23 +277,23 @@ myProbValCheckFunction <- function(v, nMax, maxDecimals, ...) {
 ```
 
 Now, problematic values will be rounded in the outputted message, while they
-will still appear in their original format under the entry `\$problemValues` %$
+will still appear in their original format under the entry `problemValues`
 in the returned object.
 
-###A worked example
+##A worked example
 
 As an example, we create four new functions and show both how they can be
-used interactively and how they can be integrated with the `clean()`
+used interactively and how they can be integrated with the `makeDataReport()`
 function. These four new functions are:
-\begin{description}
-\item[`isID()`] A new `checkFunction` intended for use in the pre-check-stage. This function checks whether a variable consists exclusively of long ($> 10$ characters/digits) entries that are all of equal length, as this might be personal identification codes that we do not wish to print out in the data summary.
-\item[`mosaicVisual()`] A new `visualFunction` that produces mosaic plots. This function will be used in the *visualize* step of `clean()`.
-\item[`countZeros()`] A new `summaryFunction` that counts the number of occurrences of the value `0` in a variable. This function will be used in the *summarize* step of `clean()`.
-\item[`identifyColons()`] A new `checkFunction` that flags variables in which values have colons that appear before and after alphanumerical characters. This is practical for identifying autogenerated interaction effects. This function will be used in the *check* step of `clean()`.
-\end{description}
-These functions are defined in turn below, and afterwards, an example of how they can be called from `clean()` is provided.
 
-####`isID` --- a new `checkFunction` without problem values
+1. **`isID()`**: A new `checkFunction` intended for use in the pre-check-stage. This function checks whether a variable consists exclusively of long ($> 10$ characters/digits) entries that are all of equal length, as this might be personal identification codes that we do not wish to print out in the data summary.
+2. **`mosaicVisual()`**: A new `visualFunction` that produces mosaic plots. This function will be used in the *visualize* step of `makeDataReport()`.
+3. **`countZeros()`**: A new `summaryFunction` that counts the number of occurrences of the value `0` in a variable. This function will be used in the *summarize* step of `makeDataReport()`.
+4. **`identifyColons()`** A new `checkFunction` that flags variables in which values have colons that appear before and after alphanumerical characters. This is practical for identifying autogenerated interaction effects. This function will be used in the *check* step of `makeDataReport()`.
+
+These functions are defined in turn below, and afterwards, an example of how they can be called from `makeDataReport()` is provided.
+
+###isID --- a new checkFunction without problem values
 
 First, let's define the `isID()` function. As this function is
 not supposed to list problematic values, it falls within the category
@@ -336,10 +319,10 @@ out
 ```
 
 This is essentially all we need to do in order to include this
-function as a pre-check-function in `clean()`, so we will leave it as
+function as a pre-check-function in `makeDataReport()`, so we will leave it as
 is and move on to the next function, namely `mosaicVisual()`.
 
-###`mosaicVisual` --- a new `visualFunction`
+###mosaicVisual --- a new visualFunction
 
 `R` provides a function, `mosaicplot()`, which produces
 mosaic plots. We intend to use this existing high-level plotting
@@ -357,7 +340,7 @@ mosaicVisual <- function(v, vnam, doEval) {
 }
 ```
 
-This function can now be called directly or used in `clean()`, as will
+This function can now be called directly or used in `makeDataReport()`, as will
 presented in an example below. Depending on the `doEval` argument, either a text string
 with code or a plot is produced. The plot resulting from the following
 call is found in Figure~\ref{fig:mosaicPlot}:
@@ -365,18 +348,6 @@ call is found in Figure~\ref{fig:mosaicPlot}:
 ```{r}
 mosaicVisual(toyData$var1, "variable 1", doEval = TRUE)
 ```
-
-\begin{figure}
-\begin{center}
-\includegraphics[scale=0.2]{mosaicPlotExample.pdf}
-\end{center}
-\caption{Mosaic plot generated by the user-defined visualization
-  function `mosaicVisual()`.}
-\label{fig:mosaicPlot}
-\end{figure}
-
-
-
 
 Even though `mosaicVisual()`, as written above, follows the style of a
 `visualFunction`, it is not yet truly one and therefore, it will not
@@ -398,6 +369,7 @@ available would be added automatically.
 
 As `mosaicVisual()` is now a full-blooded `visualFunction`, it
 will also be included in the `allVisualFunctions()` output table:
+
 ```{r}
 allVisualFunctions()
 ```
@@ -405,7 +377,8 @@ allVisualFunctions()
 Now that we are done with the definition of `mosaicVisual()` we can
 turn to the next function in line, `countZeros()`.
 
-###`countZeros` --- a new `summaryFunction`
+
+###countZeros --- a new summaryFunction
 
 This `summaryFunction` is defined in the following lines of code:
 
@@ -442,7 +415,8 @@ countZeros <- summaryFunction(countZeros,
               "labelled", "numeric"))
 ```
 
-####`identifyColons` --- a new `checkFunction` with problem values
+###identifyColons --- a new checkFunction with problem values
+
 The last function mentioned above is `identifyColons()`. We
 define it using the helper function `messageGenerator()` to
 obtain a properly escaped message, and we use `checkResult()` to
@@ -485,27 +459,27 @@ identifyColons <- checkFunction(identifyColons,
 ```
 
 Note, that for `checkFunction`s, the description will appear in
-the document produced by `clean()` (in the *Data cleaning
+the document produced by `makeDataReport()` (in the *Data cleaning
   summary* section of the output), so for this type of function, the
 change of class is not only done for the sake of the
 `allCheckFunctions()` output.
 
-###Calling the new summarize/visualize/check functions from `clean()`
+###Calling the new summarize/visualize/check functions from makeDataReport()
 
-Now, we are ready to use these new functions in a `clean()`
+Now, we are ready to use these new functions in a `makeDataReport()`
 call. The extended `dataMaid` output document should have the
 following modifications, relative to the standard `dataMaid` output:
-\begin{itemize}
-\item We want to add the new pre-check function, `isID()`, to the already existing pre-checks.
-\item We wish to change the plot type for all variables to the new mosaic plot.
-\item We want the new summary function, `countZeros()`, to be added to the summaries performed on all variable types but `Date` and `logical`.
-\item We want the new check function, `identifyColons()`, to be added to the checks performed on `character`, `factor` and `labelled` variables.
-\end{itemize}
+
+* We want to add the new pre-check function, `isID()`, to the already existing pre-checks.
+* We wish to change the plot type for all variables to the new mosaic plot.
+* We want the new summary function, `countZeros()`, to be added to the summaries performed on all variable types but `Date` and `logical`.
+* We want the new check function, `identifyColons()`, to be added to the checks performed on `character`, `factor` and `labelled` variables.
+
 These options are specified as follows:
 
-```{r}
+```{r, eval = FALSE}
 data("exampleData")
-clean(exampleData,
+makeDataReport(exampleData,
       preChecks = c("isKey", "isEmpty", "isID"),
       allVisuals = "mosaicVisual", 
       characterSummaries = c(defaultCharacterSummaries(), "countZeros"),
@@ -515,15 +489,16 @@ clean(exampleData,
       integerSummaries = c(defaultIntegerSummaries(), "countZeros"),
       characterChecks = c(defaultCharacterChecks(), "identifyColons"),
       factorChecks = c(defaultFactorChecks(), "identifyColons"),
-      labelledCheck = c(defaultLabelledChecks(), "identifyColons"))
+      labelledCheck = c(defaultLabelledChecks(), "identifyColons"),
+      replace = TRUE)
+#VIRKER IKKE
 ```  
 
-The outputted document is found in Appendix \ref{sec:appendix2}.
+The outputted document is found in XXXXXX
 
 
 
 
 ##Concluding remarks
-\label{conclusion}
 
 blabla
