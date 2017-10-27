@@ -6,7 +6,7 @@ output:
   rmarkdown::html_vignette:
     toc: true
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{Extending dataMaid}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -464,6 +464,12 @@ the document produced by `makeDataReport()` (in the *Data cleaning
 change of class is not only done for the sake of the
 `allCheckFunctions()` output.
 
+
+```{r}
+library(devtools)
+session_info()
+```
+
 ###Calling the new summarize/visualize/check functions from makeDataReport()
 
 Now, we are ready to use these new functions in a `makeDataReport()`
@@ -477,28 +483,42 @@ following modifications, relative to the standard `dataMaid` output:
 
 These options are specified as follows:
 
-```{r, eval = FALSE}
+```{r}
 data("exampleData")
 makeDataReport(exampleData,
-      preChecks = c("isKey", "isEmpty", "isID"),
-      allVisuals = "mosaicVisual", 
-      characterSummaries = c(defaultCharacterSummaries(), "countZeros"),
-      factorSummaries = c(defaultFactorSummaries(), "countZeros"),
-      labelledSummaries = c(defaultLabelledSummaries(), "countZeros"),
-      numericSummaries = c(defaultNumericSummaries(), "countZeros"),
-      integerSummaries = c(defaultIntegerSummaries(), "countZeros"),
-      characterChecks = c(defaultCharacterChecks(), "identifyColons"),
-      factorChecks = c(defaultFactorChecks(), "identifyColons"),
-      labelledCheck = c(defaultLabelledChecks(), "identifyColons"),
-      replace = TRUE)
-#VIRKER IKKE
+      preChecks = c("isKey", "isSingular", "isSupported", "isID"),
+      visuals = setVisuals(all = "mosaicVisual"), 
+      summaries = setSummaries(character = defaultCharacterSummaries(add = "countZeros"),
+                               factor = defaultFactorSummaries(add = "countZeros"),
+                               labelled = defaultLabelledSummaries(add = "counZeros"),
+                               numeric = defaultNumericSummaries(add = "countZeros"),
+                               integer = defaultIntegerSummaries(add = "countZeros")),
+      checks = setChecks(character = defaultCharacterChecks(add = "identifyColons"),
+                         factor = defaultFactorChecks(add = "identifyColons"),
+                         labelled = defaultLabelledChecks(add = "identifyColons")),
+      replace = TRUE, 
+      output = "html",
+      open = FALSE,
+      render = FALSE)
 ```  
 
-The outputted document is found in XXXXXX
+We have chosen the output to be html so that it can easily be included in this vignette by use of the .
 
-
-
+The outputted report is available at the end of this vignette. A few comments 
 
 ##Concluding remarks
+
+
+```{r, eval  =FALSE}
+library(htmltools)
+includeHTML("dataMaid_exampleData.html")
+```
+
+```{r, child = "dataMaid_exampleData.rmd"}
+```
+
+
+
+
 
 blabla
