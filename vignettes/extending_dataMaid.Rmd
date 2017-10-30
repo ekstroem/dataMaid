@@ -11,15 +11,33 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r sssss, include = FALSE}
 knitr::opts_chunk$set(echo = TRUE, eval = TRUE)
 library(dataMaid)
 ```
 
 
-##Introduction
 
-`dataMaid` can be used as a user-friendly, self-contained package, as shown in the previous sections. However, `dataMaid` is fully customizable and `makeDataReport()` is mainly a tool for formatting the
+```{r makeFirstReport}
+data("exampleData")
+makeDataReport(exampleData, 
+      replace = TRUE, 
+      output = "html",
+      open = FALSE,
+      reportTitle = "exampleData Report from beginning of vignette",
+      vol = "1")
+``` 
+
+#Introduction
+`dataMaid` can be used as a user-friendly, self-contained package, as outlined in our [article manuscript](https://github.com/ekstroem/dataMaid/blob/master/latex/article_vol3.pdf). However, `dataMaid` was built specifically with the purpose of 
+
+reports are fully customizable and this vignette was made as a tutorial to how one can write simple extensions that can be used in e.g. the `makeDataReport()` function of `dataMaid`. 
+
+In order to understand
+
+
+
+and `makeDataReport()` is mainly a tool for formatting the
 results from various checking, summary,  and visualization
 functions. Thus, the actual work underlying a `dataMaid` output file
 can be anything --- depending on the arguments given to `makeDataReport()`
@@ -55,7 +73,7 @@ interactively and in `makeDataReport()`.
 
 
 
-##Function templates
+#Function templates
 In order to construct a summary, visual or check function, one needs
 to create a new function with a specific structure.  This can be done with
 different levels of strictness. If
@@ -71,7 +89,7 @@ the table above serves as a reference to the minimal
 requirements, while also presenting the "full" versions of the
 function types.
 
-###Writing a summaryFunction
+##Writing a summaryFunction
 As mentioned above, `dataMaid` provides a dedicated class for
 `summaryFunction`s. However, this does not imply that they are
 particularly advanced or complicated to create; in fact, they are
@@ -123,12 +141,12 @@ empty. Note that the helper function `allClasses()` might be
 useful for filling out the `classes` argument, as it simply lists
 all available classes in `dataMaid`:
 
-```{r}
+```{r sdf}
 allClasses()
 ```
 
 
-###Writing a visualFunction
+##Writing a visualFunction
 `visualFunction`s are the functions that produce the figures in a
 `dataMaid` output document. Writing a `visualFunction` is slightly
 more complicated than writing a `summaryFunction`. This follows from
@@ -176,7 +194,7 @@ Now, `myVisualFunction()` will be available in a `allVisualFunctions()`
 call, just like the two build-in `visualFunction`s, `standardVisual`
 and `basicVisual`.
 
-###Writing a checkFunction
+##Writing a checkFunction
 The last, but perhaps most important, `dataMaid` function type is
 the `checkFunction`. These are the functions that flag issues in
 the data as part of the check step and/or control the overall flow of the data
@@ -280,7 +298,7 @@ Now, problematic values will be rounded in the outputted message, while they
 will still appear in their original format under the entry `problemValues`
 in the returned object.
 
-##A worked example
+#A worked example
 
 As an example, we create four new functions and show both how they can be
 used interactively and how they can be integrated with the `makeDataReport()`
@@ -293,7 +311,7 @@ function. These four new functions are:
 
 These functions are defined in turn below, and afterwards, an example of how they can be called from `makeDataReport()` is provided.
 
-###isID --- a new checkFunction without problem values
+##isID --- a new checkFunction without problem values
 
 First, let's define the `isID()` function. As this function is
 not supposed to list problematic values, it falls within the category
@@ -303,7 +321,7 @@ use this function interactively, so we will stick to the minimal
 requirements of a `checkFunction` used in `check()` (see
 Table~\ref{table.functionTypes}). The function can then be defined by
 
-```{r}
+```{r a9}
 isID <- function(v, nMax = NULL, ...) {
   out <- list(problem = FALSE, message = "")
   if (class(v) %in% setdiff(allClasses(), c("logical", "Date"))) {
@@ -322,7 +340,7 @@ This is essentially all we need to do in order to include this
 function as a pre-check-function in `makeDataReport()`, so we will leave it as
 is and move on to the next function, namely `mosaicVisual()`.
 
-###mosaicVisual --- a new visualFunction
+##mosaicVisual --- a new visualFunction
 
 `R` provides a function, `mosaicplot()`, which produces
 mosaic plots. We intend to use this existing high-level plotting
@@ -331,7 +349,7 @@ the new function such that it gets the full `dataMaid`
 functionality. This can be done using the following code which sets up
 the call using the existing function `mosaicplot()`.
 
-```{r}
+```{r a8}
 mosaicVisual <- function(v, vnam, doEval) {
   thisCall <- call("mosaicplot", table(v), main = vnam, xlab = "")
   if (doEval) {
@@ -345,7 +363,7 @@ presented in an example below. Depending on the `doEval` argument, either a text
 with code or a plot is produced. The plot resulting from the following
 call is found in Figure~\ref{fig:mosaicPlot}:
 
-```{r}
+```{r a7}
 mosaicVisual(toyData$var1, "variable 1", doEval = TRUE)
 ```
 
@@ -355,7 +373,7 @@ appear in an `allVisualFunctions()` call. In order to get this
 functionality we need to change its object class. This can be done by
 writing
 
-```{r}
+```{r a6}
 mosaicVisual <- visualFunction(mosaicVisual,
                                description = "Mosaic plots using graphics",
                                classes = allClasses())
@@ -370,7 +388,7 @@ available would be added automatically.
 As `mosaicVisual()` is now a full-blooded `visualFunction`, it
 will also be included in the `allVisualFunctions()` output table:
 
-```{r}
+```{r a5}
 allVisualFunctions()
 ```
 
@@ -378,11 +396,11 @@ Now that we are done with the definition of `mosaicVisual()` we can
 turn to the next function in line, `countZeros()`.
 
 
-###countZeros --- a new summaryFunction
+##countZeros --- a new summaryFunction
 
 This `summaryFunction` is defined in the following lines of code:
 
-```{r}
+```{r a4}
 countZeros <- function(v, ...) {
   res <- length(which(v == 0))
   summaryResult(list(feature = "No. zeros", result = res, value = res))
@@ -398,7 +416,7 @@ entries would have differed. As the result is returned as a
 `summaryResult` object, a printing method is automatically called
 when `countZeros()` is used interactively:
 
-```{r}
+```{r a3}
 countZeros(c(rep(0, 5), 1:100))
 ```
 
@@ -408,14 +426,14 @@ wish to emphasize that the function is not intended to be called on
 all variable types, as zeros have different roles in `Date`s and in
 `logical` variables:
 
-```{r}
+```{r a2}
 countZeros <- summaryFunction(countZeros,
   description = "Count number of zeros",
   classes = c("character", "factor", "integer",
               "labelled", "numeric"))
 ```
 
-###identifyColons --- a new checkFunction with problem values
+##identifyColons --- a new checkFunction with problem values
 
 The last function mentioned above is `identifyColons()`. We
 define it using the helper function `messageGenerator()` to
@@ -424,7 +442,7 @@ make its output print neatly. In the code we use regular expressions
 through the `gregexpr()` function to identify colons between two
 words.
 
-```{r}
+```{r a1}
 identifyColons <- function(v, nMax = Inf, ... ) {
   v <- unique(na.omit(v))
   problemMessage <- "Note: The following values include colons:"
@@ -452,7 +470,7 @@ identifyColons <- function(v, nMax = Inf, ... ) {
 Once again, we change the class of the function so that it becomes a
 proper `checkFunction` object:
 
-```{r}
+```{r a}
 identifyColons <- checkFunction(identifyColons,
                                 description = "Identify colons surrounded by alphanumeric characters",
                                 classes = c("character", "factor", "labelled"))
@@ -465,12 +483,7 @@ change of class is not only done for the sake of the
 `allCheckFunctions()` output.
 
 
-```{r}
-library(devtools)
-session_info()
-```
-
-###Calling the new summarize/visualize/check functions from makeDataReport()
+##Calling the new summarize/visualize/check functions from makeDataReport()
 
 Now, we are ready to use these new functions in a `makeDataReport()`
 call. The extended `dataMaid` output document should have the
@@ -483,11 +496,21 @@ following modifications, relative to the standard `dataMaid` output:
 
 These options are specified as follows:
 
-```{r}
+
+
+```{r makeSecondReport}
+data("toyData")
+makeDataReport(toyData, replace = TRUE, output = "html")
+``` 
+
+
+```
 data("exampleData")
 makeDataReport(exampleData,
       preChecks = c("isKey", "isSingular", "isSupported", "isID"),
-      visuals = setVisuals(all = "mosaicVisual"), 
+      visuals = setVisuals(character = "mosaicVisual",
+                           factor = "mosaicVisual",
+                           labelled = "mosaicVisual"), 
       summaries = setSummaries(character = defaultCharacterSummaries(add = "countZeros"),
                                factor = defaultFactorSummaries(add = "countZeros"),
                                labelled = defaultLabelledSummaries(add = "counZeros"),
@@ -499,26 +522,17 @@ makeDataReport(exampleData,
       replace = TRUE, 
       output = "html",
       open = FALSE,
-      render = FALSE)
+      reportTitle = "exampleData report from end of vignette",
+      vol = "2")
 ```  
 
-We have chosen the output to be html so that it can easily be included in this vignette by use of the .
-
-The outputted report is available at the end of this vignette. A few comments 
-
-##Concluding remarks
+We have chosen the output to be html (`output = "html"`) so that it can easily be included in this vignette by use of the `includeHTML()` function from the `htmltools` package. We have set `open = FALSE` so that the outputted rmarkdown file is not opened automatically. The outputted report is available at the end of this vignette. A few comments...
 
 
-```{r, eval  =FALSE}
-library(htmltools)
-includeHTML("dataMaid_exampleData.html")
+#A dataMaid report: Documenting exampleData
+
+We include the report documenting `exampleData`:
+
+```{r hithere}
+htmltools::includeHTML("dataMaid_toyData.html")
 ```
-
-```{r, child = "dataMaid_exampleData.rmd"}
-```
-
-
-
-
-
-blabla
