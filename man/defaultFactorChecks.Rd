@@ -20,3 +20,4 @@ factor type variables in \code{\link{check}} and \code{\link{makeDataReport}},
 possibly user-modified by adding extra function names using \code{add} or 
 removing default function names with \code{remove}.
 }
+

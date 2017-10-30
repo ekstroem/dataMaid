@@ -26,3 +26,4 @@ allSummaryFunctions()
 \code{\link{summaryFunction}} \code{\link{allVisualFunctions}}
 \code{\link{allCheckFunctions}}
 }
+

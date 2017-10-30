@@ -69,3 +69,4 @@ makeDataReport(toyData, visuals = setVisuals(all = "basicVisual"), replace = TRU
 \seealso{
 \code{\link{makeDataReport}}, \code{\link{allVisualFunctions}}
 }
+

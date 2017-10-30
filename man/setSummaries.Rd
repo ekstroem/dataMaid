@@ -69,3 +69,4 @@ makeDataReport(toyData,
 \code{\link{defaultNumericSummaries}}, \code{\link{defaultIntegerSummaries}},
 \code{\link{defaultLogicalSummaries}}, \code{\link{defaultDateSummaries}}
 }
+

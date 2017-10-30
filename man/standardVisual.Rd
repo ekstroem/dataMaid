@@ -41,3 +41,4 @@ standardVisual(myVar, "MyVar", doEval = FALSE)
 \seealso{
 \code{\link{visualize}}, \code{\link{basicVisual}}
 }
+

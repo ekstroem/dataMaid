@@ -26,3 +26,4 @@ supplying it with a \code{print()} method.
 \seealso{
 \code{\link{checkFunction}}
 }
+

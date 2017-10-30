@@ -8,8 +8,9 @@ Authors@R: c(person("Anne Helby", "Petersen", , email="ahpe@sund.ku.dk", role="a
              person("Claus Thorn", "Ekstrom", , email="ekstrom@sund.ku.dk", role=c("aut", "cre")))
 Description: Data cleaning is an important first step of any statistical
     analysis. dataMaid provides an extendable suite of test for common potential
-    errors in a dataset. It autogenerates a customizable data report with a thorough summary of the
-    checks and the results that a human can use to identify possible errors.
+    errors in a dataset. It autogenerates a customizable data report with a thorough
+    summary of the checks and the results that a human can use to identify possible
+    errors.
 Imports:
     haven,
     magrittr,
@@ -26,7 +27,7 @@ Encoding: UTF-8
 LazyData: true
 ByteCompile: true
 License: GPL-2
-RoxygenNote: 6.0.1
+RoxygenNote: 6.0.1.9000
 Suggests:
     testthat,
     knitr,

@@ -29,3 +29,4 @@ defaultLabelledSummaries(remove = "centralValue")
 \code{\link{variableType}},
 \code{\link{countMissing}}, \code{\link{uniqueValues}}, \code{\link{centralValue}}
 }
+

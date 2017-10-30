@@ -16,3 +16,4 @@ Returns the names of the seven data classes for which
 allClasses()
 
 }
+
