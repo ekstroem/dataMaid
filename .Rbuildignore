@@ -14,5 +14,6 @@ NEWS.md
 ^.*\.tar\.gz
 ^\.rda
 ^\.travis\.yml$
+^vignettes
 ^sandbox
 ^app

@@ -511,14 +511,15 @@ The outputted report is available at the end of this vignette. A few comments
 
 ```{r, eval  =FALSE}
 library(htmltools)
+system("cp dataMaid_exampleData.html ~/xxx.html")
 includeHTML("dataMaid_exampleData.html")
 ```
 
-```{r, child = "dataMaid_exampleData.rmd"}
+```{r, child = "dataMaid_exampleData.Rmd"}
 ```
 
 
 
 
 
-blabla
+blablablah?
