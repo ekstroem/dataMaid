@@ -37,4 +37,3 @@ classes(minMax)
 classes(basicVisual)
 
 }
-

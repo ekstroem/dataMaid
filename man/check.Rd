@@ -82,4 +82,3 @@ check(cars, checks = setChecks(factor = defaultFactorChecks(remove = "identifyMi
 \code{\link{defaultLogicalChecks}}, \code{\link{defaultDateChecks}}
 }
 \keyword{misc}
-

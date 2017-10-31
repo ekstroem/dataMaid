@@ -34,4 +34,3 @@ labelled or factor variables.
 \code{\link{check}}, \code{\link{allCheckFunctions}},
 \code{\link{checkFunction}}, \code{\link{checkResult}}
 }
-

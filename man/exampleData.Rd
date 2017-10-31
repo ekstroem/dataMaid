@@ -102,4 +102,3 @@ makeDataReport(exampleData, replace = TRUE,
 
 }
 \keyword{datasets}
-

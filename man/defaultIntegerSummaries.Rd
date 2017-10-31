@@ -30,4 +30,3 @@ defaultIntegerSummaries(remove = "countMissing")
 \code{\link{countMissing}}, \code{\link{uniqueValues}},
 \code{\link{centralValue}}, \code{\link{quartiles}}, \code{\link{minMax}}
 }
-

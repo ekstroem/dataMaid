@@ -227,4 +227,3 @@ makeDataReport(toyData, replace  = TRUE,
 }
 
 }
-

@@ -118,6 +118,10 @@
 \begin{document}
 
 
+<<echo=FALSE>>=
+# options(prompt = "R> ", width=77, continue = "+  ")
+options(prompt = "R> ", continue = "+  ", width = 70, useFancyQuotes = FALSE)
+@
 
 
 \section{Introduction}
@@ -299,39 +303,15 @@ commands load the dataset and produce the report:
 \label{fig:example2}
 \end{figure}
 
-\begin{Schunk}
-\begin{Sinput}
-R> library("dataMaid")
-R> data("toyData")
-R> toyData
-\end{Sinput}
-\begin{Soutput}
-# A tibble: 15 x 6
-     var1  var2   var3       var4   var5       var6
-   <fctr> <dbl> <fctr>      <dbl> <fctr>     <fctr>
- 1    red     1      a -0.6264538      1 Irrelevant
- 2    red     1      a  0.1836433      2 Irrelevant
- 3    red     1      a -0.8356286      3 Irrelevant
- 4    red     2      a  1.5952808      4 Irrelevant
- 5    red     2      a  0.3295078      5 Irrelevant
- 6    red     6      b -0.8204684      6 Irrelevant
- 7    red     6      b  0.4874291      7 Irrelevant
- 8    red     6      b  0.7383247      8 Irrelevant
- 9    red   999      c  0.5757814      9 Irrelevant
-10    red    NA      c -0.3053884     10 Irrelevant
-11   blue     4      c  1.5117812     11 Irrelevant
-12   blue    82      .  0.3898432     12 Irrelevant
-13   blue    NA        -0.6212406     13 Irrelevant
-14   <NA>   NaN  other -2.2146999     14 Irrelevant
-15   <NA>     5  OTHER  1.1249309     15 Irrelevant
-\end{Soutput}
-\end{Schunk}
+<<>>=
+library("dataMaid")
+data("toyData")
+toyData
+@ 
 
-\begin{Schunk}
-\begin{Sinput}
-R> makeDataReport(toyData)
-\end{Sinput}
-\end{Schunk}
+<<>>=
+makeDataReport(toyData)
+@ 
 
 By default, an \proglang{R} markdown file and a rendered pdf \hl{OBS: måske html/doc alt efter hvem der kalder funktionen?} overview
 document is produced, saved to the working directory and
@@ -486,12 +466,10 @@ argument \code{replace = TRUE} in order to force \code{makeDataReport()} to
 overwrite any existing files produced by \code{makeDataReport()}.  Using the
 \code{toyData} dataset as a guinea pig, we type:
   
-\begin{Schunk}
-\begin{Sinput}
-R> makeDataReport(toyData, output = "html", onlyProblematic = TRUE,
-+     maxProbVals = 2, replace = TRUE)
-\end{Sinput}
-\end{Schunk}
+<<>>=
+makeDataReport(toyData, output = "html", onlyProblematic = TRUE,
+   maxProbVals = 2, replace = TRUE)
+@
 
 The final rendering of the generated markdown file is controlled by
 the \code{render} and \code{openResult} arguments, which both default to
@@ -502,11 +480,9 @@ opened. The following command produces an \proglang{R} markdown file
 containing the information needed for generating a data report, but without
 rendering nor opening the markdown file:
 
-\begin{Schunk}
-\begin{Sinput}
-R> makeDataReport(toyData, output="html", render=FALSE, openResult=FALSE, replace=TRUE)
-\end{Sinput}
-\end{Schunk}
+<<>>=
+makeDataReport(toyData, output="html", render=FALSE, openResult=FALSE, replace=TRUE)
+@ 
 
 
 \begin{table}
@@ -574,37 +550,9 @@ lists in \proglang{R}. For example, the implemented
 %\subsection{Something about what check, visual and summary functions are available}
 
 
-\begin{Schunk}
-\begin{Sinput}
-R> allSummaryFunctions()
-\end{Sinput}
-\begin{Soutput}
-----------------------------------------------------------------------------
-name           description                     classes                      
--------------- ------------------------------- -----------------------------
-centralValue   Compute median for numeric      character, Date, factor,     
-               variables, mode for             integer, labelled, logical,  
-               categorical variables           numeric                      
-
-countMissing   Compute proportion of missing   character, Date, factor,     
-               observations                    integer, labelled, logical,  
-                                               numeric                      
-
-minMax         Find minimum and maximum        integer, numeric, Date       
-               values                                                       
-
-quartiles      Compute 1st and 3rd quartiles   Date, integer, numeric       
-
-uniqueValues   Count number of unique values   character, Date, factor,     
-                                               integer, labelled, logical,  
-                                               numeric                      
-
-variableType   Data class of variable          character, Date, factor,     
-                                               integer, labelled, logical,  
-                                               numeric                      
-----------------------------------------------------------------------------
-\end{Soutput}
-\end{Schunk}
+<<>>=
+allSummaryFunctions()
+@ 
 
 Thus we can see, for example, that for \code{numeric}, \code{integer},
 and \code{Date} variables, \pkg{dataMaid} provides functions for
@@ -615,105 +563,59 @@ for central tendency summaries (i.e., mode or median).
 We can control what summaries and checks are applied for each variable type
 through the \code{summaries}, \code{visuals} and \code{checks} arguments of \code{makeDataReport()}. Each of these arguments takes a list with one entry for each variable type and a number of function names for each such entry. The easiest way to specify the arguments is by use of the built-in helper functions \code{setSummaries()}, \code{setVisuals()} and \code{setChecks()} that contain the default settings of \code{makeDataReport()} and simple syntaxes for making small alterations of these default settings.  We can inspect the default settings for summaries by calling:
 
-\begin{Schunk}
-\begin{Sinput}
-R> setSummaries()
-\end{Sinput}
-\begin{Soutput}
-$character
-[1] "variableType" "countMissing" "uniqueValues" "centralValue"
-
-$factor
-[1] "variableType" "countMissing" "uniqueValues" "centralValue"
-
-$labelled
-[1] "variableType" "countMissing" "uniqueValues" "centralValue"
-
-$numeric
-[1] "variableType" "countMissing" "uniqueValues" "centralValue"
-[5] "quartiles"    "minMax"      
-
-$integer
-[1] "variableType" "countMissing" "uniqueValues" "centralValue"
-[5] "quartiles"    "minMax"      
-
-$logical
-[1] "variableType" "countMissing" "uniqueValues" "centralValue"
-
-$Date
-[1] "variableType" "countMissing" "uniqueValues" "centralValue"
-[5] "minMax"       "quartiles"   
-\end{Soutput}
-\end{Schunk}
+<<>>=
+setSummaries()
+@ 
 
 This helper function really just calls several other helper functions, namely the \\ 
 \code{defaultXXXSummaries()} functions, where \code{XXX} refers to a variable class. For instance, we can see the default character summaries  by calling \code{defaultCharacterSummaries()}:
 
-\begin{Schunk}
-\begin{Sinput}
-R> defaultCharacterSummaries()
-\end{Sinput}
-\begin{Soutput}
-[1] "variableType" "countMissing" "uniqueValues" "centralValue"
-\end{Soutput}
-\end{Schunk}
+<<>>=
+defaultCharacterSummaries()
+@ 
 
 We can change the choice of summaries (and similarly the checks and visual functions) by setting the
 corresponding arguments when calling \code{makeDataReport()}. For example, to get
 only the variable type and the central tendency listed in the summary
 table for numeric and integer variables, we write
 
-\begin{Schunk}
-\begin{Sinput}
-R> makeDataReport(toyData, replace=TRUE,
-+    summaries = setSummaries(numeric = c("variableType","centralValue"),
-+    integer = c("variableType", "centralValue")))
-\end{Sinput}
-\end{Schunk}
+<<>>=
+makeDataReport(toyData, replace=TRUE,
+  summaries = setSummaries(numeric = c("variableType","centralValue"),
+  integer = c("variableType", "centralValue")))
+@ 
 
 In the case where we specify the same set of summary
 functions for each variable type, we can use a simpler argument for \code{setSummaries} which overrides the summary functions for all
 variable types:
 
 
-\begin{Schunk}
-\begin{Sinput}
-R> makeDataReport(toyData, replace=TRUE,                               
-+    summaries = setSummaries(all = c("variableType", "centralValue")))
-\end{Sinput}
-\end{Schunk}
+<<>>=
+makeDataReport(toyData, replace=TRUE,                               
+  summaries = setSummaries(all = c("variableType", "centralValue")))
+@ 
 
 Similarly, the checks applied are set with the \code{checks} argument and the \code{setChecks} function. The default checks being applied to a factor are
 
-\begin{Schunk}
-\begin{Sinput}
-R> defaultFactorChecks()
-\end{Sinput}
-\begin{Soutput}
-[1] "identifyMissing"    "identifyWhitespace" "identifyLoners"    
-[4] "identifyCaseIssues" "identifyNums"      
-\end{Soutput}
-\end{Schunk}
+<<>>=
+defaultFactorChecks()
+@ 
 
 Now, if we only wanted to apply the function to identify whitespace
 for factor variables, then we would need provide this information for \code{setChecks()}:
 
-\begin{Schunk}
-\begin{Sinput}
-R> makeDataReport(toyData, replace=TRUE,
-+    checks = setChecks(factor = "identifyWhitespace"))
-\end{Sinput}
-\end{Schunk}
+<<>>=
+makeDataReport(toyData, replace=TRUE,
+  checks = setChecks(factor = "identifyWhitespace"))
+@ 
 
 or we could remove checks for factors altogether by setting the
 corresponding argument to \code{NULL}, in which case factor variables will
 not be checked for any potential errors:
 
-\begin{Schunk}
-\begin{Sinput}
-R> makeDataReport(toyData, checks = setChecks(factor = NULL), replace=TRUE)
-\end{Sinput}
-\end{Schunk}
+<<>>=
+makeDataReport(toyData, checks = setChecks(factor = NULL), replace=TRUE)
+@ 
 
 As with \code{summaryFunction}s, a complete list of available
 \code{checkFunction}s is obtained by calling
@@ -730,22 +632,18 @@ statements are true, the variable will not be subjected to the SVC
 steps.  We can allow singular variables to move on to the SVC step by
 only checking for keys and non-supported variables in the pre-check step:
 
-\begin{Schunk}
-\begin{Sinput}
-R> makeDataReport(toyData, preChecks = c("isKey", "isSupported"), replace=TRUE)
-\end{Sinput}
-\end{Schunk}
+<<>>=
+makeDataReport(toyData, preChecks = c("isKey", "isSupported"), replace=TRUE)
+@
 
 Note that the data visualizations in the report are also
 controllable, though only a single function can be provided for each variable type. If, for instance, we wish to change the visualizations
 from the default \pkg{ggplot2} \citep{ggplot2} style histograms and barplots to base
 \proglang{R} histograms and barplots, we type
 
-\begin{Schunk}
-\begin{Sinput}
-R> makeDataReport(toyData, visuals = setVisuals(all = "basicVisual"), replace=TRUE)
-\end{Sinput}
-\end{Schunk}
+<<>>=
+makeDataReport(toyData, visuals = setVisuals(all = "basicVisual"), replace=TRUE)
+@ 
 
 In summary, and as indicated in Figure~\ref{figure:cleanStructure}, there are two stages
 where \code{makeDataReport()} applies functions to each of the variables:
@@ -763,12 +661,10 @@ functions in [REFERENCE]}.
 
 One might also encounter datasets with variables that are not among the 7 classes mentioned in the above (\code{character}, \code{Date}, \code{factor}, \code{integer}, \code{labelled}, \code{logical} and \code{numeric}), for instance variables of type \code{complex} or user-defined classes. It is possible to tell \code{makeDataReport()} how to handle such variables by use of the argument \code{treatXasY}. This argument takes a list where the names correspond to "new" variable types (\code{X}), while the entries must be supported variable types (\code{Y}). For instance, we can instruct \code{dataMaid} to treat complex variables as numerics and generate a data report for a type \code{complex} variable like this:
 
-\begin{Schunk}
-\begin{Sinput}
-R> complexData <- data.frame(complexVar = complex(100, real = 1:100, imaginary = 3), numericVar = 1:100)
-R> makeDataReport(complexData, treatXasY=list(complex = "numeric"), replace=TRUE)
-\end{Sinput}
-\end{Schunk}
+<<warning=FALSE>>=
+complexData <- data.frame(complexVar = complex(100, real = 1:100, imaginary = 3), numericVar = 1:100)
+makeDataReport(complexData, treatXasY=list(complex = "numeric"), replace=TRUE)
+@ 
 
 In this report, we will find that the two variables, \code{complexVar} and \code{numericVar} will be have identical presentations in the variable list, as treating a \code{complex} variable as a \code{numeric} means dropping the imaginary part of the complex numbers which was the only thing setting the two variables apart in the first place.  
 
@@ -792,17 +688,9 @@ Assume that we wish to look further into a certain variable from
 issues in this variable, and we would like to recall what these issues
 were. This can be done using the \code{check()} command
 
-\begin{Schunk}
-\begin{Sinput}
-R> check(toyData$var2)
-\end{Sinput}
-\begin{Soutput}
-$identifyMissing
-The following suspected missing value codes enter as regular values: 999, NaN.
-$identifyOutliers
-Note that the following possible outlier values were detected: 82, 999.
-\end{Soutput}
-\end{Schunk}
+<<>>=
+check(toyData$var2)
+@ 
 
 Note that the arguments specifying which checks to perform, as
 described in the previous section, are in fact passed to \code{check()},
@@ -813,46 +701,26 @@ overviews of the available check functions.
 Moving forward, we limit the numeric checks to only identify miscoded
 missing values:
 
-\begin{Schunk}
-\begin{Sinput}
-R> check(toyData$var2, checks = setChecks(numeric = "identifyMissing"))
-\end{Sinput}
-\begin{Soutput}
-$identifyMissing
-The following suspected missing value codes enter as regular values: 999, NaN.
-\end{Soutput}
-\end{Schunk}
+<<>>=
+check(toyData$var2, checks = setChecks(numeric = "identifyMissing"))
+@ 
 
 An equivalent way to call only a single, specific \code{checkFunction},
 such as \code{identifyMissing}, is by using it directly on the variable,
 e.g.,
 
-\begin{Schunk}
-\begin{Sinput}
-R> identifyMissing(toyData$var2)
-\end{Sinput}
-\begin{Soutput}
-The following suspected missing value codes enter as regular values: 999, NaN.
-\end{Soutput}
-\end{Schunk}
+<<>>=
+identifyMissing(toyData$var2)
+@ 
 
 The result of a \code{checkFunction} is an object of class
 \code{checkResult}. By using the structure function, \code{str()}, we can
 look further into its components:
 
-\begin{Schunk}
-\begin{Sinput}
-R> missVar2 <- identifyMissing(toyData$var2)
-R> str(missVar2)
-\end{Sinput}
-\begin{Soutput}
-List of 3
- $ problem      : logi TRUE
- $ message      : chr "The following suspected missing value codes enter as regular values: \\\"999\\\", \\\"NaN\\\"."
- $ problemValues: num [1:2] 999 NaN
- - attr(*, "class")= chr "checkResult"
-\end{Soutput}
-\end{Schunk}
+<<>>=
+missVar2 <- identifyMissing(toyData$var2)
+str(missVar2)
+@ 
 
 The most important thing to note here is that while the printed
 message is made for easy reading, the actual values of the variable
@@ -861,41 +729,20 @@ causing the issue are still obtainable in the entry
 and \code{NaN} in \code{var2} are in fact miscoded missing values, we can
 easily replace them with \code{NA}s:
 
-\begin{Schunk}
-\begin{Sinput}
-R> toyData$var2[toyData$var2 %in% missVar2$problemValues] <- NA
-R> identifyMissing(toyData$var2)
-\end{Sinput}
-\begin{Soutput}
-No problems found.
-\end{Soutput}
-\end{Schunk}
+<<>>=
+toyData$var2[toyData$var2 %in% missVar2$problemValues] <- NA
+identifyMissing(toyData$var2)
+@ 
 
 Similarly, the \code{visualize()} and \code{summarize()} functions can be
 used to run the corresponding visualizations and summaries for each
 variable. See Figure~\ref{fig:example2} for the visualization output.
 
 
-\begin{Schunk}
-\begin{Sinput}
-R> visualize(toyData$var2)
-R> summarize(toyData$var2)
-\end{Sinput}
-\begin{Soutput}
-$variableType
-Variable type: numeric
-$countMissing
-Number of missing obs.: 4 (26.67 %)
-$uniqueValues
-Number of unique values: 6
-$centralValue
-Median: 4
-$quartiles
-1st and 3rd quartiles: 1.5; 6
-$minMax
-Min. and max.: 1; 82
-\end{Soutput}
-\end{Schunk}
+<<>>=
+visualize(toyData$var2)
+summarize(toyData$var2)
+@ 
 
 \begin{figure}[tb]
 \begin{center}
@@ -911,24 +758,12 @@ As we saw with the \code{check()} function, the summary can be modified
 by using the \code{summaries} argument and the \code{setSummaries()} helper function. If we want to remove the default summaries \code{variableType} and \code{countMissing} for numeric variables, we can use the function \code{defaultNumericSummaries()} and its argument \code{remove} that excludes a vector of summaries from the usual default summaries:
 
 
-\begin{Schunk}
-\begin{Sinput}
-R> summarize(toyData$var2, 
-+    summaries = setSummaries(
-+    numeric = defaultNumericSummaries(remove = c("variableType", 
-+    "countMissing"))))
-\end{Sinput}
-\begin{Soutput}
-$uniqueValues
-Number of unique values: 6
-$centralValue
-Median: 4
-$quartiles
-1st and 3rd quartiles: 1.5; 6
-$minMax
-Min. and max.: 1; 82
-\end{Soutput}
-\end{Schunk}
+<<>>=
+summarize(toyData$var2, 
+  summaries = setSummaries(
+  numeric = defaultNumericSummaries(remove = c("variableType", 
+  "countMissing"))))
+@ 
 
 The syntax in this code chunk can be read as follows: "Summarize \code{var2} in \code{toyData}, and for \code{numeric} variables, set the summaries to be the default summary functions, except \code{variableType} and \code{countMissing}." 
 
@@ -991,16 +826,14 @@ We discuss the results of a data overview report generated for this dataset belo
 \end{enumerate}
 Incorporating these three customizations, we can load the data and generate a report by calling:
 
-\begin{Schunk}
-\begin{Sinput}
-R> data(presidentData)
-R> makeDataReport(presidentData, replace = TRUE, 
-+    treatXasY = list("Name" = "character"),
-+    checks = setChecks(character = 
-+    defaultCharacterChecks(remove = "identifyLoners")),
-+    reportTitle = "Dirty president data")
-\end{Sinput}
-\end{Schunk}
+<<>>=
+data(presidentData)
+makeDataReport(presidentData, replace = TRUE, 
+  treatXasY = list("Name" = "character"),
+  checks = setChecks(character = 
+  defaultCharacterChecks(remove = "identifyLoners")),
+  reportTitle = "Dirty president data")
+@ 
 
 The first four pages of the resulting report can be inspected in Figures \ref{fig:bigExampleP01} and \ref{fig:bigExampleP23}. Note that all the customized settings can be identified from the first two pages, without having to read through the report: The new title is written on the front page, the check settings are displayed in the \textit{Checks performed} table and the strategy for handling \code{Name} variables is documented below this table. The full data report, except for the front page, is available in Appendix \ref{sec:appendix2}. 
 
@@ -1023,142 +856,87 @@ A lot of these mistakes are easily fixable, and we will do so below. However, so
 
 A few of the identified problems have easy fixes that need no further discussion. We remove the prefixed whitespace from Truman's name, fix the misspelling of New York, convert the binary variable \code{assasinationAttempt} to a factor and change the class of the \code{ageAtInauguration} variable to numeric:
 
-\begin{Schunk}
-\begin{Sinput}
-R> presidentData$lastName[presidentData$lastName == " Truman"] <- "Truman"
-R> presidentData$stateOfBirth[presidentData$stateOfBirth == "New york"] <- "New York"
-R> presidentData$assassinationAttempt <- factor(presidentData$assassinationAttempt)
-R> presidentData$ageAtInauguration <- as.numeric(presidentData$ageAtInauguration)
-\end{Sinput}
-\end{Schunk}
+<<>>=
+presidentData$lastName[presidentData$lastName == " Truman"] <- "Truman"
+presidentData$stateOfBirth[presidentData$stateOfBirth == "New york"] <- "New York"
+presidentData$assassinationAttempt <- factor(presidentData$assassinationAttempt)
+presidentData$ageAtInauguration <- as.numeric(presidentData$ageAtInauguration)
+@ 
 
 Please note that if \code{ageAtInauguration} had been a \code{factor} rather than a \code{character} variable, an additional inner call should be added in order to ensure no conversion issues:
 
-\begin{Schunk}
-\begin{Sinput}
-R> presidentData$ageAtInauguration <- as.numeric(as.character(presidentData$ageAtInauguration))
-\end{Sinput}
-\end{Schunk}
+<<>>=
+presidentData$ageAtInauguration <- as.numeric(as.character(presidentData$ageAtInauguration))
+@ 
 
 Moving forward, we might be interested in inspecting the contents of the "."-coded entry of \code{firstName} closer, as we \textit{do} know the first names of all the US presidents. We look at the last name for this president and fill in the first name correctly:
 
-\begin{Schunk}
-\begin{Sinput}
-R> presidentData$lastName[presidentData$firstName == "."]
-\end{Sinput}
-\begin{Soutput}
-[1] "Trump"
-\end{Soutput}
-\end{Schunk}
+<<>>=
+presidentData$lastName[presidentData$firstName == "."]
+@ 
 
-\begin{Schunk}
-\begin{Sinput}
-R> presidentData$firstName[presidentData$firstName == "."] <- "Donald"
-\end{Sinput}
-\end{Schunk}
+<<>>=
+presidentData$firstName[presidentData$firstName == "."] <- "Donald"
+@ 
 
 Next up is the unlikely US president birth day of March 1, 1300. In order to understand if this is a generally problematic observation, or if it is just a mistyped observation, we inspect the full data entry for this person. We can do this using the usual \proglang{R} selection syntax as above, or we can use the value of a \code{identifyOutliers} call to select this observation:
 
 
 
 
-\begin{Schunk}
-\begin{Sinput}
-R> birthdayOutlierVal <- 
-+  +    identifyOutliers(presidentData$birthday)$problemValues
-\end{Sinput}
-\end{Schunk}
+<<>>=
+birthdayOutlierVal <- 
++    identifyOutliers(presidentData$birthday)$problemValues
+@ 
  
 Now, we have the outlier birthday stored and can use it to select and print the appropriate observation in the dataset:
 
-\begin{Schunk}
-\begin{Sinput}
-R> presidentData[presidentData$birthday == birthdayOutlierVal, ]
-\end{Sinput}
-\begin{Soutput}
-      lastName firstName orderOfPresidency   birthday stateOfBirth
-46 Arathornson   Aragorn                 0 1300-03-01       Gondor
-   assassinationAttempt  sex ethnicity presidencyYears
-46                    1 Male Caucasian              NA
-   ageAtInauguration favoriteNumber
-46                87           8+0i
-\end{Soutput}
-\end{Schunk}
+<<>>=
+presidentData[presidentData$birthday == birthdayOutlierVal, ]
+@ 
 
 We see that this is not a proper US president and thus, it is likely to be the explanation of the faulty number of observations in the dataset. Therefore, we drop this observation from the dataset, e.g. by overwriting the dataset with a selection of all the other observations:
 
-\begin{Schunk}
-\begin{Sinput}
-R> presidentData <- 
-+    presidentData[presidentData$birthday != birthdayOutlierVal, ]
-\end{Sinput}
-\end{Schunk}
+<<>>=
+presidentData <- 
+  presidentData[presidentData$birthday != birthdayOutlierVal, ]
+@ 
 
 Now, all that is left to fix is the \code{presidencyYears} variable. For this variable, we are concerned about three different things: First, it has some quite small outlier values. We need to identify whether these are really true. Secondly, one president is registered to have an infinite presidency, this should also be fixed. Third, we see from the summary table that there are two missing observations for this variable. One might have been fixed by removing Aragorn from the dataset, so we start by inspecting if this is indeed the case by calling \code{summarize()} interactively:
 
 
-\begin{Schunk}
-\begin{Sinput}
-R> summarize(presidentData$presidencyYears)
-\end{Sinput}
-\begin{Soutput}
-$variableType
-Variable type: numeric
-$countMissing
-Number of missing obs.: 1 (2.22 %)
-$uniqueValues
-Number of unique values: 10
-$centralValue
-Median: 4
-$quartiles
-1st and 3rd quartiles: 3.75; 8
-$minMax
-Min. and max.: 0; Inf
-\end{Soutput}
-\end{Schunk}
+<<>>=
+summarize(presidentData$presidencyYears)
+@ 
 
 We see that there is one less missing value and that the small and large values pertain. Therefore, we look at all the observations that cause worry, namely the outliers and the missing value, and we select to see the variables \code{firstName}, \code{lastName} and \code{presidencyYears}:
 
-\begin{Schunk}
-\begin{Sinput}
-R> presidentData[is.na(presidentData$presidencyYears) | 
-+     presidentData$presidencyYears %in% 
-+     identifyOutliers(presidentData$presidencyYears)$problemValues, 
-+     c("firstName", "lastName", "presidencyYears")]
-\end{Sinput}
-\begin{Soutput}
-   firstName lastName presidencyYears
-9    William Harrison               0
-12   Zachary   Taylor               1
-20     James Garfield               0
-44    Barack    Obama             Inf
-45    Donald    Trump              NA
-\end{Soutput}
-\end{Schunk}
+<<>>=
+presidentData[is.na(presidentData$presidencyYears) | 
+   presidentData$presidencyYears %in% 
+   identifyOutliers(presidentData$presidencyYears)$problemValues, 
+   c("firstName", "lastName", "presidencyYears")]
+@ 
 
 We see that Obama is listed as being president forever, which history has proven to be wrong. Trump, on the other hand, has a missing value for his presidency duration, which is in fact reasonable as we cannot know how long it will be yet (anno 2017). Presidents William Harrison, Zachary Taylor, James Garfield, Warren Harding and Gerald Ford were identified to have very brief presidencies, but these are not mistakes, as a textbook look-up can tell us. Thus the only mistake left to fix is Obama's infinite presidency:
 
 
-\begin{Schunk}
-\begin{Sinput}
-R> presidentData$presidencyYears[presidentData$lastName == "Obama"] <- 8
-\end{Sinput}
-\end{Schunk}
+<<>>=
+presidentData$presidencyYears[presidentData$lastName == "Obama"] <- 8
+@ 
 
 This does not mean we are necessarily done with the data cleaning process: There might be problems that \pkg{dataMaid} was not able to identify. But we have fixed some key issues in the data and thereby given ourselves a chance of a smoother sailing in the next steps of the data analysis. 
 
 Finally, we create a new data report, adding the suffix "cleaned" to the title, as well as the file name, so that we have documentation of the current state of the dataset. We also decide that it might be sufficient to be able to inspect only the real part of the presidential favorite numbers and therefore, we choose to treat the \code{complex} variable \code{favoriteNumber} as a \code{numeric} variable:
 
-\begin{Schunk}
-\begin{Sinput}
-R> makeDataReport(presidentData, vol = "_cleaned", 
-+    treatXasY = list(Name = "character", complex = "numeric"),
-+    checks = setChecks(character = 
-+    defaultCharacterChecks(remove = "identifyLoners")),
-+    reportTitle = "Dirty president data - cleaned",
-+    replace=TRUE)
-\end{Sinput}
-\end{Schunk}
+<<>>=
+makeDataReport(presidentData, vol = "_cleaned", 
+  treatXasY = list(Name = "character", complex = "numeric"),
+  checks = setChecks(character = 
+  defaultCharacterChecks(remove = "identifyLoners")),
+  reportTitle = "Dirty president data - cleaned",
+  replace=TRUE)
+@ 
 
 This will create a new data report stored in the file \code{dataMaid_presidentData_cleaned.pdf}.  
 
@@ -1200,11 +978,9 @@ overview of the problems they might have. This is obtained by
 using the \code{mode} argument:
 
 
-\begin{Schunk}
-\begin{Sinput}
-R> makeDataReport(toyData, onlyProblematic = TRUE, mode = "check", replace=TRUE)
-\end{Sinput}
-\end{Schunk}
+<<>>=
+makeDataReport(toyData, onlyProblematic = TRUE, mode = "check", replace=TRUE)
+@ 
 
 Now only the checking results are printed, and only for variables
 where problems were identified. An even more minimal output  can be obtained directly in the console by using the \code{check()} function interactively. When called on a \code{data.frame}, this function produces a list (of
@@ -1213,19 +989,13 @@ variables) of lists (of checks) of lists (or rather,
 can easily be unravelled using the list manipulation function
 \code{sapply()}:
 
-\begin{Schunk}
-\begin{Sinput}
-R> toyChecks <- check(toyData)
-R> foo <- function(x) {
-+    any(sapply(x, function(y) y[["problem"]]))
-+  }
-R> sapply(toyChecks, foo)
-\end{Sinput}
-\begin{Soutput}
- var1  var2  var3  var4  var5  var6 
- TRUE  TRUE  TRUE  TRUE  TRUE FALSE 
-\end{Soutput}
-\end{Schunk}
+<<>>=
+toyChecks <- check(toyData)
+foo <- function(x) {
+  any(sapply(x, function(y) y[["problem"]]))
+}
+sapply(toyChecks, foo)
+@ 
 
 and we find that only a single variable in \code{toyData}, \code{var6} (for which all
 observations have the value \code{"Irrelevant"}), is problem-free when using the default checks.
@@ -1277,38 +1047,30 @@ header-includes:
 In the this example, the \code{dataMaid\_toyData.Rmd} file could have
 been created as follows:
 
-\begin{Schunk}
-\begin{Sinput}
-R> makeDataReport(toyData, standAlone = FALSE)
-\end{Sinput}
-\end{Schunk}
+<<eval=FALSE>>=
+makeDataReport(toyData, standAlone = FALSE)
+@ 
 
 and the more minimal, html-style \proglang{R} markdown file described above can be produced using
 
-\begin{Schunk}
-\begin{Sinput}
-R> makeDataReport(toyData, standAlone = FALSE, output = "html", 
-+    twoCols = FALSE)
-\end{Sinput}
-\end{Schunk}
+<<eval=FALSE>>=
+makeDataReport(toyData, standAlone = FALSE, output = "html", 
+  twoCols = FALSE)
+@ 
 
 Note that with the latter option, no special YAML preamble is needed in the \proglang{R} markdown document. 
 
 Alternatively, one can create the usual output report, not render it and then manually edit the produced \proglang{R} markdown file as wished. This can be done with the following command:
 
-\begin{Schunk}
-\begin{Sinput}
-R> makeDataReport(toyData, render = FALSE, openResult = FALSE)
-\end{Sinput}
-\end{Schunk}
+<<eval=FALSE>>=
+makeDataReport(toyData, render = FALSE, openResult = FALSE)
+@ 
 
 After editing, the file can be rendered by calling the \code{render} function:
 
-\begin{Schunk}
-\begin{Sinput}
-R> render("dataMaid_toyData.Rmd", quiet = FALSE)
-\end{Sinput}
-\end{Schunk}
+<<eval=FALSE>>=
+render("dataMaid_toyData.Rmd", quiet = FALSE)
+@ 
 
 
 \section{Concluding remarks}

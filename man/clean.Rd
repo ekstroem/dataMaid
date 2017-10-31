@@ -272,4 +272,3 @@ clean(toyData, replace  = TRUE, treatXasY = list(raw = "character", complex = "n
 }
 
 }
-

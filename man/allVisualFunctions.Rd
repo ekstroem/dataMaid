@@ -26,4 +26,3 @@ allVisualFunctions()
 \code{\link{visualFunction}} \code{\link{allCheckFunctions}}
 \code{\link{allSummaryFunctions}}
 }
-

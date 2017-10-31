@@ -31,4 +31,3 @@ minMax(c(1:100))
 \code{\link{summaryFunction}}, \code{\link{summarize}}, \code{\link{summaryResult}},
 \code{\link{allSummaryFunctions}}
 }
-

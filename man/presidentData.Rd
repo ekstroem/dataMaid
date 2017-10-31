@@ -41,4 +41,3 @@ data(presidentData)
 
 }
 \keyword{datasets}
-
