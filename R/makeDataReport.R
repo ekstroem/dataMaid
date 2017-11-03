@@ -626,6 +626,14 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
     ## include packages as a first chunk
     secretChunk.wrapper("library(ggplot2)\nlibrary(pander)")
     
+    ## Define unexported visual functions locally so that the report 
+    ## can be rendered from the global environment. Only done if standardVisuals are used
+    if ("visualize" %in% mode & "standardVisual" %in% visuals) {
+      secretChunk.wrapper(c("ggAggHist <- getFromNamespace(\"ggAggHist\", \"dataMaid\")", 
+                            "ggAggBarplot <- getFromNamespace(\"ggAggBarplot\", \"dataMaid\")"),
+                          label = "visualFunctions")
+    }
+    
     ## Title
     writer("# Data report overview")
     writer("The dataset examined has the following dimensions:", "\n")

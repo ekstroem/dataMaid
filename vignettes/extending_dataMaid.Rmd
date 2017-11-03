@@ -18,6 +18,7 @@ library(dataMaid)
 
 #Introduction
 The data documentation tools available in `dataMaid` allows for it to be utilized as an easy-to-use, self-contained package, as outlined in our [articlemanuscript](https://github.com/ekstroem/dataMaid/blob/master/latex/article_vol3.pdf). However, this does *not* imply that `dataMaid` is not customizable: `dataMaid` was specifically built for including user-made extenstions and this vignette is a tutorial into how one can write simple extensions that can be used in e.g. the `makeDataReport()` function of `dataMaid`. 
+
 ##Three steps of data documentation
 In order to understand how different parts of the report creation can be customized, we will briefly dwelve on the structure of the data reports made by `dataMaid`. Aside from a few pages dedicated to gaining an overview of the full dataset and what was done to document its current state, the report consists of some information for each variable. More specically, each variable is presented with one of the two sets of information:
 
