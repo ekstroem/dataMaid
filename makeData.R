@@ -40,7 +40,6 @@ makeCPR <- function(bday) {
 
 
 #make test dataset
-
 library(haven)
 
 vC <- c("a", "b", "c", "a", "b", "d", "a")
@@ -167,3 +166,32 @@ save(presidentData, file="data/presidentData.rda")
 
 
 
+#make dataset for vignette: extending dataMaid (artData)
+#Based on csv dataset from http://www.data-explorer.com/data
+library(digest)
+artData <- read.csv("artData.csv", na.strings = "",
+                    stringsAsFactors = FALSE)
+artData <- artData[, c("Artist", "Title", "Year..Approximate.", 
+                       "Movement", "Total.Height..cm.",
+                       "Total.Width..cm.",
+                       "Media", "Location",
+                       "Country")]
+names(artData) <- c("ArtistName", "Title", "Year", 
+                    "Movement", "Height", "Width", 
+                    "Media", "Location",
+                    "Country")
+artData$ArtistID <- substr(Vectorize(digest)(artData$ArtistName), 1, 8)
+artData$Movement <- gsub(", ", ":", artData$Movement)
+artData$Continent <- "North America"
+artData$Continent[artData$Country != "USA"] <- "Europe"
+artData$Continent[artData$Country %in% c("Rusia", "Japan")] <- "Asia"
+artData$Country <- NULL
+artData$NoOfMiddlenames <- sapply(gregexpr(" ", artData$ArtistName), function(x) length(x)-1)
+artData$Continent <- factor(artData$Continent)
+artData <- artData[, c("ArtistID", "ArtistName", "NoOfMiddlenames", 
+                       "Title", "Year", "Location", "Continent", 
+                       "Width", "Height", "Media", "Movement")]
+artData$ArtistName <- stringi::stri_trans_general(artData$ArtistName, "latin-ascii")
+artData$Title <- stringi::stri_trans_general(artData$Title, "latin-ascii")
+artData$Location <- stringi::stri_trans_general(artData$Location, "latin-ascii")
+save(artData, file="data/artData.rda")
