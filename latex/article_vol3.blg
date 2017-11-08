@@ -1,9 +1,47 @@
-This is BibTeX, Version 0.99dThe top-level auxiliary file: article_vol3.aux
+This is BibTeX, Version 0.99d (TeX Live 2017)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: article_vol3.aux
 The style file: jss.bst
 Database file #1: foo.bib
-You're missing a field name---line 23 of file foo.bib
- : 
- : %      title = {The Split-Apply-Combine Strategy for Data Analysis},
-(Error may have been on previous line)
-I'm skipping whatever remains of this entry
-(There was 1 error message)
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+You've used 16 entries,
+            3215 wiz_defined-function locations,
+            724 strings with 8113 characters,
+and the built_in function-call counts, 14039 in all, are:
+= -- 1405
+> -- 361
+< -- 11
++ -- 136
+- -- 121
+* -- 969
+:= -- 1732
+add.period$ -- 51
+call.type$ -- 16
+change.case$ -- 118
+chr.to.int$ -- 17
+cite$ -- 16
+duplicate$ -- 1483
+empty$ -- 1074
+format.name$ -- 162
+if$ -- 2819
+int.to.chr$ -- 1
+int.to.str$ -- 1
+missing$ -- 136
+newline$ -- 94
+num.names$ -- 64
+pop$ -- 739
+preamble$ -- 1
+purify$ -- 104
+quote$ -- 0
+skip$ -- 290
+stack$ -- 0
+substring$ -- 1362
+swap$ -- 305
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 141
+warning$ -- 0
+while$ -- 88
+width$ -- 0
+write$ -- 222

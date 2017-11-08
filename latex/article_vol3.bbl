@@ -17,18 +17,19 @@ Allaire J, Cheng J, Xie Y, McPherson J, Chang W, Allen J, Wickham H, Atkins A,
 \newblock \proglang{R} package version 1.3,
   \urlprefix\url{http://rmarkdown.rstudio.com}.
 
-\bibitem[{Bornkamp(2012)}]{txtplot}
-Bornkamp B (2012).
-\newblock \emph{\pkg{txtplot}: Text based plots}.
-\newblock \proglang{R} package version 1.0-3,
-  \urlprefix\url{https://CRAN.R-project.org/package=txtplot}.
-
 \bibitem[{Chang \emph{et~al.}(2016)Chang, Cheng, Allaire, Xie, and
   McPherson}]{shiny}
 Chang W, Cheng J, Allaire JJ, Xie Y, McPherson J (2016).
 \newblock \emph{\pkg{shiny}: Web Application Framework for \proglang{R}}.
 \newblock \proglang{R} package version 0.13.2,
   \urlprefix\url{https://CRAN.R-project.org/package=shiny}.
+
+\bibitem[{Cotton(2016)}]{assertive}
+Cotton R (2016).
+\newblock \emph{\pkg{assertive}: Readable Check Functions to Ensure Code
+  Integrity}.
+\newblock \proglang{R} package version 0.3-5,
+  \urlprefix\url{https://CRAN.R-project.org/package=assertive}.
 
 \bibitem[{Cui(2016)}]{DataExplorer}
 Cui B (2016).

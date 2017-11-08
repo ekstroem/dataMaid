@@ -41,7 +41,7 @@
 \author{Anne Helby Petersen\\Section of Biostatistics\\Department of Public
   Health\\University of Copenhagen \And Claus Thorn Ekstr\o m\\Section of Biostatistics\\Department of Public
   Health\\University of Copenhagen}
-\title{\pkg{dataMaid}: your assistant for data documentation in \proglang{R}}
+\title{\pkg{dataMaid}: your assistant for documenting supervised data quality screening in \proglang{R}}
 
 %% for pretty printing and a nice hypersummary also set:
 \Plainauthor{Anne Helby Petersen, Claus Thorn Ekstr\o m} %% comma-separated
@@ -61,28 +61,28 @@
 
   We describe an \proglang{R} package, \pkg{dataMaid}, which
   implements an extensive and customizeable suite of quality
-  assessment tools that can be applied to a dataset in order to
-  identify potential problems in its variables. The results are 
+  assessment aids that can be applied to a dataset in order to
+  identify potential problems in its variables. The results are
   presented in an auto-generated, non-technical, stand-alone overview
   document intended to be perused by an investigator with an
   understanding of the variables in the data, but not necessarily
   knowledge of \proglang{R}. Thereby, \pkg{dataMaid} aids the dialogue
   between data analysts and field experts, while also providing easy
-  documentation of reproducible data cleaning steps and data quality
-  control. Moreover, the \pkg{dataMaid} solution changes the data
-  cleaning process from the usual ad hoc approach to a systematic,
-  well-documented endeavor.  \pkg{dataMaid} also provides a suite of
-  more typical \proglang{R} tools for interactive data quality
-  assessment and -cleaning, where the data inspections are executed directly 
-  in the \proglang{R} console.
+  documentation of reproducible data quality screening. Moreover, the
+  \pkg{dataMaid} solution changes the data screening process from the
+  usual ad hoc approach to a systematic, well-documented endeavor.
+  \pkg{dataMaid} also provides a suite of more typical \proglang{R}
+  tools for interactive data quality assessment and -screening, where
+  the data inspections are executed directly in the \proglang{R}
+  console.
 
   % The \pkg{dataMaid} package is designed to be easily extended with
   % custom user-created checks that are relevant in particular
   % situations. \hl{Already said that above. Either expand on it or
   % delete this.}
 }
-\Keywords{data cleaning, quality control, \proglang{R}, data documentation}
-\Plainkeywords{data cleaning, quality control, R, data documentation} %% without formatting
+\Keywords{data screening, data cleaning, quality control, \proglang{R}, data documentation}
+\Plainkeywords{data screening, data cleaning, quality control, R, data documentation} %% without formatting
 %% at least one keyword must be supplied
 
 %% publication information
@@ -133,48 +133,110 @@ data cleaning and data wrangling. While a computer should generally not
 make unsupervised decisions on what should be done to potential
 errors in a dataset, it can still be an extremely useful tool in the
 data cleaning process. Some errors can be tracked down and flagged by a
-computer without further ado, while other types of errors need an analytic
+computer without further ado, while other types of errors need a subject
 context in order to be identified. Even in this latter case, well-designed
 software can aid the process tremendously by providing the human
 investigator with the information needed for identifying issues.
 
-But even when tools are available for identifying problems in a dataset, the activity of data cleaning still suffers from a challenge that has recieved increasing attention in the scientitic communities in the later years: Data cleaning is not very straight forward to document and therefore, reproducibility suffers. We present a new \proglang{R} package, \pkg{dataMaid} \citep{dataMaid}, whose most central purpose is to facilitate a data cleaning workflow where documentation is thoroughly integrated rather than a secondary add-on. This is accomplished by centering the data cleaning process around auto-generated data overview reports that summarize the contents of the current version of a dataset and flags potential problems that could be candidates for the next bullet on the cleaning agenda. 
+But even when tools are available for identifying problems in a
+dataset, the activity of data cleaning still suffers from a challenge
+that has recieved increasing attention in the scientitic communities
+in the later years: Data cleaning is not very straight forward to
+document and therefore, reproducibility suffers. We present a new
+\proglang{R} package, \pkg{dataMaid} \citep{dataMaid}, whose most
+central purpose is to facilitate a supervised data quality screening
+workflow where documentation is thoroughly integrated rather than an
+add-on. This is accomplished by structuring the data screening around
+auto-generated data overview reports that summarize and flags
+potential problems in the dataset.
 
-A number of \proglang{R} packages made for other pre-analysis steps are
-already available, including \pkg{janitor} \citep{janitor}, \hl{assertive}, \pkg{dplyr}
-\citep{dplyr}, \pkg{tidyr}\citep{tidyr}, \pkg{data.table} \citep{data.table}, \pkg{DataCombine}
-\citep{DataCombine} , \pkg{validate} \citep{validate}, \pkg{assertr} \citep{assertr}, and
-\pkg{DataExplorer} \citep{DataExplorer}. These packages focus on
-different stages of the pre-analysis work, most of which are not
-really data cleaning.  \pkg{janitor} provides tools for data import
-with a particular emphasis on the challenges of getting neat data
-frames from Microsoft Excel data files. \hl{Mention assertive here}. \pkg{dplyr}, \pkg{tidyr}, \pkg{data.table}
-and \pkg{DataCombine} go a few steps further by providing a wide array
-of extremely powerful tools for data wrangling, including a number of
+
+But no matter how clever software tools we make, data cleaning remains
+to be a time consuming endeavor, which inherently requires human
+interaction since every dataset is different and the variables in the
+dataset can only be understood in the proper context of their
+origin. This often requires a collaborative effort between an expert
+in the field and a statistician or data scientist. In many
+situations, these errors are discovered in the process of the data
+analysis (e.g., a categorical variable with numeric labels for each
+category may be wrongly classified as a quantitative variable or a
+variable where all values have erroneously been coded to the same
+value), but in other cases a human with knowledge about the data
+context area is needed to identify possible mistakes in the data
+(e.g., if there are 4 categories for a variable that should only have
+3).
+
+The \pkg{dataMaid} approach to data screening, -quality assessment and
+-documentation is governed by two fundamental paradigms. First of all,
+there is no need for data cleaning to be an ad hoc procedure. Often,
+we have a very clear idea of what flags are raisable in a given
+dataset before we look at it, as we were the ones to produce it in the
+first place. This means that data cleaning can easily be a
+well-documented, well-specified procedure. In order to aid this
+paradigm, \pkg{dataMaid} provides easy-to-use, automated tools for
+data quality assessment in \proglang{R} \citep{R} on which data
+cleaning decisions can be made. This quality assessment is presented
+in an auto-generated overview document, readable by data analysts and
+field experts alike, thereby also contributing to an inter-field
+dialogue about the data at hand. Oftentimes, e.g., distinguishing
+between faulty codings of a numeric value and unusual, but correct,
+values requires problem-specific expertise that might not be held by
+the data analyst. Hopefully, having easy access to data summaries
+through \pkg{dataMaid} will help this necessary knowledge sharing.
+
+While \pkg{dataMaid}s primary raison d'être is auto-generating data
+quality assessment overview documents, we still wish to emphasize that
+it is \emph{not} a tool for unsupervised data cleaning. This qualifies
+as the second paradigm of \pkg{dataMaid}: Data cleaning decisions
+should always be made by humans. Therefore, \pkg{dataMaid} does not
+supply any tools for ``fixing'' errors in the data. However, we do
+provide interactive functions that can be used to identify potentially
+erroneous entries in a dataset and that can make it easier to solve
+data issues, one variable at a time.
+
+
+
+
+
+A number of \proglang{R} packages made for other pre-analysis steps
+are already available, including \pkg{janitor} \citep{janitor},
+\pkg{assertive} \citep{assertive}, \pkg{dplyr} \citep{dplyr},
+\pkg{tidyr}\citep{tidyr}, \pkg{data.table} \citep{data.table},
+\pkg{DataCombine} \citep{DataCombine}, \pkg{validate}
+\citep{validate}, and \pkg{assertr} \citep{assertr}. These packages
+focus on different stages of the pre-analysis work.  \pkg{janitor}
+provides tools for data import with a particular emphasis on the
+challenges of getting neat data frames from Microsoft Excel data
+files. \pkg{dplyr}, \pkg{tidyr}, \pkg{data.table} and
+\pkg{DataCombine} go a few steps further by providing a wide array of
+extremely powerful tools for data wrangling, including a number of
 particularly useful functions for merging and working with very large
 datasets. When it comes to actual data cleaning, however, the options
 are fewer.  \pkg{validate} (and the similar packages \pkg{editrules}
 \citep{editrules} and \pkg{deducorrect} \citep{deducorrect} from the
-same authors) does offer a few tools for identifying and
-auto-correcting errors in a dataset, but, as the name suggests, the
-focus is on internal validity rather than general data cleaning. In
-practice, this means that quite elegant tools for, e.g., linear
-restraints among the variables in a dataset can be applied, but
-looking for potentially miscoded missing values is not really
-feasible. The main difference between these two challenges is the
-direction in which the data is inspected: While linear constraints
-work observation-wise with no ambiguity, determining whether or not something
-is a miscoded missing value often requires knowledge about the full
-variable (e.g. range or data type), and thus it should be performed
-variable-wise. \pkg{validate} does not allow for user-defined extensions
-of the latter type, thereby limiting its data cleaning potential.
-Automatic data correction functions are also provided by
-\pkg{validate} which we consider to be quite a dangerous cocktail: all
-power is given to the the computer with no human supervision, and
-investigators are less likely to make an active, case-specific choice
-regarding the handling of the potential errors.  Finally, no tools
-have been made to easily document exactly which checks and preliminary
-results were used in the data cleaning process. The \pkg{assertr} package provide very similar - and very nice - tools to those of \pkg{validate}, but without any amibitions of conducting auto-cleaning. 
+same authors) and \pkg{assertive} offers tools for identifying errors
+in a dataset by checking the state of the variable given a set of
+pre-specified rules, and their focus is on internal validity rather
+than general data screening. In practice, this means that quite elegant
+tools for, e.g., linear restraints among the variables in a dataset
+can be applied, but looking for potentially miscoded missing values is
+not really feasible. The main difference between these two challenges
+is the direction in which the data is inspected: While linear
+constraints work observation-wise with no ambiguity, determining
+whether or not something is a miscoded missing value often requires
+knowledge about the full variable (e.g. range or data type), and thus
+it should be performed variable-wise. \pkg{validate} does not
+currently allow for user-defined extensions of the latter type,
+thereby limiting its data cleaning potential.  Automatic data
+correction functions are also provided by \pkg{validate} which we
+consider to be quite a dangerous cocktail: all power is given to the
+the computer with no human supervision, and investigators are less
+likely to make an active, case-specific choice regarding the handling
+of the potential errors.  Finally, no tools have been made to easily
+document exactly which checks and preliminary results were used in the
+data cleaning process. The \pkg{assertr} package provide very similar
+--- and very nice --- tools to those of \pkg{validate}, but without
+any amibitions of conducting auto-cleaning.
 
 %All in all, the large role of data cleaning in any data analysts
 %everyday endeavors is hardly matched in the amount of available
@@ -200,64 +262,30 @@ exploratory data analysis, including automated
 documentation. Therefore, we find \pkg{DataExplorer} to be a good
 candidate for a next-step package after data cleaning is finished.
 
-But no matter how clever software tools we make, data cleaning remains
-to be a time consuming endeavor, as it inherently requires human
-interaction since every dataset is different and the variables in the
-dataset can only be understood in the proper context of their
-origin. This often requires a collaborative effort between an expert
-in the field and a statistician or data scientist, which may be why
-the process of proper data cleaning is not always undertaken. In many
-situations, these errors are discovered in the process of the data
-analysis (e.g., a categorical variable with numeric labels for each
-category may be wrongly classified as a quantitative variable or a
-variable where all values have erroneously been coded to the same
-value), but in other cases a human with knowledge about the data
-context area is needed to identify possible mistakes in the data
-(e.g., if there are 4 categories for a variable that should only have
-3).
-
-The \pkg{dataMaid} approach to data cleaning, -quality assessment and -documentation is
-governed by two fundamental paradigms. First of all, there is no need
-for data cleaning to be an ad hoc procedure. Often, we have a very
-clear idea of what flags are raisable in a given dataset before we
-look at it, as we were the ones to produce it in the first place. This
-means that data cleaning can easily be a well-documented,
-well-specified procedure. In order to aid this paradigm, \pkg{dataMaid}
-provides easy-to-use, automated tools for data quality assessment in
-\proglang{R} \citep{R} on which data cleaning decisions can be made. This quality
-assessment is presented in an auto-generated overview document,
-readable by data analysts and field experts alike, thereby also
-contributing to an inter-field dialogue about the data at
-hand. Oftentimes, e.g., distinguishing between faulty codings of a
-numeric value and unusual, but correct, values requires
-problem-specific expertise that might not be held by the data
-analyst. Hopefully, having easy access to data descriptions through
-\pkg{dataMaid} will help this necessary knowledge sharing.
-
-While \pkg{dataMaid}s primary raison d'être is auto-generating data
-quality assessment overview documents, we still wish to emphasize that
-it is \emph{not} a tool for unsupervised data cleaning. This qualifies
-as the second paradigm of \pkg{dataMaid}: Data cleaning decisions
-should always be made by humans. Therefore, \pkg{dataMaid} does not
-supply any tools for ``fixing'' errors in the data. However, we do
-provide interactive functions that can be used to identify potentially
-erroneous entries in a dataset and that can make it easier to solve
-data issues, one variable at a time.
 
 
 This manuscript is structured as follows: First, in Section
 \ref{sec:usingdataMaid}, we introduce the main representative of the first
 paradigm, namely the \code{makeDataReport()} function, which generates data
 overview documents. In the \pkg{dataMaid} package, we have
-provided a number of default checks that cover the data
+provided a number of default generic checks that cover the data
 cleaning challenges we find to be most common and these are also summarized in Section \ref{sec:usingdataMaid}. Next, in Section
 \ref{sec:interactiveCleanR}, we present the interactive mode of \pkg{dataMaid}, as motivated
-by the second paradigm above. Next, we show atep-by-step how the data report and the interactive mode of \pkg{dataMaid} can be combined to conduct a well-documented, systematic data cleaning in Section \ref{sec:bigExample}. Here, we assess and clean a dirty dataset with information about the US presidents.  At last, in Section \ref{sec:specificExamples}, we discuss a number of examples of
+by the second paradigm above. Next, we show step-by-step how the data report and the interactive mode of \pkg{dataMaid} can be combined to conduct a well-documented, systematic data cleaning in Section \ref{sec:bigExample}. Here, we assess and clean a dirty dataset with information about the US presidents.  At last, in Section \ref{sec:specificExamples}, we discuss a number of examples of
 specific data cleaning- and documentation challenges and how \pkg{dataMaid} can be used to
 solve them. 
 
-Please note that this description of what \pkg{dataMaid} contains is usefully supplemented by a tutorial into how it can be extended. Every dataset is different, and some datasets might include problems that cannot be detected by our data checking functions. Therefore, \pkg{dataMaid} was designed to be easily extendend with user-supplied functions for summarizing, viusalizing and checking data. We have provided a vignette \hl{REF TO VIGNETTE} in which we describe how \pkg{dataMaid} extensions can be made, such that they are integrable with the \code{makeDataReport()}
-function and with the other tools available in \pkg{dataMaid}. 
+%Please note that this description of what \pkg{dataMaid} contains is
+%usefully supplemented by a tutorial into how it can be extended. Every
+%dataset is different, and some datasets might include problems that
+%cannot be detected by our data checking functions. 
+%Therefore,
+\pkg{dataMaid} was designed to be easily extendend with user-supplied
+functions for summarizing, viusalizing and checking data. We have
+provided a vignette in which we describe how \pkg{dataMaid} extensions
+can be made, such that they are integrate with the
+\code{makeDataReport()} function and with the other tools available in
+\pkg{dataMaid}.
 
 %% include your article here, just as usual
 %% Note that you should use the \pkg{}, \proglang{} and \code{}
@@ -267,17 +295,21 @@ function and with the other tools available in \pkg{dataMaid}.
 \section{Creating a data overview report}
 \label{sec:usingdataMaid}
 
-The \code{makeDataReport()} function is the primary workhorse of \pkg{dataMaid} and
-this is the only function needed if a standard battery
-of tests are used to generate data reports. The data report itself is an overview document, intended for reading
-by humans, in either pdf, html or word (.docx) format. Appendix \ref{sec:appendix1}
-provides an example of a data report, produced by
-calling \code{makeDataReport()} on the dataset \code{toyData} available in
-\pkg{dataMaid}. The first two pages (excluding the frontpage) of this data report are
-shown in Figure~\ref{fig:example1} and the following two pages are shown in Figure~\ref{fig:example2}. \code{toyData} is a very
-small ($15$ observations of $6$ variables), artificial dataset which was created to
-illustrate the main capabilities of \pkg{dataMaid}. The following
-commands load the dataset and produce the report:
+The \code{makeDataReport()} function is the primary workhorse of
+\pkg{dataMaid} and it is the only function needed to generate a data
+report using the standard battery of tests. The data report itself is
+an overview document, intended for reading by humans, in either pdf,
+html or word (.docx) format. Appendix \ref{sec:appendix1} provides an
+example of a data report, produced by calling \code{makeDataReport()}
+on the dataset \code{toyData} available in \pkg{dataMaid}. The first
+two pages (excluding the frontpage) of this data report are shown in
+Figure~\ref{fig:example1} and the following two pages are shown in
+Figure~\ref{fig:example2}. \code{toyData} is a very small ($15$
+observations of $6$ variables), artificial dataset which was created
+with a lot of potential errors to illustrate the main capabilities of
+\pkg{dataMaid}. Section~\ref{sec:bigExample} shows an example of a data sreening
+process with a real dataset. The following commands load the dataset
+and produce the report:
 
 \begin{figure}[tb]
 \begin{center}
@@ -313,30 +345,34 @@ toyData
 makeDataReport(toyData)
 @ 
 
-By default, an \proglang{R} markdown file and a rendered pdf \hl{OBS: måske html/doc alt efter hvem der kalder funktionen?} overview
-document is produced, saved to the working directory and
-opened for immediate inspection. Such a data report consists of three parts, two of which 
-are presented in Figure~\ref{fig:example1}. First, an overview of what was done is presented under the
-title \textit{Data report overview}. Secondly, an index listing each variable along with an indication of whether it was found to be problematic or not is provided. Thirdly, as seen in Figure~\ref{fig:example2}, each variable in the
-dataset is presented in turn using (up to) three tools in the
+By default, an \proglang{R} markdown file and a rendered pdf or word
+overview document is produced, saved to the working directory and
+opened for immediate inspection. Such a data report consists of three
+parts, two of which are presented in Figure~\ref{fig:example1}. First,
+an overview of what was done is presented under the title \textit{Data
+  report overview}. Secondly, an index listing each variable along
+with an indication of whether it was found to be problematic or not is
+provided. Thirdly, as seen in Figure~\ref{fig:example2}, each variable
+in the dataset is presented in turn using (up to) three tools in the
 \textit{Variable list}: A table summarizing key features of the
-variable, a figure visualizing its distribution and a
-list of flagged issues, if any. For instance, as shown in Figure~\ref{fig:example2}, for the \code{numeric}-type variable
-\code{var2} from \code{toyData}, \code{makeDataReport()} has identified two values that
-are suspected to be miscoded missing values (\code{999} and \code{NaN}),
-while two values were also flagged as potential outliers that should
-be investigated more carefully.
+variable, a figure visualizing its distribution when relevant and a list of flagged
+issues, if any. For instance, as shown in Figure~\ref{fig:example2},
+for the \code{numeric}-type variable \code{events} from
+\code{toyData}, \code{makeDataReport()} has identified two values that
+are suspected to be miscoded missing values (\code{999} and
+\code{NaN}), while two values were also flagged as potential outliers
+that should be investigated more carefully.
 
-Though the \code{makeDataReport()} function is very easy to use, it should not be
-mistaken to be inflexible: By using the optional arguments of the function, 
-both the contents and the look of the data report can be molded 
-according to the user's needs. The most commonly used arguments are summarized in
+The arguments to \code{makeDataReport()} can be used to modify the
+contents and the look of the data report according to the user's
+needs. The most commonly used arguments are summarized in
 Table~\ref{table.cleanFormals} and they are grouped according to the
-part of the data assesment and report generation they influence. In order to understand
-this distinction, a glimpse of the inner structure of \code{makeDataReport()} is
-shown in Figure~\ref{figure:cleanStructure}. Below, we present a few
-examples on how to use the arguments from Table \ref{table.cleanFormals}
- to influence the output of a \code{makeDataReport()} call.
+part of the data assesment and report generation they influence. In
+order to understand this distinction, a glimpse of the inner structure
+of \code{makeDataReport()} is shown in
+Figure~\ref{figure:cleanStructure}. Below, we present a few examples
+on how to use the arguments from Table \ref{table.cleanFormals} to
+influence the output of a \code{makeDataReport()} call.
 
 \begin{table}
 \small
@@ -452,7 +488,7 @@ Argument & Description & Default value \\
 % \subsection{Controlling [something]}
 % \label{subsection:controlSomething}
 
-\subsection{Polishing off the arguments}
+\subsection{Dusting off the arguments}
 We begin with an example that is intended as an illustration of how
 \code{makeDataReport()} might be used in the very first stages of data
 cleaning, when we are uncertain about the complexities of the
@@ -461,7 +497,7 @@ this stage, what is really needed, is a very rough idea of the
 severity of errors in the dataset. In this scenario, we might wish to
 obtain a summary document in html format that only contains the
 variables with potential problems, and with a limit of, say, maximum
-2 printed potential problematic value per check for each variable. Also, we can add the
+2 printed potential problematic values per check for each variable. Also, we can add the
 argument \code{replace = TRUE} in order to force \code{makeDataReport()} to
 overwrite any existing files produced by \code{makeDataReport()}.  Using the
 \code{toyData} dataset as a guinea pig, we type:
@@ -527,24 +563,24 @@ makeDataReport(toyData, output="html", render=FALSE, openResult=FALSE, replace=T
 \label{table.SVCfunctions}
 \end{table}
 
-\subsection{Controlling contents: What summaries, visualizations and checks should be performed?}
-We will now move on to discuss how not only the structure of the
-data assesment steps is manipulated, but also its very contents. This is
-done through the summarize/visualize/check (SVC) steps, as illustrated
-in Figure \ref{figure:cleanStructure}.  \pkg{dataMaid} uses three
-different types of functions for performing these steps, namely
+\subsection{Controlling contents through summaries, visualizations and checks}
+
+\pkg{dataMaid} works through three different steps --- summarize,
+visualize, and check (SVC) --- for each variable in the dataset
+(illustrated in Figure \ref{figure:cleanStructure}).  Three different
+types of functions are used to perform these steps, namely
 \code{summaryFunction}s, \code{visualFunction}s and
-\code{checkFunction}s.  By default, \code{makeDataReport()} runs selected summary,
-visualization and check functions on each variable in the dataset, and
-the exact choice of these functions depends on the classes of the
-variables. For instance, though detection of outlier values might be
-interesting for numerical variables, it holds little meaning for
-factor variables, and therefore, numerical and factor variables need
-different checks. Table~\ref{table.SVCfunctions} lists all available
-summarize/visualize/check functions, but we can also use the
-\code{allSummaryFunctions()}, \code{allVisualFunctions()}, and
-\code{allCheckFunctions()} functions in \pkg{dataMaid} to print overview
-lists in \proglang{R}. For example, the implemented
+\code{checkFunction}s.  By default, \code{makeDataReport()} runs
+selected summary, visualization and check functions on each variable
+in the dataset, and the exact choice of these functions depends on the
+classes of the variables. For instance, detection of outlier values
+might be interesting for numerical variables, but it holds little
+meaning for factor variables, and therefore, numerical and factor
+variables need different checks. Table~\ref{table.SVCfunctions} lists
+all available summarize/visualize/check functions, but we can also use
+the \code{allSummaryFunctions()}, \code{allVisualFunctions()}, and
+\code{allCheckFunctions()} functions in \pkg{dataMaid} to print
+overview lists in \proglang{R}. For example, the implemented
 \code{summaryFunction}s are:
 
 %\subsection{Something about what check, visual and summary functions are available}
@@ -684,12 +720,12 @@ work interactively with \pkg{dataMaid}.
 
 \subsection{Data cleaning by hand: An example}
 Assume that we wish to look further into a certain variable from
-\code{toyData}, namely \code{var2}. The data cleaning summary found some
+\code{toyData}, namely \code{events}. The data cleaning summary found some
 issues in this variable, and we would like to recall what these issues
 were. This can be done using the \code{check()} command
 
 <<>>=
-check(toyData$var2)
+check(toyData$events)
 @ 
 
 Note that the arguments specifying which checks to perform, as
@@ -702,7 +738,7 @@ Moving forward, we limit the numeric checks to only identify miscoded
 missing values:
 
 <<>>=
-check(toyData$var2, checks = setChecks(numeric = "identifyMissing"))
+check(toyData$events, checks = setChecks(numeric = "identifyMissing"))
 @ 
 
 An equivalent way to call only a single, specific \code{checkFunction},
@@ -710,7 +746,7 @@ such as \code{identifyMissing}, is by using it directly on the variable,
 e.g.,
 
 <<>>=
-identifyMissing(toyData$var2)
+identifyMissing(toyData$events)
 @ 
 
 The result of a \code{checkFunction} is an object of class
@@ -718,39 +754,39 @@ The result of a \code{checkFunction} is an object of class
 look further into its components:
 
 <<>>=
-missVar2 <- identifyMissing(toyData$var2)
-str(missVar2)
+missEvents <- identifyMissing(toyData$events)
+str(missEvents)
 @ 
 
 The most important thing to note here is that while the printed
 message is made for easy reading, the actual values of the variable
 causing the issue are still obtainable in the entry
 \code{problemValues}. If we decide that the values \code{999}
-and \code{NaN} in \code{var2} are in fact miscoded missing values, we can
+and \code{NaN} in \code{events} are in fact miscoded missing values, we can
 easily replace them with \code{NA}s:
 
 <<>>=
-toyData$var2[toyData$var2 %in% missVar2$problemValues] <- NA
-identifyMissing(toyData$var2)
+toyData$events[toyData$events %in% missEvents$problemValues] <- NA
+identifyMissing(toyData$events)
 @ 
 
 Similarly, the \code{visualize()} and \code{summarize()} functions can be
 used to run the corresponding visualizations and summaries for each
-variable. See Figure~\ref{fig:example2} for the visualization output.
+variable. See Figure~\ref{fig:example3} for the visualization output.
 
 
-<<>>=
-visualize(toyData$var2)
-summarize(toyData$var2)
+<<toydata-events>>=
+visualize(toyData$events)
+summarize(toyData$events)
 @ 
 
 \begin{figure}[tb]
 \begin{center}
-\includegraphics[width=7.5cm]{toyData-var2.pdf}
+\includegraphics[width=7.5cm]{toyData-events.pdf}
 \end{center}
-\caption{Output from running \code{visualize()} on the variable \code{var2} from the
+\caption{Output from running \code{visualize()} on the variable \code{events} from the
 \code{toyData} dataset.}
-\label{fig:example2}
+\label{fig:example3}
 \end{figure}
 
 
@@ -759,13 +795,13 @@ by using the \code{summaries} argument and the \code{setSummaries()} helper func
 
 
 <<>>=
-summarize(toyData$var2, 
+summarize(toyData$events, 
   summaries = setSummaries(
   numeric = defaultNumericSummaries(remove = c("variableType", 
   "countMissing"))))
 @ 
 
-The syntax in this code chunk can be read as follows: "Summarize \code{var2} in \code{toyData}, and for \code{numeric} variables, set the summaries to be the default summary functions, except \code{variableType} and \code{countMissing}." 
+The syntax in this code chunk can be read as follows: "Summarize \code{events} in \code{toyData}, and for \code{numeric} variables, set the summaries to be the default summary functions, except \code{variableType} and \code{countMissing}." 
 
 Similar \code{defaultXXXSummaries()} functions are available for the other supported variable classes. For checks, the same syntax can also be used, but the helper functions are now named \code{defaultXXXChecks} with \code{XXX} as a placeholder for a supported variable class.
 
@@ -852,7 +888,7 @@ Figure \ref{fig:bigExampleP45} presents the remaining two pages with variable pr
 \item The variable concerning age at inauguration was coded as a character variable, but consists exclusively of numbers and takes a lot of different values and therefore, it was flagged as a potentially misclassified numeric variable.
 \item It seems as if one or more presidents have complex numbers as their favorite numbers. As \code{complex} is not a supported variable type in \code{dataMaid} and no strategy for handling this class was provided in the \code{treatXasY} argument, the variable is simply flagged as non-supported.
 \end{itemize}
-A lot of these mistakes are easily fixable, and we will do so below. However, some of them require more delicate knowledge of the subject matter. For instance, \code{ethnicity} is very reasonably marked as a potentially problematic variable as it includes only a single observation of "African American". However, a human reading this report will know that this does \textit{not} reflect a mistake in the data, but rather a perculiarity in the real world, and as such, it should not be cleaned out. 
+A lot of these mistakes are easily fixable, and we will do so below. However, some of them require more delicate knowledge of the subject matter. For instance, \code{ethnicity} is very reasonably marked as a potentially problematic variable as it includes only a single observation of "African American". However, a human reading this report will know that this does \textit{not} reflect a mistake in the data, but rather a peculiarity in the real world, and as such, it should not be cleaned out. 
 
 A few of the identified problems have easy fixes that need no further discussion. We remove the prefixed whitespace from Truman's name, fix the misspelling of New York, convert the binary variable \code{assasinationAttempt} to a factor and change the class of the \code{ageAtInauguration} variable to numeric:
 
@@ -997,7 +1033,7 @@ foo <- function(x) {
 sapply(toyChecks, foo)
 @ 
 
-and we find that only a single variable in \code{toyData}, \code{var6} (for which all
+and we find that only a single variable in \code{toyData}, \code{spotifysong} (for which all
 observations have the value \code{"Irrelevant"}), is problem-free when using the default checks.
 
 

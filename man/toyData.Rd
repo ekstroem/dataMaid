@@ -6,18 +6,18 @@
 \title{Small example data to show the features of dataMaid}
 \format{A \code{data.frame} with 15 rows and 6 variables.
 \describe{
-   \item{var1}{A factor variable with two levels (\code{"red"} and \code{"blue"}) and a few
-   (correctly coded)  missing observations.}
-   \item{var2}{A numeric variable with one obvious outlier value (\code{82}), two miscoded
-   missing values (\code{999} and \code{NaN}) and a few correctly coded missing values.}
-   \item{var3}{A factor variable where two of the levels (\code{"other"} and \code{"OTHER"}
+   \item{pill}{A factor variable with two levels (\code{"red"} and \code{"blue"}) and a few
+   (correctly coded) missing observations. This represents the colour of a pill.}
+   \item{events}{A numeric variable with one obvious outlier value (\code{82}), two miscoded
+   missing values (\code{999} and \code{NaN}) and a few correctly coded missing values. The number of previous events.}
+   \item{region}{A factor variable where two of the levels (\code{"other"} and \code{"OTHER"}
    are the same word with different case settings. Moreover, the variable includes a Stata-style
-   miscoded missing value (\code{"."})}.
-   \item{var4}{A numeric variable (random draws from a standard normal distribution).}
-   \item{var5}{A factor variable with unique codes for each observation (a character string
+   miscoded missing value (\code{"."}). Used to represent geographical regions or treatment centers.}.
+   \item{change}{A numeric variable (random draws from a standard normal distribution). Representing a change in a measured variable.}
+   \item{id}{A factor variable with unique codes for each observation (a character string
    with a number between 1 and 15), i.e. a key variable.}
-   \item{var6}{A factor variable that has the same level (\code{"Irrelevant"}) for all
-   observations, i.e. a empty variable.}
+   \item{spotifysong}{A factor variable that has the same level (\code{"Irrelevant"}) for all
+   observations, i.e. a empty variable. The latest song played on Spotify.}
 }}
 \source{
 Artificial data

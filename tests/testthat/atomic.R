@@ -1,0 +1,11 @@
+## Define atomic types
+typel <- c(TRUE, FALSE, TRUE, TRUE, FALSE)
+typei <- c(1L, 2L, 3L, 4L, 5L)
+typed <- c(1.0, 2.3, 4.5, 6.7, 8.9)
+typec <- c(1 + 2i, 2 + 0i, 3 + 3i, 4 - 0i, 5+2i)
+types <- c(LETTERS[1:5], LETTERS[1:5])
+typef <- factor(types)
+typelab <- labelled(types, labels=c(A="A", BB="B", CCC="C", DDDD="D", EEEEE="E"))
+typer <- sapply(types, charToRaw)
+typelist <- list(a=1:3, b=1:10)
+typeDate <- as.Date(c("1jan1960", "2jan1960", "31mar1960", "30jul1960"), "%d%b%Y")
