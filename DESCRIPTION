@@ -2,8 +2,8 @@ Package: dataMaid
 Type: Package
 Title: A Suite of Checks for Identification of Potential Errors in a Data Frame
     as Part of the Data Cleaning Process
-Version: 0.9.7.9000
-Date: 2017-10-11
+Version: 0.9.7.9001
+Date: 2017-11-10
 Authors@R: c(person("Anne Helby", "Petersen", , email="ahpe@sund.ku.dk", role="aut"),
              person("Claus Thorn", "Ekstrom", , email="ekstrom@sund.ku.dk", role=c("aut", "cre")))
 Description: Data cleaning is an important first step of any statistical
@@ -11,6 +11,10 @@ Description: Data cleaning is an important first step of any statistical
     errors in a dataset. It autogenerates a customizable data report with a thorough
     summary of the checks and the results that a human can use to identify possible
     errors.
+URL: https://github.com/ekstroem/dataMaid
+BugReports: https://github.com/ekstroem/dataMaid/issues    
+Depends:
+    ggplot2    
 Imports:
     haven,
     magrittr,
@@ -19,19 +23,16 @@ Imports:
     robustbase,
     gridExtra,
     whoami
-Depends:
-    ggplot2
-URL: https://github.com/ekstroem/dataMaid
-BugReports: https://github.com/ekstroem/dataMaid/issues
+Suggests:
+    knitr,
+    rmarkdown,
+    testthat
+VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
 ByteCompile: true
 License: GPL-2
 RoxygenNote: 6.0.1.9000
-Suggests:
-    testthat,
-    knitr,
-    rmarkdown
 Collate:
     'aggregateForBarplot.R'
     'aggregateForHistogram.R'
@@ -82,4 +83,3 @@ Collate:
     'unpackLabelled.R'
     'variableType.R'
     'visualize.R'
-VignetteBuilder: knitr

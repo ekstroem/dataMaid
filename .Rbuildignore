@@ -7,13 +7,11 @@ NEWS.md
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^.*\.html
-^.*\.Rmd
 ^.*\.pdf
 ^.*\.tex
 ^.*\.txt
 ^.*\.tar\.gz
 ^\.rda
 ^\.travis\.yml$
-^vignettes
 ^sandbox
 ^app
