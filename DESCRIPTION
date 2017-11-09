@@ -2,8 +2,8 @@ Package: dataMaid
 Type: Package
 Title: A Suite of Checks for Identification of Potential Errors in a Data Frame
     as Part of the Data Cleaning Process
-Version: 0.9.7.9001
-Date: 2017-11-10
+Version: 0.9.7.9002
+Date: 2017-11-09
 Authors@R: c(person("Anne Helby", "Petersen", , email="ahpe@sund.ku.dk", role="aut"),
              person("Claus Thorn", "Ekstrom", , email="ekstrom@sund.ku.dk", role=c("aut", "cre")))
 Description: Data cleaning is an important first step of any statistical
@@ -16,12 +16,13 @@ BugReports: https://github.com/ekstroem/dataMaid/issues
 Depends:
     ggplot2    
 Imports:
+    gridExtra,
     haven,
+    htmltools,
     magrittr,
     methods,
     pander,
     robustbase,
-    gridExtra,
     whoami
 Suggests:
     knitr,
