@@ -1,17 +1,16 @@
-latex/
 ^\.RData
 ^\.Rhistory
 ^makeData\.R
-^README*
-NEWS.md
+^README
+^NEWS.md            # A news file written in Markdown
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^.*\.html
-^.*\.pdf
+^dataMaid\.*        # Any accidental files in the root from running dataMaid
 ^.*\.tex
 ^.*\.txt
 ^.*\.tar\.gz
 ^\.rda
-^\.travis\.yml$
-^sandbox
-^app
+^\.travis\.yml$     # Used for continuous integration testing with travis
+^app$
+^latex$
+^sandbox$

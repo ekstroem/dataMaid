@@ -57,7 +57,8 @@
 #' \href{http://www.data-explorer.com/data}{Data Explorer}.
 #' @examples
 #' data(artData)
-#' 
+#'
+#' @importFrom htmltools includeHTML
 "artData"
 
 
