@@ -16,7 +16,7 @@ A \code{\link{checkResult}} with three entires:
 \code{$problem} (a logical indicating whether the variable consists
 of CPR numbers), \code{$message} (if a problem was found,
 the following message: "Warning: The variable seems to consist of
-Danish civil regristration (CPR) numbers.",
+Danish civil registration (CPR) numbers.",
 otherwise "") and \code{$problemValues} (always \code{NULL}).
 }
 \description{

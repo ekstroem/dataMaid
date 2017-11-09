@@ -1,6 +1,6 @@
 ---
 title: "Extending dataMaid"
-author: "Anne Helby Petersen and Claus Ekstrom"
+author: "Anne Helby Petersen and Claus Thorn Ekstrøm"
 date: "`r Sys.Date()`"
 output: 
   rmarkdown::html_vignette:
@@ -17,18 +17,18 @@ library(dataMaid)
 ```
 
 #Introduction
-The data documentation tools available in `dataMaid` allows for it to be utilized as an easy-to-use, self-contained package, as outlined in our [article manuscript](https://github.com/ekstroem/dataMaid/blob/master/latex/article_vol3.pdf). However, this does *not* imply that `dataMaid` is not customizable: `dataMaid` was specifically built for including user-made extenstions and this vignette is a tutorial into how one can write simple extensions that can be used in e.g. the `makeDataReport()` function from `dataMaid`. 
+The data documentation tools available in `dataMaid` allows for it to be utilized as an easy-to-use, self-contained package, as outlined in our [article manuscript](https://github.com/ekstroem/dataMaid/blob/master/latex/article_vol3.pdf). However, this does *not* imply that `dataMaid` is not customizable: `dataMaid` was specifically built for including user-made extensions and this vignette is a tutorial into how one can write simple extensions that can be used in e.g. the `makeDataReport()` function from `dataMaid`. 
 
 ##Three steps of data documentation
-In order to understand how different parts of the report creation can be customized, we will briefly dwelve on the structure of the data reports made by `dataMaid`. Aside from a few pages dedicated to gaining an overview of the full dataset and what was done to document its current state, the report sequentially presents information for each variable. More specically, each variable is presented with one of the two sets of information:
+In order to understand how different parts of the report creation can be customized, we will briefly dwell on the structure of the data reports made by `dataMaid`. Aside from a few pages dedicated to gaining an overview of the full dataset and what was done to document its current state, the report sequentially presents information for each variable. More specifically, each variable is presented with one of the two sets of information:
 
-1. The result of a single eligiblity check (refered to as a *pre-check* below)
+1. The result of a single eligibility check (referred to as a *pre-check* below)
 2. The results of the three canonical `dataMaid` steps:
     + Summarize: Produces a summary table
     + Visualize: Produces a distribution visualization
     + Check: Performs and lists the results of a number of checks
 
-The first option will be used for variables that do not pass the initial pre-checks. These are checks that are performed in order to identify variables that are not eligable for detailed documentation for one reason or another. The default pre-checks used in `makeDataReport()` are 
+The first option will be used for variables that do not pass the initial pre-checks. These are checks that are performed in order to identify variables that are not eligible for detailed documentation for one reason or another. The default pre-checks used in `makeDataReport()` are 
 
 * `isKey`: Check if the variable is a key, i.e. categorical with unique values for each observation 
 * `isSingular`: Check if the variable only takes a single (non-`NA`) value
@@ -42,7 +42,7 @@ This vignette consists of three parts. First, we describe how new
 turn to a worked example of how to write custom made functions in
 practice. Here, we define and showcase six new SVC functions. Lastly, a built-in dataset about art masterpieces, `artData`, is documented using the custom-made functions and the thereby obtained data report is included.
 
-In this vignette, we focus on the report creation tools of `dataMaid`. However, it should be emphasized that by following the guidelines presented here, the user-defined `summaryFunctions`, `visualFunctions` and `checkFunctions` will also be fully integrable with the interactive mode of `dataMaid`. 
+In this vignette, we focus on the report creation tools of `dataMaid`. However, it should be emphasized that by following the guidelines presented here, the user-defined `summaryFunctions`, `visualFunctions` and `checkFunctions` will also be fully integrated with the interactive mode of `dataMaid`. 
 
 
 
@@ -70,7 +70,7 @@ This table summarizes the minimal and recommended structures for summary-, visua
 | Input (required) | `v` - A variable vector. <br/> `...` - Additional arguments passed to the function. |  `v` - A variable vector. <br/> `vnam` - The variable name (as character string). <br/> `doEval` - A logical (`TRUE`/`FALSE`) controlling the output type of the function. | `v` - A variable vector <br/> `nMax` - An integer (or `Inf`), controlling how many problematic values are printed, if relevant <br/> `...` - Additional arguments passed to the function.|
 | Input (optional) |  `maxDecimals` - The number of decimals printed in outputted numerical values.  |  |  `maxDecimals` - The number of decimals printed in outputted numerical values.|
 |Purpose | Describe some aspect of the variable, e.g., a central value, its dispersion or level of missingness. | Produce a distribution plot. | Check a variable for a specific issue and, if relevant, identify the values in the variable that cause the issue. |
-| Output (required) | A list with entries: <br/> `feature` - A label for the summary value (as character string);  <br/> `result` - The result of the summary (as character string). | A character string with `R` code for producing a plot. This code should be standalone, i.e., should include the data if necessary. | A list with entries: <br/> `problem` - A logical identifying whether an issue was found; <br/> `message` - A character string (possibly empty) decribing the issue that was found, properly escaped and ready for use with `rmarkdown`. |
+| Output (required) | A list with entries: <br/> `feature` - A label for the summary value (as character string);  <br/> `result` - The result of the summary (as character string). | A character string with `R` code for producing a plot. This code should be standalone, i.e., should include the data if necessary. | A list with entries: <br/> `problem` - A logical identifying whether an issue was found; <br/> `message` - A character string (possibly empty) describing the issue that was found, properly escaped and ready for use with `rmarkdown`. |
 | Output (recommended) | A `summaryResult` object, i.e., an attributed list with entries `feature`, `result` and `value`, the latter being the values from `result` in their original format). | If `doEval` is `TRUE`: A plot that is opened by the graphic device in `R`. <br/> If `doEval` is `FALSE`:  A text string with `R` code, as described above.  | A `checkResult` object, i.e., an attributed list with entries `problem`, `message` and `problemValues`, the latter being either `NULL` or the problem causing values, as they were found in `v`, whichever is relevant. |
 | Tools available for producing the function | `summaryResult()` |  | `messageGenerator()` <br/> `checkResult()`|
 
@@ -356,7 +356,7 @@ countZeros <- summaryFunction(countZeros,
 Please note that this is just meta-information: The function can still be called on `Date` and `logical` variables, but then the user will know that they are acting against the recommendations of the programmer. In order to control what input variables can actually be used, we suggest writing the function as an S3 generic with methods for some, but not all, data classes, as the next example will show. 
 
 ###meanSummary --- an S3 generic summary function
-In this example, we will use the concept of method dispatch and generic S3 functions in order to control what data classes a `summaryFunction` can be used for. If you are not familiar with S3 classes, we refer to Hadley Wickhams [Advanced R](http://adv-r.had.co.nz/OO-essentials.html) for a excellent, though somewhat computer science heavy, introduction to object oriented programming in R. 
+In this example, we will use the concept of method dispatch and generic S3 functions in order to control what data classes a `summaryFunction` can be used for. If you are not familiar with S3 classes, we refer to Hadley Wickham's [Advanced R](http://adv-r.had.co.nz/OO-essentials.html) for a excellent, though somewhat computer science heavy, introduction to object oriented programming in R. 
 
 We would like to define a very simple summary function that computes the arithmetic mean of a variable. This is of course only meaningful for numerical variables, i.e. variables with the classes numeric`, `integer` or `logical`. Therefore, we will use the S3 framework to force users to only call our function on these appropriate classes. 
 
@@ -383,7 +383,7 @@ meanSummaryHelper <- function(v, maxDecimals) {
   #compute mean and store "raw" output in `val`
   val <- mean(v)
   
-  #store printable (rounded) putput in `res`
+  #store printable (rounded) output in `res`
   res <- round(val, maxDecimals)
   
   #output summaryResult
@@ -462,7 +462,7 @@ mosaicVisual <- function(v, vnam, doEval) {
   #Define a (unevaluated) call to mosaicplot
   thisCall <- call("mosaicplot", table(v), main = vnam, xlab = "")
   
-  #if doEval is TRUE, evaluate the call, thereby prooducing a plot
+  #if doEval is TRUE, evaluate the call, thereby producing a plot
   #if doEval is FALSE, return the deparsed call
   if (doEval) {
     return(eval(thisCall))
@@ -538,13 +538,13 @@ prettierHist <- function(v, vnam, doEval = TRUE) {
   } else return(deparse(thisCall))
 }
 
-#Make it a proper visualFunctin:
+#Make it a proper visualFunction:
 prettierHist <- visualFunction(prettierHist, 
     description = "ggplot2 style histogram with contours",
     classes = c("numeric", "integer", "logical", "Date"))
 ```
 
-We specify that the `prettierHist()` should only be called on variables of the classes `numeric`, `integer`, `logical` or `Date`, as is reasonable for a histogram. And we will now find our new `visualFunctions` in a `allVisualFunction()`-call:
+We specify that the `prettierHist()` should only be called on variables of the classes `numeric`, `integer`, `logical` or `Date`, as is reasonable for a histogram. And we will now find our new `visualFunctions` in a `allVisualFunctions()`-call:
 
 ```{r showAllVisFunc}
 allVisualFunctions()
@@ -606,7 +606,7 @@ isID(rnorm(10))
 
 ```
 
-As we have not changed the class of this check function to be a `checkFunction`, it should be noted that it will *not* show up in the output of a `allCheckFUnctions()` call. 
+As we have not changed the class of this check function to be a `checkFunction`, it should be noted that it will *not* show up in the output of a `allCheckFunctions()` call. 
 
 
 ###identifyColons --- a new checkFunction with problem values
@@ -618,7 +618,7 @@ make its output print neatly. As mentioned above, the purpose of this check func
 
 ```{r a1}
 identifyColons <- function(v, nMax = Inf, ... ) {
-  #remove dupliates (for speed) and missing values:
+  #remove duplicates (for speed) and missing values:
   v <- unique(na.omit(v))
   
   #Define the message displayed if a problem is found:
@@ -629,7 +629,7 @@ identifyColons <- function(v, nMax = Inf, ... ) {
   problem <- FALSE
   problemValues <- NULL
   
-  #Idenitfy values in v that has the structure: First something (.), 
+  #Identify values in v that has the structure: First something (.), 
   #then a colon (:), and then something again (.), i.e. values with
   #non-trailing colons: 
   problemValues <- v[sapply(gregexpr(".:.", v),
@@ -711,13 +711,13 @@ The 11 variables of `artData` can be summarized as follows:
 
 * `ArtistID`: A unique ID used for cataloging the artists (fictional)
 * `ArtistName`: The name of the artist
-* `NoOfMiddleNames`: The number of middlenames the artist has 
+* `NoOfMiddleNames`: The number of middle names the artist has 
 * `Title`: The title of the painting
 * `Year`: The approximate year in which the painting was made
 * `Location`: The current location of the painting
 * `Continent`: The continent of the current location of the painting
 * `Width`: The width of the painting, in centimeters
-* `Height`: The height of the painting, in centimers
+* `Height`: The height of the painting, in centimeters
 * `Media`: The media/materials of the painting
 * `Movement`: The artistic movement(s) the painting belongs to
 
@@ -734,7 +734,7 @@ makeDataReport(artData,
   summaries = setSummaries(
     character = defaultCharacterSummaries(add = "countZeros"),
     factor = defaultFactorSummaries(add = "countZeros"),
-    labelled = defaultLabelledSummaries(add = "counZeros"),
+    labelled = defaultLabelledSummaries(add = "countZeros"),
     numeric = defaultNumericSummaries(add = c("countZeros", "meanSummary")),
     integer = defaultIntegerSummaries(add = c("countZeros", "meanSummary")),
     logical = defaultLogicalSummaries(add =  c("meanSummary"))

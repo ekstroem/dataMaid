@@ -45,7 +45,7 @@
 
 %% for pretty printing and a nice hypersummary also set:
 \Plainauthor{Anne Helby Petersen, Claus Thorn Ekstr\o m} %% comma-separated
-\Plaintitle{{dataMaid}: your assistant for data documentation in R} %% without formatting
+\Plaintitle{{dataMaid}: your assistant for documenting supervised data quality screening in R} %% without formatting
 \Shorttitle{\pkg{dataMaid}: your assistant for data documentation in R} %% a short title (if necessary)
 
 %% an abstract and keywords
@@ -210,7 +210,7 @@ particularly useful functions for merging and working with very large
 datasets. When it comes to actual data cleaning, however, the options
 are fewer.  \pkg{validate} (and the similar packages \pkg{editrules}
 \citep{editrules} and \pkg{deducorrect} \citep{deducorrect} from the
-same authors) and \pkg{assertive} offers tools for identifying errors
+same authors) and \pkg{assertive} offer tools for identifying errors
 in a dataset by checking the state of the variable given a set of
 pre-specified rules, and their focus is on internal validity rather
 than general data screening. In practice, this means that quite elegant
@@ -253,7 +253,7 @@ One last package that should be mentioned in this context is
 \pkg{DataExplorer} \citep{DataExplorer}. While this package does not
 address data cleaning issues \emph{per se}, its general strategy is
 quite similar to that of \pkg{dataMaid} and to the paradigms presented
-below. This package provides a few simple, but practical, tools for
+above. This package provides a few simple, but practical, tools for
 exploratory data analysis, including automated
 documentation. Therefore, we find \pkg{DataExplorer} to be a good
 candidate for a next-step package after data cleaning is finished.
@@ -267,7 +267,7 @@ overview documents. In the \pkg{dataMaid} package, we have
 provided a number of default generic checks that cover the data
 cleaning challenges we find to be most common and these are also summarized in Section \ref{sec:usingdataMaid}. Next, in Section
 \ref{sec:interactiveCleanR}, we present the interactive mode of \pkg{dataMaid}, as motivated
-by the second paradigm above. Next, we show step-by-step how the data report and the interactive mode of \pkg{dataMaid} can be combined to conduct a well-documented, systematic data cleaning in Section \ref{sec:bigExample}. Here, we assess and clean a dirty dataset with information about the US presidents.  At last, in Section \ref{sec:specificExamples}, we discuss a number of examples of
+by the second paradigm above. Next, we show step-by-step how the data report mode and the interactive mode of \pkg{dataMaid} can be combined to conduct a well-documented, systematic data cleaning in Section \ref{sec:bigExample}. Here, we assess and clean a dirty dataset with information about the US presidents.  At last, in Section \ref{sec:specificExamples}, we discuss a number of examples of
 specific data cleaning- and documentation challenges and how \pkg{dataMaid} can be used to
 solve them. 
 
@@ -277,7 +277,7 @@ solve them.
 %cannot be detected by our data checking functions. 
 %Therefore,
 \pkg{dataMaid} was designed to be easily extendend with user-supplied
-functions for summarizing, viusalizing and checking data. We have
+functions for summarizing, viusalizing and checking data. In the package, we have
 provided a vignette in which we describe how \pkg{dataMaid} extensions
 can be made, such that they are integrate with the
 \code{makeDataReport()} function and with the other tools available in
@@ -309,8 +309,8 @@ and produce the report:
 
 \begin{figure}[tb]
 \begin{center}
-\frame{\includegraphics[width=7.5cm,page=2]{dataMaid_toyData.pdf}}
-\frame{\includegraphics[width=7.5cm,page=3]{dataMaid_toyData.pdf}}
+\frame{\includegraphics[width=7.5cm,page=2]{dataMaid_toyData_appA.pdf}}
+\frame{\includegraphics[width=7.5cm,page=3]{dataMaid_toyData_appA.pdf}}
 %\includepdf[pages={2}, pagecommand={}]{dataMaid_testData.pdf}
 \end{center}
 \caption{The two first pages of the report created by running \code{makeDataReport()} on the \code{toyData}
@@ -321,12 +321,12 @@ and produce the report:
 
 \begin{figure}[tb]
 \begin{center}
-\frame{\includegraphics[width=7.5cm,page=4]{dataMaid_toyData.pdf}}
-\frame{\includegraphics[width=7.5cm,page=5]{dataMaid_toyData.pdf}}
+\frame{\includegraphics[width=7.5cm,page=4]{dataMaid_toyData_appA.pdf}}
+\frame{\includegraphics[width=7.5cm,page=5]{dataMaid_toyData_appA.pdf}}
 %\includepdf[pages={2}, pagecommand={}]{dataMaid_testData.pdf}
 \end{center}
 \caption{The third and fourth pages of the report created by running \code{makeDataReport()} on the \code{toyData}
-  dataset. Here, we see a description of each variable in the dataset, consiting of a summary table, a visualization and a indication of what problems were flagged for the variable (if any). At last, a few lines of metadata about the \code{makeDataReport()} are included for enhancing reproducibility. Larger versions of the pages can be seen in
+  dataset. Here, we see a description of each variable in the dataset, consisting of a summary table, a visualization and an indication of what problems were flagged for the variable (if any). At last, a few lines of metadata about the \code{makeDataReport()} are included for enhancing reproducibility. Larger versions of the pages can be seen in
   Appendix~\ref{sec:appendix1}.}
 \label{fig:example2}
 \end{figure}
@@ -365,7 +365,7 @@ R> makeDataReport(toyData)
 \end{Sinput}
 \end{Schunk}
 
-By default, an \proglang{R} markdown file and a rendered pdf or word
+By default, an \proglang{R} markdown file and a rendered pdf,  word or html
 overview document is produced, saved to the working directory and
 opened for immediate inspection. Such a data report consists of three
 parts, two of which are presented in Figure~\ref{fig:example1}. First,
@@ -428,7 +428,7 @@ Argument & Description & Default value \\
 %Takes a list on the format \code{list(X = Y)} where \code{X} is a non-supported variable class (e.g. \code{complex}) and \code{Y} is a supported one (e.g. \code{numeric}) & \code{NULL} (No rules for handling non-supported variable types) \\
 
 \smallskip Control output and post-processing \\
-\quad \code{output} & Type of output file to be produced (html, word (.docx) or pdf) & \code{NULL} (use pdf if \LaTeX\ is found, otherwise word (if on windows), or html)\\
+\quad \code{output} & Type of output file to be produced (html, word (.docx) or pdf) & \code{NULL} (use pdf if \LaTeX\ is found, otherwise Word (if on Windows), or html)\\
 \quad \code{render} & Should the output file be rendered from markdown? & \code{TRUE} \\
 \quad \code{openResult} & If a  pdf/html file is rendered, should it
                        automatically open afterwards, and if not,
@@ -796,7 +796,7 @@ Each of these stages are controllable using appropriate function
 arguments in \code{makeDataReport()}, and above we have shown examples
 of how to tweak them to modify the data cleaning outputs. However, if
 the dataset at hand requires new, additional checks, then more control
-is needed a package vignette explains the details of how to modify and
+is needed. The package contains a vignette that explains the details of how to modify and
 expand the possibilities by producing new summary, visual, and check
 functions.
 
@@ -982,8 +982,8 @@ Note that the \code{summarize()}, \code{check()} and \code{visualize()} function
 
 \begin{figure}[tb]
 \begin{center}
-\frame{\includegraphics[width=7.5cm,page=1]{dataMaid_presidentData.pdf}}
-\frame{\includegraphics[width=7.5cm,page=2]{dataMaid_presidentData.pdf}}\\
+\frame{\includegraphics[width=7.5cm,page=1]{dataMaid_presidentData_appB.pdf}}
+\frame{\includegraphics[width=7.5cm,page=2]{dataMaid_presidentData_appB.pdf}}\\
 \end{center}
 \caption{The front page and the first page of the data overview report for the \code{presidentData} dataset. Note that the report title has been customized (front page), \code{identifyLoners} has been removed from the checks performed on character variables ("Identify levels with <6 obs." is not checked for character variables in the table on page 1) and that variables of class \code{Name} have been set to be treated like \code{character} variables (page 1). Larger versions of the pages can be seen in
   Appendix~\ref{sec:appendix2}.}
@@ -992,8 +992,8 @@ Note that the \code{summarize()}, \code{check()} and \code{visualize()} function
 
 \begin{figure}[tb]
 \begin{center}
-\frame{\includegraphics[width=7.5cm,page=3]{dataMaid_presidentData.pdf}}
-\frame{\includegraphics[width=7.5cm,page=4]{dataMaid_presidentData.pdf}}
+\frame{\includegraphics[width=7.5cm,page=3]{dataMaid_presidentData_appB.pdf}}
+\frame{\includegraphics[width=7.5cm,page=4]{dataMaid_presidentData_appB.pdf}}
 \end{center}
 \caption{The second and third pages of the \code{presidentData} data report. We see that there are two \code{Name} variables in the overview on page 2 and see that these variables are indeed treated as \code{character} variables on page 3, as specified in the \code{makeDataReport} call by use of the \code{treatXasY} argument. Larger versions of the pages can be seen in
   Appendix~\ref{sec:appendix2}.}
@@ -1002,8 +1002,8 @@ Note that the \code{summarize()}, \code{check()} and \code{visualize()} function
 
 \begin{figure}[tb]
 \begin{center}
-\frame{\includegraphics[width=7.5cm,page=5]{dataMaid_presidentData.pdf}}
-\frame{\includegraphics[width=7.5cm,page=6]{dataMaid_presidentData.pdf}}
+\frame{\includegraphics[width=7.5cm,page=5]{dataMaid_presidentData_appB.pdf}}
+\frame{\includegraphics[width=7.5cm,page=6]{dataMaid_presidentData_appB.pdf}}
 \end{center}
 \caption{Part of the data overview report generated for the \code{presidentData} dataset. Here, we see pages 4 and 5 from the \textit{Variable list}. Larger versions of the pages can be seen in
   Appendix~\ref{sec:appendix2}.}
@@ -1081,7 +1081,7 @@ On page 3, we see the contents for the three first variables. Here, we identifif
 
 Figure \ref{fig:bigExampleP45} presents the remaining two pages with variable presentations. On pages 4 and 5, we find a few remarks:
 \begin{itemize}
-\item In the birthday variable, there is an entry with the date March 1, 1300 which is a bit of an outlier. 
+\item In the \code{birthday} variable, there is an entry with the date March 1, 1300 which is a bit of an outlier. 
 \item Among the states in which the presidents were born, New York was mistakenly spelled with a lower case "Y" in at least one entry.
 \item The variable concerning assassination attempts is coded as a numeric, but the default \code{smartNum = TRUE} setting of \code{makeDataReport()} implies that such a numeric variable with only a few (less that 5) unique values is treated as a factor variable in the data report, thereby providing more relevant summaries, visualizations and checks. This is remarked in the variable presentation for \code{assassinationAttempt} and it can also be seen by the visualization being a barplot rather than a histogram.
 \item The variable concerning the sex of the president was skipped, as there is nothing to present when all US presidents have been male so far.
@@ -1132,7 +1132,7 @@ R> presidentData$firstName[presidentData$firstName == "."] <- "Donald"
 \end{Sinput}
 \end{Schunk}
 
-Next up is the unlikely US president birth day of March 1, 1300. In order to understand if this is a generally problematic observation, or if it is just a mistyped observation, we inspect the full data entry for this person. We can do this using the usual \proglang{R} selection syntax as above, or we can use the value of a \code{identifyOutliers} call to select this observation:
+Next up is the unlikely US president birthday of March 1, 1300. In order to understand if this is a generally problematic observation, or if it is just a mistyped observation, we inspect the full data entry for this person. We can do this using the usual \proglang{R} selection syntax as above, or we can use the value of a \code{identifyOutliers} call to select this observation:
 
 
 
@@ -1211,7 +1211,7 @@ R> presidentData[is.na(presidentData$presidencyYears) |
 \end{Soutput}
 \end{Schunk}
 
-We see that Obama is listed as being president forever, which history has proven to be wrong. Trump, on the other hand, has a missing value for his presidency duration, which is in fact reasonable as we cannot know how long it will be yet (anno 2017). Presidents William Harrison, Zachary Taylor, James Garfield, Warren Harding and Gerald Ford were identified to have very brief presidencies, but these are not mistakes, as any US history textbook can tell us. Thus, the only mistake left to fix is Obama's infinite presidency:
+We see that Obama is listed as being president forever, which history has proven to be wrong. Trump, on the other hand, has a missing value for his presidency duration, which is in fact reasonable as we cannot know how long it will be yet (anno 2017). Presidents William Harrison, Zachary Taylor and James Garfield were identified to have very brief presidencies, but these are not mistakes, as any US history textbook can tell us. Thus, the only mistake left to fix is Obama's infinite presidency:
 
 
 \begin{Schunk}
@@ -1253,7 +1253,9 @@ The default settings of \code{makeDataReport()} have been set to facilitate easy
 \item The report generation writes messages to the console while producing and rendering the report.
 \item Unless specifically told otherwise, every report created for the same dataset (or different datasets with the same storage name in \proglang{R}) will have the same file name.
 \end{enumerate}
-Please note that the data report does contain information about who, when and how concerning its generation, so even though the default choices for file names do not make it easy to tell different reports for the same dataset apart, it should be rather easy when inspecting the report manually. These three problems can easily be solved by use of the arguments of \code{makeDataReport()}. Whether or not the outputted file is opened can be controlled through the argument \code{open}. How much information is printed in the console can be adjusted by using the argument \code{quiet}. And convenintely introducing small alterations of the file names can be obtained by use of the \code{vol} argument. For instance, we can make a data report for \code{toyData} that is not opened automatically, produces no output to the console and includes the date and time of its creation in the file name:
+Please note that the data report does contain information about who, when and how concerning its generation, so even though the default choices for file names do not make it easy to tell different reports for the same dataset apart, it should be rather easy when inspecting the report manually. 
+
+The three problems can easily be solved by use of the arguments of \code{makeDataReport()}. Whether or not the outputted file is opened can be controlled through the argument \code{open}. How much information is printed in the console can be adjusted by using the argument \code{quiet}. And convenintely introducing small alterations of the file names can be obtained by use of the \code{vol} argument. For instance, we can make a data report for \code{toyData} that is not opened automatically, produces no output to the console and includes the date and time of its creation in the file name:
 
 \begin{Schunk}
 \begin{Sinput}
@@ -1266,7 +1268,7 @@ Now, if e.g. the report is created at 3 pm on October 31, 2017, its file will be
 
 
 \subsection[Using dataMaid for problem flagging]{Using \pkg{dataMaid} for problem flagging}
-If the dataset is large and the time available for reading through the data report is scarce, it can be convenient to only make a report concerning the variabels that were flagged to be problematic. This can be achieved by using the \code{onlyProblematic} argument for
+If the dataset is large and the time available for reading through the data report is scarce, it can be convenient to only make a report concerning the variables that were flagged to be problematic. This can be achieved by using the \code{onlyProblematic} argument for
 \code{makeDataReport()}. By specifying \code{onlyProblematic = TRUE}, only
 variables that raise a flag in the checking steps will be summarized
 and visualized. But perhaps we are not even interested in obtaining
@@ -1437,13 +1439,13 @@ and get a data cleaning document.
 %0cm 0cm 2cm,pages={2-5},pagecommand={}]{pdfdocument}
 
 % \section{Appendix A: cleaning the toyData data frame} \label{sec:appendix1}
-\includepdf[pages=2, pagecommand={\section{Data report for the toyData dataset} \label{sec:appendix1}}, frame=true, noautoscale=true, scale=0.7]{dataMaid_toyData.pdf}
-\includepdf[pages=3-4, pagecommand={}, frame=true, noautoscale=true, scale=0.7,pagecommand={}]{dataMaid_toyData.pdf}
+\includepdf[pages=2, pagecommand={\section{Data report for the toyData dataset} \label{sec:appendix1}}, frame=true, noautoscale=true, scale=0.7]{dataMaid_toyData_appA.pdf}
+\includepdf[pages=3-4, pagecommand={}, frame=true, noautoscale=true, scale=0.7,pagecommand={}]{dataMaid_toyData_appA.pdf}
 
 
 
-\includepdf[pages=2, pagecommand={\section{Data report for the presidentData dataset} \label{sec:appendix2}}, frame=true, noautoscale=true, scale=0.7]{dataMaid_presidentData.pdf}
-\includepdf[pages=3-6, pagecommand={}, frame=true, noautoscale=true, scale=0.7]{dataMaid_presidentData.pdf}
+\includepdf[pages=2, pagecommand={\section{Data report for the presidentData dataset} \label{sec:appendix2}}, frame=true, noautoscale=true, scale=0.7]{dataMaid_presidentData_appB.pdf}
+\includepdf[pages=3-6, pagecommand={}, frame=true, noautoscale=true, scale=0.7]{dataMaid_presidentData_appB.pdf}
 
 
 \end{document}

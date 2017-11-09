@@ -1,8 +1,8 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.10.2)  9 NOV 2017 02:45
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.10.2)  9 NOV 2017 15:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**article_vol3.tex
+**article_vol3
 (./article_vol3.tex
 LaTeX2e <2017-04-15>
 Babel <3.13> and hyphenation patterns for 84 language(s) loaded.
@@ -1318,18 +1318,20 @@ Package xcolor Warning: Incompatible color definition on input line 303.
 
 Package xcolor Warning: Incompatible color definition on input line 306.
 
-<dataMaid_toyData.pdf, id=146, page=2, 614.295pt x 794.97pt>
-File: dataMaid_toyData.pdf Graphic file (type pdf)
+<dataMaid_toyData_appA.pdf, id=146, page=2, 614.295pt x 794.97pt>
+File: dataMaid_toyData_appA.pdf Graphic file (type pdf)
 
-<use dataMaid_toyData.pdf, page 2>
-Package pdftex.def Info: dataMaid_toyData.pdf, page2 used on input line 312.
+<use dataMaid_toyData_appA.pdf, page 2>
+Package pdftex.def Info: dataMaid_toyData_appA.pdf, page2 used on input line 31
+2.
 (pdftex.def)             Requested size: 213.39566pt x 276.15726pt.
 
-<dataMaid_toyData.pdf, id=147, page=3, 614.295pt x 794.97pt>
-File: dataMaid_toyData.pdf Graphic file (type pdf)
+<dataMaid_toyData_appA.pdf, id=147, page=3, 614.295pt x 794.97pt>
+File: dataMaid_toyData_appA.pdf Graphic file (type pdf)
 
-<use dataMaid_toyData.pdf, page 3>
-Package pdftex.def Info: dataMaid_toyData.pdf, page3 used on input line 313.
+<use dataMaid_toyData_appA.pdf, page 3>
+Package pdftex.def Info: dataMaid_toyData_appA.pdf, page3 used on input line 31
+3.
 (pdftex.def)             Requested size: 213.39566pt x 276.15726pt.
 
 
@@ -1338,18 +1340,20 @@ Package xcolor Warning: Incompatible color definition on input line 318.
 
 Package xcolor Warning: Incompatible color definition on input line 318.
 
-<dataMaid_toyData.pdf, id=150, page=4, 614.295pt x 794.97pt>
-File: dataMaid_toyData.pdf Graphic file (type pdf)
+<dataMaid_toyData_appA.pdf, id=150, page=4, 614.295pt x 794.97pt>
+File: dataMaid_toyData_appA.pdf Graphic file (type pdf)
 
-<use dataMaid_toyData.pdf, page 4>
-Package pdftex.def Info: dataMaid_toyData.pdf, page4 used on input line 324.
+<use dataMaid_toyData_appA.pdf, page 4>
+Package pdftex.def Info: dataMaid_toyData_appA.pdf, page4 used on input line 32
+4.
 (pdftex.def)             Requested size: 213.39566pt x 276.15726pt.
 
-<dataMaid_toyData.pdf, id=151, page=5, 614.295pt x 794.97pt>
-File: dataMaid_toyData.pdf Graphic file (type pdf)
+<dataMaid_toyData_appA.pdf, id=151, page=5, 614.295pt x 794.97pt>
+File: dataMaid_toyData_appA.pdf Graphic file (type pdf)
 
-<use dataMaid_toyData.pdf, page 5>
-Package pdftex.def Info: dataMaid_toyData.pdf, page5 used on input line 325.
+<use dataMaid_toyData_appA.pdf, page 5>
+Package pdftex.def Info: dataMaid_toyData_appA.pdf, page5 used on input line 32
+5.
 (pdftex.def)             Requested size: 213.39566pt x 276.15726pt.
 
 
@@ -1363,7 +1367,7 @@ Overfull \hbox (5.47499pt too wide) has occurred while \output is active
 \T1/aer/m/n/10.95 4 []
  []
 
-[4 <./dataMaid_toyData.pdf> <./dataMaid_toyData.pdf>]
+[4 <./dataMaid_toyData_appA.pdf> <./dataMaid_toyData_appA.pdf>]
 Underfull \vbox (badness 2856) has occurred while \output is active []
 
 
@@ -1371,7 +1375,7 @@ Overfull \hbox (5.47499pt too wide) has occurred while \output is active
 [] \T1/aer/m/n/10.95 5
  []
 
-[5 <./dataMaid_toyData.pdf> <./dataMaid_toyData.pdf>]
+[5 <./dataMaid_toyData_appA.pdf> <./dataMaid_toyData_appA.pdf>]
 
 Package xcolor Warning: Incompatible color definition on input line 371.
 
@@ -2123,7 +2127,7 @@ Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 \T1/aer/m/n/10.95 14 []
  []
 
-[14] <article_vol3-toydataevents.pdf, id=261, 433.62pt x 433.62pt>
+[14] <article_vol3-toydataevents.pdf, id=280, 433.62pt x 433.62pt>
 File: article_vol3-toydataevents.pdf Graphic file (type pdf)
 
 <use article_vol3-toydataevents.pdf>
@@ -2136,20 +2140,20 @@ Overfull \hbox (10.94998pt too wide) has occurred while \output is active
  []
 
 [15 <./article_vol3-toydataevents.pdf>]
-<dataMaid_presidentData.pdf, id=271, page=1, 614.295pt x 794.97pt>
-File: dataMaid_presidentData.pdf Graphic file (type pdf)
+<dataMaid_presidentData_appB.pdf, id=290, page=1, 614.295pt x 794.97pt>
+File: dataMaid_presidentData_appB.pdf Graphic file (type pdf)
 
-<use dataMaid_presidentData.pdf, page 1>
-Package pdftex.def Info: dataMaid_presidentData.pdf, page1 used on input line 9
-85.
+<use dataMaid_presidentData_appB.pdf, page 1>
+Package pdftex.def Info: dataMaid_presidentData_appB.pdf, page1 used on input l
+ine 985.
 (pdftex.def)             Requested size: 213.39566pt x 276.15726pt.
 
-<dataMaid_presidentData.pdf, id=272, page=2, 614.295pt x 794.97pt>
-File: dataMaid_presidentData.pdf Graphic file (type pdf)
+<dataMaid_presidentData_appB.pdf, id=291, page=2, 614.295pt x 794.97pt>
+File: dataMaid_presidentData_appB.pdf Graphic file (type pdf)
 
-<use dataMaid_presidentData.pdf, page 2>
-Package pdftex.def Info: dataMaid_presidentData.pdf, page2 used on input line 9
-86.
+<use dataMaid_presidentData_appB.pdf, page 2>
+Package pdftex.def Info: dataMaid_presidentData_appB.pdf, page2 used on input l
+ine 986.
 (pdftex.def)             Requested size: 213.39566pt x 276.15726pt.
 
 
@@ -2158,20 +2162,20 @@ Package xcolor Warning: Incompatible color definition on input line 989.
 
 Package xcolor Warning: Incompatible color definition on input line 989.
 
-<dataMaid_presidentData.pdf, id=275, page=3, 614.295pt x 794.97pt>
-File: dataMaid_presidentData.pdf Graphic file (type pdf)
+<dataMaid_presidentData_appB.pdf, id=294, page=3, 614.295pt x 794.97pt>
+File: dataMaid_presidentData_appB.pdf Graphic file (type pdf)
 
-<use dataMaid_presidentData.pdf, page 3>
-Package pdftex.def Info: dataMaid_presidentData.pdf, page3 used on input line 9
-95.
+<use dataMaid_presidentData_appB.pdf, page 3>
+Package pdftex.def Info: dataMaid_presidentData_appB.pdf, page3 used on input l
+ine 995.
 (pdftex.def)             Requested size: 213.39566pt x 276.15726pt.
 
-<dataMaid_presidentData.pdf, id=276, page=4, 614.295pt x 794.97pt>
-File: dataMaid_presidentData.pdf Graphic file (type pdf)
+<dataMaid_presidentData_appB.pdf, id=295, page=4, 614.295pt x 794.97pt>
+File: dataMaid_presidentData_appB.pdf Graphic file (type pdf)
 
-<use dataMaid_presidentData.pdf, page 4>
-Package pdftex.def Info: dataMaid_presidentData.pdf, page4 used on input line 9
-96.
+<use dataMaid_presidentData_appB.pdf, page 4>
+Package pdftex.def Info: dataMaid_presidentData_appB.pdf, page4 used on input l
+ine 996.
 (pdftex.def)             Requested size: 213.39566pt x 276.15726pt.
 
 
@@ -2180,20 +2184,20 @@ Package xcolor Warning: Incompatible color definition on input line 999.
 
 Package xcolor Warning: Incompatible color definition on input line 999.
 
-<dataMaid_presidentData.pdf, id=279, page=5, 614.295pt x 794.97pt>
-File: dataMaid_presidentData.pdf Graphic file (type pdf)
+<dataMaid_presidentData_appB.pdf, id=298, page=5, 614.295pt x 794.97pt>
+File: dataMaid_presidentData_appB.pdf Graphic file (type pdf)
 
-<use dataMaid_presidentData.pdf, page 5>
-Package pdftex.def Info: dataMaid_presidentData.pdf, page5 used on input line 1
-005.
+<use dataMaid_presidentData_appB.pdf, page 5>
+Package pdftex.def Info: dataMaid_presidentData_appB.pdf, page5 used on input l
+ine 1005.
 (pdftex.def)             Requested size: 213.39566pt x 276.15726pt.
 
-<dataMaid_presidentData.pdf, id=280, page=6, 614.295pt x 794.97pt>
-File: dataMaid_presidentData.pdf Graphic file (type pdf)
+<dataMaid_presidentData_appB.pdf, id=299, page=6, 614.295pt x 794.97pt>
+File: dataMaid_presidentData_appB.pdf Graphic file (type pdf)
 
-<use dataMaid_presidentData.pdf, page 6>
-Package pdftex.def Info: dataMaid_presidentData.pdf, page6 used on input line 1
-006.
+<use dataMaid_presidentData_appB.pdf, page 6>
+Package pdftex.def Info: dataMaid_presidentData_appB.pdf, page6 used on input l
+ine 1006.
 (pdftex.def)             Requested size: 213.39566pt x 276.15726pt.
 
 
@@ -2212,12 +2216,12 @@ Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 [] \T1/aer/m/n/10.95 17
  []
 
-[17 <./dataMaid_presidentData.pdf> <./dataMaid_presidentData.pdf>]
+[17 <./dataMaid_presidentData_appB.pdf> <./dataMaid_presidentData_appB.pdf>]
 Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 \T1/aer/m/n/10.95 18 []
  []
 
-[18 <./dataMaid_presidentData.pdf> <./dataMaid_presidentData.pdf>]
+[18 <./dataMaid_presidentData_appB.pdf> <./dataMaid_presidentData_appB.pdf>]
 
 Package xcolor Warning: Incompatible color definition on input line 1076.
 
@@ -2232,7 +2236,7 @@ Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 [] \T1/aer/m/n/10.95 19
  []
 
-[19 <./dataMaid_presidentData.pdf> <./dataMaid_presidentData.pdf>]
+[19 <./dataMaid_presidentData_appB.pdf> <./dataMaid_presidentData_appB.pdf>]
 
 Package xcolor Warning: Incompatible color definition on input line 1082.
 
@@ -2269,19 +2273,19 @@ Overfull \hbox (10.94998pt too wide) has occurred while \output is active
  []
 
 [24]
-LaTeX Font Info:    Try loading font information for TS1+aett on input line 134
-9.
+LaTeX Font Info:    Try loading font information for TS1+aett on input line 135
+1.
  (/Users/cld189/Library/texmf/tex/latex/Sweave/tex/latex/ts1aett.fd
 File: ts1aett.fd 
 )
-LaTeX Font Info:    Try loading font information for TS1+cmtt on input line 134
-9.
+LaTeX Font Info:    Try loading font information for TS1+cmtt on input line 135
+1.
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/base/ts1cmtt.fd
 File: ts1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `TS1/aett/m/n' in size <10> not available
-(Font)              Font shape `TS1/cmtt/m/n' tried instead on input line 1349.
+(Font)              Font shape `TS1/cmtt/m/n' tried instead on input line 1351.
 
 
 Overfull \hbox (10.94998pt too wide) has occurred while \output is active
@@ -2290,10 +2294,10 @@ Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 
 [25]
 
-Package xcolor Warning: Incompatible color definition on input line 1409.
+Package xcolor Warning: Incompatible color definition on input line 1411.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1409.
+Package xcolor Warning: Incompatible color definition on input line 1411.
 
 (./article_vol3.bbl
 LaTeX Font Info:    Font shape `T1/aer/b/it' in size <10.95> not available
@@ -2357,253 +2361,272 @@ Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 [] \T1/aer/m/n/10.95 27
  []
 
-[27] <dataMaid_toyData.pdf, id=472, 614.295pt x 794.97pt>
-File: dataMaid_toyData.pdf Graphic file (type pdf)
+[27] <dataMaid_toyData_appA.pdf, id=475, 614.295pt x 794.97pt>
+File: dataMaid_toyData_appA.pdf Graphic file (type pdf)
 
-<use dataMaid_toyData.pdf>
-Package pdftex.def Info: dataMaid_toyData.pdf used on input line 1440.
+<use dataMaid_toyData_appA.pdf>
+Package pdftex.def Info: dataMaid_toyData_appA.pdf used on input line 1442.
 (pdftex.def)             Requested size: 354.12434pt x 458.28084pt.
-File: dataMaid_toyData.pdf Graphic file (type pdf)
- <use dataMaid_toyData.pdf>
-Package pdftex.def Info: dataMaid_toyData.pdf used on input line 1440.
+File: dataMaid_toyData_appA.pdf Graphic file (type pdf)
+ <use dataMaid_toyData_appA.pdf>
+Package pdftex.def Info: dataMaid_toyData_appA.pdf used on input line 1442.
 (pdftex.def)             Requested size: 354.12434pt x 458.28084pt.
-File: dataMaid_toyData.pdf Graphic file (type pdf)
+File: dataMaid_toyData_appA.pdf Graphic file (type pdf)
 
-<use dataMaid_toyData.pdf, page 2>
-Package pdftex.def Info: dataMaid_toyData.pdf, page2 used on input line 1440.
+<use dataMaid_toyData_appA.pdf, page 2>
+Package pdftex.def Info: dataMaid_toyData_appA.pdf, page2 used on input line 14
+42.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
-File: dataMaid_toyData.pdf Graphic file (type pdf)
- <use dataMaid_toyData.pdf, page 2>
-Package pdftex.def Info: dataMaid_toyData.pdf, page2 used on input line 1440.
-(pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
-File: dataMaid_toyData.pdf Graphic file (type pdf)
+File: dataMaid_toyData_appA.pdf Graphic file (type pdf)
 
-<use dataMaid_toyData.pdf, page 2>
-Package pdftex.def Info: dataMaid_toyData.pdf, page2 used on input line 1440.
+<use dataMaid_toyData_appA.pdf, page 2>
+Package pdftex.def Info: dataMaid_toyData_appA.pdf, page2 used on input line 14
+42.
+(pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
+File: dataMaid_toyData_appA.pdf Graphic file (type pdf)
+
+<use dataMaid_toyData_appA.pdf, page 2>
+Package pdftex.def Info: dataMaid_toyData_appA.pdf, page2 used on input line 14
+42.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
 
 Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 \T1/aer/m/n/10.95 28 []
  []
 
-File: dataMaid_toyData.pdf Graphic file (type pdf)
-<use dataMaid_toyData.pdf, page 2>
-Package pdftex.def Info: dataMaid_toyData.pdf, page2 used on input line 1440.
+File: dataMaid_toyData_appA.pdf Graphic file (type pdf)
+<use dataMaid_toyData_appA.pdf, page 2>
+Package pdftex.def Info: dataMaid_toyData_appA.pdf, page2 used on input line 14
+42.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
  [28]
-File: dataMaid_toyData.pdf Graphic file (type pdf)
- <use dataMaid_toyData.pdf>
-Package pdftex.def Info: dataMaid_toyData.pdf used on input line 1441.
+File: dataMaid_toyData_appA.pdf Graphic file (type pdf)
+ <use dataMaid_toyData_appA.pdf>
+Package pdftex.def Info: dataMaid_toyData_appA.pdf used on input line 1443.
 (pdftex.def)             Requested size: 354.12434pt x 458.28084pt.
-File: dataMaid_toyData.pdf Graphic file (type pdf)
+File: dataMaid_toyData_appA.pdf Graphic file (type pdf)
 
-<use dataMaid_toyData.pdf>
-Package pdftex.def Info: dataMaid_toyData.pdf used on input line 1441.
+<use dataMaid_toyData_appA.pdf>
+Package pdftex.def Info: dataMaid_toyData_appA.pdf used on input line 1443.
 (pdftex.def)             Requested size: 354.12434pt x 458.28084pt.
-File: dataMaid_toyData.pdf Graphic file (type pdf)
- <use dataMaid_toyData.pdf, page 3>
-Package pdftex.def Info: dataMaid_toyData.pdf, page3 used on input line 1441.
+File: dataMaid_toyData_appA.pdf Graphic file (type pdf)
+ <use dataMaid_toyData_appA.pdf, page 3>
+Package pdftex.def Info: dataMaid_toyData_appA.pdf, page3 used on input line 14
+43.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
-File: dataMaid_toyData.pdf Graphic file (type pdf)
+File: dataMaid_toyData_appA.pdf Graphic file (type pdf)
 
-<use dataMaid_toyData.pdf, page 3>
-Package pdftex.def Info: dataMaid_toyData.pdf, page3 used on input line 1441.
+<use dataMaid_toyData_appA.pdf, page 3>
+Package pdftex.def Info: dataMaid_toyData_appA.pdf, page3 used on input line 14
+43.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
-File: dataMaid_toyData.pdf Graphic file (type pdf)
- <use dataMaid_toyData.pdf, page 3>
-Package pdftex.def Info: dataMaid_toyData.pdf, page3 used on input line 1441.
+File: dataMaid_toyData_appA.pdf Graphic file (type pdf)
+
+<use dataMaid_toyData_appA.pdf, page 3>
+Package pdftex.def Info: dataMaid_toyData_appA.pdf, page3 used on input line 14
+43.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
 
 Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 [] \T1/aer/m/n/10.95 29
  []
 
-File: dataMaid_toyData.pdf Graphic file (type pdf)
-<use dataMaid_toyData.pdf, page 3>
-Package pdftex.def Info: dataMaid_toyData.pdf, page3 used on input line 1441.
+File: dataMaid_toyData_appA.pdf Graphic file (type pdf)
+<use dataMaid_toyData_appA.pdf, page 3>
+Package pdftex.def Info: dataMaid_toyData_appA.pdf, page3 used on input line 14
+43.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
  [29]
-File: dataMaid_toyData.pdf Graphic file (type pdf)
- <use dataMaid_toyData.pdf, page 4>
-Package pdftex.def Info: dataMaid_toyData.pdf, page4 used on input line 1441.
-(pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
-File: dataMaid_toyData.pdf Graphic file (type pdf)
+File: dataMaid_toyData_appA.pdf Graphic file (type pdf)
 
-<use dataMaid_toyData.pdf, page 4>
-Package pdftex.def Info: dataMaid_toyData.pdf, page4 used on input line 1441.
+<use dataMaid_toyData_appA.pdf, page 4>
+Package pdftex.def Info: dataMaid_toyData_appA.pdf, page4 used on input line 14
+43.
+(pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
+File: dataMaid_toyData_appA.pdf Graphic file (type pdf)
+
+<use dataMaid_toyData_appA.pdf, page 4>
+Package pdftex.def Info: dataMaid_toyData_appA.pdf, page4 used on input line 14
+43.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
 
 Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 \T1/aer/m/n/10.95 30 []
  []
 
-File: dataMaid_toyData.pdf Graphic file (type pdf)
-<use dataMaid_toyData.pdf, page 4>
-Package pdftex.def Info: dataMaid_toyData.pdf, page4 used on input line 1441.
+File: dataMaid_toyData_appA.pdf Graphic file (type pdf)
+<use dataMaid_toyData_appA.pdf, page 4>
+Package pdftex.def Info: dataMaid_toyData_appA.pdf, page4 used on input line 14
+43.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
  [30]
-<dataMaid_presidentData.pdf, id=489, 614.295pt x 794.97pt>
-File: dataMaid_presidentData.pdf Graphic file (type pdf)
+<dataMaid_presidentData_appB.pdf, id=492, 614.295pt x 794.97pt>
+File: dataMaid_presidentData_appB.pdf Graphic file (type pdf)
 
-<use dataMaid_presidentData.pdf>
-Package pdftex.def Info: dataMaid_presidentData.pdf used on input line 1445.
+<use dataMaid_presidentData_appB.pdf>
+Package pdftex.def Info: dataMaid_presidentData_appB.pdf used on input line 144
+7.
 (pdftex.def)             Requested size: 354.12434pt x 458.28084pt.
-File: dataMaid_presidentData.pdf Graphic file (type pdf)
- <use dataMaid_presidentData.pdf>
-Package pdftex.def Info: dataMaid_presidentData.pdf used on input line 1445.
+File: dataMaid_presidentData_appB.pdf Graphic file (type pdf)
+ <use dataMaid_presidentData_appB.pdf>
+Package pdftex.def Info: dataMaid_presidentData_appB.pdf used on input line 144
+7.
 (pdftex.def)             Requested size: 354.12434pt x 458.28084pt.
-File: dataMaid_presidentData.pdf Graphic file (type pdf)
+File: dataMaid_presidentData_appB.pdf Graphic file (type pdf)
 
-<use dataMaid_presidentData.pdf, page 2>
-Package pdftex.def Info: dataMaid_presidentData.pdf, page2 used on input line 1
-445.
+<use dataMaid_presidentData_appB.pdf, page 2>
+Package pdftex.def Info: dataMaid_presidentData_appB.pdf, page2 used on input l
+ine 1447.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
-File: dataMaid_presidentData.pdf Graphic file (type pdf)
+File: dataMaid_presidentData_appB.pdf Graphic file (type pdf)
 
-<use dataMaid_presidentData.pdf, page 2>
-Package pdftex.def Info: dataMaid_presidentData.pdf, page2 used on input line 1
-445.
+<use dataMaid_presidentData_appB.pdf, page 2>
+Package pdftex.def Info: dataMaid_presidentData_appB.pdf, page2 used on input l
+ine 1447.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
-File: dataMaid_presidentData.pdf Graphic file (type pdf)
+File: dataMaid_presidentData_appB.pdf Graphic file (type pdf)
 
-<use dataMaid_presidentData.pdf, page 2>
-Package pdftex.def Info: dataMaid_presidentData.pdf, page2 used on input line 1
-445.
+<use dataMaid_presidentData_appB.pdf, page 2>
+Package pdftex.def Info: dataMaid_presidentData_appB.pdf, page2 used on input l
+ine 1447.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
 
 Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 [] \T1/aer/m/n/10.95 31
  []
 
-File: dataMaid_presidentData.pdf Graphic file (type pdf)
-<use dataMaid_presidentData.pdf, page 2>
-Package pdftex.def Info: dataMaid_presidentData.pdf, page2 used on input line 1
-445.
+File: dataMaid_presidentData_appB.pdf Graphic file (type pdf)
+<use dataMaid_presidentData_appB.pdf, page 2>
+Package pdftex.def Info: dataMaid_presidentData_appB.pdf, page2 used on input l
+ine 1447.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
  [31]
-File: dataMaid_presidentData.pdf Graphic file (type pdf)
- <use dataMaid_presidentData.pdf>
-Package pdftex.def Info: dataMaid_presidentData.pdf used on input line 1446.
+File: dataMaid_presidentData_appB.pdf Graphic file (type pdf)
+
+<use dataMaid_presidentData_appB.pdf>
+Package pdftex.def Info: dataMaid_presidentData_appB.pdf used on input line 144
+8.
 (pdftex.def)             Requested size: 354.12434pt x 458.28084pt.
-File: dataMaid_presidentData.pdf Graphic file (type pdf)
-
-<use dataMaid_presidentData.pdf>
-Package pdftex.def Info: dataMaid_presidentData.pdf used on input line 1446.
+File: dataMaid_presidentData_appB.pdf Graphic file (type pdf)
+ <use dataMaid_presidentData_appB.pdf>
+Package pdftex.def Info: dataMaid_presidentData_appB.pdf used on input line 144
+8.
 (pdftex.def)             Requested size: 354.12434pt x 458.28084pt.
-File: dataMaid_presidentData.pdf Graphic file (type pdf)
- <use dataMaid_presidentData.pdf, page 3>
-Package pdftex.def Info: dataMaid_presidentData.pdf, page3 used on input line 1
-446.
-(pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
-File: dataMaid_presidentData.pdf Graphic file (type pdf)
+File: dataMaid_presidentData_appB.pdf Graphic file (type pdf)
 
-<use dataMaid_presidentData.pdf, page 3>
-Package pdftex.def Info: dataMaid_presidentData.pdf, page3 used on input line 1
-446.
+<use dataMaid_presidentData_appB.pdf, page 3>
+Package pdftex.def Info: dataMaid_presidentData_appB.pdf, page3 used on input l
+ine 1448.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
-File: dataMaid_presidentData.pdf Graphic file (type pdf)
+File: dataMaid_presidentData_appB.pdf Graphic file (type pdf)
 
-<use dataMaid_presidentData.pdf, page 3>
-Package pdftex.def Info: dataMaid_presidentData.pdf, page3 used on input line 1
-446.
+<use dataMaid_presidentData_appB.pdf, page 3>
+Package pdftex.def Info: dataMaid_presidentData_appB.pdf, page3 used on input l
+ine 1448.
+(pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
+File: dataMaid_presidentData_appB.pdf Graphic file (type pdf)
+
+<use dataMaid_presidentData_appB.pdf, page 3>
+Package pdftex.def Info: dataMaid_presidentData_appB.pdf, page3 used on input l
+ine 1448.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
 
 Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 \T1/aer/m/n/10.95 32 []
  []
 
-File: dataMaid_presidentData.pdf Graphic file (type pdf)
-<use dataMaid_presidentData.pdf, page 3>
-Package pdftex.def Info: dataMaid_presidentData.pdf, page3 used on input line 1
-446.
+File: dataMaid_presidentData_appB.pdf Graphic file (type pdf)
+<use dataMaid_presidentData_appB.pdf, page 3>
+Package pdftex.def Info: dataMaid_presidentData_appB.pdf, page3 used on input l
+ine 1448.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
  [32]
-File: dataMaid_presidentData.pdf Graphic file (type pdf)
+File: dataMaid_presidentData_appB.pdf Graphic file (type pdf)
 
-<use dataMaid_presidentData.pdf, page 4>
-Package pdftex.def Info: dataMaid_presidentData.pdf, page4 used on input line 1
-446.
+<use dataMaid_presidentData_appB.pdf, page 4>
+Package pdftex.def Info: dataMaid_presidentData_appB.pdf, page4 used on input l
+ine 1448.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
-File: dataMaid_presidentData.pdf Graphic file (type pdf)
+File: dataMaid_presidentData_appB.pdf Graphic file (type pdf)
 
-<use dataMaid_presidentData.pdf, page 4>
-Package pdftex.def Info: dataMaid_presidentData.pdf, page4 used on input line 1
-446.
+<use dataMaid_presidentData_appB.pdf, page 4>
+Package pdftex.def Info: dataMaid_presidentData_appB.pdf, page4 used on input l
+ine 1448.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
 
 Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 [] \T1/aer/m/n/10.95 33
  []
 
-File: dataMaid_presidentData.pdf Graphic file (type pdf)
-<use dataMaid_presidentData.pdf, page 4>
-Package pdftex.def Info: dataMaid_presidentData.pdf, page4 used on input line 1
-446.
+File: dataMaid_presidentData_appB.pdf Graphic file (type pdf)
+<use dataMaid_presidentData_appB.pdf, page 4>
+Package pdftex.def Info: dataMaid_presidentData_appB.pdf, page4 used on input l
+ine 1448.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
  [33]
-File: dataMaid_presidentData.pdf Graphic file (type pdf)
+File: dataMaid_presidentData_appB.pdf Graphic file (type pdf)
 
-<use dataMaid_presidentData.pdf, page 5>
-Package pdftex.def Info: dataMaid_presidentData.pdf, page5 used on input line 1
-446.
+<use dataMaid_presidentData_appB.pdf, page 5>
+Package pdftex.def Info: dataMaid_presidentData_appB.pdf, page5 used on input l
+ine 1448.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
-File: dataMaid_presidentData.pdf Graphic file (type pdf)
+File: dataMaid_presidentData_appB.pdf Graphic file (type pdf)
 
-<use dataMaid_presidentData.pdf, page 5>
-Package pdftex.def Info: dataMaid_presidentData.pdf, page5 used on input line 1
-446.
+<use dataMaid_presidentData_appB.pdf, page 5>
+Package pdftex.def Info: dataMaid_presidentData_appB.pdf, page5 used on input l
+ine 1448.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
 
 Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 \T1/aer/m/n/10.95 34 []
  []
 
-File: dataMaid_presidentData.pdf Graphic file (type pdf)
-<use dataMaid_presidentData.pdf, page 5>
-Package pdftex.def Info: dataMaid_presidentData.pdf, page5 used on input line 1
-446.
+File: dataMaid_presidentData_appB.pdf Graphic file (type pdf)
+<use dataMaid_presidentData_appB.pdf, page 5>
+Package pdftex.def Info: dataMaid_presidentData_appB.pdf, page5 used on input l
+ine 1448.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
  [34]
-File: dataMaid_presidentData.pdf Graphic file (type pdf)
+File: dataMaid_presidentData_appB.pdf Graphic file (type pdf)
 
-<use dataMaid_presidentData.pdf, page 6>
-Package pdftex.def Info: dataMaid_presidentData.pdf, page6 used on input line 1
-446.
+<use dataMaid_presidentData_appB.pdf, page 6>
+Package pdftex.def Info: dataMaid_presidentData_appB.pdf, page6 used on input l
+ine 1448.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
-File: dataMaid_presidentData.pdf Graphic file (type pdf)
+File: dataMaid_presidentData_appB.pdf Graphic file (type pdf)
 
-<use dataMaid_presidentData.pdf, page 6>
-Package pdftex.def Info: dataMaid_presidentData.pdf, page6 used on input line 1
-446.
+<use dataMaid_presidentData_appB.pdf, page 6>
+Package pdftex.def Info: dataMaid_presidentData_appB.pdf, page6 used on input l
+ine 1448.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
 
 Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 [] \T1/aer/m/n/10.95 35
  []
 
-File: dataMaid_presidentData.pdf Graphic file (type pdf)
-<use dataMaid_presidentData.pdf, page 6>
-Package pdftex.def Info: dataMaid_presidentData.pdf, page6 used on input line 1
-446.
+File: dataMaid_presidentData_appB.pdf Graphic file (type pdf)
+<use dataMaid_presidentData_appB.pdf, page 6>
+Package pdftex.def Info: dataMaid_presidentData_appB.pdf, page6 used on input l
+ine 1448.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
  [35]
 
-Package xcolor Warning: Incompatible color definition on input line 1449.
+Package xcolor Warning: Incompatible color definition on input line 1451.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1449.
+Package xcolor Warning: Incompatible color definition on input line 1451.
 
 LaTeX Font Info:    Font shape `T1/pzc/m/n' in size <13> not available
-(Font)              Font shape `T1/pzc/mb/it' tried instead on input line 1449.
+(Font)              Font shape `T1/pzc/mb/it' tried instead on input line 1451.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1449.
+Package xcolor Warning: Incompatible color definition on input line 1451.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1449.
+Package xcolor Warning: Incompatible color definition on input line 1451.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1449.
+Package xcolor Warning: Incompatible color definition on input line 1451.
 
 
 Overfull \hbox (10.94998pt too wide) has occurred while \output is active
@@ -2611,24 +2634,24 @@ Overfull \hbox (10.94998pt too wide) has occurred while \output is active
  []
 
 [36]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1449.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1449.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1451.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1451.
  (./article_vol3.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1449.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1449.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1451.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1451.
 
 Package rerunfilecheck Info: File `article_vol3.out' has not changed.
 (rerunfilecheck)             Checksum: FAB0885C939F8B699512C22D723EB80F;1803.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1449.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1451.
  ) 
 Here is how much of TeX's memory you used:
  19202 strings out of 492990
- 361500 string characters out of 6132636
- 464331 words of memory out of 5000000
+ 361710 string characters out of 6132636
+ 464425 words of memory out of 5000000
  22240 multiletter control sequences out of 15000+600000
  64984 words of font info for 107 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,20n,60p,1466b,835s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 55i,20n,60p,1462b,835s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc
 }{/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/te
 xlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmb10.pfb></usr/local/texl
@@ -2652,14 +2675,13 @@ texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2017/texmf-dist
 1/public/lm/lmr12.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/lm
 /lmr17.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/lm/lmri12.pfb
 ></usr/local/texlive/2017/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/loc
-al/texlive/2017/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive
-/2017/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/local/texlive/2
-017/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb></usr/local/texlive/201
-7/texmf-dist/fonts/type1/urw/zapfchan/uzcmi8a.pfb>
-Output written on article_vol3.pdf (36 pages, 546496 bytes).
+al/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/local
+/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb></usr/local/t
+exlive/2017/texmf-dist/fonts/type1/urw/zapfchan/uzcmi8a.pfb>
+Output written on article_vol3.pdf (36 pages, 535370 bytes).
 PDF statistics:
- 617 PDF objects out of 1000 (max. 8388607)
- 496 compressed objects within 5 object streams
+ 619 PDF objects out of 1000 (max. 8388607)
+ 499 compressed objects within 5 object streams
  98 named destinations out of 1000 (max. 500000)
  235 words of extra memory for PDF output out of 10000 (max. 10000000)
 

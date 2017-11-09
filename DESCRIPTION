@@ -1,16 +1,16 @@
 Package: dataMaid
 Type: Package
 Title: A Suite of Checks for Identification of Potential Errors in a Data Frame
-    as Part of the Data Cleaning Process
-Version: 0.9.7.9002
+    as Part of the Data Screening Process
+Version: 1.0.0
 Date: 2017-11-09
 Authors@R: c(person("Anne Helby", "Petersen", , email="ahpe@sund.ku.dk", role="aut"),
              person("Claus Thorn", "Ekstrom", , email="ekstrom@sund.ku.dk", role=c("aut", "cre")))
-Description: Data cleaning is an important first step of any statistical
-    analysis. dataMaid provides an extendable suite of test for common potential
-    errors in a dataset. It autogenerates a customizable data report with a thorough
+Description: Data screening is an important first step of any statistical
+    analysis. dataMaid autogenerates a customizable data report with a thorough
     summary of the checks and the results that a human can use to identify possible
-    errors.
+    errors. It provides an extendable suite of test for common potential
+    errors in a dataset. 
 URL: https://github.com/ekstroem/dataMaid
 BugReports: https://github.com/ekstroem/dataMaid/issues    
 Depends:
