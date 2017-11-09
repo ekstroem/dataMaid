@@ -199,7 +199,7 @@ are already available, including \pkg{janitor} \citep{janitor},
 \pkg{assertive} \citep{assertive}, \pkg{dplyr} \citep{dplyr},
 \pkg{tidyr}\citep{tidyr}, \pkg{data.table} \citep{data.table},
 \pkg{DataCombine} \citep{DataCombine}, \pkg{validate}
-\citep{validate}, \pkg{assertr}, and \citep{assertr}. These packages
+\citep{validate}, and \pkg{assertr} \citep{assertr}. These packages
 focus on different stages of the pre-analysis work.  \pkg{janitor}
 provides tools for data import with a particular emphasis on the
 challenges of getting neat data frames from Microsoft Excel data
@@ -365,30 +365,34 @@ R> makeDataReport(toyData)
 \end{Sinput}
 \end{Schunk}
 
-By default, an \proglang{R} markdown file and a rendered pdf \hl{OBS: måske html/doc alt efter hvem der kalder funktionen?} overview
-document is produced, saved to the working directory and
-opened for immediate inspection. Such a data report consists of three parts, two of which 
-are presented in Figure~\ref{fig:example1}. First, an overview of what was done is presented under the
-title \textit{Data report overview}. Secondly, an index listing each variable along with an indication of whether it was found to be problematic or not is provided. Thirdly, as seen in Figure~\ref{fig:example2}, each variable in the
-dataset is presented in turn using (up to) three tools in the
+By default, an \proglang{R} markdown file and a rendered pdf or word
+overview document is produced, saved to the working directory and
+opened for immediate inspection. Such a data report consists of three
+parts, two of which are presented in Figure~\ref{fig:example1}. First,
+an overview of what was done is presented under the title \textit{Data
+  report overview}. Secondly, an index listing each variable along
+with an indication of whether it was found to be problematic or not is
+provided. Thirdly, as seen in Figure~\ref{fig:example2}, each variable
+in the dataset is presented in turn using (up to) three tools in the
 \textit{Variable list}: A table summarizing key features of the
-variable, a figure visualizing its distribution and a
-list of flagged issues, if any. For instance, as shown in Figure~\ref{fig:example2}, for the \code{numeric}-type variable
-\code{events} from \code{toyData}, \code{makeDataReport()} has identified two values that
-are suspected to be miscoded missing values (\code{999} and \code{NaN}),
-while two values were also flagged as potential outliers that should
-be investigated more carefully.
+variable, a figure visualizing its distribution when relevant and a list of flagged
+issues, if any. For instance, as shown in Figure~\ref{fig:example2},
+for the \code{numeric}-type variable \code{events} from
+\code{toyData}, \code{makeDataReport()} has identified two values that
+are suspected to be miscoded missing values (\code{999} and
+\code{NaN}), while two values were also flagged as potential outliers
+that should be investigated more carefully.
 
-Though the \code{makeDataReport()} function is very easy to use, it should not be
-mistaken to be inflexible: By using the optional arguments of the function, 
-both the contents and the look of the data report can be molded 
-according to the user's needs. The most commonly used arguments are summarized in
+The arguments to \code{makeDataReport()} can be used to modify the
+contents and the look of the data report according to the user's
+needs. The most commonly used arguments are summarized in
 Table~\ref{table.cleanFormals} and they are grouped according to the
-part of the data assesment and report generation they influence. In order to understand
-this distinction, a glimpse of the inner structure of \code{makeDataReport()} is
-shown in Figure~\ref{figure:cleanStructure}. Below, we present a few
-examples on how to use the arguments from Table \ref{table.cleanFormals}
- to influence the output of a \code{makeDataReport()} call.
+part of the data assesment and report generation they influence. In
+order to understand this distinction, a glimpse of the inner structure
+of \code{makeDataReport()} is shown in
+Figure~\ref{figure:cleanStructure}. Below, we present a few examples
+on how to use the arguments from Table \ref{table.cleanFormals} to
+influence the output of a \code{makeDataReport()} call.
 
 \begin{table}
 \small
@@ -424,7 +428,7 @@ Argument & Description & Default value \\
 %Takes a list on the format \code{list(X = Y)} where \code{X} is a non-supported variable class (e.g. \code{complex}) and \code{Y} is a supported one (e.g. \code{numeric}) & \code{NULL} (No rules for handling non-supported variable types) \\
 
 \smallskip Control output and post-processing \\
-\quad \code{output} & Type of output file to be produced (html, word (.docx) or pdf) & \code{"pdf"} \hl{OBS. Ændrer vi dette?}\\
+\quad \code{output} & Type of output file to be produced (html, word (.docx) or pdf) & \code{NULL} (use pdf if \LaTeX\ is found, otherwise word (if on windows), or html)\\
 \quad \code{render} & Should the output file be rendered from markdown? & \code{TRUE} \\
 \quad \code{openResult} & If a  pdf/html file is rendered, should it
                        automatically open afterwards, and if not,
@@ -504,7 +508,7 @@ Argument & Description & Default value \\
 % \subsection{Controlling [something]}
 % \label{subsection:controlSomething}
 
-\subsection{Polishing off the arguments}
+\subsection{Dusting off the arguments}
 We begin with an example that is intended as an illustration of how
 \code{makeDataReport()} might be used in the very first stages of data
 cleaning, when we are uncertain about the complexities of the
@@ -513,7 +517,7 @@ this stage, what is really needed, is a very rough idea of the
 severity of errors in the dataset. In this scenario, we might wish to
 obtain a summary document in html format that only contains the
 variables with potential problems, and with a limit of, say, maximum
-2 printed potential problematic value per check for each variable. Also, we can add the
+2 printed potential problematic values per check for each variable. Also, we can add the
 argument \code{replace = TRUE} in order to force \code{makeDataReport()} to
 overwrite any existing files produced by \code{makeDataReport()}.  Using the
 \code{toyData} dataset as a guinea pig, we type:
@@ -521,7 +525,7 @@ overwrite any existing files produced by \code{makeDataReport()}.  Using the
 \begin{Schunk}
 \begin{Sinput}
 R> makeDataReport(toyData, output = "html", onlyProblematic = TRUE,
-+     maxProbVals = 2, replace = TRUE)
++    maxProbVals = 2, replace = TRUE)
 \end{Sinput}
 \end{Schunk}
 
@@ -536,7 +540,8 @@ rendering nor opening the markdown file:
 
 \begin{Schunk}
 \begin{Sinput}
-R> makeDataReport(toyData, output="html", render=FALSE, openResult=FALSE, replace=TRUE)
+R> makeDataReport(toyData, output="html", render=FALSE,
++    openResult=FALSE, replace=TRUE)
 \end{Sinput}
 \end{Schunk}
 
@@ -583,24 +588,24 @@ R> makeDataReport(toyData, output="html", render=FALSE, openResult=FALSE, replac
 \label{table.SVCfunctions}
 \end{table}
 
-\subsection{Controlling contents: What summaries, visualizations and checks should be performed?}
-We will now move on to discuss how not only the structure of the
-data assesment steps is manipulated, but also its very contents. This is
-done through the summarize/visualize/check (SVC) steps, as illustrated
-in Figure \ref{figure:cleanStructure}.  \pkg{dataMaid} uses three
-different types of functions for performing these steps, namely
+\subsection{Controlling contents through summaries, visualizations and checks}
+
+\pkg{dataMaid} works through three different steps --- summarize,
+visualize, and check (SVC) --- for each variable in the dataset
+(illustrated in Figure \ref{figure:cleanStructure}).  Three different
+types of functions are used to perform these steps, namely
 \code{summaryFunction}s, \code{visualFunction}s and
-\code{checkFunction}s.  By default, \code{makeDataReport()} runs selected summary,
-visualization and check functions on each variable in the dataset, and
-the exact choice of these functions depends on the classes of the
-variables. For instance, though detection of outlier values might be
-interesting for numerical variables, it holds little meaning for
-factor variables, and therefore, numerical and factor variables need
-different checks. Table~\ref{table.SVCfunctions} lists all available
-summarize/visualize/check functions, but we can also use the
-\code{allSummaryFunctions()}, \code{allVisualFunctions()}, and
-\code{allCheckFunctions()} functions in \pkg{dataMaid} to print overview
-lists in \proglang{R}. For example, the implemented
+\code{checkFunction}s.  By default, \code{makeDataReport()} runs
+selected summary, visualization and check functions on each variable
+in the dataset, and the exact choice of these functions depends on the
+classes of the variables. For instance, detection of outlier values
+might be interesting for numerical variables, but it holds little
+meaning for factor variables, and therefore, numerical and factor
+variables need different checks. Table~\ref{table.SVCfunctions} lists
+all available summarize/visualize/check functions, but we can also use
+the \code{allSummaryFunctions()}, \code{allVisualFunctions()}, and
+\code{allCheckFunctions()} functions in \pkg{dataMaid} to print
+overview lists in \proglang{R}. For example, the implemented
 \code{summaryFunction}s are:
 
 %\subsection{Something about what check, visual and summary functions are available}
@@ -764,7 +769,8 @@ only checking for keys and non-supported variables in the pre-check step:
 
 \begin{Schunk}
 \begin{Sinput}
-R> makeDataReport(toyData, preChecks = c("isKey", "isSupported"), replace=TRUE)
+R> makeDataReport(toyData, preChecks = c("isKey", "isSupported"), 
++    replace=TRUE)
 \end{Sinput}
 \end{Schunk}
 
@@ -775,7 +781,8 @@ from the default \pkg{ggplot2} \citep{ggplot2} style histograms and barplots to 
 
 \begin{Schunk}
 \begin{Sinput}
-R> makeDataReport(toyData, visuals = setVisuals(all = "basicVisual"), replace=TRUE)
+R> makeDataReport(toyData, visuals = setVisuals(all = "basicVisual"), 
++    replace=TRUE)
 \end{Sinput}
 \end{Schunk}
 
@@ -786,19 +793,21 @@ where \code{makeDataReport()} applies functions to each of the variables:
 \item As part of the summarize/visualize/check (SVC) steps.
 \end{enumerate}
 Each of these stages are controllable using appropriate function
-arguments in \code{makeDataReport()}, and above we have shown examples of how
-to tweak them to modify the data cleaning outputs. However, if the
-dataset at hand requires new, additional checks, then more control is
-needed \hl{ and we have provided a detailed vignette that explains how to modify and
+arguments in \code{makeDataReport()}, and above we have shown examples
+of how to tweak them to modify the data cleaning outputs. However, if
+the dataset at hand requires new, additional checks, then more control
+is needed a package vignette explains the details of how to modify and
 expand the possibilities by producing new summary, visual, and check
-functions in [REFERENCE]}.
+functions.
 
 One might also encounter datasets with variables that are not among the 7 classes mentioned in the above (\code{character}, \code{Date}, \code{factor}, \code{integer}, \code{labelled}, \code{logical} and \code{numeric}), for instance variables of type \code{complex} or user-defined classes. It is possible to tell \code{makeDataReport()} how to handle such variables by use of the argument \code{treatXasY}. This argument takes a list where the names correspond to "new" variable types (\code{X}), while the entries must be supported variable types (\code{Y}). For instance, we can instruct \code{dataMaid} to treat complex variables as numerics and generate a data report for a type \code{complex} variable like this:
 
 \begin{Schunk}
 \begin{Sinput}
-R> complexData <- data.frame(complexVar = complex(100, real = 1:100, imaginary = 3), numericVar = 1:100)
-R> makeDataReport(complexData, treatXasY=list(complex = "numeric"), replace=TRUE)
+R> complexData <- data.frame(complexVar = complex(100, real = 1:100, 
++    imaginary = 3), numericVar = 1:100)
+R> makeDataReport(complexData, treatXasY=list(complex = "numeric"), 
++    replace=TRUE)
 \end{Sinput}
 \end{Schunk}
 
@@ -931,9 +940,9 @@ Min. and max.: 1; 82
 
 \begin{figure}[tb]
 \begin{center}
-\includegraphics[width=7.5cm]{toyData-events.pdf}
+\includegraphics[width=7.5cm]{article_vol3-toydataevents.pdf}
 \end{center}
-\caption{Output from running \code{visualize()} on the variable \code{events} from the
+\caption{Output from running \code{visualize()} on variable \code{events} from the
 \code{toyData} dataset.}
 \label{fig:example3}
 \end{figure}
@@ -987,7 +996,7 @@ Note that the \code{summarize()}, \code{check()} and \code{visualize()} function
 \frame{\includegraphics[width=7.5cm,page=4]{dataMaid_presidentData.pdf}}
 \end{center}
 \caption{The second and third pages of the \code{presidentData} data report. We see that there are two \code{Name} variables in the overview on page 2 and see that these variables are indeed treated as \code{character} variables on page 3, as specified in the \code{makeDataReport} call by use of the \code{treatXasY} argument. Larger versions of the pages can be seen in
-  Appendix~\ref{sec:appendix2}}
+  Appendix~\ref{sec:appendix2}.}
 \label{fig:bigExampleP23}
 \end{figure}
 
@@ -997,7 +1006,7 @@ Note that the \code{summarize()}, \code{check()} and \code{visualize()} function
 \frame{\includegraphics[width=7.5cm,page=6]{dataMaid_presidentData.pdf}}
 \end{center}
 \caption{Part of the data overview report generated for the \code{presidentData} dataset. Here, we see pages 4 and 5 from the \textit{Variable list}. Larger versions of the pages can be seen in
-  Appendix~\ref{sec:appendix2}}
+  Appendix~\ref{sec:appendix2}.}
 \label{fig:bigExampleP45}
 \end{figure}
 
@@ -1015,6 +1024,37 @@ We will now put the bits and pieces from above together and show how \code{makeD
 \item[\code{ageAtInauguration}] The age of the president at inauguration.
 \item[\code{favoriteNumber}] The favourite number of the president (fictional).
 \end{description}
+
+\begin{Schunk}
+\begin{Sinput}
+R> data(presidentData)
+R> head(presidentData)
+\end{Sinput}
+\begin{Soutput}
+    lastName firstName orderOfPresidency   birthday  stateOfBirth
+1 Washington    George                 1 1732-02-22      Virginia
+2      Adams      John                 2 1735-10-30 Massachusetts
+3  Jefferson    Thomas                 3 1743-04-13      Virginia
+4    Madison     James                 4 1751-03-16      Virginia
+5     Monroe     James                 5 1758-04-28      Virginia
+6      Adams      John                 6 1767-07-11 Massachusetts
+  assassinationAttempt  sex ethnicity presidencyYears
+1                    0 Male Caucasian               7
+2                    0 Male Caucasian               3
+3                    0 Male Caucasian               8
+4                    0 Male Caucasian               8
+5                    0 Male Caucasian               8
+6                    0 Male Caucasian               4
+  ageAtInauguration favoriteNumber
+1                57    3+0.000000i
+2                61    4+0.000000i
+3                57    0+1.414214i
+4                57   10+0.000000i
+5                58    3+0.000000i
+6                57    9+0.000000i
+\end{Soutput}
+\end{Schunk}
+
 We discuss the results of a data overview report generated for this dataset below, but first there are a few special features of the dataset and wishes for the data report that require us to customize it using some of the arguments for \code{makeDataReport}. We have the following points of interest:
 \begin{enumerate}
 \item A couple of variables are used to store names, namely \code{lastName} and \code{firstName}. In order to use special bibliographical analysis tools on these, and only these, variables, it might be convenient to assign them a special class. Therefore, these variables have been set to have class \code{Name} by use of the base \proglang{R} function \code{class()}. When we wish to make a data report for the dataset, we have to tell \code{makeDataReport()} how to handle such \code{Name}-type variables, as they are not among the supported variable types mentioned in the above. This can be done using the \code{treatXasY} argument.
@@ -1025,7 +1065,6 @@ Incorporating these three customizations, we can load the data and generate a re
 
 \begin{Schunk}
 \begin{Sinput}
-R> data(presidentData)
 R> makeDataReport(presidentData, replace = TRUE, 
 +    treatXasY = list("Name" = "character"),
 +    checks = setChecks(character = 
@@ -1036,7 +1075,7 @@ R> makeDataReport(presidentData, replace = TRUE,
 
 The first four pages of the resulting report can be inspected in Figures \ref{fig:bigExampleP01} and \ref{fig:bigExampleP23}. Note that all the customized settings can be identified from the first two pages, without having to read through the report: The new title is written on the front page, the check settings are displayed in the \textit{Checks performed} table and the strategy for handling \code{Name} variables is documented below this table. The full data report, except for the front page, is available in Appendix \ref{sec:appendix2}. 
 
-The first problem that can be spotted from these first four pages is the surprising number of observations: Anno 2017, there have only been 45 US presidents. Therefore, having 46 observations reveals that the dataset contains a blind passenger. For instance, if the dataset was constructed as a subset of a more general "World leaders" dataset, this type of problem could occur due to wrongful nationality classification. We return to the extra president issue below. 
+The first problem that can be spotted from these first four pages is the surprising number of observations: Anno 2017, there have only been 45 US presidents. Therefore, having 46 observations reveal that the dataset contains a blind passenger. For instance, if the dataset was constructed as a subset of a more general "World leaders" dataset, this type of problem could occur due to wrongful nationality classification. We return to the extra president issue below. 
 
 On page 3, we see the contents for the three first variables. Here, we identifify a prefixed whitespace in the lastname entry for President Truman and we find that a dot was entered as a first name; this is a typical choice for coding missing values in e.g. Stata, and therefore, it is flagged as a potential miscoded missing value. The variable \code{orderOfPresidency} is not summarized, visualized or checked because it is categorical and contains unique values for each observation. 
 
@@ -1058,9 +1097,12 @@ A few of the identified problems have easy fixes that need no further discussion
 \begin{Schunk}
 \begin{Sinput}
 R> presidentData$lastName[presidentData$lastName == " Truman"] <- "Truman"
-R> presidentData$stateOfBirth[presidentData$stateOfBirth == "New york"] <- "New York"
-R> presidentData$assassinationAttempt <- factor(presidentData$assassinationAttempt)
-R> presidentData$ageAtInauguration <- as.numeric(presidentData$ageAtInauguration)
+R> presidentData$stateOfBirth[presidentData$stateOfBirth == "New york"] <- 
++    "New York"
+R> presidentData$assassinationAttempt <- 
++    factor(presidentData$assassinationAttempt)
+R> presidentData$ageAtInauguration <- 
++    as.numeric(presidentData$ageAtInauguration)
 \end{Sinput}
 \end{Schunk}
 
@@ -1068,7 +1110,8 @@ Please note that if \code{ageAtInauguration} had been a \code{factor} rather tha
 
 \begin{Schunk}
 \begin{Sinput}
-R> presidentData$ageAtInauguration <- as.numeric(as.character(presidentData$ageAtInauguration))
+R> presidentData$ageAtInauguration <- 
++    as.numeric(as.character(presidentData$ageAtInauguration))
 \end{Sinput}
 \end{Schunk}
 
@@ -1097,7 +1140,7 @@ Next up is the unlikely US president birth day of March 1, 1300. In order to und
 \begin{Schunk}
 \begin{Sinput}
 R> birthdayOutlierVal <- 
-+  +    identifyOutliers(presidentData$birthday)$problemValues
++    identifyOutliers(presidentData$birthday)$problemValues
 \end{Sinput}
 \end{Schunk}
  
@@ -1154,9 +1197,9 @@ We see that there is one less missing value and that the small and large values 
 \begin{Schunk}
 \begin{Sinput}
 R> presidentData[is.na(presidentData$presidencyYears) | 
-+     presidentData$presidencyYears %in% 
-+     identifyOutliers(presidentData$presidencyYears)$problemValues, 
-+     c("firstName", "lastName", "presidencyYears")]
++    presidentData$presidencyYears %in% 
++    identifyOutliers(presidentData$presidencyYears)$problemValues, 
++    c("firstName", "lastName", "presidencyYears")]
 \end{Sinput}
 \begin{Soutput}
    firstName lastName presidencyYears
@@ -1168,7 +1211,7 @@ R> presidentData[is.na(presidentData$presidencyYears) |
 \end{Soutput}
 \end{Schunk}
 
-We see that Obama is listed as being president forever, which history has proven to be wrong. Trump, on the other hand, has a missing value for his presidency duration, which is in fact reasonable as we cannot know how long it will be yet (anno 2017). Presidents William Harrison, Zachary Taylor, James Garfield, Warren Harding and Gerald Ford were identified to have very brief presidencies, but these are not mistakes, as a textbook look-up can tell us. Thus the only mistake left to fix is Obama's infinite presidency:
+We see that Obama is listed as being president forever, which history has proven to be wrong. Trump, on the other hand, has a missing value for his presidency duration, which is in fact reasonable as we cannot know how long it will be yet (anno 2017). Presidents William Harrison, Zachary Taylor, James Garfield, Warren Harding and Gerald Ford were identified to have very brief presidencies, but these are not mistakes, as any US history textbook can tell us. Thus, the only mistake left to fix is Obama's infinite presidency:
 
 
 \begin{Schunk}
@@ -1203,7 +1246,7 @@ solve specific issues related to data documentation and -cleaning. First, we dis
 documents as a way to produce clear and concise documentation of a
 dataset.
 
-\subsection[Incorporating dataMaid in a programmer's workflow]{Incorporating \pkg{dataMaid} in a programmer's workflow}
+\subsection[Incorporating dataMaid in an automated workflow]{Incorporating \pkg{dataMaid} in automated workflow}
 The default settings of \code{makeDataReport()} have been set to facilitate easy and quick data report generation, but unfortunately, this also means that it is not ideal for a more programming-oriented workflow, where the function might not be called by a human. For instance, one might be interested in automatically running \code{makeDataReport()} on all datasets received from a certain client, perhaps via email or through a web upload, and returning a data report for them to inspect and comment before ever looking at the data. In this scenario, there are a few issues with the standard data report:
 \begin{enumerate}
 \item After rendering, the report is automatically opened. This is not very useful, if the processes are supposed to run in the background.
@@ -1214,8 +1257,8 @@ Please note that the data report does contain information about who, when and ho
 
 \begin{Schunk}
 \begin{Sinput}
->R makeDataReport(toyData, open = FALSE, quiet = "silent",
-+   vol = paste("_", format(Sys.time(), "%m-%d%-%y_%H.%M"), sep = ""))
+R> makeDataReport(toyData, open = FALSE, quiet = "silent",
++    vol = paste("_", format(Sys.time(), "%m-%d%-%y_%H.%M"), sep = ""))
 \end{Sinput}
 \end{Schunk}
 
@@ -1223,7 +1266,7 @@ Now, if e.g. the report is created at 3 pm on October 31, 2017, its file will be
 
 
 \subsection[Using dataMaid for problem flagging]{Using \pkg{dataMaid} for problem flagging}
-If the dataset is large and the time available for reading through the data report is scarce, it can be convenient to only make a report concerning the variabels that were flagged to be problematic. This can be achieved by using the \code{onlyProblematic} argument in
+If the dataset is large and the time available for reading through the data report is scarce, it can be convenient to only make a report concerning the variabels that were flagged to be problematic. This can be achieved by using the \code{onlyProblematic} argument for
 \code{makeDataReport()}. By specifying \code{onlyProblematic = TRUE}, only
 variables that raise a flag in the checking steps will be summarized
 and visualized. But perhaps we are not even interested in obtaining
@@ -1271,16 +1314,16 @@ more general overview document, including additional information such
 as pairwise association plots, time series plots, or exploratory
 analysis results.  \pkg{dataMaid} can produce a document to be
 included in other \proglang{R} markdown files by setting the
-\code{standAlone} argument in \code{makeDataReport()} to remove the preamble
+\code{standAlone=FALSE} argument in \code{makeDataReport()} to remove the preamble
 from the output \proglang{R} markdown file. Note that it is still
 necessary to indicate which \proglang{R} markdown output type is
 created; the pdf and html \proglang{R} markdown styles are
 unfortunately not identical. Note that the \code{word} output option is based on the \code{html} markdown style. 
 
 If it is important that the embedded \pkg{dataMaid} document can be
-rendered to any of these three file types, we recommend setting
-\code{twoCols = FALSE} and \code{output = "html"} in \code{makeDataReport()}, thereby
-essentially removing almost all output type specific formatting code
+rendered to any of these three file types, we recommend setting the
+\code{twoCols = FALSE} and \code{output = "html"} arguments in \code{makeDataReport()}. This 
+essentially removes almost all output type specific formatting code
 from the generated \proglang{R} markdown file.
 
 On the other hand, if a pdf document is to be produced, a few extra
@@ -1348,22 +1391,24 @@ R> render("dataMaid_toyData.Rmd", quiet = FALSE)
 \section{Concluding remarks}
 \label{conclusion}
 
-In this paper we have introduced the \proglang{R} package \pkg{dataMaid}
-for performing reproducible error detection, data overview reports and data cleaning. The package provides a general and extendable framework for
-identifying potential errors and for creating human-readable summary
-documents that will help investigators to identify possible errors in
-the data.
+In this paper we have introduced the \proglang{R} package
+\pkg{dataMaid} for performing reproducible error detection, data
+overview reports and data screening. The package provides a general and
+extendable framework for identifying potential errors and for creating
+human-readable summary documents that will help investigators to
+identify possible errors in the data.
 
 
-While the the current release is stable, the authors have an interest
-in further developing the functionality of \pkg{dataMaid} by providing
-more summary, visual, and check function as part of the
-package. We are also currently considering adding options to handle
-repeated measurement, where the visualizations --- in particular ---
-might be improved by visualizing measurements over time. In addition,
-an online \pkg{shiny} \citep{shiny} application where users that are not
-\proglang{R}-savvy can upload their data and get a data cleaning
-document is currently being developed.
+%While the the current release is stable, the authors have an interest
+%in further developing the functionality of \pkg{dataMaid} by providing
+%more summary, visual, and check function as part of the
+%package. 
+We are also currently considering adding options to handle repeated
+measurement, where the visualizations --- in particular --- might be
+improved by visualizing measurements over time. In addition, an online
+\pkg{shiny} \citep{shiny} application is currently being developed
+such that non-\proglang{R}-savvy users can upload their data online
+and get a data cleaning document.
 
 
 

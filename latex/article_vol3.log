@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.10.2)  8 NOV 2017 12:08
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.10.2)  9 NOV 2017 02:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1376,267 +1376,127 @@ Overfull \hbox (5.47499pt too wide) has occurred while \output is active
 Package xcolor Warning: Incompatible color definition on input line 371.
 
 
-Package xcolor Warning: Incompatible color definition on input line 372.
+Package xcolor Warning: Incompatible color definition on input line 375.
 
 
-Package xcolor Warning: Incompatible color definition on input line 376.
-
-
-Package xcolor Warning: Incompatible color definition on input line 386.
+Package xcolor Warning: Incompatible color definition on input line 379.
 
 
 Package xcolor Warning: Incompatible color definition on input line 389.
 
 
-Package xcolor Warning: Incompatible color definition on input line 390.
+Package xcolor Warning: Incompatible color definition on input line 393.
+
+
+Package xcolor Warning: Incompatible color definition on input line 394.
 
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 395.
+(Font)              <7> on input line 399.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 395.
+(Font)              <5> on input line 399.
 
-Underfull \hbox (badness 10000) in paragraph at lines 406--407
+Underfull \hbox (badness 10000) in paragraph at lines 410--411
 []|\T1/aett/m/n/10 c("isKey",
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 406--407
+Underfull \hbox (badness 10000) in paragraph at lines 410--411
 \T1/aett/m/n/10 "isSingular",
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 407--408
+Underfull \hbox (badness 10000) in paragraph at lines 411--412
 []|\T1/aett/m/n/10 NULL \T1/aer/m/n/10 (cor-re-sponds
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 407--408
+Underfull \hbox (badness 10000) in paragraph at lines 411--412
 \T1/aer/m/n/10 to the dataset
  []
 
 
-Package xcolor Warning: Incompatible color definition on input line 412.
+Package xcolor Warning: Incompatible color definition on input line 416.
 
 
-Package xcolor Warning: Incompatible color definition on input line 413.
+Package xcolor Warning: Incompatible color definition on input line 417.
 
 
-Package xcolor Warning: Incompatible color definition on input line 414.
+Package xcolor Warning: Incompatible color definition on input line 418.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 418--419
+Underfull \hbox (badness 10000) in paragraph at lines 422--423
 []|\T1/aett/m/n/10 c("summarize",
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 418--419
+Underfull \hbox (badness 10000) in paragraph at lines 422--423
 \T1/aett/m/n/10 "visualize",
  []
 
 
-Underfull \hbox (badness 1168) in paragraph at lines 419--420
+Underfull \hbox (badness 1168) in paragraph at lines 423--424
 []|\T1/aer/m/n/10 Should nu-mer-i-cal val-ues with only a few
  []
 
 
-LaTeX Warning: Float too large for page by 33.12306pt on input line 439.
+Underfull \hbox (badness 6032) in paragraph at lines 431--432
+[]|\T1/aett/m/n/10 NULL \T1/aer/m/n/10 (use pdf if
+ []
 
 
-Overfull \hbox (2.62779pt too wide) in paragraph at lines 458--458
+LaTeX Warning: Float too large for page by 57.12306pt on input line 443.
+
+
+Overfull \hbox (2.62779pt too wide) in paragraph at lines 462--462
 \T1/aett/m/n/10.95 data.frame 
  []
 
 
-Package xcolor Warning: Incompatible color definition on input line 531.
+Package xcolor Warning: Incompatible color definition on input line 535.
 
 
-Package xcolor Warning: Incompatible color definition on input line 531.
+Package xcolor Warning: Incompatible color definition on input line 535.
 
 
-Overfull \hbox (0.64066pt too wide) in paragraph at lines 528--536
+Overfull \hbox (0.64066pt too wide) in paragraph at lines 532--540
 []\T1/aer/m/n/10.95 The fi-nal ren-der-ing of the gen-er-ated mark-down file is
  con-trolled by the \T1/aett/m/n/10.95 render \T1/aer/m/n/10.95 and \T1/aett/m/
 n/10.95 openResult
  []
 
 
-Overfull \hbox (3.48175pt too wide) in paragraph at lines 550--550
+Overfull \hbox (3.48175pt too wide) in paragraph at lines 555--555
 []|\T1/aer/m/n/10.95 C| 
  []
 
 
-Overfull \hbox (2.71518pt too wide) in paragraph at lines 550--550
+Overfull \hbox (2.71518pt too wide) in paragraph at lines 555--555
 []|\T1/aer/m/n/10.95 F| 
  []
 
 
-Overfull \hbox (2.41963pt too wide) in paragraph at lines 550--550
+Overfull \hbox (2.41963pt too wide) in paragraph at lines 555--555
 []|\T1/aer/m/n/10.95 L| 
  []
 
 
-Overfull \hbox (3.32845pt too wide) in paragraph at lines 550--550
+Overfull \hbox (3.32845pt too wide) in paragraph at lines 555--555
 []|\T1/aer/m/n/10.95 B| 
  []
 
 
-Overfull \hbox (3.78839pt too wide) in paragraph at lines 550--550
+Overfull \hbox (3.78839pt too wide) in paragraph at lines 555--555
 []|\T1/aer/m/n/10.95 N| 
  []
 
 
-Overfull \hbox (3.9306pt too wide) in paragraph at lines 550--551
+Overfull \hbox (3.9306pt too wide) in paragraph at lines 555--556
 []|\T1/aer/m/n/10.95 D| 
  []
 
 
-Underfull \hbox (badness 2012) in paragraph at lines 553--553
+Underfull \hbox (badness 2012) in paragraph at lines 558--558
 []|\T1/aer/m/n/10.95 Compute me-dian for nu-
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 553--553
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 553--553
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 553--553
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 553--553
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 553--553
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 553--553
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 553--554
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 554--554
-[]|\T1/aer/m/n/10.95 Compute pro-por-tion of
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 554--554
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 554--554
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 554--554
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 554--554
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 554--554
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 554--554
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 554--555
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 555--555
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 555--555
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 555--556
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 556--556
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 556--556
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 556--557
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
- []
-
-
-Underfull \hbox (badness 2277) in paragraph at lines 557--557
-[]|\T1/aer/m/n/10.95 Count num-ber of unique
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 557--557
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 557--557
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 557--557
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 557--557
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 557--557
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 557--557
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 557--558
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
  []
 
 
@@ -1675,38 +1535,113 @@ Overfull \hbox (4.09259pt too wide) in paragraph at lines 558--559
  []
 
 
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 562--562
-[]|$\OMS/cmsy/m/n/10.95 ^^B$| 
+Underfull \hbox (badness 10000) in paragraph at lines 559--559
+[]|\T1/aer/m/n/10.95 Compute pro-por-tion of
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 559--559
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 559--559
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 559--559
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 559--559
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 559--559
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 559--559
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 559--560
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 560--560
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 560--560
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 560--561
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 561--561
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 561--561
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 561--562
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+ []
+
+
+Underfull \hbox (badness 2277) in paragraph at lines 562--562
+[]|\T1/aer/m/n/10.95 Count num-ber of unique
  []
 
 
 Overfull \hbox (4.09259pt too wide) in paragraph at lines 562--562
-[]|$\OMS/cmsy/m/n/10.95 ^^B$| 
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
  []
 
 
 Overfull \hbox (4.09259pt too wide) in paragraph at lines 562--562
-[]|$\OMS/cmsy/m/n/10.95 ^^B$| 
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
  []
 
 
 Overfull \hbox (4.09259pt too wide) in paragraph at lines 562--562
-[]|$\OMS/cmsy/m/n/10.95 ^^B$| 
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
  []
 
 
 Overfull \hbox (4.09259pt too wide) in paragraph at lines 562--562
-[]|$\OMS/cmsy/m/n/10.95 ^^B$| 
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
  []
 
 
 Overfull \hbox (4.09259pt too wide) in paragraph at lines 562--562
-[]|$\OMS/cmsy/m/n/10.95 ^^B$| 
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 562--562
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
  []
 
 
 Overfull \hbox (4.09259pt too wide) in paragraph at lines 562--563
-[]|$\OMS/cmsy/m/n/10.95 ^^B$| 
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
  []
 
 
@@ -1746,16 +1681,51 @@ Overfull \hbox (4.09259pt too wide) in paragraph at lines 563--564
 
 
 Overfull \hbox (4.09259pt too wide) in paragraph at lines 567--567
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+[]|$\OMS/cmsy/m/n/10.95 ^^B$| 
  []
 
 
 Overfull \hbox (4.09259pt too wide) in paragraph at lines 567--567
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+[]|$\OMS/cmsy/m/n/10.95 ^^B$| 
  []
 
 
 Overfull \hbox (4.09259pt too wide) in paragraph at lines 567--567
+[]|$\OMS/cmsy/m/n/10.95 ^^B$| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 567--567
+[]|$\OMS/cmsy/m/n/10.95 ^^B$| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 567--567
+[]|$\OMS/cmsy/m/n/10.95 ^^B$| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 567--567
+[]|$\OMS/cmsy/m/n/10.95 ^^B$| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 567--568
+[]|$\OMS/cmsy/m/n/10.95 ^^B$| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 568--568
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 568--568
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 568--568
 []|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
  []
 
@@ -1775,151 +1745,81 @@ Overfull \hbox (4.09259pt too wide) in paragraph at lines 568--568
  []
 
 
-Underfull \hbox (badness 1490) in paragraph at lines 569--569
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 568--569
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 572--572
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 572--572
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 572--572
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 573--573
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 573--573
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 573--573
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+ []
+
+
+Underfull \hbox (badness 1490) in paragraph at lines 574--574
 []|\T1/aer/m/n/10.95 Identify mis-coded miss-ing
  []
 
 
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 569--569
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 574--574
 []|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
  []
 
 
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 569--569
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 574--574
 []|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
  []
 
 
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 569--569
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 574--574
 []|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
  []
 
 
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 569--569
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 574--574
 []|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
  []
 
 
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 569--569
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 574--574
 []|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
  []
 
 
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 569--569
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 574--574
 []|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
  []
 
 
-Underfull \hbox (badness 6236) in paragraph at lines 570--570
+Underfull \hbox (badness 6236) in paragraph at lines 575--575
 []|\T1/aer/m/n/10.95 Identify mis-clas-si-fied nu-
  []
 
 
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 570--570
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 570--570
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 570--570
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 571--571
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 571--571
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 571--572
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
- []
-
-
-Underfull \hbox (badness 3884) in paragraph at lines 572--572
-[]|\T1/aer/m/n/10.95 Identify out-liers (Turk-ish
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 572--572
-[]|$\OMS/cmsy/m/n/10.95 ^^B$| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 572--572
-[]|$\OMS/cmsy/m/n/10.95 ^^B$| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 572--573
-[]|$\OMS/cmsy/m/n/10.95 ^^B$| 
- []
-
-
-Underfull \hbox (badness 1005) in paragraph at lines 573--573
-[]|\T1/aer/m/n/10.95 Identify pre-fixed and suf-
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 573--573
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 573--573
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 573--573
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 574--574
-[]|$\OMS/cmsy/m/n/10.95 ^^B$| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 574--574
-[]|$\OMS/cmsy/m/n/10.95 ^^B$| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 574--574
-[]|$\OMS/cmsy/m/n/10.95 ^^B$| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 574--574
-[]|$\OMS/cmsy/m/n/10.95 ^^B$| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 574--574
-[]|$\OMS/cmsy/m/n/10.95 ^^B$| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 574--574
-[]|$\OMS/cmsy/m/n/10.95 ^^B$| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 574--575
-[]|$\OMS/cmsy/m/n/10.95 ^^B$| 
- []
-
-
 Overfull \hbox (4.09259pt too wide) in paragraph at lines 575--575
 []|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
  []
@@ -1931,46 +1831,6 @@ Overfull \hbox (4.09259pt too wide) in paragraph at lines 575--575
 
 
 Overfull \hbox (4.09259pt too wide) in paragraph at lines 575--575
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 575--575
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 575--575
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 575--575
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 575--576
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 576--576
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 576--576
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 576--576
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 576--576
 []|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
  []
 
@@ -1986,57 +1846,202 @@ Overfull \hbox (4.09259pt too wide) in paragraph at lines 576--576
 
 
 Overfull \hbox (4.09259pt too wide) in paragraph at lines 576--577
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]
- []
-
-
-Underfull \hbox (badness 3049) in paragraph at lines 577--577
-[]|\T1/aer/m/n/10.95 Check if the vari-able is
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 577--577
 []|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
  []
 
 
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 577--577
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+Underfull \hbox (badness 3884) in paragraph at lines 577--577
+[]|\T1/aer/m/n/10.95 Identify out-liers (Turk-ish
  []
 
 
 Overfull \hbox (4.09259pt too wide) in paragraph at lines 577--577
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+[]|$\OMS/cmsy/m/n/10.95 ^^B$| 
  []
 
 
 Overfull \hbox (4.09259pt too wide) in paragraph at lines 577--577
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 577--577
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
- []
-
-
-Overfull \hbox (4.09259pt too wide) in paragraph at lines 577--577
-[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+[]|$\OMS/cmsy/m/n/10.95 ^^B$| 
  []
 
 
 Overfull \hbox (4.09259pt too wide) in paragraph at lines 577--578
+[]|$\OMS/cmsy/m/n/10.95 ^^B$| 
+ []
+
+
+Underfull \hbox (badness 1005) in paragraph at lines 578--578
+[]|\T1/aer/m/n/10.95 Identify pre-fixed and suf-
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 578--578
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 578--578
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 578--578
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 579--579
+[]|$\OMS/cmsy/m/n/10.95 ^^B$| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 579--579
+[]|$\OMS/cmsy/m/n/10.95 ^^B$| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 579--579
+[]|$\OMS/cmsy/m/n/10.95 ^^B$| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 579--579
+[]|$\OMS/cmsy/m/n/10.95 ^^B$| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 579--579
+[]|$\OMS/cmsy/m/n/10.95 ^^B$| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 579--579
+[]|$\OMS/cmsy/m/n/10.95 ^^B$| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 579--580
+[]|$\OMS/cmsy/m/n/10.95 ^^B$| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 580--580
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 580--580
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 580--580
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 580--580
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 580--580
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 580--580
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 580--581
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 581--581
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 581--581
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 581--581
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 581--581
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 581--581
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 581--581
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 581--582
 []|[]$\OMS/cmsy/m/n/10.95 ^^B$[]
  []
 
 
-LaTeX Warning: Float too large for page by 35.74963pt on input line 584.
-
-
-Overfull \hbox (2.23961pt too wide) in paragraph at lines 586--586
-[]\T1/aer/bx/n/12 2.2. Con-trol-ling con-tents: What sum-maries, vi-su-al-iza-t
-ions and checks should
+Underfull \hbox (badness 3049) in paragraph at lines 582--582
+[]|\T1/aer/m/n/10.95 Check if the vari-able is
  []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 582--582
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 582--582
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 582--582
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 582--582
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 582--582
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 582--582
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]| 
+ []
+
+
+Overfull \hbox (4.09259pt too wide) in paragraph at lines 582--583
+[]|[]$\OMS/cmsy/m/n/10.95 ^^B$[]
+ []
+
+
+LaTeX Warning: Float too large for page by 35.74963pt on input line 589.
+
+
+Package xcolor Warning: Incompatible color definition on input line 595.
+
+
+Package xcolor Warning: Incompatible color definition on input line 604.
 
 
 Overfull \hbox (5.47499pt too wide) has occurred while \output is active
@@ -2054,11 +2059,7 @@ Overfull \hbox (5.47499pt too wide) has occurred while \output is active
  []
 
 [8]
-
-Package xcolor Warning: Incompatible color definition on input line 590.
-
-
-Package xcolor Warning: Incompatible color definition on input line 599.
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 Overfull \hbox (5.47499pt too wide) has occurred while \output is active
@@ -2077,23 +2078,23 @@ Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 
 [11]
 
-Package xcolor Warning: Incompatible color definition on input line 773.
+Package xcolor Warning: Incompatible color definition on input line 779.
 
 
-Package xcolor Warning: Incompatible color definition on input line 773.
+Package xcolor Warning: Incompatible color definition on input line 779.
 
 
-Package xcolor Warning: Incompatible color definition on input line 782.
+Package xcolor Warning: Incompatible color definition on input line 789.
 
 
-Overfull \hbox (12.8825pt too wide) in paragraph at lines 788--795
+Overfull \hbox (12.8825pt too wide) in paragraph at lines 795--802
 \T1/aer/m/n/10.95 Each of these stages are con-trol-lable us-ing ap-pro-pri-ate
  func-tion ar-gu-ments in \T1/aett/m/n/10.95 makeDataReport()\T1/aer/m/n/10.95 
 ,
  []
 
 
-Overfull \hbox (3.37756pt too wide) in paragraph at lines 796--797
+Overfull \hbox (3.37756pt too wide) in paragraph at lines 803--804
 \T1/aer/m/n/10.95 stance vari-ables of type \T1/aett/m/n/10.95 complex \T1/aer/
 m/n/10.95 or user-defined classes. It is pos-si-ble to tell \T1/aett/m/n/10.95 
 makeDataReport()
@@ -2106,7 +2107,7 @@ Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 
 [12]
 
-Package xcolor Warning: Incompatible color definition on input line 843.
+Package xcolor Warning: Incompatible color definition on input line 852.
 
 
 Overfull \hbox (10.94998pt too wide) has occurred while \output is active
@@ -2115,104 +2116,98 @@ Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 
 [13]
 
-Package xcolor Warning: Incompatible color definition on input line 908.
+Package xcolor Warning: Incompatible color definition on input line 917.
 
 
 Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 \T1/aer/m/n/10.95 14 []
  []
 
-[14]
+[14] <article_vol3-toydataevents.pdf, id=261, 433.62pt x 433.62pt>
+File: article_vol3-toydataevents.pdf Graphic file (type pdf)
 
-LaTeX Warning: File `toyData-events.pdf' not found on input line 934.
+<use article_vol3-toydataevents.pdf>
+Package pdftex.def Info: article_vol3-toydataevents.pdf used on input line 943.
 
-
-! Package pdftex.def Error: File `toyData-events.pdf' not found.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.934 ...graphics[width=7.5cm]{toyData-events.pdf}
-                                                  
-? 
+(pdftex.def)             Requested size: 213.39566pt x 213.39536pt.
 
 Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 [] \T1/aer/m/n/10.95 15
  []
 
-[15] <dataMaid_presidentData.pdf, id=264, page=1, 614.295pt x 794.97pt>
+[15 <./article_vol3-toydataevents.pdf>]
+<dataMaid_presidentData.pdf, id=271, page=1, 614.295pt x 794.97pt>
 File: dataMaid_presidentData.pdf Graphic file (type pdf)
 
 <use dataMaid_presidentData.pdf, page 1>
 Package pdftex.def Info: dataMaid_presidentData.pdf, page1 used on input line 9
-76.
+85.
 (pdftex.def)             Requested size: 213.39566pt x 276.15726pt.
 
-<dataMaid_presidentData.pdf, id=265, page=2, 614.295pt x 794.97pt>
+<dataMaid_presidentData.pdf, id=272, page=2, 614.295pt x 794.97pt>
 File: dataMaid_presidentData.pdf Graphic file (type pdf)
 
 <use dataMaid_presidentData.pdf, page 2>
 Package pdftex.def Info: dataMaid_presidentData.pdf, page2 used on input line 9
-77.
+86.
 (pdftex.def)             Requested size: 213.39566pt x 276.15726pt.
 
 
-Package xcolor Warning: Incompatible color definition on input line 980.
+Package xcolor Warning: Incompatible color definition on input line 989.
 
 
-Package xcolor Warning: Incompatible color definition on input line 980.
+Package xcolor Warning: Incompatible color definition on input line 989.
 
-<dataMaid_presidentData.pdf, id=268, page=3, 614.295pt x 794.97pt>
+<dataMaid_presidentData.pdf, id=275, page=3, 614.295pt x 794.97pt>
 File: dataMaid_presidentData.pdf Graphic file (type pdf)
 
 <use dataMaid_presidentData.pdf, page 3>
 Package pdftex.def Info: dataMaid_presidentData.pdf, page3 used on input line 9
-86.
+95.
 (pdftex.def)             Requested size: 213.39566pt x 276.15726pt.
 
-<dataMaid_presidentData.pdf, id=269, page=4, 614.295pt x 794.97pt>
+<dataMaid_presidentData.pdf, id=276, page=4, 614.295pt x 794.97pt>
 File: dataMaid_presidentData.pdf Graphic file (type pdf)
 
 <use dataMaid_presidentData.pdf, page 4>
 Package pdftex.def Info: dataMaid_presidentData.pdf, page4 used on input line 9
-87.
-(pdftex.def)             Requested size: 213.39566pt x 276.15726pt.
-
-
-Package xcolor Warning: Incompatible color definition on input line 990.
-
-
-Package xcolor Warning: Incompatible color definition on input line 990.
-
-<dataMaid_presidentData.pdf, id=272, page=5, 614.295pt x 794.97pt>
-File: dataMaid_presidentData.pdf Graphic file (type pdf)
-
-<use dataMaid_presidentData.pdf, page 5>
-Package pdftex.def Info: dataMaid_presidentData.pdf, page5 used on input line 9
 96.
 (pdftex.def)             Requested size: 213.39566pt x 276.15726pt.
 
-<dataMaid_presidentData.pdf, id=273, page=6, 614.295pt x 794.97pt>
+
+Package xcolor Warning: Incompatible color definition on input line 999.
+
+
+Package xcolor Warning: Incompatible color definition on input line 999.
+
+<dataMaid_presidentData.pdf, id=279, page=5, 614.295pt x 794.97pt>
+File: dataMaid_presidentData.pdf Graphic file (type pdf)
+
+<use dataMaid_presidentData.pdf, page 5>
+Package pdftex.def Info: dataMaid_presidentData.pdf, page5 used on input line 1
+005.
+(pdftex.def)             Requested size: 213.39566pt x 276.15726pt.
+
+<dataMaid_presidentData.pdf, id=280, page=6, 614.295pt x 794.97pt>
 File: dataMaid_presidentData.pdf Graphic file (type pdf)
 
 <use dataMaid_presidentData.pdf, page 6>
-Package pdftex.def Info: dataMaid_presidentData.pdf, page6 used on input line 9
-97.
+Package pdftex.def Info: dataMaid_presidentData.pdf, page6 used on input line 1
+006.
 (pdftex.def)             Requested size: 213.39566pt x 276.15726pt.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1000.
+Package xcolor Warning: Incompatible color definition on input line 1009.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1000.
+Package xcolor Warning: Incompatible color definition on input line 1009.
 
 
 Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 \T1/aer/m/n/10.95 16 []
  []
 
-[16 <./dataMaid_presidentData.pdf> <./dataMaid_presidentData.pdf>]
+[16]
 Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 [] \T1/aer/m/n/10.95 17
  []
@@ -2224,30 +2219,31 @@ Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 
 [18 <./dataMaid_presidentData.pdf> <./dataMaid_presidentData.pdf>]
 
-Package xcolor Warning: Incompatible color definition on input line 1037.
+Package xcolor Warning: Incompatible color definition on input line 1076.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1037.
+Package xcolor Warning: Incompatible color definition on input line 1076.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1037.
+Package xcolor Warning: Incompatible color definition on input line 1076.
 
-
-Package xcolor Warning: Incompatible color definition on input line 1043.
-
-LaTeX Font Info:    Try loading font information for TS1+aer on input line 1045
-.
-(/Users/cld189/Library/texmf/tex/latex/Sweave/tex/latex/ts1aer.fd
-File: ts1aer.fd 
-)
-LaTeX Font Info:    Font shape `TS1/aer/m/n' in size <10.95> not available
-(Font)              Font shape `TS1/cmr/m/n' tried instead on input line 1045.
 
 Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 [] \T1/aer/m/n/10.95 19
  []
 
-[19]
+[19 <./dataMaid_presidentData.pdf> <./dataMaid_presidentData.pdf>]
+
+Package xcolor Warning: Incompatible color definition on input line 1082.
+
+LaTeX Font Info:    Try loading font information for TS1+aer on input line 1084
+.
+(/Users/cld189/Library/texmf/tex/latex/Sweave/tex/latex/ts1aer.fd
+File: ts1aer.fd 
+)
+LaTeX Font Info:    Font shape `TS1/aer/m/n' in size <10.95> not available
+(Font)              Font shape `TS1/cmr/m/n' tried instead on input line 1084.
+
 Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 \T1/aer/m/n/10.95 20 []
  []
@@ -2268,45 +2264,38 @@ Overfull \hbox (10.94998pt too wide) has occurred while \output is active
  []
 
 [23]
-Overfull \hbox (14.9218pt too wide) in paragraph at lines 1280--1285
-\T1/aer/m/n/10.95 file types, we rec-om-mend set-ting \T1/aett/m/n/10.95 twoCol
-s = FALSE \T1/aer/m/n/10.95 and \T1/aett/m/n/10.95 output = "html" \T1/aer/m/n/
-10.95 in \T1/aett/m/n/10.95 makeDataReport()\T1/aer/m/n/10.95 ,
- []
-
-
 Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 \T1/aer/m/n/10.95 24 []
  []
 
 [24]
-LaTeX Font Info:    Try loading font information for TS1+aett on input line 130
-6.
+LaTeX Font Info:    Try loading font information for TS1+aett on input line 134
+9.
  (/Users/cld189/Library/texmf/tex/latex/Sweave/tex/latex/ts1aett.fd
 File: ts1aett.fd 
 )
-LaTeX Font Info:    Try loading font information for TS1+cmtt on input line 130
-6.
+LaTeX Font Info:    Try loading font information for TS1+cmtt on input line 134
+9.
 
 (/usr/local/texlive/2017/texmf-dist/tex/latex/base/ts1cmtt.fd
 File: ts1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `TS1/aett/m/n' in size <10> not available
-(Font)              Font shape `TS1/cmtt/m/n' tried instead on input line 1306.
+(Font)              Font shape `TS1/cmtt/m/n' tried instead on input line 1349.
 
 
-
-Package xcolor Warning: Incompatible color definition on input line 1364.
-
-
-Package xcolor Warning: Incompatible color definition on input line 1364.
-
-(./article_vol3.bbl
 Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 [] \T1/aer/m/n/10.95 25
  []
 
 [25]
+
+Package xcolor Warning: Incompatible color definition on input line 1409.
+
+
+Package xcolor Warning: Incompatible color definition on input line 1409.
+
+(./article_vol3.bbl
 LaTeX Font Info:    Font shape `T1/aer/b/it' in size <10.95> not available
 (Font)              Font shape `T1/aer/bx/it' tried instead on input line 16.
 LaTeX Font Info:    Font shape `T1/aess/m/it' in size <10.95> not available
@@ -2324,6 +2313,12 @@ Package xcolor Warning: Incompatible color definition on input line 32.
 
 Package xcolor Warning: Incompatible color definition on input line 38.
 
+
+Overfull \hbox (10.94998pt too wide) has occurred while \output is active
+\T1/aer/m/n/10.95 26 []
+ []
+
+[26]
 
 Package xcolor Warning: Incompatible color definition on input line 45.
 
@@ -2352,12 +2347,6 @@ Package xcolor Warning: Incompatible color definition on input line 99.
 Package xcolor Warning: Incompatible color definition on input line 106.
 
 
-Overfull \hbox (10.94998pt too wide) has occurred while \output is active
-\T1/aer/m/n/10.95 26 []
- []
-
-[26]
-
 Package xcolor Warning: Incompatible color definition on input line 113.
 
 
@@ -2368,29 +2357,29 @@ Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 [] \T1/aer/m/n/10.95 27
  []
 
-[27] <dataMaid_toyData.pdf, id=465, 614.295pt x 794.97pt>
+[27] <dataMaid_toyData.pdf, id=472, 614.295pt x 794.97pt>
 File: dataMaid_toyData.pdf Graphic file (type pdf)
 
 <use dataMaid_toyData.pdf>
-Package pdftex.def Info: dataMaid_toyData.pdf used on input line 1395.
+Package pdftex.def Info: dataMaid_toyData.pdf used on input line 1440.
 (pdftex.def)             Requested size: 354.12434pt x 458.28084pt.
 File: dataMaid_toyData.pdf Graphic file (type pdf)
  <use dataMaid_toyData.pdf>
-Package pdftex.def Info: dataMaid_toyData.pdf used on input line 1395.
+Package pdftex.def Info: dataMaid_toyData.pdf used on input line 1440.
 (pdftex.def)             Requested size: 354.12434pt x 458.28084pt.
 File: dataMaid_toyData.pdf Graphic file (type pdf)
 
 <use dataMaid_toyData.pdf, page 2>
-Package pdftex.def Info: dataMaid_toyData.pdf, page2 used on input line 1395.
+Package pdftex.def Info: dataMaid_toyData.pdf, page2 used on input line 1440.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
 File: dataMaid_toyData.pdf Graphic file (type pdf)
  <use dataMaid_toyData.pdf, page 2>
-Package pdftex.def Info: dataMaid_toyData.pdf, page2 used on input line 1395.
+Package pdftex.def Info: dataMaid_toyData.pdf, page2 used on input line 1440.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
 File: dataMaid_toyData.pdf Graphic file (type pdf)
 
 <use dataMaid_toyData.pdf, page 2>
-Package pdftex.def Info: dataMaid_toyData.pdf, page2 used on input line 1395.
+Package pdftex.def Info: dataMaid_toyData.pdf, page2 used on input line 1440.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
 
 Overfull \hbox (10.94998pt too wide) has occurred while \output is active
@@ -2399,30 +2388,30 @@ Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 
 File: dataMaid_toyData.pdf Graphic file (type pdf)
 <use dataMaid_toyData.pdf, page 2>
-Package pdftex.def Info: dataMaid_toyData.pdf, page2 used on input line 1395.
+Package pdftex.def Info: dataMaid_toyData.pdf, page2 used on input line 1440.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
  [28]
 File: dataMaid_toyData.pdf Graphic file (type pdf)
  <use dataMaid_toyData.pdf>
-Package pdftex.def Info: dataMaid_toyData.pdf used on input line 1396.
+Package pdftex.def Info: dataMaid_toyData.pdf used on input line 1441.
 (pdftex.def)             Requested size: 354.12434pt x 458.28084pt.
 File: dataMaid_toyData.pdf Graphic file (type pdf)
 
 <use dataMaid_toyData.pdf>
-Package pdftex.def Info: dataMaid_toyData.pdf used on input line 1396.
+Package pdftex.def Info: dataMaid_toyData.pdf used on input line 1441.
 (pdftex.def)             Requested size: 354.12434pt x 458.28084pt.
 File: dataMaid_toyData.pdf Graphic file (type pdf)
  <use dataMaid_toyData.pdf, page 3>
-Package pdftex.def Info: dataMaid_toyData.pdf, page3 used on input line 1396.
+Package pdftex.def Info: dataMaid_toyData.pdf, page3 used on input line 1441.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
 File: dataMaid_toyData.pdf Graphic file (type pdf)
 
 <use dataMaid_toyData.pdf, page 3>
-Package pdftex.def Info: dataMaid_toyData.pdf, page3 used on input line 1396.
+Package pdftex.def Info: dataMaid_toyData.pdf, page3 used on input line 1441.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
 File: dataMaid_toyData.pdf Graphic file (type pdf)
  <use dataMaid_toyData.pdf, page 3>
-Package pdftex.def Info: dataMaid_toyData.pdf, page3 used on input line 1396.
+Package pdftex.def Info: dataMaid_toyData.pdf, page3 used on input line 1441.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
 
 Overfull \hbox (10.94998pt too wide) has occurred while \output is active
@@ -2431,17 +2420,17 @@ Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 
 File: dataMaid_toyData.pdf Graphic file (type pdf)
 <use dataMaid_toyData.pdf, page 3>
-Package pdftex.def Info: dataMaid_toyData.pdf, page3 used on input line 1396.
+Package pdftex.def Info: dataMaid_toyData.pdf, page3 used on input line 1441.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
  [29]
 File: dataMaid_toyData.pdf Graphic file (type pdf)
  <use dataMaid_toyData.pdf, page 4>
-Package pdftex.def Info: dataMaid_toyData.pdf, page4 used on input line 1396.
+Package pdftex.def Info: dataMaid_toyData.pdf, page4 used on input line 1441.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
 File: dataMaid_toyData.pdf Graphic file (type pdf)
 
 <use dataMaid_toyData.pdf, page 4>
-Package pdftex.def Info: dataMaid_toyData.pdf, page4 used on input line 1396.
+Package pdftex.def Info: dataMaid_toyData.pdf, page4 used on input line 1441.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
 
 Overfull \hbox (10.94998pt too wide) has occurred while \output is active
@@ -2450,36 +2439,36 @@ Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 
 File: dataMaid_toyData.pdf Graphic file (type pdf)
 <use dataMaid_toyData.pdf, page 4>
-Package pdftex.def Info: dataMaid_toyData.pdf, page4 used on input line 1396.
+Package pdftex.def Info: dataMaid_toyData.pdf, page4 used on input line 1441.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
  [30]
-<dataMaid_presidentData.pdf, id=482, 614.295pt x 794.97pt>
+<dataMaid_presidentData.pdf, id=489, 614.295pt x 794.97pt>
 File: dataMaid_presidentData.pdf Graphic file (type pdf)
 
 <use dataMaid_presidentData.pdf>
-Package pdftex.def Info: dataMaid_presidentData.pdf used on input line 1400.
+Package pdftex.def Info: dataMaid_presidentData.pdf used on input line 1445.
 (pdftex.def)             Requested size: 354.12434pt x 458.28084pt.
 File: dataMaid_presidentData.pdf Graphic file (type pdf)
  <use dataMaid_presidentData.pdf>
-Package pdftex.def Info: dataMaid_presidentData.pdf used on input line 1400.
+Package pdftex.def Info: dataMaid_presidentData.pdf used on input line 1445.
 (pdftex.def)             Requested size: 354.12434pt x 458.28084pt.
 File: dataMaid_presidentData.pdf Graphic file (type pdf)
 
 <use dataMaid_presidentData.pdf, page 2>
 Package pdftex.def Info: dataMaid_presidentData.pdf, page2 used on input line 1
-400.
+445.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
 File: dataMaid_presidentData.pdf Graphic file (type pdf)
 
 <use dataMaid_presidentData.pdf, page 2>
 Package pdftex.def Info: dataMaid_presidentData.pdf, page2 used on input line 1
-400.
+445.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
 File: dataMaid_presidentData.pdf Graphic file (type pdf)
 
 <use dataMaid_presidentData.pdf, page 2>
 Package pdftex.def Info: dataMaid_presidentData.pdf, page2 used on input line 1
-400.
+445.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
 
 Overfull \hbox (10.94998pt too wide) has occurred while \output is active
@@ -2489,34 +2478,34 @@ Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 File: dataMaid_presidentData.pdf Graphic file (type pdf)
 <use dataMaid_presidentData.pdf, page 2>
 Package pdftex.def Info: dataMaid_presidentData.pdf, page2 used on input line 1
-400.
+445.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
  [31]
 File: dataMaid_presidentData.pdf Graphic file (type pdf)
  <use dataMaid_presidentData.pdf>
-Package pdftex.def Info: dataMaid_presidentData.pdf used on input line 1401.
+Package pdftex.def Info: dataMaid_presidentData.pdf used on input line 1446.
 (pdftex.def)             Requested size: 354.12434pt x 458.28084pt.
 File: dataMaid_presidentData.pdf Graphic file (type pdf)
 
 <use dataMaid_presidentData.pdf>
-Package pdftex.def Info: dataMaid_presidentData.pdf used on input line 1401.
+Package pdftex.def Info: dataMaid_presidentData.pdf used on input line 1446.
 (pdftex.def)             Requested size: 354.12434pt x 458.28084pt.
 File: dataMaid_presidentData.pdf Graphic file (type pdf)
  <use dataMaid_presidentData.pdf, page 3>
 Package pdftex.def Info: dataMaid_presidentData.pdf, page3 used on input line 1
-401.
+446.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
 File: dataMaid_presidentData.pdf Graphic file (type pdf)
 
 <use dataMaid_presidentData.pdf, page 3>
 Package pdftex.def Info: dataMaid_presidentData.pdf, page3 used on input line 1
-401.
+446.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
 File: dataMaid_presidentData.pdf Graphic file (type pdf)
 
 <use dataMaid_presidentData.pdf, page 3>
 Package pdftex.def Info: dataMaid_presidentData.pdf, page3 used on input line 1
-401.
+446.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
 
 Overfull \hbox (10.94998pt too wide) has occurred while \output is active
@@ -2526,20 +2515,20 @@ Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 File: dataMaid_presidentData.pdf Graphic file (type pdf)
 <use dataMaid_presidentData.pdf, page 3>
 Package pdftex.def Info: dataMaid_presidentData.pdf, page3 used on input line 1
-401.
+446.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
  [32]
 File: dataMaid_presidentData.pdf Graphic file (type pdf)
 
 <use dataMaid_presidentData.pdf, page 4>
 Package pdftex.def Info: dataMaid_presidentData.pdf, page4 used on input line 1
-401.
+446.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
 File: dataMaid_presidentData.pdf Graphic file (type pdf)
 
 <use dataMaid_presidentData.pdf, page 4>
 Package pdftex.def Info: dataMaid_presidentData.pdf, page4 used on input line 1
-401.
+446.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
 
 Overfull \hbox (10.94998pt too wide) has occurred while \output is active
@@ -2549,20 +2538,20 @@ Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 File: dataMaid_presidentData.pdf Graphic file (type pdf)
 <use dataMaid_presidentData.pdf, page 4>
 Package pdftex.def Info: dataMaid_presidentData.pdf, page4 used on input line 1
-401.
+446.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
  [33]
 File: dataMaid_presidentData.pdf Graphic file (type pdf)
 
 <use dataMaid_presidentData.pdf, page 5>
 Package pdftex.def Info: dataMaid_presidentData.pdf, page5 used on input line 1
-401.
+446.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
 File: dataMaid_presidentData.pdf Graphic file (type pdf)
 
 <use dataMaid_presidentData.pdf, page 5>
 Package pdftex.def Info: dataMaid_presidentData.pdf, page5 used on input line 1
-401.
+446.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
 
 Overfull \hbox (10.94998pt too wide) has occurred while \output is active
@@ -2572,20 +2561,20 @@ Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 File: dataMaid_presidentData.pdf Graphic file (type pdf)
 <use dataMaid_presidentData.pdf, page 5>
 Package pdftex.def Info: dataMaid_presidentData.pdf, page5 used on input line 1
-401.
+446.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
  [34]
 File: dataMaid_presidentData.pdf Graphic file (type pdf)
 
 <use dataMaid_presidentData.pdf, page 6>
 Package pdftex.def Info: dataMaid_presidentData.pdf, page6 used on input line 1
-401.
+446.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
 File: dataMaid_presidentData.pdf Graphic file (type pdf)
 
 <use dataMaid_presidentData.pdf, page 6>
 Package pdftex.def Info: dataMaid_presidentData.pdf, page6 used on input line 1
-401.
+446.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
 
 Overfull \hbox (10.94998pt too wide) has occurred while \output is active
@@ -2595,26 +2584,26 @@ Overfull \hbox (10.94998pt too wide) has occurred while \output is active
 File: dataMaid_presidentData.pdf Graphic file (type pdf)
 <use dataMaid_presidentData.pdf, page 6>
 Package pdftex.def Info: dataMaid_presidentData.pdf, page6 used on input line 1
-401.
+446.
 (pdftex.def)             Requested size: 430.00356pt x 556.4752pt.
  [35]
 
-Package xcolor Warning: Incompatible color definition on input line 1404.
+Package xcolor Warning: Incompatible color definition on input line 1449.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1404.
+Package xcolor Warning: Incompatible color definition on input line 1449.
 
 LaTeX Font Info:    Font shape `T1/pzc/m/n' in size <13> not available
-(Font)              Font shape `T1/pzc/mb/it' tried instead on input line 1404.
+(Font)              Font shape `T1/pzc/mb/it' tried instead on input line 1449.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1404.
+Package xcolor Warning: Incompatible color definition on input line 1449.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1404.
+Package xcolor Warning: Incompatible color definition on input line 1449.
 
 
-Package xcolor Warning: Incompatible color definition on input line 1404.
+Package xcolor Warning: Incompatible color definition on input line 1449.
 
 
 Overfull \hbox (10.94998pt too wide) has occurred while \output is active
@@ -2622,22 +2611,22 @@ Overfull \hbox (10.94998pt too wide) has occurred while \output is active
  []
 
 [36]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1404.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1404.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1449.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1449.
  (./article_vol3.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1404.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1404.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1449.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1449.
 
 Package rerunfilecheck Info: File `article_vol3.out' has not changed.
-(rerunfilecheck)             Checksum: 048127CC396E7D85DDBC171A5443FE80;1849.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1404.
+(rerunfilecheck)             Checksum: FAB0885C939F8B699512C22D723EB80F;1803.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1449.
  ) 
 Here is how much of TeX's memory you used:
- 19194 strings out of 492990
- 361374 string characters out of 6132636
- 463448 words of memory out of 5000000
- 22235 multiletter control sequences out of 15000+600000
- 62829 words of font info for 104 fonts, out of 8000000 for 9000
+ 19202 strings out of 492990
+ 361500 string characters out of 6132636
+ 464331 words of memory out of 5000000
+ 22240 multiletter control sequences out of 15000+600000
+ 64984 words of font info for 107 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,20n,60p,1466b,835s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc
@@ -2649,27 +2638,28 @@ e/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxsl10.pfb></usr/local/texli
 ve/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb></usr/local/texl
 ive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texli
 ve/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive
-/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl10.pfb></usr/local/texlive/
-2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsltt10.pfb></usr/local/texlive
-/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/texlive/
-2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/local/texlive
-/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi10.pfb></usr/local/texlive
-/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/
-2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2
-017/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/20
-17/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2017/texmf-d
-ist/fonts/type1/public/lm/lmr10.pfb></usr/local/texlive/2017/texmf-dist/fonts/t
-ype1/public/lm/lmr12.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public
-/lm/lmr17.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/lm/lmri12.
-pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/
-local/texlive/2017/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texl
-ive/2017/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/local/texliv
-e/2017/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb></usr/local/texlive/
-2017/texmf-dist/fonts/type1/urw/zapfchan/uzcmi8a.pfb>
-Output written on article_vol3.pdf (36 pages, 536095 bytes).
+/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/20
+17/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl10.pfb></usr/local/texlive/201
+7/texmf-dist/fonts/type1/public/amsfonts/cm/cmsltt10.pfb></usr/local/texlive/20
+17/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/texlive/201
+7/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/local/texlive/20
+17/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi10.pfb></usr/local/texlive/20
+17/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/201
+7/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2017
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2017/
+texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2017/texmf-dist
+/fonts/type1/public/lm/lmr10.pfb></usr/local/texlive/2017/texmf-dist/fonts/type
+1/public/lm/lmr12.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/lm
+/lmr17.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/lm/lmri12.pfb
+></usr/local/texlive/2017/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/loc
+al/texlive/2017/texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive
+/2017/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/local/texlive/2
+017/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb></usr/local/texlive/201
+7/texmf-dist/fonts/type1/urw/zapfchan/uzcmi8a.pfb>
+Output written on article_vol3.pdf (36 pages, 546496 bytes).
 PDF statistics:
- 607 PDF objects out of 1000 (max. 8388607)
- 489 compressed objects within 5 object streams
+ 617 PDF objects out of 1000 (max. 8388607)
+ 496 compressed objects within 5 object streams
  98 named destinations out of 1000 (max. 500000)
- 230 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 235 words of extra memory for PDF output out of 10000 (max. 10000000)
 

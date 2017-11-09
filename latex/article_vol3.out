@@ -1,12 +1,12 @@
 \BOOKMARK [1][-]{Section.0.Introduction.1}{Introduction}{}% 1
 \BOOKMARK [1][-]{Section.1.Creating a data overview report.1}{Creating a data overview report}{}% 2
-\BOOKMARK [2][-]{Subsection.2.0.Polishing off the arguments.2}{Polishing off the arguments}{Section.1.Creating a data overview report.1}% 3
-\BOOKMARK [2][-]{Subsection.2.1.Controlling contents: What summaries, visualizations and checks should be performed?.2}{Controlling contents: What summaries, visualizations and checks should be performed?}{Section.1.Creating a data overview report.1}% 4
+\BOOKMARK [2][-]{Subsection.2.0.Dusting off the arguments.2}{Dusting off the arguments}{Section.1.Creating a data overview report.1}% 3
+\BOOKMARK [2][-]{Subsection.2.1.Controlling contents through summaries, visualizations and checks.2}{Controlling contents through summaries, visualizations and checks}{Section.1.Creating a data overview report.1}% 4
 \BOOKMARK [1][-]{Section.2.Using dataMaid interactively.1}{Using dataMaid interactively}{}% 5
 \BOOKMARK [2][-]{Subsection.3.0.Data cleaning by hand: An example.2}{Data cleaning by hand: An example}{Section.2.Using dataMaid interactively.1}% 6
 \BOOKMARK [1][-]{Section.3.A worked example: Dirty presidents.1}{A worked example: Dirty presidents}{}% 7
 \BOOKMARK [1][-]{Section.4.Rubbing down data cleaning challenges.1}{Rubbing down data cleaning challenges}{}% 8
-\BOOKMARK [2][-]{Subsection.5.0.Incorporating dataMaid in a programmer's workflow.2}{Incorporating dataMaid in a programmer's workflow}{Section.4.Rubbing down data cleaning challenges.1}% 9
+\BOOKMARK [2][-]{Subsection.5.0.Incorporating dataMaid in an automated workflow.2}{Incorporating dataMaid in an automated workflow}{Section.4.Rubbing down data cleaning challenges.1}% 9
 \BOOKMARK [2][-]{Subsection.5.1.Using dataMaid for problem flagging.2}{Using dataMaid for problem flagging}{Section.4.Rubbing down data cleaning challenges.1}% 10
 \BOOKMARK [2][-]{Subsection.5.2.Including dataMaid reports in other files.2}{Including dataMaid reports in other files}{Section.4.Rubbing down data cleaning challenges.1}% 11
 \BOOKMARK [1][-]{Section.5.Concluding remarks.1}{Concluding remarks}{}% 12
