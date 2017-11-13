@@ -1146,6 +1146,10 @@ such that non-\proglang{R}-savvy users can upload their data online
 and get a data cleaning document.
 
 
+\section*{Acknowledgements}
+\label{acknowledgements}
+This work was supported by The Lundbeck Foundation, Trygfonden and The Region of Southern Denmark. 
+
 
 % \nocite{R}
 %\nocite{shiny}

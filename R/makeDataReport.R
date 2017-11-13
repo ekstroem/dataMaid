@@ -287,69 +287,73 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
   
   
   #Set output default if output is NULL or check for valid values otherwise
-  makeOutputWarning <- FALSE
-  if (!is.null(output)) {
-    if (length(output) > 1) {
-      output <- output[1]
-      warning("Output argument was wrongfully given as a vector. Only the first entry was used.")
-    }
-    if (!(output %in% c("pdf", "html", "word"))) {
-      output <- NULL
+    makeOutputWarning <- FALSE
+    if (!is.null(output)) {
+        if (length(output) > 1) {
+            output <- output[1]
+            warning("Output argument was wrongfully given as a vector. Only the first entry was used.")
+        }
+        if (!(output %in% c("pdf", "html", "word"))) {
+            output <- NULL
       makeOutputWarning <- TRUE
-    } 
-  }
-  if (is.null(output)) {
-    xelatexTest <- suppressWarnings(system("xelatex --version", show.output.on.console = FALSE)) == 0
-    pdflatexTest <- suppressWarnings(system("pdflatex --version", show.output.on.console = FALSE)) == 0
-    lualatexTest <- suppressWarnings(system("lualatex --version", show.output.on.console = FALSE)) == 0
-    if (any(c(xelatexTest, pdflatexTest, lualatexTest))) {
-      output <- "pdf"
-    } else {
-      if (identical(as.character(Sys.info()["sysname"]),"Windows")) {
-        output <- "word"
-      } else output <- "html"
+        } 
     }
-    if (makeOutputWarning) {
-      warning(paste("No valid output option was chosen. ", 
-                    "Therefore, output was set to ", output, ".", sep = ""))
+    if (is.null(output)) {
+        xelatexTest <- suppressWarnings(system2("xelatex", args=c("--version"), stdout=NULL, stderr=NULL)) == 0
+        pdflatexTest <- suppressWarnings(system2("pdflatex", args=c("--version"), stdout=NULL, stderr=NULL)) == 0
+        lualatexTest <- suppressWarnings(system2("lualatex", args=c("--version"), stdout=NULL, stderr=NULL)) == 0
+        
+        ##    xelatexTest <- suppressWarnings(system2("xelatex --version", show.output.on.console = FALSE)) == 0
+        ##   pdflatexTest <- suppressWarnings(system2("pdflatex --version", show.output.on.console = FALSE)) == 0
+        ##    lualatexTest <- suppressWarnings(system2("lualatex --version", show.output.on.console = FALSE)) == 0
+        if (any(c(xelatexTest, pdflatexTest, lualatexTest))) {
+            output <- "pdf"
+        } else {
+            if (identical(as.character(Sys.info()["sysname"]),"Windows")) {
+                output <- "word"
+            } else output <- "html"
+        }
+        if (makeOutputWarning) {
+            warning(paste("No valid output option was chosen. ", 
+                          "Therefore, output was set to ", output, ".", sep = ""))
+        }
     }
-  }
-
-  ## Extract the dataframe name
-  dfname <- deparse(substitute(data))
-  
-  the_lhs <- function() {
-    parents <- lapply(sys.frames(), parent.env)
     
-    is_magrittr_env <- vapply(parents, identical, logical(1), y = environment(`%>%`))
+    ## Extract the dataframe name
+    dfname <- deparse(substitute(data))
     
-    if (any(is_magrittr_env)) {
-      deparse(get("lhs", sys.frames()[[max(which(is_magrittr_env))]]))
+    the_lhs <- function() {
+        parents <- lapply(sys.frames(), parent.env)
+        
+        is_magrittr_env <- vapply(parents, identical, logical(1), y = environment(`%>%`))
+        
+        if (any(is_magrittr_env)) {
+            deparse(get("lhs", sys.frames()[[max(which(is_magrittr_env))]]))
+        }
     }
-  }
-  
-  
-  ## Now if data are added as part of a magrittr pipe then use this "fix"
-  if (dfname==".") {
-    dfname <- the_lhs()
-  }
-  
-  #If standAlone is FALSE, the document obviously shouldn't be rendered
-  if (!standAlone) render <- FALSE
-  
+    
+    
+    ## Now if data are added as part of a magrittr pipe then use this "fix"
+    if (dfname==".") {
+        dfname <- the_lhs()
+    }
+    
+                                        #If standAlone is FALSE, the document obviously shouldn't be rendered
+    if (!standAlone) render <- FALSE
+    
   ##########################################################################################
-  #######Secret arguments that were removed for the users but are still implemented#########
-  ##########################################################################################
-  
-  #If the users don't ask for silence, they will be nagged.
-  nagUser <- TRUE
-  if (silent) nagUser <- FALSE
-  
-  ##########################################################################################
-  ##########################################################################################
-  ##########################################################################################
-  
-  ## What variables should be used?
+#######Secret arguments that were removed for the users but are still implemented#########
+##########################################################################################
+    
+                                        #If the users don't ask for silence, they will be nagged.
+    nagUser <- TRUE
+    if (silent) nagUser <- FALSE
+    
+##########################################################################################
+##########################################################################################
+##########################################################################################
+    
+    ## What variables should be used?
   if (!is.null(useVar)) {
     ## The line below is probably not efficient if we have large datasets and want to extract many variables
     ### o <- o[, useVar, drop=FALSE]  #warning here if this doesn't work + overwrite stuff?
