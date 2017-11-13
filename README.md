@@ -47,7 +47,7 @@ The dataMaid package can also be used interactively by running checks for the in
 
 ```{r}
 data(toyData)
-check(toyData$var2)  # Individual check of var2
+check(toyData$events)  # Individual check of var2
 check(toyData) # Check all variables at once
 ```
 
@@ -60,14 +60,14 @@ an overview of the checks available or how to create and include your own tests.
 
 
 ```{r}
-check(toyData$var2, numericChecks = "identifyMissing")
+check(toyData$events, checks = setChecks(numeric = "identifyMissing"))
 ```
 
 We can also access the graphics or summary tables that are produced for a variable by calling the `visualize` or `summarize` functions. One can visualize a single variable or a full dataset:
 
 ```{r}
 #Visualize a variable
-visualize(toyData$var2)
+visualize(toyData$events)
 
 #Visualize a dataset
 visualize(toyData)
@@ -88,7 +88,11 @@ summarize(toyData$var2, summaries = setSummaries(all =  c("centralValue", "minMa
 
 [This manuscript](https://github.com/ekstroem/dataMaid/blob/master/latex/article_vol2.pdf) draft
 provides a detailed introduction to the dataMaid package. At one point
-it will be added as a vignette.
+it will be added as a vignette. Moreover, we have created a vignette that describes how to extend dataMaid to include user-defined data screening checks, summaries and visualizations. This vignette is called `extending_dataMaid`:
+
+```{r}
+vignette("extending_dataMaid")
+```
 
 
 

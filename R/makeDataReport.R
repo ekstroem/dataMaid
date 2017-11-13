@@ -740,6 +740,7 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
         
         ## Deal with non-supported classes whose handling is 
         ## specified in treatXasY
+        ## Note: prechecks should be run again after change of class
         userSuppVar <- FALSE
         if ("isSupported" %in% preChecks && 
             preCheckProblems[which(preChecks == "isSupported")] &&  
@@ -749,8 +750,11 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
           if (!is.na(firstUSClass)) {
             attr(v, "orginalClass") <- vClasses[1]
             class(v) <- treatXasY[[firstUSClass]]
-            preCheckProblems[which(preChecks == "isSupported")] <- FALSE
-            preCheckMessages[which(preChecks == "isSupported")] <- ""
+            preCheckRes <- lapply(preChecks, function(x) eval(call(x, v)))
+            preCheckProblems <- sapply(preCheckRes, function(x) x$problem)
+            preCheckMessages <- sapply(preCheckRes, function(x) x$message)
+            #preCheckProblems[which(preChecks == "isSupported")] <- FALSE
+            #preCheckMessages[which(preChecks == "isSupported")] <- ""
             userSuppVar <- TRUE
           }
         }
@@ -785,20 +789,20 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
         ## Make checks
         if (doCheck && !any(preCheckProblems)) {
           #if (vnam == "numOutlierVar") browser()
-          checkRes <- check(v, characterChecks = characterChecks,
-                            factorChecks = factorChecks,
-                            labelledChecks = labelledChecks,
-                            numericChecks = numericChecks,
-                            integerChecks = integerChecks,
-                            logicalChecks = logicalChecks,
-                            dateChecks = dateChecks,
+          checkRes <- check(v, checks = setChecks(character = characterChecks,
+                                                  factor = factorChecks,
+                                                  labelled = labelledChecks,
+                                                  numeric = numericChecks,
+                                                  integer = integerChecks,
+                                                  logical = logicalChecks,
+                                                  Date = dateChecks),
                             nMax = maxProbVals,
                             maxDecimals = maxDecimals, ...)
           problems <- sapply(checkRes, function(x) x[[1]]) #maybe change to index by name?
         }
         
         #Update problem status in results overview
-        if (any(c(problems, preCheckProblems)))  {
+        if (any(unlist(c(problems, preCheckProblems))))  {
           allRes$problems[allRes$variable == vnam] <- y
         }
         
@@ -837,13 +841,14 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
             ## make Summary table
             if (doSummarize) sumTable <- pander::pandoc.table.return(summarize(v,
                                                                          reportstyleOutput = TRUE,
-                                                                         characterSummaries = characterSummaries,
-                                                                         factorSummaries = factorSummaries,
-                                                                         labelledSummaries = labelledSummaries,
-                                                                         numericSummaries = numericSummaries,
-                                                                         integerSummaries = integerSummaries,
-                                                                         logicalSummaries = logicalSummaries,
-                                                                         dateSummaries = dateSummaries,
+                                                                         summaries = setSummaries(
+                                                                           character = characterSummaries,
+                                                                           factor = factorSummaries,
+                                                                           labelled = labelledSummaries,
+                                                                           numeric = numericSummaries,
+                                                                           integer = integerSummaries,
+                                                                           logical = logicalSummaries,
+                                                                           Date = dateSummaries),
                                                                          maxDecimals = maxDecimals, ...),
                                                                justify="lr")
             #NOTE: pander_return() does the same thing but results in problems when used 
@@ -856,13 +861,14 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
             
             ## make Visualization
             if (doVisualize) visual <- visualize(v, vnam, doEval=FALSE, 
-                                                 characterVisual = characterVisual, 
-                                                 factorVisual = factorVisual, 
-                                                 labelledVisual = labelledVisual,
-                                                 numericVisual = numericVisual,
-                                                 integerVisual = integerVisual,
-                                                 logicalVisual = logicalVisual,
-                                                 DateVisual = dateVisual, ...)
+                                                 visuals = setVisuals(character = characterVisual,
+                                                                      factor = factorVisual,
+                                                                      labelled = labelledVisual,
+                                                                      numeric = numericVisual,
+                                                                      integer = integerVisual,
+                                                                      logical = logicalVisual,
+                                                                      Date = dateVisual),
+                                                 ...)
             
             ## Chunkname should avoid spaces and periods
             chunk_name <- paste0("Var-", idx, "-", gsub("[_:. ]", "-", vnam))
