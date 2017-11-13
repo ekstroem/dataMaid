@@ -740,6 +740,7 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
         
         ## Deal with non-supported classes whose handling is 
         ## specified in treatXasY
+        ## Note: prechecks should be run again after change of class
         userSuppVar <- FALSE
         if ("isSupported" %in% preChecks && 
             preCheckProblems[which(preChecks == "isSupported")] &&  
@@ -749,8 +750,11 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
           if (!is.na(firstUSClass)) {
             attr(v, "orginalClass") <- vClasses[1]
             class(v) <- treatXasY[[firstUSClass]]
-            preCheckProblems[which(preChecks == "isSupported")] <- FALSE
-            preCheckMessages[which(preChecks == "isSupported")] <- ""
+            preCheckRes <- lapply(preChecks, function(x) eval(call(x, v)))
+            preCheckProblems <- sapply(preCheckRes, function(x) x$problem)
+            preCheckMessages <- sapply(preCheckRes, function(x) x$message)
+            #preCheckProblems[which(preChecks == "isSupported")] <- FALSE
+            #preCheckMessages[which(preChecks == "isSupported")] <- ""
             userSuppVar <- TRUE
           }
         }
