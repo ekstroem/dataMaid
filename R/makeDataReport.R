@@ -303,9 +303,9 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
         pdflatexTest <- suppressWarnings(system2("pdflatex", args=c("--version"), stdout=NULL, stderr=NULL)) == 0
         lualatexTest <- suppressWarnings(system2("lualatex", args=c("--version"), stdout=NULL, stderr=NULL)) == 0
         
-        ##    xelatexTest <- suppressWarnings(system2("xelatex --version", show.output.on.console = FALSE)) == 0
-        ##   pdflatexTest <- suppressWarnings(system2("pdflatex --version", show.output.on.console = FALSE)) == 0
-        ##    lualatexTest <- suppressWarnings(system2("lualatex --version", show.output.on.console = FALSE)) == 0
+        ##    xelatexTest <- suppressWarnings(system("xelatex --version", show.output.on.console = FALSE)) == 0
+        ##   pdflatexTest <- suppressWarnings(system("pdflatex --version", show.output.on.console = FALSE)) == 0
+        ##    lualatexTest <- suppressWarnings(system("lualatex --version", show.output.on.console = FALSE)) == 0
         if (any(c(xelatexTest, pdflatexTest, lualatexTest))) {
             output <- "pdf"
         } else {
