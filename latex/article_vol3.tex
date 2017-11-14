@@ -60,7 +60,7 @@
   time-consuming, expensive and error-prone in itself.
 
   We describe an \proglang{R} package, \pkg{dataMaid}, which
-  implements an extensive and customizeable suite of quality
+  implements an extensive and customizable suite of quality
   assessment aids that can be applied to a dataset in order to
   identify potential problems in its variables. The results are
   presented in an auto-generated, non-technical, stand-alone overview
@@ -136,7 +136,7 @@ investigator with the information needed for identifying issues.
 
 But even when tools are available for identifying problems in a
 dataset, the activity of data cleaning still suffers from a challenge
-that has recieved increasing attention in the scientitic communities
+that has received increasing attention in the scientific communities
 in the later years: Data cleaning is not very straight forward to
 document and therefore, reproducibility suffers. We present a new
 \proglang{R} package, \pkg{dataMaid} \citep{dataMaid}, whose most
@@ -232,7 +232,7 @@ of the potential errors.  Finally, no tools have been made to easily
 document exactly which checks and preliminary results were used in the
 data cleaning process. The \pkg{assertr} package provide very similar
 --- and very nice --- tools to those of \pkg{validate}, but without
-any amibitions of conducting auto-cleaning.
+any ambitions of conducting auto-cleaning.
 
 %All in all, the large role of data cleaning in any data analysts
 %everyday endeavors is hardly matched in the amount of available
@@ -276,8 +276,8 @@ solve them.
 %dataset is different, and some datasets might include problems that
 %cannot be detected by our data checking functions. 
 %Therefore,
-\pkg{dataMaid} was designed to be easily extendend with user-supplied
-functions for summarizing, viusalizing and checking data. In the package, we have
+\pkg{dataMaid} was designed to be easily extended with user-supplied
+functions for summarizing, visualizing and checking data. In the package, we have
 provided a vignette in which we describe how \pkg{dataMaid} extensions
 can be made, such that they are integrate with the
 \code{makeDataReport()} function and with the other tools available in
@@ -298,12 +298,12 @@ an overview document, intended for reading by humans, in either pdf,
 html or word (.docx) format. Appendix \ref{sec:appendix1} provides an
 example of a data report, produced by calling \code{makeDataReport()}
 on the dataset \code{toyData} available in \pkg{dataMaid}. The first
-two pages (excluding the frontpage) of this data report are shown in
+two pages (excluding the front page) of this data report are shown in
 Figure~\ref{fig:example1} and the following two pages are shown in
 Figure~\ref{fig:example2}. \code{toyData} is a very small ($15$
 observations of $6$ variables), artificial dataset which was created
 with a lot of potential errors to illustrate the main capabilities of
-\pkg{dataMaid}. Section~\ref{sec:bigExample} shows an example of a data sreening
+\pkg{dataMaid}. Section~\ref{sec:bigExample} shows an example of a data screening
 process with a real dataset. The following commands load the dataset
 and produce the report:
 
@@ -387,7 +387,7 @@ The arguments to \code{makeDataReport()} can be used to modify the
 contents and the look of the data report according to the user's
 needs. The most commonly used arguments are summarized in
 Table~\ref{table.cleanFormals} and they are grouped according to the
-part of the data assesment and report generation they influence. In
+part of the data assessment and report generation they influence. In
 order to understand this distinction, a glimpse of the inner structure
 of \code{makeDataReport()} is shown in
 Figure~\ref{figure:cleanStructure}. Below, we present a few examples
@@ -473,7 +473,7 @@ Argument & Description & Default value \\
     \node [block, right of=done, node distance=3.5cm] (stop) {Write
       \proglang{R} markdown file};
     \node [cloud, below of=stop, node distance=3.5cm] (render) {Render
-      markdown and possiby open};
+      markdown and possibly open};
     % Draw edges
     \path [line] (summarize) -- (visualize);
     \path [line] (visualize) -- (check);
@@ -575,7 +575,7 @@ R> makeDataReport(toyData, output="html", render=FALSE,
  \quad \code{identifyNums} & Identify misclassified numeric or integer variables & \blue{$\times$} & \blue{$\times$} & & \blue{$\times$} & & &  \\
  \quad \code{identifyOutliers} & Identify outliers &  & & \blue{$\times$} & & \blue{$\times$} & \blue{$\times$} \\
  \quad \code{identifyOutliersTBStyle} & Identify outliers (Turkish Boxplot style) &  & & $\times$ & & $\times$ & $\times$ \\
- \quad \code{identifyWhitespace} & Identify prefixed and suffixed whitespace &  \blue{$\times$} & \blue{$\times$} & & \blue{$\times$} & & &  \\
+ \quad \code{identifyWhitespace} & Identify prefixed and suffixed white space &  \blue{$\times$} & \blue{$\times$} & & \blue{$\times$} & & &  \\
  \quad \code{isCPR} & Identify Danish CPR numbers & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ &$\times$   \\
  \quad \code{isSingular} & Check if the variable contains only a single value & \blue{$\times$} & \blue{$\times$} & \blue{$\times$} & \blue{$\times$} & \blue{$\times$} & \blue{$\times$} & \blue{$\times$}  \\
  \quad \code{isKey} & Check if the variable is a key & \blue{$\times$} & \blue{$\times$} & \blue{$\times$} & \blue{$\times$} & \blue{$\times$} & \blue{$\times$} & \blue{$\times$} \smallskip   \\
@@ -732,7 +732,7 @@ R> defaultFactorChecks()
 \end{Soutput}
 \end{Schunk}
 
-Now, if we only wanted to apply the function to identify whitespace
+Now, if we only wanted to apply the function to identify white space
 for factor variables, then we would need provide this information for \code{setChecks()}:
 
 \begin{Schunk}
@@ -1010,7 +1010,7 @@ Note that the \code{summarize()}, \code{check()} and \code{visualize()} function
 \label{fig:bigExampleP45}
 \end{figure}
 
-We will now put the bits and pieces from above together and show how \code{makeDataReport()} can be used on a less artificial dataset to create a useful overview report and how the interactive tools can subsequently be used to assist the actual data cleaning process. More specifically, we will create a report describing the \code{presidentData} dataset, which is available in \pkg{dataMaid} and use the information from this report to clean up the data. \code{presidentData} is a sligtly mutilated dataset with information about the 45 first US presidents, but with a few common data issues and a blind passenger. The dataset contains one observation per president and has the following variables:
+We will now put the bits and pieces from above together and show how \code{makeDataReport()} can be used on a less artificial dataset to create a useful overview report and how the interactive tools can subsequently be used to assist the actual data cleaning process. More specifically, we will create a report describing the \code{presidentData} dataset, which is available in \pkg{dataMaid} and use the information from this report to clean up the data. \code{presidentData} is a slightly mutilated dataset with information about the 45 first US presidents, but with a few common data issues and a blind passenger. The dataset contains one observation per president and has the following variables:
 \begin{description}
 \item[\code{lastName}] The last name of the president.
 \item[\code{firstName}] The first name of the president.
@@ -1022,7 +1022,7 @@ We will now put the bits and pieces from above together and show how \code{makeD
 \item[\code{ethnicity}] The ethnicity of the president.
 \item[\code{presidencyYears}] The duration of the presidency.
 \item[\code{ageAtInauguration}] The age of the president at inauguration.
-\item[\code{favoriteNumber}] The favourite number of the president (fictional).
+\item[\code{favoriteNumber}] The favorite number of the president (fictional).
 \end{description}
 
 \begin{Schunk}
@@ -1077,7 +1077,7 @@ The first four pages of the resulting report can be inspected in Figures \ref{fi
 
 The first problem that can be spotted from these first four pages is the surprising number of observations: Anno 2017, there have only been 45 US presidents. Therefore, having 46 observations reveal that the dataset contains a blind passenger. For instance, if the dataset was constructed as a subset of a more general "World leaders" dataset, this type of problem could occur due to wrongful nationality classification. We return to the extra president issue below. 
 
-On page 3, we see the contents for the three first variables. Here, we identifify a prefixed whitespace in the lastname entry for President Truman and we find that a dot was entered as a first name; this is a typical choice for coding missing values in e.g. Stata, and therefore, it is flagged as a potential miscoded missing value. The variable \code{orderOfPresidency} is not summarized, visualized or checked because it is categorical and contains unique values for each observation. 
+On page 3, we see the contents for the three first variables. Here, we identify a prefixed white space in the last name entry for President Truman and we find that a dot was entered as a first name; this is a typical choice for coding missing values in e.g. Stata, and therefore, it is flagged as a potential miscoded missing value. The variable \code{orderOfPresidency} is not summarized, visualized or checked because it is categorical and contains unique values for each observation. 
 
 Figure \ref{fig:bigExampleP45} presents the remaining two pages with variable presentations. On pages 4 and 5, we find a few remarks:
 \begin{itemize}
@@ -1092,7 +1092,7 @@ Figure \ref{fig:bigExampleP45} presents the remaining two pages with variable pr
 \end{itemize}
 A lot of these mistakes are easily fixable, and we will do so below. However, some of them require more delicate knowledge of the subject matter. For instance, \code{ethnicity} is very reasonably marked as a potentially problematic variable as it includes only a single observation of "African American". However, a human reading this report will know that this does \textit{not} reflect a mistake in the data, but rather a peculiarity in the real world, and as such, it should not be cleaned out. 
 
-A few of the identified problems have easy fixes that need no further discussion. We remove the prefixed whitespace from Truman's name, fix the misspelling of New York, convert the binary variable \code{assasinationAttempt} to a factor and change the class of the \code{ageAtInauguration} variable to numeric:
+A few of the identified problems have easy fixes that need no further discussion. We remove the prefixed white space from Truman's name, fix the misspelling of New York, convert the binary variable \code{assasinationAttempt} to a factor and change the class of the \code{ageAtInauguration} variable to numeric:
 
 \begin{Schunk}
 \begin{Sinput}
@@ -1255,7 +1255,7 @@ The default settings of \code{makeDataReport()} have been set to facilitate easy
 \end{enumerate}
 Please note that the data report does contain information about who, when and how concerning its generation, so even though the default choices for file names do not make it easy to tell different reports for the same dataset apart, it should be rather easy when inspecting the report manually. 
 
-The three problems can easily be solved by use of the arguments of \code{makeDataReport()}. Whether or not the outputted file is opened can be controlled through the argument \code{open}. How much information is printed in the console can be adjusted by using the argument \code{quiet}. And convenintely introducing small alterations of the file names can be obtained by use of the \code{vol} argument. For instance, we can make a data report for \code{toyData} that is not opened automatically, produces no output to the console and includes the date and time of its creation in the file name:
+The three problems can easily be solved by use of the arguments of \code{makeDataReport()}. Whether or not the outputted file is opened can be controlled through the argument \code{open}. How much information is printed in the console can be adjusted by using the argument \code{quiet}. And conveniently introducing small alterations of the file names can be obtained by use of the \code{vol} argument. For instance, we can make a data report for \code{toyData} that is not opened automatically, produces no output to the console and includes the date and time of its creation in the file name:
 
 \begin{Schunk}
 \begin{Sinput}
@@ -1287,7 +1287,7 @@ Now only the checking results are printed, and only for variables
 where problems were identified. An even more minimal output  can be obtained directly in the console by using the \code{check()} function interactively. When called on a \code{data.frame}, this function produces a list (of
 variables) of lists (of checks) of lists (or rather,
 \code{checkResult}s). Thus, the overall problem status of each variable
-can easily be unravelled using the list manipulation function
+can easily be unraveled using the list manipulation function
 \code{sapply()}:
 
 \begin{Schunk}
@@ -1412,6 +1412,10 @@ improved by visualizing measurements over time. In addition, an online
 such that non-\proglang{R}-savvy users can upload their data online
 and get a data cleaning document.
 
+
+\section*{Acknowledgements}
+\label{acknowledgements}
+This work was supported by The Lundbeck Foundation, Trygfonden and The Region of Southern Denmark. 
 
 
 % \nocite{R}
