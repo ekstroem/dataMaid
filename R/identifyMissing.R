@@ -263,7 +263,7 @@ identifyMissingD <- function(v, nMax) {
   problemValues <- outProblemValues <- NULL
 
   ## Extract the year
-  problemOcc <- v[lubridate::year(v)==9999]
+  problemOcc <- v[as.numeric(format(v, "%Y"))==9999]
 
   if (length(problemOcc)) {
       problem <- TRUE
