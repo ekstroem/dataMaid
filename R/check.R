@@ -305,7 +305,7 @@ check.logical <- function(v, nMax =  10, checks = setChecks(),
 #'
 #' @export
 defaultDateChecks <- function(remove = NULL, add = NULL) {
-  defVals <- "identifyOutliers"
+  defVals <- c("identifyOutliers", "identifyMissing")
   unique(c(setdiff(defVals, remove), add))
 }
 
