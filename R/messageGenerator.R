@@ -137,8 +137,13 @@ printProblemValues <- function(problemValues, nMax = Inf) {
     nVals <- length(problemValues)
     extraStr <- ""
     if (nMax < nVals) {
+      if (nMax == 0) {
+        problemValues <- ""
+        extraStr <- paste(nVals-nMax, "problematic value(s) omitted")
+      } else {
         problemValues <- problemValues[1:nMax]
         extraStr <- paste(" (", nVals-nMax, " additional values omitted)", sep="")
+      }
     }
     paste(paste(paste("\\\"", problemValues, "\\\"", sep=""),
                 collapse=", "), extraStr, sep="")
