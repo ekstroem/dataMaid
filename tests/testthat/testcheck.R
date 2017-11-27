@@ -46,5 +46,5 @@ test_that("check return the right number of tests for (most) atomic vectors", {
     expect_equal(length(check(typef)), 5)
     expect_equal(length(check(typelab)), 5)
     ##expect_is(check(typer), "list")
-    expect_equal(length(check(typeDate)), 1)    
+    expect_equal(length(check(typeDate)), 2)    
 })  

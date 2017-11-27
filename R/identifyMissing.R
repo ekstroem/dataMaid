@@ -66,12 +66,15 @@ identifyMissing.integer <- function(v, nMax = 10, ...) {
 }
 #' @export
 identifyMissing.logical <- function(v, nMax = 10, ...) identifyMissingB(v, nMax = nMax)
+#' @export
+identifyMissing.Date <- function(v, nMax = 10, ...) identifyMissingD(v, nMax = nMax)
 
 
 #make it a checkFunction
 #' @include checkFunction.R
-identifyMissing <- checkFunction(identifyMissing, "Identify miscoded missing values",
-                                 setdiff(allClasses(), "Date"))
+identifyMissing <- checkFunction(identifyMissing, "Identify miscoded missing values", allClasses())
+
+##                                 setdiff(allClasses(), "Date"))
 
 ##########################################Not exported below#########################################
 
@@ -250,3 +253,29 @@ identifyMissingNI <- function(v, nMax, maxDecimals) {
 identifyMissingB <- function(v, nMax) {
   checkResult(list(problem = FALSE, message = "", problemValues = NULL))
 }
+
+
+#Date variables
+identifyMissingD <- function(v, nMax) {
+  v <- v[!is.na(v)]
+  problem <- FALSE
+
+  problemValues <- outProblemValues <- NULL
+
+  ## Extract the year
+  problemOcc <- v[as.numeric(format(v, "%Y"))==9999]
+
+  if (length(problemOcc)) {
+      problem <- TRUE
+      problemValues <- problemOcc
+      outProblemValues <- problemOcc
+  }
+
+  outMessage <- messageGenerator(list(problem = problem,
+                                      problemValues = problemValues),
+                                 message = "The year for the following dates look suspicious",
+                                 nMax = nMax)
+  checkResult(list(problem = problem, message = outMessage,
+                   problemValues = outProblemValues))
+}
+
