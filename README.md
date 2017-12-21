@@ -19,7 +19,7 @@ commands from within R (requires that the `devtools` package is already installe
 devtools::install_github('ekstroem/dataMaid')
 ```
 
-![Download counter](http://cranlogs.r-pkg.org/badges/grand-total/dataMaid)
+[![Build Status](https://travis-ci.org/ekstroem/dataMaid.svg)](https://travis-ci.org/ekstroem/dataMaid) ![Download counter](http://cranlogs.r-pkg.org/badges/grand-total/dataMaid)
 
 
 ## Package overview
