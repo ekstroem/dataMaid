@@ -1161,6 +1161,3 @@ doCheckLabs <- function(v) {
   return(v)
 }
 
-
-
-
