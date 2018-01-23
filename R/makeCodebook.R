@@ -1,27 +1,14 @@
-#' Produce a data report
+#' Produce a data codebook
 #'
-#' Make a data overview report that summarizes the contents of a dataset
-#' and flags potential problems. The potential problems are identified by
-#' running a set of class-specific validation checks, so that different 
-#' checks are performed on different variables types.  The checking
-#' steps can be customized according to user input and/or data type of the inputted
-#' variable.  The checks are saved to an R markdown file which can
-#' rendered into an easy-to-read data report in pdf, html or word formats. 
-#' This report also includes summaries and visualizations of each variable in the
-#' dataset.
-#'
-#' For each variable, a set of pre-check functions (controlled by the
-#' \code{preChecks} argument) are first run and then then a battery of
-#' functions are applied depending on the variable class.  For each
-#' variable type the summarize/visualize/check functions are applied
-#' and and the results are written to an R markdown file.
-#'
+#' Make a data codebook that summarizes the contents of a dataset.
+#' The result is saved to an R markdown file which can
+#' rendered into an easy-to-read codebook in pdf, html or word formats.
+#' 
 #' @param data The dataset to be checked. This dataset should be of class \code{data.frame},
 #' \code{tibble} or \code{matrix}. If it is of classs \code{matrix}, it will be converted to a
 #' \code{data.frame}.
 #'
-#' @param output
-#' Output format. Options are \code{"pdf"}, \code{"word"} (.docx) and \code{"html"}. If \code{NULL} (the default), 
+#' @param output Output format. Options are \code{"pdf"}, \code{"word"} (.docx) and \code{"html"}. If \code{NULL} (the default), 
 #' the output format depends two sequential checks. First, whether a LaTeX installation is available, 
 #' in which case \code{pdf} output is chosen. Secondly, if no LaTeX installation
 #' is found, then if the operating system is Windows, \code{word} output is used. Lastly, if neither of these 
@@ -215,26 +202,30 @@
 #' @importFrom utils packageVersion sessionInfo capture.output packageDescription
 #' @importFrom magrittr %>%
 #' @export
-makeCB <- function(data, output=NULL, render=TRUE,
-                   useVar=NULL, ordering=c("asIs", "alphabetical"), onlyProblematic=FALSE,
-                   labelled_as=c("factor"),
-                   mode=c("summarize", "visualize", "check"),
-                   smartNum=TRUE, preChecks=c("isKey", "isSingular", "isSupported"),
-                   file=NULL, replace=FALSE, vol="",
-                   standAlone=TRUE, twoCol=TRUE,
-                   quiet = TRUE,
-                   openResult=TRUE,
-                   summaries = setSummaries(),
-                   visuals = setVisuals(),
-                   checks = setChecks(),
-                   listChecks = TRUE,
-                   maxProbVals = 10,
-                   maxDecimals = 2,
-                   addSummaryTable = TRUE,
-                   reportTitle = NULL,
-                   treatXasY = NULL,
-                   ...) {
-    
+makeCodebook <- function(data, output=NULL, render=TRUE,
+                         useVar=NULL, ordering=c("asIs", "alphabetical"),
+                         onlyProblematic=FALSE,
+                         labelled_as=c("factor"),
+                         mode=c("summarize", "visualize", "check"),
+                         smartNum=TRUE, preChecks=c("isKey", "isSingular", "isSupported"),
+                         file=NULL, replace=FALSE, vol="",
+                         standAlone=TRUE, twoCol=TRUE,
+                         quiet = TRUE,
+                         openResult=TRUE,
+                         summaries = setSummaries(),
+                         visuals = setVisuals(),
+                         checks = setChecks(),
+                         listChecks = TRUE,
+                         maxProbVals = 10,
+                         maxDecimals = 2,
+                         addSummaryTable = TRUE,
+                         reportTitle = NULL,
+                         treatXasY = NULL,
+                         ...) {
+
+  ## klasdkj
+
+
   ## Store the original call
   orig.call <- match.call()
   
@@ -1142,3 +1133,12 @@ doCheckLabs <- function(v) {
 
 
 
+#makeCodebook <- function(data, vol="", reportTitle=NULL, ...) {
+#  
+#  dfname <- deparse(substitute(data))
+#  
+#  makeDataReport(data,
+#                 reportTitle=paste0("Codebook for ", dfname),
+#                 file=normalizeFileName(paste0("codebook_", dfname, vol, ".Rmd")),
+#                 ...)
+#}
