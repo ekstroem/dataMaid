@@ -215,26 +215,26 @@
 #' @importFrom utils packageVersion sessionInfo capture.output packageDescription
 #' @importFrom magrittr %>%
 #' @export
-makeDataReport <- function(data, output=NULL, render=TRUE,
-                  useVar=NULL, ordering=c("asIs", "alphabetical"), onlyProblematic=FALSE,
-                  labelled_as=c("factor"),
-                  mode=c("summarize", "visualize", "check"),
-                  smartNum=TRUE, preChecks=c("isKey", "isSingular", "isSupported"),
-                  file=NULL, replace=FALSE, vol="",
-                  standAlone=TRUE, twoCol=TRUE,
-                  quiet = TRUE,
-                  openResult=TRUE,
-                  summaries = setSummaries(),
-                  visuals = setVisuals(),
-                  checks = setChecks(),
-                  listChecks = TRUE,
-                  maxProbVals = 10,
-                  maxDecimals = 2,
-                  addSummaryTable = TRUE,
-                  reportTitle = NULL,
-                  treatXasY = NULL,
-                  ...) {
-  
+makeCB <- function(data, output=NULL, render=TRUE,
+                   useVar=NULL, ordering=c("asIs", "alphabetical"), onlyProblematic=FALSE,
+                   labelled_as=c("factor"),
+                   mode=c("summarize", "visualize", "check"),
+                   smartNum=TRUE, preChecks=c("isKey", "isSingular", "isSupported"),
+                   file=NULL, replace=FALSE, vol="",
+                   standAlone=TRUE, twoCol=TRUE,
+                   quiet = TRUE,
+                   openResult=TRUE,
+                   summaries = setSummaries(),
+                   visuals = setVisuals(),
+                   checks = setChecks(),
+                   listChecks = TRUE,
+                   maxProbVals = 10,
+                   maxDecimals = 2,
+                   addSummaryTable = TRUE,
+                   reportTitle = NULL,
+                   treatXasY = NULL,
+                   ...) {
+    
   ## Store the original call
   orig.call <- match.call()
   

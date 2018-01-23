@@ -34,7 +34,7 @@ LazyData: true
 ByteCompile: true
 License: GPL-2
 RoxygenNote: 6.0.1.9000
-Collate:
+Collate: 
     'aggregateForBarplot.R'
     'aggregateForHistogram.R'
     'allCheckFunctions.R'
@@ -69,6 +69,7 @@ Collate:
     'isEmpty.R'
     'isKey.R'
     'isSupported.R'
+    'makeCodebook.R'
     'makeDataReport.R'
     'misc.R'
     'quartiles.R'
