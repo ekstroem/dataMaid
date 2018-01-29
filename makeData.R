@@ -145,8 +145,6 @@ presidentData$ageAtInauguration <- floor(as.numeric(presidentData$presidencyBegi
                                                 presidentData$birthday)/365.25)
 presidentData$orderOfPresidency <- as.factor(presidentData$orderOfPresidency)
 class(presidentData$lastName) <- class(presidentData$firstName) <- "Name"
-presidentData$dayOfDeath <- NULL
-presidentData$party <- NULL
 presidentData$assassinationAttempt <- as.numeric(factor(presidentData$assassinationAttempt))-1
 set.seed(1)
 presidentData$favoriteNumber <- sample(1:10, 46, replace = TRUE)
@@ -155,13 +153,30 @@ presidentData$sex <- factor(presidentData$sex)
 presidentData$ethnicity <- factor(presidentData$ethnicity)
 presidentData$ageAtInauguration <- as.character(presidentData$ageAtInauguration)
 presidentData$ageAtInauguration[presidentData$firstName == "Aragorn"] <- "87"
+presidentData$lastName[presidentData$lastName == "Truman"] <- " Truman"
+presidentData$assassinationAttempt[presidentData$lastName == "Obama"] <- 0
+bigPresidentData <- presidentData
 presidentData$presidencyBeginDate <- NULL
 presidentData$presidencyEndDate <- NULL
 presidentData$dateOfDeath <- NULL
-presidentData$lastName[presidentData$lastName == "Truman"] <- " Truman"
-presidentData$assassinationAttempt[presidentData$lastName == "Obama"] <- 0
+presidentData$dayOfDeath <- NULL
+presidentData$party <- NULL
+
+TRdates <- bigPresidentData[bigPresidentData$lastName == "Roosevelt" & 
+                   bigPresidentData$firstName == "Theodore", c("presidencyBeginDate", "presidencyEndDate")]
+FRdates <- bigPresidentData[bigPresidentData$lastName == "Roosevelt" & 
+                              bigPresidentData$firstName == "Franklin", c("presidencyBeginDate", "presidencyEndDate")]
+bigPresidentData[bigPresidentData$lastName == "Roosevelt" & 
+                   bigPresidentData$firstName == "Theodore", c("presidencyBeginDate", "presidencyEndDate")] <- FRdates
+bigPresidentData[bigPresidentData$lastName == "Roosevelt" & 
+                   bigPresidentData$firstName == "Franklin", c("presidencyBeginDate", "presidencyEndDate")] <- TRdates
+bigPresidentData[bigPresidentData$lastName == "Carter", "presidencyEndDate"] <- as.Date("1982-10-01")
+bigPresidentData[bigPresidentData$lastName == "Garfield", "stateOfBirth"] <- "Indiana"
+bigPresidentData[bigPresidentData$firstName == "Calvin", "firstName"] <- "Hobbes"
+bigPresidentData[bigPresidentData$lastName == "Arthur" & bigPresidentData$firstName == "Chester", "presidencyYears"] <- 5
 
 save(presidentData, file="data/presidentData.rda")
+save(bigPresidentData, file="data/bigPresidentData.rda")
 
 
 

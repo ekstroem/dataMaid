@@ -7,7 +7,7 @@
 #' non-standard class \code{Name} which is simply an attribute that has been added to 
 #' two variables in order to show how \code{dataMaid} handles non-supported classes. 
 #'
-#' @format A data frame with 15 rows and 14 variables.
+#' @format A data frame with 46 rows and 11 variables.
 #' \describe{
 #'    \item{lastName}{A \code{Name} type variable containing the last name of the president.}
 #'    \item{firstName}{A \code{Name} type variable containing the first name of the president.}
@@ -30,6 +30,46 @@
 #' data(presidentData)
 #'
 "presidentData"
+
+
+#' Semi-artificial data about the US presidents (extended version)
+#'
+#' A dataset with information about the first 45 US presidents as well as a 46th
+#' person, who is not a US president. The dataset was constructed to show the capabilities
+#' of \code{dataMaid} and therefore, it has been constructed to include errors and miscodings.
+#' Each observation in the dataset corresponds to a person. The dataset uses the 
+#' non-standard class \code{Name} which is simply an attribute that has been added to 
+#' two variables in order to show how \code{dataMaid} handles non-supported classes. Note that the dataset
+#' is an extended and more error-filled version of the dataset \code{presidentData} which is 
+#' also included in the package. 
+#'
+#' @format A data frame with 46 rows and 15 variables.
+#' \describe{
+#'    \item{lastName}{A \code{Name} type variable containing the last name of the president.}
+#'    \item{firstName}{A \code{Name} type variable containing the first name of the president.}
+#'    \item{orderOfPresidency}{A factor variable indicating the order of the presidents (with George Washington
+#'    as number 1 and Donald Trump as number 45).}
+#'    \item{birthday}{A Date variable with the birthday of the president.}
+#'    \item{dateOfDeath}{A Date variable with the date of the president's death.}
+#'    \item{stateOfBirth}{A character variable with the state in which the president was born.}
+#'    \item{party}{A charcter variable with the party to which the president was associated.}
+#'    \item{presidencyBeginDate}{A Date variable with the date of inauguration of the president.}
+#'    \item{presidencyEndDate}{A Date variable with the date at which the presidency ends.}
+#'    \item{assassinationAttempt}{A numeric variable indicating whether there was an assassination 
+#'    attempt (\code{1}) or not (\code{0}) on the president.}
+#'    \item{sex}{A factor variable with the sex of the president.}
+#'    \item{ethnicity}{A factor variable with the ethnicity of the president.}
+#'    \item{presidencyYears}{A numeric variable with the duration of the presidency, in years.}
+#'    \item{ageAtInauguration}{A character variable with the age at inauguration.}
+#'    \item{favoriteNumber}{A \code{complex} type variable with a fictional favorite number for
+#'    each president.}
+#' }
+#' @source Artificial dataset constructed based on the US president dataset available from 
+#' \href{http://www.data-explorer.com/data}{Data Explorer}.
+#' @examples
+#' data(bigPresidentData)
+#'
+"bigPresidentData"
 
 
 #' Semi-artificial data about masterpieces of art
