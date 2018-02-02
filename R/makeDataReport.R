@@ -126,7 +126,11 @@
 #'
 #' @param addSummaryTable A logical. If \code{TRUE} (the default), a summary table
 #' of the variable checks is added between the Data Cleaning Summary and the
-#' Variable List.
+#' Variable List. Only one of \code{addSummaryTable} and \code{addCodebookTable} can be \code{TRUE}.
+#'
+#' @param addCodebookTable A logical. Defaults to \code{FALSE}. If \code{TRUE} then a summary table
+#' of the variable checks for the codebook is added between the Data Cleaning Summary and the
+#' Variable List. Only one of \code{addSummaryTable} and \code{addCodebookTable} can be \code{TRUE}.
 #'
 #' @param reportTitle A text string. If supplied, this will be the printed title of the
 #' report. If left unspecified, the title with the name of the supplied dataset.
@@ -231,6 +235,7 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
                   maxProbVals = 10,
                   maxDecimals = 2,
                   addSummaryTable = TRUE,
+                  addCodebookTable = !addSummaryTable,
                   reportTitle = NULL,
                   treatXasY = NULL,
                   ...) {
@@ -277,7 +282,12 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
     silent <- FALSE
     #perhaps check if quiet argument is valid (i.e. TRUE/FALSE) here?
   }
- 
+
+    ## Make sure only one of addSummaryTable and addCodebookTable are TRUE
+    
+    if (addSummaryTable) {
+        addCodebookTable <- FALSE
+    }
   
   
   ##Match arguments
@@ -712,8 +722,10 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
                            distinctVals = rep(NA, nvariables),
                            missingPct = rep(NA, nvariables),
                            problems = rep("", nvariables),
-                           stringsAsFactors = FALSE)
-      
+                           stringsAsFactors = FALSE,
+                           label = rep(NA, nvariables),
+                           description = rep(NA, nvariables))
+
       ## List of variables
       writer("# Variable list", outfile = vListConn)
       
@@ -817,7 +829,11 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
           writer("## ", printable_name, "\n", outfile = vListConn) #** makes linking complicated
           
           #Fill out name, vClass and missingPct entries in the results overview
-          allRes$name[allRes$variable == vnam] <- paste("[", printable_name, "]", sep = "")
+            allRes$name[allRes$variable == vnam] <- paste("[", printable_name, "]", sep = "")
+            ## Pass on the labels for the codebook
+            allRes$label[allRes$variable == vnam] <- ifelse(is.null(attr(v, "label")), "", attr(v, "label"))
+            allRes$description[allRes$variable == vnam] <- ifelse(is.null(attr(v, "shortDescription")), "", attr(v, "shortDescription"))
+                
           allRes$vClass[allRes$variable == vnam] <- oClass(v)[1]
           allRes$missingPct[allRes$variable == vnam] <- paste(format(round(100*mean(is.na(v)),2),
                                                                      nsmall = 2), "%")
@@ -916,7 +932,11 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
     
     #Add variable summary table
     if (addSummaryTable) {
-      writer("# Summary table")
+        writer("# Summary table")
+
+        ## Drop the variables that are only used for the codebook
+        allRes$label <- NULL
+        allRes$description <- NULL
       
       #remove skipped variabled (e.g. due to onlyProblematic = TRUE) and
       #drop variable with original variable names (not formatted for printing)
@@ -933,6 +953,35 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
       writer(pander::pandoc.table.return(allRes, justify="llrrc"))
       writer("\n")
     }
+    
+    ## Add stuff for codebook
+    if (addCodebookTable) {
+        writer("# Codebook summary table")
+
+        ## drop variable with original variable names (not formatted for printing)
+        allRes <- allRes[, -1]
+        
+
+        rownames(allRes) <- 1:nrow(allRes) #note: necessary, as pander prints
+      #non-trivial row names as a column
+      #and data.frame subsetting creates
+      #rownames like c(1, 2, 4, 5, 9)...
+      
+      #Add names used for printing
+        names(allRes) <- c("Variable", "Class", "# unique values", "Missing",
+                           "problems", "Label", "Description")
+
+        ## Reorder variables and add stuff to table 
+        ## Add stuff to table
+        allResCodebook <- allRes[, c("Label", "Variable", "Class", "# unique values", "Missing", "Description")]
+        
+        writer(pander::pandoc.table.return(allResCodebook, justify="lllrcl",
+                                           missing="", split.cells=c(12, 8, 5, 8, 8, 35),
+                                           keep.line.breaks=TRUE, emphasize.verbatim.cols=2)
+               )
+        writer("\n")
+    }
+
     
     
     

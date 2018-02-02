@@ -12,7 +12,8 @@ makeDataReport(data, output = NULL, render = TRUE, useVar = NULL,
   twoCol = TRUE, quiet = TRUE, openResult = TRUE,
   summaries = setSummaries(), visuals = setVisuals(),
   checks = setChecks(), listChecks = TRUE, maxProbVals = 10,
-  maxDecimals = 2, addSummaryTable = TRUE, reportTitle = NULL,
+  maxDecimals = 2, addSummaryTable = TRUE,
+  addCodebookTable = !addSummaryTable, reportTitle = NULL,
   treatXasY = NULL, ...)
 }
 \arguments{
@@ -124,7 +125,11 @@ data checks. If \code{Inf}, no rounding is performed.}
 
 \item{addSummaryTable}{A logical. If \code{TRUE} (the default), a summary table
 of the variable checks is added between the Data Cleaning Summary and the
-Variable List.}
+Variable List. Only one of \code{addSummaryTable} and \code{addCodebookTable} can be \code{TRUE}.}
+
+\item{addCodebookTable}{A logical. Defaults to \code{FALSE}. If \code{TRUE} then a summary table
+of the variable checks for the codebook is added between the Data Cleaning Summary and the
+Variable List. Only one of \code{addSummaryTable} and \code{addCodebookTable} can be \code{TRUE}.}
 
 \item{reportTitle}{A text string. If supplied, this will be the printed title of the
 report. If left unspecified, the title with the name of the supplied dataset.}
