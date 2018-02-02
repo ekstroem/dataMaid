@@ -20,13 +20,13 @@
 #' @export
 makeCodebook <- function(data, vol="", reportTitle=NULL, ...) {
   
-  dfname <- deparse(substitute(data))
+    dfname <- deparse(substitute(data))
   
-  makeDataReport(data,
-                 reportTitle=paste0("Codebook for ", dfname),
-                 file=normalizeFileName(paste0("codebook_", dfname, vol, ".Rmd")),
-                 addSummaryTable=FALSE, addCodebookTable=TRUE,
-                 mode = c("summarize", "visualize"),
-                 listChecks = FALSE,
-                 ...)
+    makeDataReport(data,
+                   reportTitle=paste0("Codebook for ", dfname),
+                   file=normalizeFileName(paste0("codebook_", dfname, vol, ".Rmd")),
+                   codebook=TRUE,
+                   mode = c("summarize", "visualize"),
+                   listChecks = FALSE,
+                   ...)
 }

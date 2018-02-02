@@ -4,11 +4,15 @@
 #and checks for such variables. In other words, such variables will be
 #treated like factor variables instead of numerics.
 smartNum <- function(v) {
-  oriClass <- class(v)
-  v <- factor(v)
-  attr(v, "originalClass") <- oriClass
-  class(v) <- c("smartNum", "factor")
-  v
+    oriClass <- class(v)
+    origLabel <- attr(v, "label")
+    origDesc <- attr(v, "shortDescription")
+    v <- factor(v)
+    attr(v, "label") <- origLabel
+    attr(v, "shortDescription") <- origDesc
+    attr(v, "originalClass") <- oriClass
+    class(v) <- c("smartNum", "factor")
+    v
 }
 
 
