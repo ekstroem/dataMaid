@@ -27,5 +27,6 @@ makeCodebook <- function(data, vol="", reportTitle=NULL, ...) {
                  file=normalizeFileName(paste0("codebook_", dfname, vol, ".Rmd")),
                  addSummaryTable=FALSE, addCodebookTable=TRUE,
                  mode = c("summarize", "visualize"),
+                 listChecks = FALSE,
                  ...)
 }

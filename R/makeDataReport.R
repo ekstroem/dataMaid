@@ -815,6 +815,8 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
         
         #Update problem status in results overview
         if (any(unlist(c(problems, preCheckProblems))))  {
+          y <- ifelse(output == "pdf", "$\\times$", "&times;")
+            #note: y initialized above, but only in an if-statement
           allRes$problems[allRes$variable == vnam] <- y
         }
         
@@ -832,7 +834,8 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
             allRes$name[allRes$variable == vnam] <- paste("[", printable_name, "]", sep = "")
             ## Pass on the labels for the codebook
             allRes$label[allRes$variable == vnam] <- ifelse(is.null(attr(v, "label")), "", attr(v, "label"))
-            allRes$description[allRes$variable == vnam] <- ifelse(is.null(attr(v, "shortDescription")), "", attr(v, "shortDescription"))
+            allRes$description[allRes$variable == vnam] <- ifelse(is.null(attr(v, "shortDescription")), "", 
+                                                                  attr(v, "shortDescription"))
                 
           allRes$vClass[allRes$variable == vnam] <- oClass(v)[1]
           allRes$missingPct[allRes$variable == vnam] <- paste(format(round(100*mean(is.na(v)),2),
