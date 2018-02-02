@@ -35,7 +35,8 @@
 #' Semi-artificial data about the US presidents (extended version)
 #'
 #' A dataset with information about the first 45 US presidents as well as a 46th
-#' person, who is not a US president. The dataset was constructed to show the capabilities
+#' person, who is not a US president, and a duplicate of one of the 45 actual presidents. 
+#' The dataset was constructed to show the capabilities
 #' of \code{dataMaid} and therefore, it has been constructed to include errors and miscodings.
 #' Each observation in the dataset corresponds to a person. The dataset uses the 
 #' non-standard class \code{Name} which is simply an attribute that has been added to 
@@ -43,7 +44,7 @@
 #' is an extended and more error-filled version of the dataset \code{presidentData} which is 
 #' also included in the package. 
 #'
-#' @format A data frame with 46 rows and 15 variables.
+#' @format A data frame with 47 rows and 15 variables.
 #' \describe{
 #'    \item{lastName}{A \code{Name} type variable containing the last name of the president.}
 #'    \item{firstName}{A \code{Name} type variable containing the first name of the president.}

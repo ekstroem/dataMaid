@@ -174,6 +174,12 @@ bigPresidentData[bigPresidentData$lastName == "Carter", "presidencyEndDate"] <- 
 bigPresidentData[bigPresidentData$lastName == "Garfield", "stateOfBirth"] <- "Indiana"
 bigPresidentData[bigPresidentData$firstName == "Calvin", "firstName"] <- "Hobbes"
 bigPresidentData[bigPresidentData$lastName == "Arthur" & bigPresidentData$firstName == "Chester", "presidencyYears"] <- 5
+bigPresidentData <- rbind(bigPresidentData, bigPresidentData[bigPresidentData$lastName == "Eisenhower",])
+bigPresidentData[bigPresidentData$lastName == "Eisenhower", "firstName"] <- c("Dwight", "Dwight D")
+
+set.seed(12234)
+bigPresidentData <- bigPresidentData[sample(1:nrow(bigPresidentData), nrow(bigPresidentData)),]
+
 
 save(presidentData, file="data/presidentData.rda")
 save(bigPresidentData, file="data/bigPresidentData.rda")
