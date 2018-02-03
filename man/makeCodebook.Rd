@@ -13,7 +13,7 @@ makeCodebook(data, vol = "", reportTitle = NULL, ...)
 
 \item{vol}{Extra text string or numeric that is appended on the end of the output
 file name(s). For example, if the dataset is called "myData", no file argument is
- supplied and \code{vol=2}, the output file will be called "dataMaid_myData2.Rmd"}
+ supplied and \code{vol=2}, the output file will be called "codebook_myData2.Rmd"}
 
 \item{reportTitle}{A text string. If supplied, this will be the printed title of the
 report. If left unspecified, the title with the name of the supplied dataset.}

@@ -973,12 +973,16 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
 
             ## Reorder variables and add stuff to table 
             ## Add stuff to table
+            
             allResCodebook <- allRes[, c("Label", "Variable", "Class", "# unique values", "Missing", "Description")]
             
             writer(pander::pandoc.table.return(allResCodebook, justify="lllrcl",
                                                missing="", split.cells=c(12, 8, 5, 8, 8, 35),
-                                               keep.line.breaks=TRUE, emphasize.verbatim.cols=2)
-                   )
+                                               keep.line.breaks=TRUE,
+                                               emphasize.strong.cols = 2))
+                   #emphasize.verbatim.cols=2 doesn't work: It kills the links and prints
+                   #the "[]"s that are supposed to be interpreted in compiling
+                   
             writer("\n")
         }
         
