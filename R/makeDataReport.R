@@ -612,20 +612,13 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
       writer(paste("date:", Sys.time())) 
       if (output=="pdf") {
         writer("output: pdf_document")
-        writer("documentclass: report")
+        writer(paste0("documentclass: ", ifelse(codebook, "article", "report")))
         writer("header-includes:")
-        writer("  - \\renewcommand{\\chaptername}{Part}")
+        if (!codebook) {
+            writer("  - \\renewcommand{\\chaptername}{Part}")
+        }
         writer("  - \\newcommand{\\fullline}{\\noindent\\makebox[\\linewidth]{\\rule{\\textwidth}{0.4pt}}}")
         if (codebook) {
-#            writer("  - \\makeatletter")
-#            writer("  -   \\renewcommand\\chapter{\\par%")
-#            writer("  -   \\thispagestyle{plain}%")
-#            writer("  -   \\global\\@topnum\\z@")
-#            writer("  -   \\@afterindentfalse")
-#            writer("  -   \\secdef\\@chapter\\@schapter}")
-#            writer("  - \\makeatother")
-#            writer("  - \\renewcommand{\\cleardoublepage}{}")
-#            writer("  - \\renewcommand{\\clearpage}{}")
             writer("  - \\renewcommand\\familydefault{\\sfdefault}")
         }       
         if (twoCol) {
