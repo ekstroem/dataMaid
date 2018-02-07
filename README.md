@@ -47,7 +47,7 @@ The dataMaid package can also be used interactively by running checks for the in
 
 ```{r}
 data(toyData)
-check(toyData$events)  # Individual check of var2
+check(toyData$events)  # Individual check of events
 check(toyData) # Check all variables at once
 ```
 
@@ -77,10 +77,10 @@ The same is true for summaries. Note also that the choice of checks/visualizatio
 
 ```{r}
 #Summarize a variable with default settings:
-summarize(toyData$var2) 
+summarize(toyData$events) 
 
 #Summarize a variable with user-specified settings:
-summarize(toyData$var2, summaries = setSummaries(all =  c("centralValue", "minMax"))  
+summarize(toyData$events, summaries = setSummaries(all =  c("centralValue", "minMax"))  
 ```
 
 
