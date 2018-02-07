@@ -50,6 +50,18 @@
     </li>
   </ul>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Courses
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="http://biostatistics.dk">CSP 2018</a>
+    </li>
+  </ul>
+</li>
 <li>
   <a href="news/index.html">News</a>
 </li>
@@ -103,11 +115,11 @@ check(toyData) # Check all variables at once</code></pre>
 <p>By default the standard battery of tests is run depending on the variable type. If we just want a specific test for, say, a numeric variable then we can specify that. All available checks can be viewed by calling <code><a href="reference/allCheckFunctions.html">allCheckFunctions()</a></code>. See <a href="https://github.com/ekstroem/dataMaid/blob/master/latex/article_vol2.pdf">the documentation</a> for an overview of the checks available or how to create and include your own tests.</p>
 <pre class="{r}"><code><a href="reference/check.html">check(toyData$events, checks = setChecks(numeric = "identifyMissing"))</a></code></pre>
 <p>We can also access the graphics or summary tables that are produced for a variable by calling the <code>visualize</code> or <code>summarize</code> functions. One can visualize a single variable or a full dataset:</p>
-<pre class="{r}"><code><a href="reference/visualize.html">#Visualize a variable
+<pre class="{r}"><code>#Visualize a variable
 visualize(toyData$events)
 
 #Visualize a dataset
-visualize(toyData)</a></code></pre>
+visualize(toyData)</code></pre>
 <p>The same is true for summaries. Note also that the choice of checks/visualizations/summaries are customizable:</p>
 <pre class="{r}"><code>#Summarize a variable with default settings:
 summarize(toyData$var2) 
@@ -156,7 +168,7 @@ summarize(toyData$var2, summaries = setSummaries(all =  c("centralValue", "minMa
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>

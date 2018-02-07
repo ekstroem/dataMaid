@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Default summary functions for character variables — defaultCharacterSummaries â€¢ dataMaid</title>
+<title>Semi-artificial data about the US presidents (extended version) — bigPresidentData â€¢ dataMaid</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -107,54 +107,62 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Default summary functions for character variables</h1>
+    <h1>Semi-artificial data about the US presidents (extended version)</h1>
     </div>
 
     
-    <p>Default options for which summaries to apply on
-character type variables in <code><a href='check.html'>check</a></code> and <code><a href='makeDataReport.html'>makeDataReport</a></code>,
-possibly user-modified by adding extra function names using <code>add</code> or 
-removing default function names with <code>remove</code>.</p>
+    <p>A dataset with information about the first 45 US presidents as well as a 46th
+person, who is not a US president, and a duplicate of one of the 45 actual presidents. 
+The dataset was constructed to show the capabilities
+of <code>dataMaid</code> and therefore, it has been constructed to include errors and miscodings.
+Each observation in the dataset corresponds to a person. The dataset uses the 
+non-standard class <code>Name</code> which is simply an attribute that has been added to 
+two variables in order to show how <code>dataMaid</code> handles non-supported classes. Note that the dataset
+is an extended and more error-filled version of the dataset <code>presidentData</code> which is 
+also included in the package.</p>
     
 
-    <pre class="usage"><span class='fu'>defaultCharacterSummaries</span>(<span class='kw'>remove</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>remove</th>
-      <td><p>Character vector of function names. Checks to remove from the returned vector</p></td>
-    </tr>
-    <tr>
-      <th>add</th>
-      <td><p>Character vector of function names. Checks to add to the returned vector</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <pre class="usage"><span class='no'>bigPresidentData</span></pre>
+        
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A list of function names (as character strings).</p>
+    <p>A data frame with 47 rows and 15 variables.</p><dl class='dl-horizontal'>
+   <dt>lastName</dt><dd><p>A <code>Name</code> type variable containing the last name of the president.</p></dd>
+   <dt>firstName</dt><dd><p>A <code>Name</code> type variable containing the first name of the president.</p></dd>
+   <dt>orderOfPresidency</dt><dd><p>A factor variable indicating the order of the presidents (with George Washington
+   as number 1 and Donald Trump as number 45).</p></dd>
+   <dt>birthday</dt><dd><p>A Date variable with the birthday of the president.</p></dd>
+   <dt>dateOfDeath</dt><dd><p>A Date variable with the date of the president's death.</p></dd>
+   <dt>stateOfBirth</dt><dd><p>A character variable with the state in which the president was born.</p></dd>
+   <dt>party</dt><dd><p>A charcter variable with the party to which the president was associated.</p></dd>
+   <dt>presidencyBeginDate</dt><dd><p>A Date variable with the date of inauguration of the president.</p></dd>
+   <dt>presidencyEndDate</dt><dd><p>A Date variable with the date at which the presidency ends.</p></dd>
+   <dt>assassinationAttempt</dt><dd><p>A numeric variable indicating whether there was an assassination 
+   attempt (<code>1</code>) or not (<code>0</code>) on the president.</p></dd>
+   <dt>sex</dt><dd><p>A factor variable with the sex of the president.</p></dd>
+   <dt>ethnicity</dt><dd><p>A factor variable with the ethnicity of the president.</p></dd>
+   <dt>presidencyYears</dt><dd><p>A numeric variable with the duration of the presidency, in years.</p></dd>
+   <dt>ageAtInauguration</dt><dd><p>A character variable with the age at inauguration.</p></dd>
+   <dt>favoriteNumber</dt><dd><p>A <code>complex</code> type variable with a fictional favorite number for
+   each president.</p></dd>
+</dl>
     
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-    <p><code><a href='variableType.html'>variableType</a></code>, <code><a href='countMissing.html'>countMissing</a></code>, <code><a href='uniqueValues.html'>uniqueValues</a></code>,
-<code><a href='centralValue.html'>centralValue</a></code></p>
+    <p>Artificial dataset constructed based on the US president dataset available from 
+<a href='http://www.data-explorer.com/data'>Data Explorer</a>.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>#remove "variableType" from the summaries:</span>
-<span class='fu'>defaultCharacterSummaries</span>(<span class='kw'>remove</span> <span class='kw'>=</span> <span class='st'>"variableType"</span>)</div><div class='output co'>#&gt; [1] "countMissing" "uniqueValues" "centralValue"</div><div class='input'>
-</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>bigPresidentData</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
+      <li><a href="#format">Format</a></li>
 
-      <li><a href="#see-also">See also</a></li>
+      <li><a href="#source">Source</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
