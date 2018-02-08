@@ -13,7 +13,7 @@ navbar:
   - text: Courses
     menu:
     - text: CSP 2018
-      href: http://biostatistics.dk
+      href: CSP2018/index.html
   - text: News
     href: news/index.html
  
