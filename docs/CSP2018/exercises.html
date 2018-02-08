@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Exercises</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 60px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+
+.section h2 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h3 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h4 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h5 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h6 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Data Screening</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="slides.html">Slides</a>
+</li>
+<li>
+  <a href="exercises.html">Exercises</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Exercises</h1>
+
+</div>
+
+
+<div id="exercise-1" class="section level1">
+<h1>Exercise 1</h1>
+<p>For this initial exercise we will be trying to identify errors in a data frame containing information about the US presidents. First we install the packages needed to get the dataset that we will be working with.</p>
+<pre class="r"><code>install.packages(&quot;devtools&quot;)  # We need this to be able to install the development version of dataMaid
+devtools::install_github(&quot;ekstroem/dataMaid&quot;)  # We need the development version of this</code></pre>
+<p>Now we have installed the <code>dataMaid</code> package which contains the raw dataset, <code>bigPresidentData</code>. We can see the first couple of rows of the dataset with the <code>head</code> command.</p>
+<pre class="r"><code>library(&quot;dataMaid&quot;)
+data(&quot;bigPresidentData&quot;)
+head(bigPresidentData)</code></pre>
+<pre><code>##     lastName firstName orderOfPresidency   birthday dateOfDeath
+## 1 Washington    George                 1 1732-02-22  1799-12-14
+## 2      Adams      John                 2 1735-10-30  1826-07-04
+## 3  Jefferson    Thomas                 3 1743-04-13  1826-07-04
+## 4    Madison     James                 4 1751-03-16  1836-06-28
+## 5     Monroe     James                 5 1758-04-28  1831-07-04
+## 6      Adams      John                 6 1767-07-11  1848-02-23
+##    stateOfBirth                                     party
+## 1      Virginia                               Independent
+## 2 Massachusetts                                Federalist
+## 3      Virginia                     Democratic-Republican
+## 4      Virginia                     Democratic-Republican
+## 5      Virginia                     Democratic-Republican
+## 6 Massachusetts Democratic-Republican/National Republican
+##   presidencyBeginDate presidencyEndDate assassinationAttempt  sex
+## 1          1789-04-30        1797-03-04                    0 Male
+## 2          1797-03-04        1801-03-04                    0 Male
+## 3          1801-03-04        1809-03-04                    0 Male
+## 4          1809-03-04        1817-03-04                    0 Male
+## 5          1817-03-04        1825-03-04                    0 Male
+## 6          1825-03-04        1829-03-04                    0 Male
+##   ethnicity presidencyYears ageAtInauguration favoriteNumber
+## 1 Caucasian               7                57    3+0.000000i
+## 2 Caucasian               3                61    4+0.000000i
+## 3 Caucasian               8                57    0+1.414214i
+## 4 Caucasian               8                57   10+0.000000i
+## 5 Caucasian               8                58    3+0.000000i
+## 6 Caucasian               4                57    9+0.000000i</code></pre>
+<p>We are being told by our research collaborators that the dataset should contain information on 18 variables relates to the US presidents. The variables are</p>
+<ul>
+<li><code>lastName</code> The surname of the president.</li>
+<li><code>firstName</code> The first name of the president.</li>
+<li><code>orderOfPresidency</code> A factor variable indicating the order of the presidents (with George Washington as number 1 and Donald Trump as number 45).</li>
+<li><code>birthday</code> The date of birth of the president.</li>
+<li><code>dateOfDeath</code> The date of the president’s death.</li>
+<li><code>stateOfBirth</code> A character variable with the state in which the president was born.</li>
+<li><code>party</code> A charcter variable with the political party to which the president was associated.</li>
+<li><code>presidencyBeginDate</code> A Date variable with the date of inauguration of the president.</li>
+<li><code>presidencyEndDate</code> A Date variable with the date at which the presidency ends.</li>
+<li><code>assassinationAttempt</code> A text variable indicating whether there was an assassination attempt (1) or not (0) on the president.</li>
+<li><code>sex</code> A factor variable with the sex of the president.</li>
+<li><code>ethnicity</code> A factor variable with the ethnicity of the president.</li>
+<li><code>presidencyYears</code> A numeric variable with the duration of the presidency, in years.</li>
+<li><code>ageAtInauguration</code> the age at inauguration.</li>
+<li><code>favoriteNumber</code> A complex type variable with a fictional favorite number for each president.</li>
+</ul>
+<p>Try to find and document as many errors are you can in the <code>bigPresidentData</code>. In particular focus on validity (conforms to the correct syntax with the right format, type, and range), on consistency, accuracy, and uniqueness.</p>
+<p>[Hint: If you are new to R then you can use the functions <code>str</code>, <code>print</code> and the <code>$</code> operator to extract variables from the data frame.]</p>
+</div>
+<div id="exercise-2" class="section level1">
+<h1>Exercise 2</h1>
+<p>Here we should use the <code>dataMaid</code> package <code>makeDataReport()</code> to screen data for obvious and non-obvious errors in the dataset. We will continue working on the <code>bigPresidentData</code> from the <code>dataMaid</code> package in order to find errors that we previously missed.</p>
+<p>Note that exercise 2 contains a lot of exercises. We do not expect you to be able to solve all of them in the time given. Remember the primary focus is to identify potential errors in the dataset.</p>
+<ol style="list-style-type: decimal">
+<li><p>Run the <code>makeDataReport()</code> function to make your own report for the <code>bigPresidentData</code> and look through it. What legitimate errors are found? What warnings are unnecessary?</p></li>
+<li><p>Start by verifying the validity of the data (format, type, and range). When <code>dataMaid</code> encounters a variable type that is unknown then it prints a note and skips the variable. If we want to perform specific checks for a variable with an unknown type then we must fix the <code>class</code> in the data frame (when relevant) or alternatively force <code>dataMaid</code> to consider a specific class as if it were another class.</p>
+<p>Try calling <code>help(makeDataReport)</code> and look at the documentation for the argument <code>treatXasY</code>. Use this argument in a new call to <code>makeDataReport()</code> so that for example the <code>favoriteNumber</code> variable will be handled like a <code>numeric</code> variable. [Hint: you may need to use the <code>replace=TRUE</code> argument too to overwrite any previous reports.]</p></li>
+<li><p>Are there any errors that does not pop up using the <code>makeDataReport()</code> function? What about consistency in the data? What about uniqueness in the data?</p></li>
+</ol>
+<p>Note how everything is documented and can be used in collaboration with a research partner.</p>
+<p>The argument <code>checks</code> can be used to control which checks are performed for variables of each supported class. The helper function <code>setChecks()</code> makes it easy to add or remove certain checks for certain variable classes while <code>allCheckFunctions()</code> returns an overview of all available checkFunctions to choose from.</p>
+<p>The following bit of code shows how to change the choice of checks for <code>numeric</code> variables to <em>not</em> include a check for outliers (i.e. the checkFunction <code>identifyOutliers</code>):</p>
+<pre class="r"><code>makeDataReport(bigPresidentData, replace = TRUE,
+               checks = setChecks(numeric = defaultNumericChecks(remove=&quot;identifyOutliers&quot;)))
+
+#or, by without the use of defaultNumericChecks():
+makeDataReport(bigPresidentData, replace  = TRUE,
+               checks = setChecks(numeric = &quot;identifyMissing&quot;))</code></pre>
+<p>Now, it’s your turn to make a <code>makeDataReport()</code> call that does <em>not</em> check whether or not <code>character</code> variables have less than 5 unique levels. You can proceed as follows:</p>
+<ol start="4" style="list-style-type: decimal">
+<li><p>Use <code>allCheckFunctions()</code> to find out which checkFunction does the check for less than 5 unique values. Check that this function is indeed among the default checkFunctions for <code>character</code> variables by calling <code>defaultCharacterChecks()</code>.</p></li>
+<li><p>Use the <code>checks</code> argument, <code>setChecks()</code> and <code>defaultCharacterChecks()</code> to remove the “less than 5 unique values”-check from the checks performed for <code>character</code> variables. Look at the overview table on the first page of your report. Can you find a difference?</p></li>
+</ol>
+<p>The default plots used in a <code>dataMaid</code> report are made using the <code>ggplot2</code> package. However, you can change the plot style to base <code>R</code> graphics if you please by using the <code>visuals</code> argument in <code>makeDataReport()</code>.</p>
+<ol start="6" style="list-style-type: decimal">
+<li><p>Use <code>allVisualFunctions()</code> to identify the name of the visualFunction that you need to use if you want base R graphics style plots.</p></li>
+<li><p>Look at the documentation for <code>setVisuals()</code> e.g. by calling <code>?setVisuals</code>. Here, you see an argument called <code>all</code>. Call <code>setVisuals()</code> in the console using the <code>all</code> argument to specify the <code>graphics</code> style plots. Try also calling <code>setVisuals()</code> with the new function in the <code>factor</code> and <code>character</code> arguments only.</p></li>
+<li><p>Use <code>makeDataReport()</code>’s <code>visuals</code> argument and <code>setVisuals()</code> to obtain a data report where <code>character</code> and <code>factor</code> variables use base R graphics plots, while all other variable classes use <code>ggplot2</code> plots.</p></li>
+<li><p>The choice of summaries included for each variable class in the report can also be controlled, and the manner in which this is done is very similar to the procedures you have tried for checks and visuals in the above. Experiment with the functions <code>setSummaries()</code>, <code>allSummaryFunctions()</code> and <code>defaultCharacterSummaries()</code> in order to remove “Mode” from the summaries listed for such variables in the data report (using the argument <code>summaries</code>).</p></li>
+<li><p>We would now like a report that only displays the results of checks (no visuals or summaries) and only lists variables that actually were found to have potential problems. But for each problem found, we would like to see <em>all</em> problematic values listed, not just the first 10, as is currently the case. Moreover, we would like to rename the report title (as displayed on the front page) to be “Problem flagging report”, and we would also like to have “problemflagging” appended to the file name of the report, so that we can easily tell it apart from the usual data report.</p>
+<p>Look at the documentation for <code>makeDataReport()</code> and try to produce the report described here.</p></li>
+</ol>
+<div id="exercise-2b---using-datamaid-interactively" class="section level2">
+<h2>Exercise 2b - using <code>dataMaid</code> interactively</h2>
+<p>The primary intent of the <code>dataMaid</code> package is to generate the combined report produced by the <code>makeDataReport()</code>. However, the report generated by <code>makeDataReport()</code> are produced by a series of check, summary, and visualization function that can be called directly. This enables us to work interactively with the functions that are part of the <code>dataMaid</code> package.</p>
+<p>Recall that the <code>allCheckFunctions()</code>, <code>allSummaryFunctions()</code>, and <code>allVisualFunctions()</code> show the built-in functions that are used for checks, summaries, and visuals, respectively.</p>
+<ol style="list-style-type: decimal">
+<li>Run <code>check(bigPresidentData$ageAtInauguration)</code>, <code>visualize(bigPresidentData$ageAtInauguration)</code>, and <code>summarize(bigPresidentData$ageAtInauguration)</code> and verify that you obtain information identical to what you saw in the report previously generated by <code>makeDataReport(bigPresidentData)</code>.</li>
+</ol>
+<p>Look at <code>str(check(bigPresidentData$ageAtInauguration))</code>. The <code>check()</code> function returns a list with a length matching the number of checks, and each element is itself a list of length 3 containing information about whether a problem was found, the message that is printed in the report, and the list of observations that gave rise to the problem.</p>
+<ol start="2" style="list-style-type: decimal">
+<li>Earlier, we saw how we could modify the choice of checks by using the <code>checks</code> argument in combination with the <code>setChecks()</code> function. Modify the manual check for <code>presidencyYears</code> such that it only returns potential outliers.</li>
+</ol>
+<p>When a particular value is flagged as a potential error we might want to report this back to the data provider so they can verify if the data is correct. In order to do this we need to be able to identify the <em>rows</em> that give rise to these potential problems.</p>
+<ol start="3" style="list-style-type: decimal">
+<li><p>Use <code>check()</code> to identify the values that are thought to be potential outliers for the <code>presidencyYears</code> variable and store the result in an object <code>problems</code>.</p>
+<p>Recall that <code>problems</code> consists of a list (of 1 element) of lists. Return the vector with the <code>problemValues</code> and save them to a vector <code>probs</code>. [ Hint: You can reference elements of a list using double square brackets <code>[[]]</code> and elements of a list can be referenced using the <code>$</code> operator ]</p></li>
+<li><p>Use the vector of potential error values to identify the indices (rows) of <code>bigPresidentData</code> which contain values for <code>presidencyYears</code> that are part of the vector of problem values, <code>probs</code>. [ Hint: the operator <code>%in%</code> provides a way to return the indices of a vector that contain elements that are found within another vector. ]</p>
+<p>Print all the rows that were just identified.</p></li>
+</ol>
+<p>We can also use <code>check()</code> on a full data frame. This will return a list of lists of lists. We can use this to extract check results across different variables.</p>
+<p>For the next 3 questions we will use the <code>toyData</code> dataset.</p>
+<ol start="5" style="list-style-type: decimal">
+<li><p>Run the following two lines to load the <code>toyData</code> dataset and print it</p>
+<pre class="r"><code>data(toyData)
+toyData</code></pre>
+<pre><code>## # A tibble: 15 x 6
+##    pill  events region change id    spotifysong
+##    &lt;fct&gt;  &lt;dbl&gt; &lt;fct&gt;   &lt;dbl&gt; &lt;fct&gt; &lt;fct&gt;      
+##  1 red     1.00 a      -0.626 1     Irrelevant 
+##  2 red     1.00 a       0.184 2     Irrelevant 
+##  3 red     1.00 a      -0.836 3     Irrelevant 
+##  4 red     2.00 a       1.60  4     Irrelevant 
+##  5 red     2.00 a       0.330 5     Irrelevant 
+##  6 red     6.00 b      -0.820 6     Irrelevant 
+##  7 red     6.00 b       0.487 7     Irrelevant 
+##  8 red     6.00 b       0.738 8     Irrelevant 
+##  9 red   999    c       0.576 9     Irrelevant 
+## 10 red    NA    c      -0.305 10    Irrelevant 
+## 11 blue    4.00 c       1.51  11    Irrelevant 
+## 12 blue   82.0  .       0.390 12    Irrelevant 
+## 13 blue   NA    &quot; &quot;    -0.621 13    Irrelevant 
+## 14 &lt;NA&gt;  NaN    other  -2.21  14    Irrelevant 
+## 15 &lt;NA&gt;    5.00 OTHER   1.12  15    Irrelevant</code></pre></li>
+</ol>
+<p>We will try to identify <em>all</em> the values found in the dataset that are possible missing values that have been wrongly encoded.</p>
+<ol start="6" style="list-style-type: decimal">
+<li><p>Do a full <code>check()</code> on the full <code>toyData</code> data frame but only consider the <code>identifyMissing</code> check. [ Hint: Note you can use the <code>all=&quot;identifyMissing&quot;</code> argument to <code>setChecks()</code> as described previously ]</p></li>
+<li><p>(Somewhat R-tricky) Return a vector of values that are potential missing values across the full dataset. [ Hint: You can use <code>sapply()</code> to extract the <code>problemValues</code> for each element in the list, and then wrap it in <code>unlist()</code> to combine it all into a single list.]</p>
+<p>This approach is especially useful if you have data in wide format and you want to summarize problem values across different repeats of the same underlying variable (eg, if it is the same value measured over time).</p></li>
+</ol>
+</div>
+<div id="exercise-2c---customizing-new-function" class="section level2">
+<h2>Exercise 2c - customizing new function</h2>
+<p>Build your own <code>summaryFunction</code> and <code>checkFunction</code> Next up is the task of writing custom summaryFunctions and checkFunctions. Note that a complete guide to writing such extensions is available in the vignette: <code>vignette(&quot;extending_dataMaid&quot;)</code>. We do not cover writing visualFunctions in the exercises, but we recommend you to look through the vignette if you are particularly interested in this subject.</p>
+<div id="make-a-summaryfunction-refcat" class="section level4">
+<h4>Make a summaryFunction: <code>refCat()</code></h4>
+<p>First up is building a summaryFunction, <code>refCat()</code>, which will give en reference category for factor variables, i.e. the first level. For instance, for the variable <code>pill</code> in <code>toyData</code>, the reference category is <code>blue</code>:</p>
+<pre class="r"><code>library(dataMaid)
+toyData$pill</code></pre>
+<pre><code>##  [1] red  red  red  red  red  red  red  red  red  red  blue blue blue &lt;NA&gt;
+## [15] &lt;NA&gt;
+## Levels: blue red</code></pre>
+<p>Below, we have provided a template for building <code>refCat()</code> that you can use as a starting point. There are a few points to note about this function:</p>
+<ul>
+<li>The final call to <code>summaryFunction()</code> changes the class of the output, so that it will be indistinguishable from that of the built-in summaryFunctions.</li>
+<li>The list argument used for <code>summaryFunction()</code> has three entries, <code>feature</code>, <code>result</code> and <code>value</code>. In the example below, the contents of <code>result</code> and <code>value</code> are identical, but generally, <code>result</code> should be used for the result one wants printed in the data report, while <code>value</code> is not mandatory, but can be used to store whatever we are summarizing in its original data class.</li>
+</ul>
+<pre class="r"><code>refCat &lt;- function(v, ...) {
+  val &lt;- #the reference category of the variable v
+  res &lt;- val
+  summaryResult(list(feature = &quot;Reference category&quot;, result = res,
+                     value = val))
+}</code></pre>
+<ol style="list-style-type: decimal">
+<li><p>Use the template to finish writing <code>refCat()</code>. Call it on <code>pill</code> from <code>toyData</code> in order to test whether it is working.</p></li>
+<li><p>Now, we will add <code>refCat()</code> to <code>dataMaid</code>s known summaryFunctions. First, try calling <code>allSummaryFunctions()</code> to see what summary functions are already available. We want <code>refCat()</code> to be added to the output of this function. This is done by use of <code>summaryFunction()</code>. Fill in the missing pieces in the code below, run it, and try calling <code>allSummaryFunctions()</code> again afterwards.</p></li>
+</ol>
+<pre class="r"><code>refCat &lt;- summaryFunction(refCat,
+  description = #Text describing what the summaryFunction does,
+    ,
+  classes = c(#[vector of data types that the function is intended for]
+    )
+  )</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Lastly, we will use <code>refCat()</code> from <code>makeDataReport()</code>. Run the following code bit, adding <code>refCat()</code> to the summaries used for factor variables and look at the result.</li>
+</ol>
+<pre class="r"><code>makeDataReport(bigPresidentData, 
+               summaries = setSummaries(factor = defaultFactorSummaries(add = &quot;refCat&quot;)),
+               vol = &quot;_withRefCat&quot;)</code></pre>
+</div>
+<div id="make-a-checkfunction-identifynonstartcase" class="section level4">
+<h4>Make a checkFunction: <code>identifyNonStartCase</code></h4>
+<p>We will now write a check function that checks whether character variables are written in start case (i.e., “With Capital Letters For Each New Word”). This might be relevant for variables containing names. Again, we give a template below that can be used as a starting point.</p>
+<pre class="r"><code>identifyNonStartCase &lt;- function(v, nMax, maxDecimals, ...) {
+  
+  #do the check
+  problemValues &lt;- #vector of values in v that are problematic, i.e. that are not 
+    #written in start case. If no problem is encountered, it should be set to NULL
+  
+  problem &lt;- #is there a problem? TRUE/FALSE
+  
+  problemStatus &lt;- list(problem = problem,
+                        problemValues = problemValues)
+
+  problemMessage &lt;- #Message that is printed prior to listing
+                    # problem values in the dataMaid output,
+                    # ending with a colon
+    
+  outMessage &lt;- messageGenerator(problemStatus, problemMessage, nMax)
+
+  checkResult(list(problem = problem,
+    message = outMessage,
+    problemValues = problemValues))
+}
+
+identifyNonStartCase &lt;- checkFunction(identifyNonStartCase,
+  description = #Some text describing the checkFunction
+    ,
+  classes = c(#[the data types that this function is intended to be used for]
+    )
+)</code></pre>
+<p>A few comments for the helper functions seen in the template:</p>
+<ul>
+<li><code>messageGenerator()</code> helps creating streamlined, properly escaped messages that can be printed in the data report without any problems. It also ommits extra problemValues, if <code>nMax</code> is smaller than the encountered number of problemValues.</li>
+<li><code>checkResult()</code> works just like <code>summaryResult()</code> and converts the output class. Note that <code>problemValues</code> must be in their original data class (i.e. the raw values from <code>v</code>), because then the contents of <code>problemValues</code> can be used to identify <em>where</em> problems were found.</li>
+<li><code>checkFunction()</code> is also like its <code>summaryFunction</code> cousin mentioned above: It converts the funciton into a <code>checkFunction</code> and makes sure that it becomes available in a <code>allCheckFunctions()</code> call.</li>
+</ul>
+<ol start="4" style="list-style-type: decimal">
+<li><p>Finish <code>identifyNonStartCase()</code>. A few tips that might be helpful:</p>
+<ul>
+<li>One strategy for a check like the current one is first manipulating the variable so that it adhers to the check-rule (in this case: is in start case) and secondly, comparing the original version of the variable with the new one. Any entries that differ in the two versions of the variables are then deemed <code>problemValues</code> and the <code>problem</code> indicator must be set to <code>TRUE</code> if <code>length(problemValues &gt; 0)</code>.<br />
+</li>
+<li><code>strsplit()</code> splits character strings into smaller parts. Try calling it on a character string with <code>split = &quot; &quot;</code>.</li>
+<li><code>toupper()</code> and <code>tolower()</code> changes the case for letters to upper- and lower case, respectively.</li>
+<li>If you are familiar with regular expressions, this is of course also a very good strategy for identifying non-start case values.</li>
+</ul></li>
+<li><p>Use <code>identifyNonStartCase()</code> on the variable <code>stateOfBirth</code> from <code>bigPresidentData</code>. Try using it on all <code>character</code> variables in <code>bigPresidentData</code> by use of the function <code>check()</code>.</p></li>
+<li><p>Add <code>identifyNonStartCase()</code> to the checks used on character variables in a <code>makeDataReport()</code> call on <code>bigPresidentData</code>. Use the argument <code>vol = &quot;_nonStartCase&quot;</code> to give the new report a different file name than the old ones. Compare the new report with an old version. Can you find the description you wrote for <code>identifyNonStartCase()</code> when calling <code>checkFunction()</code>?</p></li>
+</ol>
+</div>
+</div>
+</div>
+<div id="exercise-3" class="section level1">
+<h1>Exercise 3</h1>
+<p>In order to solve the exercises below, you will need to use logical operators in <code>R</code>. Note that their documentation is available through a <code>?Logic</code> call. Here is a brief summary of the most commonly used logical operators:</p>
+<p><code>&amp;</code>: And. <code>x &amp; y</code> evaluates to <code>TRUE</code> if both <code>x</code> and <code>y</code> evaluate to <code>TRUE</code>. <code>|</code>: Or. <code>x | y</code> evaluates to <code>TRUE</code> if either <code>x</code> or <code>y</code> evaluate to <code>TRUE</code>. <code>!</code>: Not. <code>!x</code> evaluates to <code>TRUE</code> if <code>x</code> evaluates to <code>FALSE</code> (and vice versa).</p>
+<p>You will also need to use relational operators, which are documented in <code>?Comparison</code>:</p>
+<p><code>&lt;</code>: Strictly smaller than. <code>&gt;</code>: Strictly greater than. <code>&lt;=</code>: Smaller than. <code>&gt;=</code>: Greater than. <code>==</code>: Equals - note the double equality sign! <code>!=</code>: Not equal.</p>
+<p>Note that these relational operators are not just implemented for comparing numbers, but also dates.</p>
+<div id="row-wise-constraints" class="section level3">
+<h3>Row-wise constraints</h3>
+<p>Below, we list some sets of variables in <code>bigPresidentData</code> for which logical row-wise constraints must be fulfilled. For each set of variables, identify what logical constraint(s) must be satisfied and check if it does indeed hold, using either <code>verify()</code> from <code>assertr</code> or <code>validator()</code> and <code>confront()</code> from <code>validate</code>. We have provided an example below that you can use for inspiration.</p>
+<ul>
+<li><code>orderOfPresidency</code> and <code>presidencyBeginDate</code></li>
+<li><code>birthday</code>, <code>dateOfDeath</code>, <code>presidencyBeginDate</code> and <code>presidencyEndDate</code></li>
+<li><code>presidencyBeginDate</code>, <code>presidencyEndDate</code> and <code>presidencyYears</code></li>
+<li><code>birthday</code>, <code>ageAtInauguration</code> and <code>presidencyBeginDate</code></li>
+</ul>
+<p>Tip: The <code>floor()</code> function rounds a number down to the nearest, smaller integer.</p>
+<div id="example" class="section level4">
+<h4>Example</h4>
+<p>We wish to ensure that all presidents are born at an earlier date than their time of death (if relevant). This can be done in <code>assertr</code> by use of the <code>verify()</code> function:</p>
+<pre class="r"><code>library(assertr)
+library(dataMaid)
+data(bigPresidentData)
+
+#crashes due to missing information in dateOfDeath:
+verify(bigPresidentData, birthday &lt; dateOfDeath) </code></pre>
+<pre><code>## Error in if (all(logical.results) &amp;&amp; is.null(attr(data, &quot;assertr_errors&quot;))) return(success_fun(data)): manglende værdi hvor TRUE/FALSE er krævet</code></pre>
+<pre class="r"><code>#possible solution: change check such that each observation either
+#has to be missing in dateOfDeath (is.na()) or (|) birthday must be
+#strictly smaller than dateOfDeath. 
+head(verify(bigPresidentData, is.na(dateOfDeath) | birthday &lt; dateOfDeath))</code></pre>
+<pre><code>##     lastName firstName orderOfPresidency   birthday dateOfDeath
+## 1 Washington    George                 1 1732-02-22  1799-12-14
+## 2      Adams      John                 2 1735-10-30  1826-07-04
+## 3  Jefferson    Thomas                 3 1743-04-13  1826-07-04
+## 4    Madison     James                 4 1751-03-16  1836-06-28
+## 5     Monroe     James                 5 1758-04-28  1831-07-04
+## 6      Adams      John                 6 1767-07-11  1848-02-23
+##    stateOfBirth                                     party
+## 1      Virginia                               Independent
+## 2 Massachusetts                                Federalist
+## 3      Virginia                     Democratic-Republican
+## 4      Virginia                     Democratic-Republican
+## 5      Virginia                     Democratic-Republican
+## 6 Massachusetts Democratic-Republican/National Republican
+##   presidencyBeginDate presidencyEndDate assassinationAttempt  sex
+## 1          1789-04-30        1797-03-04                    0 Male
+## 2          1797-03-04        1801-03-04                    0 Male
+## 3          1801-03-04        1809-03-04                    0 Male
+## 4          1809-03-04        1817-03-04                    0 Male
+## 5          1817-03-04        1825-03-04                    0 Male
+## 6          1825-03-04        1829-03-04                    0 Male
+##   ethnicity presidencyYears ageAtInauguration favoriteNumber
+## 1 Caucasian               7                57    3+0.000000i
+## 2 Caucasian               3                61    4+0.000000i
+## 3 Caucasian               8                57    0+1.414214i
+## 4 Caucasian               8                57   10+0.000000i
+## 5 Caucasian               8                58    3+0.000000i
+## 6 Caucasian               4                57    9+0.000000i</code></pre>
+<pre class="r"><code>  #check passed so the whole dataset is returned - we use head() to only 
+  #display the first 5 observations</code></pre>
+<p>The same check can be made in <code>validate</code> by creating a <code>validator</code> object and confronting the data with it:</p>
+<pre class="r"><code>library(validate)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;validate&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:dataMaid&#39;:
+## 
+##     description, description&lt;-</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     expr</code></pre>
+<pre class="r"><code>bdaycheck &lt;- validator(birthday &lt; dateOfDeath)</code></pre>
+<pre><code>## Found more than one class &quot;rule&quot; in cache; using the first, from namespace &#39;cli&#39;</code></pre>
+<pre><code>## Also defined by &#39;validate&#39;</code></pre>
+<pre class="r"><code>summary(confront(bigPresidentData, bdaycheck))</code></pre>
+<pre><code>##   name items passes fails nNA error warning             expression
+## 1   V1    46     40     0   6 FALSE   FALSE birthday &lt; dateOfDeath</code></pre>
+<p>And again, we see that all observations either have missing information in the check or pass it.</p>
+</div>
+</div>
+<div id="advanced-assertr-write-predicate-functions" class="section level3">
+<h3>Advanced (<code>assertr</code>): Write predicate functions</h3>
+<p>We now turn to the use of predicate functions together with <code>assert()</code> and <code>insist()</code>. A predicate function only needs to adher to two criteria:</p>
+<ol style="list-style-type: decimal">
+<li>It must take a variable as its first argument</li>
+<li>It must return <code>FALSE</code> (or a vector containing <code>FALSE</code>) if the check was not succesful, i.e. <code>assert()</code> should alert the user of a problem.</li>
+</ol>
+<p>For example, the following predicate function checks whether the first character in each entry of a variable is a capital case letter (note that <code>LETTERS</code> is a build-in variable in <code>R</code> that contains all the letters in capitals):</p>
+<pre class="r"><code>foo &lt;- function(x) {
+  substr(x, 1, 1) %in% LETTERS
+}</code></pre>
+<p>Note that the function returns a logical vector of the same length as <code>x</code> where the entries are <code>TRUE</code> whenever the first character is a letter and <code>FALSE</code> otherwise. We can try it out on <code>firstName</code> of <code>bigPresidentData</code>:</p>
+<pre class="r"><code>library(dataMaid)
+library(assertr)
+data(bigPresidentData)
+
+assert(bigPresidentData, foo, firstName)</code></pre>
+<pre><code>## Column &#39;firstName&#39; violates assertion &#39;foo&#39; 1 time
+##   index value
+## 1    45     .</code></pre>
+<pre><code>## Error: assertr stopped execution</code></pre>
+<p>Tip: The <code>assertr</code> vignette can be accessed by calling <code>vignette(&quot;assertr&quot;)</code>.</p>
+<ol style="list-style-type: decimal">
+<li>Make a predicate function that checks if all characters in each entry of a variable is a letter (tip: small case letters are available in <code>letters</code>). Apply this function to <code>firstName</code> and <code>lastName</code> using <code>assert()</code>.</li>
+<li>Make a new version of your function from 1) so that the user can specify the set that each character of each entry must be in. Use your new function to apply a check to <code>firstName</code> and <code>lastName</code> that will pass. It might be helpful to look at the source code of <code>in_set()</code>. Note that your function will be a predicate generating function.</li>
+<li>Make a new version of your function from 2) so that the check is performed only for entries that have more characters than the average of entry lengths in the variable. This will be a function that generates predicate generating functions and it should be used in <code>insist()</code>. It may be useful to look at the source code of <code>within_n_bounds()</code>.</li>
+</ol>
+</div>
+<div id="advanced-validate-one-at-a-time-please" class="section level3">
+<h3>Advanced (<code>validate</code>): One at a time, please!</h3>
+<p>There can only be one president at a time. However, a mistake in the data has caused two presidencies to overlap. Locate the error using <code>validator()</code> and <code>confront()</code> from <code>validate</code>.</p>
+<p>Tip: It may be helpful to begin by sorting the data according to <code>presidencyBeginDate</code>.</p>
+<hr />
+</div>
+</div>
+<div id="exercise-4" class="section level1">
+<h1>Exercise 4</h1>
+<p>Until now we have identified a number of errors and inconsistencies in the <code>bigPresidentData</code>. For each data error you encountered in the above, your should:</p>
+<ol style="list-style-type: decimal">
+<li>Corrects the error</li>
+<li>Check the resulting dataset to ensure that you did indeed clean up the data errors.</li>
+</ol>
+<p>When all the corrections are completed you should be able to run all the error checks from <code>dataMaid</code> and <code>validate</code> and end up without any critical errors.</p>
+<p>Remember to follow <strong>rules 1 and 2</strong> and consider how these corrections best are documented.</p>
+<div id="exercise-4b" class="section level2">
+<h2>Exercise 4b</h2>
+<p>For now we assume that we have a dataset that has been screened and is clean enough to be used for subsequent analyses.</p>
+<ol style="list-style-type: decimal">
+<li>Use the <code>makeCodebook()</code> function to produce a final codebook that could be passed on as a documentation (of the dataset) for the data analysis.</li>
+<li>Use the option to set <code>label</code> and <code>shortDescription</code> attributes for the dataset to explain that:
+<ol style="list-style-type: lower-alpha">
+<li>The information in <code>favoriteNumber</code> have been obtained by consulting an Ouija board or - when that failed - just typing in a number and consequently the accuracy may be low.</li>
+<li>For <code>assassinationAttempt</code>, 1 means yes and 0 means no</li>
+<li>For the <code>firstName</code> it is literally the first name. No middle names or initials.</li>
+</ol></li>
+</ol>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
