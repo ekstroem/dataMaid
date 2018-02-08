@@ -2,6 +2,7 @@
 
 *   Added makeCodebook() function to use a default set of arguments to produce a codebook-like document.
 *   Added the bigPresidentData dataset 
+*   Various minor bug fixes
 
 # dataMaid 1.0.0
 
