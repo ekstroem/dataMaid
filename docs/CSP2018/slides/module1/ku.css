@@ -1,0 +1,381 @@
+/************
+ *
+ * KU - Remark tweaks
+ * 
+ * Claus Ekstrøm 2016-2017
+ *
+ * This CSS file consists of two types of changes: 1) changes to the default style, and 2) new additions
+ * There is no ordering of these and it would be a good idea if they were added in separate sections
+ * 
+ ************/
+
+@import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+@import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+@import url(https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700);
+
+/* CE Added my favorite fonts */
+@import url('https://fonts.googleapis.com/css?family=Alegreya|Alegreya+Sans');
+
+body { font-family: 'Droid Serif', 'Palatino Linotype', 'Book Antiqua', Palatino, 'Microsoft YaHei', 'Songti SC', serif;
+       background-color:#000;
+     }
+
+/* Default background colour, and font size */
+.remark-slide-content{ background-color: #000;
+		       font-family: 'Fira Sans', 'Yanone Kaffeesatz';
+		       color: #fff;
+		       font-size: 220%;    /* Regular text */
+/*		       font-family: 'Alegreya Sans', sans-serif; */
+		       font-family: 'Alegreya', serif;		       
+		     }
+
+/* Remove the drop box shadow around the slides in full screen */
+.remark-slide-scaler {
+    -webkit-box-shadow: 0 0 0px #888;
+    box-shadow: 0 0 0px #888;
+}
+
+/* Change the overall background colour _outside_ the actual slides */
+body:-webkit-full-screen {
+    background: #000;
+}
+
+
+/****************
+ *
+ * Tables
+ *
+ ****************/
+
+table { display: inline-block; }  /* Fix centering of tables  */
+
+table th {
+    background-color: #901A1E; /* KUs farve for table headers */
+    padding: 0px 6px; 
+}
+
+tbody tr:nth-child(odd) {   /* Zebra stipes for tables */
+    background-color: #444;
+}
+tbody tr:nth-child(even) {   /* Zebra stipes for tables */
+    background-color: #666;
+}
+
+table td  { padding: 0px 16px; }
+
+
+/***********
+ *
+ * Changed CSS
+ *
+ **************/
+
+
+
+/* Insert logo as background image */
+.kulogo {
+    background-image: url(kulogowhiteq.png);
+    background-position: 100% 100%;
+    background-size: 30%;
+}
+
+.sundlogo {
+    background-image: url(sundlogowhiteq.png);
+    background-position: 100% 100%;
+    background-size: 30%;
+}
+
+
+video#videobg {
+    position: fixed;
+    top: 50%; left: 50%;
+    z-index: 1;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%);
+}
+
+.dimbg {
+    -webkit-filter: blur(5px) opacity(.3);
+    -moz-filter: blur(10px) opacity(.3);
+    -o-filter: blur(5px) opacity(.3);
+    -ms-filter: blur(5px) opacity(.3);
+    filter: blur(5px) opacity(.3);
+    /*    opacity: 0.5; */
+}
+
+
+/**************
+ *
+ * Font size and colours
+ *
+ **************/
+
+
+.Large { font-size: 144% }
+.large { font-size: 120% }
+.small { font-size: 90% }
+.footnotesize { font-size: 80% }
+.scriptsize { font-size: 70% }
+
+.black { color: black; }
+
+.bold { font-weight: bold; }
+.bolder { font-weight: bolder; }
+
+
+/**************
+ *
+ * Fancy stuff
+ *
+ **************/
+
+/*  */
+
+.rotate-left>img {
+    -webkit-transform: rotate(-2deg);
+    -moz-transform: rotate(-2deg);
+    transform: rotate(-2deg); 
+}
+
+.rotate-right>img {
+    -webkit-transform: rotate(2deg);
+    -moz-transform: rotate(2deg);
+    transform: rotate(2deg);     
+}
+
+
+.polaroid img {
+    border: 10px solid #fff;
+    border-bottom: 45px solid #fff;
+    -webkit-box-shadow: 3px 3px 3px #111;
+    -moz-box-shadow: 3px 3px 3px #111;
+    box-shadow: 3px 3px 3px #111;
+}
+
+
+
+
+.cornerlift img
+{
+    position: relative;
+}
+
+
+.cornerlift img:before, .cornerlift img:after {
+			    
+    border: 10px solid #fff;
+    border-bottom: 45px solid #fff;
+			    
+  z-index: -1;
+  position: absolute;
+  content: "";
+  bottom: 15px;
+  left: 10px;
+  width: 50%;
+  top: 80%;
+  max-width:300px;
+  background: #777;
+  -webkit-box-shadow: 0 15px 10px #777;
+  -moz-box-shadow: 0 15px 10px #777;
+  box-shadow: 0 15px 10px #777;
+  -webkit-transform: rotate(-3deg);
+  -moz-transform: rotate(-3deg);
+  -o-transform: rotate(-3deg);
+  -ms-transform: rotate(-3deg);
+  transform: rotate(-3deg);
+}
+
+.cornerlift img:after {
+  -webkit-transform: rotate(3deg);
+  -moz-transform: rotate(3deg);
+  -o-transform: rotate(3deg);
+  -ms-transform: rotate(3deg);
+  transform: rotate(3deg);
+  right: 10px;
+  left: auto;
+}
+
+
+h1, h2, h3 {
+    font-family: 'Yanone Kaffeesatz';
+    font-family: 'Alegreya Sans', sans-serif; 
+    font-weight: normal;
+    font-weight: 600;
+}
+
+a, a > code {
+  /* Link colours */
+  color: rgb(164, 46, 50);
+  text-decoration: none;
+}
+
+.footnote {
+  position: absolute;
+  bottom: 3em;
+  font-size: 90%;
+}
+
+
+.fullimage {
+    z-index:-5;    
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto; 
+}
+
+.fullimage2 {
+    z-index:-5;    
+    min-width: 900px;
+    min-height: 900px;
+/*    width: auto;
+    height: auto; */
+}
+
+@page { margin: 0; }
+@media print {
+  .remark-slide-scaler {
+    width: 100% !important;
+    height: 100% !important;
+    transform: scale(1) !important;
+    top: 0 !important;
+    left: 0 !important;
+  }
+}
+
+
+/* Normal code output 
+   Note that .remark-code also control blocked mathematics
+*/
+.remark-code, .remark-inline-code { font-family: 'Source Code Pro', 'Lucida Console', Monaco, monospace;
+				    font-size: 90%;
+				    background-color: #333;				    
+				  }
+
+.remark-code-line-highlighted     { background-color: #901A1E; }  /* Color coding of highlighted code */
+
+
+.inverse .remark-code, .inverse .remark-inline-code { font-family: 'Source Code Pro', 'Lucida Console', Monaco, monospace;
+					     font-size: 90%;
+                                             background-color: #901A1E;    					     
+					   }
+
+
+
+.remark-code-line {
+    font-size: 90%;
+    background-color: #333;
+}
+
+
+/* Block math */ 
+.mjx-math {
+    font-size: 180%;
+}
+
+/* Block math 
+   Only this is unique to block (display) math
+*/ 
+.MJXc-display {
+    font-size: 120% !important;
+}
+
+
+/* Inline math */ 
+.mjx-chtml {
+    font-size: 100%; 
+}
+
+
+.inverse {
+    /*    background-color: #A72822; */
+    background-color: #901A1E;    
+    /*     color: #777872; */
+    color: #f3f3f3;
+    text-shadow: 0 0 20px #333;
+}
+
+.inverse h1, .inverse h2, .inverse h3 {
+    color: #f3f3f3;
+    text-shadow: 0 0 20px #333;
+//  line-height: 0.8em;
+}
+
+
+.white {
+    //    background-color: #A72822;
+    background-color: #BBBBBB;
+    //    color: #777872;
+    color: #030303;
+    text-shadow: 0 0 20px #333;
+}
+
+.white h1, .white h2, .white h3 {
+    color: #030303;
+    text-shadow: 0 0 20px #333;
+//  line-height: 0.8em;
+}
+
+
+
+.title-slide {
+    background-color: #0728A2;
+    color: #777872;
+    background-image: url(kulogowhiteq.png);
+    background-position: 100% 100%;
+    background-size: 30%;
+    background-color:#000;
+    color: #fff;
+}
+
+.title-slide h1 {
+    font-size: 165%;    /* Regular text */
+}
+
+.title-slide h2 {
+    font-size: 150%;    /* Regular text */
+}
+
+.title-slide h3 {
+    font-size: 120%;    /* Regular text */
+}
+
+
+/* Two-column layout */
+.left-column {
+  color: #777;
+  width: 20%;
+  height: 92%;
+  float: left;
+}
+
+.left-column h2:last-of-type, .left-column h3:last-child {
+  color: #000;
+}
+
+.right-column {
+  width: 75%;
+  float: right;
+  padding-top: 1em;
+}
+
+.pull-left {
+  float: left;
+  width: 47%;
+}
+
+.pull-right {
+  float: right;
+  width: 47%;
+}
+
+.pull-right ~ * {
+  clear: both;
+}
+
+img {
+  max-width: 100%;
+}

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cleaning Up the Data Cleaning Process</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Claus Thorn Ekstrøm and Anne Helby Petersen UCPH Biostatistics" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="ku.css" type="text/css" />
+    <link rel="stylesheet" href="animate.min.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Cleaning Up the Data Cleaning Process
+## Module 3: Row-wise constraints
+### Claus Thorn Ekstrøm and Anne Helby Petersen<br>UCPH Biostatistics
+### CSP, Portland, OR, Feb. 15th, 2018<br>.footnotesize[<a href="https://ekstroem.github.io/dataMaid/CSP2018/index.html">Slides/homepage</a>]
+
+---
+
+  
+
+
+##Row-wise or column-wise checks?
+
+&lt;img src="pics/colrow1.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+##Row-wise or column-wise checks?
+
+&lt;img src="pics/colrow2.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+##Row-wise or column-wise checks?
+
+&lt;img src="pics/colrow3.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+##Row-wise *and* column-wise constraints!
+  
+* `dataMaid` performs class dependent checks for each variable in a dataset, one at a time (column-wise)
+  + Pros: Easy to document what was (not) done, let's you get started without a lot of prior knowledge, easy to share with collaborators
+  + Shortcomings: Generally cannot detect internal consistency issues or use non-class dependent variable constraints
+
+---
+
+##Row-wise *and* column-wise constraints!
+
+An R-packages that performs row-wise checks: `validate`
+
+
+```r
+library(validate)
+```
+
+Note: Different use of the term "validation" - no longer about format, type and range, but used as synonym to "check". 
+
+---
+
+##`validate` - overview:
+
+* Splits checking into two steps:
+  1. Define the checking rules in a `validator` object, using the `valdiator()` function.
+  2. Confront the data with the rules in a call to `confront`, thereby obtaining a `confrontation` object.
+* Easy to asses what problems were found and to document what was checked (saved in `validator` object). 
+*  &lt;span style="color:red"&gt;Beware: Non-standard object storage might cause trouble!&lt;/span&gt;   
+
+---
+
+###Make `validator` object
+
+.footnotesize[
+
+```r
+val1 &lt;- 
+ validator(
+   ageAtDeath := floor((dateOfDeath - birthday)/365.25),  
+   `Adult president` = ageAtInauguration &gt;= 18,
+   `Alive at inauguration` = ageAtDeath &gt;= ageAtInauguration,
+   `Positive first name` = firstName*2 &gt; firstName,
+   `Death by assassination` = 
+     if (dateOfDeath == presidencyEndDate) 
+       assassinationAttempt == 1
+)
+```
+
+```
+## Found more than one class "rule" in cache; using the first, from namespace 'cli'
+```
+
+```
+## Also defined by 'validate'
+```
+]
+
+---
+
+###Confront data with `validator` object:
+.footnotesize[
+
+```r
+con1 &lt;- confront(bpD, val1)
+summary(con1)[, 1:6]
+```
+
+```
+##                     name items passes fails nNA error
+## 1        Adult.president    47     47     0   0 FALSE
+## 2  Alive.at.inauguration    47     40     1   6 FALSE
+## 3    Positive.first.name     0      0     0   0  TRUE
+## 4 Death.by.assassination    47     38     3   6 FALSE
+```
+]
+
+---
+
+##Understand confrontation results
+
+Lots of functions available for inspecting confrontations:
+* `summary()`: Overview of confrontation results
+* `aggregate()`: Compute percentage pass/fail/na 
+* `sort()`: Sort results by problem prevalence
+* `values()`: For each observation and each check: `TRUE`/`FALSE`/`NA`
+* `barplot()`: Visual overview of check results
+* `errors()`: What errors were caught?
+* `warnings()`: What warnings were caught?
+
+---
+
+##Warning: modify-by-reference
+
+* `validator` and `confrontation` objects imply use of "modify-by-reference" rather than "copy-on-modify" semantics (standard R)
+* Other package that uses "modify-by-reference": `data.table`
+* If one is not aware of modify-by-reference, it can have problematic consequences 
+  + Unintentional overwriting of full objects, attributes or parts
+  + Caching in rmarkdown does not work (but throws no errors)
+
+
+---
+
+
+##Warning: modify-by-reference
+
+
+```r
+v1 &lt;- validator(check1 = sex == "Male")
+v1
+```
+
+```
+## Object of class 'validator' with 1 elements:
+##  check1: sex == "Male"
+```
+
+```r
+v2 &lt;- v1  
+names(v2) &lt;- "All males"
+v1
+```
+
+```
+## Object of class 'validator' with 1 elements:
+##  All.males: sex == "Male"
+```
+
+
+---
+
+
+
+##Warning: modify-by-reference
+
+Make a copy using `[TRUE]`:
+
+```r
+v1 &lt;- validator(check1 = sex == "Male")
+v2 &lt;- v1[TRUE]  
+names(v2) &lt;- "All males"
+v1
+```
+
+```
+## Object of class 'validator' with 1 elements:
+##  check1: sex == "Male"
+```
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"slideNumberFormat": "%current%",
+"highlightStyle": "ir-black",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

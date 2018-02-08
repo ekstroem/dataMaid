@@ -1,0 +1,496 @@
+---
+title: "Cleaning Up the Data Cleaning Process"
+subtitle: "Module 2: Data Screening with dataMaid"
+author: "Claus Thorn Ekstrøm and Anne Helby Petersen<br>UCPH Biostatistics"
+date: "CSP, Portland, OR, Feb. 15th, 2018<br>.footnotesize[[Slides/homepage](https://ekstroem.github.io/dataMaid/CSP2018/index.html)]"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: ['default', 'ku.css', 'animate.min.css']
+    seal: true
+    nature:
+      ratio: '16:9'
+      slideNumberFormat: '%current%' 
+      highlightStyle: ir-black
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+
+background-image: url(pics/manbeer.jpg)
+background-size: 100%
+class: middle, center
+
+
+
+```{r setup, include=FALSE}
+library(knitr)
+options(htmltools.dir.version = FALSE, cache=TRUE)
+opts_chunk$set(comment = NA, prompt=TRUE)
+#opts_chunk$set(dev.args=list(bg="transparent"), fig.width=15, fig.height=7)
+source("kutheme.R")
+```
+
+
+# The RESCueH project
+
+
+---
+
+class: center
+
+# Timeline followback (TLFB)
+
+```{r, echo=FALSE}
+DF <- data.frame(day1=sample(1:25, 6),
+                 day2=c(NA, NA, sample(1:25, 3), 88),
+                 day3=c(NA, 99, 40, sample(1:25, 3)))
+head(DF, 4)
+```
+
+---
+
+class: center
+
+# Timeline followback (TLFB)
+
+```{r, echo=FALSE}
+head(DF, 6)
+```
+
+---
+
+background-image: url(pics/mau.png)
+background-size: 80%
+class: center
+
+# Monthly Alcohol units
+
+
+```{r echo=FALSE,message=FALSE, warning=FALSE, error=FALSE}
+library(extrafont)
+loadfonts()
+library(ggplot2)
+library(ggthemr)
+claus <- define_palette(swatch = c('#eeeeee', '#FFFACD','#901A1E', 'lightblue', 'green', 'blue', 'brown', 'purple', 'yellow'),
+  gradient = c(lower = 'red', upper = 'green'),
+                        background = "#222222",
+                        text = c("#eeeeee", "#eeeeee"),
+                        line = c("#ee1e1e", "#6e6e6e"), # Axis lines
+                        gridline = "#434343") # Gridlines
+
+ggthemr(claus, layout="scientific", type = 'outer', spacing=1.2)
+
+tlfb <- data.frame(units=dget("tlfb.txt"))
+
+p <- ggplot(tlfb, aes(units)) + geom_dotplot() +
+#     ggtitle("Baseline alcohol") +
+     xlab("Units") + ylab("Frequency") +
+     theme(text=element_text(size=24, family="Comic Sans MS"),
+           axis.text.y=element_blank(),
+           axis.ticks.y=element_blank())
+
+theme_xkcd <- theme(
+
+#  panel.background = element_rect(fill="transparent"),
+#  plot.background = element_rect(fill="transparent"),
+
+  #axis.ticks = element_line(colour=NA),
+##  panel.grid = element_line(colour="white"),
+  #axis.text.y = element_text(colour=NA),
+##  axis.text.x = element_text(colour="black"),
+  text = element_text(size=36, family="Humor Sans")
+)
+## p + theme_xkcd
+
+
+# Rotate the dot plot
+# p + coord_flip()
+
+
+
+#p <- ggplot(mtcars, aes(x=wt, y=mpg)) + geom_point(size=3) +
+#  ggtitle("Fuel Efficiency of 32 Cars") +
+#  xlab("Weight (x1000 lb)") + ylab("Miles per Gallon") +
+#  theme(text=element_text(size=16, family="Comic Sans MS"))
+#p
+```
+
+
+---
+
+# Reproducible research
+
+What **didn't** we check?
+
+--
+
+- Need **experts in relevant field**
+- Merge existing databases into megadatabases
+- New technologies revive old data
+
+
+---
+
+class: center
+
+```{r message=FALSE, echo=FALSE}
+library(dataMaid)
+data(toyData)
+```
+
+.small[
+```{r message=FALSE, echo=FALSE}
+toyData
+```
+]
+
+---
+
+class: middle
+
+# dataMaid
+
+```{r eval=FALSE}
+library(dataMaid)
+data(toyData)
+makeDataReport(toyData) #<<
+```
+
+Documentation to be **read** and **evaluated** by a human.
+
+
+See [github.com/ekstroem/dataMaid](github.com/ekstroem/dataMaid) for more info. Stable version on CRAN.
+
+
+---
+
+background-image: url(pics/flowchart2.png)
+background-size: 100%
+class: center
+
+# `dataMaid` flowchart
+
+
+```{r eval=TRUE,echo=FALSE, warning=FALSE, out.width='100%', out.height='60%'}
+library(DiagrammeR)
+library(DiagrammeRsvg)
+library(svglite)
+library(rsvg)
+
+grViz("
+  digraph {
+
+graph[layout = neato,
+      overlap=false,
+      rankdir = 'LR', 
+      bgcolor='#000000',
+      sep=.2]
+
+node[fontsize=20,
+      fillcolor = DimGray,
+      fontcolor = White,
+      fillcolor='#222222',
+      style=filled,
+      color=White]
+
+edge [color = White, penwidth=4]
+
+  'data frame'  -> 'summarize'
+    subgraph detail {
+       rank='same';
+       'summarize' -> 'visualize' -> 'check';
+       'check' -> 'summarize'; }
+'check' -> '.Rmd / render';
+  }")
+```
+
+
+
+
+
+---
+
+# Part 1: Data cleaning summary
+
+```{r res1, fig.align='center', echo=FALSE, out.width='100%'}
+knitr::include_graphics('pics/summ.png', dpi = NA)
+```
+
+
+
+---
+
+background-image: url(pics/miss.png)
+background-size: 100%
+
+# Part 2: Summary table
+
+---
+
+background-image: url(pics/out1.png)
+background-size: 100%
+
+# Part 3: Variable list
+
+
+---
+
+background-image: url(pics/out2.png)
+background-size: 100%
+
+
+---
+
+# `dataMaid` common arguments
+
+.small[
+
+| Argument      | Description   |
+| ------------- |:--------------------------------| 
+| `mode`        | Tasks to perform. `c("summarize", "visualize", "check")` is default |
+| `replace`      | Logical. Should existing dataMaid reports be overwritten? Default `FALSE`   | 
+| `output`      | Output format. Choices are `"pdf"`, `"html"`, "`"word"` | 
+| `onlyProblematic`      | Logical. Show only variable with problems. Default `FALSE`  |
+| `maxProbVals`  | Maximum number of unique values printed. Positive int or `Inf` (default 10)     | 
+
+]
+
+---
+
+class: inverse, middle
+
+# Exercise 2
+
+1.  Load the `dataMaid` package
+2.  Use `makeDataReport()` to generate a data report
+3.  Screen the `bigPresidentData` data for errors we did not find before.
+
+Hunt for errors!
+
+---
+
+class: center
+
+.small[
+```{r message=FALSE, echo=FALSE}
+toyData
+```
+]
+
+---
+
+# Using `dataMaid` interactively
+
+
+.footnotesize[
+```{r}
+check(toyData$events)
+check(toyData$events, 
+        numericChecks = "identifyMissing")
+```
+]
+
+
+???
+
+check er de funktioner, der bliver checket for
+
+Kan sætte specifikke (også i makeDataReport)
+
+Vis, at det er en liste med 2 elementer, og den form, som de har.
+
+---
+
+# Overview of `check` functions
+
+.footnotesize[
+```{r eval=FALSE,results='markup'}
+allCheckFunctions()
+```
+]
+
+
+.footnotesize[
+
+```
+----------------------------------------------------------------------------------
+name                 description                     classes                      
+-------------------- -------------------------------------------------------------
+identifyCaseIssues   Identify case issues            character, factor            
+
+identifyLoners       Identify levels with < 6 obs.   character, factor            
+
+identifyMissing      Identify miscoded missing       character, Date, factor,     
+                     values                          integer, labelled, logical,  
+                                                          numeric                      
+```                                                       
+]                                                    
+    
+and more                                                      
+                                                          
+---
+
+# Interactive `dataMaid` - visualizations
+
+.pull-left[
+.footnotesize[
+```{r, eval=FALSE}
+visualize(toyData$events)
+```
+
+Can also check the available `visual` functions
+
+```{r eval=FALSE}
+allVisualFunctions()
+```
+]
+]
+
+.pull-right[
+```{r, eval=TRUE, echo=FALSE}
+visualize(toyData$events)  # Visualize variable
+```
+]
+
+
+---
+
+# Interactive `dataMaid` - summaries
+
+.footnotesize[
+```{r, eval=TRUE}
+summarize(toyData$events)
+```
+]
+
+---
+
+# Using dataMaid interactively
+
+.small[
+```
+> allSummaryFunctions()
+
+-------------------------------------------------------------
+name         description          classes                    
+------------ -------------------- ---------------------------
+centralValue Compute median       character, Date, factor,   
+             or mode              integer, labelled, logical,
+                                  numeric                    
+
+countMissing Compute ratio of     character, Date, factor,   
+             missing obs.         integer, labelled, logical,
+                                  numeric                    
+
+minMax       Find min and max     integer, numeric, Date     
+             values                                                   
+quartiles    Compute 1st and 3rd quartiles Date, integer, numeric     
+
+uniqueValues Count number of unique values character, Date, factor,   
+                                           integer, labelled, logical,
+                                           numeric                    
+
+variableType Data class of variable        character, Date, factor,   
+                                           integer, labelled, logical,
+                                           numeric                    
+----------------------------------------------------------------------
+
+```
+]
+
+---
+
+# Extending `dataMaid`
+
+Custom check, visual, or summary functions.
+
+Few requirements --- input and output formats.
+
+Easiet to work with a **template system** and modify one of those. 
+
+Check vignette `vignette("extending_dataMaid")` for detailed instructions. Or the exercises!
+
+---
+
+## Custom `summaryFunction` - template
+
+.footnotesize[
+```
+mySummaryFunction <- function(v, ...) {
+  val <- [ result of whatever summary we are doing ]
+  res <- [ properly escaped version of val ]        
+  summaryResult(list(feature = "[Feature name]", 
+                     result = res,
+                     value = val))
+}
+```
+]
+
+Example (centralValue for numeric/integer)
+
+.footnotesize[
+```{r eval=FALSE}
+function (v, maxDecimals = 2) {
+    v <- na.omit(v)
+    val <- median(v)
+    summaryResult(list(feature = "Median", result = round(val, 
+        maxDecimals), value = val))
+}
+```
+]
+
+---
+
+## Custom `checkFunction` - template
+
+.small[
+```{r, eval=TRUE}
+isSSN <- function(v, nMax = NULL, ...) {
+  out <- list(problem = FALSE, 
+              message = "", 
+              problemValues=NULL)
+  if (class(v) %in% c("character", "factor", 
+                      "labelled")) {
+    if (any(grep("\\d{3}-\\d{2}-\\d{4}", v))) {
+      out$problem <- TRUE
+      out$message <- "Warning: Seems to contain SSNs."
+      out$problemValues <- "Will not show"
+    }  
+  }
+  out 
+}
+```
+]
+---
+
+## Using the function
+
+.footnotesize[
+```{r}
+DF <- data.frame(ids=c("111-22-3333","123-45-6789", 
+                       "111-22-3333"),
+                 id2=c("111223333", "123456789", "4728491283"), 
+                 stringsAsFactors=FALSE)
+
+check(DF, characterChecks = c("isSSN"))
+```
+
+]
+
+
+---
+
+class: inverse
+
+# Exercise 2b/2c
+
+How to tailor `dataMaid` to work with *your* dataset:
+
+*   Work interactively with `dataMaid` (exercise 2b)
+*   Create new custom summary, check and visualization functions (exercise 2c)
+
+Pick whatever you want. Or jump back and forth.
+
+
+
