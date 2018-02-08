@@ -1,32 +1,15 @@
 <!DOCTYPE html>
-
 <html xmlns="http://www.w3.org/1999/xhtml">
-
 <head>
-
-<meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="generator" content="pandoc" />
-
-
-
-
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="generator" content="pandoc">
 <title>Cleaning Up the Data Cleaning Process: Challenges and Solutions in R</title>
-
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
-<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
-<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
-<script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-
-<style type="text/css">code{white-space: pre;}</style>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet">
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script><script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script><script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script><script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script><link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet">
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script><script src="site_libs/navigation-1.1/tabsets.js"></script><link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet">
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script><style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
   pre:not([class]) {
     background-color: white;
@@ -40,11 +23,7 @@ if (window.hljs) {
     window.setTimeout(function() { hljs.initHighlighting(); }, 0);
   }
 }
-</script>
-
-
-
-<style type="text/css">
+</script><style type="text/css">
 h1 {
   font-size: 34px;
 }
@@ -70,14 +49,11 @@ h6 {
   text-align: left;
 }
 </style>
-
-<link rel="stylesheet" href="style.css" type="text/css" />
-
+<link rel="stylesheet" href="style.css" type="text/css">
 </head>
-
 <body>
 
-<style type = "text/css">
+<style type="text/css">
 .main-container {
   max-width: 940px;
   margin-left: auto;
@@ -98,8 +74,6 @@ button.code-folding-btn:focus {
   outline: none;
 }
 </style>
-
-
 <style type="text/css">
 /* padding for bootstrap navbar */
 body {
@@ -133,7 +107,6 @@ body {
   margin-top: -65px;
 }
 </style>
-
 <script>
 // manage active state of menu based on current page
 $(document).ready(function () {
@@ -150,24 +123,14 @@ $(document).ready(function () {
   // if it's got a parent navbar menu mark it active as well
   menuAnchor.closest('li.dropdown').addClass('active');
 });
-</script>
-
-
-<div class="container-fluid main-container">
+</script><div class="container-fluid main-container">
 
 <!-- tabsets -->
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
 });
-</script>
-
-<!-- code folding -->
-
-
-
-
-<script>
+</script><!-- code folding --><script>
 $(document).ready(function ()  {
 
     // move toc-ignore selectors from section div to header
@@ -192,9 +155,7 @@ $(document).ready(function ()  {
     // tocify
     var toc = $("#TOC").tocify(options).data("toc-tocify");
 });
-</script>
-
-<style type="text/css">
+</script><style type="text/css">
 
 #TOC {
   margin: 25px 0px 20px 0px;
@@ -251,9 +212,7 @@ div.tocify {
 
 
 </style>
-
-<!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
+<!-- setup 3col/9col grid for toc_float and main content  --><div class="row-fluid">
 <div class="col-xs-12 col-sm-4 col-md-3">
 <div id="TOC" class="tocify">
 </div>
@@ -276,7 +235,7 @@ div.tocify {
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li>
+<li>
   <a href="index.html">Home</a>
 </li>
 <li>
@@ -289,18 +248,19 @@ div.tocify {
   <a href="about.html">About</a>
 </li>
       </ul>
-      <ul class="nav navbar-nav navbar-right">
-        
-      </ul>
-    </div><!--/.nav-collapse -->
-  </div><!--/.container -->
-</div><!--/.navbar -->
+<ul class="nav navbar-nav navbar-right"></ul>
+</div>
+<!--/.nav-collapse -->
+  </div>
+<!--/.container -->
+</div>
+<!--/.navbar -->
 
 <div class="fluid-row" id="header">
 
 
 
-<h1 class="title toc-ignore">Cleaning Up the Data Cleaning Process: Challenges and Solutions in R</h1>
+<div class="page-header"><h1 class="title toc-ignore">Cleaning Up the Data Cleaning Process: Challenges and Solutions in R</h1></div>
 
 </div>
 
@@ -313,8 +273,7 @@ img {
 
 </style>
 <div class="figure">
-<img src="pics/csp2018logo.png" />
-
+<img src="pics/csp2018logo.png">
 </div>
 <p>Data cleaning and validation are the first steps in any data analysis, as the validity of the conclusions from the analysis hinges on the quality of the input data. Mistakes in the data can arise for any number of reasons, including erroneous codings, malfunctioning measurement equipment, and inconsistent data generation manuals.</p>
 <p>We present a systematic, analytical approach to data cleaning that will ensure the data cleaning process to be just as structured and well-documented as the rest of the data analysis. The primary software tool is the dataMaid R package, which implements an extensive and customisable suite of quality assessment tools that can be used to identify potential problems in a dataset. The results are summarised in an auto-generated, non-technical, stand-alone document readable by statisticians and non-statisticians alike. Thus, the course teaches practical skills that aid the dialogue between data analysts and field experts, while also providing easy documentation of reproducible data cleaning steps and data quality control.</p>
@@ -333,8 +292,10 @@ img {
 <h2>Installation</h2>
 <p>Before the course starts you should make sure that you have installed the latest version of:</p>
 <ul>
-<li><p>The following R packages:</p>
-<pre class="r"><code>install.packages(c(&quot;knitr&quot;, &quot;dataMaid&quot;))</code></pre></li>
+<li>
+<p>The following R packages:</p>
+<pre class="r"><code>install.packages(c("knitr", "dataMaid"))</code></pre>
+</li>
 </ul>
 </div>
 </div>
@@ -357,10 +318,7 @@ $(document).ready(function () {
 });
 
 
-</script>
-
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
+</script><!-- dynamically load mathjax for compatibility with self-contained --><script>
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
@@ -368,6 +326,5 @@ $(document).ready(function () {
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>
-
 </body>
 </html>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create an object of class checkFunction � checkFunction • dataMaid</title>
+<title>Create an object of class checkFunction — checkFunction • dataMaid</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -80,7 +80,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="http://biostatistics.dk">CSP 2018</a>
+      <a href="../CSP2018/index.html">CSP 2018</a>
     </li>
   </ul>
 </li>
@@ -205,7 +205,7 @@ if more knowledge about <code>checkFunction</code>s is required.</p>
 
 <span class='co'>#Convert it into a checkFunction</span>
 <span class='no'>isID</span> <span class='kw'>&lt;-</span> <span class='fu'>checkFunction</span>(<span class='no'>isID</span>, <span class='kw'>description</span> <span class='kw'>=</span> <span class='st'>"Identify ID variables (long, equal length values)"</span>,
-  <span class='kw'>classes</span> <span class='kw'>=</span> <span class='fu'><a href='allClasses.html'>allClasses</a></span>())</div><div class='output co'>#&gt; <span class='error'>Error in get(fName): object 'isID' not found</span></div><div class='input'>
+  <span class='kw'>classes</span> <span class='kw'>=</span> <span class='fu'><a href='allClasses.html'>allClasses</a></span>())</div><div class='output co'>#&gt; <span class='error'>Error in get(fName): objekt 'isID' blev ikke fundet</span></div><div class='input'>
 <span class='co'>#Call isID</span>
 <span class='fu'>isID</span>(<span class='fu'>c</span>(<span class='st'>"12345678901"</span>, <span class='st'>"23456789012"</span>, <span class='st'>"34567890123"</span>, <span class='st'>"45678901234"</span>))</div><div class='output co'>#&gt; $problem
 #&gt; [1] TRUE
@@ -321,7 +321,7 @@ if more knowledge about <code>checkFunction</code>s is required.</p>
 <span class='co'>#Make it a checkFunction:</span>
 <span class='no'>identifyColons</span> <span class='kw'>&lt;-</span> <span class='fu'>checkFunction</span>(<span class='no'>identifyColons</span>,
      <span class='kw'>description</span> <span class='kw'>=</span> <span class='st'>"Identify non-suffixed nor -prefixed colons"</span>,
-     <span class='kw'>classes</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"character"</span>, <span class='st'>"factor"</span>, <span class='st'>"labelled"</span>))</div><div class='output co'>#&gt; <span class='error'>Error in get(fName): object 'identifyColons' not found</span></div><div class='input'>
+     <span class='kw'>classes</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"character"</span>, <span class='st'>"factor"</span>, <span class='st'>"labelled"</span>))</div><div class='output co'>#&gt; <span class='error'>Error in get(fName): objekt 'identifyColons' blev ikke fundet</span></div><div class='input'>
 <span class='co'>#Call it:</span>
 <span class='fu'>identifyColons</span>(<span class='fl'>1</span>:<span class='fl'>100</span>)</div><div class='output co'>#&gt; No problems found.</div><div class='input'><span class='fu'>identifyColons</span>(<span class='fu'>c</span>(<span class='st'>"a:b"</span>, <span class='fl'>1</span>:<span class='fl'>10</span>, <span class='st'>":b"</span>, <span class='st'>"a:b:c:d"</span>))</div><div class='output co'>#&gt; Note: The following values include colons: a:b, a:b:c:d.</div><div class='input'>
 <span class='co'>#identifyColons now appears in a allCheckFunctions() call:</span>
@@ -425,7 +425,7 @@ if more knowledge about <code>checkFunction</code>s is required.</p>
 
 <span class='co'>#Make it a checkFunction</span>
 <span class='no'>identifyNeg</span> <span class='kw'>&lt;-</span> <span class='fu'>checkFunction</span>(<span class='no'>identifyNeg</span>, <span class='st'>"Identify negative values"</span>,
-  <span class='kw'>classes</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"integer"</span>, <span class='st'>"numeric"</span>))</div><div class='output co'>#&gt; <span class='error'>Error in get(fName): object 'identifyNeg' not found</span></div><div class='input'>
+  <span class='kw'>classes</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"integer"</span>, <span class='st'>"numeric"</span>))</div><div class='output co'>#&gt; <span class='error'>Error in get(fName): objekt 'identifyNeg' blev ikke fundet</span></div><div class='input'>
 <span class='co'>#Call it:</span>
 <span class='fu'>identifyNeg</span>(<span class='fu'>c</span>(<span class='fl'>0</span>:<span class='fl'>100</span>))</div><div class='output co'>#&gt; No problems found.</div><div class='input'><span class='fu'>identifyNeg</span>(<span class='fu'>c</span>(-<span class='fl'>20.1232323</span>:<span class='fl'>20</span>), <span class='kw'>nMax</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>maxDecimals</span> <span class='kw'>=</span> <span class='fl'>4</span>)</div><div class='output co'>#&gt; Note: The following negative values were found: -20.1232, -19.1232, -18.1232 (18 additional values omitted).</div><div class='input'>
 <span class='co'>#identifyNeg now appears in a allCheckFunctions() call:</span>
@@ -533,7 +533,7 @@ if more knowledge about <code>checkFunction</code>s is required.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
 </div>
 
       </footer>
