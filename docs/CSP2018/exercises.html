@@ -307,41 +307,40 @@ div.tocify {
 
 <div id="exercise-1" class="section level1">
 <h1>Exercise 1</h1>
-<p>For this initial exercise we will be trying to identify errors in a data frame containing information about the US presidents. First we install the packages needed to get the dataset that we will be working with.</p>
-<pre class="r"><code>install.packages(&quot;devtools&quot;)  # We need this to be able to install the development version of dataMaid
-devtools::install_github(&quot;ekstroem/dataMaid&quot;)  # We need the development version of this</code></pre>
+<p>For this initial exercise we will be trying to identify errors in a data frame containing information about the US presidents. First we install the packages needed to get the dataset that we will be working with (if you have already done this then you can skip this step).</p>
+<pre class="r"><code>install.packages(&quot;dataMaid&quot;)  # We need this to be able to install the development version of dataMaid</code></pre>
 <p>Now we have installed the <code>dataMaid</code> package which contains the raw dataset, <code>bigPresidentData</code>. We can see the first couple of rows of the dataset with the <code>head</code> command.</p>
 <pre class="r"><code>library(&quot;dataMaid&quot;)
 data(&quot;bigPresidentData&quot;)
 head(bigPresidentData)</code></pre>
-<pre><code>##     lastName firstName orderOfPresidency   birthday dateOfDeath
-## 1 Washington    George                 1 1732-02-22  1799-12-14
-## 2      Adams      John                 2 1735-10-30  1826-07-04
-## 3  Jefferson    Thomas                 3 1743-04-13  1826-07-04
-## 4    Madison     James                 4 1751-03-16  1836-06-28
-## 5     Monroe     James                 5 1758-04-28  1831-07-04
-## 6      Adams      John                 6 1767-07-11  1848-02-23
-##    stateOfBirth                                     party
-## 1      Virginia                               Independent
-## 2 Massachusetts                                Federalist
-## 3      Virginia                     Democratic-Republican
-## 4      Virginia                     Democratic-Republican
-## 5      Virginia                     Democratic-Republican
-## 6 Massachusetts Democratic-Republican/National Republican
-##   presidencyBeginDate presidencyEndDate assassinationAttempt  sex
-## 1          1789-04-30        1797-03-04                    0 Male
-## 2          1797-03-04        1801-03-04                    0 Male
-## 3          1801-03-04        1809-03-04                    0 Male
-## 4          1809-03-04        1817-03-04                    0 Male
-## 5          1817-03-04        1825-03-04                    0 Male
-## 6          1825-03-04        1829-03-04                    0 Male
-##   ethnicity presidencyYears ageAtInauguration favoriteNumber
-## 1 Caucasian               7                57    3+0.000000i
-## 2 Caucasian               3                61    4+0.000000i
-## 3 Caucasian               8                57    0+1.414214i
-## 4 Caucasian               8                57   10+0.000000i
-## 5 Caucasian               8                58    3+0.000000i
-## 6 Caucasian               4                57    9+0.000000i</code></pre>
+<pre><code>##      lastName firstName orderOfPresidency   birthday dateOfDeath
+## 38       Ford    Gerald                38 1913-07-14  2006-12-26
+## 2       Adams      John                 2 1735-10-30  1826-07-04
+## 31     Hoover   Herbert                31 1874-08-10  1964-10-20
+## 1  Washington    George                 1 1732-02-22  1799-12-14
+## 13   Fillmore   Millard                13 1800-01-07  1874-03-08
+## 42    Clinton   William                42 1946-08-19        &lt;NA&gt;
+##     stateOfBirth       party presidencyBeginDate presidencyEndDate
+## 38      Nebraska  Republican          1974-08-09        1977-01-20
+## 2  Massachusetts  Federalist          1797-03-04        1801-03-04
+## 31          Iowa  Republican          1929-03-04        1933-03-04
+## 1       Virginia Independent          1789-04-30        1797-03-04
+## 13      New York        Whig          1850-07-09        1853-03-04
+## 42      Arkansas  Democratic          1993-01-20        2001-01-20
+##    assassinationAttempt  sex ethnicity presidencyYears ageAtInauguration
+## 38                    1 Male Caucasian               2                61
+## 2                     0 Male Caucasian               3                61
+## 31                    0 Male Caucasian               4                54
+## 1                     0 Male Caucasian               7                57
+## 13                    0 Male Caucasian               2                50
+## 42                    0 Male Caucasian               8                46
+##    favoriteNumber
+## 38           2+0i
+## 2            4+0i
+## 31           5+0i
+## 1            3+0i
+## 13           7+0i
+## 42           7+0i</code></pre>
 <p>We are being told by our research collaborators that the dataset should contain information on 18 variables relates to the US presidents. The variables are</p>
 <ul>
 <li><code>lastName</code> The surname of the president.</li>
@@ -568,34 +567,34 @@ verify(bigPresidentData, birthday &lt; dateOfDeath) </code></pre>
 #has to be missing in dateOfDeath (is.na()) or (|) birthday must be
 #strictly smaller than dateOfDeath. 
 head(verify(bigPresidentData, is.na(dateOfDeath) | birthday &lt; dateOfDeath))</code></pre>
-<pre><code>##     lastName firstName orderOfPresidency   birthday dateOfDeath
-## 1 Washington    George                 1 1732-02-22  1799-12-14
-## 2      Adams      John                 2 1735-10-30  1826-07-04
-## 3  Jefferson    Thomas                 3 1743-04-13  1826-07-04
-## 4    Madison     James                 4 1751-03-16  1836-06-28
-## 5     Monroe     James                 5 1758-04-28  1831-07-04
-## 6      Adams      John                 6 1767-07-11  1848-02-23
-##    stateOfBirth                                     party
-## 1      Virginia                               Independent
-## 2 Massachusetts                                Federalist
-## 3      Virginia                     Democratic-Republican
-## 4      Virginia                     Democratic-Republican
-## 5      Virginia                     Democratic-Republican
-## 6 Massachusetts Democratic-Republican/National Republican
-##   presidencyBeginDate presidencyEndDate assassinationAttempt  sex
-## 1          1789-04-30        1797-03-04                    0 Male
-## 2          1797-03-04        1801-03-04                    0 Male
-## 3          1801-03-04        1809-03-04                    0 Male
-## 4          1809-03-04        1817-03-04                    0 Male
-## 5          1817-03-04        1825-03-04                    0 Male
-## 6          1825-03-04        1829-03-04                    0 Male
-##   ethnicity presidencyYears ageAtInauguration favoriteNumber
-## 1 Caucasian               7                57    3+0.000000i
-## 2 Caucasian               3                61    4+0.000000i
-## 3 Caucasian               8                57    0+1.414214i
-## 4 Caucasian               8                57   10+0.000000i
-## 5 Caucasian               8                58    3+0.000000i
-## 6 Caucasian               4                57    9+0.000000i</code></pre>
+<pre><code>##      lastName firstName orderOfPresidency   birthday dateOfDeath
+## 38       Ford    Gerald                38 1913-07-14  2006-12-26
+## 2       Adams      John                 2 1735-10-30  1826-07-04
+## 31     Hoover   Herbert                31 1874-08-10  1964-10-20
+## 1  Washington    George                 1 1732-02-22  1799-12-14
+## 13   Fillmore   Millard                13 1800-01-07  1874-03-08
+## 42    Clinton   William                42 1946-08-19        &lt;NA&gt;
+##     stateOfBirth       party presidencyBeginDate presidencyEndDate
+## 38      Nebraska  Republican          1974-08-09        1977-01-20
+## 2  Massachusetts  Federalist          1797-03-04        1801-03-04
+## 31          Iowa  Republican          1929-03-04        1933-03-04
+## 1       Virginia Independent          1789-04-30        1797-03-04
+## 13      New York        Whig          1850-07-09        1853-03-04
+## 42      Arkansas  Democratic          1993-01-20        2001-01-20
+##    assassinationAttempt  sex ethnicity presidencyYears ageAtInauguration
+## 38                    1 Male Caucasian               2                61
+## 2                     0 Male Caucasian               3                61
+## 31                    0 Male Caucasian               4                54
+## 1                     0 Male Caucasian               7                57
+## 13                    0 Male Caucasian               2                50
+## 42                    0 Male Caucasian               8                46
+##    favoriteNumber
+## 38           2+0i
+## 2            4+0i
+## 31           5+0i
+## 1            3+0i
+## 13           7+0i
+## 42           7+0i</code></pre>
 <pre class="r"><code>  #check passed so the whole dataset is returned - we use head() to only 
   #display the first 5 observations</code></pre>
 <p>The same check can be made in <code>validate</code> by creating a <code>validator</code> object and confronting the data with it:</p>
@@ -613,7 +612,7 @@ head(verify(bigPresidentData, is.na(dateOfDeath) | birthday &lt; dateOfDeath))</
 <pre><code>## Also defined by &#39;validate&#39;</code></pre>
 <pre class="r"><code>summary(confront(bigPresidentData, bdaycheck))</code></pre>
 <pre><code>##   name items passes fails nNA error warning             expression
-## 1   V1    46     40     0   6 FALSE   FALSE birthday &lt; dateOfDeath</code></pre>
+## 1   V1    47     41     0   6 FALSE   FALSE birthday &lt; dateOfDeath</code></pre>
 <p>And again, we see that all observations either have missing information in the check or pass it.</p>
 </div>
 </div>
@@ -636,7 +635,7 @@ data(bigPresidentData)
 assert(bigPresidentData, foo, firstName)</code></pre>
 <pre><code>## Column &#39;firstName&#39; violates assertion &#39;foo&#39; 1 time
 ##   index value
-## 1    45     .</code></pre>
+## .    30     .</code></pre>
 <pre><code>## Error: assertr stopped execution</code></pre>
 <p>Tip: The <code>assertr</code> vignette can be accessed by calling <code>vignette(&quot;assertr&quot;)</code>.</p>
 <ol style="list-style-type: decimal">

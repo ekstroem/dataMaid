@@ -15,3 +15,4 @@
 ^latex$
 ^sandbox$
 ^docs$
+^_pkgdown.yaml
