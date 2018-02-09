@@ -307,8 +307,8 @@ div.tocify {
 
 <div id="exercise-1" class="section level1">
 <h1>Exercise 1</h1>
-<p>For this initial exercise we will be trying to identify errors in a data frame containing information about the US presidents. First we install the packages needed to get the dataset that we will be working with (if you have already done this then you can skip this step).</p>
-<pre class="r"><code>install.packages(&quot;dataMaid&quot;)  # We need this to be able to install the development version of dataMaid</code></pre>
+<p>For this initial exercise we will be trying to identify errors in a data frame containing information about the US presidents. First we install the packages needed to get the dataset that we will be working with. If you have already installed <code>dataMaid</code> from home, you can skip this step.</p>
+<pre class="r"><code>install.packages(&quot;dataMaid&quot;)</code></pre>
 <p>Now we have installed the <code>dataMaid</code> package which contains the raw dataset, <code>bigPresidentData</code>. We can see the first couple of rows of the dataset with the <code>head</code> command.</p>
 <pre class="r"><code>library(&quot;dataMaid&quot;)
 data(&quot;bigPresidentData&quot;)
@@ -545,7 +545,7 @@ identifyNonStartCase &lt;- checkFunction(identifyNonStartCase,
 <p>Note that these relational operators are not just implemented for comparing numbers, but also dates.</p>
 <div id="row-wise-constraints" class="section level3">
 <h3>Row-wise constraints</h3>
-<p>Below, we list some sets of variables in <code>bigPresidentData</code> for which logical row-wise constraints must be fulfilled. For each set of variables, identify what logical constraint(s) must be satisfied and check if it does indeed hold, using either <code>verify()</code> from <code>assertr</code> or <code>validator()</code> and <code>confront()</code> from <code>validate</code>. We have provided an example below that you can use for inspiration.</p>
+<p>Below, we list some sets of variables in <code>bigPresidentData</code> for which logical row-wise constraints must be fulfilled. For each set of variables, identify what logical constraint(s) must be satisfied and check if it does indeed hold, using <code>validator()</code> and <code>confront()</code> from <code>validate</code>. We have provided an example below that you can use for inspiration.</p>
 <ul>
 <li><code>orderOfPresidency</code> and <code>presidencyBeginDate</code></li>
 <li><code>birthday</code>, <code>dateOfDeath</code>, <code>presidencyBeginDate</code> and <code>presidencyEndDate</code></li>
@@ -553,51 +553,10 @@ identifyNonStartCase &lt;- checkFunction(identifyNonStartCase,
 <li><code>birthday</code>, <code>ageAtInauguration</code> and <code>presidencyBeginDate</code></li>
 </ul>
 <p>Tip: The <code>floor()</code> function rounds a number down to the nearest, smaller integer.</p>
+<p>Try to experiment with the different functions available for inspecting confrontations, <code>summary()</code>, <code>aggregate()</code>, <code>sort()</code>, <code>values()</code>, <code>barplot()</code>, <code>errors()</code> and <code>warnings()</code>, in order to get an idea of what they each do.</p>
 <div id="example" class="section level4">
 <h4>Example</h4>
-<p>We wish to ensure that all presidents are born at an earlier date than their time of death (if relevant). This can be done in <code>assertr</code> by use of the <code>verify()</code> function:</p>
-<pre class="r"><code>library(assertr)
-library(dataMaid)
-data(bigPresidentData)
-
-#crashes due to missing information in dateOfDeath:
-verify(bigPresidentData, birthday &lt; dateOfDeath) </code></pre>
-<pre><code>## Error in if (all(logical.results) &amp;&amp; is.null(attr(data, &quot;assertr_errors&quot;))) return(success_fun(data)): manglende værdi hvor TRUE/FALSE er krævet</code></pre>
-<pre class="r"><code>#possible solution: change check such that each observation either
-#has to be missing in dateOfDeath (is.na()) or (|) birthday must be
-#strictly smaller than dateOfDeath. 
-head(verify(bigPresidentData, is.na(dateOfDeath) | birthday &lt; dateOfDeath))</code></pre>
-<pre><code>##      lastName firstName orderOfPresidency   birthday dateOfDeath
-## 38       Ford    Gerald                38 1913-07-14  2006-12-26
-## 2       Adams      John                 2 1735-10-30  1826-07-04
-## 31     Hoover   Herbert                31 1874-08-10  1964-10-20
-## 1  Washington    George                 1 1732-02-22  1799-12-14
-## 13   Fillmore   Millard                13 1800-01-07  1874-03-08
-## 42    Clinton   William                42 1946-08-19        &lt;NA&gt;
-##     stateOfBirth       party presidencyBeginDate presidencyEndDate
-## 38      Nebraska  Republican          1974-08-09        1977-01-20
-## 2  Massachusetts  Federalist          1797-03-04        1801-03-04
-## 31          Iowa  Republican          1929-03-04        1933-03-04
-## 1       Virginia Independent          1789-04-30        1797-03-04
-## 13      New York        Whig          1850-07-09        1853-03-04
-## 42      Arkansas  Democratic          1993-01-20        2001-01-20
-##    assassinationAttempt  sex ethnicity presidencyYears ageAtInauguration
-## 38                    1 Male Caucasian               2                61
-## 2                     0 Male Caucasian               3                61
-## 31                    0 Male Caucasian               4                54
-## 1                     0 Male Caucasian               7                57
-## 13                    0 Male Caucasian               2                50
-## 42                    0 Male Caucasian               8                46
-##    favoriteNumber
-## 38           2+0i
-## 2            4+0i
-## 31           5+0i
-## 1            3+0i
-## 13           7+0i
-## 42           7+0i</code></pre>
-<pre class="r"><code>  #check passed so the whole dataset is returned - we use head() to only 
-  #display the first 5 observations</code></pre>
-<p>The same check can be made in <code>validate</code> by creating a <code>validator</code> object and confronting the data with it:</p>
+<p>We wish to ensure that all presidents are born at an earlier date than their time of death (if relevant). This can be done in <code>validate</code> by creating a <code>validator</code> object with the appropriate logical statement and confronting the data with it:</p>
 <pre class="r"><code>library(validate)</code></pre>
 <pre><code>## 
 ## Attaching package: &#39;validate&#39;</code></pre>
@@ -607,45 +566,36 @@ head(verify(bigPresidentData, is.na(dateOfDeath) | birthday &lt; dateOfDeath))</
 <pre><code>## The following object is masked from &#39;package:dplyr&#39;:
 ## 
 ##     expr</code></pre>
-<pre class="r"><code>bdaycheck &lt;- validator(birthday &lt; dateOfDeath)</code></pre>
+<pre class="r"><code>#define check
+bdaycheck &lt;- validator(birthday &lt; dateOfDeath)</code></pre>
 <pre><code>## Found more than one class &quot;rule&quot; in cache; using the first, from namespace &#39;cli&#39;</code></pre>
 <pre><code>## Also defined by &#39;validate&#39;</code></pre>
-<pre class="r"><code>summary(confront(bigPresidentData, bdaycheck))</code></pre>
+<pre class="r"><code>#save confrontation
+bdayconfr &lt;- confront(bigPresidentData, bdaycheck)
+
+#look at confrontation
+summary(bdayconfr)</code></pre>
 <pre><code>##   name items passes fails nNA error warning             expression
 ## 1   V1    47     41     0   6 FALSE   FALSE birthday &lt; dateOfDeath</code></pre>
-<p>And again, we see that all observations either have missing information in the check or pass it.</p>
+<p>We see that all observations either have missing information (<code>nNA = 6</code>) in the check or pass it (<code>passes = 41</code>). And we can look at the results of the check together with the relevant variables, <code>birthday</code> and <code>dateofDeath</code> by using the <code>values()</code> function:</p>
+<pre class="r"><code>#look at contents of values(bdayconfr)
+head(values(bdayconfr))</code></pre>
+<pre><code>##        V1
+## [1,] TRUE
+## [2,] TRUE
+## [3,] TRUE
+## [4,] TRUE
+## [5,] TRUE
+## [6,]   NA</code></pre>
+<pre class="r"><code>#view president names, birthday, date of death and bdayconfr values
+#together:
+View(cbind(bigPresidentData[, c(&quot;firstName&quot;, &quot;lastName&quot;, &quot;birthday&quot;, &quot;dateOfDeath&quot;)],
+           values(bdayconfr)))</code></pre>
+<p>Here, we see that the <code>NA</code> values from the confrontation corresponds to presidents who are still alive and therefore have <code>dateOfDeath = NA</code>.</p>
 </div>
 </div>
-<div id="advanced-assertr-write-predicate-functions" class="section level3">
-<h3>Advanced (<code>assertr</code>): Write predicate functions</h3>
-<p>We now turn to the use of predicate functions together with <code>assert()</code> and <code>insist()</code>. A predicate function only needs to adher to two criteria:</p>
-<ol style="list-style-type: decimal">
-<li>It must take a variable as its first argument</li>
-<li>It must return <code>FALSE</code> (or a vector containing <code>FALSE</code>) if the check was not succesful, i.e. <code>assert()</code> should alert the user of a problem.</li>
-</ol>
-<p>For example, the following predicate function checks whether the first character in each entry of a variable is a capital case letter (note that <code>LETTERS</code> is a build-in variable in <code>R</code> that contains all the letters in capitals):</p>
-<pre class="r"><code>foo &lt;- function(x) {
-  substr(x, 1, 1) %in% LETTERS
-}</code></pre>
-<p>Note that the function returns a logical vector of the same length as <code>x</code> where the entries are <code>TRUE</code> whenever the first character is a letter and <code>FALSE</code> otherwise. We can try it out on <code>firstName</code> of <code>bigPresidentData</code>:</p>
-<pre class="r"><code>library(dataMaid)
-library(assertr)
-data(bigPresidentData)
-
-assert(bigPresidentData, foo, firstName)</code></pre>
-<pre><code>## Column &#39;firstName&#39; violates assertion &#39;foo&#39; 1 time
-##   index value
-## .    30     .</code></pre>
-<pre><code>## Error: assertr stopped execution</code></pre>
-<p>Tip: The <code>assertr</code> vignette can be accessed by calling <code>vignette(&quot;assertr&quot;)</code>.</p>
-<ol style="list-style-type: decimal">
-<li>Make a predicate function that checks if all characters in each entry of a variable is a letter (tip: small case letters are available in <code>letters</code>). Apply this function to <code>firstName</code> and <code>lastName</code> using <code>assert()</code>.</li>
-<li>Make a new version of your function from 1) so that the user can specify the set that each character of each entry must be in. Use your new function to apply a check to <code>firstName</code> and <code>lastName</code> that will pass. It might be helpful to look at the source code of <code>in_set()</code>. Note that your function will be a predicate generating function.</li>
-<li>Make a new version of your function from 2) so that the check is performed only for entries that have more characters than the average of entry lengths in the variable. This will be a function that generates predicate generating functions and it should be used in <code>insist()</code>. It may be useful to look at the source code of <code>within_n_bounds()</code>.</li>
-</ol>
-</div>
-<div id="advanced-validate-one-at-a-time-please" class="section level3">
-<h3>Advanced (<code>validate</code>): One at a time, please!</h3>
+<div id="one-at-a-time-please-advanced" class="section level3">
+<h3>One at a time, please! (advanced)</h3>
 <p>There can only be one president at a time. However, a mistake in the data has caused two presidencies to overlap. Locate the error using <code>validator()</code> and <code>confront()</code> from <code>validate</code>.</p>
 <p>Tip: It may be helpful to begin by sorting the data according to <code>presidencyBeginDate</code>.</p>
 <hr />
@@ -659,9 +609,7 @@ assert(bigPresidentData, foo, firstName)</code></pre>
 <li>Check the resulting dataset to ensure that you did indeed clean up the data errors.</li>
 </ol>
 <p>When all the corrections are completed you should be able to run all the error checks from <code>dataMaid</code> and <code>validate</code> and end up without any critical errors.</p>
-<p>Remember to follow <strong>rules 1 and 2</strong> and consider how these corrections best are documented.</p>
-<div id="exercise-4b" class="section level2">
-<h2>Exercise 4b</h2>
+<p>Remember to follow <strong>rules 1 and 2</strong> and consider how these corrections best are documented. “a” ## Exercise 4b</p>
 <p>For now we assume that we have a dataset that has been screened and is clean enough to be used for subsequent analyses.</p>
 <ol style="list-style-type: decimal">
 <li>Use the <code>makeCodebook()</code> function to produce a final codebook that could be passed on as a documentation (of the dataset) for the data analysis.</li>
@@ -672,7 +620,6 @@ assert(bigPresidentData, foo, firstName)</code></pre>
 <li>For the <code>firstName</code> it is literally the first name. No middle names or initials.</li>
 </ol></li>
 </ol>
-</div>
 </div>
 
 
