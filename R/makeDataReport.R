@@ -1007,6 +1007,7 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
     writer("Report generation information:\n")
     writer(" *  Created by ", whoami::fullname() , ".\n")
     writer(" *  Report creation time: ", format(Sys.time(), "%a %b %d %Y %H:%M:%S"),"\n")
+    writer(" *  Report Was run from directory: `", getwd(),"`\n")
     
     ## Part of this was lifted from devtools
     

@@ -1,3 +1,7 @@
+# dataMaid nextversion
+
+*  Added information about the directory the makeDataReport command was run from 
+
 # dataMaid 1.1.0
 
 *   Added makeCodebook() function to use a default set of arguments to produce a codebook-like document.
