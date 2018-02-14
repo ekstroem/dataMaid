@@ -547,12 +547,12 @@ identifyNonStartCase &lt;- checkFunction(identifyNonStartCase,
 <h3>Row-wise constraints</h3>
 <p>Below, we list some sets of variables in <code>bigPresidentData</code> for which logical row-wise constraints must be fulfilled. For each set of variables, identify what logical constraint(s) must be satisfied and check if it does indeed hold, using <code>validator()</code> and <code>confront()</code> from <code>validate</code>. We have provided an example below that you can use for inspiration.</p>
 <ul>
-<li><code>orderOfPresidency</code> and <code>presidencyBeginDate</code></li>
 <li><code>birthday</code>, <code>dateOfDeath</code>, <code>presidencyBeginDate</code> and <code>presidencyEndDate</code></li>
 <li><code>presidencyBeginDate</code>, <code>presidencyEndDate</code> and <code>presidencyYears</code></li>
 <li><code>birthday</code>, <code>ageAtInauguration</code> and <code>presidencyBeginDate</code></li>
+<li><code>orderOfPresidency</code> and <code>presidencyBeginDate</code> (tricky - remember to handle missing data)</li>
 </ul>
-<p>Tip: The <code>floor()</code> function rounds a number down to the nearest, smaller integer.</p>
+<p>Tip: The <code>floor()</code> function rounds a number down to the nearest, smaller integer. Tip: The <code>rank()</code> function provides the ranks of variables.</p>
 <p>Try to experiment with the different functions available for inspecting confrontations, <code>summary()</code>, <code>aggregate()</code>, <code>sort()</code>, <code>values()</code>, <code>barplot()</code>, <code>errors()</code> and <code>warnings()</code>, in order to get an idea of what they each do.</p>
 <div id="example" class="section level4">
 <h4>Example</h4>
@@ -605,21 +605,24 @@ View(cbind(bigPresidentData[, c(&quot;firstName&quot;, &quot;lastName&quot;, &qu
 <h1>Exercise 4</h1>
 <p>Until now we have identified a number of errors and inconsistencies in the <code>bigPresidentData</code>. For each data error you encountered in the above, your should:</p>
 <ol style="list-style-type: decimal">
-<li>Corrects the error</li>
+<li>Correct the error</li>
 <li>Check the resulting dataset to ensure that you did indeed clean up the data errors.</li>
 </ol>
 <p>When all the corrections are completed you should be able to run all the error checks from <code>dataMaid</code> and <code>validate</code> and end up without any critical errors.</p>
-<p>Remember to follow <strong>rules 1 and 2</strong> and consider how these corrections best are documented. “a” ## Exercise 4b</p>
+<p>Remember to follow <strong>rules 1 and 2</strong> and consider how these corrections best are documented. “a”</p>
+<div id="exercise-4b" class="section level2">
+<h2>Exercise 4b</h2>
 <p>For now we assume that we have a dataset that has been screened and is clean enough to be used for subsequent analyses.</p>
 <ol style="list-style-type: decimal">
 <li>Use the <code>makeCodebook()</code> function to produce a final codebook that could be passed on as a documentation (of the dataset) for the data analysis.</li>
-<li>Use the option to set <code>label</code> and <code>shortDescription</code> attributes for the dataset to explain that:
+<li>Use the option to set <code>shortDescription</code> attributes for the dataset to explain that:
 <ol style="list-style-type: lower-alpha">
-<li>The information in <code>favoriteNumber</code> have been obtained by consulting an Ouija board or - when that failed - just typing in a number and consequently the accuracy may be low.</li>
+<li>The information in <code>favoriteNumber</code> has been obtained by consulting a Ouija board or - when that failed - just typing in a number and consequently the accuracy may be low.</li>
 <li>For <code>assassinationAttempt</code>, 1 means yes and 0 means no</li>
-<li>For the <code>firstName</code> it is literally the first name. No middle names or initials.</li>
+<li>For the <code>firstName</code> it is literally the first name. No middle names or initials. Also try using the <code>labels</code> attribute to add some variable labels of your own choosing. Run the codebook command again.</li>
 </ol></li>
 </ol>
+</div>
 </div>
 
 
