@@ -78,14 +78,10 @@ Note: Different use of the term "validation" - no longer about format, type and 
 ```r
 val1 &lt;- 
  validator(
-   ageAtDeath := floor((dateOfDeath - birthday)/365.25),  
    `Adult president` = ageAtInauguration &gt;= 18,
-   `Alive at inauguration` = ageAtDeath &gt;= ageAtInauguration,
-   `Positive first name` = firstName*2 &gt; firstName,
-   `Death by assassination` = 
-     if (dateOfDeath == presidencyEndDate) 
-       assassinationAttempt == 1
-)
+   `Alive at inauguration` = dateOfDeath &gt;= presidencyBeginDate,
+   `Positive first name` = firstName*2 &gt; firstName
+  )
 ```
 ]
 
@@ -100,11 +96,10 @@ summary(con1)[, 1:6]
 ```
 
 ```
-##                     name items passes fails nNA error
-## 1        Adult.president    47     47     0   0 FALSE
-## 2  Alive.at.inauguration    47     40     1   6 FALSE
-## 3    Positive.first.name     0      0     0   0  TRUE
-## 4 Death.by.assassination    47     38     3   6 FALSE
+##                    name items passes fails nNA error
+## 1       Adult.president    47     47     0   0 FALSE
+## 2 Alive.at.inauguration    47     39     1   7 FALSE
+## 3   Positive.first.name     0      0     0   0  TRUE
 ```
 ]
 
