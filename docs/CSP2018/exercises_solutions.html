@@ -1,0 +1,1827 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Exercises - solutions</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 60px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+
+.section h2 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h3 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h4 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h5 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h6 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Data Screening</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="slides.html">Slides</a>
+</li>
+<li>
+  <a href="exercises.html">Exercises</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Exercises - solutions</h1>
+
+</div>
+
+
+<div id="exercise-1" class="section level1">
+<h1>Exercise 1</h1>
+<p>Exploratory exercise - no solution here.</p>
+</div>
+<div id="exercise-2" class="section level1">
+<h1>Exercise 2</h1>
+<div id="a-try-out-makedatareport" class="section level2">
+<h2>2a: Try out <code>makeDataReport()</code></h2>
+<div id="a.1" class="section level3">
+<h3>2a.1</h3>
+<p><strong>Run the <code>makeDataReport()</code> function to make your own report for the <code>bigPresidentData</code> and look through it. What legitimate errors are found? What warnings are unnecessary?</strong></p>
+<p>We open the <code>dataMaid</code> package, load the <code>bigPresidentData</code> dataset and run our first data report:</p>
+<pre class="r"><code>#open dataMaid
+library(dataMaid)
+
+#load data
+data(bigPresidentData)</code></pre>
+<pre class="r"><code>#make data report for it
+makeDataReport(bigPresidentData)</code></pre>
+<p>We see that the report has identified the following legitimate errors:</p>
+<ul>
+<li>There is a prefixed whitespace in one of the <code>lastName</code> entries (for president Truman) (validity)</li>
+<li>One president has “.” registered as his first name in the <code>firstName</code> variable (validity)</li>
+<li><code>orderOfPresidency</code> is stored as a factor variable, although it might more naturally be stored as a numeric (validity)</li>
+<li>There is a birthday in the year 1300 (validity/timeliness/accuracy)</li>
+<li>There is an outlier date of death that is before the first presidential inauguration (validity/timeliness/accuracy)</li>
+<li>New York is spelled with a lower case “y” in at least one entry (validity)</li>
+<li>The value <code>Inf</code> (infinity) occurs as a length of presidency (validity)</li>
+<li>The variable <code>ageAtInauguration</code> has been misclassified as a categorical variable, even though it is supposed to be numeric (validity)</li>
+</ul>
+<p>On the other hand, the following warnings are not really necessary:</p>
+<ul>
+<li>Noting that some of the levels of the <code>lastName</code>, <code>firstName</code>, <code>orderOfPresidency</code>, <code>stateOfBirth</code>, <code>party</code> variables have less than five observations.</li>
+<li>There is an outlier date of death i 1799, which is not a mistake - it is the day George Washington died.</li>
+<li>There is a warning about the variable <code>sex</code> only containing one level (“male”), but this is not a mistake in the data</li>
+<li>In the <code>ethnicity</code> variable, the value <code>African American</code> has less than five observations. However, this is not a mistake in the data either.</li>
+<li>There is a presidency that is listed to last for 12 years, which is indeed what happened for Franklin D. Roosevelt</li>
+</ul>
+</div>
+<div id="a.2" class="section level3">
+<h3>2a.2</h3>
+<p><strong>Try calling <code>help(makeDataReport)</code> and look at the documentation for the argument <code>treatXasY</code>. Use this argument in a new call to <code>makeDataReport()</code> so that for example the <code>favoriteNumber</code> variable will be handled like a <code>numeric</code> variable</strong></p>
+<p>We make a new report where variables of class <code>complex</code> (like <code>favoriteNumber</code>) are handled as <code>numeric</code> variables:</p>
+<pre class="r"><code>makeDataReport(bigPresidentData, treatXasY = list(complex = &quot;numeric&quot;),
+               replace = TRUE)</code></pre>
+<p>Note that we can see that this was succesfull in two ways:</p>
+<ol style="list-style-type: decimal">
+<li>By looking at the “Data Report Overview”, where it explicitly says that complex variables are treated as numerics</li>
+<li>By looking at the results for <code>favoriteNumber</code> in the Variable List, where we can see that the summaries usually used for numeric variables are now applied</li>
+</ol>
+</div>
+<div id="a.3" class="section level3">
+<h3>2a.3</h3>
+<p><strong>Are there any errors that does not pop up using the <code>makeDataReport()</code> function? What about consistency in the data? What about uniqueness in the data?</strong></p>
+<p>For consistency, we refer to the exercises below. But for uniqueness, one may note that President Eisenhower appears twice in the data, one the with the first name “Dwight” and the second time with the first name “Dwight D”. Note that this type of data problem is not something that <code>dataMaid</code> screens for (because whether or not uniqueness of obsevations is expected is very context-specific).</p>
+</div>
+<div id="a.4" class="section level3">
+<h3>2a.4</h3>
+<p><strong>Use <code>allCheckFunctions()</code> to find out which checkFunction does the check for less than 5 unique values. Check that this function is indeed among the default checkFunctions for <code>character</code> variables by calling <code>defaultCharacterChecks()</code>.</strong></p>
+<p>We call <code>allCheckFunctions()</code> to see that check functions are available:</p>
+<pre class="r"><code>allCheckFunctions()</code></pre>
+<table style="width:81%;">
+<caption>Table continues below</caption>
+<colgroup>
+<col width="36%" />
+<col width="44%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">name</th>
+<th align="left">description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">identifyCaseIssues</td>
+<td align="left">Identify case issues</td>
+</tr>
+<tr class="even">
+<td align="left">identifyLoners</td>
+<td align="left">Identify levels with &lt; 6 obs.</td>
+</tr>
+<tr class="odd">
+<td align="left">identifyMissing</td>
+<td align="left">Identify miscoded missing values</td>
+</tr>
+<tr class="even">
+<td align="left">identifyNums</td>
+<td align="left">Identify misclassified numeric or integer variables</td>
+</tr>
+<tr class="odd">
+<td align="left">identifyOutliers</td>
+<td align="left">Identify outliers</td>
+</tr>
+<tr class="even">
+<td align="left">identifyOutliersTBStyle</td>
+<td align="left">Identify outliers (Turkish Boxplot style)</td>
+</tr>
+<tr class="odd">
+<td align="left">identifyWhitespace</td>
+<td align="left">Identify prefixed and suffixed whitespace</td>
+</tr>
+<tr class="even">
+<td align="left">isCPR</td>
+<td align="left">Identify Danish CPR numbers</td>
+</tr>
+<tr class="odd">
+<td align="left">isEmpty</td>
+<td align="left">Check if the variable contains only a single value</td>
+</tr>
+<tr class="even">
+<td align="left">isKey</td>
+<td align="left">Check if the variable is a key</td>
+</tr>
+<tr class="odd">
+<td align="left">isSingular</td>
+<td align="left">Check if the variable contains only a single value</td>
+</tr>
+<tr class="even">
+<td align="left">isSupported</td>
+<td align="left">Check if the variable class is supported by dataMaid.</td>
+</tr>
+</tbody>
+</table>
+<table style="width:40%;">
+<colgroup>
+<col width="40%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">classes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">character, factor</td>
+</tr>
+<tr class="even">
+<td align="left">character, factor</td>
+</tr>
+<tr class="odd">
+<td align="left">character, Date, factor, integer, labelled, logical, numeric</td>
+</tr>
+<tr class="even">
+<td align="left">character, factor, labelled</td>
+</tr>
+<tr class="odd">
+<td align="left">Date, integer, numeric</td>
+</tr>
+<tr class="even">
+<td align="left">Date, integer, numeric</td>
+</tr>
+<tr class="odd">
+<td align="left">character, factor, labelled</td>
+</tr>
+<tr class="even">
+<td align="left">character, Date, factor, integer, labelled, logical, numeric</td>
+</tr>
+<tr class="odd">
+<td align="left">character, Date, factor, integer, labelled, logical, numeric</td>
+</tr>
+<tr class="even">
+<td align="left">character, Date, factor, integer, labelled, logical, numeric</td>
+</tr>
+<tr class="odd">
+<td align="left">character, Date, factor, integer, labelled, logical, numeric</td>
+</tr>
+<tr class="even">
+<td align="left">character, Date, factor, integer, labelled, logical, numeric</td>
+</tr>
+</tbody>
+</table>
+<p>We see that the check function <code>identifyLoners</code> looks for levels with strictly less than 6 observations. This is the function we were looking for. Let’s see if it is among the default options used in <code>makeDataReport()</code> for checking <code>character</code> variables:</p>
+<pre class="r"><code>defaultCharacterChecks()</code></pre>
+<pre><code>## [1] &quot;identifyMissing&quot;    &quot;identifyWhitespace&quot; &quot;identifyLoners&quot;    
+## [4] &quot;identifyCaseIssues&quot; &quot;identifyNums&quot;</code></pre>
+<p>– and it’s there.</p>
+</div>
+<div id="a.5" class="section level3">
+<h3>2a.5</h3>
+<p><strong>Use the <code>checks</code> argument, <code>setChecks()</code> and <code>defaultCharacterChecks()</code> to remove the “less than 5 unique values”-check from the checks performed for <code>character</code> variables. Look at the overview table on the first page of your report. Can you find a difference? </strong></p>
+<p>We remove the <code>identifyLoners</code> check function from the checks used for <code>character</code> variables in a data report:</p>
+<pre class="r"><code>makeDataReport(bigPresidentData, 
+               checks = setChecks(character = defaultCharacterChecks(remove = &quot;identifyLoners&quot;)),
+               replace = TRUE)</code></pre>
+<p>We note that in the table in the Data Report Overview that marks what checks were performed, “Identify levels with &lt;6 obs.” is no longer checked for <code>character</code> variables. And if we look at the <code>character</code> variables in the Variable List, we also see that it is no longer performed.</p>
+<p>If you are unsure about exactly what happens in the code bit above, try running the functions one by one and look at the output:</p>
+<pre class="r"><code>defaultCharacterChecks()</code></pre>
+<pre><code>## [1] &quot;identifyMissing&quot;    &quot;identifyWhitespace&quot; &quot;identifyLoners&quot;    
+## [4] &quot;identifyCaseIssues&quot; &quot;identifyNums&quot;</code></pre>
+<pre class="r"><code>defaultCharacterChecks(remove = &quot;identifyLoners&quot;)</code></pre>
+<pre><code>## [1] &quot;identifyMissing&quot;    &quot;identifyWhitespace&quot; &quot;identifyCaseIssues&quot;
+## [4] &quot;identifyNums&quot;</code></pre>
+<pre class="r"><code>setChecks()</code></pre>
+<pre><code>## $character
+## [1] &quot;identifyMissing&quot;    &quot;identifyWhitespace&quot; &quot;identifyLoners&quot;    
+## [4] &quot;identifyCaseIssues&quot; &quot;identifyNums&quot;      
+## 
+## $factor
+## [1] &quot;identifyMissing&quot;    &quot;identifyWhitespace&quot; &quot;identifyLoners&quot;    
+## [4] &quot;identifyCaseIssues&quot; &quot;identifyNums&quot;      
+## 
+## $labelled
+## [1] &quot;identifyMissing&quot;    &quot;identifyWhitespace&quot; &quot;identifyLoners&quot;    
+## [4] &quot;identifyCaseIssues&quot; &quot;identifyNums&quot;      
+## 
+## $numeric
+## [1] &quot;identifyMissing&quot;  &quot;identifyOutliers&quot;
+## 
+## $integer
+## [1] &quot;identifyMissing&quot;  &quot;identifyOutliers&quot;
+## 
+## $logical
+## NULL
+## 
+## $Date
+## [1] &quot;identifyOutliers&quot; &quot;identifyMissing&quot;</code></pre>
+<pre class="r"><code>setChecks(character = defaultCharacterChecks(remove = &quot;identifyLoners&quot;))</code></pre>
+<pre><code>## $character
+## [1] &quot;identifyMissing&quot;    &quot;identifyWhitespace&quot; &quot;identifyCaseIssues&quot;
+## [4] &quot;identifyNums&quot;      
+## 
+## $factor
+## [1] &quot;identifyMissing&quot;    &quot;identifyWhitespace&quot; &quot;identifyLoners&quot;    
+## [4] &quot;identifyCaseIssues&quot; &quot;identifyNums&quot;      
+## 
+## $labelled
+## [1] &quot;identifyMissing&quot;    &quot;identifyWhitespace&quot; &quot;identifyLoners&quot;    
+## [4] &quot;identifyCaseIssues&quot; &quot;identifyNums&quot;      
+## 
+## $numeric
+## [1] &quot;identifyMissing&quot;  &quot;identifyOutliers&quot;
+## 
+## $integer
+## [1] &quot;identifyMissing&quot;  &quot;identifyOutliers&quot;
+## 
+## $logical
+## NULL
+## 
+## $Date
+## [1] &quot;identifyOutliers&quot; &quot;identifyMissing&quot;</code></pre>
+</div>
+<div id="a.6" class="section level3">
+<h3>2a.6</h3>
+<p><strong>Use <code>allVisualFunctions()</code> to identify the name of the visualFunction that you need to use if you want base R graphics style plots.</strong></p>
+<p>We call <code>allVisualFunctions()</code>:</p>
+<pre class="r"><code>allVisualFunctions()</code></pre>
+<table>
+<colgroup>
+<col width="21%" />
+<col width="41%" />
+<col width="37%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">name</th>
+<th align="left">description</th>
+<th align="left">classes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">basicVisual</td>
+<td align="left">Histograms and barplots using graphics</td>
+<td align="left">character, Date, factor, integer, labelled, logical, numeric</td>
+</tr>
+<tr class="even">
+<td align="left">standardVisual</td>
+<td align="left">Histograms and barplots using ggplot2</td>
+<td align="left">character, Date, factor, integer, labelled, logical, numeric</td>
+</tr>
+</tbody>
+</table>
+<p>And we note that we should use <code>basicVisual</code> if we want base R graphics plots.</p>
+</div>
+<div id="a.7" class="section level3">
+<h3>2a.7</h3>
+<p><strong>Call <code>setVisuals()</code> in the console using the <code>all</code> argument to specify the <code>graphics</code> style plots. Try also calling <code>setVisuals()</code> with the new function in the <code>factor</code> and <code>character</code> arguments only.</strong></p>
+<p>We use the <code>all</code> argument for the <code>setVisuals()</code> function to specify that all variable classes should use <code>basicVisual</code> as their visual function:</p>
+<pre class="r"><code>setVisuals(all = &quot;basicVisual&quot;)</code></pre>
+<pre><code>## $character
+## [1] &quot;basicVisual&quot;
+## 
+## $factor
+## [1] &quot;basicVisual&quot;
+## 
+## $labelled
+## [1] &quot;basicVisual&quot;
+## 
+## $numeric
+## [1] &quot;basicVisual&quot;
+## 
+## $integer
+## [1] &quot;basicVisual&quot;
+## 
+## $logical
+## [1] &quot;basicVisual&quot;
+## 
+## $Date
+## [1] &quot;basicVisual&quot;</code></pre>
+<p>We see that <code>basicVisual</code> is indeed listed for all variables. We now specify only <code>character</code> and <code>factor</code> variables to use the <code>basicVisual</code> function:</p>
+<pre class="r"><code>setVisuals(character = &quot;basicVisual&quot;,
+           factor = &quot;basicVisual&quot;)</code></pre>
+<pre><code>## $character
+## [1] &quot;basicVisual&quot;
+## 
+## $factor
+## [1] &quot;basicVisual&quot;
+## 
+## $labelled
+## [1] &quot;standardVisual&quot;
+## 
+## $numeric
+## [1] &quot;standardVisual&quot;
+## 
+## $integer
+## [1] &quot;standardVisual&quot;
+## 
+## $logical
+## [1] &quot;standardVisual&quot;
+## 
+## $Date
+## [1] &quot;standardVisual&quot;</code></pre>
+<p>Note that we have not yet used these arguments for anything: we have just looked at the functions that are used to specify what visual functions to use.</p>
+</div>
+<div id="a.8" class="section level3">
+<h3>2a.8</h3>
+<p><strong>Use <code>makeDataReport()</code>’s <code>visuals</code> argument and <code>setVisuals()</code> to obtain a data report where <code>character</code> and <code>factor</code> variables use base R graphics plots, while all other variable classes use <code>ggplot2</code> plots.</strong></p>
+<p>This task corresponds to using <code>setVisuals()</code> just like we did in exercise 2.8. E.g. by looking at the documentation for <code>makeDataReport()</code> by using <code>help()</code> or <code>?</code>, we can find out that the choice of visual functions is specified in the argument <code>visuals</code>. So the following command will make a data report for <code>bigPresidentData</code> where <code>character</code> and <code>factor</code> variables are visualized using the <code>graphics</code> package rather than <code>ggplot2</code>:</p>
+<pre class="r"><code>makeDataReport(bigPresidentData, 
+               visuals = setVisuals(character = &quot;basicVisual&quot;, 
+                                    factor = &quot;basicVisual&quot;),
+               replace = TRUE)</code></pre>
+</div>
+<div id="a.9" class="section level3">
+<h3>2a.9</h3>
+<p><strong>Experiment with the functions <code>setSummaries()</code>, <code>allSummaryFunctions()</code> and <code>defaultCharacterSummaries()</code> in order to remove “Mode” from the summaries listed for such variables in the data report (using the argument <code>summaries</code>).</strong></p>
+<p>First, we see what summary functions are available in order to identify the one that produces the “mode” information:</p>
+<pre class="r"><code>allSummaryFunctions()</code></pre>
+<table>
+<colgroup>
+<col width="19%" />
+<col width="42%" />
+<col width="38%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">name</th>
+<th align="left">description</th>
+<th align="left">classes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">centralValue</td>
+<td align="left">Compute median for numeric variables, mode for categorical variables</td>
+<td align="left">character, Date, factor, integer, labelled, logical, numeric</td>
+</tr>
+<tr class="even">
+<td align="left">countMissing</td>
+<td align="left">Compute proportion of missing observations</td>
+<td align="left">character, Date, factor, integer, labelled, logical, numeric</td>
+</tr>
+<tr class="odd">
+<td align="left">minMax</td>
+<td align="left">Find minimum and maximum values</td>
+<td align="left">integer, numeric, Date</td>
+</tr>
+<tr class="even">
+<td align="left">quartiles</td>
+<td align="left">Compute 1st and 3rd quartiles</td>
+<td align="left">Date, integer, numeric</td>
+</tr>
+<tr class="odd">
+<td align="left">uniqueValues</td>
+<td align="left">Count number of unique values</td>
+<td align="left">character, Date, factor, integer, labelled, logical, numeric</td>
+</tr>
+<tr class="even">
+<td align="left">variableType</td>
+<td align="left">Data class of variable</td>
+<td align="left">character, Date, factor, integer, labelled, logical, numeric</td>
+</tr>
+</tbody>
+</table>
+<p>We see that the function <code>centralValue</code> computes modes for categorical variables. Now, we can use <code>defaultCharacterSummaries()</code> and <code>setSummaries()</code> in a call to <code>makeDataReport()</code> to create a report where <code>centralValue</code> is not used for character variables:</p>
+<pre class="r"><code>makeDataReport(bigPresidentData, 
+               summaries = setSummaries(character = defaultCharacterSummaries(remove = &quot;centralValue&quot;)),
+               replace = TRUE)</code></pre>
+</div>
+<div id="a.10" class="section level3">
+<h3>2a.10</h3>
+<p><strong>We would now like a report that only displays the results of checks (no visuals or summaries) and only lists variables that actually were found to have potential problems. But for each problem found, we would like to see all problematic values listed, not just the first 10, as is currently the case. Moreover, we would like to rename the report title (as displayed on the front page) to be “Problem flagging report”, and we would also like to have “problemflagging” appended to the file name of the report, so that we can easily tell it apart from the usual data report.</strong></p>
+<p>This customized report can be generated in the following way:</p>
+<pre class="r"><code>makeDataReport(bigPresidentData, mode = &quot;check&quot;, 
+               onlyProblematic = TRUE,
+               maxProbVals = Inf,
+               reportTitle = &quot;Problem flagging report&quot;,
+               vol = &quot;problemflagging&quot;)</code></pre>
+<p>Here, * <code>mode = &quot;check&quot;</code> specifies that we only want checks done - no visuals nor summaries * <code>onlyProblematic = TRUE</code> makes sure that one variables for which problems were found are included in the report * <code>maxProbVals = Inf</code> means that there is no upper limit (or, an infinite one, if you will) for how many problematic values are printed in the checks * <code>reportTitle = &quot;Problem flagging report&quot;</code> puts “Problem Flagging Report” as the title on the first page * <code>vol = &quot;problemflagging&quot;</code>appends “problemflagging” to the file name so that it now reads “dataMaid_bigPresidentDataproblemflagging” (with a file extension depending on you operating system and availability of LaTeX.)</p>
+</div>
+</div>
+<div id="exercise-2b---using-datamaid-interactively" class="section level2">
+<h2>Exercise 2b - using <code>dataMaid</code> interactively</h2>
+<div id="b.1" class="section level3">
+<h3>2b.1</h3>
+<p><strong>Run <code>check(bigPresidentData$ageAtInauguration)</code>, <code>visualize(bigPresidentData$ageAtInauguration)</code>, and <code>summarize(bigPresidentData$ageAtInauguration)</code> and verify that you obtain information identical to what you saw in the report previously generated by <code>makeDataReport(bigPresidentData)</code>.</strong></p>
+<p>We run the three check/visualize/summarize steps in the variable <code>ageAtInauguration</code> interactively:</p>
+<pre class="r"><code>check(bigPresidentData$ageAtInauguration)</code></pre>
+<pre><code>## $identifyMissing
+## No problems found.
+## $identifyWhitespace
+## No problems found.
+## $identifyLoners
+## Note that the following levels have at most five observations: 42, 43, 46, 47, 48, 49, 50, 51, 52, 54 (13 additional values omitted).
+## $identifyCaseIssues
+## No problems found.
+## $identifyNums
+## Note: The variable consists exclusively of numbers and takes a lot of different values. Is it perhaps a misclassified numeric variable?</code></pre>
+<pre class="r"><code>visualize(bigPresidentData$ageAtInauguration)</code></pre>
+<p><img src="exercises_solutions_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<pre class="r"><code>summarize(bigPresidentData$ageAtInauguration)</code></pre>
+<pre><code>## $variableType
+## Variable type: character
+## $countMissing
+## Number of missing obs.: 0 (0 %)
+## $uniqueValues
+## Number of unique values: 23
+## $centralValue
+## Mode: &quot;54&quot;</code></pre>
+<p><strong>Look at <code>str(check(bigPresidentData$ageAtInauguration))</code>.</strong> We try calling the structure (<code>str()</code>) function on the output of a <code>check()</code> call:</p>
+<pre class="r"><code>ageAtInaugCheck &lt;- check(bigPresidentData$ageAtInauguration)
+
+str(ageAtInaugCheck)</code></pre>
+<pre><code>## List of 5
+##  $ identifyMissing   :List of 3
+##   ..$ problem      : logi FALSE
+##   ..$ message      : chr &quot;&quot;
+##   ..$ problemValues: NULL
+##   ..- attr(*, &quot;class&quot;)= chr &quot;checkResult&quot;
+##  $ identifyWhitespace:List of 3
+##   ..$ problem      : logi FALSE
+##   ..$ message      : chr &quot;&quot;
+##   ..$ problemValues: NULL
+##   ..- attr(*, &quot;class&quot;)= chr &quot;checkResult&quot;
+##  $ identifyLoners    :List of 3
+##   ..$ problem      : logi TRUE
+##   ..$ message      : chr &quot;Note that the following levels have at most five observations: \\\&quot;42\\\&quot;, \\\&quot;43\\\&quot;, \\\&quot;46\\\&quot;, \\\&quot;47\\\&quot;, &quot;| __truncated__
+##   ..$ problemValues: chr [1:23] &quot;42&quot; &quot;43&quot; &quot;46&quot; &quot;47&quot; ...
+##   ..- attr(*, &quot;class&quot;)= chr &quot;checkResult&quot;
+##  $ identifyCaseIssues:List of 3
+##   ..$ problem      : logi FALSE
+##   ..$ message      : chr &quot;&quot;
+##   ..$ problemValues: NULL
+##   ..- attr(*, &quot;class&quot;)= chr &quot;checkResult&quot;
+##  $ identifyNums      :List of 3
+##   ..$ problem      : logi TRUE
+##   ..$ message      : chr &quot;Note: The variable consists exclusively of numbers and takes a lot of different values. Is it perhaps a misclas&quot;| __truncated__
+##   ..$ problemValues: NULL
+##   ..- attr(*, &quot;class&quot;)= chr &quot;checkResult&quot;</code></pre>
+<p>We observe that the results are stored in a list-type object with one entry for each check function used. And for each check function, we then find a new list with three entries: <code>problem</code> (<code>TRUE</code> if a problem was found), <code>message</code> (the message printed in the report) and <code>problemValues</code> the values in the varibale that were deemed problematic.</p>
+</div>
+<div id="b.2" class="section level3">
+<h3>2b.2</h3>
+<p><strong>Modify the manual check for <code>presidencyYears</code> such that it only returns potential outliers.</strong></p>
+<p>We call <code>check()</code> and use the <code>checks</code> argument to specify that the variable <code>presidencyYears</code> (a numeric) should only be subjected to a check for outliers.</p>
+<p>First, we see that class the variable has:</p>
+<pre class="r"><code>class(bigPresidentData$presidencyYears)</code></pre>
+<pre><code>## [1] &quot;numeric&quot;</code></pre>
+<p>Next, we find the name of the check function that identifies potential outliers:</p>
+<pre class="r"><code>allCheckFunctions()</code></pre>
+<table style="width:81%;">
+<caption>Table continues below</caption>
+<colgroup>
+<col width="36%" />
+<col width="44%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">name</th>
+<th align="left">description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">identifyCaseIssues</td>
+<td align="left">Identify case issues</td>
+</tr>
+<tr class="even">
+<td align="left">identifyLoners</td>
+<td align="left">Identify levels with &lt; 6 obs.</td>
+</tr>
+<tr class="odd">
+<td align="left">identifyMissing</td>
+<td align="left">Identify miscoded missing values</td>
+</tr>
+<tr class="even">
+<td align="left">identifyNums</td>
+<td align="left">Identify misclassified numeric or integer variables</td>
+</tr>
+<tr class="odd">
+<td align="left">identifyOutliers</td>
+<td align="left">Identify outliers</td>
+</tr>
+<tr class="even">
+<td align="left">identifyOutliersTBStyle</td>
+<td align="left">Identify outliers (Turkish Boxplot style)</td>
+</tr>
+<tr class="odd">
+<td align="left">identifyWhitespace</td>
+<td align="left">Identify prefixed and suffixed whitespace</td>
+</tr>
+<tr class="even">
+<td align="left">isCPR</td>
+<td align="left">Identify Danish CPR numbers</td>
+</tr>
+<tr class="odd">
+<td align="left">isEmpty</td>
+<td align="left">Check if the variable contains only a single value</td>
+</tr>
+<tr class="even">
+<td align="left">isKey</td>
+<td align="left">Check if the variable is a key</td>
+</tr>
+<tr class="odd">
+<td align="left">isSingular</td>
+<td align="left">Check if the variable contains only a single value</td>
+</tr>
+<tr class="even">
+<td align="left">isSupported</td>
+<td align="left">Check if the variable class is supported by dataMaid.</td>
+</tr>
+</tbody>
+</table>
+<table style="width:40%;">
+<colgroup>
+<col width="40%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">classes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">character, factor</td>
+</tr>
+<tr class="even">
+<td align="left">character, factor</td>
+</tr>
+<tr class="odd">
+<td align="left">character, Date, factor, integer, labelled, logical, numeric</td>
+</tr>
+<tr class="even">
+<td align="left">character, factor, labelled</td>
+</tr>
+<tr class="odd">
+<td align="left">Date, integer, numeric</td>
+</tr>
+<tr class="even">
+<td align="left">Date, integer, numeric</td>
+</tr>
+<tr class="odd">
+<td align="left">character, factor, labelled</td>
+</tr>
+<tr class="even">
+<td align="left">character, Date, factor, integer, labelled, logical, numeric</td>
+</tr>
+<tr class="odd">
+<td align="left">character, Date, factor, integer, labelled, logical, numeric</td>
+</tr>
+<tr class="even">
+<td align="left">character, Date, factor, integer, labelled, logical, numeric</td>
+</tr>
+<tr class="odd">
+<td align="left">character, Date, factor, integer, labelled, logical, numeric</td>
+</tr>
+<tr class="even">
+<td align="left">character, Date, factor, integer, labelled, logical, numeric</td>
+</tr>
+</tbody>
+</table>
+<p>And lastly, we specify that this is the check we want for numeric variables and apply it to <code>presidencyYears</code>:</p>
+<pre class="r"><code>check(bigPresidentData$presidencyYears,
+      checks = setChecks(numeric = &quot;identifyOutliers&quot;))</code></pre>
+<pre><code>## $identifyOutliers
+## Note that the following possible outlier values were detected: 12, Inf.</code></pre>
+<p>Note that the same output could have been obtained by calling <code>identifyOutliers</code> directly:</p>
+<pre class="r"><code>identifyOutliers(bigPresidentData$presidencyYears)</code></pre>
+<pre><code>## Note that the following possible outlier values were detected: 12, Inf.</code></pre>
+</div>
+<div id="b.3" class="section level3">
+<h3>2b.3</h3>
+<p><strong>Use <code>check()</code> to identify the values that are thought to be potential outliers for the <code>presidencyYears</code> variable and store the result in an object <code>problems</code>. Return the vector with the <code>problemValues</code> and save them to a vector <code>probs</code>.</strong></p>
+<p>We store the results of checking <code>presidencyYears</code> for outliers in an object called <code>problems</code>:</p>
+<pre class="r"><code>problems &lt;- check(bigPresidentData$presidencyYears,
+                  check = setChecks(numeric = &quot;identifyOutliers&quot;))
+
+#look at the contents
+problems</code></pre>
+<pre><code>## $identifyOutliers
+## Note that the following possible outlier values were detected: 12, Inf.</code></pre>
+<pre class="r"><code>#look at the structure of the contents
+str(problems)</code></pre>
+<pre><code>## List of 1
+##  $ identifyOutliers:List of 3
+##   ..$ problem      : logi TRUE
+##   ..$ message      : chr &quot;Note that the following possible outlier values were detected: \\\&quot;12\\\&quot;, \\\&quot;Inf\\\&quot;.&quot;
+##   ..$ problemValues: num [1:2] 12 Inf
+##   ..- attr(*, &quot;class&quot;)= chr &quot;checkResult&quot;</code></pre>
+<p>We now want to save the problem values found by the <code>identifyOutliers</code> check. In order to do this, we must first select the <code>identifyOutliers</code> entry of the list <code>problems</code> and then select the problem values within <em>that</em> list. Below, we show two ways of doing this, using either list indexing (<code>[[]]</code>) or <code>$</code>. We store the problematic values in a new object called <code>probs</code>:</p>
+<pre class="r"><code>#select first entry of problems using indexing, and then choose 
+#problemValues by use of the entry name
+probs &lt;- problems[[1]]$problemValues
+
+#Select the results from `identifyOutliers` using the entry name, 
+#and then select `problemValues` also by use of the entry name
+probs &lt;- problems$identifyOutliers$problemValues</code></pre>
+<p>In both objects we will find the same contents, namely:</p>
+<pre class="r"><code>probs</code></pre>
+<pre><code>## [1]  12 Inf</code></pre>
+</div>
+<div id="b.4" class="section level3">
+<h3>2b.4</h3>
+<p><strong>Use the vector of potential error values to identify the indices (rows) of <code>bigPresidentData</code> which contain values for <code>presidencyYears</code> that are part of the vector of problem values, <code>probs</code>.</strong></p>
+<p>We now identify the row numbers of <code>bigPresidentData</code> where potential outliers were identified in the <code>presidencyYears</code> variable:</p>
+<pre class="r"><code>probRows &lt;- which(bigPresidentData$presidencyYears %in% probs)
+
+probRows</code></pre>
+<pre><code>## [1] 37 42</code></pre>
+<p>A brief comment on the code: The inner statement, <code>bigPresidentData$presidencyYears %in% probs</code> returns a vector of <code>TRUE</code> (for observations that are among the problematic values) and <code>FALSE</code> (for observations that are not in the <code>probs</code> vector). By wrapping the statement in a <code>which()</code> call, instead of getting the logical vector, we get the row numbers of the places in the vector that are <code>TRUE</code>.</p>
+<p>Next, we can use the indicies stored in <code>probRows</code> to look at the full dataset for those rows:</p>
+<pre class="r"><code>bigPresidentData[probRows, ]</code></pre>
+<pre><code>##     lastName firstName orderOfPresidency   birthday dateOfDeath
+## 32 Roosevelt  Franklin                32 1882-01-30  1945-04-12
+## 44     Obama    Barack                44 1961-08-04        &lt;NA&gt;
+##    stateOfBirth      party presidencyBeginDate presidencyEndDate
+## 32     New York Democratic          1901-09-14        1909-03-04
+## 44       Hawaii Democratic          2009-01-20        2017-01-20
+##    assassinationAttempt  sex        ethnicity presidencyYears
+## 32                    1 Male        Caucasian              12
+## 44                    0 Male African American             Inf
+##    ageAtInauguration favoriteNumber
+## 32                51           6+0i
+## 44                47           6+0i</code></pre>
+<p>And now we can see that President Obama was listed to have an infinite presidency – a data error – while Franklin Roosevelt was the president with a 12 year presidency. However, that is not a mistake - it is just an unusual value.</p>
+</div>
+<div id="b.5" class="section level3">
+<h3>2b.5</h3>
+<p>We look at the <code>toyData</code> dataset:</p>
+<pre class="r"><code>data(toyData)
+toyData</code></pre>
+<pre><code>## # A tibble: 15 x 6
+##    pill  events region change id    spotifysong
+##    &lt;fct&gt;  &lt;dbl&gt; &lt;fct&gt;   &lt;dbl&gt; &lt;fct&gt; &lt;fct&gt;      
+##  1 red     1.00 a      -0.626 1     Irrelevant 
+##  2 red     1.00 a       0.184 2     Irrelevant 
+##  3 red     1.00 a      -0.836 3     Irrelevant 
+##  4 red     2.00 a       1.60  4     Irrelevant 
+##  5 red     2.00 a       0.330 5     Irrelevant 
+##  6 red     6.00 b      -0.820 6     Irrelevant 
+##  7 red     6.00 b       0.487 7     Irrelevant 
+##  8 red     6.00 b       0.738 8     Irrelevant 
+##  9 red   999    c       0.576 9     Irrelevant 
+## 10 red    NA    c      -0.305 10    Irrelevant 
+## 11 blue    4.00 c       1.51  11    Irrelevant 
+## 12 blue   82.0  .       0.390 12    Irrelevant 
+## 13 blue   NA    &quot; &quot;    -0.621 13    Irrelevant 
+## 14 &lt;NA&gt;  NaN    other  -2.21  14    Irrelevant 
+## 15 &lt;NA&gt;    5.00 OTHER   1.12  15    Irrelevant</code></pre>
+</div>
+<div id="b.6" class="section level3">
+<h3>2b.6</h3>
+<p><strong>Do a full <code>check()</code> on the full <code>toyData</code> data frame but only consider the <code>identifyMissing</code> check.</strong></p>
+<p>We use <code>check()</code> to look for missing values in the <code>toyData</code> dataset:</p>
+<pre class="r"><code>check(toyData, checks = setChecks(all = &quot;identifyMissing&quot;))</code></pre>
+<pre><code>## $pill
+## $pill$identifyMissing
+## No problems found.
+## 
+## $events
+## $events$identifyMissing
+## The following suspected missing value codes enter as regular values: 999, NaN.
+## 
+## $region
+## $region$identifyMissing
+## The following suspected missing value codes enter as regular values:  , ..
+## 
+## $change
+## $change$identifyMissing
+## No problems found.
+## 
+## $id
+## $id$identifyMissing
+## No problems found.
+## 
+## $spotifysong
+## $spotifysong$identifyMissing
+## No problems found.</code></pre>
+</div>
+<div id="b.7" class="section level3">
+<h3>2b.7</h3>
+<p><strong>Return a vector of values that are potential missing values across the full dataset.</strong> We now collect a vector with all potential missing values in the <code>toyData</code> dataset. Note that this will coerce them to all have the same data class (namely, character), as vectors in <code>R</code> can only have a single class.</p>
+<p>The strategy goes as follows:</p>
+<ol style="list-style-type: decimal">
+<li>Use <code>check()</code> like in the previous exercise to identify where there are problems. As we just saw, when called on a full dataset, this function returns a list (of variables) of lists (of checks) of lists (problem status, message and problem values).</li>
+<li>We use <code>sapply()</code> to select the problem values from each <code>identifyMissing</code> result. Note that if no problems are found, <code>NULL</code> is stored under <code>problemValues</code>.</li>
+<li>Lastly, we use <code>unlist()</code> to obtain a character vector with the result. Note that this function automatically drops <code>NULL</code> entries.</li>
+</ol>
+<pre class="r"><code>missCheck &lt;- check(toyData, checks = setChecks(all = &quot;identifyMissing&quot;))
+missCheckValList &lt;- sapply(missCheck, function(x) x$identifyMissing$problemValues) 
+missCheckVals &lt;- unlist(missCheckValList)
+
+#Look at the results
+missCheckVals</code></pre>
+<pre><code>## events1 events2 region1 region2 
+##   &quot;999&quot;   &quot;NaN&quot;     &quot; &quot;     &quot;.&quot;</code></pre>
+</div>
+</div>
+<div id="exercise-2c---customizing-new-function" class="section level2">
+<h2>Exercise 2c - customizing new function</h2>
+<div id="c.1" class="section level3">
+<h3>2c.1</h3>
+<p><strong>Use the template to finish writing <code>refCat()</code>. Call it on <code>pill</code> from <code>toyData</code> in order to test whether it is working.</strong></p>
+<p>We fill out the missing line of <code>refCat()</code> where we choose the first level of the variable (assuming that <code>v</code> is a factor):</p>
+<pre class="r"><code>refCat &lt;- function(v, ...) {
+  val &lt;- levels(v)[1]
+  res &lt;- val
+  summaryResult(list(feature = &quot;Reference category&quot;, result = res,
+                     value = val))
+}</code></pre>
+<p>And we use it on <code>pill</code> from <code>toyData</code>:</p>
+<pre class="r"><code>refCat(toyData$pill)</code></pre>
+<pre><code>## Reference category: blue</code></pre>
+<p>It seems to be working as intended. Note that we can also use it in a <code>check()</code> call. For instance, below we add it to the checks performed on <code>factor</code> variables and check the full <code>toyData</code> dataset:</p>
+<pre class="r"><code>check(toyData, 
+      checks = setChecks(factor = defaultFactorChecks(add = &quot;refCat&quot;)))</code></pre>
+<pre><code>## $pill
+## $pill$identifyMissing
+## No problems found.
+## $pill$identifyWhitespace
+## No problems found.
+## $pill$identifyLoners
+## Note that the following levels have at most five observations: blue.
+## $pill$identifyCaseIssues
+## No problems found.
+## $pill$identifyNums
+## No problems found.
+## $pill$refCat
+## Reference category: blue
+## 
+## $events
+## $events$identifyMissing
+## The following suspected missing value codes enter as regular values: 999, NaN.
+## $events$identifyOutliers
+## Note that the following possible outlier values were detected: 82, 999.
+## 
+## $region
+## $region$identifyMissing
+## The following suspected missing value codes enter as regular values:  , ..
+## $region$identifyWhitespace
+## The following values appear with prefixed or suffixed white space:  .
+## $region$identifyLoners
+## Note that the following levels have at most five observations:  , ., OTHER, a, b, c, other.
+## $region$identifyCaseIssues
+## Note that there might be case problems with the following levels: OTHER, other.
+## $region$identifyNums
+## No problems found.
+## $region$refCat
+## Reference category:  
+## 
+## $change
+## $change$identifyMissing
+## No problems found.
+## $change$identifyOutliers
+## Note that the following possible outlier values were detected: 1.12, 1.51, 1.6.
+## 
+## $id
+## $id$identifyMissing
+## No problems found.
+## $id$identifyWhitespace
+## No problems found.
+## $id$identifyLoners
+## Note that the following levels have at most five observations: 1, 10, 11, 12, 13, 14, 15, 2, 3, 4 (5 additional values omitted).
+## $id$identifyCaseIssues
+## No problems found.
+## $id$identifyNums
+## Note: The variable consists exclusively of numbers and takes a lot of different values. Is it perhaps a misclassified numeric variable?
+## $id$refCat
+## Reference category: 1
+## 
+## $spotifysong
+## $spotifysong$identifyMissing
+## No problems found.
+## $spotifysong$identifyWhitespace
+## No problems found.
+## $spotifysong$identifyLoners
+## No problems found.
+## $spotifysong$identifyCaseIssues
+## No problems found.
+## $spotifysong$identifyNums
+## No problems found.
+## $spotifysong$refCat
+## Reference category: Irrelevant</code></pre>
+</div>
+<div id="c.2" class="section level3">
+<h3>2c.2</h3>
+<p><strong>First, try calling <code>allSummaryFunctions()</code> to see what summary functions are already available. We want <code>refCat()</code> to be added to the output of this function. This is done by use of <code>summaryFunction()</code>. Fill in the missing pieces in the code, run it, and try calling <code>allSummaryFunctions()</code> again afterwards.</strong></p>
+<p>First, we see what summary functions are available already:</p>
+<pre class="r"><code>allSummaryFunctions()</code></pre>
+<table>
+<colgroup>
+<col width="19%" />
+<col width="42%" />
+<col width="38%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">name</th>
+<th align="left">description</th>
+<th align="left">classes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">centralValue</td>
+<td align="left">Compute median for numeric variables, mode for categorical variables</td>
+<td align="left">character, Date, factor, integer, labelled, logical, numeric</td>
+</tr>
+<tr class="even">
+<td align="left">countMissing</td>
+<td align="left">Compute proportion of missing observations</td>
+<td align="left">character, Date, factor, integer, labelled, logical, numeric</td>
+</tr>
+<tr class="odd">
+<td align="left">minMax</td>
+<td align="left">Find minimum and maximum values</td>
+<td align="left">integer, numeric, Date</td>
+</tr>
+<tr class="even">
+<td align="left">quartiles</td>
+<td align="left">Compute 1st and 3rd quartiles</td>
+<td align="left">Date, integer, numeric</td>
+</tr>
+<tr class="odd">
+<td align="left">uniqueValues</td>
+<td align="left">Count number of unique values</td>
+<td align="left">character, Date, factor, integer, labelled, logical, numeric</td>
+</tr>
+<tr class="even">
+<td align="left">variableType</td>
+<td align="left">Data class of variable</td>
+<td align="left">character, Date, factor, integer, labelled, logical, numeric</td>
+</tr>
+</tbody>
+</table>
+<p>And then we make <code>refCat()</code> a proper summary function by using the <code>summaryFunction()</code> function to change its class:</p>
+<pre class="r"><code>refCat &lt;- summaryFunction(refCat,
+  description = &quot;Identify reference level&quot;,
+  classes = c(&quot;factor&quot;)
+  )</code></pre>
+<p>and we see that <code>refCat</code> is now added to the output of <code>allSummaryFunctions()</code>:</p>
+<pre class="r"><code>allSummaryFunctions()</code></pre>
+<table>
+<colgroup>
+<col width="19%" />
+<col width="42%" />
+<col width="38%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">name</th>
+<th align="left">description</th>
+<th align="left">classes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">refCat</td>
+<td align="left">Identify reference level</td>
+<td align="left">factor</td>
+</tr>
+<tr class="even">
+<td align="left">centralValue</td>
+<td align="left">Compute median for numeric variables, mode for categorical variables</td>
+<td align="left">character, Date, factor, integer, labelled, logical, numeric</td>
+</tr>
+<tr class="odd">
+<td align="left">countMissing</td>
+<td align="left">Compute proportion of missing observations</td>
+<td align="left">character, Date, factor, integer, labelled, logical, numeric</td>
+</tr>
+<tr class="even">
+<td align="left">minMax</td>
+<td align="left">Find minimum and maximum values</td>
+<td align="left">integer, numeric, Date</td>
+</tr>
+<tr class="odd">
+<td align="left">quartiles</td>
+<td align="left">Compute 1st and 3rd quartiles</td>
+<td align="left">Date, integer, numeric</td>
+</tr>
+<tr class="even">
+<td align="left">uniqueValues</td>
+<td align="left">Count number of unique values</td>
+<td align="left">character, Date, factor, integer, labelled, logical, numeric</td>
+</tr>
+<tr class="odd">
+<td align="left">variableType</td>
+<td align="left">Data class of variable</td>
+<td align="left">character, Date, factor, integer, labelled, logical, numeric</td>
+</tr>
+</tbody>
+</table>
+<p>Please note that even though we have written that the function should only be used for <code>factor</code> variables, this is not enforced automatically: It is up to the user to consult <code>allSummaryFunctions()</code> and only apply appropriate summaries.</p>
+</div>
+<div id="c.3" class="section level3">
+<h3>2c.3</h3>
+<p><strong>Run the following code bit, adding <code>refCat()</code> to the summaries used for factor variables and look at the result.</strong></p>
+<pre class="r"><code>makeDataReport(bigPresidentData, 
+               summaries = setSummaries(factor = defaultFactorSummaries(add = &quot;refCat&quot;)),
+               vol = &quot;_withRefCat&quot;)</code></pre>
+<p>We now see that “reference category” is included among the summaries used for <code>factor</code> variables.</p>
+</div>
+<div id="c.4" class="section level3">
+<h3>2c.4</h3>
+<p><strong>Finish <code>identifyNonStartCase()</code>.</strong></p>
+<p>Here is an example of how the function can be written. But please note that there are many different approaches for solving the problem. This solution draws on list operations (with <code>sapply()</code>) but avoids regular expressions. Note also that we add default values to the mandatory argument, <code>nMax</code>, so that it is easier to call from the console. However, this default setting will be overwritten both by <code>check()</code> and <code>makeDataReport()</code> if the function is used within one of these functions.</p>
+<pre class="r"><code>identifyNonStartCase &lt;- function(v, nMax = 10, ...) {
+  #omit NA values from v and only keep unique values
+  v &lt;- unique(na.omit(v))
+  
+  #for each entry in v, split it around blank spaces. Note that this
+  #function returns a list with one entry per entry in v
+  vSplit &lt;- strsplit(v, split = &quot; &quot;)
+  
+  #We then transform all entries of v to be lower case:
+  vSplitAllLower &lt;- sapply(vSplit, tolower)
+  
+  #We define a helper function that converts a lower case character
+  #string into having a capitalized first letter
+  foo &lt;- function(x) {
+    capFirstLetters &lt;- toupper(substring(x, 1, 1))
+    x &lt;- paste(capFirstLetters, substring(x, 2), sep = &quot;&quot;)
+    x
+  }
+  
+  #And we use the helper function to obtain a Start Case version of v (first
+  #as list, then as a variable):
+  vSplitStartCase &lt;- sapply(vSplit, foo)
+  vStartCase &lt;- sapply(vSplitStartCase, function(x) paste(x, collapse = &quot; &quot;))
+  
+  #We can then compare the original v with the Start Case v in order to
+  #find problems (i.e. places where they differ)
+  problemPlaces &lt;- v != vStartCase
+  
+  #The problemValues are then the values in v in the problemPlaces. In 
+  #no problems are found, we store NULL
+  if (any(problemPlaces)) {
+    problemValues &lt;- v[problemPlaces]
+  } else problemValues &lt;- NULL
+  
+  #We store the a logical indicator of whether a problem was found
+  problem &lt;- any(problemPlaces)
+  
+  
+  problemStatus &lt;- list(problem = problem,
+                        problemValues = problemValues)
+
+  problemMessage &lt;- &quot;The following values were not in start case:&quot;
+    
+  outMessage &lt;- messageGenerator(problemStatus, problemMessage, nMax)
+
+  checkResult(list(problem = problem,
+    message = outMessage,
+    problemValues = problemValues))
+}
+
+identifyNonStartCase &lt;- checkFunction(identifyNonStartCase,
+  description = &quot;Identify entries that are not written in Start Case&quot;,
+  classes = c(&quot;character&quot;, &quot;factor&quot;)
+)</code></pre>
+</div>
+<div id="c.5" class="section level3">
+<h3>2c.5</h3>
+<p><strong>Use <code>identifyNonStartCase()</code> on the variable <code>stateOfBirth</code> from <code>bigPresidentData</code>. Try using it on all <code>character</code> variables in <code>bigPresidentData</code> by use of the function <code>check()</code>.</strong></p>
+<p>We use <code>identifyNonStartCase()</code> on <code>stateOfBirth</code>:</p>
+<pre class="r"><code>identifyNonStartCase(bigPresidentData$stateOfBirth)</code></pre>
+<pre><code>## The following values were not in start case: New york.</code></pre>
+<p>And we find the lower-case “New York” entry that we have encountered before. We add <code>identifyNonStartCase</code> to the checks applied on <code>character</code> variables and use it to check <code>bigPresidentData</code>:</p>
+<pre class="r"><code>check(bigPresidentData, 
+      checks = setChecks(character = defaultCharacterChecks(add = &quot;identifyNonStartCase&quot;)))</code></pre>
+<pre><code>## $lastName
+## $lastName$identifyMissing
+## No problems found.
+## $lastName$identifyWhitespace
+## The following values appear with prefixed or suffixed white space:  Truman.
+## $lastName$identifyLoners
+## Note that the following levels have at most five observations:  Truman, Adams, Arathornson, Arthur, Buchanan, Bush, Carter, Cleveland, Clinton, Coolidge (30 additional values omitted).
+## $lastName$identifyCaseIssues
+## No problems found.
+## $lastName$identifyNums
+## No problems found.
+## $lastName$identifyNonStartCase
+## No problems found.
+## 
+## $firstName
+## $firstName$identifyMissing
+## The following suspected missing value codes enter as regular values: ..
+## $firstName$identifyWhitespace
+## No problems found.
+## $firstName$identifyLoners
+## Note that the following levels have at most five observations: ., Abraham, Andrew, Aragorn, Barack, Benjamin, Chester, Dwight, Dwight D, Franklin (22 additional values omitted).
+## $firstName$identifyCaseIssues
+## No problems found.
+## $firstName$identifyNums
+## No problems found.
+## $firstName$identifyNonStartCase
+## No problems found.
+## 
+## $orderOfPresidency
+## $orderOfPresidency$identifyMissing
+## No problems found.
+## $orderOfPresidency$identifyWhitespace
+## No problems found.
+## $orderOfPresidency$identifyLoners
+## Note that the following levels have at most five observations: 0, 1, 10, 11, 12, 13, 14, 15, 16, 17 (36 additional values omitted).
+## $orderOfPresidency$identifyCaseIssues
+## No problems found.
+## $orderOfPresidency$identifyNums
+## Note: The variable consists exclusively of numbers and takes a lot of different values. Is it perhaps a misclassified numeric variable?
+## 
+## $birthday
+## $birthday$identifyOutliers
+## Note that the following possible outlier values were detected: 1300-03-01.
+## $birthday$identifyMissing
+## No problems found.
+## 
+## $dateOfDeath
+## $dateOfDeath$identifyOutliers
+## Note that the following possible outlier values were detected: 1510-01-01, 1799-12-14.
+## $dateOfDeath$identifyMissing
+## No problems found.
+## 
+## $stateOfBirth
+## $stateOfBirth$identifyMissing
+## No problems found.
+## $stateOfBirth$identifyWhitespace
+## No problems found.
+## $stateOfBirth$identifyLoners
+## Note that the following levels have at most five observations: Arkansas, California, Connecticut, Georgia, Gondor, Hawaii, Illinois, Indiana, Iowa, Kentucky (12 additional values omitted).
+## $stateOfBirth$identifyCaseIssues
+## Note that there might be case problems with the following levels: New York, New york.
+## $stateOfBirth$identifyNums
+## No problems found.
+## $stateOfBirth$identifyNonStartCase
+## The following values were not in start case: New york.
+## 
+## $party
+## $party$identifyMissing
+## No problems found.
+## $party$identifyWhitespace
+## No problems found.
+## $party$identifyLoners
+## Note that the following levels have at most five observations: Democratic-Republican, Democratic-Republican/National Republican, Democratic/National Union, Dunedain, Federalist, Independent, Republican/National Union, Whig.
+## $party$identifyCaseIssues
+## No problems found.
+## $party$identifyNums
+## No problems found.
+## $party$identifyNonStartCase
+## No problems found.
+## 
+## $presidencyBeginDate
+## $presidencyBeginDate$identifyOutliers
+## No problems found.
+## $presidencyBeginDate$identifyMissing
+## No problems found.
+## 
+## $presidencyEndDate
+## $presidencyEndDate$identifyOutliers
+## No problems found.
+## $presidencyEndDate$identifyMissing
+## No problems found.
+## 
+## $assassinationAttempt
+## $assassinationAttempt$identifyMissing
+## No problems found.
+## $assassinationAttempt$identifyOutliers
+## Note that the following possible outlier values were detected: 1.
+## 
+## $sex
+## $sex$identifyMissing
+## No problems found.
+## $sex$identifyWhitespace
+## No problems found.
+## $sex$identifyLoners
+## No problems found.
+## $sex$identifyCaseIssues
+## No problems found.
+## $sex$identifyNums
+## No problems found.
+## 
+## $ethnicity
+## $ethnicity$identifyMissing
+## No problems found.
+## $ethnicity$identifyWhitespace
+## No problems found.
+## $ethnicity$identifyLoners
+## Note that the following levels have at most five observations: African American.
+## $ethnicity$identifyCaseIssues
+## No problems found.
+## $ethnicity$identifyNums
+## No problems found.
+## 
+## $presidencyYears
+## $presidencyYears$identifyMissing
+## The following suspected missing value codes enter as regular values: Inf.
+## $presidencyYears$identifyOutliers
+## Note that the following possible outlier values were detected: 12, Inf.
+## 
+## $ageAtInauguration
+## $ageAtInauguration$identifyMissing
+## No problems found.
+## $ageAtInauguration$identifyWhitespace
+## No problems found.
+## $ageAtInauguration$identifyLoners
+## Note that the following levels have at most five observations: 42, 43, 46, 47, 48, 49, 50, 51, 52, 54 (13 additional values omitted).
+## $ageAtInauguration$identifyCaseIssues
+## No problems found.
+## $ageAtInauguration$identifyNums
+## Note: The variable consists exclusively of numbers and takes a lot of different values. Is it perhaps a misclassified numeric variable?
+## $ageAtInauguration$identifyNonStartCase
+## No problems found.
+## 
+## $favoriteNumber
+## $favoriteNumber$NoChecksPerformed
+## No problems found.</code></pre>
+</div>
+<div id="c.6" class="section level3">
+<h3>2c.6</h3>
+<p><strong>Add <code>identifyNonStartCase()</code> to the checks used on character variables in a <code>makeDataReport()</code> call on <code>bigPresidentData</code>. Use the argument <code>vol = &quot;_nonStartCase&quot;</code> to give the new report a different file name than the old ones. Compare the new report with an old version. Can you find the description you wrote for <code>identifyNonStartCase()</code> when calling <code>checkFunction()</code>?</strong></p>
+<p>We do as told:</p>
+<pre class="r"><code>makeDataReport(bigPresidentData, 
+               checks = setChecks(character = defaultCharacterChecks(add = &quot;identifyNonStartCase&quot;)),
+               vol = &quot;_nonStartCase&quot;)</code></pre>
+<p>We see that the description is added on the first page of the report in the table that summarizes what checks were performed.</p>
+</div>
+</div>
+</div>
+<div id="exercise-3" class="section level1">
+<h1>Exercise 3</h1>
+<p>In order to solve the exercises below, you will need to use logical operators in <code>R</code>. Note that their documentation is available through a <code>?Logic</code> call. Here is a brief summary of the most commonly used logical operators:</p>
+<p><code>&amp;</code>: And. <code>x &amp; y</code> evaluates to <code>TRUE</code> if both <code>x</code> and <code>y</code> evaluate to <code>TRUE</code>. <code>|</code>: Or. <code>x | y</code> evaluates to <code>TRUE</code> if either <code>x</code> or <code>y</code> evaluate to <code>TRUE</code>. <code>!</code>: Not. <code>!x</code> evaluates to <code>TRUE</code> if <code>x</code> evaluates to <code>FALSE</code> (and vice versa).</p>
+<p>You will also need to use relational operators, which are documented in <code>?Comparison</code>:</p>
+<p><code>&lt;</code>: Strictly smaller than. <code>&gt;</code>: Strictly greater than. <code>&lt;=</code>: Smaller than. <code>&gt;=</code>: Greater than. <code>==</code>: Equals - note the double equality sign! <code>!=</code>: Not equal.</p>
+<p>Note that these relational operators are not just implemented for comparing numbers, but also dates.</p>
+<div id="row-wise-constraints" class="section level2">
+<h2>Row-wise constraints</h2>
+<p>We create <code>validator</code> objects for each of the combinations of variables below and confront the data with them.</p>
+<pre class="r"><code>library(validate)</code></pre>
+<div id="birthday-dateofdeath-presidencybegindate-and-presidencyenddate" class="section level3">
+<h3><strong><code>birthday</code>, <code>dateOfDeath</code>, <code>presidencyBeginDate</code> and <code>presidencyEndDate</code></strong></h3>
+<p>It must hold that <code>birthday</code> is before <code>presidencyBeginDate</code>, which is before <code>presidencyEndDate</code>, which is before <code>dateOfDeath</code>. The last equality does not need to be strict, some presidencies have been known to end at the death of the president. We specify this in a validator:</p>
+<pre class="r"><code>dateVal &lt;- validator(birthday &lt; presidencyBeginDate,
+                     presidencyBeginDate &lt; presidencyEndDate,
+                     presidencyEndDate &lt;= dateOfDeath)
+
+dateCon &lt;- confront(bigPresidentData, dateVal)
+
+summary(dateCon)</code></pre>
+<pre><code>##   name items passes fails nNA error warning
+## 1   V1    47     46     0   1 FALSE   FALSE
+## 2   V2    47     45     0   2 FALSE   FALSE
+## 3   V3    47     39     1   7 FALSE   FALSE
+##                                expression
+## 1          birthday &lt; presidencyBeginDate
+## 2 presidencyBeginDate &lt; presidencyEndDate
+## 3        presidencyEndDate &lt;= dateOfDeath</code></pre>
+<p>We find 1 fail in the third contrain, <code>presidencyEndDate &lt; dateOfDeath</code>. Looking further into it:</p>
+<pre class="r"><code>bigPresidentData[!values(dateCon)[, 3],] </code></pre>
+<pre><code>##       lastName firstName orderOfPresidency   birthday dateOfDeath
+## NA        &lt;NA&gt;      &lt;NA&gt;              &lt;NA&gt;       &lt;NA&gt;        &lt;NA&gt;
+## 26   Roosevelt  Theodore                26 1858-10-27  1919-01-06
+## NA.1      &lt;NA&gt;      &lt;NA&gt;              &lt;NA&gt;       &lt;NA&gt;        &lt;NA&gt;
+## NA.2      &lt;NA&gt;      &lt;NA&gt;              &lt;NA&gt;       &lt;NA&gt;        &lt;NA&gt;
+## NA.3      &lt;NA&gt;      &lt;NA&gt;              &lt;NA&gt;       &lt;NA&gt;        &lt;NA&gt;
+## NA.4      &lt;NA&gt;      &lt;NA&gt;              &lt;NA&gt;       &lt;NA&gt;        &lt;NA&gt;
+## NA.5      &lt;NA&gt;      &lt;NA&gt;              &lt;NA&gt;       &lt;NA&gt;        &lt;NA&gt;
+## NA.6      &lt;NA&gt;      &lt;NA&gt;              &lt;NA&gt;       &lt;NA&gt;        &lt;NA&gt;
+##      stateOfBirth      party presidencyBeginDate presidencyEndDate
+## NA           &lt;NA&gt;       &lt;NA&gt;                &lt;NA&gt;              &lt;NA&gt;
+## 26       New York Republican          1933-03-04        1945-04-12
+## NA.1         &lt;NA&gt;       &lt;NA&gt;                &lt;NA&gt;              &lt;NA&gt;
+## NA.2         &lt;NA&gt;       &lt;NA&gt;                &lt;NA&gt;              &lt;NA&gt;
+## NA.3         &lt;NA&gt;       &lt;NA&gt;                &lt;NA&gt;              &lt;NA&gt;
+## NA.4         &lt;NA&gt;       &lt;NA&gt;                &lt;NA&gt;              &lt;NA&gt;
+## NA.5         &lt;NA&gt;       &lt;NA&gt;                &lt;NA&gt;              &lt;NA&gt;
+## NA.6         &lt;NA&gt;       &lt;NA&gt;                &lt;NA&gt;              &lt;NA&gt;
+##      assassinationAttempt  sex ethnicity presidencyYears ageAtInauguration
+## NA                     NA &lt;NA&gt;      &lt;NA&gt;              NA              &lt;NA&gt;
+## 26                      1 Male Caucasian               7                42
+## NA.1                   NA &lt;NA&gt;      &lt;NA&gt;              NA              &lt;NA&gt;
+## NA.2                   NA &lt;NA&gt;      &lt;NA&gt;              NA              &lt;NA&gt;
+## NA.3                   NA &lt;NA&gt;      &lt;NA&gt;              NA              &lt;NA&gt;
+## NA.4                   NA &lt;NA&gt;      &lt;NA&gt;              NA              &lt;NA&gt;
+## NA.5                   NA &lt;NA&gt;      &lt;NA&gt;              NA              &lt;NA&gt;
+## NA.6                   NA &lt;NA&gt;      &lt;NA&gt;              NA              &lt;NA&gt;
+##      favoriteNumber
+## NA               NA
+## 26             4+0i
+## NA.1             NA
+## NA.2             NA
+## NA.3             NA
+## NA.4             NA
+## NA.5             NA
+## NA.6             NA</code></pre>
+<p>We see that Theodore Roosevelt has a date of death before the noted date of the end of his presidency - but the latter is not correct, rather it is the date of Franklin Roosevelt’s end of presidency. It seems that the dates related to these to presidencies have been mixed up!</p>
+</div>
+<div id="presidencybegindate-presidencyenddate-and-presidencyyears" class="section level3">
+<h3><strong><code>presidencyBeginDate</code>, <code>presidencyEndDate</code> and <code>presidencyYears</code></strong></h3>
+<p>It should hold that the difference between <code>presidencyEndDate</code> and <code>presidencyBeginDate</code>, measured in full (rounded down) years should correspond to the contents of <code>presidencyYears</code>. We check this:</p>
+<pre class="r"><code>durationVal &lt;- validator(presidencyYears == floor((presidencyEndDate - presidencyBeginDate)/365.25))
+
+durationCon &lt;- confront(bigPresidentData, durationVal)
+
+summary(durationCon)</code></pre>
+<pre><code>##   name items passes fails nNA error warning
+## 1   V1    47     40     5   2 FALSE   FALSE
+##                                                                   expression
+## 1 presidencyYears == floor((presidencyEndDate - presidencyBeginDate)/365.25)</code></pre>
+<p>We find 5 fails and 2 <code>NA</code>s. We look closer at them:</p>
+<pre class="r"><code>cbind(bigPresidentData[!values(durationCon), c(&quot;firstName&quot;, &quot;lastName&quot;, 
+                                         &quot;presidencyYears&quot;, 
+                                         &quot;presidencyBeginDate&quot;, 
+                                         &quot;presidencyEndDate&quot;)])</code></pre>
+<pre><code>##      firstName  lastName presidencyYears presidencyBeginDate
+## 26    Theodore Roosevelt               7          1933-03-04
+## 21     Chester    Arthur               5          1881-09-19
+## NA        &lt;NA&gt;      &lt;NA&gt;              NA                &lt;NA&gt;
+## NA.1      &lt;NA&gt;      &lt;NA&gt;              NA                &lt;NA&gt;
+## 32    Franklin Roosevelt              12          1901-09-14
+## 44      Barack     Obama             Inf          2009-01-20
+## 39       Jimmy    Carter               4          1977-01-20
+##      presidencyEndDate
+## 26          1945-04-12
+## 21          1885-03-04
+## NA                &lt;NA&gt;
+## NA.1              &lt;NA&gt;
+## 32          1909-03-04
+## 44          2017-01-20
+## 39          1982-10-01</code></pre>
+<p>First, we see yet another consequence of the Roosevelt presidency date mixup that we noted above. Next, it seems that Chester Arthur has a disprepancy between his presidency dates and the presidency years variables. In reality, his <code>presidencyYears</code> value has wrongfully been listed as 5 rather than 3 years. Then there is Obamas infinite presidency, which we have also encountered before. And lastly, we see that Jimmy Carter also has a problem. This is due to his <code>presidencyEndDate</code> being wrong.</p>
+</div>
+<div id="birthday-ageatinauguration-and-presidencybegindate" class="section level3">
+<h3><strong><code>birthday</code>, <code>ageAtInauguration</code> and <code>presidencyBeginDate</code></strong></h3>
+<p>For all these variables to be valid, the age at inauguration should be the number of full years that have passed between the birthday and the date where the presidency begins. Or, formulated as a validator object:</p>
+<pre class="r"><code>ageVal &lt;- validator(ageAtInauguration == floor((presidencyBeginDate - birthday)/365.25))
+
+ageCon &lt;- confront(bigPresidentData, ageVal)
+
+summary(ageCon)</code></pre>
+<pre><code>##   name items passes fails nNA error warning
+## 1   V1    47     44     2   1 FALSE   FALSE
+##                                                            expression
+## 1 ageAtInauguration == floor((presidencyBeginDate - birthday)/365.25)</code></pre>
+<p>We look at the two fails:</p>
+<pre class="r"><code>bigPresidentData[!values(ageCon),]</code></pre>
+<pre><code>##     lastName firstName orderOfPresidency   birthday dateOfDeath
+## 26 Roosevelt  Theodore                26 1858-10-27  1919-01-06
+## NA      &lt;NA&gt;      &lt;NA&gt;              &lt;NA&gt;       &lt;NA&gt;        &lt;NA&gt;
+## 32 Roosevelt  Franklin                32 1882-01-30  1945-04-12
+##    stateOfBirth      party presidencyBeginDate presidencyEndDate
+## 26     New York Republican          1933-03-04        1945-04-12
+## NA         &lt;NA&gt;       &lt;NA&gt;                &lt;NA&gt;              &lt;NA&gt;
+## 32     New York Democratic          1901-09-14        1909-03-04
+##    assassinationAttempt  sex ethnicity presidencyYears ageAtInauguration
+## 26                    1 Male Caucasian               7                42
+## NA                   NA &lt;NA&gt;      &lt;NA&gt;              NA              &lt;NA&gt;
+## 32                    1 Male Caucasian              12                51
+##    favoriteNumber
+## 26           4+0i
+## NA             NA
+## 32           6+0i</code></pre>
+<p>And there we have the Roosevelt mixup again!</p>
+</div>
+<div id="orderofpresidency-and-presidencybegindate" class="section level3">
+<h3><strong><code>orderOfPresidency</code> and <code>presidencyBeginDate</code></strong></h3>
+<p>Order of presidency should correspond to <code>presidencyBeginDate</code> such that the presidency that begins first corresponds to the smallest number in <code>orderOfPresidency</code>. This condition can be expressed as a constrain on the ranks of the observations. However, we know that <code>presidencyBeginDate</code> has a missing values (for Aragorn Arathorn), so in order to not let this affect the ordering, we perform the confrontation on the data without missing values.</p>
+<pre class="r"><code>beginVal &lt;- validator(rank(presidencyBeginDate) == rank(orderOfPresidency))
+
+beginCon &lt;- confront(na.omit(bigPresidentData[, c(&quot;presidencyBeginDate&quot;, &quot;orderOfPresidency&quot;)]),
+                             beginVal)
+
+summary(beginCon)</code></pre>
+<pre><code>##   name items passes fails nNA error warning
+## 1   V1    46     44     2   0 FALSE   FALSE
+##                                             expression
+## 1 rank(presidencyBeginDate) == rank(orderOfPresidency)</code></pre>
+<p>We find two problems. Let’s look further into them. Recall that <code>values(beginCon)</code> is a vector with the value <code>TRUE</code> for all observations that passed the check and <code>FALSE</code> for all others. Thus, <code>!values(beginCon)</code> is <code>FALSE</code> for all observations that passed the check and <code>TRUE</code> for the problematic observations. But we also need to only look at the data for which <code>presidencyBeginDate</code> and <code>orderOfPresidency</code> are non-missing so that the <code>beginCon</code> values correctly correspond to the data. This can be done in the following way:</p>
+<pre class="r"><code>bigPresidentData[!is.na(bigPresidentData$presidencyBeginDate) &amp; 
+                 !is.na(bigPresidentData$orderOfPresidency), 
+                 c(&quot;firstName&quot;, &quot;lastName&quot;, 
+                   &quot;presidencyBeginDate&quot;, &quot;orderOfPresidency&quot;)][!values(beginCon), ]</code></pre>
+<pre><code>##    firstName  lastName presidencyBeginDate orderOfPresidency
+## 26  Theodore Roosevelt          1933-03-04                26
+## 32  Franklin Roosevelt          1901-09-14                32</code></pre>
+<p>We see that presidents Theodore and Franks Roosevelt have discrepancies between their presidency orders and their begin dates. And this is because their <code>presidencyBeginDate</code> values have been switched around.</p>
+</div>
+</div>
+<div id="one-at-a-time-please-advanced" class="section level2">
+<h2>One at a time, please! (advanced)</h2>
+<p><strong>A mistake in the data has caused two presidencies to overlap. Locate the error using <code>validator()</code> and <code>confront()</code> from <code>validate</code>.</strong></p>
+<p>If we sort the data, then this constrain corresponds to requiring that any president (but the first) begins later than or on the date the former president’s period ended. This means that if we drop the first observation from the <code>presidencyBeginDate</code>, then that variable should always be greater or equal to <code>presidencyEndDate</code>, where the last (unfinished) presidency has been dropped. In code:</p>
+<pre class="r"><code>sortedBPD &lt;- bigPresidentData[order(bigPresidentData$presidencyBeginDate),]
+nObs &lt;- nrow(sortedBPD)
+
+orderVal &lt;- validator(presidencyBeginDate[-1] &gt;= presidencyEndDate[-nObs])
+
+orderCon &lt;- confront(sortedBPD, orderVal)
+
+summary(orderCon)</code></pre>
+<pre><code>##   name items passes fails nNA error warning
+## 1   V1    46     43     2   1 FALSE   FALSE
+##                                            expression
+## 1 presidencyBeginDate[-1] &gt;= presidencyEndDate[-nObs]</code></pre>
+<p>We find two problems: One for Ronald Reagan and one for Dwight Eisenhower. We look further into them by also including the presidents that come just before them:</p>
+<pre class="r"><code>sortedBPD[-1, ][c(which(!values(orderCon)), which(!values(orderCon))-1),]</code></pre>
+<pre><code>##       lastName firstName orderOfPresidency   birthday dateOfDeath
+## 34  Eisenhower    Dwight                34 1890-10-14  1969-03-28
+## 40      Reagan    Ronald                40 1911-02-06  2004-06-05
+## 341 Eisenhower  Dwight D                34 1890-10-14  1969-03-28
+## 39      Carter     Jimmy                39 1924-10-01        &lt;NA&gt;
+##     stateOfBirth      party presidencyBeginDate presidencyEndDate
+## 34         Texas Republican          1953-01-20        1961-01-20
+## 40      Illinois Republican          1981-01-20        1989-01-20
+## 341        Texas Republican          1953-01-20        1961-01-20
+## 39       Georgia Democratic          1977-01-20        1982-10-01
+##     assassinationAttempt  sex ethnicity presidencyYears ageAtInauguration
+## 34                     0 Male Caucasian               8                62
+## 40                     1 Male Caucasian               8                69
+## 341                    0 Male Caucasian               8                62
+## 39                     0 Male Caucasian               4                52
+##     favoriteNumber
+## 34            2+0i
+## 40            5+0i
+## 341           2+0i
+## 39            8+0i</code></pre>
+<p>We see that Eisenhower has been listed twice (a uniqueness problem). And Carter’s end of presidency date has been changed such that it is within Reagan’s presidency.</p>
+<hr />
+</div>
+</div>
+<div id="exercise-4" class="section level1">
+<h1>Exercise 4</h1>
+<div id="exercise-4a" class="section level2">
+<h2>Exercise 4a</h2>
+<p>We now show how the data mistakes can be fixed, one by one. Since we advice that this is done in a self contained R-script, we will provide the answers as a commented chunk of R code. Note that we correct <em>all</em> errors, some of which you might not (yet) be aware of.</p>
+<pre class="r"><code>#Load packages
+library(dataMaid)
+
+#Load data
+data(bigPresidentData)
+
+#Copy data. This is the data we will make changes to.
+bpd &lt;- bigPresidentData
+
+#We fix the following mistake: 
+#Aragorn Arathornson is included in the dataset.
+bpd &lt;- bpd[!(bpd$firstName == &quot;Aragorn&quot; &amp; bpd$lastName == &quot;Arathornson&quot;),]
+
+#We fix the following mistake:
+#Trump has &quot;.&quot; listed as his first name (firstName).
+bpd[bpd$lastName == &quot;Trump&quot;, &quot;firstName&quot;] &lt;- &quot;Donald&quot;
+
+#We fix the following mistake:
+#Obama&#39;s presidency duration is listed as infinite (presidencyYears).
+bpd[bpd$lastName == &quot;Obama&quot;, &quot;presidencyYears&quot;] &lt;- 
+  floor((bpd$presidencyEndDate[bpd$lastName == &quot;Obama&quot;] - 
+           bpd$presidencyBeginDate[bpd$lastName == &quot;Obama&quot;])/365.25)
+
+#We fix the following mistake:
+#Trump&#39;s state of birth (New York) was spelled with a lower case &quot;y&quot; (stateOfBirth).
+bpd[bpd$lastName == &quot;Trump&quot;, &quot;stateOfBirth&quot;] &lt;- &quot;New York&quot;
+
+#We fix the following mistake:
+#Truman&#39;s last name is prefixed with whitespace (lastName).
+bpd[bpd$lastName == &quot; Truman&quot;, &quot;lastName&quot;] &lt;- &quot;Truman&quot;
+
+#We fix the following mistake:
+#ageAtInauguration is coded as a character variable.
+bpd$ageAtInauguration &lt;- as.numeric(bpd$ageAtInauguration)
+
+#We fix the following mistake:
+#The dates marking the beginning and end of the presidency 
+#(presidencyBeginDate, presidencyEndDate) have been switched for Theodore and 
+#Franklin Roosevelt.
+TRbegin &lt;- bpd$presidencyBeginDate[bpd$firstName == &quot;Franklin&quot; &amp; bpd$lastName == &quot;Roosevelt&quot;]
+FRbegin &lt;- bpd$presidencyBeginDate[bpd$firstName == &quot;Theodore&quot; &amp; bpd$lastName == &quot;Roosevelt&quot;]
+TRend &lt;- bpd$presidencyEndDate[bpd$firstName == &quot;Franklin&quot; &amp; bpd$lastName == &quot;Roosevelt&quot;]
+FRend &lt;- bpd$presidencyEndDate[bpd$firstName == &quot;Theodore&quot; &amp; bpd$lastName == &quot;Roosevelt&quot;]
+
+bpd$presidencyBeginDate[bpd$firstName == &quot;Franklin&quot; &amp; bpd$lastName == &quot;Roosevelt&quot;] &lt;- FRbegin
+bpd$presidencyBeginDate[bpd$firstName == &quot;Theodore&quot; &amp; bpd$lastName == &quot;Roosevelt&quot;] &lt;- TRbegin
+bpd$presidencyEndDate[bpd$firstName == &quot;Franklin&quot; &amp; bpd$lastName == &quot;Roosevelt&quot;] &lt;- FRend
+bpd$presidencyEndDate[bpd$firstName == &quot;Theodore&quot; &amp; bpd$lastName == &quot;Roosevelt&quot;] &lt;- TRend
+
+#We fix the following mistake:
+#Jimmy Carter&#39;s end of presidency date (presidencyEndDate) has been changed such that 
+#his presidency overlaps with the subsequent president, Ronald Reagan.
+bpd$presidencyEndDate[bpd$firstName == &quot;Jimmy&quot; &amp; bpd$lastName == &quot;Carter&quot;] &lt;- as.Date(&quot;1975-01-14&quot;)
+
+#We fix the following mistake:
+#James  Garfield&#39;s state of birth (stateOfBirth) has been changed from Ohio to Indiana
+#(state of birth of Jim Davis, the creator of the cartoon &quot;Garfield&quot;).
+bpd$stateOfBirth[bpd$firstName == &quot;James&quot; &amp; bpd$lastName == &quot;Garfield&quot;] &lt;- &quot;Ohio&quot;
+
+#We fix the following mistake:
+#Calvin Goolidge has had his first name changed to &quot;Hobbes&quot; (firstName).
+bpd$firstName[bpd$firstName == &quot;Hobbes&quot;] &lt;- &quot;Calvin&quot;
+
+##We fix the following mistake:
+#Chester Arthur has had his presidency duration (presidencyYears) changed from 3 to 5 years
+bpd$presidencyYears[bpd$firstName == &quot;Chester&quot; &amp; bpd$lastName == &quot;Arthur&quot;] &lt;- 3
+
+#We fix the following mistake:
+#Eisenhower appears twice in the dataset, one time with the first name &quot;Dwight&quot; 
+#and one time with the first name &quot;Dwight D&quot;. 
+#Note: We delete the observation with the extra &quot;D&quot; as the other presidents do 
+#not have their middle names included
+bpd &lt;- bpd[bpd$firstName != &quot;Dwight D&quot;,]
+
+
+#Save a new copy of the data
+save(list = &quot;bpd&quot;, file = &quot;bigPresidentData_cleaned.rdata&quot;)</code></pre>
+</div>
+<div id="exercise-4b" class="section level2">
+<h2>Exercise 4b</h2>
+<div id="b.1-1" class="section level3">
+<h3>4b.1</h3>
+<p><strong>Use the <code>makeCodebook()</code> function to produce a final codebook that could be passed on as a documentation (of the dataset) for the data analysis.</strong></p>
+<p>We make a codebook of <code>bpd</code>:</p>
+<pre class="r"><code>makeCodebook(bpd, replace = TRUE)</code></pre>
+</div>
+<div id="b.2-1" class="section level3">
+<h3>4b.2</h3>
+<p><strong>Use the option to set <code>shortDescription</code> attributes for the dataset to explain that: a) The information in <code>favoriteNumber</code> have been obtained by consulting an Ouija board or - when that failed - just typing in a number and consequently the accuracy may be low, b) For <code>assassinationAttempt</code>, 1 means yes and 0 means no, c) For the <code>firstName</code> it is literally the first name. No middle names or initials. Also try using the <code>label</code> attribute to add some variable labels of your own choosing. Run the codebook command again.</strong></p>
+<p>We add short descriptions:</p>
+<pre class="r"><code>attr(bpd$favoriteNumber, &quot;shortDescription&quot;) &lt;- &quot;The information has been obtained by consulting a Ouija board or - when that failed - just typing in a number. Thus, the accuracy may be low.&quot;
+
+attr(bpd$assassinationAttempt, &quot;shortDescription&quot;) &lt;- &quot;1 means yes and 0 means no.&quot;
+
+attr(bpd$firstName, &quot;shortDescription&quot;) &lt;- &quot;Only literal first names, no inclusion of middle names or initials&quot;</code></pre>
+<p>And we add labels:</p>
+<pre class="r"><code>attr(bpd$favoriteNumber, &quot;label&quot;) &lt;- &quot;Favorite number&quot;
+
+attr(bpd$assassinationAttempt, &quot;label&quot;) &lt;- &quot;Was there an assassination attempt on the president?&quot;
+
+attr(bpd$firstName, &quot;label&quot;) &lt;- &quot;First name&quot;
+
+attr(bpd$lastName, &quot;label&quot;) &lt;- &quot;Last name&quot;
+
+attr(bpd$presidencyYears, &quot;label&quot;) &lt;- &quot;Duration of presidency&quot;
+
+attr(bpd$orderOfPresidency, &quot;label&quot;) &lt;- &quot;Presidency order&quot;
+
+attr(bpd$birthday, &quot;label&quot;) &lt;- &quot;Date of birth&quot;
+
+attr(bpd$dateOfDeath, &quot;label&quot;) &lt;- &quot;Date of death&quot;
+
+attr(bpd$stateOfBirth, &quot;label&quot;) &lt;- &quot;Birth state of the president&quot;
+
+attr(bpd$party, &quot;label&quot;) &lt;- &quot;Party&quot;
+
+attr(bpd$presidencyBeginDate, &quot;label&quot;) &lt;- &quot;Date where the presidency begins&quot;
+
+attr(bpd$presidencyEndDate, &quot;label&quot;) &lt;- &quot;Date where the presidency ends&quot;
+
+attr(bpd$sex, &quot;label&quot;) &lt;- &quot;Sex&quot;
+
+attr(bpd$ethnicity, &quot;label&quot;) &lt;- &quot;Ethnicity&quot;
+
+attr(bpd$ageAtInauguration, &quot;label&quot;) &lt;- &quot;Age at inauguration&quot;</code></pre>
+<p>And lastly, we rerun the codebook:</p>
+<pre class="r"><code>makeCodebook(bpd, replace = TRUE)</code></pre>
+<p>Thanks for reading! If you have questions or comments for these exercises, don’t hesitate to contact Anne Helby Petersen at [<a href="mailto:ahpe@sund.ku.dk">ahpe@sund.ku.dk</a>].</p>
+</div>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
