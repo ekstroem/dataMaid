@@ -15,18 +15,32 @@
 #' @param reportTitle A text string. If supplied, this will be the printed title of the
 #' report. If left unspecified, the title with the name of the supplied dataset.
 #'
+#' @param file The filename of the outputted rmarkdown (.Rmd) file.
+#' If set to \code{NULL} (the default), the filename will be the name of \code{data}
+#' prefixed with "codebook_", if this qualifies as a valid file name (e.g. no special
+#' characters allowed). Otherwise, \code{makeCodebook()} tries to create a valid filename by
+#' substituing illegal characters. Note that a valid file is of type .Rmd, hence all
+#' filenames should have a ".Rmd"-suffix.
+#'
 #' @param ... Additional parameters passed to \code{makeDataReport}.
 #' 
 #' @export
-makeCodebook <- function(data, vol="", reportTitle=NULL, ...) {
-  
+makeCodebook <- function(data, vol="", reportTitle=NULL, file=NULL, ...) {
+
+#    newargs <- list(...)
+    
     dfname <- deparse(substitute(data))
 
     ## make a temporary checkFunction to print all factor levels
+
+    ## Replace arguments that were not given
+#    if ("b" %in% names(newargs))
+
+#    do.call("makeDataReport", newargs)
     
     makeDataReport(data,
                    reportTitle=paste0("Codebook for ", dfname),
-                   file=normalizeFileName(paste0("codebook_", dfname, vol, ".Rmd")),
+                   file=ifelse(is.null(file), normalizeFileName(paste0("codebook_", dfname, vol, ".Rmd")), file),
                    codebook=TRUE,
                    mode = c("summarize", "visualize", "check"),
                    checks = setChecks(
@@ -66,7 +80,7 @@ showAllFactorLevels <- function(v, nMax = NULL, ...) {
             problem <- TRUE
         } else {
             if ("labelled" %in% class(v)) {
-                problemValues <- names(attr(v, "labels"))
+                problemValues <- names(attr(v, "labels", exact=TRUE))
                 problem <- TRUE
             }
         }

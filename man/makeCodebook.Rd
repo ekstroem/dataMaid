@@ -4,7 +4,7 @@
 \alias{makeCodebook}
 \title{Produce a data codebook}
 \usage{
-makeCodebook(data, vol = "", reportTitle = NULL, ...)
+makeCodebook(data, vol = "", reportTitle = NULL, file = NULL, ...)
 }
 \arguments{
 \item{data}{The dataset to be checked. This dataset should be of class \code{data.frame},
@@ -17,6 +17,13 @@ file name(s). For example, if the dataset is called "myData", no file argument i
 
 \item{reportTitle}{A text string. If supplied, this will be the printed title of the
 report. If left unspecified, the title with the name of the supplied dataset.}
+
+\item{file}{The filename of the outputted rmarkdown (.Rmd) file.
+If set to \code{NULL} (the default), the filename will be the name of \code{data}
+prefixed with "codebook_", if this qualifies as a valid file name (e.g. no special
+characters allowed). Otherwise, \code{makeCodebook()} tries to create a valid filename by
+substituing illegal characters. Note that a valid file is of type .Rmd, hence all
+filenames should have a ".Rmd"-suffix.}
 
 \item{...}{Additional parameters passed to \code{makeDataReport}.}
 }
