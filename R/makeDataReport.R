@@ -655,7 +655,11 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
                      dimnames= list(NULL, c("Feature", "Result")))
     writer(pander::pandoc.table.return(sumMat, justify = "lr"))
     
-    
+    ## User added data.frame information
+    if (!is.null(attr(data, "label"))) {
+      writer(attr(data, "label"))
+    }
+        
     ## if useVar options are chosen, they are printed accordingly
     if (!is.null(useVar)) {
       writer(paste("\n* Only the following variables in", dfname, "were included:",
