@@ -27,35 +27,33 @@
 #' @export
 makeCodebook <- function(data, vol="", reportTitle=NULL, file=NULL, ...) {
 
-#    newargs <- list(...)
     
     dfname <- deparse(substitute(data))
 
-    ## make a temporary checkFunction to print all factor levels
 
-    ## Replace arguments that were not given
-#    if ("b" %in% names(newargs))
+    Call <- match.call(expand.dots = TRUE)
 
-#    do.call("makeDataReport", newargs)
+    Call$reportTitle <- ifelse(is.null(reportTitle), paste0("Codebook for ", dfname), reportTitle)
+    Call$file <- ifelse(is.null(file), normalizeFileName(paste0("codebook_", dfname, vol, ".Rmd")), file)
+    Call$codebook <- TRUE
+    Call$mode <- ifelse(is.null(Call[["mode"]]), c("summarize", "visualize", "check"), Call[["mode"]])
+    Call$checks <- ifelse(is.null(Call[["checks"]]), setChecks(
+                                                         character = list("showAllFactorLevels"),
+                                                         factor = list("showAllFactorLevels"),
+                                                         labelled = list("showAllFactorLevels"),
+                                                         numeric=NULL,
+                                                         integer=NULL,
+                                                         Date=NULL,
+                                                         logical=NULL
+                                                     ), Call[["checks"]])
+    Call$maxProbVals <- ifelse(is.null(Call[["maxProbVals"]]), Inf, Call[["maxProbVals"]])
+    Call$listChecks <-  ifelse(is.null(Call[["listChecks"]]), FALSE, Call[["listChecks"]])
+    Call$maxProbVals <- ifelse(is.null(Call[["smartNum"]]), FALSE, Call[["smartNum"]])
+                          
+    Call[[1L]] <- as.name("makeDataReport")
+    eval.parent(Call)
+
     
-    makeDataReport(data,
-                   reportTitle=paste0("Codebook for ", dfname),
-                   file=ifelse(is.null(file), normalizeFileName(paste0("codebook_", dfname, vol, ".Rmd")), file),
-                   codebook=TRUE,
-                   mode = c("summarize", "visualize", "check"),
-                   checks = setChecks(
-                       character = list("showAllFactorLevels"),
-                       factor = list("showAllFactorLevels"),
-                       labelled = list("showAllFactorLevels"),
-                       numeric=NULL,
-                       integer=NULL,
-                       Date=NULL,
-                       logical=NULL
-                   ),
-                   maxProbVals = Inf,
-                   listChecks = FALSE,
-                   smartNum = FALSE, 
-                   ...)
 }
 
 
