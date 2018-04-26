@@ -1080,7 +1080,7 @@ The first four pages of the resulting report can be inspected in Figures \ref{fi
 
 The first problem that can be spotted from these first four pages is the surprising number of observations: Anno 2017, there have only been 45 US presidents. Therefore, having 46 observations reveal that the dataset contains a blind passenger. For instance, if the dataset was constructed as a subset of a more general "World leaders" dataset, this type of problem could occur due to wrongful nationality classification. We return to the extra president issue below. 
 
-On page 3, we see the contents for the three first variables. Here, we identify a prefixed white space in the last name entry for President Truman and we find that a dot was entered as a first name; this is a typical choice for coding missing values in e.g., Stata, and therefore, it is flagged as a potential miscoded missing value. The variable \code{orderOfPresidency} is not summarized, visualized or checked because it is categorical and contains unique values for each observation. 
+On page 3, we see the contents for the three first variables. Here, we identify a prefixed white space in the last name entry for President Truman and we find that a dot was entered as a first name; this is a typical choice for coding missing values in e.g., \proglang{Stata}, and therefore, it is flagged as a potential miscoded missing value. The variable \code{orderOfPresidency} is not summarized, visualized or checked because it is categorical and contains unique values for each observation. 
 
 Figure \ref{fig:bigExampleP45} presents the remaining two pages with variable presentations. On pages 4 and 5, we find a few remarks:
 \begin{itemize}
@@ -1298,8 +1298,7 @@ can easily be unraveled using the list manipulation function
 \begin{Sinput}
 R> toyChecks <- check(toyData)
 R> foo <- function(x) {
-+    any(sapply(x, function(y) y[["problem"]]))
-+  }
++    any(sapply(x, function(y) y[["problem"]])) }
 R> sapply(toyChecks, foo)
 \end{Sinput}
 \begin{Soutput}

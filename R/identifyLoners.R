@@ -60,32 +60,32 @@ identifyLonersMessage <- "Note that the following levels have at most five obser
 
 #factor variables
 identifyLonersF <- function(v, nMax) {
-  vLev <- levels(v)
-  v <- factor(na.omit(v)) #drop unused levels
-  lonerOcc <- vLev[which(table(v) <= 5)]
-  if (length(lonerOcc) > 0) {
-    problem <- TRUE
-    problemValues <- lonerOcc
-  } else {
-    problem <- FALSE
-    problemValues <- NULL
-  }
-  outMessage <- messageGenerator(list(problem=problem,
-                                      problemValues=problemValues),
-                                 message = identifyLonersMessage,
-                                 nMax = nMax)
-  checkResult(list(problem = problem, message = outMessage,
-                   problemValues = problemValues))
+    v <- factor(na.omit(v))  # Drop unused levels
+    vLev <- levels(v)        # Get the levels that are left.
+    lonerOcc <- vLev[which(table(v) <= 5)]
+    if (length(lonerOcc) > 0) {
+        problem <- TRUE
+        problemValues <- lonerOcc
+    } else {
+        problem <- FALSE
+        problemValues <- NULL
+    }
+    outMessage <- messageGenerator(list(problem=problem,
+                                        problemValues=problemValues),
+                                   message = identifyLonersMessage,
+                                   nMax = nMax)
+    checkResult(list(problem = problem, message = outMessage,
+                     problemValues = problemValues))
 }
 
 #character variables
 identifyLonersC <- function(v, nMax) {
-  v <- factor(v)
-  identifyLonersF(v, nMax)
+    v <- factor(v)
+    identifyLonersF(v, nMax)
 }
 
 identifyLonersL <- function(v, nMax) {
-  v <- haven::as_factor(v)
-  identifyLonersF(v, nMax)
+    v <- haven::as_factor(v)
+    identifyLonersF(v, nMax)
 }
 
