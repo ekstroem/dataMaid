@@ -376,7 +376,7 @@ in the dataset is presented in turn using (up to) three tools in the
 ``Variable list'': A table summarizing key features of the
 variable, a figure visualizing its distribution when relevant and a list of flagged
 issues, if any. For instance, as shown in Figure~\ref{fig:example2},
-for the \code{numeric}-type variable \code{events} from
+for the numeric-type variable \code{events} from
 \code{toyData}, \code{makeDataReport()} has identified two values that
 are suspected to be miscoded missing values (\code{999} and
 \code{NaN}), while two values were also flagged as potential outliers
@@ -424,14 +424,14 @@ Argument & Description & Default value \\
 \quad \code{maxProbVals} & Maximum number of problematic values to print, if any are found in data checks & \code{10} \\
 \quad \code{maxDecimals} & Maximum number of decimals to print for numeric values in the variable list & \code{2} \\
 \quad \code{treatXasY} & How should non-supported variable classes be handled? & \code{NULL} (no handling) \\
-%Takes a list on the format \code{list(X = Y)} where \code{X} is a non-supported variable class (e.g. \code{complex}) and \code{Y} is a supported one (e.g. \code{numeric}) & \code{NULL} (No rules for handling non-supported variable types) \\
+%Takes a list on the format \code{list(X = Y)} where \code{X} is a non-supported variable class (e.g. complex) and \code{Y} is a supported one (e.g. numeric) & \code{NULL} (No rules for handling non-supported variable types) \\
 
 \smallskip Control output and post-processing \\
 \quad \code{output} & Type of output file to be produced (html, word (.docx) or pdf) & \code{NULL} (use pdf if \LaTeX\ is found, otherwise Word (if on Windows), or html)\\
 \quad \code{render} & Should the output file be rendered from markdown? & \code{TRUE} \\
 \quad \code{openResult} & If a  pdf/html file is rendered, should it
                        automatically open afterwards, and if not,
-                       should the \code{rmarkdown} file be opened? & \code{TRUE} \\
+                       should the \proglang{R} markdown file be opened? & \code{TRUE} \\
 \quad \code{replace} & Overwrite an existing file with the same name? & \code{FALSE} \\
 \quad \code{vol} & Add a suffix to the file name of the outputted report &   \code{""} (no suffix)\\
 
@@ -582,8 +582,8 @@ R> makeDataReport(toyData, output="html", render=FALSE,
  \hline
 \end{tabular}
 \caption{Overview of all summary-, visual- and  check functions currently implemented in \pkg{dataMaid}. The variable
-  classes C, F, I, L, B, N, and D, refer to \code{character}, \code{factor},
-  \code{integer}, \code{labelled}, \code{logical} (boolean), \code{numeric}, and \code{Date}, respectively. The default settings of \code{makeDataReport()} are marked in blue.}
+  classes C, F, I, L, B, N, and D, refer to character, factor,
+  integer, labelled, logical (boolean), numeric, and Date, respectively. The default settings of \code{makeDataReport()} are marked in blue.}
 \label{table.SVCfunctions}
 \end{table}
 
@@ -642,8 +642,8 @@ variableType   Data class of variable          character, Date, factor,
 \end{Soutput}
 \end{Schunk}
 
-Thus we can see, for example, that for \code{numeric}, \code{integer},
-and \code{Date} variables, \pkg{dataMaid} provides functions for
+Thus we can see, for example, that for numeric, integer,
+and Date variables, \pkg{dataMaid} provides functions for
 adding summary information about the minimum and maximum values, while
 all seven variable classes dealt with in \pkg{dataMaid} have functions
 for central tendency summaries (i.e., mode or median).
@@ -799,7 +799,7 @@ is needed. The package contains a vignette that explains the details of how to m
 expand the possibilities by producing new summary, visual, and check
 functions.
 
-One might also encounter datasets with variables that are not among the 7 classes mentioned in the above (\code{character}, \code{Date}, \code{factor}, \code{integer}, \code{labelled}, \code{logical} and \code{numeric}), for instance variables of type \code{complex} or user-defined classes. \code{makeDataReport()} can be told how to handle such variables by use of the argument \code{treatXasY}. This argument takes a list where the names correspond to "new" variable types (\code{X}), while the entries must be supported variable types (\code{Y}). For instance, we can instruct \code{dataMaid} to treat complex variables as numerics and generate a data report for a type \code{complex} variable like this:
+One might also encounter datasets with variables that are not among the 7 classes mentioned in the above (character, Date, factor, integer, labelled, logical and numeric), for instance variables of type complex or user-defined classes. \code{makeDataReport()} can be told how to handle such variables by use of the argument \code{treatXasY}. This argument takes a list where the names correspond to "new" variable types (\code{X}), while the entries must be supported variable types (\code{Y}). For instance, we can instruct \code{dataMaid} to treat complex variables as numeric and generate a data report for a type complex variable like this:
 
 \begin{Schunk}
 \begin{Sinput}
@@ -810,7 +810,7 @@ R> makeDataReport(complexData, treatXasY=list(complex = "numeric"),
 \end{Sinput}
 \end{Schunk}
 
-In this report, we will find that the two variables, \code{complexVar} and \code{numericVar} will be have identical presentations in the variable list, as treating a \code{complex} variable as a \code{numeric} means dropping the imaginary part of the complex numbers which was the only thing setting the two variables apart in the first place.  
+In this report, we will find that the two variables, \code{complexVar} and \code{numericVar} will be have identical presentations in the variable list, as treating a complex variable as a numeric means dropping the imaginary part of the complex numbers which was the only thing setting the two variables apart in the first place.  
 
 
 \section[Using dataMaid interactively]{Using \pkg{dataMaid} interactively}
@@ -974,7 +974,7 @@ Min. and max.: 1; 82
 \end{Soutput}
 \end{Schunk}
 
-The syntax in this code chunk can be read as follows: "Summarize \code{events} in \code{toyData}, and for \code{numeric} variables, set the summaries to be the default summary functions, except \code{variableType} and \code{countMissing}." 
+The syntax in this code chunk can be read as follows: "Summarize \code{events} in \code{toyData}, and for numeric variables, set the summaries to be the default summary functions, except \code{variableType} and \code{countMissing}." 
 
 Similar \code{defaultXXXSummaries()} functions are available for the other supported variable classes. For checks, the same syntax can also be used, but the helper functions are now named \code{defaultXXXChecks} with \code{XXX} as a placeholder for a supported variable class.
 
@@ -988,7 +988,7 @@ Note that the \code{summarize()}, \code{check()} and \code{visualize()} function
 \frame{\includegraphics[width=7.5cm,page=1]{dataMaid_presidentData_appB.pdf}}
 \frame{\includegraphics[width=7.5cm,page=2]{dataMaid_presidentData_appB.pdf}}\\
 \end{center}
-\caption{The front page and the first page of the data overview report for the \code{presidentData} dataset. Note that the report title has been customized (front page), \code{identifyLoners} has been removed from the checks performed on character variables ("Identify levels with <6 obs." is not checked for character variables in the table on page 1) and that variables of class \code{Name} have been set to be treated like \code{character} variables (page 1). Larger versions of the pages can be seen in
+\caption{The front page and the first page of the data overview report for the \code{presidentData} dataset. Note that the report title has been customized (front page), \code{identifyLoners} has been removed from the checks performed on character variables ("Identify levels with <6 obs." is not checked for character variables in the table on page 1) and that variables of class \code{Name} have been set to be treated like character variables (page 1). Larger versions of the pages can be seen in
   Appendix~\ref{sec:appendix2}.}
 \label{fig:bigExampleP01}
 \end{figure}
@@ -998,7 +998,7 @@ Note that the \code{summarize()}, \code{check()} and \code{visualize()} function
 \frame{\includegraphics[width=7.5cm,page=3]{dataMaid_presidentData_appB.pdf}}
 \frame{\includegraphics[width=7.5cm,page=4]{dataMaid_presidentData_appB.pdf}}
 \end{center}
-\caption{The second and third pages of the \code{presidentData} data report. We see that there are two \code{Name} variables in the overview on page 2 and see that these variables are indeed treated as \code{character} variables on page 3, as specified in the \code{makeDataReport} call by use of the \code{treatXasY} argument. Larger versions of the pages can be seen in
+\caption{The second and third pages of the \code{presidentData} data report. We see that there are two \code{Name} variables in the overview on page 2 and see that these variables are indeed treated as character variables on page 3, as specified in the \code{makeDataReport} call by use of the \code{treatXasY} argument. Larger versions of the pages can be seen in
   Appendix~\ref{sec:appendix2}.}
 \label{fig:bigExampleP23}
 \end{figure}
@@ -1061,10 +1061,10 @@ R> head(presidentData)
 We discuss the results of a data overview report generated for this dataset below, but first there are a few special features of the dataset and wishes for the data report that require us to customize it using some of the arguments for \code{makeDataReport}. We have the following points of interest:
 \begin{enumerate}
 \item A couple of variables are used to store names, namely \code{lastName} and \code{firstName}. In order to use special bibliographical analysis tools on these, and only these, variables, it might be convenient to assign them a special class. Therefore, these variables have been set to have class \code{Name} by use of the base \proglang{R} function \code{class()}. When we wish to make a data report for the dataset, we have to tell \code{makeDataReport()} how to handle such \code{Name}-type variables, as they are not among the supported variable types mentioned in the above. This can be done using the \code{treatXasY} argument.
-\item We use the \code{character} class for a few categorical variables that have a lot of different levels, but where it is not a data mistake that these levels each generally have very few observations, e.g., the variable \code{stateOfBirth}. Therefore, we would like to disable the \code{identifyLoners} check (which flags variables with <6 observations in any of the levels) for this variable type. This can be done using the \code{checks} argument.
+\item We use the character class for a few categorical variables that have a lot of different levels, but where it is not a data mistake that these levels each generally have very few observations, e.g., the variable \code{stateOfBirth}. Therefore, we would like to disable the \code{identifyLoners} check (which flags variables with <6 observations in any of the levels) for this variable type. This can be done using the \code{checks} argument.
 \item We would like the report to be called "Dirty president data" in order to reflect that it is, indeed, a report concerning dirty data about presidents.
 \end{enumerate}
-Incorporating these three customizations, we can load the data and generate a report by calling:
+We incorporate these three customizations, load the data, and generate a report by calling:
 
 \begin{Schunk}
 \begin{Sinput}
@@ -1080,7 +1080,7 @@ The first four pages of the resulting report can be inspected in Figures \ref{fi
 
 The first problem that can be spotted from these first four pages is the surprising number of observations: Anno 2017, there have only been 45 US presidents. Therefore, having 46 observations reveal that the dataset contains a blind passenger. For instance, if the dataset was constructed as a subset of a more general "World leaders" dataset, this type of problem could occur due to wrongful nationality classification. We return to the extra president issue below. 
 
-On page 3, we see the contents for the three first variables. Here, we identify a prefixed white space in the last name entry for President Truman and we find that a dot was entered as a first name; this is a typical choice for coding missing values in e.g., \proglang{Stata}, and therefore, it is flagged as a potential miscoded missing value. The variable \code{orderOfPresidency} is not summarized, visualized or checked because it is categorical and contains unique values for each observation. 
+On page 3, we see the contents for the three first variables. Here, we identify a prefixed white space in the last name entry for President Truman and we find that a dot was entered as a first name; this is a typical choice for coding missing values in e.g., \proglang{Stata} \citep{stata}, and therefore, it is flagged as a potential miscoded missing value. The variable \code{orderOfPresidency} is not summarized, visualized or checked because it is categorical and contains unique values for each observation. 
 
 Figure \ref{fig:bigExampleP45} presents the remaining two pages with variable presentations. On pages 4 and 5, we find a few remarks:
 \begin{itemize}
@@ -1091,7 +1091,7 @@ Figure \ref{fig:bigExampleP45} presents the remaining two pages with variable pr
 \item The report flags the variable \code{ethnicity} to have suspiciously few observations in one category, "African American". 
 \item A few presidents were found to have odd values in the variable describing the duration of their presidencies: Some had very short (outlier) presidencies of less than two years and one was registered to have an infinite presidency. 
 \item The variable concerning age at inauguration was coded as a character variable, but consists exclusively of numbers and takes a lot of different values and therefore, it was flagged as a potentially misclassified numeric variable.
-\item It seems as if one or more presidents have complex numbers as their favorite numbers. As \code{complex} is not a supported variable type in \code{dataMaid} and no strategy for handling this class was provided in the \code{treatXasY} argument, the variable is simply flagged as non-supported.
+\item It seems as if one or more presidents have complex numbers as their favorite numbers. As complex is not a supported variable type in \code{dataMaid} and no strategy for handling this class was provided in the \code{treatXasY} argument, the variable is simply flagged as non-supported.
 \end{itemize}
 A lot of these mistakes are easily fixable, and we will do so below. However, some of them require more delicate knowledge of the subject matter. For instance, \code{ethnicity} is very reasonably marked as a potentially problematic variable as it includes only a single observation of "African American". However, a human reading this report will know that this does not reflect a mistake in the data, but rather a peculiarity in the real world, and as such, it should not be cleaned out. 
 
@@ -1109,7 +1109,7 @@ R> presidentData$ageAtInauguration <-
 \end{Sinput}
 \end{Schunk}
 
-Please note that if \code{ageAtInauguration} had been a \code{factor} rather than a \code{character} variable, an additional inner call should be added in order to ensure no conversion issues:
+Please note that if \code{ageAtInauguration} had been a factor rather than a character variable, an additional inner call should be added in order to ensure no conversion issues:
 
 \begin{Schunk}
 \begin{Sinput}
@@ -1225,7 +1225,7 @@ R> presidentData$presidencyYears[presidentData$lastName == "Obama"] <- 8
 
 This does not mean we are necessarily done with the data cleaning process: There might be problems that \pkg{dataMaid} was not able to identify. But we have fixed some key issues in the data and thereby given ourselves a chance of a smoother sailing in the next steps of the data analysis. 
 
-Finally, we create a new data report, adding the suffix "cleaned" to the title, as well as the file name, so that we have documentation of the current state of the dataset. We also decide that it might be sufficient to be able to inspect only the real part of the presidential favorite numbers and therefore, we choose to treat the \code{complex} variable \code{favoriteNumber} as a \code{numeric} variable:
+Finally, we create a new data report, adding the suffix "cleaned" to the title, as well as the file name, so that we have documentation of the current state of the dataset. We also decide that it might be sufficient to inspect only the real part of the presidential favorite numbers and therefore, we choose to treat the complex variable \code{favoriteNumber} as a numeric variable:
 
 \begin{Schunk}
 \begin{Sinput}
@@ -1256,7 +1256,7 @@ The default settings of \code{makeDataReport()} have been set to facilitate easy
 \item The report generation writes messages to the console while producing and rendering the report.
 \item Unless specifically told otherwise, every report created for the same dataset (or different datasets with the same storage name in \proglang{R}) will have the same file name.
 \end{enumerate}
-Please note that the data report does contain information about who, when and how concerning its generation, so even though the default choices for file names do not make it easy to tell different reports for the same dataset apart, it should be rather easy when inspecting the report manually. 
+Note that the data report does contain information about who, when and how concerning its generation, so even though the default choices for file names do not make it easy to tell different reports for the same dataset apart, it should be rather easy when inspecting the report manually. 
 
 The three problems can easily be solved by use of the arguments of \code{makeDataReport()}. Whether or not the outputted file is opened can be controlled through the argument \code{open}. How much information is printed in the console can be adjusted by using the argument \code{quiet}. And conveniently introducing small alterations of the file names can be obtained by use of the \code{vol} argument. For instance, we can make a data report for \code{toyData} that is not opened automatically, produces no output to the console and includes the date and time of its creation in the file name:
 
@@ -1288,7 +1288,7 @@ R> makeDataReport(toyData, onlyProblematic = TRUE,
 \end{Schunk}
 
 Now only the checking results are printed, and only for variables
-where problems were identified. An even more minimal output  can be obtained directly in the console by using the \code{check()} function interactively. When called on a \code{data.frame}, this function produces a list (of
+where problems were identified. An even more minimal output  can be obtained directly in the console by using the \code{check()} function interactively. When called on a data frame, this function produces a list (of
 variables) of lists (of checks) of lists (or rather,
 \code{checkResult}s). Thus, the overall problem status of each variable
 can easily be unraveled using the list manipulation function
@@ -1338,25 +1338,23 @@ error. The following is an example of how such a master document
 preamble YAML might look like and how the \code{dataMaid\_toyData.Rmd} file can
 then be included:
 
-{\small
 \begin{Verbatim}
 ---
 output: pdf_document
 documentclass: report
 header-includes:
   - \renewcommand{\chaptername}{Part}
-  - \newcommand{\fullline}{\noindent\makebox[\linewidth]{\rule{\textwidth}{0.4pt}}}
-  - \newcommand{\bminione}{\begin{minipage}{0.75 \textwidth}}
-  - \newcommand{\bminitwo}{\begin{minipage}{0.25 \textwidth}}
+  - \newcommand{\fullline}{\noindent\rule{\textwidth}{0.4pt}}
+  - \newcommand{\bminione}{\begin{minipage}{0.75\textwidth}}
+  - \newcommand{\bminitwo}{\begin{minipage}{0.25\textwidth}}
   - \newcommand{\emini}{\end{minipage}}
 ---
 
 ```{r, child = 'dataMaid_toyData.Rmd'}
 ```
 \end{Verbatim}
-}
 
-In the this example, the \code{dataMaid\_toyData.Rmd} file could have
+In this example, the \code{dataMaid\_toyData.Rmd} file could have
 been created as follows:
 
 \begin{Schunk}
@@ -1375,8 +1373,8 @@ R> makeDataReport(toyData, standAlone = FALSE, output = "html",
 \end{Schunk}
 
 Note that with the latter option, no special YAML preamble is needed in the \proglang{R} markdown document. 
-
-Alternatively, one can create the usual output report, not render it and then manually edit the produced \proglang{R} markdown file as wished. This can be done with the following command:
+%
+Alternatively, one can create the usual output report, not render it and then manually edit the produced \proglang{R} markdown file as wished. The following command does that:
 
 \begin{Schunk}
 \begin{Sinput}
