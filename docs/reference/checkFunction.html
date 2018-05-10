@@ -18,13 +18,25 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="Create an object of class checkFunction — checkFunction" />
+
+<meta property="og:description" content="Convert a function, f, into an S3
+checkFunction object. This adds f to the
+overview list returned by an allCheckFunctions()
+call." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +59,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">dataMaid</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">dataMaid</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.2</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -82,6 +98,9 @@
     <li>
       <a href="../CSP2018/index.html">CSP 2018</a>
     </li>
+    <li>
+      <a href="../eRum2018/index.html">eRum 2018</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -97,6 +116,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -104,22 +124,26 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Create an object of class checkFunction</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ekstroem/dataMaid/blob/master/R/checkFunction.R'><code>R/checkFunction.R</code></a></small>
+    <div class="hidden name"><code>checkFunction.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Convert a function, <code>f</code>, into an S3
 <code>checkFunction</code> object. This adds <code>f</code> to the
 overview list returned by an <code><a href='allCheckFunctions.html'>allCheckFunctions()</a></code>
 call.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>checkFunction</span>(<span class='no'>f</span>, <span class='kw'>description</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>classes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -180,8 +204,8 @@ if more knowledge about <code>checkFunction</code>s is required.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='allCheckFunctions.html'>allCheckFunctions</a></code>, <code><a href='check.html'>check</a></code>, <code><a href='makeDataReport.html'>makeDataReport</a></code>,
-<code><a href='messageGenerator.html'>messageGenerator</a></code>, <code><a href='checkResult.html'>checkResult</a></code></p>
+    <div class='dont-index'><p><code><a href='allCheckFunctions.html'>allCheckFunctions</a></code>, <code><a href='check.html'>check</a></code>, <code><a href='makeDataReport.html'>makeDataReport</a></code>,
+<code><a href='messageGenerator.html'>messageGenerator</a></code>, <code><a href='checkResult.html'>checkResult</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -205,7 +229,7 @@ if more knowledge about <code>checkFunction</code>s is required.</p>
 
 <span class='co'>#Convert it into a checkFunction</span>
 <span class='no'>isID</span> <span class='kw'>&lt;-</span> <span class='fu'>checkFunction</span>(<span class='no'>isID</span>, <span class='kw'>description</span> <span class='kw'>=</span> <span class='st'>"Identify ID variables (long, equal length values)"</span>,
-  <span class='kw'>classes</span> <span class='kw'>=</span> <span class='fu'><a href='allClasses.html'>allClasses</a></span>())</div><div class='output co'>#&gt; <span class='error'>Error in get(fName): objekt 'isID' blev ikke fundet</span></div><div class='input'>
+  <span class='kw'>classes</span> <span class='kw'>=</span> <span class='fu'><a href='allClasses.html'>allClasses</a></span>())</div><div class='output co'>#&gt; <span class='error'>Error in get(fName): object 'isID' not found</span></div><div class='input'>
 <span class='co'>#Call isID</span>
 <span class='fu'>isID</span>(<span class='fu'>c</span>(<span class='st'>"12345678901"</span>, <span class='st'>"23456789012"</span>, <span class='st'>"34567890123"</span>, <span class='st'>"45678901234"</span>))</div><div class='output co'>#&gt; $problem
 #&gt; [1] TRUE
@@ -321,7 +345,7 @@ if more knowledge about <code>checkFunction</code>s is required.</p>
 <span class='co'>#Make it a checkFunction:</span>
 <span class='no'>identifyColons</span> <span class='kw'>&lt;-</span> <span class='fu'>checkFunction</span>(<span class='no'>identifyColons</span>,
      <span class='kw'>description</span> <span class='kw'>=</span> <span class='st'>"Identify non-suffixed nor -prefixed colons"</span>,
-     <span class='kw'>classes</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"character"</span>, <span class='st'>"factor"</span>, <span class='st'>"labelled"</span>))</div><div class='output co'>#&gt; <span class='error'>Error in get(fName): objekt 'identifyColons' blev ikke fundet</span></div><div class='input'>
+     <span class='kw'>classes</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"character"</span>, <span class='st'>"factor"</span>, <span class='st'>"labelled"</span>))</div><div class='output co'>#&gt; <span class='error'>Error in get(fName): object 'identifyColons' not found</span></div><div class='input'>
 <span class='co'>#Call it:</span>
 <span class='fu'>identifyColons</span>(<span class='fl'>1</span>:<span class='fl'>100</span>)</div><div class='output co'>#&gt; No problems found.</div><div class='input'><span class='fu'>identifyColons</span>(<span class='fu'>c</span>(<span class='st'>"a:b"</span>, <span class='fl'>1</span>:<span class='fl'>10</span>, <span class='st'>":b"</span>, <span class='st'>"a:b:c:d"</span>))</div><div class='output co'>#&gt; Note: The following values include colons: a:b, a:b:c:d.</div><div class='input'>
 <span class='co'>#identifyColons now appears in a allCheckFunctions() call:</span>
@@ -425,7 +449,7 @@ if more knowledge about <code>checkFunction</code>s is required.</p>
 
 <span class='co'>#Make it a checkFunction</span>
 <span class='no'>identifyNeg</span> <span class='kw'>&lt;-</span> <span class='fu'>checkFunction</span>(<span class='no'>identifyNeg</span>, <span class='st'>"Identify negative values"</span>,
-  <span class='kw'>classes</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"integer"</span>, <span class='st'>"numeric"</span>))</div><div class='output co'>#&gt; <span class='error'>Error in get(fName): objekt 'identifyNeg' blev ikke fundet</span></div><div class='input'>
+  <span class='kw'>classes</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"integer"</span>, <span class='st'>"numeric"</span>))</div><div class='output co'>#&gt; <span class='error'>Error in get(fName): object 'identifyNeg' not found</span></div><div class='input'>
 <span class='co'>#Call it:</span>
 <span class='fu'>identifyNeg</span>(<span class='fu'>c</span>(<span class='fl'>0</span>:<span class='fl'>100</span>))</div><div class='output co'>#&gt; No problems found.</div><div class='input'><span class='fu'>identifyNeg</span>(<span class='fu'>c</span>(-<span class='fl'>20.1232323</span>:<span class='fl'>20</span>), <span class='kw'>nMax</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>maxDecimals</span> <span class='kw'>=</span> <span class='fl'>4</span>)</div><div class='output co'>#&gt; Note: The following negative values were found: -20.1232, -19.1232, -18.1232 (18 additional values omitted).</div><div class='input'>
 <span class='co'>#identifyNeg now appears in a allCheckFunctions() call:</span>
@@ -533,11 +557,14 @@ if more knowledge about <code>checkFunction</code>s is required.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

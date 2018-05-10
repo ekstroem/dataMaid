@@ -18,13 +18,23 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="A checkFunction for identifying outliers — identifyOutliers" />
+
+<meta property="og:description" content="A checkFunction to be called from check that identifies outlier values
+in a Date/numeric/integer variable." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +57,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">dataMaid</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">dataMaid</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.2</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -82,6 +96,9 @@
     <li>
       <a href="../CSP2018/index.html">CSP 2018</a>
     </li>
+    <li>
+      <a href="../eRum2018/index.html">eRum 2018</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -97,6 +114,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -104,20 +122,24 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>A checkFunction for identifying outliers</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ekstroem/dataMaid/blob/master/R/identifyOutliers.R'><code>R/identifyOutliers.R</code></a></small>
+    <div class="hidden name"><code>identifyOutliers.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>A checkFunction to be called from <code><a href='check.html'>check</a></code> that identifies outlier values
 in a Date/numeric/integer variable.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>identifyOutliers</span>(<span class='no'>v</span>, <span class='kw'>nMax</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>maxDecimals</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -148,8 +170,8 @@ data checks. If <code>Inf</code>, no rounding is performed.</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Outliers are identified based on an outlier rule that is 
-appropriate for asymmetric data. Outliers are observations outside the range
-    $$Q1 - 1.5*exp(a*MC)*IQR ;  Q3 + 1.5*exp(b*MC)*IQR $$</p>
+appropriate for asymmetric data. Outliers are observations outside the range</p>
+<p>$$Q1 - 1.5*exp(a*MC)*IQR ;  Q3 + 1.5*exp(b*MC)*IQR $$</p>
 <p>where Q1, Q3, and IQR are the first quartile, third quartile, and
 inter-quartile range, MC is the 'medcouple', a robust concept and
 estimator of skewness, and a and b are appropriate constants (-4
@@ -167,8 +189,8 @@ Note that no rounding is performed for Dates, no matter the value of <code>maxDe
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='check.html'>check</a></code>, <code><a href='allCheckFunctions.html'>allCheckFunctions</a></code>, 
-<code><a href='checkFunction.html'>checkFunction</a></code>, <code><a href='checkResult.html'>checkResult</a></code>, <code>mc</code></p>
+    <div class='dont-index'><p><code><a href='check.html'>check</a></code>, <code><a href='allCheckFunctions.html'>allCheckFunctions</a></code>, 
+<code><a href='checkFunction.html'>checkFunction</a></code>, <code><a href='checkResult.html'>checkResult</a></code>, <code>mc</code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -198,11 +220,14 @@ Note that no rounding is performed for Dates, no matter the value of <code>maxDe
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

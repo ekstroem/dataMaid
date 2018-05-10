@@ -18,13 +18,24 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="Produce distribution plots — visualize" />
+
+<meta property="og:description" content="Generic shell function that calls a plotting function in order to produce a marginal
+distribution plot for a variable (or for each variable in a dataset). What type of plot is made 
+might depend on the data class of the variable." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +58,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">dataMaid</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">dataMaid</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.2</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -82,6 +97,9 @@
     <li>
       <a href="../CSP2018/index.html">CSP 2018</a>
     </li>
+    <li>
+      <a href="../eRum2018/index.html">eRum 2018</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -97,6 +115,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -104,21 +123,25 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Produce distribution plots</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ekstroem/dataMaid/blob/master/R/visualize.R'><code>R/visualize.R</code></a></small>
+    <div class="hidden name"><code>visualize.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Generic shell function that calls a plotting function in order to produce a marginal
 distribution plot for a variable (or for each variable in a dataset). What type of plot is made 
 might depend on the data class of the variable.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>visualize</span>(<span class='no'>v</span>, <span class='kw'>vnam</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>visuals</span> <span class='kw'>=</span> <span class='fu'><a href='setVisuals.html'>setVisuals</a></span>(), <span class='kw'>doEval</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -164,8 +187,8 @@ to construct valid visual functions are found in <code><a href='visualFunction.h
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='setVisuals.html'>setVisuals</a></code>, <code><a href='allVisualFunctions.html'>allVisualFunctions</a></code>,
-<code><a href='standardVisual.html'>standardVisual</a></code>, <code><a href='basicVisual.html'>basicVisual</a></code></p>
+    <div class='dont-index'><p><code><a href='setVisuals.html'>setVisuals</a></code>, <code><a href='allVisualFunctions.html'>allVisualFunctions</a></code>,
+<code><a href='standardVisual.html'>standardVisual</a></code>, <code><a href='basicVisual.html'>basicVisual</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -183,9 +206,8 @@ to construct valid visual functions are found in <code><a href='visualFunction.h
 #&gt; [11] "    8.2, 8.65, 9.1, 9.55, 10), ymin = c(0, 0, 0, 0, 0, 0, 0, "                        
 #&gt; [12] "    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0), ymax = c(1L, 0L, "                        
 #&gt; [13] "    1L, 0L, 1L, 0L, 1L, 0L, 1L, 0L, 0L, 1L, 0L, 1L, 0L, 1L, 0L, "                     
-#&gt; [14] "    1L, 0L, 1L)), .Names = c(\"factorV\", \"Freq\", \"xmin\", \"xmax\", "             
-#&gt; [15] "\"ymin\", \"ymax\"), row.names = c(NA, -20L), class = \"data.frame\"), "              
-#&gt; [16] "    vnam = \"Variable 1\")"                                                           </div><div class='input'>
+#&gt; [14] "    1L, 0L, 1L)), row.names = c(NA, -20L), class = \"data.frame\"), "                 
+#&gt; [15] "    vnam = \"Variable 1\")"                                                           </div><div class='input'>
  <span class='co'>#Define a new visualization function and call it using visualize either</span>
  <span class='co'>#using allVisual or a class specific argument:</span>
    <span class='no'>mosaicVisual</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>v</span>, <span class='no'>vnam</span>, <span class='no'>doEval</span>) {
@@ -196,7 +218,7 @@ to construct valid visual functions are found in <code><a href='visualFunction.h
    }
    <span class='no'>mosaicVisual</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='visualFunction.html'>visualFunction</a></span>(<span class='no'>mosaicVisual</span>,
                                   <span class='kw'>description</span> <span class='kw'>=</span> <span class='st'>"Mosaicplots from graphics"</span>,
-                                  <span class='kw'>classes</span> <span class='kw'>=</span> <span class='fu'><a href='allClasses.html'>allClasses</a></span>())</div><div class='output co'>#&gt; <span class='error'>Error in get(fName): objekt 'mosaicVisual' blev ikke fundet</span></div><div class='input'>
+                                  <span class='kw'>classes</span> <span class='kw'>=</span> <span class='fu'><a href='allClasses.html'>allClasses</a></span>())</div><div class='output co'>#&gt; <span class='error'>Error in get(fName): object 'mosaicVisual' not found</span></div><div class='input'>
   <span class='co'>#Inspect all options for visualFunctions:</span>
   <span class='fu'><a href='allVisualFunctions.html'>allVisualFunctions</a></span>()</div><div class='output co'>#&gt; 
 #&gt; ------------------------------------------------------------------------------
@@ -228,9 +250,9 @@ to construct valid visual functions are found in <code><a href='visualFunction.h
 <span class='co'># }</span><div class='input'>
    <span class='co'>#return code for a mosaic plot</span>
    <span class='fu'>visualize</span>(<span class='fu'>c</span>(<span class='st'>"1"</span>, <span class='st'>"1"</span>, <span class='st'>"1"</span>, <span class='st'>"2"</span>, <span class='st'>"2"</span>, <span class='st'>"a"</span>), <span class='st'>"My variable"</span>,
-       <span class='kw'>allVisuals</span> <span class='kw'>=</span> <span class='st'>"mosaicVisual"</span>, <span class='kw'>doEval</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; [1] "ggAggBarplot(data = structure(list(x = structure(1:3, .Label = c(\"1\", "        
-#&gt; [2] "\"2\", \"a\"), class = \"factor\"), y = c(3L, 2L, 1L)), .Names = c(\"x\", "      
-#&gt; [3] "\"y\"), row.names = c(NA, -3L), class = \"data.frame\"), vnam = \"My variable\")"</div><div class='input'>
+       <span class='kw'>allVisuals</span> <span class='kw'>=</span> <span class='st'>"mosaicVisual"</span>, <span class='kw'>doEval</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; [1] "ggAggBarplot(data = structure(list(x = structure(1:3, .Label = c(\"1\", "                
+#&gt; [2] "\"2\", \"a\"), class = \"factor\"), y = 3:1), class = \"data.frame\", row.names = c(NA, "
+#&gt; [3] "-3L)), vnam = \"My variable\")"                                                          </div><div class='input'>
  </div><span class='co'># NOT RUN {</span>
  <span class='co'>#Produce multiple plots easily by calling visualize on a full dataset:</span>
    <span class='fu'>data</span>(<span class='no'>testData</span>)
@@ -269,11 +291,14 @@ to construct valid visual functions are found in <code><a href='visualFunction.h
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

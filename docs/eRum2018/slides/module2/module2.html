@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Reproducible data screening and quality control</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Claus Thorn Ekstrøm and Anne Helby Petersen UCPH Biostatistics" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <script src="libs/htmlwidgets/htmlwidgets.js"></script>
+    <script src="libs/viz/viz.js"></script>
+    <link href="libs/DiagrammeR-styles/styles.css" rel="stylesheet" />
+    <script src="libs/grViz-binding/grViz.js"></script>
+    <link rel="stylesheet" href="ku.css" type="text/css" />
+    <link rel="stylesheet" href="animate.min.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Reproducible data screening and quality control
+## Module 2: Data Screening with dataMaid
+### Claus Thorn Ekstrøm and Anne Helby Petersen<br>UCPH Biostatistics
+### eRum, Budapest, May 14th, 2018<br>.footnotesize[<a href="https://ekstroem.github.io/dataMaid/eRum2018/index.html">Slides/homepage</a>]
+
+---
+
+
+
+background-image: url(pics/manbeer.jpg)
+background-size: 100%
+class: middle, center
+
+
+
+
+
+
+# The RESCueH project
+
+
+---
+
+class: center
+
+# Timeline followback (TLFB)
+
+
+```
+  day1 day2 day3
+1    9   NA   NA
+2   10   NA   99
+3   13    3   40
+4   24    7   22
+```
+
+---
+
+class: center
+
+# Timeline followback (TLFB)
+
+
+```
+  day1 day2 day3
+1    9   NA   NA
+2   10   NA   99
+3   13    3   40
+4   24    7   22
+5   17    2    6
+6    3   88   16
+```
+
+---
+
+background-image: url(pics/mau.png)
+background-size: 80%
+class: center
+
+# Monthly Alcohol units
+
+
+
+
+
+---
+
+# Reproducible research
+
+What **didn't** we check?
+
+--
+
+- Need **experts in relevant field**
+- Merge existing databases into megadatabases
+- New technologies revive old data
+
+
+---
+
+class: center
+
+
+
+.small[
+
+```
+# A tibble: 15 x 6
+   pill  events region change id    spotifysong
+   &lt;fct&gt;  &lt;dbl&gt; &lt;fct&gt;   &lt;dbl&gt; &lt;fct&gt; &lt;fct&gt;      
+ 1 red        1 a      -0.626 1     Irrelevant 
+ 2 red        1 a       0.184 2     Irrelevant 
+ 3 red        1 a      -0.836 3     Irrelevant 
+ 4 red        2 a       1.60  4     Irrelevant 
+ 5 red        2 a       0.330 5     Irrelevant 
+ 6 red        6 b      -0.820 6     Irrelevant 
+ 7 red        6 b       0.487 7     Irrelevant 
+ 8 red        6 b       0.738 8     Irrelevant 
+ 9 red      999 c       0.576 9     Irrelevant 
+10 red       NA c      -0.305 10    Irrelevant 
+11 blue       4 c       1.51  11    Irrelevant 
+12 blue      82 .       0.390 12    Irrelevant 
+13 blue      NA " "    -0.621 13    Irrelevant 
+14 &lt;NA&gt;     NaN other  -2.21  14    Irrelevant 
+15 &lt;NA&gt;       5 OTHER   1.12  15    Irrelevant 
+```
+]
+
+---
+
+class: middle
+
+# dataMaid
+
+
+```r
+&gt; library(dataMaid)
+&gt; data(toyData)
+*&gt; makeDataReport(toyData)
+```
+
+Documentation to be **read** and **evaluated** by a human.
+
+
+See [github.com/ekstroem/dataMaid](github.com/ekstroem/dataMaid) for more info. Stable version on CRAN.
+
+
+---
+
+background-image: url(pics/flowchart2.png)
+background-size: 100%
+class: center
+
+# `dataMaid` flowchart
+
+
+<div id="htmlwidget-4461edc4dbe2ca2e9e84" style="width:100%;height:60%;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4461edc4dbe2ca2e9e84">{"x":{"diagram":"\n  digraph {\n\ngraph[layout = neato,\n      overlap=false,\n      rankdir = \"LR\", \n      bgcolor=\"#000000\",\n      sep=.2]\n\nnode[fontsize=20,\n      fillcolor = DimGray,\n      fontcolor = White,\n      fillcolor=\"#222222\",\n      style=filled,\n      color=White]\n\nedge [color = White, penwidth=4]\n\n  \"data frame\"  -> \"summarize\"\n    subgraph detail {\n       rank=\"same\";\n       \"summarize\" -> \"visualize\" -> \"check\";\n       \"check\" -> \"summarize\"; }\n\"check\" -> \".Rmd / render\";\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+
+
+
+
+
+---
+
+# Part 1: Data cleaning summary
+
+&lt;img src="pics/summ.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+
+
+---
+
+background-image: url(pics/miss.png)
+background-size: 100%
+
+# Part 2: Summary table
+
+---
+
+background-image: url(pics/out1.png)
+background-size: 100%
+
+# Part 3: Variable list
+
+
+---
+
+background-image: url(pics/out2.png)
+background-size: 100%
+
+
+---
+
+# `dataMaid` common arguments
+
+.small[
+
+| Argument      | Description   |
+| ------------- |:--------------------------------| 
+| `mode`        | Tasks to perform. `c("summarize", "visualize", "check")` is default |
+| `replace`      | Logical. Should existing dataMaid reports be overwritten? Default `FALSE`   | 
+| `output`      | Output format. Choices are `"pdf"`, `"html"`, "`"word"` | 
+| `onlyProblematic`      | Logical. Show only variable with problems. Default `FALSE`  |
+| `maxProbVals`  | Maximum number of unique values printed. Positive int or `Inf` (default 10)     | 
+
+]
+
+---
+
+class: inverse, middle
+
+# Exercise 2
+
+1.  Load the `dataMaid` package
+2.  Use `makeDataReport()` to generate a data report
+3.  Screen the `presidentData` data for errors we did not find before.
+
+Hunt for errors!
+
+---
+
+class: center
+
+.small[
+
+```
+# A tibble: 15 x 6
+   pill  events region change id    spotifysong
+   &lt;fct&gt;  &lt;dbl&gt; &lt;fct&gt;   &lt;dbl&gt; &lt;fct&gt; &lt;fct&gt;      
+ 1 red        1 a      -0.626 1     Irrelevant 
+ 2 red        1 a       0.184 2     Irrelevant 
+ 3 red        1 a      -0.836 3     Irrelevant 
+ 4 red        2 a       1.60  4     Irrelevant 
+ 5 red        2 a       0.330 5     Irrelevant 
+ 6 red        6 b      -0.820 6     Irrelevant 
+ 7 red        6 b       0.487 7     Irrelevant 
+ 8 red        6 b       0.738 8     Irrelevant 
+ 9 red      999 c       0.576 9     Irrelevant 
+10 red       NA c      -0.305 10    Irrelevant 
+11 blue       4 c       1.51  11    Irrelevant 
+12 blue      82 .       0.390 12    Irrelevant 
+13 blue      NA " "    -0.621 13    Irrelevant 
+14 &lt;NA&gt;     NaN other  -2.21  14    Irrelevant 
+15 &lt;NA&gt;       5 OTHER   1.12  15    Irrelevant 
+```
+]
+
+---
+
+# Using `dataMaid` interactively
+
+
+.footnotesize[
+
+```r
+&gt; check(toyData$events)
+```
+
+```
+$identifyMissing
+The following suspected missing value codes enter as regular values: 999, NaN.
+$identifyOutliers
+Note that the following possible outlier values were detected: 82, 999.
+```
+
+```r
+&gt; check(toyData$events, 
++         numericChecks = "identifyMissing")
+```
+
+```
+$identifyMissing
+The following suspected missing value codes enter as regular values: 999, NaN.
+```
+]
+
+
+???
+
+check er de funktioner, der bliver checket for
+
+Kan sætte specifikke (også i makeDataReport)
+
+Vis, at det er en liste med 2 elementer, og den form, som de har.
+
+---
+
+# Overview of `check` functions
+
+.footnotesize[
+
+```r
+&gt; allCheckFunctions()
+```
+]
+
+
+.scriptsize[
+
+```
+----------------------------------------------------------------------------------
+name                 description                     classes                      
+-------------------- -------------------------------------------------------------
+identifyCaseIssues   Identify case issues            character, factor            
+
+identifyLoners       Identify levels with &lt; 6 obs.   character, factor            
+
+identifyMissing      Identify miscoded missing       character, Date, factor,     
+                     values                          integer, labelled, logical,  
+                                                          numeric                      
+```                                                       
+]                                                    
+    
+and more                                                      
+                                                          
+---
+
+# Interactive `dataMaid` - visualizations
+
+.pull-left[
+.footnotesize[
+
+```r
+&gt; visualize(toyData$events)
+```
+
+Can also check the available `visual` functions
+
+
+```r
+&gt; allVisualFunctions()
+```
+]
+]
+
+.pull-right[
+![](module2_files/figure-html/unnamed-chunk-13-1.png)&lt;!-- --&gt;
+]
+
+
+---
+
+# Interactive `dataMaid` - summaries
+
+.footnotesize[
+
+```r
+&gt; summarize(toyData$events)
+```
+
+```
+$variableType
+Variable type: numeric
+$countMissing
+Number of missing obs.: 3 (20 %)
+$uniqueValues
+Number of unique values: 8
+$centralValue
+Median: 4.5
+$quartiles
+1st and 3rd quartiles: 1.75; 6
+$minMax
+Min. and max.: 1; 999
+```
+]
+
+---
+
+# Using dataMaid interactively
+
+.scriptsize[
+```
+&gt; allSummaryFunctions()
+
+-------------------------------------------------------------
+name         description          classes                    
+------------ -------------------- ---------------------------
+centralValue Compute median       character, Date, factor,   
+             or mode              integer, labelled, logical,
+                                  numeric                    
+
+countMissing Compute ratio of     character, Date, factor,   
+             missing obs.         integer, labelled, logical,
+                                  numeric                    
+
+minMax       Find min and max     integer, numeric, Date     
+             values                                                   
+quartiles    Compute 1st and 3rd quartiles Date, integer, numeric     
+
+uniqueValues Count number of unique values character, Date, factor,   
+                                           integer, labelled, logical,
+                                           numeric                    
+
+variableType Data class of variable        character, Date, factor,   
+                                           integer, labelled, logical,
+                                           numeric                    
+----------------------------------------------------------------------
+
+```
+]
+
+---
+
+# Everything is a function
+
+Note that you can call the individual `check`, `summary`, and `visualize` functions directly.
+
+.footnotesize[
+
+```r
+&gt; countMissing(toyData$events)
+```
+
+```
+Number of missing obs.: 3 (20 %)
+```
+
+```r
+&gt; centralValue(toyData$events)
+```
+
+```
+Median: 4.5
+```
+
+```r
+&gt; identifyOutliers(toyData$events)
+```
+
+```
+Note that the following possible outlier values were detected: 82, 999.
+```
+]
+
+---
+
+# Extending `dataMaid`
+
+Custom check, visual, or summary functions.
+
+Few requirements --- input and output formats.
+
+Easiet to work with a **template system** and modify one of those. 
+
+Check vignette `vignette("extending_dataMaid")` for detailed instructions. Or the exercises!
+
+---
+
+## Custom `summaryFunction` - template
+
+.footnotesize[
+```
+mySummaryFunction &lt;- function(v, ...) {
+  val &lt;- [ result of whatever summary we are doing ]
+  res &lt;- [ properly escaped version of val ]        
+  summaryResult(list(feature = "[Feature name]", 
+                     result = res,
+                     value = val))
+}
+```
+]
+
+Example (centralValue for numeric/integer)
+
+.footnotesize[
+
+```r
+&gt; function (v, maxDecimals = 2) {
++     v &lt;- na.omit(v)
++     val &lt;- median(v)
++     summaryResult(list(feature = "Median", result = round(val, 
++         maxDecimals), value = val))
++ }
+```
+]
+
+---
+
+## Custom `checkFunction` - template
+
+.small[
+
+```r
+&gt; isSSN &lt;- function(v, nMax = NULL, ...) {
++   out &lt;- list(problem = FALSE, 
++               message = "", 
++               problemValues=NULL)
++   if (class(v) %in% c("character", "factor", 
++                       "labelled")) {
++     if (any(grep("\\d{3}-\\d{2}-\\d{4}", v))) {
++       out$problem &lt;- TRUE
++       out$message &lt;- "Warning: Seems to contain SSNs."
++       out$problemValues &lt;- "Will not show"
++     }  
++   }
++   out 
++ }
+```
+]
+---
+
+## Using the function
+
+.footnotesize[
+
+```r
+&gt; DF &lt;- data.frame(ids=c("111-22-3333","123-45-6789", 
++                        "111-22-3333"),
++                  id2=c("111223333", "123456789", "4728491283"), 
++                  stringsAsFactors=FALSE)
+&gt; 
+&gt; check(DF, characterChecks = c("isSSN"))
+```
+
+```
+$ids
+$ids$isSSN
+$ids$isSSN$problem
+[1] TRUE
+
+$ids$isSSN$message
+[1] "Warning: Seems to contain SSNs."
+
+$ids$isSSN$problemValues
+[1] "Will not show"
+
+
+
+$id2
+$id2$isSSN
+$id2$isSSN$problem
+[1] FALSE
+
+$id2$isSSN$message
+[1] ""
+
+$id2$isSSN$problemValues
+NULL
+```
+
+]
+
+
+---
+
+class: inverse
+
+# Exercise 2b/2c
+
+How to tailor `dataMaid` to work with *your* dataset:
+
+*   Work interactively with `dataMaid` (exercise 2b)
+*   Create new custom summary, check and visualization functions (exercise 2c)
+
+Pick whatever you want. Or jump back and forth.
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"slideNumberFormat": "%current%",
+"highlightStyle": "ir-black",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

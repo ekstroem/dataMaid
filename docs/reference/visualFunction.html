@@ -18,13 +18,25 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="Create an object of class visualFunction — visualFunction" />
+
+<meta property="og:description" content="Convert a function, f, into an S3 
+visualFunction object. This adds f to the
+overview list returned by an allVisualFunctions() 
+call." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +59,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">dataMaid</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">dataMaid</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.2</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -82,6 +98,9 @@
     <li>
       <a href="../CSP2018/index.html">CSP 2018</a>
     </li>
+    <li>
+      <a href="../eRum2018/index.html">eRum 2018</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -97,6 +116,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -104,22 +124,26 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Create an object of class visualFunction</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ekstroem/dataMaid/blob/master/R/visualFunction.R'><code>R/visualFunction.R</code></a></small>
+    <div class="hidden name"><code>visualFunction.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Convert a function, <code>f</code>, into an S3 
 <code>visualFunction</code> object. This adds <code>f</code> to the
 overview list returned by an <code><a href='allVisualFunctions.html'>allVisualFunctions()</a></code> 
 call.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>visualFunction</span>(<span class='no'>f</span>, <span class='no'>description</span>, <span class='kw'>classes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -179,8 +203,8 @@ if more knowledge about <code>visualFunction</code>s is required.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='allVisualFunctions.html'>allVisualFunctions</a></code>, <code><a href='visualize.html'>visualize</a></code>, 
-<code><a href='makeDataReport.html'>makeDataReport</a></code></p>
+    <div class='dont-index'><p><code><a href='allVisualFunctions.html'>allVisualFunctions</a></code>, <code><a href='visualize.html'>visualize</a></code>, 
+<code><a href='makeDataReport.html'>makeDataReport</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -192,7 +216,7 @@ if more knowledge about <code>visualFunction</code>s is required.</p>
    } <span class='kw'>else</span> <span class='fu'>return</span>(<span class='fu'>deparse</span>(<span class='no'>thisCall</span>))
  }
  <span class='no'>mosaicVisual</span> <span class='kw'>&lt;-</span> <span class='fu'>visualFunction</span>(<span class='no'>mosaicVisual</span>, <span class='kw'>description</span> <span class='kw'>=</span> <span class='st'>"Mosaicplots from graphics"</span>,
-                                <span class='kw'>classes</span> <span class='kw'>=</span> <span class='fu'><a href='allClasses.html'>allClasses</a></span>())</div><div class='output co'>#&gt; <span class='error'>Error in get(fName): objekt 'mosaicVisual' blev ikke fundet</span></div><div class='input'>
+                                <span class='kw'>classes</span> <span class='kw'>=</span> <span class='fu'><a href='allClasses.html'>allClasses</a></span>())</div><div class='output co'>#&gt; <span class='error'>Error in get(fName): object 'mosaicVisual' not found</span></div><div class='input'>
 <span class='co'>#mosaicVisual is now included in a allVisualFunctions() call:</span>
  <span class='fu'><a href='allVisualFunctions.html'>allVisualFunctions</a></span>()</div><div class='output co'>#&gt; 
 #&gt; ------------------------------------------------------------------------------
@@ -209,11 +233,11 @@ if more knowledge about <code>visualFunction</code>s is required.</p>
 #&gt; </div><div class='input'>
 <span class='co'>#Create a mosaic plot:</span>
  <span class='no'>ABCvar</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='fu'>rep</span>(<span class='st'>"a"</span>, <span class='fl'>10</span>), <span class='fu'>rep</span>(<span class='st'>"b"</span>, <span class='fl'>20</span>), <span class='fu'>rep</span>(<span class='st'>"c"</span>, <span class='fl'>5</span>))
- <span class='fu'>mosaicVisual</span>(<span class='no'>ABCvar</span>, <span class='st'>"ABCvar"</span>, <span class='fl'>TRUE</span>)</div><div class='img'><img src='visualFunction-4.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+ <span class='fu'>mosaicVisual</span>(<span class='no'>ABCvar</span>, <span class='st'>"ABCvar"</span>, <span class='fl'>TRUE</span>)</div><div class='img'><img src='visualFunction-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'>#Create a character string with the code for a mosaic plot:</span>
- <span class='fu'>mosaicVisual</span>(<span class='no'>ABCvar</span>, <span class='st'>"ABCVar"</span>, <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; [1] "mosaicplot(structure(c(10L, 20L, 5L), .Dim = 3L, .Dimnames = structure(list("             
-#&gt; [2] "    v = c(\"a\", \"b\", \"c\")), .Names = \"v\"), class = \"table\"), main = \"ABCVar\", "
-#&gt; [3] "    xlab = \"\")"                                                                         </div><div class='input'>
+ <span class='fu'>mosaicVisual</span>(<span class='no'>ABCvar</span>, <span class='st'>"ABCVar"</span>, <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; [1] "mosaicplot(structure(c(a = 10L, b = 20L, c = 5L), .Dim = 3L, .Dimnames = list("
+#&gt; [2] "    v = c(\"a\", \"b\", \"c\")), class = \"table\"), main = \"ABCVar\", "      
+#&gt; [3] "    xlab = \"\")"                                                              </div><div class='input'>
 <span class='co'>#Extract or set description of a visualFunction:</span>
  <span class='fu'><a href='description.html'>description</a></span>(<span class='no'>mosaicVisual</span>)</div><div class='output co'>#&gt; [1] "mosaicVisual"</div><div class='input'> <span class='fu'><a href='description.html'>description</a></span>(<span class='no'>mosaicVisual</span>) <span class='kw'>&lt;-</span> <span class='st'>"A cubist version of a pie chart"</span>
  <span class='fu'><a href='description.html'>description</a></span>(<span class='no'>mosaicVisual</span>)</div><div class='output co'>#&gt; [1] "mosaicVisual"</div><div class='input'>
@@ -243,11 +267,14 @@ if more knowledge about <code>visualFunction</code>s is required.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

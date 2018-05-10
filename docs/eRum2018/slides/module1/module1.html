@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Reproducible data screening and quality control</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Claus Thorn Ekstrøm and Anne Helby Petersen UCPH Biostatistics" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <script src="libs/htmlwidgets/htmlwidgets.js"></script>
+    <script src="libs/viz/viz.js"></script>
+    <link href="libs/DiagrammeR-styles/styles.css" rel="stylesheet" />
+    <script src="libs/grViz-binding/grViz.js"></script>
+    <link rel="stylesheet" href="ku.css" type="text/css" />
+    <link rel="stylesheet" href="animate.min.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Reproducible data screening and quality control
+## Module 1: Introduction and terminology
+### Claus Thorn Ekstrøm and Anne Helby Petersen<br>UCPH Biostatistics
+### eRum, Budapest, May 14th, 2018<br>.footnotesize[<a href="https://ekstroem.github.io/dataMaid/eRum2018/index.html">Slides/homepage</a>]
+
+---
+
+
+
+
+background-image: url(pics/redcard+sociology.jpg)
+background-size: 96%
+class: center, middle
+
+???
+
+Science og statistics har været under pres de seneste år.
+
+Specielt indenfor psykologi har det vist sig svært at replikere vigtige resultater
+
+Resulteret i en diskussion om, hvad videnserfaring var, og hvordan forskellige grupper 
+kan se så forskelligt på de samme data. 
+
+---
+
+background-image: url(pics/soccer.png)
+background-size: 98%
+class: center, middle
+
+???
+
+Soccer la la la la
+
+Rødt kort til farvede spillere
+
+29 forskergrupper
+
+---
+
+# Classical research process
+
+From idea ...
+
+<div id="htmlwidget-ccd9c31b2d69cbf76741" style="width:100%;height:35%;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ccd9c31b2d69cbf76741">{"x":{"diagram":"\ndigraph dot {\n\ngraph [layout = dot,\n       rankdir = LR,\n       bgcolor=\"#000000\",\n       size=2]\n\nnode [shape = circle,\n      style = filled,\n      fillcolor = DimGray,\n      fontcolor = White,\n      fontsize=15,\n      fontname=Helvetica,\n      label = \"\", \n      penwidth=4, \n      margin=0.05,\n      color=White]\na [label=\"Design\"]\nb [label=\"Collect\"]\nc [label=\"Analyze\"]\nd [label=\"Publish\"]\n\nedge [color = White, penwidth=4]\na -> b -> c \nc -> d [color=red, penwidth=4]\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+
+
+.pull-right[... to publication.]
+
+
+???
+
+
+
+The red line shows where peer review comes in. Total summary. We need to document the steps we did througout as shown in the soccer example.
+
+We want reproducible research
+
+---
+
+# Why is reproducible research important?
+
+
+&gt; **Statistical analysis**
+&gt;
+&gt; .large[All of the data were analyzed with data processing software and figures with Microsoft excel 2007.]
+&gt;
+&gt; .pull-right[-- Tayefe *et al*, Advances in Bioresearch, 2014]
+
+???
+
+Full statistical analysis section from a scientific paper.
+
+Clearly impossible to reproduce
+
+---
+
+# Terminology
+
+**Reproducibility**
+
+Given code/data/materials, can I get *the same* (=identical) numbers that you did?
+
+**Replicability**
+
+Given scientific protocol, can I get *the same* (=in agreement) result that you did in my own study?
+
+???
+
+
+However, what do we really do?
+
+
+---
+
+## The life of a data scientist
+
+&gt; .large[Data scientists, according to interviews and expert estimates, spend from **50 percent to 80 percent** of their time mired in this more mundane labor of collecting and preparing unruly digital data, before it can be explored for useful nuggets.]
+&gt;
+&gt; .right[.small[-- "For Big-Data Scientists, 'Janitor Work' Is Key Hurdle to Insight" - The New York Times, 2014]]
+
+???
+
+Noter
+
+
+---
+
+## Realistic process plan
+
+
+<div id="htmlwidget-4d6b0ea97afdebf8524f" style="width:100%;height:25%;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4d6b0ea97afdebf8524f">{"x":{"diagram":"\ndigraph dot {\n\ngraph [layout = dot,\n       rankdir = LR,\n       bgcolor=\"#000000\",\n       size=2]\n\nnode [shape = circle,\n      style = filled,\n      fillcolor = DimGray,\n      fontcolor = White,\n      fontsize=15,\n      fontname=Helvetica,\n      label = \"\", \n      penwidth=4, \n      margin=0.05,\n      color=White]\na [label=\"Design\"]\nb [label=\"Collect\"]\nc [label=\"Analyze\"]\nd [label=\"Publish\"]\n\nedge [color = White, penwidth=4]\na -> b \nc -> d \nb -> c [color=red, penwidth=16]\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+
+
+&lt;img src="pics/cartoon-metadata.png" width="1200" /&gt;
+
+???
+
+
+GIGO
+
+Huge impact **here**
+
+*   Filtering, selection, error-fixing, ...
+
+
+---
+
+
+
+class: middle
+
+# Plan for workshop
+
+1.  Introduction, data, error-hunting
+2.  Data screening with `dataMaid`. Extending `dataMaid`
+3.  Validity and consistency checking using `validate`
+4.  Data cleaning and reporting
+
+Exercises.
+
+If you haven't already: go to [ekstroem.github.io/dataMaid/eRum2018/](https://ekstroem.github.io/dataMaid/eRum2018/index.html) and install the required packages.
+
+
+---
+
+
+background-image: url(pics/flower.png)
+background-size: 60%
+class: center, middle
+
+
+---
+
+background-image: url(pics/structure.png)
+background-position: right
+background-size: 30%
+
+# From raw data to analysis-ready
+
+.small[
+.pull-left[
+*   Wrangle to put into correct format and type (validity)
+*   Screen to look for consistency, accuracy and uniqueness
+*   Validate to check for consistency, accuracy and uniqueness
+*   Clean data 
+*   Check (screen/validate) again
+]]
+
+
+---
+
+## What is data?
+
+### **Context**
+
+*   Data type : BMI
+*   Values : Non-negative. Idea about lower and upper boundary
+*   Missing  : Half the individuals were not measured
+
+### **Content**
+
+--
+
+*   Data type : numeric
+*   Values  : 23.5, 31.1, ...
+*   Missing : Code as `.`
+
+
+???
+
+Note the complete overlap between context and content.
+
+Crucial: someone must know the topic!
+
+---
+
+# Wide vs. long
+
+
+
+.pull-left[
+
+| id| bmi0| bmi52|
+|--:|----:|-----:|
+|  1| 35.2|  24.2|
+|  2| 31.1|  27.0|
+]
+
+.pull-right[
+
+| id| value| time|
+|--:|-----:|----:|
+|  1|  35.2|    0|
+|  2|  31.1|    0|
+|  1|  24.2|   52|
+|  2|  27.0|   52|
+]
+
+--
+
+*   Work row-wise or column-wise?
+*   Tidy data?
+
+
+???
+
+Fordele og ulemper ved begge dele. Man skal være opmærksom på, hvad man har med at gøre.
+
+
+
+---
+
+class: center, middle
+
+## First rule of reproducible data wrangling
+
+
+.Large[*Thou shall never manually modify your raw data.*]
+
+There are no exceptions to this rule.
+
+---
+
+class: center, middle
+
+## Second rule of reproducible data wrangling
+
+
+.Large[*Thou shall never overwrite your raw data.*]
+
+There are no exceptions to this rule either.
+
+
+
+---
+
+# R markdown
+
+Format for writing **reproducible**, dynamic reports with R. Embed R code and results into slideshows, pdfs, html documents, Word files and more. See [cheat sheet at RStudio](https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf).
+
+
+```r
+&gt; install.packages("rmarkdown", "knitr")
+```
+
+&lt;img src="pics/rmarkdown.png" width="784" /&gt;
+
+
+---
+
+
+# Validity - data formats
+
+Technically corrct data requires that the data formats are correct
+
+.pull-left[
+
+```r
+&gt; DF
+```
+
+```
+  id bmi0 bmi52
+1  1 35.2  24.2
+2  2 31.1  27.0
+```
+]
+
+.pull-right[
+
+```r
+&gt; lapply(DF, class)
+```
+
+```
+$id
+[1] "numeric"
+
+$bmi0
+[1] "numeric"
+
+$bmi52
+[1] "numeric"
+```
+]
+
+---
+
+class: inverse, middle
+
+# Exercise 1
+
+Get the `presidentData` from the `dataMaid` package:
+
+
+```r
+&gt; library(dataMaid)
+&gt; data("presidentData")
+```
+
+Hunt for errors!
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="js/zoom.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"slideNumberFormat": "%current%",
+"highlightStyle": "ir-black",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

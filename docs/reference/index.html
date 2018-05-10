@@ -18,13 +18,19 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="Function reference" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +53,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">dataMaid</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">dataMaid</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.2</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -82,6 +92,9 @@
     <li>
       <a href="../CSP2018/index.html">CSP 2018</a>
     </li>
+    <li>
+      <a href="../eRum2018/index.html">eRum 2018</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -97,6 +110,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -104,407 +118,402 @@
       
       </header>
 
-      <div class="row">
-  <div class="col-md-9">
+<div class="row">
+  <div class="contents col-md-9">
     <div class="page-header">
-      <h1>
-        Reference
-        <small>version&nbsp;1.1.0</small>
-      </h1>
+      <h1>Reference</h1>
     </div>
 
-    <div class="contents">
-      <table class="ref-index">
+    <table class="ref-index">
 
-      <colgroup>
-        <col class="alias" />
-        <col class="title" />
-      </colgroup>
+    <colgroup>
+      <col class="alias" />
+      <col class="title" />
+    </colgroup>
 
-      <tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-            <p class="section-desc"></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="allCheckFunctions.html">allCheckFunctions</a></code> </p>
-          </td>
-          <td><p>Overview of all available checkFunctions</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="allClasses.html">allClasses</a></code> </p>
-          </td>
-          <td><p>Vector of all variable classes in <code>dataMaid</code></p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="allSummaryFunctions.html">allSummaryFunctions</a></code> </p>
-          </td>
-          <td><p>Overview of all available summaryFunctions</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="allVisualFunctions.html">allVisualFunctions</a></code> </p>
-          </td>
-          <td><p>Overview of all available visualFunctions</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="artData.html">artData</a></code> </p>
-          </td>
-          <td><p>Semi-artificial data about masterpieces of art</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="basicVisual.html">basicVisual</a></code> </p>
-          </td>
-          <td><p>Produce distribution plots in the base R (graphics) style using <code>plot</code> and
+    <tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        <!--  -->
+        <td>
+          <p><code><a href="allCheckFunctions.html">allCheckFunctions()</a></code> </p>
+        </td>
+        <td><p>Overview of all available checkFunctions</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="allClasses.html">allClasses()</a></code> </p>
+        </td>
+        <td><p>Vector of all variable classes in <code>dataMaid</code></p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="allSummaryFunctions.html">allSummaryFunctions()</a></code> </p>
+        </td>
+        <td><p>Overview of all available summaryFunctions</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="allVisualFunctions.html">allVisualFunctions()</a></code> </p>
+        </td>
+        <td><p>Overview of all available visualFunctions</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="artData.html">artData</a></code> </p>
+        </td>
+        <td><p>Semi-artificial data about masterpieces of art</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="basicVisual.html">basicVisual()</a></code> </p>
+        </td>
+        <td><p>Produce distribution plots in the base R (graphics) style using <code>plot</code> and
 <code>barplot</code></p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="basicVisualCFLB.html">basicVisualCFLB</a></code> </p>
-          </td>
-          <td><p>importFrom stats na.omit</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="bigPresidentData.html">bigPresidentData</a></code> </p>
-          </td>
-          <td><p>Semi-artificial data about the US presidents (extended version)</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="centralValue.html">centralValue</a></code> </p>
-          </td>
-          <td><p>summaryFunction for central values</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="check.html">check</a></code> </p>
-          </td>
-          <td><p>Perform checks of potential errors in variable/dataset</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="checkFunction.html">checkFunction</a></code> </p>
-          </td>
-          <td><p>Create an object of class checkFunction</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="checkResult.html">checkResult</a></code> </p>
-          </td>
-          <td><p>Create object of class checkResult</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="classes.html">classes</a></code> <code><a href="classes.html">classes<-</a></code> </p>
-          </td>
-          <td><p>Extract the contents of the attribute <code>classes</code></p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="clean.html">clean</a></code> </p>
-          </td>
-          <td><p>Produce a data cleaning overview document (deprecated version)</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="countMissing.html">countMissing</a></code> </p>
-          </td>
-          <td><p>Summary function for missing values</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="defaultCharacterChecks.html">defaultCharacterChecks</a></code> </p>
-          </td>
-          <td><p>Default checks for character variables</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="defaultCharacterSummaries.html">defaultCharacterSummaries</a></code> </p>
-          </td>
-          <td><p>Default summary functions for character variables</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="defaultDateChecks.html">defaultDateChecks</a></code> </p>
-          </td>
-          <td><p>Default checks for Date variables</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="defaultDateSummaries.html">defaultDateSummaries</a></code> </p>
-          </td>
-          <td><p>Default summary functions for Date variables</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="defaultFactorChecks.html">defaultFactorChecks</a></code> </p>
-          </td>
-          <td><p>Default checks for factor variables</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="defaultFactorSummaries.html">defaultFactorSummaries</a></code> </p>
-          </td>
-          <td><p>Default summary functions for factor variables</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="defaultIntegerChecks.html">defaultIntegerChecks</a></code> </p>
-          </td>
-          <td><p>Default checks for integer variables</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="defaultIntegerSummaries.html">defaultIntegerSummaries</a></code> </p>
-          </td>
-          <td><p>Default summary functions for integer variables</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="defaultLabelledChecks.html">defaultLabelledChecks</a></code> </p>
-          </td>
-          <td><p>Default checks for labelled variables</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="defaultLabelledSummaries.html">defaultLabelledSummaries</a></code> </p>
-          </td>
-          <td><p>Default summary functions for labelled variables</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="defaultLogicalChecks.html">defaultLogicalChecks</a></code> </p>
-          </td>
-          <td><p>Default checks for logical variables</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="defaultLogicalSummaries.html">defaultLogicalSummaries</a></code> </p>
-          </td>
-          <td><p>Default summary functions for logical variables</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="defaultNumericChecks.html">defaultNumericChecks</a></code> </p>
-          </td>
-          <td><p>Default checks for numeric variables</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="defaultNumericSummaries.html">defaultNumericSummaries</a></code> </p>
-          </td>
-          <td><p>Default summary functions for numeric variables</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="description.html">description</a></code> <code><a href="description.html">description<-</a></code> </p>
-          </td>
-          <td><p>Extract the contents of the attribute <code>description</code></p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="exampleData.html">exampleData</a></code> </p>
-          </td>
-          <td><p>Example data with zero-inflated variables</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="identifyCaseIssues.html">identifyCaseIssues</a></code> </p>
-          </td>
-          <td><p>A checkFunction for identifying case issues</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="identifyLoners.html">identifyLoners</a></code> </p>
-          </td>
-          <td><p>A checkFunction for identifying sparsely represented values (loners)</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="identifyMissing.html">identifyMissing</a></code> </p>
-          </td>
-          <td><p>A checkFunction for identifying miscoded missing values.</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="identifyNums.html">identifyNums</a></code> </p>
-          </td>
-          <td><p>A checkFunction</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="identifyOutliers.html">identifyOutliers</a></code> </p>
-          </td>
-          <td><p>A checkFunction for identifying outliers</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="identifyOutliersTBStyle.html">identifyOutliersTBStyle</a></code> </p>
-          </td>
-          <td><p>A checkFunction for identifying outliers Turkey Boxstole style</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="identifyWhitespace.html">identifyWhitespace</a></code> </p>
-          </td>
-          <td><p>A checkFunction for identifying whitespace</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="isCPR.html">isCPR</a></code> </p>
-          </td>
-          <td><p>Check if a variable consists of Danish CPR numbers</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="isKey.html">isKey</a></code> </p>
-          </td>
-          <td><p>Check if a variable qualifies as a key</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="isSingular.html">isSingular</a></code> <code><a href="isSingular.html">isEmpty</a></code> </p>
-          </td>
-          <td><p>Check if a variable only contains a single value</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="isSupported.html">isSupported</a></code> </p>
-          </td>
-          <td><p>Check if a variable has a class supported by dataMaid</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="makeCodebook.html">makeCodebook</a></code> </p>
-          </td>
-          <td><p>Produce a data codebook</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="makeDataReport.html">makeDataReport</a></code> </p>
-          </td>
-          <td><p>Produce a data report</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="messageGenerator.html">messageGenerator</a></code> </p>
-          </td>
-          <td><p>Produce a message for the output of a checkFunction</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="minMax.html">minMax</a></code> </p>
-          </td>
-          <td><p>summaryFunction for minimum and maximum</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="presidentData.html">presidentData</a></code> </p>
-          </td>
-          <td><p>Semi-artificial data about the US presidents</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="quartiles.html">quartiles</a></code> </p>
-          </td>
-          <td><p>summaryFunction for quartiles</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="render.html">render</a></code> </p>
-          </td>
-          <td><p>Simplified Rmarkdown rendering</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="setChecks.html">setChecks</a></code> </p>
-          </td>
-          <td><p>Set check arguments for makeDataReport</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="setSummaries.html">setSummaries</a></code> </p>
-          </td>
-          <td><p>Set summary arguments for makeDataReport</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="setVisuals.html">setVisuals</a></code> </p>
-          </td>
-          <td><p>Set visual arguments for makeDataReport</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="standardVisual.html">standardVisual</a></code> </p>
-          </td>
-          <td><p>Produce distribution plots using ggplot from ggplot2.</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="summarize.html">summarize</a></code> </p>
-          </td>
-          <td><p>Summarize a variable/dataset</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="summaryFunction.html">summaryFunction</a></code> </p>
-          </td>
-          <td><p>Create an object of class summaryFunction</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="summaryResult.html">summaryResult</a></code> </p>
-          </td>
-          <td><p>Create object of class summaryResult</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="testData.html">testData</a></code> </p>
-          </td>
-          <td><p>Extended example data to test the features of dataMaid</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="toyData.html">toyData</a></code> </p>
-          </td>
-          <td><p>Small example data to show the features of dataMaid</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="uniqueValues.html">uniqueValues</a></code> </p>
-          </td>
-          <td><p>summaryFunction for unique values</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="variableType.html">variableType</a></code> </p>
-          </td>
-          <td><p>Summary function for original class</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="visualFunction.html">visualFunction</a></code> </p>
-          </td>
-          <td><p>Create an object of class visualFunction</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="visualize.html">visualize</a></code> </p>
-          </td>
-          <td><p>Produce distribution plots</p></td>
-        </tr>
-      </tbody>
-      </table>
-    </div>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="basicVisualCFLB.html">basicVisualCFLB()</a></code> </p>
+        </td>
+        <td><p>importFrom stats na.omit</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="bigPresidentData.html">bigPresidentData</a></code> </p>
+        </td>
+        <td><p>Semi-artificial data about the US presidents (extended version)</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="centralValue.html">centralValue()</a></code> </p>
+        </td>
+        <td><p>summaryFunction for central values</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="check.html">check()</a></code> </p>
+        </td>
+        <td><p>Perform checks of potential errors in variable/dataset</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="checkFunction.html">checkFunction()</a></code> </p>
+        </td>
+        <td><p>Create an object of class checkFunction</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="checkResult.html">checkResult()</a></code> </p>
+        </td>
+        <td><p>Create object of class checkResult</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="classes.html">classes()</a></code> <code><a href="classes.html">`classes<-`()</a></code> </p>
+        </td>
+        <td><p>Extract the contents of the attribute <code>classes</code></p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="clean.html">clean()</a></code> </p>
+        </td>
+        <td><p>Produce a data cleaning overview document (deprecated version)</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="countMissing.html">countMissing()</a></code> </p>
+        </td>
+        <td><p>Summary function for missing values</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="defaultCharacterChecks.html">defaultCharacterChecks()</a></code> </p>
+        </td>
+        <td><p>Default checks for character variables</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="defaultCharacterSummaries.html">defaultCharacterSummaries()</a></code> </p>
+        </td>
+        <td><p>Default summary functions for character variables</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="defaultDateChecks.html">defaultDateChecks()</a></code> </p>
+        </td>
+        <td><p>Default checks for Date variables</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="defaultDateSummaries.html">defaultDateSummaries()</a></code> </p>
+        </td>
+        <td><p>Default summary functions for Date variables</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="defaultFactorChecks.html">defaultFactorChecks()</a></code> </p>
+        </td>
+        <td><p>Default checks for factor variables</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="defaultFactorSummaries.html">defaultFactorSummaries()</a></code> </p>
+        </td>
+        <td><p>Default summary functions for factor variables</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="defaultIntegerChecks.html">defaultIntegerChecks()</a></code> </p>
+        </td>
+        <td><p>Default checks for integer variables</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="defaultIntegerSummaries.html">defaultIntegerSummaries()</a></code> </p>
+        </td>
+        <td><p>Default summary functions for integer variables</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="defaultLabelledChecks.html">defaultLabelledChecks()</a></code> </p>
+        </td>
+        <td><p>Default checks for labelled variables</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="defaultLabelledSummaries.html">defaultLabelledSummaries()</a></code> </p>
+        </td>
+        <td><p>Default summary functions for labelled variables</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="defaultLogicalChecks.html">defaultLogicalChecks()</a></code> </p>
+        </td>
+        <td><p>Default checks for logical variables</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="defaultLogicalSummaries.html">defaultLogicalSummaries()</a></code> </p>
+        </td>
+        <td><p>Default summary functions for logical variables</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="defaultNumericChecks.html">defaultNumericChecks()</a></code> </p>
+        </td>
+        <td><p>Default checks for numeric variables</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="defaultNumericSummaries.html">defaultNumericSummaries()</a></code> </p>
+        </td>
+        <td><p>Default summary functions for numeric variables</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="description.html">description()</a></code> <code><a href="description.html">`description<-`()</a></code> </p>
+        </td>
+        <td><p>Extract the contents of the attribute <code>description</code></p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="exampleData.html">exampleData</a></code> </p>
+        </td>
+        <td><p>Example data with zero-inflated variables</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="identifyCaseIssues.html">identifyCaseIssues()</a></code> </p>
+        </td>
+        <td><p>A checkFunction for identifying case issues</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="identifyLoners.html">identifyLoners()</a></code> </p>
+        </td>
+        <td><p>A checkFunction for identifying sparsely represented values (loners)</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="identifyMissing.html">identifyMissing()</a></code> </p>
+        </td>
+        <td><p>A checkFunction for identifying miscoded missing values.</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="identifyNums.html">identifyNums()</a></code> </p>
+        </td>
+        <td><p>A checkFunction</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="identifyOutliers.html">identifyOutliers()</a></code> </p>
+        </td>
+        <td><p>A checkFunction for identifying outliers</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="identifyOutliersTBStyle.html">identifyOutliersTBStyle()</a></code> </p>
+        </td>
+        <td><p>A checkFunction for identifying outliers Turkey Boxstole style</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="identifyWhitespace.html">identifyWhitespace()</a></code> </p>
+        </td>
+        <td><p>A checkFunction for identifying whitespace</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="isCPR.html">isCPR()</a></code> </p>
+        </td>
+        <td><p>Check if a variable consists of Danish CPR numbers</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="isKey.html">isKey()</a></code> </p>
+        </td>
+        <td><p>Check if a variable qualifies as a key</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="isSingular.html">isSingular()</a></code> <code><a href="isSingular.html">isEmpty()</a></code> </p>
+        </td>
+        <td><p>Check if a variable only contains a single value</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="isSupported.html">isSupported()</a></code> </p>
+        </td>
+        <td><p>Check if a variable has a class supported by dataMaid</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="makeCodebook.html">makeCodebook()</a></code> </p>
+        </td>
+        <td><p>Produce a data codebook</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="makeDataReport.html">makeDataReport()</a></code> </p>
+        </td>
+        <td><p>Produce a data report</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="messageGenerator.html">messageGenerator()</a></code> </p>
+        </td>
+        <td><p>Produce a message for the output of a checkFunction</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="minMax.html">minMax()</a></code> </p>
+        </td>
+        <td><p>summaryFunction for minimum and maximum</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="presidentData.html">presidentData</a></code> </p>
+        </td>
+        <td><p>Semi-artificial data about the US presidents</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="quartiles.html">quartiles()</a></code> </p>
+        </td>
+        <td><p>summaryFunction for quartiles</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="render.html">render()</a></code> </p>
+        </td>
+        <td><p>Simplified Rmarkdown rendering</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="setChecks.html">setChecks()</a></code> </p>
+        </td>
+        <td><p>Set check arguments for makeDataReport</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="setSummaries.html">setSummaries()</a></code> </p>
+        </td>
+        <td><p>Set summary arguments for makeDataReport</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="setVisuals.html">setVisuals()</a></code> </p>
+        </td>
+        <td><p>Set visual arguments for makeDataReport</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="standardVisual.html">standardVisual()</a></code> </p>
+        </td>
+        <td><p>Produce distribution plots using ggplot from ggplot2.</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="summarize.html">summarize()</a></code> </p>
+        </td>
+        <td><p>Summarize a variable/dataset</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="summaryFunction.html">summaryFunction()</a></code> </p>
+        </td>
+        <td><p>Create an object of class summaryFunction</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="summaryResult.html">summaryResult()</a></code> </p>
+        </td>
+        <td><p>Create object of class summaryResult</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="testData.html">testData</a></code> </p>
+        </td>
+        <td><p>Extended example data to test the features of dataMaid</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="toyData.html">toyData</a></code> </p>
+        </td>
+        <td><p>Small example data to show the features of dataMaid</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="uniqueValues.html">uniqueValues()</a></code> </p>
+        </td>
+        <td><p>summaryFunction for unique values</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="variableType.html">variableType()</a></code> </p>
+        </td>
+        <td><p>Summary function for original class</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="visualFunction.html">visualFunction()</a></code> </p>
+        </td>
+        <td><p>Create an object of class visualFunction</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="visualize.html">visualize()</a></code> </p>
+        </td>
+        <td><p>Produce distribution plots</p></td>
+      </tr>
+    </tbody>
+    </table>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -521,11 +530,14 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

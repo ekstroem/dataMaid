@@ -1,0 +1,251 @@
+---
+title: "Reproducible data screening and quality control"
+subtitle: "Module 3: Time to clean and other options"
+author: "Claus Thorn Ekstrøm and Anne Helby Petersen<br>UCPH Biostatistics"
+date: "eRum, Budapest, May 14th, 2018<br>.footnotesize[[Slides/homepage](https://ekstroem.github.io/dataMaid/eRum2018/index.html)]"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: ['default', 'ku.css', 'animate.min.css']
+    seal: true
+    nature:
+      ratio: '16:9'
+      slideNumberFormat: '%current%' 
+      highlightStyle: ir-black
+      highlightLines: true
+      countIncrementalSlides: false
+      beforeInit: "js/zoom.js"
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+options(htmltools.dir.version = FALSE, cache=TRUE)
+opts_chunk$set(comment = NA, prompt=TRUE)
+#opts_chunk$set(dev.args=list(bg="transparent"), fig.width=15, fig.height=7)
+source("kutheme.R")
+library(dataMaid)
+toyData <- as.data.frame(toyData)
+```
+
+#Summarizing the errors
+
+* What did we find so far?
+* What didn't we find?
+
+
+---
+
+
+#Data cleaning
+
+
+.center[
+```{r cleanpic, echo=FALSE, out.width="60%"}
+knitr::include_graphics("pics/datacleaning.jpg")
+```
+]
+
+Not the best term ... and should not be unsupervised
+
+
+---
+
+
+
+#Data cleaning in R
+
+In an R-script:
+
+1. Make a copy of the dataset. 
+2. Use indexing to locate the problem in the data.
+3. Overwrite the faulty value with a correct one - if you know it - or `NA` to mark that information is missing in this spot. 
+4. Save the copy of the "cleaned" data in a **new** file.
+
+
+
+---
+
+
+#Selection - rows/observations
+
+Two systems for selecting observations in `data.frame`s in R: 
+
+By index (row number) or using a logical vector.
+
+```{r}
+(tD <- head(toyData, 3))  
+``` 
+
+---
+
+#Selection - rows/observations
+
+Four equivalent ways to get the second line of `tD`:
+```{r, eval = FALSE}
+tD[2, ] #indexing
+tD[c(FALSE, TRUE, FALSE), ] #manual logical vector 
+tD[tD$id == 2, ] #informative logical vector
+tD %>% filter(id==2)  # Using tidyverse
+``` 
+
+```{r, echo = FALSE}
+tD[tD$id == 2, ] #informative logical vector
+```
+
+
+
+---
+
+
+#Selection - rows/observations
+
+Use informative logical vectors as much as possible!
+
+```{r}
+tD
+
+#Mark non-positive change as missing:
+tD[tD$change > 0, "change"] <- NA
+``` 
+
+---
+
+#Selection - columns/variables
+
+*ALWAYS* use variable names.
+
+```{r, eval = FALSE}
+#readable, informative code:
+tD[tD$change > 0, "change"] <- NA
+
+# Indexing by numbers easily becomes 
+# a source of error by itself:
+tD[tD$change > 0, 4] <- NA
+``` 
+
+---
+
+background-image: url(pics/structure.png)
+background-size: 30%
+background-position: right
+
+
+## Finishing up after cleaning
+
+Should now have<br>
+a cleaned dataset<br>
+that can form the<br>
+basis for future<br>
+analyses.<br>
+
+With documentation<br>
+of how we got<br>
+there!
+
+---
+
+# Create codebook
+
+Produce a summary document for subsequent analyses.
+
+.footnotesize[
+```{r eval=FALSE}
+makeCodebook(presidentData)
+```
+]
+
+Add label (similar to `labelled` package) or extra information
+
+.footnotesize[
+```{r}
+pD <- presidentData
+attr(pD$presidencyYears, "label") <- 
+  "Full years as president"
+```
+]
+
+.footnotesize[
+```{r}
+attr(pD$birthday, "shortDescription") <- 
+  "Dates are stored in YYYY-MM-DD format"
+```
+]
+
+
+---
+
+class: inverse
+
+# Exercise 3
+
+Correct the errors you have found so far.
+
+Make sure to make the cleaning process reproducible.
+
+Remember **rules 1 and 2**!
+
+Create the final codebook with additional information about some of the variables.
+
+```{r eval=FALSE}
+makeCodebook(myCleanedData)
+```
+
+---
+
+##Row-wise or column-wise checks?
+
+```{r colrow1, echo=FALSE, out.width="75%", fig.align = "center"}
+knitr::include_graphics("pics/colrow1.png")
+```
+
+---
+
+##Row-wise or column-wise checks?
+
+```{r colrow2, echo=FALSE, out.width="75%", fig.align = "center"}
+knitr::include_graphics("pics/colrow2.png")
+```
+
+---
+
+##Row-wise or column-wise checks?
+
+```{r colrow3, echo=FALSE, out.width="75%", fig.align = "center"}
+knitr::include_graphics("pics/colrow3.png")
+```
+
+---
+
+##Row-wise *and* column-wise constraints!
+  
+* `dataMaid` performs class dependent checks for each variable in a dataset, one at a time (column-wise)
+  + Pros: Easy to document what was (not) done, let's you get started without a lot of prior knowledge, easy to share with collaborators
+  + Shortcomings: Generally cannot detect internal consistency issues or use non-class dependent variable constraints
+
+---
+
+
+##Row-wise *and* column-wise constraints!
+
+An R-packages that performs row-wise checks: `validate`. Check out the talk on Wednesday @ 14.50 by Edwin de Jonge:
+
+**validatetools - resolve and simplify contradictive or redundant data validation rules**
+
+
+
+
+Note: Different use of the term "validation" - no longer about format, type and range, but used as synonym to "check". 
+
+
+
+
+
+---
+
+class: middle, center
+
+# Thank you!
+
+Please grab hold of us here or via email
+
+.pull-left[Anne<br>[ahpe@sund.ku.dk](mailto:ahpe@sund.ku.dk)]  .pull-right[Claus<br>[ekstrom@sund.ku.dk](mailto:ekstrom@sund.ku.dk)]  

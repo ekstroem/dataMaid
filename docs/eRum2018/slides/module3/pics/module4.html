@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Reproducible data screening and quality control</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Claus Thorn Ekstrøm and Anne Helby Petersen UCPH Biostatistics" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="ku.css" type="text/css" />
+    <link rel="stylesheet" href="animate.min.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Reproducible data screening and quality control
+## Module 3: Time to clean and other options
+### Claus Thorn Ekstrøm and Anne Helby Petersen<br>UCPH Biostatistics
+### eRum, Budapest, May 14th, 2018<br>.footnotesize[<a href="https://ekstroem.github.io/dataMaid/eRum2018/index.html">Slides/homepage</a>]
+
+---
+
+
+
+
+#Summarizing the errors
+
+* What did we find so far?
+* What didn't we find?
+
+
+---
+
+
+#Data cleaning
+
+
+.center[
+&lt;img src="pics/datacleaning.jpg" width="60%" /&gt;
+]
+
+Not the best term ... and should not be unsupervised
+
+
+---
+
+
+
+#Data cleaning in R
+
+In an R-script:
+
+1. Make a copy of the dataset. 
+2. Use indexing to locate the problem in the data.
+3. Overwrite the faulty value with a correct one - if you know it - or `NA` to mark that information is missing in this spot. 
+4. Save the copy of the "cleaned" data in a **new** file.
+
+
+
+---
+
+
+#Selection - rows/observations
+
+Two systems for selecting observations in `data.frame`s in R: 
+
+By index (row number) or using a logical vector.
+
+
+```r
+&gt; (tD &lt;- head(toyData, 3))  
+```
+
+```
+  pill events region     change id spotifysong
+1  red      1      a -0.6264538  1  Irrelevant
+2  red      1      a  0.1836433  2  Irrelevant
+3  red      1      a -0.8356286  3  Irrelevant
+```
+
+---
+
+#Selection - rows/observations
+
+Four equivalent ways to get the second line of `tD`:
+
+```r
+&gt; tD[2, ] #indexing
+&gt; tD[c(FALSE, TRUE, FALSE), ] #manual logical vector 
+&gt; tD[tD$id == 2, ] #informative logical vector
+&gt; tD %&gt;% filter(id==2)  # Using tidyverse
+```
+
+
+```
+  pill events region    change id spotifysong
+2  red      1      a 0.1836433  2  Irrelevant
+```
+
+
+
+---
+
+
+#Selection - rows/observations
+
+Use informative logical vectors as much as possible!
+
+
+```r
+&gt; tD
+```
+
+```
+  pill events region     change id spotifysong
+1  red      1      a -0.6264538  1  Irrelevant
+2  red      1      a  0.1836433  2  Irrelevant
+3  red      1      a -0.8356286  3  Irrelevant
+```
+
+```r
+&gt; #Mark non-positive change as missing:
+&gt; tD[tD$change &gt; 0, "change"] &lt;- NA
+```
+
+---
+
+#Selection - columns/variables
+
+*ALWAYS* use variable names.
+
+
+```r
+&gt; #readable, informative code:
+&gt; tD[tD$change &gt; 0, "change"] &lt;- NA
+&gt; 
+&gt; # Indexing by numbers easily becomes 
+&gt; # a source of error by itself:
+&gt; tD[tD$change &gt; 0, 4] &lt;- NA
+```
+
+---
+
+background-image: url(pics/structure.png)
+background-size: 30%
+background-position: right
+
+
+## Finishing up after cleaning
+
+Should now have&lt;br&gt;
+a cleaned dataset&lt;br&gt;
+that can form the&lt;br&gt;
+basis for future&lt;br&gt;
+analyses.&lt;br&gt;
+
+With documentation&lt;br&gt;
+of how we got&lt;br&gt;
+there!
+
+---
+
+# Create codebook
+
+Produce a summary document for subsequent analyses.
+
+.footnotesize[
+
+```r
+&gt; makeCodebook(presidentData)
+```
+]
+
+Add label (similar to `labelled` package) or extra information
+
+.footnotesize[
+
+```r
+&gt; pD &lt;- presidentData
+&gt; attr(pD$presidencyYears, "label") &lt;- 
++   "Full years as president"
+```
+]
+
+.footnotesize[
+
+```r
+&gt; attr(pD$birthday, "shortDescription") &lt;- 
++   "Dates are stored in YYYY-MM-DD format"
+```
+]
+
+
+---
+
+class: inverse
+
+# Exercise 3
+
+Correct the errors you have found so far.
+
+Make sure to make the cleaning process reproducible.
+
+Remember **rules 1 and 2**!
+
+Create the final codebook with additional information about some of the variables.
+
+
+```r
+&gt; makeCodebook(myCleanedData)
+```
+
+---
+
+##Row-wise or column-wise checks?
+
+&lt;img src="pics/colrow1.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+---
+
+##Row-wise or column-wise checks?
+
+&lt;img src="pics/colrow2.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+---
+
+##Row-wise or column-wise checks?
+
+&lt;img src="pics/colrow3.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+---
+
+##Row-wise *and* column-wise constraints!
+  
+* `dataMaid` performs class dependent checks for each variable in a dataset, one at a time (column-wise)
+  + Pros: Easy to document what was (not) done, let's you get started without a lot of prior knowledge, easy to share with collaborators
+  + Shortcomings: Generally cannot detect internal consistency issues or use non-class dependent variable constraints
+
+---
+
+
+##Row-wise *and* column-wise constraints!
+
+An R-packages that performs row-wise checks: `validate`. Check out the talk on Wednesday @ 14.50 by Edwin de Jonge:
+
+**validatetools - resolve and simplify contradictive or redundant data validation rules**
+
+
+
+
+Note: Different use of the term "validation" - no longer about format, type and range, but used as synonym to "check". 
+
+
+
+
+
+---
+
+class: middle, center
+
+# Thank you!
+
+Please grab hold of us here or via email
+
+.pull-left[Anne&lt;br&gt;[ahpe@sund.ku.dk](mailto:ahpe@sund.ku.dk)]  .pull-right[Claus&lt;br&gt;[ekstrom@sund.ku.dk](mailto:ekstrom@sund.ku.dk)]
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="js/zoom.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"slideNumberFormat": "%current%",
+"highlightStyle": "ir-black",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
