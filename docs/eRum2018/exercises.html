@@ -318,37 +318,38 @@ div.tocify {
 <h1>Exercise 1</h1>
 <p>For this initial exercise we will be trying to identify errors in a data frame containing information about the US presidents. First we install the packages needed to get the dataset that we will be working with. If you have already installed <code>dataMaid</code> from home, you can skip this step.</p>
 <pre class="r"><code>install.packages(&quot;dataMaid&quot;)</code></pre>
-<p>Now we have installed the <code>dataMaid</code> package which contains the raw dataset, <code>presidentData</code>. We can see the first couple of rows of the dataset with the <code>head</code> command.</p>
+<p>Now we have installed the <code>dataMaid</code> package which contains the raw dataset, <code>presiData</code>. We can see the first couple of rows of the dataset with the <code>head</code> command.</p>
 <pre class="r"><code>library(&quot;dataMaid&quot;)
-data(&quot;presidentData&quot;)
-head(presidentData)</code></pre>
-<pre><code>##     lastName firstName orderOfPresidency   birthday  stateOfBirth
-## 1 Washington    George                 1 1732-02-22      Virginia
-## 2      Adams      John                 2 1735-10-30 Massachusetts
-## 3  Jefferson    Thomas                 3 1743-04-13      Virginia
-## 4    Madison     James                 4 1751-03-16      Virginia
-## 5     Monroe     James                 5 1758-04-28      Virginia
-## 6      Adams      John                 6 1767-07-11 Massachusetts
-##   assassinationAttempt  sex ethnicity presidencyYears ageAtInauguration
-## 1                    0 Male Caucasian               7                57
-## 2                    0 Male Caucasian               3                61
-## 3                    0 Male Caucasian               8                57
-## 4                    0 Male Caucasian               8                57
-## 5                    0 Male Caucasian               8                58
-## 6                    0 Male Caucasian               4                57
-##   favoriteNumber
-## 1    3+0.000000i
-## 2    4+0.000000i
-## 3    0+1.414214i
-## 4   10+0.000000i
-## 5    3+0.000000i
-## 6    9+0.000000i</code></pre>
+load(url(&quot;http://biostatistics.dk/eRum2018/data/presiData.rda&quot;))
+head(presiData)</code></pre>
+<pre><code>##     lastName firstName orderOfPresidency   birthday dateOfDeath
+## 10     Tyler      John                10 1790-03-29  1862-01-18
+## 2      Adams      John                 2 1735-10-30  1826-07-04
+## 25  McKinley   William                25 1843-01-29  1901-09-14
+## 32 Roosevelt  Franklin                32 1882-01-30  1945-04-12
+## 14    Pierce  Franklin                14 1804-11-03  1869-10-08
+## 24 Cleveland    Grover                24 1837-03-18  1908-06-24
+##     stateOfBirth assassinationAttempt  sex ethnicity presidencyYears
+## 10      Virginia                    0 Male Caucasian               3
+## 2  Massachusetts                    0 Male Caucasian               3
+## 25          Ohio                    1 Male Caucasian               4
+## 32      New York                    1 Male Caucasian              12
+## 14 New Hampshire                    0 Male Caucasian               4
+## 24    New Jersey                    0 Male Caucasian               4
+##    ageAtInauguration favoriteNumber
+## 10                51           1+0i
+## 2                 61           4+0i
+## 25                54           3+0i
+## 32                51           6+0i
+## 14                48           4+0i
+## 24                55           2+0i</code></pre>
 <p>We are being told by our research collaborators that the dataset should contain information on 11 variables relates to the US presidents. The variables are</p>
 <ul>
 <li><code>lastName</code> The surname of the president.</li>
 <li><code>firstName</code> The first name of the president.</li>
 <li><code>orderOfPresidency</code> A factor variable indicating the order of the presidents (with George Washington as number 1 and Donald Trump as number 45).</li>
 <li><code>birthday</code> The date of birth of the president.</li>
+<li><code>dateOfDeath</code> The date of death of the president.</li>
 <li><code>stateOfBirth</code> A character variable with the state in which the president was born.</li>
 <li><code>assassinationAttempt</code> A text variable indicating whether there was an assassination attempt (1) or not (0) on the president.</li>
 <li><code>sex</code> A factor variable with the sex of the president.</li>
@@ -357,30 +358,30 @@ head(presidentData)</code></pre>
 <li><code>ageAtInauguration</code> the age at inauguration.</li>
 <li><code>favoriteNumber</code> A complex type variable with a fictional favorite number for each president.</li>
 </ul>
-<p>Try to find and document as many errors are you can in the <code>presidentData</code>. In particular focus on validity (conforms to the correct syntax with the right format, type, and range), on consistency, accuracy, and uniqueness.</p>
+<p>Try to find and document as many errors are you can in the <code>presiData</code>. In particular focus on validity (conforms to the correct syntax with the right format, type, and range), on consistency, accuracy, and uniqueness.</p>
 <p>[Hint: If you are new to R then you can use the functions <code>str</code>, <code>print</code> and the <code>$</code> operator to extract variables from the data frame.]</p>
 </div>
 <div id="exercise-2" class="section level1">
 <h1>Exercise 2</h1>
-<p>Here we will use the <code>dataMaid</code> package <code>makeDataReport()</code> to screen data for obvious and non-obvious errors in the dataset. We will continue working on the <code>presidentData</code> from the <code>dataMaid</code> package in order to find errors that we previously missed.</p>
+<p>Here we will use the <code>dataMaid</code> package <code>makeDataReport()</code> to screen data for obvious and non-obvious errors in the dataset. We will continue working on the <code>presiData</code> from the <code>dataMaid</code> package in order to find errors that we previously missed.</p>
 <p>Note that exercise 2 contains a lot of exercises. We do not expect you to be able to solve all of them in the time given. Remember the primary focus is to identify potential errors in the dataset.</p>
 <ol style="list-style-type: decimal">
-<li><p>Run the <code>makeDataReport()</code> function to make your own report for the <code>presidentData</code> and look through it. What legitimate errors are found? What warnings are unnecessary?</p></li>
+<li><p>Run the <code>makeDataReport()</code> function to make your own report for the <code>presiData</code> and look through it. What legitimate errors are found? What warnings are unnecessary?</p></li>
 <li><p>Start by verifying the validity of the data (format, type, and range). When <code>dataMaid</code> encounters a variable type that is unknown then it prints a note and skips the variable. If we want to perform specific checks for a variable with an unknown type then we must fix the <code>class</code> in the data frame (when relevant) or alternatively force <code>dataMaid</code> to consider a specific class as if it were another class.</p>
 <p>Handle the unusual variable class used for the variables <code>lastName</code> and <code>firstName</code> by changing their classes to something more standard. This can be done using the code</p>
-<pre class="r"><code>class(presidentData$firstName) &lt;- &quot;character&quot;
-class(presidentData$lastName) &lt;- &quot;character&quot;</code></pre>
+<pre class="r"><code>class(presiData$firstName) &lt;- &quot;character&quot;
+class(presiData$lastName) &lt;- &quot;character&quot;</code></pre>
 <p>Try calling <code>help(makeDataReport)</code> and look at the documentation for the argument <code>treatXasY</code>. Use this argument in a new call to <code>makeDataReport()</code> so that for example the <code>favoriteNumber</code> variable will be handled like a <code>numeric</code> variable.</p>
 <p>[Hint: you may need to use the <code>replace=TRUE</code> argument too to overwrite any previous reports.]</p></li>
 </ol>
 <p>Note how everything is documented and can be used in collaboration with a research partner.</p>
 <p>The argument <code>checks</code> can be used to control which checks are performed for variables of each supported class. The helper function <code>setChecks()</code> makes it easy to add or remove certain checks for certain variable classes while <code>allCheckFunctions()</code> returns an overview of all available checkFunctions to choose from.</p>
 <p>The following bit of code shows how to change the choice of checks for <code>numeric</code> variables to <em>not</em> include a check for outliers (i.e. the checkFunction <code>identifyOutliers</code>):</p>
-<pre class="r"><code>makeDataReport(presidentData, replace = TRUE,
+<pre class="r"><code>makeDataReport(presiData, replace = TRUE,
                checks = setChecks(numeric = defaultNumericChecks(remove=&quot;identifyOutliers&quot;)))
 
 #or, by without the use of defaultNumericChecks():
-makeDataReport(presidentData, replace  = TRUE,
+makeDataReport(presiData, replace  = TRUE,
                checks = setChecks(numeric = &quot;identifyMissing&quot;))</code></pre>
 <p>Now, it’s your turn to make a <code>makeDataReport()</code> call that does <em>not</em> check whether or not <code>character</code> variables have less than 5 unique levels. You can proceed as follows:</p>
 <ol start="3" style="list-style-type: decimal">
@@ -401,9 +402,9 @@ makeDataReport(presidentData, replace  = TRUE,
 <p>The primary intent of the <code>dataMaid</code> package is to generate the combined report produced by the <code>makeDataReport()</code>. However, the report generated by <code>makeDataReport()</code> are produced by a series of check, summary, and visualization function that can be called directly. This enables us to work interactively with the functions that are part of the <code>dataMaid</code> package.</p>
 <p>Recall that the <code>allCheckFunctions()</code>, <code>allSummaryFunctions()</code>, and <code>allVisualFunctions()</code> show the built-in functions that are used for checks, summaries, and visuals, respectively.</p>
 <ol style="list-style-type: decimal">
-<li>Run <code>check(presidentData$ageAtInauguration)</code>, <code>visualize(presidentData$ageAtInauguration)</code>, and <code>summarize(presidentData$ageAtInauguration)</code> and verify that you obtain information identical to what you saw in the report previously generated by <code>makeDataReport(presidentData)</code>.</li>
+<li>Run <code>check(presiData$ageAtInauguration)</code>, <code>visualize(presiData$ageAtInauguration)</code>, and <code>summarize(presiData$ageAtInauguration)</code> and verify that you obtain information identical to what you saw in the report previously generated by <code>makeDataReport(presiData)</code>.</li>
 </ol>
-<p>Look at <code>str(check(presidentData$ageAtInauguration))</code>. The <code>check()</code> function returns a list with a length matching the number of checks, and each element is itself a list of length 3 containing information about whether a problem was found, the message that is printed in the report, and the list of observations that gave rise to the problem.</p>
+<p>Look at <code>str(check(presiData$ageAtInauguration))</code>. The <code>check()</code> function returns a list with a length matching the number of checks, and each element is itself a list of length 3 containing information about whether a problem was found, the message that is printed in the report, and the list of observations that gave rise to the problem.</p>
 <ol start="2" style="list-style-type: decimal">
 <li>Earlier, we saw how we could modify the choice of checks by using the <code>checks</code> argument in combination with the <code>setChecks()</code> function. Modify the manual check for <code>presidencyYears</code> such that it only returns potential outliers.</li>
 </ol>
@@ -411,7 +412,7 @@ makeDataReport(presidentData, replace  = TRUE,
 <ol start="3" style="list-style-type: decimal">
 <li><p>Use <code>check()</code> to identify the values that are thought to be potential outliers for the <code>presidencyYears</code> variable and store the result in an object <code>problems</code>.</p>
 <p>Recall that <code>problems</code> consists of a list (of 1 element) of lists. Return the vector with the <code>problemValues</code> and save them to a vector <code>probs</code>. [ Hint: You can reference elements of a list using double square brackets <code>[[]]</code> or the <code>$</code> operator ]</p></li>
-<li><p>Use the vector of potential error values to identify the indices (rows) of <code>presidentData</code> which contain values for <code>presidencyYears</code> that are part of the vector of problem values, <code>probs</code>. [ Hint: the operator <code>%in%</code> provides a way to return the indices of a vector that contain elements that are found within another vector. ]</p>
+<li><p>Use the vector of potential error values to identify the indices (rows) of <code>presiData</code> which contain values for <code>presidencyYears</code> that are part of the vector of problem values, <code>probs</code>. [ Hint: the operator <code>%in%</code> provides a way to return the indices of a vector that contain elements that are found within another vector. ]</p>
 <p>Print all the rows that were just identified.</p></li>
 </ol>
 <p>We can also use <code>check()</code> on a full data frame. This will return a list of lists of lists. We can use this to extract check results across different variables.</p>
@@ -481,7 +482,7 @@ toyData$pill</code></pre>
 <ol start="3" style="list-style-type: decimal">
 <li>Lastly, we will use <code>refCat()</code> from <code>makeDataReport()</code>. Run the following code bit, adding <code>refCat()</code> to the summaries used for factor variables and look at the result.</li>
 </ol>
-<pre class="r"><code>makeDataReport(presidentData, 
+<pre class="r"><code>makeDataReport(presiData, 
                summaries = setSummaries(factor = defaultFactorSummaries(add = &quot;refCat&quot;)),
                vol = &quot;_withRefCat&quot;)</code></pre>
 </div>
@@ -531,8 +532,8 @@ identifyNonStartCase &lt;- checkFunction(identifyNonStartCase,
 <li><code>toupper()</code> and <code>tolower()</code> changes the case for letters to upper- and lower case, respectively.</li>
 <li>If you are familiar with regular expressions, this is of course also a very good strategy for identifying non-start case values.</li>
 </ul></li>
-<li><p>Use <code>identifyNonStartCase()</code> on the variable <code>stateOfBirth</code> from <code>presidentData</code>. Try using it on all <code>character</code> variables in <code>presidentData</code> by use of the function <code>check()</code>.</p></li>
-<li><p>Add <code>identifyNonStartCase()</code> to the checks used on character variables in a <code>makeDataReport()</code> call on <code>presidentData</code>. Use the argument <code>vol = &quot;_nonStartCase&quot;</code> to give the new report a different file name than the old ones. Compare the new report with an old version. Can you find the description you wrote for <code>identifyNonStartCase()</code> when calling <code>checkFunction()</code>?</p></li>
+<li><p>Use <code>identifyNonStartCase()</code> on the variable <code>stateOfBirth</code> from <code>presiData</code>. Try using it on all <code>character</code> variables in <code>presiData</code> by use of the function <code>check()</code>.</p></li>
+<li><p>Add <code>identifyNonStartCase()</code> to the checks used on character variables in a <code>makeDataReport()</code> call on <code>presiData</code>. Use the argument <code>vol = &quot;_nonStartCase&quot;</code> to give the new report a different file name than the old ones. Compare the new report with an old version. Can you find the description you wrote for <code>identifyNonStartCase()</code> when calling <code>checkFunction()</code>?</p></li>
 </ol>
 <hr />
 </div>
@@ -542,7 +543,7 @@ identifyNonStartCase &lt;- checkFunction(identifyNonStartCase,
 <h1>Exercise 3</h1>
 <div id="exercise-3a" class="section level2">
 <h2>Exercise 3a</h2>
-<p>Until now we have identified a number of errors and inconsistencies in the <code>presidentData</code>. For each data error you encountered in the above, your should:</p>
+<p>Until now we have identified a number of errors and inconsistencies in the <code>presiData</code>. For each data error you encountered in the above, your should:</p>
 <ol style="list-style-type: decimal">
 <li>Correct the error</li>
 <li>Check the resulting dataset to ensure that you did indeed clean up the data errors.</li>
