@@ -46,10 +46,10 @@ class: center
 
 ```
   day1 day2 day3
-1   13   NA   NA
-2   10   NA   99
-3   14    2   40
-4    4   15   19
+1    9   NA   NA
+2   13   NA   99
+3    2   17   40
+4   10   19   24
 ```
 
 ---
@@ -61,12 +61,12 @@ class: center
 
 ```
   day1 day2 day3
-1   13   NA   NA
-2   10   NA   99
-3   14    2   40
-4    4   15   19
-5   24   19    6
-6   11   88   15
+1    9   NA   NA
+2   13   NA   99
+3    2   17   40
+4   10   19   24
+5   14   15   15
+6   17   88    1
 ```
 
 ---
@@ -140,7 +140,7 @@ class: middle
 Documentation to be **read** and **evaluated** by a human.
 
 
-See [github.com/ekstroem/dataMaid](github.com/ekstroem/dataMaid) for more info and a [paper with details (accepted for publication in JSS)](). Stable version on CRAN.
+See [github.com/ekstroem/dataMaid](github.com/ekstroem/dataMaid) for more info and a [paper with details (accepted for publication in JSS)](https://github.com/ekstroem/dataMaid/raw/master/latex/article_accept.pdf). Stable version on CRAN.
 
 
 ---
@@ -152,8 +152,8 @@ class: center
 # `dataMaid` flowchart
 
 
-<div id="htmlwidget-62168b269e380edd90db" style="width:100%;height:60%;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-62168b269e380edd90db">{"x":{"diagram":"\n  digraph {\n\ngraph[layout = neato,\n      overlap=false,\n      rankdir = \"LR\", \n      bgcolor=\"#000000\",\n      sep=.2]\n\nnode[fontsize=20,\n      fillcolor = DimGray,\n      fontcolor = White,\n      fillcolor=\"#222222\",\n      style=filled,\n      color=White]\n\nedge [color = White, penwidth=4]\n\n  \"data frame\"  -> \"summarize\"\n    subgraph detail {\n       rank=\"same\";\n       \"summarize\" -> \"visualize\" -> \"check\";\n       \"check\" -> \"summarize\"; }\n\"check\" -> \".Rmd / render\";\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-6251f76b9c4993565fd4" style="width:100%;height:60%;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-6251f76b9c4993565fd4">{"x":{"diagram":"\n  digraph {\n\ngraph[layout = neato,\n      overlap=false,\n      rankdir = \"LR\", \n      bgcolor=\"#000000\",\n      sep=.2]\n\nnode[fontsize=20,\n      fillcolor = DimGray,\n      fontcolor = White,\n      fillcolor=\"#222222\",\n      style=filled,\n      color=White]\n\nedge [color = White, penwidth=4]\n\n  \"data frame\"  -> \"summarize\"\n    subgraph detail {\n       rank=\"same\";\n       \"summarize\" -> \"visualize\" -> \"check\";\n       \"check\" -> \"summarize\"; }\n\"check\" -> \".Rmd / render\";\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
 
 
