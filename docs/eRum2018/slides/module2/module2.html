@@ -46,10 +46,10 @@ class: center
 
 ```
   day1 day2 day3
-1    9   NA   NA
+1   13   NA   NA
 2   10   NA   99
-3   13    3   40
-4   24    7   22
+3   14    2   40
+4    4   15   19
 ```
 
 ---
@@ -61,12 +61,12 @@ class: center
 
 ```
   day1 day2 day3
-1    9   NA   NA
+1   13   NA   NA
 2   10   NA   99
-3   13    3   40
-4   24    7   22
-5   17    2    6
-6    3   88   16
+3   14    2   40
+4    4   15   19
+5   24   19    6
+6   11   88   15
 ```
 
 ---
@@ -140,7 +140,7 @@ class: middle
 Documentation to be **read** and **evaluated** by a human.
 
 
-See [github.com/ekstroem/dataMaid](github.com/ekstroem/dataMaid) for more info. Stable version on CRAN.
+See [github.com/ekstroem/dataMaid](github.com/ekstroem/dataMaid) for more info and a [paper with details (accepted for publication in JSS)](). Stable version on CRAN.
 
 
 ---
@@ -152,8 +152,8 @@ class: center
 # `dataMaid` flowchart
 
 
-<div id="htmlwidget-4461edc4dbe2ca2e9e84" style="width:100%;height:60%;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-4461edc4dbe2ca2e9e84">{"x":{"diagram":"\n  digraph {\n\ngraph[layout = neato,\n      overlap=false,\n      rankdir = \"LR\", \n      bgcolor=\"#000000\",\n      sep=.2]\n\nnode[fontsize=20,\n      fillcolor = DimGray,\n      fontcolor = White,\n      fillcolor=\"#222222\",\n      style=filled,\n      color=White]\n\nedge [color = White, penwidth=4]\n\n  \"data frame\"  -> \"summarize\"\n    subgraph detail {\n       rank=\"same\";\n       \"summarize\" -> \"visualize\" -> \"check\";\n       \"check\" -> \"summarize\"; }\n\"check\" -> \".Rmd / render\";\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-62168b269e380edd90db" style="width:100%;height:60%;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-62168b269e380edd90db">{"x":{"diagram":"\n  digraph {\n\ngraph[layout = neato,\n      overlap=false,\n      rankdir = \"LR\", \n      bgcolor=\"#000000\",\n      sep=.2]\n\nnode[fontsize=20,\n      fillcolor = DimGray,\n      fontcolor = White,\n      fillcolor=\"#222222\",\n      style=filled,\n      color=White]\n\nedge [color = White, penwidth=4]\n\n  \"data frame\"  -> \"summarize\"\n    subgraph detail {\n       rank=\"same\";\n       \"summarize\" -> \"visualize\" -> \"check\";\n       \"check\" -> \"summarize\"; }\n\"check\" -> \".Rmd / render\";\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
 
 
@@ -198,7 +198,7 @@ background-size: 100%
 | ------------- |:--------------------------------| 
 | `mode`        | Tasks to perform. `c("summarize", "visualize", "check")` is default |
 | `replace`      | Logical. Should existing dataMaid reports be overwritten? Default `FALSE`   | 
-| `output`      | Output format. Choices are `"pdf"`, `"html"`, "`"word"` | 
+| `output`      | Output format. Choices are `"pdf"`, `"html"`, `"word"` | 
 | `onlyProblematic`      | Logical. Show only variable with problems. Default `FALSE`  |
 | `maxProbVals`  | Maximum number of unique values printed. Positive int or `Inf` (default 10)     | 
 
@@ -212,11 +212,22 @@ class: inverse, middle
 
 1.  Load the `dataMaid` package
 2.  Use `makeDataReport()` to generate a data report
-3.  Screen the `presidentData` data for errors we did not find before.
+3.  Screen the `presiData` data for errors we did not find before.
 
 Hunt for errors!
 
 ---
+
+
+#Next up
+
+* How to use dataMaid interactively
+* How to extend dataMaid with your own functions for summarizing, visualizing and checking data
+
+
+
+---
+
 
 class: center
 
@@ -365,7 +376,7 @@ Min. and max.: 1; 999
 
 ---
 
-# Using dataMaid interactively
+# Overview of the dataMaid function library
 
 .scriptsize[
 ```
@@ -435,13 +446,10 @@ Note that the following possible outlier values were detected: 82, 999.
 
 # Extending `dataMaid`
 
-Custom check, visual, or summary functions.
-
-Few requirements --- input and output formats.
-
-Easiet to work with a **template system** and modify one of those. 
-
-Check vignette `vignette("extending_dataMaid")` for detailed instructions. Or the exercises!
+* Custom check, visual, or summary functions.
+* Few requirements --- input and output formats.
+* Easiest to work with a **template system** and modify one of those. 
+* Check vignette `vignette("extending_dataMaid")` for detailed instructions. Or the exercises!
 
 ---
 
@@ -475,7 +483,7 @@ Example (centralValue for numeric/integer)
 
 ---
 
-## Custom `checkFunction` - template
+## Custom `checkFunction` - example
 
 .small[
 
