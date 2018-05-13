@@ -86,7 +86,7 @@ summarize(toyData$events, summaries = setSummaries(all =  c("centralValue", "min
 
 ## Detailed documentation
 
-[This manuscript](https://github.com/ekstroem/dataMaid/blob/master/latex/article_vol2.pdf) draft
+[This manuscript](https://github.com/ekstroem/dataMaid/blob/master/latex/article_accept.pdf) has been accepted for publication in JSS and it
 provides a detailed introduction to the dataMaid package. At one point
 it will be added as a vignette. Moreover, we have created a vignette that describes how to extend dataMaid to include user-defined data screening checks, summaries and visualizations. This vignette is called `extending_dataMaid`:
 
