@@ -70,6 +70,7 @@ identifyOutliersTBStyleNI <- function(v, nMax, maxDecimals) {
   res <- findOutlierTBstyle(v, maxDecimals)
   outMessage <- messageGenerator(list(problem = res$problem,
                                       problemValues = res$problemValues),
+                                 message = identifyOutliersTBStyleMessage,
                                  nMax = nMax)
   checkResult(list(problem = res$problem, message = outMessage, 
                    problemValues = res$outProblemValues))
@@ -87,7 +88,7 @@ identifyOutliersTBStyleD <- function(v, nMax, maxDecimals) {
   }
   outMessage <- messageGenerator(list(problem = res$problem,
                                       problemValues = res$problemValues),
-                                 message = "identifyOutliersTBStyleMessage",
+                                 message = identifyOutliersTBStyleMessage,
                                  nMax = nMax)
   checkResult(list(problem = res$problem, message = outMessage, 
                    problemValues = res$outProblemValues))
