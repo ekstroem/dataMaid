@@ -102,3 +102,9 @@ vignette("extending_dataMaid")
 We are currently working on an online version of the tool, where users
 can upload their data and get a report. A prototype
 is already up and running - we just need to configure the R server correctly.
+
+You can try it out on your own machine by using the following call:
+```{r}
+library(shiny)
+runUrl("https://github.com/ekstroem/dataMaid/raw/master/app/app.zip")
+``` 
