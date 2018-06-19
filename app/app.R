@@ -21,7 +21,7 @@ ui <- shinyUI(fluidPage(
                      "ensure that the data is loaded correctly.")),
       fluidRow(br(), HTML(paste("<b> Step 2: </b>", 
                           "Choose what your report should contain using the panel to the right."))),
-      fluidRow(br(), HTML("<b> Step 3: </b> Do data cleaning.")),
+      fluidRow(br(), HTML("<b> Step 3: </b> Make data report.")),
       fluidRow(withBusyIndicatorUI(actionButton("doClean", textOutput("dataStatus")))),
       fluidRow(br(), HTML("<b> Step 4: </b> Download (if pdf) or view (if html) your report below."))
       ),
@@ -319,7 +319,7 @@ server <- function(input, output, session) {
   observeEvent(input$doClean, {
    withBusyIndicatorServer("doClean", {
      readyForClean <<- TRUE
-     clean(data, replace = TRUE, file = "dataMaid_report.rmd", openResult = FALSE,
+     makeDataReport(data, replace = TRUE, file = "dataMaid_report.rmd", openResult = FALSE,
            output = input$clean.output,
            ordering = input$clean.ordering,
            maxProbVals = as.numeric(input$clean.maxProbVals),
@@ -331,7 +331,7 @@ server <- function(input, output, session) {
            logicalChecks = allChecks[unlist(checks.b)],
            dateChecks = allChecks[unlist(checks.d)],
            reportTitle = dataFile$name) 
-     message("clean done!")
+     message("Data report done!")
      fileName <<- paste("dataMaid_report.", ifelse(input$clean.output == "html", "html", "pdf"), sep = "") #OBS
      output$reportPageHTML <- renderUI({
        if (cleanDone & input$clean.output == "html") { #OBS
