@@ -36,19 +36,33 @@ makeCodebook <- function(data, vol="", reportTitle=NULL, file=NULL, ...) {
     Call$reportTitle <- ifelse(is.null(reportTitle), paste0("Codebook for ", dfname), reportTitle)
     Call$file <- ifelse(is.null(file), normalizeFileName(paste0("codebook_", dfname, vol, ".Rmd")), file)
     Call$codebook <- TRUE
-    Call$mode <- ifelse(is.null(Call[["mode"]]), c("summarize", "visualize", "check"), Call[["mode"]])
-    Call$checks <- ifelse(is.null(Call[["checks"]]), setChecks(
-                                                         character = list("showAllFactorLevels"),
-                                                         factor = list("showAllFactorLevels"),
-                                                         labelled = list("showAllFactorLevels"),
-                                                         numeric=NULL,
-                                                         integer=NULL,
-                                                         Date=NULL,
-                                                         logical=NULL
-                                                     ), Call[["checks"]])
+#    Call$mode <- ifelse(is.null(Call[["mode"]]), c("summarize", "visualize", "check"), Call[["mode"]])
+#Note: ifelse() can only return objects of length 1. Code above returns first element of vector ("summarize")
+    if (is.null(Call[["mode"]])) {
+      Call$mode <- c("summarize", "visualize", "check")
+    } 
+    if (is.null(Call[["checks"]])) {
+      Call$checks <- setChecks(
+        character = "showAllFactorLevels",
+        factor = "showAllFactorLevels",
+        labelled = "showAllFactorLevels",
+        numeric=NULL,
+        integer=NULL,
+        Date=NULL,
+        logical=NULL)
+    }
+#    Call$checks <- ifelse(is.null(Call[["checks"]]), setChecks(
+#                                                         character = list("showAllFactorLevels"),
+#                                                         factor = list("showAllFactorLevels"),
+#                                                         labelled = list("showAllFactorLevels"),
+#                                                         numeric=NULL,
+#                                                         integer=NULL,
+#                                                         Date=NULL,
+#                                                         logical=NULL
+#                                                     ), Call[["checks"]])
     Call$maxProbVals <- ifelse(is.null(Call[["maxProbVals"]]), Inf, Call[["maxProbVals"]])
     Call$listChecks <-  ifelse(is.null(Call[["listChecks"]]), FALSE, Call[["listChecks"]])
-    Call$maxProbVals <- ifelse(is.null(Call[["smartNum"]]), FALSE, Call[["smartNum"]])
+    Call$smartNum <- ifelse(is.null(Call[["smartNum"]]), FALSE, Call[["smartNum"]])
                           
     Call[[1L]] <- as.name("makeDataReport")
     eval.parent(Call)
@@ -58,7 +72,7 @@ makeCodebook <- function(data, vol="", reportTitle=NULL, file=NULL, ...) {
 
 
 
-showAllFactorLevels <- function(v, nMax = NULL, ...) {
+showAllFactorLevels <- function(v, ...) {
     
     ## Define the message displayed if a problem is found:
     problemMessage <- "Observed factor levels:"
@@ -91,7 +105,7 @@ showAllFactorLevels <- function(v, nMax = NULL, ...) {
     ## for inclusion in the dataMaid report
     problemStatus <- list(problem = problem, 
                           problemValues = problemValues)
-    outMessage <- messageGenerator(problemStatus, problemMessage, nMax)
+    outMessage <- messageGenerator(problemStatus, problemMessage, ...)
     
     ## Output a checkResult with the problem, the escaped
     ## message and the raw problem values.
