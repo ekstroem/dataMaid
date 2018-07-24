@@ -897,7 +897,7 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
             } else {
               if (doSummarize) writer(sumTable, outfile = vListConn)
               if (doVisualize) fig.wrapper(visual, label=chunk_name, outfile = vListConn)
-              writer("\n")
+              writer("\n", outfile = vListConn)
             }
             
             ## add check results to file
