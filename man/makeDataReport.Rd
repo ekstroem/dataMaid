@@ -13,7 +13,7 @@ makeDataReport(data, output = NULL, render = TRUE, useVar = NULL,
   summaries = setSummaries(), visuals = setVisuals(),
   checks = setChecks(), listChecks = TRUE, maxProbVals = 10,
   maxDecimals = 2, addSummaryTable = TRUE, codebook = FALSE,
-  reportTitle = NULL, treatXasY = NULL, ...)
+  reportTitle = NULL, treatXasY = list(haven_labelled = "labelled"), ...)
 }
 \arguments{
 \item{data}{The dataset to be checked. This dataset should be of class \code{data.frame},
@@ -137,7 +137,9 @@ This parameter allows you to include variables that are not of class \code{facto
 that inherits from any of these classes). The names of the list are the new classes and the entries
 are the names of the class, they should be treated as. If \code{makeDataReport()} should e.g. treat variables of 
 class \code{raw} as characters and variables of class \code{complex} as numeric, you should put
-\code{treatXasY = list(raw = "character", complex = "numeric")}.}
+\code{treatXasY = list(raw = "character", complex = "numeric")}. The default setting was chosen to accomodate the new
+variable class \code{haven_labelled} provided in the development version of \code{haven} as a replacement of 
+the class \code{labelled}.}
 
 \item{\dots}{Other arguments that are passed on the to precheck,
 checking, summary and visualization functions.}

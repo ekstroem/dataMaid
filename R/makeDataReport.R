@@ -139,7 +139,9 @@
 #' that inherits from any of these classes). The names of the list are the new classes and the entries
 #' are the names of the class, they should be treated as. If \code{makeDataReport()} should e.g. treat variables of 
 #' class \code{raw} as characters and variables of class \code{complex} as numeric, you should put
-#' \code{treatXasY = list(raw = "character", complex = "numeric")}.
+#' \code{treatXasY = list(raw = "character", complex = "numeric")}. The default setting was chosen to accomodate the new
+#' variable class \code{haven_labelled} provided in the development version of \code{haven} as a replacement of 
+#' the class \code{labelled}. 
 #'
 #' @param \dots Other arguments that are passed on the to precheck,
 #' checking, summary and visualization functions.
@@ -235,7 +237,7 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
                   addSummaryTable = TRUE,
                   codebook = FALSE,
                   reportTitle = NULL,
-                  treatXasY = NULL,
+                  treatXasY = list(`haven_labelled` = "labelled"),
                   ...) {
   
   ## Store the original call
