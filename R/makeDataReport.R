@@ -1012,7 +1012,7 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
     writer("Report generation information:\n")
     writer(" *  Created by ", whoami::fullname(fallback="Could not determine from system") , " (username: `", whoami::username(fallback="Unknown"),  "`).\n")
     writer(" *  Report creation time: ", format(Sys.time(), "%a %b %d %Y %H:%M:%S"),"\n")
-    writer(" *  Report Was run from directory: `", getwd(),"`\n")
+    writer(" *  Report was run from directory: `", getwd(),"`\n")
     
     ## Part of this was lifted from devtools
     
@@ -1075,7 +1075,7 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
     }    
     
     
-    desc <- lapply("dataMaid", packageDescription, lib.loc = NULL)
+    desc <- lapply("dataMaid", packageDescription, lib.loc = NULL, encoding = NA)
     version <- vapply(desc, function(x) x$Version, character(1))
     pkgdate <- vapply(desc, getdate, character(1))
     pkgsource <- vapply(desc, getpkgsource, character(1))
