@@ -538,7 +538,7 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
   numericVisual <- visuals$numeric
   integerVisual <- visuals$integer
   logicalVisual <- visuals$logical
-  dateVisual <- visuals$date
+  dateVisual <- visuals$Date
   
   ##
   ## Below comes a bunch of helper functions for writing the output
