@@ -46,10 +46,10 @@ class: center
 
 ```
   day1 day2 day3
-1    9   NA   NA
-2   13   NA   99
-3    2   17   40
-4   10   19   24
+1   25   NA   NA
+2   15   NA   99
+3    9   12   40
+4   21   14    7
 ```
 
 ---
@@ -61,12 +61,12 @@ class: center
 
 ```
   day1 day2 day3
-1    9   NA   NA
-2   13   NA   99
-3    2   17   40
-4   10   19   24
-5   14   15   15
-6   17   88    1
+1   25   NA   NA
+2   15   NA   99
+3    9   12   40
+4   21   14    7
+5   12   24   12
+6    7   88   16
 ```
 
 ---
@@ -152,8 +152,8 @@ class: center
 # `dataMaid` flowchart
 
 
-<div id="htmlwidget-6251f76b9c4993565fd4" style="width:100%;height:60%;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-6251f76b9c4993565fd4">{"x":{"diagram":"\n  digraph {\n\ngraph[layout = neato,\n      overlap=false,\n      rankdir = \"LR\", \n      bgcolor=\"#000000\",\n      sep=.2]\n\nnode[fontsize=20,\n      fillcolor = DimGray,\n      fontcolor = White,\n      fillcolor=\"#222222\",\n      style=filled,\n      color=White]\n\nedge [color = White, penwidth=4]\n\n  \"data frame\"  -> \"summarize\"\n    subgraph detail {\n       rank=\"same\";\n       \"summarize\" -> \"visualize\" -> \"check\";\n       \"check\" -> \"summarize\"; }\n\"check\" -> \".Rmd / render\";\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-8f54dbc90d09a1b5ecc7" style="width:100%;height:60%;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-8f54dbc90d09a1b5ecc7">{"x":{"diagram":"\n  digraph {\n\ngraph[layout = neato,\n      overlap=false,\n      rankdir = \"LR\", \n      bgcolor=\"#000000\",\n      sep=.2]\n\nnode[fontsize=20,\n      fillcolor = DimGray,\n      fontcolor = White,\n      fillcolor=\"#222222\",\n      style=filled,\n      color=White]\n\nedge [color = White, penwidth=4]\n\n  \"data frame\"  -> \"summarize\"\n    subgraph detail {\n       rank=\"same\";\n       \"summarize\" -> \"visualize\" -> \"check\";\n       \"check\" -> \"summarize\"; }\n\"check\" -> \".Rmd / render\";\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
 
 
@@ -275,7 +275,7 @@ Note that the following possible outlier values were detected: 82, 999.
 
 ```r
 &gt; check(toyData$events, 
-+         numericChecks = "identifyMissing")
++         checks = setChecks(numeric = "identifyMissing"))
 ```
 
 ```
@@ -376,35 +376,37 @@ Min. and max.: 1; 999
 
 ---
 
-# Overview of the dataMaid function library
+# Overview of the `summary` function library
 
 .scriptsize[
 ```
 &gt; allSummaryFunctions()
 
--------------------------------------------------------------
-name         description          classes                    
------------- -------------------- ---------------------------
-centralValue Compute median       character, Date, factor,   
-             or mode              integer, labelled, logical,
-                                  numeric                    
+----------------------------------------------------------------------------
+name           description                     classes                      
+-------------- ------------------------------- -----------------------------
+centralValue   Compute median for numeric      character, Date, factor,     
+               variables, mode for             integer, labelled, logical,  
+               categorical variables           numeric                      
 
-countMissing Compute ratio of     character, Date, factor,   
-             missing obs.         integer, labelled, logical,
-                                  numeric                    
+countMissing   Compute proportion of missing   character, Date, factor,     
+               observations                    integer, labelled, logical,  
+                                               numeric                      
 
-minMax       Find min and max     integer, numeric, Date     
-             values                                                   
-quartiles    Compute 1st and 3rd quartiles Date, integer, numeric     
+minMax         Find minimum and maximum        integer, numeric, Date       
+               values                                                       
 
-uniqueValues Count number of unique values character, Date, factor,   
-                                           integer, labelled, logical,
-                                           numeric                    
+quartiles      Compute 1st and 3rd quartiles   Date, integer, numeric       
 
-variableType Data class of variable        character, Date, factor,   
-                                           integer, labelled, logical,
-                                           numeric                    
-----------------------------------------------------------------------
+uniqueValues   Count number of unique values   character, Date, factor,     
+                                               integer, labelled, logical,  
+                                               numeric                      
+
+variableType   Data class of variable          character, Date, factor,     
+                                               integer, labelled, logical,  
+                                               numeric                      
+----------------------------------------------------------------------------
+
 
 ```
 ]
@@ -467,7 +469,7 @@ mySummaryFunction &lt;- function(v, ...) {
 ```
 ]
 
-Example (centralValue for numeric/integer)
+Example (`centralValue` for numeric/integer)
 
 .footnotesize[
 

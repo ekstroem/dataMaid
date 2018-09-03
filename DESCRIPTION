@@ -22,7 +22,7 @@ Imports:
     magrittr,
     methods,
     pander,
-    robustbase,
+    robustbase (>= 0.93-2),
     whoami
 Suggests:
     knitr,

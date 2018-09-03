@@ -1,5 +1,10 @@
 # dataMaid next version
 
+*   Updated requirements for package robustbase. This fixes convergence problems of mc thanks to Martin Maechler and the robustbase team. 
+    Thanks to Erik Bülow for pointing the error out (#27)
+
+# dataMaid 1.1.2
+
 *   Added information about the directory the makeDataReport command was run from 
 *   Fixed a bug with determining the full name of the user running the report, and added the username to the report as well.
 *   Minor tweaks related to the label attributes. Fixes #21 - thanks to jomuller.
