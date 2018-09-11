@@ -218,6 +218,7 @@
 #' @importFrom tools file_ext
 #' @importFrom utils packageVersion sessionInfo capture.output packageDescription
 #' @importFrom magrittr %>%
+#' @importFrom DT datatable
 #' @export
 makeDataReport <- function(data, output=NULL, render=TRUE,
                   useVar=NULL, ordering=c("asIs", "alphabetical"), onlyProblematic=FALSE,
@@ -959,6 +960,8 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
       
             writer(pander::pandoc.table.return(allRes, justify="llrrc"))
             writer("\n")
+            
+            DT::datatable(allRes)
         } else {
             ## Add stuff for codebook
 
