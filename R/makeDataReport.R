@@ -844,7 +844,8 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
             ## Fill out name, vClass and missingPct entries in the results overview
             allRes$name[allRes$variable == vnam] <- paste("[", printable_name, "]", sep = "")
             ## Pass on the label for the codebook
-            allRes$label[allRes$variable == vnam] <- ifelse(is.null(attr(v, "label")), "", attr(v, "label"))
+              #Note: Need "exact = TRUE", otherwise attr might retreive "labels" attributes 
+            allRes$label[allRes$variable == vnam] <- ifelse(is.null(attr(v, "label", exact = TRUE)), "", attr(v, "label", exact = TRUE))
             allRes$description[allRes$variable == vnam] <- ifelse(is.null(attr(v, "shortDescription")), "", 
                                                                   attr(v, "shortDescription"))
             allRes$vClass[allRes$variable == vnam] <- oClass(v)[1]
