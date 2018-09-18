@@ -3,7 +3,7 @@
 #' @description A \code{summaryFunction}, intended to be called from 
 #' \code{\link{summarize}}, which returns the central value of a variable. 
 #' For numeric and integer variables, this is the median. For
-#' character, factor, labelled, Date and logical variables, the central value is the mode 
+#' character, factor, (have_)labelled, Date and logical variables, the central value is the mode 
 #' (i.e. the value that occurs the largest number of times).
 #'
 #' @param v A variable (vector).
@@ -13,7 +13,7 @@
 #' values.
 #'
 #' @details Note that NA, NaN and Inf values are ignored for numeric and integer variables, while
-#' only NA values are ignored for factor, character, Date and labelled variables. No values are
+#' only NA values are ignored for factor, character, Date and (haven_)labelled variables. No values are
 #' ignored for logical variables.
 #'
 #' @return An object of class \code{summaryResult} with the following entries: \code{$feature} 
@@ -48,6 +48,11 @@ centralValue.factor <- function(v, ...) centralValueCF(v)
 
 #' @export
 centralValue.labelled <- function(v, ...) centralValueL(v)
+
+
+#' @export
+centralValue.haven_labelled <- function(v, ...) centralValueL(v)
+
 
 #' @export
 centralValue.numeric <- function(v, ...) centralValueIN(v, ...)
@@ -89,7 +94,7 @@ centralValueCF <- function(v) {
 
 #labelled variables
 centralValueL <- function(v) {
-  centralValueB(na.omit(haven::as_factor(v)))
+  centralValueB(na.omit(dataMaid_as_factor(v)))
 }
 
 #integer and numeric variables

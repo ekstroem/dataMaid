@@ -44,7 +44,7 @@ depending on its data class.
 Summary functions are supplied using their
 names (in character strings) in the class-specific argument, e.g.
 \code{characterSummaries = c("countMissing", "uniqueValues")} for character variables and
-similarly for the remaining 6 data classes (factor, Date, labelled, numeric, integer, logical).
+similarly for the remaining 7 data classes (factor, Date, labelled, haven_labelled, numeric, integer, logical).
 Note that an overview of all available \code{summaryFunction}s can be obtained by calling
 \code{\link{allSummaryFunctions}}. 
 
@@ -94,7 +94,7 @@ valid summary functions are found in \code{\link{summaryFunction}}.
 \code{\link{summaryFunction}}, \code{\link{allSummaryFunctions}}, 
 \code{\link{summaryResult}},
 \code{\link{defaultCharacterSummaries}}, \code{\link{defaultFactorSummaries}},
-\code{\link{defaultLabelledSummaries}}, \code{\link{defaultLabelledSummaries}},
+\code{\link{defaultLabelledSummaries}}, \code{\link{defaultHavenlabelledSummaries}},
 \code{\link{defaultNumericSummaries}}, \code{\link{defaultIntegerSummaries}},
 \code{\link{defaultLogicalSummaries}}
 }

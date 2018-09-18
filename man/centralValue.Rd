@@ -25,12 +25,12 @@ returned, when the variable is sorted according to \code{\link{sort}}.
 A \code{summaryFunction}, intended to be called from 
 \code{\link{summarize}}, which returns the central value of a variable. 
 For numeric and integer variables, this is the median. For
-character, factor, labelled, Date and logical variables, the central value is the mode 
+character, factor, (have_)labelled, Date and logical variables, the central value is the mode 
 (i.e. the value that occurs the largest number of times).
 }
 \details{
 Note that NA, NaN and Inf values are ignored for numeric and integer variables, while
-only NA values are ignored for factor, character, Date and labelled variables. No values are
+only NA values are ignored for factor, character, Date and (haven_)labelled variables. No values are
 ignored for logical variables.
 }
 \examples{

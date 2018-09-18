@@ -46,6 +46,7 @@ makeCodebook <- function(data, vol="", reportTitle=NULL, file=NULL, ...) {
         character = "showAllFactorLevels",
         factor = "showAllFactorLevels",
         labelled = "showAllFactorLevels",
+        haven_labelled = "showAllFactorLevels",
         numeric=NULL,
         integer=NULL,
         Date=NULL,
@@ -91,7 +92,7 @@ showAllFactorLevels <- function(v, ...) {
             problemValues <- sort(unique(v))
             problem <- TRUE
         } else {
-            if ("labelled" %in% class(v)) {
+            if (any(c("labelled", "haven_labelled") %in% class(v))) {
                 problemValues <- names(attr(v, "labels", exact=TRUE))
                 problem <- TRUE
             }

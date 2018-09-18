@@ -41,10 +41,10 @@
 #' @param onlyProblematic A logical. If \code{TRUE}, only the variables flagged as
 #' problematic in the check step will be included in the variable list.
 #'
-#' @param labelled_as A string explaining the way to handle labelled vectors.
-#' Currently \code{"factor"} (the default) is the only possibility. This means that labelled
+#' @param labelled_as A string explaining the way to handle labelled and haven_labelled vectors.
+#' Currently \code{"factor"} (the default) is the only possibility. This means that labelled or haven_labelled
 #' variables that appear factor-like (by having a non-\code{NULL} \code{labels}-attribute) will
-#' be treated as factors, while other labelled variables will be treated as whatever base
+#' be treated as factors, while other labelled or haven_labelled variables will be treated as whatever base
 #' variable class they inherit from.
 #'
 #'
@@ -135,13 +135,11 @@
 #'
 #' @param treatXasY A list that indicates how non-standard variable classes should be treated.
 #' This parameter allows you to include variables that are not of class \code{factor}, \code{character}, 
-#' \code{labelled}, \code{numeric}, \code{integer}, \code{logical} nor \code{Date} (or a class
+#' \code{labelled}, \code{haven_labelled}, \code{numeric}, \code{integer}, \code{logical} nor \code{Date} (or a class
 #' that inherits from any of these classes). The names of the list are the new classes and the entries
 #' are the names of the class, they should be treated as. If \code{makeDataReport()} should e.g. treat variables of 
 #' class \code{raw} as characters and variables of class \code{complex} as numeric, you should put
-#' \code{treatXasY = list(raw = "character", complex = "numeric")}. The default setting was chosen to accomodate the new
-#' variable class \code{haven_labelled} provided in the development version of \code{haven} as a replacement of 
-#' the class \code{labelled}. 
+#' \code{treatXasY = list(raw = "character", complex = "numeric")}. 
 #'
 #' @param \dots Other arguments that are passed on the to precheck,
 #' checking, summary and visualization functions.
@@ -218,7 +216,6 @@
 #' @importFrom tools file_ext
 #' @importFrom utils packageVersion sessionInfo capture.output packageDescription
 #' @importFrom magrittr %>%
-#' @importFrom DT datatable
 #' @export
 makeDataReport <- function(data, output=NULL, render=TRUE,
                   useVar=NULL, ordering=c("asIs", "alphabetical"), onlyProblematic=FALSE,
@@ -238,7 +235,7 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
                   addSummaryTable = TRUE,
                   codebook = FALSE,
                   reportTitle = NULL,
-                  treatXasY = list(`haven_labelled` = "labelled"),
+                  treatXasY = NULL,
                   ...) {
   
   ## Store the original call
@@ -254,7 +251,7 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
   
   #Check treatXasY argument
   ## Supported variable classes 
-  allClasses <- c("character", "factor", "labelled", "numeric", "integer", 
+  allClasses <- c("character", "factor", "labelled", "haven_labelled", "numeric", "integer", 
                   "logical", "Date")
   if (!is.null(treatXasY)) {
     if (!is.list(treatXasY)) {
@@ -520,6 +517,7 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
   characterChecks <- checks$character
   factorChecks <- checks$factor
   labelledChecks <- checks$labelled
+  havenlabelledChecks <- checks$haven_labelled
   numericChecks <- checks$numeric
   integerChecks <- checks$integer
   logicalChecks <- checks$logical
@@ -528,6 +526,7 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
   characterSummaries <- summaries$character
   factorSummaries <- summaries$factor
   labelledSummaries <- summaries$labelled
+  havenlabelledSummaries <- summaries$haven_labelled
   numericSummaries <- summaries$numeric
   integerSummaries <- summaries$integer
   logicalSummaries <- summaries$logical
@@ -536,6 +535,7 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
   characterVisual <- visuals$character
   factorVisual <- visuals$factor
   labelledVisual <- visuals$labelled
+  havenlabelledVisual <- visuals$haven_labelled
   numericVisual <- visuals$numeric
   integerVisual <- visuals$integer
   logicalVisual <- visuals$logical
@@ -679,15 +679,17 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
     
     ## List the checking that were used for each possible variable type
     if (listChecks) {
-      everyCheck <- union(characterChecks, c(factorChecks, labelledChecks, numericChecks,
+      everyCheck <- union(characterChecks, c(factorChecks, labelledChecks, 
+                                             havenlabelledChecks, numericChecks,
                                              integerChecks, logicalChecks, dateChecks))
-      checkMat <- matrix("", length(everyCheck), 7, #6: number of different variable types
-                         dimnames=list(everyCheck, c("character", "factor", "labelled",
+      checkMat <- matrix("", length(everyCheck), 8, #7: number of different variable types
+                         dimnames=list(everyCheck, c("character", "factor", "labelled", "haven labelled",
                                                      "numeric", "integer", "logical", "Date")))
       y <- ifelse(output == "pdf", "$\\times$", "&times;")
       checkMat[characterChecks, "character"] <- y
       checkMat[factorChecks, "factor"] <- y
       checkMat[labelledChecks, "labelled"] <- y
+      checkMat[havenlabelledChecks, "haven labelled"] <- y
       checkMat[numericChecks, "numeric"] <- y
       checkMat[integerChecks, "integer"] <- y
       checkMat[logicalChecks, "logical"] <- y
@@ -698,8 +700,14 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
       
       writer("### Checks performed")
       writer("The following variable checks were performed, depending on the data type of each variable:")
-      writer(pander::pandoc.table.return(checkMat, justify="lccccccc",
+   #   if (output == "pdf") {
+  #      writer("\\begin{tiny}")
+  #    }
+      writer(pander::pandoc.table.return(checkMat, justify="lcccccccc",
                                          emphasize.rownames=FALSE)) #allows for centering in this table only
+   #   if (output == "pdf") {
+    #    writer("\\end{tiny}")
+    #  }
       writer("\n")
       if (!is.null(treatXasY)) {
         writer("Non-supported variable types were set to be handled in the following way:")
@@ -806,6 +814,7 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
           checkRes <- check(v, checks = setChecks(character = characterChecks,
                                                   factor = factorChecks,
                                                   labelled = labelledChecks,
+                                                  haven_labelled = havenlabelledChecks,
                                                   numeric = numericChecks,
                                                   integer = integerChecks,
                                                   logical = logicalChecks,
@@ -866,6 +875,7 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
                                                                            character = characterSummaries,
                                                                            factor = factorSummaries,
                                                                            labelled = labelledSummaries,
+                                                                           haven_labelled = havenlabelledSummaries, 
                                                                            numeric = numericSummaries,
                                                                            integer = integerSummaries,
                                                                            logical = logicalSummaries,
@@ -885,6 +895,7 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
                                                  visuals = setVisuals(character = characterVisual,
                                                                       factor = factorVisual,
                                                                       labelled = labelledVisual,
+                                                                      haven_labelled = havenlabelledVisual, 
                                                                       numeric = numericVisual,
                                                                       integer = integerVisual,
                                                                       logical = logicalVisual,
@@ -960,8 +971,6 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
       
             writer(pander::pandoc.table.return(allRes, justify="llrrc"))
             writer("\n")
-            
-            DT::datatable(allRes)
         } else {
             ## Add stuff for codebook
 
@@ -1194,12 +1203,13 @@ normalizeFileName <- function(fileName, replaceChar = "_") {
 #'@importFrom haven is.labelled
 doCheckLabs <- function(v) {
   # browser()
-  if (!is.labelled(v)) return(v)
+ # if (!is.labelled(v)) return(v)
   cV <- class(v)
+  if (!any(c("haven_labelled", "labelled") %in% cV)) return(v)
   if (length(cV) > 1) {
     if (!is.null(attr(v, "labels", exact=TRUE))) return(v)
-    class(v) <- c("fakeLabelled", setdiff(class(v), "labelled"))
-    attr(v, "originalClass") <- "labelled"
+    class(v) <- c("fakeLabelled", setdiff(class(v), c("labelled", "haven_labelled")))
+    attr(v, "originalClass") <- intersect(cV, c("haven_labelled", "labelled"))[1]
     return(v)
   }
   return(v)

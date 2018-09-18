@@ -64,7 +64,7 @@
 #' #length is then also larger than 10:
 #' isID <- function(v, nMax = NULL, ...) {
 #'   out <- list(problem = FALSE, message = "")
-#'   if (class(v) %in% c("character", "factor", "labelled", "numeric", "integer")) {
+#'   if (class(v) %in% c("character", "factor", "labelled", "haven_labelled", "numeric", "integer")) {
 #'     v <- as.character(v)
 #'     lengths <- nchar(v)
 #'     if (all(lengths > 10) & length(unique(lengths)) == 1) {
@@ -113,7 +113,7 @@
 #' #Make it a checkFunction:
 #' identifyColons <- checkFunction(identifyColons,
 #'      description = "Identify non-suffixed nor -prefixed colons",
-#'      classes = c("character", "factor", "labelled"))
+#'      classes = c("character", "factor", "labelled", "haven_labelled"))
 #'
 #' #Call it:
 #' identifyColons(1:100)

@@ -5,10 +5,10 @@
 #' plotting functions. Note that \code{basicVisual} is a \code{\link{visualFunction}}, compatible with the 
 #' \code{\link{visualize}} and \code{\link{makeDataReport}} functions. 
 #'
-#' For character, factor, logical and labelled variables, a barplot is produced. For numeric, 
+#' For character, factor, logical and (haven_)labelled variables, a barplot is produced. For numeric, 
 #' integer or Date variables, \code{basicVisual} produces a histogram instead. Note that for
 #' integer and numeric variables, all non-finite (i.e. \code{NA}, \code{NaN}, \code{Inf}) values are
-#' removed prior to plotting. For character, factor, labelled and logical variables, only \code{NA}
+#' removed prior to plotting. For character, factor, (haven_)labelled and logical variables, only \code{NA}
 #' values are removed.
 #'
 #' @inheritParams standardVisual
@@ -49,7 +49,11 @@ basicVisual.character <- function(v, vnam, doEval = TRUE) basicVisualCFLB(v, vna
 basicVisual.factor <- function(v, vnam, doEval = TRUE) basicVisualCFLB(v, vnam, doEval=doEval)
 
 #' @export
-basicVisual.labelled <- function(v, vnam, doEval = TRUE) basicVisualCFLB(haven::as_factor(v), 
+basicVisual.labelled <- function(v, vnam, doEval = TRUE) basicVisualCFLB(dataMaid_as_factor(v), 
+                                                                         vnam, doEval=doEval)
+
+#' @export
+basicVisual.haven_labelled <- function(v, vnam, doEval = TRUE) basicVisualCFLB(dataMaid_as_factor(v), 
                                                                          vnam, doEval=doEval)
 
 #' @export

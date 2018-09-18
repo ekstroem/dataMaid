@@ -13,6 +13,9 @@
 #' @param labelled A character vector of function names to be used as summaries for labelled
 #' variables. The default options are available by calling \code{defaultLabelledSummaries()}. 
 #' 
+#' @param haven_labelled A character vector of function names to be used as summaries for haven_labelled
+#' variables. The default options are available by calling \code{defaultHavenlabelledSummaries()}. 
+#' 
 #' @param numeric A character vector of function names to be used as summaries for numeric
 #' variables. The default options are available by calling \code{defaultNumericSummaries()}. 
 #' 
@@ -36,6 +39,7 @@
 #' @seealso \code{\link{makeDataReport}}, \code{\link{allSummaryFunctions}},
 #' \code{\link{defaultCharacterSummaries}}, 
 #' \code{\link{defaultFactorSummaries}}, \code{\link{defaultLabelledSummaries}},
+#' \code{\link{defaultHavenlabelledSummaries}},
 #' \code{\link{defaultNumericSummaries}}, \code{\link{defaultIntegerSummaries}},
 #' \code{\link{defaultLogicalSummaries}}, \code{\link{defaultDateSummaries}}
 #' @examples
@@ -57,15 +61,18 @@
 setSummaries <- function(character = defaultCharacterSummaries(), 
                       factor = defaultFactorSummaries(), 
                       labelled = defaultLabelledSummaries(), 
+                      haven_labelled = defaultHavenlabelledSummaries(),
                       numeric = defaultNumericSummaries(), 
                       integer = defaultIntegerSummaries(), 
                       logical = defaultLogicalSummaries(), 
                       Date = defaultDateSummaries(), all = NULL) {
   if (!is.null(all)) {
-    character <- factor <- labelled <- numeric <- integer <- logical <- Date <- all
+    character <- factor <- labelled <- haven_labelled <- numeric <- integer <- logical <- Date <- all
   } 
   outList <- list(character = character, factor = factor,
-                  labelled = labelled, numeric = numeric,
+                  labelled = labelled,
+                  haven_labelled = haven_labelled,
+                  numeric = numeric,
                   integer = integer, logical = logical,
                   Date = Date)
   outList

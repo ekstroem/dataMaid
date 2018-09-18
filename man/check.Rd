@@ -78,6 +78,7 @@ check(cars, checks = setChecks(factor = defaultFactorChecks(remove = "identifyMi
 \code{\link{allCheckFunctions}} \code{\link{checkResult}}
 \code{\link{checkFunction}}, \code{\link{defaultCharacterChecks}},
 \code{\link{defaultFactorChecks}}, \code{\link{defaultLabelledChecks}},
+\code{\link{defaultHavenlabelledChecks}},
 \code{\link{defaultNumericChecks}}, \code{\link{defaultIntegerChecks}},
 \code{\link{defaultLogicalChecks}}, \code{\link{defaultDateChecks}}
 }

@@ -7,7 +7,7 @@
 identifyLoners(v, nMax = 10)
 }
 \arguments{
-\item{v}{A character, labelled, or factor variable to check.}
+\item{v}{A character, (haven_)labelled, or factor variable to check.}
 
 \item{nMax}{The maximum number of problematic values to report. 
 Default is \code{10}. Set to \code{Inf} if all problematic values are to be included 
@@ -23,10 +23,10 @@ are listed and they are presented in alphabetical order.
 }
 \description{
 A \code{\link{checkFunction}} to be called from \code{\link{check}} that identifies values that
-only occur less than 6 times in factor, labelled, or character variables (that is, loners).
+only occur less than 6 times in factor, (haven_)labelled, or character variables (that is, loners).
 }
 \details{
-For character, labelled, and factor variables, identify values that only have a
+For character, (haven_)labelled, and factor variables, identify values that only have a
 very low number of observations, as these categories might be
 problematic when conducting an analysis. Unused factor levels are
 not considered "loners". "Loners" are defined as values with 5 or less

@@ -7,7 +7,7 @@
 identifyCaseIssues(v, nMax = 10)
 }
 \arguments{
-\item{v}{A character, factor, or labelled variable to check.}
+\item{v}{A character, factor, haven_labelled or labelled variable to check.}
 
 \item{nMax}{The maximum number of problematic values to report. 
 Default is \code{10}. Set to \code{Inf} if all problematic values are to be included 

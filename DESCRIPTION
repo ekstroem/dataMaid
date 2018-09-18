@@ -58,6 +58,7 @@ Collate:
     'clean.R'
     'countMissing.R'
     'dataMaid-package.R'
+    'dataMaid_as_factor.R'
     'description.R'
     'identifyCaseIssues.R'
     'identifyLoners.R'

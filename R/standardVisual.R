@@ -4,10 +4,10 @@
 #' Note that \code{standardVisual} is a \code{\link{visualFunction}}, compatible with the 
 #' \code{\link{visualize}} and \code{\link{makeDataReport}} functions. 
 #'
-#' For character, factor, logical and labelled variables, a barplot is produced. For numeric,
+#' For character, factor, logical and (haven_)labelled variables, a barplot is produced. For numeric,
 #' integer or Date variables, \code{standardVisual} produces a histogram instead. Note that for
 #' integer and numeric variables, all non-finite (i.e. \code{NA}, \code{NaN}, \code{Inf}) values are
-#' removed prior to plotting. For character, Date, factor, labelled and logical variables, 
+#' removed prior to plotting. For character, Date, factor, (haven_)labelled and logical variables, 
 #' only \code{NA} values are removed.
 #'
 #' @param v The variable (vector) to be plotted.
@@ -50,7 +50,10 @@ standardVisual.character <- function(v, vnam, doEval = TRUE) standardVisualCFLB(
 standardVisual.factor <- function(v, vnam, doEval = TRUE) standardVisualCFLB(v, vnam, doEval=doEval)
 
 #' @export
-standardVisual.labelled <- function(v, vnam, doEval = TRUE) standardVisualCFLB(haven::as_factor(v), 
+standardVisual.labelled <- function(v, vnam, doEval = TRUE) standardVisualCFLB(dataMaid_as_factor(v), 
+                                                                               vnam, doEval=doEval)
+#' @export
+standardVisual.haven_labelled <- function(v, vnam, doEval = TRUE) standardVisualCFLB(dataMaid_as_factor(v), 
                                                                                vnam, doEval=doEval)
 
 #' @export

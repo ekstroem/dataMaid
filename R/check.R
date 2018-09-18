@@ -1,6 +1,7 @@
 #General comments:
 # arguments: v is a variable (column) from a data.frame, i.e. a vector
-# note: labelled is Wickham's class from the haven/hmisc packages
+# note: labelled and haven_labelled is Wickham's class from the haven packages 
+#       (old/new) versions
 # note: Function names are suffixed with an indicator of the data types it
 #       is to be called on. N is numerical, I is integer, F is factor,
 #       L is labelled (Wickham), C is character, D is Date, B is logical (boolean)
@@ -53,6 +54,7 @@
 #' \code{\link{allCheckFunctions}} \code{\link{checkResult}}
 #' \code{\link{checkFunction}}, \code{\link{defaultCharacterChecks}},
 #' \code{\link{defaultFactorChecks}}, \code{\link{defaultLabelledChecks}},
+#' \code{\link{defaultHavenlabelledChecks}},
 #' \code{\link{defaultNumericChecks}}, \code{\link{defaultIntegerChecks}},
 #' \code{\link{defaultLogicalChecks}}, \code{\link{defaultDateChecks}}
 #' @keywords misc
@@ -190,6 +192,34 @@ check.labelled <- function(v, nMax =  10, checks = setChecks(),
   if (is.null(labelledChecks)) labelledChecks <- checks$labelled
   out <- lapply(labelledChecks, function(x) eval(call(x, v = v, nMax = nMax)))
   names(out) <- labelledChecks
+  out
+}
+
+#' @title Default checks for haven_labelled variables
+#'
+#' @param remove Character vector of function names. Checks to remove from the returned vector 
+#' 
+#' @param add Character vector of function names. Checks to add to the returned vector
+#'
+#' @description Default options for which checks to perform on
+#' haven_labelled type variables in \code{\link{check}} and \code{\link{makeDataReport}},
+#' possibly user-modified by adding extra function names using \code{add} or 
+#' removing default function names with \code{remove}. 
+#'
+#' @return A vector of function names.
+#'
+#' @export
+defaultHavenlabelledChecks <- function(remove = NULL, add = NULL) {
+  defaultLabelledChecks(remove = remove, add = add)
+}
+
+
+#' @export
+check.haven_labelled <- function(v, nMax =  10, checks = setChecks(),
+                           havenlabelledChecks = NULL, ...) {
+  if (is.null(havenlabelledChecks)) havenlabelledChecks <- checks$haven_labelled
+  out <- lapply(havenlabelledChecks, function(x) eval(call(x, v = v, nMax = nMax)))
+  names(out) <- havenlabelledChecks
   out
 }
 

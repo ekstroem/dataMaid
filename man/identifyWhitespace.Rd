@@ -7,7 +7,7 @@
 identifyWhitespace(v, nMax = 10)
 }
 \arguments{
-\item{v}{A character, labelled or factor variable to check.}
+\item{v}{A character, (haven_)labelled or factor variable to check.}
 
 \item{nMax}{The maximum number of problematic values to report. 
 Default is \code{10}. Set to \code{Inf} if all problematic values are to be included 
@@ -24,7 +24,7 @@ they are sorted alphabetically.
 \description{
 A checkFunction to be called from \code{\link{check}}
 that identifies prefixed and suffixed whitespace(s) in character,
-labelled or factor variables.
+(haven_)labelled or factor variables.
 }
 \examples{
  identifyWhitespace(c("a", " b", "c", "d ", "e  "))
