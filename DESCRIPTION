@@ -83,6 +83,7 @@ Collate:
     'standardVisual.R'
     'summarize.R'
     'summaryResult.R'
+    'tableVisual.R'
     'uniqueValues.R'
     'unpackLabelled.R'
     'variableType.R'

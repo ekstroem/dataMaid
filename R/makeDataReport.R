@@ -501,6 +501,12 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
   if (!doVisualize || !doSummarize) twoCol <- FALSE
   
   
+  ## If "tableVisual" is chosen for any of the visuals, "twoCol = FALSE" wasn't chosen, and the output type
+  ## is pdf, write a message to the console suggesting for the user to set twoCol = FALSE
+  if ("tableVisual" %in% unlist(visuals) & twoCol & output == "pdf") {
+    message("Note: setting \"twoCol = FALSE\" will allow for nicer formatting of the data report when using the tableVisual visualization option\n")
+  }
+  
   ## make tables left-aligned and allow for 6 columns
   oldPanderOptions <- pander::panderOptions() # Used to restore towards the end
   ## panderOptions("table.alignment.default", "left")
