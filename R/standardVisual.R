@@ -96,7 +96,7 @@ standardVisualCFLB <- function(v, vnam, doEval = TRUE) {
 #numeric and integer variables
 standardVisualIN <- function(v, vnam, doEval = TRUE) {
   v <- v[is.finite(v)]
-  pf <- aggregateForHistogram(v, bins = 20)
+  pf <- aggregateForHistogram(v)
   thisCall <- call("ggAggHist", data = pf, vnam = vnam)
   #thisCall <- call("qplot", x=na.omit(v), geom="histogram", xlab="",
    #                main=vnam, bins=20)
@@ -104,16 +104,13 @@ standardVisualIN <- function(v, vnam, doEval = TRUE) {
     return(eval(thisCall))
   } else return(deparse(thisCall))
 } 
-    #change binwidth to be chosen dynamically. ggplot2 does this if 
-    #no "bins" argument is specified, but then an annoying warning
-    #is also printed.
 
 
 
 # Dates
 standardVisualD <- function(v, vnam, doEval = TRUE) {
   v <- na.omit(v)
-  pf <- aggregateForHistogram(v, bins = 20)
+  pf <- aggregateForHistogram(v)
   thisCall <- call("ggAggHist", data = pf, vnam = vnam)
 #      thisCall <- call("qplot", x=na.omit(v), geom="bar", xlab="",
 #                   main=vnam)
