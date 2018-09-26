@@ -144,7 +144,7 @@ defaultCharacterSummaries <- function(remove = NULL, add = NULL) {
 #' @export
 defaultFactorSummaries <- function(remove = NULL, add = NULL) {
   defVals <- c("variableType", "countMissing", "uniqueValues",
-                                       "centralValue")
+                                       "centralValue", "refCat")
   unique(c(setdiff(defVals, remove), add))
 }
 

@@ -75,6 +75,7 @@ Collate:
     'makeDataReport.R'
     'misc.R'
     'quartiles.R'
+    'refCat.R'
     'render.R'
     'setChecks.R'
     'setSummaries.R'
