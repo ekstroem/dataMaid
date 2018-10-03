@@ -1,9 +1,9 @@
 #' A checkFunction for identifying sparsely represented values (loners)
 #'
 #' A \code{\link{checkFunction}} to be called from \code{\link{check}} that identifies values that
-#' only occur less than 6 times in factor, labelled, or character variables (that is, loners).
+#' only occur less than 6 times in factor, (haven_)labelled, or character variables (that is, loners).
 #'
-#' @param v A character, labelled, or factor variable to check.
+#' @param v A character, (haven_)labelled, or factor variable to check.
 #'
 #' @param nMax The maximum number of problematic values to report. 
 #' Default is \code{10}. Set to \code{Inf} if all problematic values are to be included 
@@ -16,7 +16,7 @@
 #' Note that Only unique problematic values
 #' are listed and they are presented in alphabetical order.
 #'
-#' @details For character, labelled, and factor variables, identify values that only have a
+#' @details For character, (haven_)labelled, and factor variables, identify values that only have a
 #' very low number of observations, as these categories might be
 #' problematic when conducting an analysis. Unused factor levels are
 #' not considered "loners". "Loners" are defined as values with 5 or less
@@ -39,6 +39,8 @@ identifyLoners <- function(v, nMax = 10) UseMethod("identifyLoners")
 identifyLoners.factor <- function(v, nMax = 10) identifyLonersF(v, nMax = nMax)
 #' @export
 identifyLoners.labelled <- function(v, nMax = 10) identifyLonersL(v, nMax = nMax)
+#' @export
+identifyLoners.haven_labelled <- function(v, nMax = 10) identifyLonersL(v, nMax = nMax)
 #' @export
 identifyLoners.character <- function(v, nMax = 10) identifyLonersC(v, nMax = nMax)
 
@@ -85,7 +87,7 @@ identifyLonersC <- function(v, nMax) {
 }
 
 identifyLonersL <- function(v, nMax) {
-    v <- haven::as_factor(v)
+    v <- dataMaid_as_factor(v)
     identifyLonersF(v, nMax)
 }
 

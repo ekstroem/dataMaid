@@ -4,7 +4,7 @@
 #' \code{\link{check}} that identifies values in a vector
 #' that appear multiple times with different case settings.
 #'
-#' @param v A character, factor, or labelled variable to check.
+#' @param v A character, factor, haven_labelled or labelled variable to check.
 #'
 #' @param nMax The maximum number of problematic values to report. 
 #' Default is \code{10}. Set to \code{Inf} if all problematic values are to be included 
@@ -38,6 +38,8 @@ identifyCaseIssues.factor <- function(v, nMax = 10) identifyCaseIssuesF(v, nMax 
 #' @export
 identifyCaseIssues.labelled <- function(v, nMax = 10) identifyCaseIssuesL(v, nMax = nMax)
 
+#' @export
+identifyCaseIssues.haven_labelled <- function(v, nMax = 10) identifyCaseIssuesL(v, nMax = nMax)
 
 #make it a checkFunction
 #' @include checkFunction.R
@@ -78,5 +80,5 @@ identifyCaseIssuesF <- function(v, nMax) {
 
 #labelled variable
 identifyCaseIssuesL <- function(v, nMax) {
-  identifyCaseIssuesF(haven::as_factor(v), nMax)
+  identifyCaseIssuesF(dataMaid_as_factor(v), nMax)
 }

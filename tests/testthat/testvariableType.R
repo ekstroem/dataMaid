@@ -15,7 +15,7 @@ test_that("variableType returns the right value", {
     expect_equal(variableType(typec)$value, "complex")
     expect_equal(variableType(types)$value, "character")
     expect_equal(variableType(typef)$value, "factor")
-    expect_equal(variableType(typelab)$value, "labelled")
+    expect_true(variableType(typelab)$value %in% c("labelled", "haven_labelled"))
     expect_equal(variableType(typelist)$value, "list")
     expect_equal(variableType(typeDate)$value, "Date")
 })

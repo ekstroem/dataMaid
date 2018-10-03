@@ -4,10 +4,10 @@
 #' Note that \code{standardVisual} is a \code{\link{visualFunction}}, compatible with the 
 #' \code{\link{visualize}} and \code{\link{makeDataReport}} functions. 
 #'
-#' For character, factor, logical and labelled variables, a barplot is produced. For numeric,
+#' For character, factor, logical and (haven_)labelled variables, a barplot is produced. For numeric,
 #' integer or Date variables, \code{standardVisual} produces a histogram instead. Note that for
 #' integer and numeric variables, all non-finite (i.e. \code{NA}, \code{NaN}, \code{Inf}) values are
-#' removed prior to plotting. For character, Date, factor, labelled and logical variables, 
+#' removed prior to plotting. For character, Date, factor, (haven_)labelled and logical variables, 
 #' only \code{NA} values are removed.
 #'
 #' @param v The variable (vector) to be plotted.
@@ -50,7 +50,10 @@ standardVisual.character <- function(v, vnam, doEval = TRUE) standardVisualCFLB(
 standardVisual.factor <- function(v, vnam, doEval = TRUE) standardVisualCFLB(v, vnam, doEval=doEval)
 
 #' @export
-standardVisual.labelled <- function(v, vnam, doEval = TRUE) standardVisualCFLB(haven::as_factor(v), 
+standardVisual.labelled <- function(v, vnam, doEval = TRUE) standardVisualCFLB(dataMaid_as_factor(v), 
+                                                                               vnam, doEval=doEval)
+#' @export
+standardVisual.haven_labelled <- function(v, vnam, doEval = TRUE) standardVisualCFLB(dataMaid_as_factor(v), 
                                                                                vnam, doEval=doEval)
 
 #' @export
@@ -93,7 +96,7 @@ standardVisualCFLB <- function(v, vnam, doEval = TRUE) {
 #numeric and integer variables
 standardVisualIN <- function(v, vnam, doEval = TRUE) {
   v <- v[is.finite(v)]
-  pf <- aggregateForHistogram(v, bins = 20)
+  pf <- aggregateForHistogram(v)
   thisCall <- call("ggAggHist", data = pf, vnam = vnam)
   #thisCall <- call("qplot", x=na.omit(v), geom="histogram", xlab="",
    #                main=vnam, bins=20)
@@ -101,16 +104,13 @@ standardVisualIN <- function(v, vnam, doEval = TRUE) {
     return(eval(thisCall))
   } else return(deparse(thisCall))
 } 
-    #change binwidth to be chosen dynamically. ggplot2 does this if 
-    #no "bins" argument is specified, but then an annoying warning
-    #is also printed.
 
 
 
 # Dates
 standardVisualD <- function(v, vnam, doEval = TRUE) {
   v <- na.omit(v)
-  pf <- aggregateForHistogram(v, bins = 20)
+  pf <- aggregateForHistogram(v)
   thisCall <- call("ggAggHist", data = pf, vnam = vnam)
 #      thisCall <- call("qplot", x=na.omit(v), geom="bar", xlab="",
 #                   main=vnam)

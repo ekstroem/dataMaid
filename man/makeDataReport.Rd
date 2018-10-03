@@ -13,7 +13,7 @@ makeDataReport(data, output = NULL, render = TRUE, useVar = NULL,
   summaries = setSummaries(), visuals = setVisuals(),
   checks = setChecks(), listChecks = TRUE, maxProbVals = 10,
   maxDecimals = 2, addSummaryTable = TRUE, codebook = FALSE,
-  reportTitle = NULL, treatXasY = list(haven_labelled = "labelled"), ...)
+  reportTitle = NULL, treatXasY = NULL, ...)
 }
 \arguments{
 \item{data}{The dataset to be checked. This dataset should be of class \code{data.frame},
@@ -40,10 +40,10 @@ are "asIs" (ordering as in the dataset) and "alphabetical" (alphabetical order).
 \item{onlyProblematic}{A logical. If \code{TRUE}, only the variables flagged as
 problematic in the check step will be included in the variable list.}
 
-\item{labelled_as}{A string explaining the way to handle labelled vectors.
-Currently \code{"factor"} (the default) is the only possibility. This means that labelled
+\item{labelled_as}{A string explaining the way to handle labelled and haven_labelled vectors.
+Currently \code{"factor"} (the default) is the only possibility. This means that labelled or haven_labelled
 variables that appear factor-like (by having a non-\code{NULL} \code{labels}-attribute) will
-be treated as factors, while other labelled variables will be treated as whatever base
+be treated as factors, while other labelled or haven_labelled variables will be treated as whatever base
 variable class they inherit from.}
 
 \item{mode}{Vector of tasks to perform among the three categories "summarize", "visualize" and "check".
@@ -133,13 +133,11 @@ report. If left unspecified, the title with the name of the supplied dataset.}
 
 \item{treatXasY}{A list that indicates how non-standard variable classes should be treated.
 This parameter allows you to include variables that are not of class \code{factor}, \code{character}, 
-\code{labelled}, \code{numeric}, \code{integer}, \code{logical} nor \code{Date} (or a class
+\code{labelled}, \code{haven_labelled}, \code{numeric}, \code{integer}, \code{logical} nor \code{Date} (or a class
 that inherits from any of these classes). The names of the list are the new classes and the entries
 are the names of the class, they should be treated as. If \code{makeDataReport()} should e.g. treat variables of 
 class \code{raw} as characters and variables of class \code{complex} as numeric, you should put
-\code{treatXasY = list(raw = "character", complex = "numeric")}. The default setting was chosen to accomodate the new
-variable class \code{haven_labelled} provided in the development version of \code{haven} as a replacement of 
-the class \code{labelled}.}
+\code{treatXasY = list(raw = "character", complex = "numeric")}.}
 
 \item{\dots}{Other arguments that are passed on the to precheck,
 checking, summary and visualization functions.}

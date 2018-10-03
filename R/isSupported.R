@@ -3,6 +3,7 @@
 #' @description A \code{\link{checkFunction}} that checks if \code{v} has 
 #' one of the classes supported by dataMaid, namely \code{character},
 #' \code{factor}, \code{numeric}, \code{integer}, \code{labelled},
+#' \code{haven_labelled},
 #' \code{logical} and \code{Date} (inlcuding other classes that inherits
 #' from any of these classes). A user supported list can be provided
 #' in the \code{treatXasY} argument, which will let the user decide
@@ -29,7 +30,8 @@
 #' 
 #' @export
 isSupported <- function(v) {
-  suppClasses <-  c("character", "factor", "labelled", "numeric", "integer", 
+  suppClasses <-  c("character", "factor", "labelled", "haven_labelled", 
+                    "numeric", "integer", 
                     "logical", "Date")
   vClasses <- class(v)
   out <- list(problem = FALSE, message = "", problemValues = NULL)

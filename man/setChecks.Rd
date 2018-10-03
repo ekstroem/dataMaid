@@ -6,6 +6,7 @@
 \usage{
 setChecks(character = defaultCharacterChecks(),
   factor = defaultFactorChecks(), labelled = defaultLabelledChecks(),
+  haven_labelled = defaultHavenlabelledChecks(),
   numeric = defaultNumericChecks(), integer = defaultIntegerChecks(),
   logical = defaultLogicalChecks(), Date = defaultDateChecks(),
   all = NULL)
@@ -19,6 +20,9 @@ variables. The default options are available by calling \code{defaultFactorCheck
 
 \item{labelled}{A character vector of function names to be used as checks for labelled
 variables. The default options are available by calling \code{defaultLabelledChecks()}.}
+
+\item{haven_labelled}{A character vector of function names to be used as checks for haven_labelled
+variables. The default options are available by calling \code{defaultHavenlabelledChecks()}.}
 
 \item{numeric}{A character vector of function names to be used as checks for numeric
 variables. The default options are available by calling \code{defaultNumericChecks()}.}
@@ -63,6 +67,7 @@ makeDataReport(toyData, checks = setChecks(character = "identifyMissing",
 \code{\link{makeDataReport}}, \code{\link{allCheckFunctions}},
 \code{\link{defaultCharacterChecks}}, 
 \code{\link{defaultFactorChecks}}, \code{\link{defaultLabelledChecks}},
+\code{\link{defaultHavenlabelledChecks}},
 \code{\link{defaultNumericChecks}}, \code{\link{defaultIntegerChecks}},
 \code{\link{defaultLogicalChecks}}, \code{\link{defaultDateChecks}}
 }

@@ -4,7 +4,7 @@
 #' \code{\link{check}} for identifying numeric variables that have
 #' been misclassified as categorical.
 #'
-#' @param v A character, factor, or labelled variable to check.
+#' @param v A character, factor, or (haven_)labelled variable to check.
 #' 
 #' @param nVals An integer determining how many unique values a variable must have
 #' before it can potentially be determined to be a misclassified numeric variable. 
@@ -47,7 +47,7 @@ identifyNums <- function(v, nVals = 12, ...) {
   
     #note: update to haven made as_factor not work on character variables!
   if ("labelled" %in% class(v)) {
-    v <- as.character(na.omit(haven::as_factor(v)))
+    v <- as.character(na.omit(dataMaid_as_factor(v)))
   } else v <- as.character(na.omit(v))
   
   if (length(unique(v)) < nVals) {
@@ -67,4 +67,4 @@ identifyNums <- function(v, nVals = 12, ...) {
 #' @include checkFunction.R
 identifyNums <- checkFunction(identifyNums,
                               "Identify misclassified numeric or integer variables",
-                              c("character", "factor", "labelled"))
+                              c("character", "factor", "labelled", "haven_labelled"))

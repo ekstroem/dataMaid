@@ -28,7 +28,7 @@
 isSingular <- function(v) {
   lV <- length(v)
   
-  if ("labelled" %in% class(v)) v <- haven::as_factor(v) #otherwise na.omit does not work
+  if (any(c("labelled", "haven_labelled") %in% class(v))) v <- dataMaid_as_factor(v) #otherwise na.omit does not work
   
   v <- na.omit(v)
   pctMiss <- round(100*(lV - length(v))/lV, 2)

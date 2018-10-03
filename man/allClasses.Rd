@@ -7,9 +7,10 @@
 allClasses()
 }
 \description{
-Returns the names of the seven data classes for which
+Returns the names of the eight data classes for which
 \code{dataMaid} is implemented, namely \code{"character"}, \code{"Date"},
-\code{"factor"}, \code{"integer"}, \code{"labelled"}, \code{"logical"} and
+\code{"factor"}, \code{"integer"}, \code{"labelled"}, 
+\code{"haven_labelled"}, \code{"logical"} and
 \code{"numeric"}.
 }
 \examples{

@@ -5,8 +5,8 @@
 \title{Set visual arguments for makeDataReport}
 \usage{
 setVisuals(character = NULL, factor = NULL, labelled = NULL,
-  numeric = NULL, integer = NULL, logical = NULL, Date = NULL,
-  all = "standardVisual")
+  haven_labelled = NULL, numeric = NULL, integer = NULL, logical = NULL,
+  Date = NULL, all = "standardVisual")
 }
 \arguments{
 \item{character}{A function name (character string) to be used as the visual function for character
@@ -18,6 +18,10 @@ variables.  If \code{NULL} (the default) the argument is ignored and the content
 argument is used instead.}
 
 \item{labelled}{A function name (character string) to be used as the visual function for labelled
+variables.  If \code{NULL} (the default) the argument is ignored and the contents of the \code{all}
+argument is used instead.}
+
+\item{haven_labelled}{A function name (character string) to be used as the visual function for haven_labelled
 variables.  If \code{NULL} (the default) the argument is ignored and the contents of the \code{all}
 argument is used instead.}
 

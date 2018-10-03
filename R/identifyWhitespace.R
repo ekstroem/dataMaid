@@ -2,9 +2,9 @@
 #'
 #' @description A checkFunction to be called from \code{\link{check}}
 #' that identifies prefixed and suffixed whitespace(s) in character,
-#' labelled or factor variables.
+#' (haven_)labelled or factor variables.
 #'
-#' @param v A character, labelled or factor variable to check.
+#' @param v A character, (haven_)labelled or factor variable to check.
 #'
 #' @param nMax The maximum number of problematic values to report. 
 #' Default is \code{10}. Set to \code{Inf} if all problematic values are to be included 
@@ -40,11 +40,13 @@ identifyWhitespace.factor <- function(v, nMax = 10) identifyWhitespaceF(v, nMax 
 #'@export
 identifyWhitespace.labelled <- function(v, nMax = 10) identifyWhitespaceL(v, nMax = nMax)
 
+#'@export
+identifyWhitespace.haven_labelled <- function(v, nMax = 10) identifyWhitespaceL(v, nMax = nMax)
 
 #make it a checkFunction
 #' @include checkFunction.R
 identifyWhitespace <- checkFunction(identifyWhitespace, "Identify prefixed and suffixed whitespace",
-                                    c("character", "factor", "labelled"))
+                                    c("character", "factor", "labelled", "haven_labelled"))
 
 
 ##########################################Not exported below#########################################
@@ -81,7 +83,7 @@ identifyWhitespaceF <- function(v, nMax) {
 
 #labelled variables
 identifyWhitespaceL <- function(v, nMax) {
-  v <- na.omit(haven::as_factor(v))
+  v <- na.omit(dataMaid_as_factor(v))
   identifyWhitespaceF(v, nMax = nMax)
 }
 

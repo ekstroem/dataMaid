@@ -6,6 +6,7 @@
 \usage{
 setSummaries(character = defaultCharacterSummaries(),
   factor = defaultFactorSummaries(), labelled = defaultLabelledSummaries(),
+  haven_labelled = defaultHavenlabelledSummaries(),
   numeric = defaultNumericSummaries(), integer = defaultIntegerSummaries(),
   logical = defaultLogicalSummaries(), Date = defaultDateSummaries(),
   all = NULL)
@@ -19,6 +20,9 @@ variables. The default options are available by calling \code{defaultFactorSumma
 
 \item{labelled}{A character vector of function names to be used as summaries for labelled
 variables. The default options are available by calling \code{defaultLabelledSummaries()}.}
+
+\item{haven_labelled}{A character vector of function names to be used as summaries for haven_labelled
+variables. The default options are available by calling \code{defaultHavenlabelledSummaries()}.}
 
 \item{numeric}{A character vector of function names to be used as summaries for numeric
 variables. The default options are available by calling \code{defaultNumericSummaries()}.}
@@ -66,6 +70,7 @@ makeDataReport(toyData,
 \code{\link{makeDataReport}}, \code{\link{allSummaryFunctions}},
 \code{\link{defaultCharacterSummaries}}, 
 \code{\link{defaultFactorSummaries}}, \code{\link{defaultLabelledSummaries}},
+\code{\link{defaultHavenlabelledSummaries}},
 \code{\link{defaultNumericSummaries}}, \code{\link{defaultIntegerSummaries}},
 \code{\link{defaultLogicalSummaries}}, \code{\link{defaultDateSummaries}}
 }

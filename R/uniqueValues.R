@@ -34,6 +34,10 @@ uniqueValues.factor <- function(v, ...) uniqueValuesCFBI(v)
 uniqueValues.labelled <- function(v, ...) uniqueValuesL(v) #?PROBLEM?
 
 #' @export
+uniqueValues.haven_labelled <- function(v, ...) uniqueValuesL(v) #?PROBLEM?
+
+
+#' @export
 uniqueValues.numeric <- function(v, ...) uniqueValuesN(v)
 
 #' @export
@@ -73,6 +77,6 @@ uniqueValuesN <- function(v) {
 }
 
 uniqueValuesL <- function(v) {
-  uniqueValuesCFBI(haven::as_factor(v))
+  uniqueValuesCFBI(dataMaid_as_factor(v))
 }
 

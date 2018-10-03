@@ -40,7 +40,7 @@ test_that("summarize return the right number of tests for (most) atomic vectors"
     expect_equal(length(summarize(typed)), 6)
     ##expect_is(summarize(typec), "list")
     expect_equal(length(summarize(types)), 4)
-    expect_equal(length(summarize(typef)), 4)
+    expect_equal(length(summarize(typef)), 5)
     expect_equal(length(summarize(typelab)), 4)
     ##expect_is(summarize(typer), "list")
     expect_equal(length(summarize(typeDate)), 6)

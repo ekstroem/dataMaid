@@ -11,3 +11,4 @@ print.functionSummary <- function(x, ...) {
   x$classes <- sapply(x$classes, function(x) paste(x, collapse=", "))
   pander::pander(data.frame(x, row.names = NULL), justify="left")
 }
+

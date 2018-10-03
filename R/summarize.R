@@ -18,7 +18,7 @@
 #' @details Summary functions are supplied using their
 #' names (in character strings) in the class-specific argument, e.g.
 #' \code{characterSummaries = c("countMissing", "uniqueValues")} for character variables and
-#' similarly for the remaining 6 data classes (factor, Date, labelled, numeric, integer, logical).
+#' similarly for the remaining 7 data classes (factor, Date, labelled, haven_labelled, numeric, integer, logical).
 #' Note that an overview of all available \code{summaryFunction}s can be obtained by calling
 #' \code{\link{allSummaryFunctions}}. 
 #'
@@ -51,7 +51,7 @@
 #' \code{\link{summaryFunction}}, \code{\link{allSummaryFunctions}}, 
 #' \code{\link{summaryResult}},
 #' \code{\link{defaultCharacterSummaries}}, \code{\link{defaultFactorSummaries}},
-#' \code{\link{defaultLabelledSummaries}}, \code{\link{defaultLabelledSummaries}},
+#' \code{\link{defaultLabelledSummaries}}, \code{\link{defaultHavenlabelledSummaries}},
 #' \code{\link{defaultNumericSummaries}}, \code{\link{defaultIntegerSummaries}},
 #' \code{\link{defaultLogicalSummaries}}
 #'
@@ -144,7 +144,7 @@ defaultCharacterSummaries <- function(remove = NULL, add = NULL) {
 #' @export
 defaultFactorSummaries <- function(remove = NULL, add = NULL) {
   defVals <- c("variableType", "countMissing", "uniqueValues",
-                                       "centralValue")
+                                       "centralValue", "refCat")
   unique(c(setdiff(defVals, remove), add))
 }
 
@@ -175,6 +175,32 @@ defaultLabelledSummaries <- function(remove = NULL, add = NULL) {
                                          "centralValue")
   unique(c(setdiff(defVals, remove), add))
 }
+
+#' Default summary functions for haven_labelled variables
+#'
+#' @param remove Character vector of function names. Checks to remove from the returned vector 
+#' 
+#' @param add Character vector of function names. Checks to add to the returned vector
+#'
+#' @description Default options for which summaries to apply on
+#' haven_labelled type variables in \code{\link{check}} and \code{\link{makeDataReport}},
+#' possibly user-modified by adding extra function names using \code{add} or 
+#' removing default function names with \code{remove}. 
+#'
+#' @return A list of function names (as character strings).
+#'
+#' @seealso \code{\link{variableType}},
+#' \code{\link{countMissing}}, \code{\link{uniqueValues}}, \code{\link{centralValue}}
+#'
+#' @examples
+#' #remove "centralValue":
+#' defaultHavenlabelledSummaries(remove = "centralValue")
+#'
+#' @export
+defaultHavenlabelledSummaries <- function(remove = NULL, add = NULL) {
+  defaultLabelledSummaries(remove = remove, add = add)
+}
+
 
 
 #' Default summary functions for numeric variables
@@ -355,6 +381,21 @@ summarize.labelled <- function(v,  reportstyleOutput = FALSE,
     res <- sumMatGenerator(res)
   } else {
     names(res) <- labelledSummaries
+  }
+  res
+}
+
+#' @export
+summarize.haven_labelled <- function(v,  reportstyleOutput = FALSE,
+                               summaries = setSummaries(), 
+                               havenlabelledSummaries = NULL, 
+                               ...) {
+  if (is.null(havenlabelledSummaries)) havenlabelledSummaries <- summaries$haven_labelled
+  res <- lapply(havenlabelledSummaries, function(x) eval(call(x, v = v)))
+  if (reportstyleOutput) {
+    res <- sumMatGenerator(res)
+  } else {
+    names(res) <- havenlabelledSummaries
   }
   res
 }

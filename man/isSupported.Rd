@@ -20,6 +20,7 @@ value the variable takes and how many missing observations it contains, otherwis
 A \code{\link{checkFunction}} that checks if \code{v} has 
 one of the classes supported by dataMaid, namely \code{character},
 \code{factor}, \code{numeric}, \code{integer}, \code{labelled},
+\code{haven_labelled},
 \code{logical} and \code{Date} (inlcuding other classes that inherits
 from any of these classes). A user supported list can be provided
 in the \code{treatXasY} argument, which will let the user decide

@@ -21,6 +21,10 @@
 #' variables.  If \code{NULL} (the default) the argument is ignored and the contents of the \code{all}
 #' argument is used instead.
 #' 
+#' @param haven_labelled A function name (character string) to be used as the visual function for haven_labelled
+#' variables.  If \code{NULL} (the default) the argument is ignored and the contents of the \code{all}
+#' argument is used instead.
+#' 
 #' @param numeric A function name (character string) to be used as the visual function for numeric
 #' variables.  If \code{NULL} (the default) the argument is ignored and the contents of the \code{all}
 #' argument is used instead.
@@ -59,6 +63,7 @@
 setVisuals <- function(character = NULL, 
                       factor = NULL, 
                       labelled = NULL, 
+                      haven_labelled = NULL,
                       numeric = NULL, 
                       integer = NULL, 
                       logical = NULL, 
@@ -66,13 +71,16 @@ setVisuals <- function(character = NULL,
   if (is.null(character)) character <- all
   if (is.null(factor)) factor <- all
   if (is.null(labelled)) labelled <- all
+  if (is.null(haven_labelled)) haven_labelled <- all
   if (is.null(numeric)) numeric <- all
   if (is.null(integer)) integer <- all
   if (is.null(logical)) logical <- all
   if (is.null(Date)) Date <- all
   
   outList <- list(character = character, factor = factor,
-                  labelled = labelled, numeric = numeric,
+                  labelled = labelled, 
+                  haven_labelled = haven_labelled,
+                  numeric = numeric,
                   integer = integer, logical = logical,
                   Date = Date)
   

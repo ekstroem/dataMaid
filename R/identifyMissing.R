@@ -57,6 +57,8 @@ identifyMissing.factor <- function(v, nMax = 10, ...) identifyMissingCF(v, nMax 
 #' @export
 identifyMissing.labelled <- function(v, nMax = 10, ...) identifyMissingL(v, nMax = nMax)
 #' @export
+identifyMissing.haven_labelled <- function(v, nMax = 10, ...) identifyMissingL(v, nMax = nMax)
+#' @export
 identifyMissing.numeric <- function(v, nMax = 10, ...) {
   identifyMissingNI(v, nMax = nMax, ...)
 }
@@ -206,7 +208,7 @@ identifyMissingCF <- function(v, nMax) {
 
 #labelled variables
 identifyMissingL <- function(v, nMax) {
-  v <- na.omit(haven::as_factor(v))
+  v <- na.omit(dataMaid_as_factor(v))
   identifyMissingCF(v, nMax = nMax)
 }
 

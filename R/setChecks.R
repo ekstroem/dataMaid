@@ -13,6 +13,9 @@
 #' @param labelled A character vector of function names to be used as checks for labelled
 #' variables. The default options are available by calling \code{defaultLabelledChecks()}. 
 #' 
+#' @param haven_labelled A character vector of function names to be used as checks for haven_labelled
+#' variables. The default options are available by calling \code{defaultHavenlabelledChecks()}. 
+#' 
 #' @param numeric A character vector of function names to be used as checks for numeric
 #' variables. The default options are available by calling \code{defaultNumericChecks()}. 
 #' 
@@ -36,6 +39,7 @@
 #' @seealso \code{\link{makeDataReport}}, \code{\link{allCheckFunctions}},
 #' \code{\link{defaultCharacterChecks}}, 
 #' \code{\link{defaultFactorChecks}}, \code{\link{defaultLabelledChecks}},
+#' \code{\link{defaultHavenlabelledChecks}},
 #' \code{\link{defaultNumericChecks}}, \code{\link{defaultIntegerChecks}},
 #' \code{\link{defaultLogicalChecks}}, \code{\link{defaultDateChecks}}
 #' @examples
@@ -54,15 +58,17 @@
 setChecks <- function(character = defaultCharacterChecks(), 
                       factor = defaultFactorChecks(), 
                       labelled = defaultLabelledChecks(), 
+                      haven_labelled = defaultHavenlabelledChecks(),
                       numeric = defaultNumericChecks(), 
                       integer = defaultIntegerChecks(), 
                       logical = defaultLogicalChecks(), 
                       Date = defaultDateChecks(), all = NULL) {
   if (!is.null(all)) {
-    character <- factor <- labelled <- numeric <- integer <- logical <- Date <- all
+    character <- factor <- labelled <- haven_labelled <- numeric <- integer <- logical <- Date <- all
   } 
   outList <- list(character = character, factor = factor,
-                  labelled = labelled, numeric = numeric,
+                  labelled = labelled, haven_labelled = haven_labelled,
+                  numeric = numeric,
                   integer = integer, logical = logical,
                   Date = Date)
   outList

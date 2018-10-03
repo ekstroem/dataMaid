@@ -7,7 +7,7 @@
 identifyNums(v, nVals = 12, ...)
 }
 \arguments{
-\item{v}{A character, factor, or labelled variable to check.}
+\item{v}{A character, factor, or (haven_)labelled variable to check.}
 
 \item{nVals}{An integer determining how many unique values a variable must have
 before it can potentially be determined to be a misclassified numeric variable. 

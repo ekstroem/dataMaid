@@ -130,6 +130,13 @@ visualize.labelled <- function(v, vnam = NULL, visuals = setVisuals(),
   if (is.null(vnam)) vnam <- deparse(substitute(v))
   eval(call(labelledVisual, v = v, vnam = vnam, doEval = doEval))}
 
+#' @export
+visualize.haven_labelled <- function(v, vnam = NULL, visuals = setVisuals(),
+                               doEval = TRUE, havenlabelledVisual = NULL, ...) {
+  if (is.null(havenlabelledVisual)) havenlabelledVisual <- visuals$haven_labelled 
+  if (is.null(vnam)) vnam <- deparse(substitute(v))
+  eval(call(havenlabelledVisual, v = v, vnam = vnam, doEval = doEval))}
+
 
 #' @export
 visualize.numeric <- function(v, vnam = NULL, visuals = setVisuals(),
