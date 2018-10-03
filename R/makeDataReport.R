@@ -549,7 +549,7 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
   }
   
   chunk.wrapper <- function(x, ..., outfile=fileConn, options=c("echo=FALSE", "warning=FALSE"), label=NULL) {
-    writer(paste0("```{r ", ifelse(is.null(label), ", ", paste0(label, ", ")),
+    writer(paste0("```{r ", ifelse(is.null(label), ", ", paste0("'", label, "', ")),
                   paste0(options, collapse=", "), "}"),
            outfile = outfile)
     writer(x, ..., outfile = outfile)
