@@ -214,6 +214,7 @@
 #' @importFrom methods is
 #' @importFrom pander panderOptions pandoc.table.return
 #' @importFrom tools file_ext
+#' @importFrom stringi stri_trans_general
 #' @importFrom utils packageVersion sessionInfo capture.output packageDescription
 #' @importFrom magrittr %>%
 #' @export
@@ -562,7 +563,7 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
     writer("```", outfile = outfile)
   }
   
-  fig.wrapper <- function(x, ..., outfile=fileConn, options=c("echo=FALSE", "fig.width=4",
+  fig.wrapper <- function(x, outfile=fileConn, options=c("echo=FALSE", "fig.width=4",
                                                               "fig.height=3", "message=FALSE",
                                                               "warning=FALSE"), label=NULL) {
     chunk.wrapper(x, outfile=outfile, options=options, label=label)
@@ -644,7 +645,7 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
     
     
     ## include packages as a first chunk
-    secretChunk.wrapper("library(ggplot2)\nlibrary(pander)")
+    secretChunk.wrapper('library("ggplot2")\nlibrary("pander")')
     
     ## Define unexported visual functions locally so that the report 
     ## can be rendered from the global environment. Only done if standardVisuals are used
@@ -910,7 +911,11 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
                                                  ...)
             
             ## Chunkname should avoid spaces and periods
-            chunk_name <- paste0("Var-", idx, "-", gsub("[_:. ]", "-", vnam))
+              ##  chunk_name <- paste0("Var-", idx, "-", gsub("[_:. ]", "-", vnam))
+              ## Since we are not really needing the specific chunk names with variables we could skip the trailing part
+              ## However, might be useful when looking at the rmd.
+             chunk_name <- paste0("Var-", idx, "-", stringi::stri_trans_general(gsub("[_:. ]", "-", vnam), "Latin-ASCII"))
+##              chunk_name <- paste0("Var-", idx)
             
             ## add visualization + summary results to output file
             if (twoCol) {
