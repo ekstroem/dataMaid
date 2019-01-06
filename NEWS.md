@@ -2,6 +2,10 @@
 
 *   Updated requirements for package robustbase. This fixes convergence problems of mc thanks to Martin Maechler and the robustbase team. 
     Thanks to Erik Bülow for pointing the error out (#27)
+*   Updated the calls to the labelled functions so they match the upcoming changes to the haven package
+*   Fixed bin sizes in standardVisual histograms so they match the plots created by ggplots2
+*   Adding the tableVisual function to the options for visual functions
+*   Various minor internal fixes
 
 # dataMaid 1.1.2
 
