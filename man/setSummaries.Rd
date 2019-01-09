@@ -5,9 +5,11 @@
 \title{Set summary arguments for makeDataReport}
 \usage{
 setSummaries(character = defaultCharacterSummaries(),
-  factor = defaultFactorSummaries(), labelled = defaultLabelledSummaries(),
+  factor = defaultFactorSummaries(),
+  labelled = defaultLabelledSummaries(),
   haven_labelled = defaultHavenlabelledSummaries(),
-  numeric = defaultNumericSummaries(), integer = defaultIntegerSummaries(),
+  numeric = defaultNumericSummaries(),
+  integer = defaultIntegerSummaries(),
   logical = defaultLogicalSummaries(), Date = defaultDateSummaries(),
   all = NULL)
 }

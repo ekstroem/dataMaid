@@ -560,7 +560,7 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
                   paste0(options, collapse=", "), "}"),
            outfile = outfile)
     writer(x, ..., outfile = outfile)
-    writer("```", outfile = outfile)
+    writer("```\n", outfile = outfile)
   }
   
   fig.wrapper <- function(x, outfile=fileConn, options=c("echo=FALSE", "fig.width=4",
@@ -583,7 +583,7 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
       writer("\\bminione", outfile = outfile)
       writer(text, outfile = outfile)
       writer("\\emini", outfile = outfile)
-      writer("\\bminitwo", outfile = outfile)
+      writer("\\bminitwo", outfile = outfile) 
       fig.wrapper(figure, label=label, outfile = outfile)
       writer("\\emini", outfile = outfile)
     }

@@ -4,7 +4,8 @@
 \alias{summarize}
 \title{Summarize a variable/dataset}
 \usage{
-summarize(v, reportstyleOutput = FALSE, summaries = setSummaries(), ...)
+summarize(v, reportstyleOutput = FALSE, summaries = setSummaries(),
+  ...)
 }
 \arguments{
 \item{v}{The variable (vector) or dataset (data.frame) to be summarized.}

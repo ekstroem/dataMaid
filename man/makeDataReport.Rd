@@ -6,14 +6,14 @@
 \usage{
 makeDataReport(data, output = NULL, render = TRUE, useVar = NULL,
   ordering = c("asIs", "alphabetical"), onlyProblematic = FALSE,
-  labelled_as = c("factor"), mode = c("summarize", "visualize", "check"),
-  smartNum = TRUE, preChecks = c("isKey", "isSingular", "isSupported"),
-  file = NULL, replace = FALSE, vol = "", standAlone = TRUE,
-  twoCol = TRUE, quiet = TRUE, openResult = TRUE,
-  summaries = setSummaries(), visuals = setVisuals(),
-  checks = setChecks(), listChecks = TRUE, maxProbVals = 10,
-  maxDecimals = 2, addSummaryTable = TRUE, codebook = FALSE,
-  reportTitle = NULL, treatXasY = NULL, ...)
+  labelled_as = c("factor"), mode = c("summarize", "visualize",
+  "check"), smartNum = TRUE, preChecks = c("isKey", "isSingular",
+  "isSupported"), file = NULL, replace = FALSE, vol = "",
+  standAlone = TRUE, twoCol = TRUE, quiet = TRUE,
+  openResult = TRUE, summaries = setSummaries(),
+  visuals = setVisuals(), checks = setChecks(), listChecks = TRUE,
+  maxProbVals = 10, maxDecimals = 2, addSummaryTable = TRUE,
+  codebook = FALSE, reportTitle = NULL, treatXasY = NULL, ...)
 }
 \arguments{
 \item{data}{The dataset to be checked. This dataset should be of class \code{data.frame},
