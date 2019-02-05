@@ -21,7 +21,7 @@ ui <- shinyUI(fluidPage(
                      "ensure that the data is loaded correctly.")),
       fluidRow(br(), HTML(paste("<b> Step 2: </b>", 
                           "Choose what your report should contain using the panel to the right."))),
-      fluidRow(br(), HTML("<b> Step 3: </b> Make data report.")),
+      fluidRow(br(), HTML("<b> Step 3: </b> Make report.")),
       fluidRow(withBusyIndicatorUI(actionButton("doClean", textOutput("dataStatus")))),
       fluidRow(br(), HTML("<b> Step 4: </b> Download (if pdf) or view (if html) your report below."))
       ),
@@ -58,85 +58,92 @@ ui <- shinyUI(fluidPage(
                ),
       tabPanel("Options for report", 
                fluidRow(
-                  column(4, radioButtons("clean.output", "Output format", list("html (web)" = "html", "pdf" = "pdf"))),
-                  column(4, radioButtons("clean.ordering", "Variable order",
-                                        list("As is" = "asIs", "Alphabetical" = "alphabetical"))),
-                  column(4, radioButtons("clean.maxProbVals", "Number of displayed problematic values",
-                                     list("1"= 1, "5" = 5, "10" = 10, "All" = Inf),
-                                     selected = 10))
-               ),
+                 column(6, radioButtons("reportType", "Report type", list("Data overview report" = "report",
+                                                                          "Codebook" = "codebook"))),
+                 column(6, radioButtons("clean.output", "Output format", list("html (web)" = "html", "pdf" = "pdf")))
+                 ),
                hr(),
-               fluidRow(HTML("<b> Choose what checks to perform </b>"),
+                 conditionalPanel(condition = "input.reportType == \"report\"",
                  fluidRow(
-                   column(c1_w, ""),
-                   column(cRes_w, "char.", align = "center"),
-                   column(cRes_w, "factor", align = "center"),
-                   column(cRes_w, "labelled", align = "center"),
-                   column(cRes_w, "numeric", align = "center"),
-                   column(cRes_w, "integer", align = "center"),
-                   column(cRes_w, "logical", align = "center"),
-                   column(cRes_w, "Date", align = "center")
+                    column(6, radioButtons("clean.ordering", "Variable order",
+                                          list("As is" = "asIs", "Alphabetical" = "alphabetical"))),
+                    column(6, radioButtons("clean.maxProbVals", "Number of displayed problematic values",
+                                       list("1"= 1, "5" = 5, "10" = 10, "All" = Inf),
+                                       selected = 10))
                  ),
-                 fluidRow(
-                   column(c1_w, "Identify case issues"),
-                   column(cRes_w, checkboxInput("identifyCaseIssues.c", "", TRUE), align = "center"),
-                   column(cRes_w, checkboxInput("identifyCaseIssues.f", "", TRUE), align = "center"),
-                   column(cRes_w, checkboxInput("identifyCaseIssues.l", "", TRUE), align = "center"),
-                   column(cRes_w, checkboxInput("identifyCaseIssues.n", "", FALSE), align = "center"),
-                   column(cRes_w, checkboxInput("identifyCaseIssues.i", "", FALSE), align = "center"),
-                   column(cRes_w, checkboxInput("identifyCaseIssues.b", "", FALSE), align = "center"),
-                   column(cRes_w, checkboxInput("identifyCaseIssues.d", "", FALSE), align = "center")
-                 ),
-                 fluidRow(
-                   column(c1_w, "Identify levels with < 6 obs."),
-                   column(cRes_w, checkboxInput("identifyLoners.c", "", TRUE), align = "center"),
-                   column(cRes_w, checkboxInput("identifyLoners.f", "", TRUE), align = "center"),
-                   column(cRes_w, checkboxInput("identifyLoners.l", "", TRUE), align = "center"),
-                   column(cRes_w, checkboxInput("identifyLoners.n", "", FALSE), align = "center"),
-                   column(cRes_w, checkboxInput("identifyLoners.i", "", FALSE), align = "center"),
-                   column(cRes_w, checkboxInput("identifyLoners.b", "", FALSE), align = "center"),
-                   column(cRes_w, checkboxInput("identifyLoners.d", "", FALSE), align = "center")
-                 ),
-                 fluidRow(
-                   column(c1_w, "Identify miscoded missing values"),
-                   column(cRes_w, checkboxInput("identifyMissing.c", "", TRUE), align = "center"),
-                   column(cRes_w, checkboxInput("identifyMissing.f", "", TRUE), align = "center"),
-                   column(cRes_w, checkboxInput("identifyMissing.l", "", TRUE), align = "center"),
-                   column(cRes_w, checkboxInput("identifyMissing.n", "", TRUE), align = "center"),
-                   column(cRes_w, checkboxInput("identifyMissing.i", "", TRUE), align = "center"),
-                   column(cRes_w, checkboxInput("identifyMissing.b", "", FALSE), align = "center"),
-                   column(cRes_w, checkboxInput("identifyMissing.d", "", FALSE), align = "center")
-                 ),
-                 fluidRow(
-                   column(c1_w, "Identify misclassified numeric or integer variables"),
-                   column(cRes_w, checkboxInput("identifyNums.c", "", TRUE), align = "center"),
-                   column(cRes_w, checkboxInput("identifyNums.f", "", TRUE), align = "center"),
-                   column(cRes_w, checkboxInput("identifyNums.l", "", TRUE), align = "center"),
-                   column(cRes_w, checkboxInput("identifyNums.n", "", FALSE), align = "center"),
-                   column(cRes_w, checkboxInput("identifyNums.i", "", FALSE), align = "center"),
-                   column(cRes_w, checkboxInput("identifyNums.b", "", FALSE), align = "center"),
-                   column(cRes_w, checkboxInput("identifyNums.d", "", FALSE), align = "center")
-                 ),
-                 fluidRow(
-                   column(c1_w, "Identify outliers"),
-                   column(cRes_w, checkboxInput("identifyOutliers.c", "", FALSE), align = "center"),
-                   column(cRes_w, checkboxInput("identifyOutliers.f", "", FALSE), align = "center"),
-                   column(cRes_w, checkboxInput("identifyOutliers.l", "", FALSE), align = "center"),
-                   column(cRes_w, checkboxInput("identifyOutliers.n", "", TRUE), align = "center"),
-                   column(cRes_w, checkboxInput("identifyOutliers.i", "", TRUE), align = "center"),
-                   column(cRes_w, checkboxInput("identifyOutliers.b", "", FALSE), align = "center"),
-                   column(cRes_w, checkboxInput("identifyOutliers.d", "", TRUE), align = "center")
-                 ),
-                 fluidRow(
-                   column(c1_w, "Identify prefixed and suffixed whitespace"),
-                   column(cRes_w, checkboxInput("identifyWhitespace.c", "", TRUE), align = "center"),
-                   column(cRes_w, checkboxInput("identifyWhitespace.f", "", TRUE), align = "center"),
-                   column(cRes_w, checkboxInput("identifyWhitespace.l", "", TRUE), align = "center"),
-                   column(cRes_w, checkboxInput("identifyWhitespace.n", "", FALSE), align = "center"),
-                   column(cRes_w, checkboxInput("identifyWhitespace.i", "", FALSE), align = "center"),
-                   column(cRes_w, checkboxInput("identifyWhitespace.b", "", FALSE), align = "center"),
-                   column(cRes_w, checkboxInput("identifyWhitespace.d", "", FALSE), align = "center")
-                )
+                 hr(),
+                 fluidRow(HTML("<b> Choose what checks to perform </b>"),
+                   fluidRow(
+                     column(c1_w, ""),
+                     column(cRes_w, "char.", align = "center"),
+                     column(cRes_w, "factor", align = "center"),
+                     column(cRes_w, "labelled", align = "center"),
+                     column(cRes_w, "numeric", align = "center"),
+                     column(cRes_w, "integer", align = "center"),
+                     column(cRes_w, "logical", align = "center"),
+                     column(cRes_w, "Date", align = "center")
+                   ),
+                   fluidRow(
+                     column(c1_w, "Identify case issues"),
+                     column(cRes_w, checkboxInput("identifyCaseIssues.c", "", TRUE), align = "center"),
+                     column(cRes_w, checkboxInput("identifyCaseIssues.f", "", TRUE), align = "center"),
+                     column(cRes_w, checkboxInput("identifyCaseIssues.l", "", TRUE), align = "center"),
+                     column(cRes_w, checkboxInput("identifyCaseIssues.n", "", FALSE), align = "center"),
+                     column(cRes_w, checkboxInput("identifyCaseIssues.i", "", FALSE), align = "center"),
+                     column(cRes_w, checkboxInput("identifyCaseIssues.b", "", FALSE), align = "center"),
+                     column(cRes_w, checkboxInput("identifyCaseIssues.d", "", FALSE), align = "center")
+                   ),
+                   fluidRow(
+                     column(c1_w, "Identify levels with < 6 obs."),
+                     column(cRes_w, checkboxInput("identifyLoners.c", "", TRUE), align = "center"),
+                     column(cRes_w, checkboxInput("identifyLoners.f", "", TRUE), align = "center"),
+                     column(cRes_w, checkboxInput("identifyLoners.l", "", TRUE), align = "center"),
+                     column(cRes_w, checkboxInput("identifyLoners.n", "", FALSE), align = "center"),
+                     column(cRes_w, checkboxInput("identifyLoners.i", "", FALSE), align = "center"),
+                     column(cRes_w, checkboxInput("identifyLoners.b", "", FALSE), align = "center"),
+                     column(cRes_w, checkboxInput("identifyLoners.d", "", FALSE), align = "center")
+                   ),
+                   fluidRow(
+                     column(c1_w, "Identify miscoded missing values"),
+                     column(cRes_w, checkboxInput("identifyMissing.c", "", TRUE), align = "center"),
+                     column(cRes_w, checkboxInput("identifyMissing.f", "", TRUE), align = "center"),
+                     column(cRes_w, checkboxInput("identifyMissing.l", "", TRUE), align = "center"),
+                     column(cRes_w, checkboxInput("identifyMissing.n", "", TRUE), align = "center"),
+                     column(cRes_w, checkboxInput("identifyMissing.i", "", TRUE), align = "center"),
+                     column(cRes_w, checkboxInput("identifyMissing.b", "", FALSE), align = "center"),
+                     column(cRes_w, checkboxInput("identifyMissing.d", "", FALSE), align = "center")
+                   ),
+                   fluidRow(
+                     column(c1_w, "Identify misclassified numeric or integer variables"),
+                     column(cRes_w, checkboxInput("identifyNums.c", "", TRUE), align = "center"),
+                     column(cRes_w, checkboxInput("identifyNums.f", "", TRUE), align = "center"),
+                     column(cRes_w, checkboxInput("identifyNums.l", "", TRUE), align = "center"),
+                     column(cRes_w, checkboxInput("identifyNums.n", "", FALSE), align = "center"),
+                     column(cRes_w, checkboxInput("identifyNums.i", "", FALSE), align = "center"),
+                     column(cRes_w, checkboxInput("identifyNums.b", "", FALSE), align = "center"),
+                     column(cRes_w, checkboxInput("identifyNums.d", "", FALSE), align = "center")
+                   ),
+                   fluidRow(
+                     column(c1_w, "Identify outliers"),
+                     column(cRes_w, checkboxInput("identifyOutliers.c", "", FALSE), align = "center"),
+                     column(cRes_w, checkboxInput("identifyOutliers.f", "", FALSE), align = "center"),
+                     column(cRes_w, checkboxInput("identifyOutliers.l", "", FALSE), align = "center"),
+                     column(cRes_w, checkboxInput("identifyOutliers.n", "", TRUE), align = "center"),
+                     column(cRes_w, checkboxInput("identifyOutliers.i", "", TRUE), align = "center"),
+                     column(cRes_w, checkboxInput("identifyOutliers.b", "", FALSE), align = "center"),
+                     column(cRes_w, checkboxInput("identifyOutliers.d", "", TRUE), align = "center")
+                   ),
+                   fluidRow(
+                     column(c1_w, "Identify prefixed and suffixed whitespace"),
+                     column(cRes_w, checkboxInput("identifyWhitespace.c", "", TRUE), align = "center"),
+                     column(cRes_w, checkboxInput("identifyWhitespace.f", "", TRUE), align = "center"),
+                     column(cRes_w, checkboxInput("identifyWhitespace.l", "", TRUE), align = "center"),
+                     column(cRes_w, checkboxInput("identifyWhitespace.n", "", FALSE), align = "center"),
+                     column(cRes_w, checkboxInput("identifyWhitespace.i", "", FALSE), align = "center"),
+                     column(cRes_w, checkboxInput("identifyWhitespace.b", "", FALSE), align = "center"),
+                     column(cRes_w, checkboxInput("identifyWhitespace.d", "", FALSE), align = "center")
+                  )
+                 )
                )
       ),
       tabPanel("About", includeHTML("about.html"))
@@ -319,18 +326,24 @@ server <- function(input, output, session) {
   observeEvent(input$doClean, {
    withBusyIndicatorServer("doClean", {
      readyForClean <<- TRUE
-     makeDataReport(data, replace = TRUE, file = "dataMaid_report.rmd", openResult = FALSE,
-           output = input$clean.output,
-           ordering = input$clean.ordering,
-           maxProbVals = as.numeric(input$clean.maxProbVals),
-           characterChecks = allChecks[unlist(checks.c)],
-           factorChecks = allChecks[unlist(checks.f)],
-           labelledChecks = allChecks[unlist(checks.l)],
-           numericChecks = allChecks[unlist(checks.n)],
-           integerChecks = allChecks[unlist(checks.i)],
-           logicalChecks = allChecks[unlist(checks.b)],
-           dateChecks = allChecks[unlist(checks.d)],
-           reportTitle = dataFile$name) 
+     if (input$reportType == "report") {
+       makeDataReport(data, replace = TRUE, file = "dataMaid_report.rmd", openResult = FALSE,
+             output = input$clean.output,
+             ordering = input$clean.ordering,
+             maxProbVals = as.numeric(input$clean.maxProbVals),
+             characterChecks = allChecks[unlist(checks.c)],
+             factorChecks = allChecks[unlist(checks.f)],
+             labelledChecks = allChecks[unlist(checks.l)],
+             numericChecks = allChecks[unlist(checks.n)],
+             integerChecks = allChecks[unlist(checks.i)],
+             logicalChecks = allChecks[unlist(checks.b)],
+             dateChecks = allChecks[unlist(checks.d)],
+             reportTitle = dataFile$name) 
+     } else {
+       makeCodebook(data, replace = TRUE, file = "dataMaid_report.rmd", openResult = FALSE,
+                    reportTitle = paste("Codebook for", dataFile$name),
+                    output = input$clean.output)
+     }
      message("Data report done!")
      fileName <<- paste("dataMaid_report.", ifelse(input$clean.output == "html", "html", "pdf"), sep = "") #OBS
      output$reportPageHTML <- renderUI({
