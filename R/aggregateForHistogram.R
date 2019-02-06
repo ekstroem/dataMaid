@@ -4,8 +4,10 @@
 #Uses binning procedure from hist() so that basicVisual and 
 #standardVisual create identical histograms, except for 
 #plotting style. 
-aggregateForHistogram <- function(v) {
-  d <- hist(v, plot = FALSE)
+#note: "Sturges" is breaks default in hist()
+#and we need to set breaks for Date variables only
+aggregateForHistogram <- function(v, breaks = "Sturges") {
+  d <- hist(v, plot = FALSE, breaks = breaks)
   nBins <- length(d$counts)
   out <- data.frame(xmin = d$breaks[-(nBins+1)],
                     xmax = d$breaks[-1],
