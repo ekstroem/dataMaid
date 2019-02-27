@@ -110,7 +110,9 @@ standardVisualIN <- function(v, vnam, doEval = TRUE) {
 # Dates
 standardVisualD <- function(v, vnam, doEval = TRUE) {
   v <- na.omit(v)
-  pf <- aggregateForHistogram(v)
+  pf <- aggregateForHistogram(v, breaks = 8)
+  pf$xmin <- as.Date(pf$xmin, origin = "1970-01-01")
+  pf$xmax <- as.Date(pf$xmax, origin = "1970-01-01")
   thisCall <- call("ggAggHist", data = pf, vnam = vnam)
 #      thisCall <- call("qplot", x=na.omit(v), geom="bar", xlab="",
 #                   main=vnam)
