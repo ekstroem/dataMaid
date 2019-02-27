@@ -13,10 +13,9 @@ Description: Data screening is an important first step of any statistical
     errors in a dataset. 
 URL: https://github.com/ekstroem/dataMaid
 BugReports: https://github.com/ekstroem/dataMaid/issues    
-Depends:
-    ggplot2    
 Imports:
     DT,
+    ggplot2,
     gridExtra,
     haven,
     htmltools,
@@ -35,7 +34,7 @@ Encoding: UTF-8
 LazyData: true
 ByteCompile: true
 License: GPL-2
-RoxygenNote: 6.1.0.9000
+RoxygenNote: 6.1.1
 Collate: 
     'aggregateForBarplot.R'
     'aggregateForHistogram.R'

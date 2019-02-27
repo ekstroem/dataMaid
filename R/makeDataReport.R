@@ -638,8 +638,7 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
         }
       }
       if (output=="html" & !outOutput == "docx") writer("output: html_document")
-      if (outOutput=="docx") writer("output: word_document")
-      
+      if (outOutput=="docx") writer("output: word_document")      
     }
     writer("---")
     
