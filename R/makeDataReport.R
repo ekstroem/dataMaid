@@ -140,6 +140,10 @@
 #' are the names of the class, they should be treated as. If \code{makeDataReport()} should e.g. treat variables of 
 #' class \code{raw} as characters and variables of class \code{complex} as numeric, you should put
 #' \code{treatXasY = list(raw = "character", complex = "numeric")}. 
+#' 
+#' @param includeVariableList A logical indicating whether the results of the summarize/visualize/check-steps 
+#' should be added to the report. Defaults to \code{TRUE}. Note that setting it to \code{FALSE} does currently
+#' not speed up computations, it just means that the information is not printed in the report. 
 #'
 #' @param \dots Other arguments that are passed on the to precheck,
 #' checking, summary and visualization functions.
@@ -237,6 +241,7 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
                   codebook = FALSE,
                   reportTitle = NULL,
                   treatXasY = NULL,
+                  includeVariableList = TRUE,
                   ...) {
   
   ## Store the original call
@@ -638,7 +643,8 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
         }
       }
       if (output=="html" & !outOutput == "docx") writer("output: html_document")
-      if (outOutput=="docx") writer("output: word_document")      
+      if (outOutput=="docx") writer("output: word_document")
+      
     }
     writer("---")
     
@@ -848,7 +854,13 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
           writer("## ", printable_name, "\n", outfile = vListConn) #** makes linking complicated
           
             ## Fill out name, vClass and missingPct entries in the results overview
-            allRes$name[allRes$variable == vnam] <- paste("[", printable_name, "]", sep = "")
+            extraLinkCharBegin <- "["
+            extraLinkCharEnd <- "]"
+            if (!includeVariableList) {
+              extraLinkCharBegin <- extraLinkCharEnd <- ""
+            }
+            #add link functionality by wrapping varname in [] if the variable list is to be printed
+            allRes$name[allRes$variable == vnam] <- paste(extraLinkCharBegin, printable_name, extraLinkCharEnd, sep = "")
             ## Pass on the label for the codebook
               #Note: Need "exact = TRUE", otherwise attr might retreive "labels" attributes 
             allRes$label[allRes$variable == vnam] <- ifelse(is.null(attr(v, "label", exact = TRUE)), "", attr(v, "label", exact = TRUE))
@@ -1019,11 +1031,12 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
     
     
     
-    
-    #Write variable list file into parent .Rmd file and delete the temporary file afterwards
-    writer(scan(vListFileName, what = "character", sep = "\n",
-                blank.lines.skip = FALSE, quiet = TRUE))
-    unlink(vListFileName)
+    if (includeVariableList) {
+      #Write variable list file into parent .Rmd file and delete the temporary file afterwards
+      writer(scan(vListFileName, what = "character", sep = "\n",
+                  blank.lines.skip = FALSE, quiet = TRUE))
+      unlink(vListFileName)
+    }
     
     
     ## This could be wrapped in a tryCatch for those rather weird situations where the package is not installed.

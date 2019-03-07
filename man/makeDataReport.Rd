@@ -13,7 +13,8 @@ makeDataReport(data, output = NULL, render = TRUE, useVar = NULL,
   openResult = TRUE, summaries = setSummaries(),
   visuals = setVisuals(), checks = setChecks(), listChecks = TRUE,
   maxProbVals = 10, maxDecimals = 2, addSummaryTable = TRUE,
-  codebook = FALSE, reportTitle = NULL, treatXasY = NULL, ...)
+  codebook = FALSE, reportTitle = NULL, treatXasY = NULL,
+  includeVariableList = TRUE, ...)
 }
 \arguments{
 \item{data}{The dataset to be checked. This dataset should be of class \code{data.frame},
@@ -138,6 +139,10 @@ that inherits from any of these classes). The names of the list are the new clas
 are the names of the class, they should be treated as. If \code{makeDataReport()} should e.g. treat variables of 
 class \code{raw} as characters and variables of class \code{complex} as numeric, you should put
 \code{treatXasY = list(raw = "character", complex = "numeric")}.}
+
+\item{includeVariableList}{A logical indicating whether the results of the summarize/visualize/check-steps 
+should be added to the report. Defaults to \code{TRUE}. Note that setting it to \code{FALSE} does currently
+not speed up computations, it just means that the information is not printed in the report.}
 
 \item{\dots}{Other arguments that are passed on the to precheck,
 checking, summary and visualization functions.}
