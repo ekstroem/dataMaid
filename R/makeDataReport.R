@@ -627,11 +627,13 @@ makeDataReport <- function(data, output=NULL, render=TRUE,
       writer(paste("date:", Sys.time())) 
       if (output=="pdf") {
         writer("output: pdf_document")
+	writer("geometry: margin=2cm")
         writer(paste0("documentclass: ", ifelse(codebook, "article", "report")))
         writer("header-includes:")
         if (!codebook) {
             writer("  - \\renewcommand{\\chaptername}{Part}")
         }
+#        writer("  - \\usepackage{fullpage}")
         writer("  - \\newcommand{\\fullline}{\\noindent\\makebox[\\linewidth]{\\rule{\\textwidth}{0.4pt}}}")
         if (codebook) {
             writer("  - \\renewcommand\\familydefault{\\sfdefault}")
