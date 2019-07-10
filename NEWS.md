@@ -1,4 +1,4 @@
-# dataMaid next version
+# dataMaid 1.3.1
 
 *   Updated requirements for package robustbase. This fixes convergence problems of mc thanks to Martin Maechler and the robustbase team. 
     Thanks to Erik Bülow for pointing the error out (#27)
@@ -6,6 +6,7 @@
 *   Fixed bin sizes in standardVisual histograms so they match the plots created by ggplots2
 *   Adding the tableVisual function to the options for visual functions
 *   Various minor internal fixes
+*   Added geometry to YAML definitions to fix margins with pdf output
 
 # dataMaid 1.1.2
 
