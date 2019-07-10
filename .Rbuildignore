@@ -16,3 +16,4 @@
 ^sandbox$
 ^docs$
 ^_pkgdown.yaml
+^texput.log
