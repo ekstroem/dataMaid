@@ -1,3 +1,7 @@
+# Upcoming version
+
+*   Fixed a bug in isCPR that threw a warning when checking if a variable was labelled or haven_labelled
+
 # dataMaid 1.3.1
 
 *   Updated requirements for package robustbase. This fixes convergence problems of mc thanks to Martin Maechler and the robustbase team. 

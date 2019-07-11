@@ -42,7 +42,7 @@ isCPR <- function(v, ...) { #Note: Implementation works until the year 2036...
   out <- list(problem=FALSE, message="", problemValues = NULL)
   m <- "Warning: The variable seems to consist of Danish civil regristration (CPR) numbers."
   
-  if (any(c("labelled", "haven_labelled")) %in% class(v)) v <- dataMaid_as_factor(v)
+  if (any(c("labelled", "haven_labelled") %in% class(v))) v <- dataMaid_as_factor(v)
   
   v <- as.character(na.omit(v))
   if (length(v) == 0) return(checkResult(out)) #if v consists only of NAs
