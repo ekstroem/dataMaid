@@ -1,0 +1,16 @@
+bibentry(bibtype = "Article",
+  title        = "{dataMaid}: Your Assistant for Documenting Supervised Data Quality Screening in {R}",
+  author       = c(person(given = c("Anne", "Helby"),
+                          family = "Petersen"),
+                   person(given = c("Claus", "Thorn"),
+                          family = "Ekstr{\\o}m")),
+  journal      = "Journal of Statistical Software",
+  year         = "2019",
+  volume       = "90",
+  number       = "6",
+  pages        = "1--38",
+  doi          = "10.18637/jss.v090.i06",
+
+  header       = "To cite dataMaid in publications use:"
+)
+

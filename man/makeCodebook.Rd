@@ -32,3 +32,6 @@ Make a data codebook that summarizes the contents of a dataset.
 The result is saved to an R markdown file which can
 rendered into an easy-to-read codebook in pdf, html or word formats.
 }
+\references{
+Petersen AH, Ekstrøm CT (2019). “dataMaid: Your Assistant for Documenting Supervised Data Quality Screening in R.” _Journal of Statistical Software_, *90*(6), 1-38. doi: 10.18637/jss.v090.i06 ( \url{https://doi.org/10.18637/jss.v090.i06}).
+}

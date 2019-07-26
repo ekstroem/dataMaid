@@ -47,6 +47,8 @@
 #' If \code{v} is a full dataset: A list of matrices as described above, one for each
 #' variable in the dataset.
 #'
+#' @references Petersen AH, Ekstrøm CT (2019). “dataMaid: Your Assistant for Documenting Supervised Data Quality Screening in R.” _Journal of Statistical Software_, *90*(6), 1-38. doi: 10.18637/jss.v090.i06 (\url{https://doi.org/10.18637/jss.v090.i06}).
+#'
 #' @seealso \code{\link{setSummaries}},
 #' \code{\link{summaryFunction}}, \code{\link{allSummaryFunctions}}, 
 #' \code{\link{summaryResult}},
