@@ -11,8 +11,7 @@ Description: Data screening is an important first step of any statistical
     summary of the checks and the results that a human can use to identify possible
     errors. It provides an extendable suite of test for common potential
     errors in a dataset. 
-Reference: Petersen AH, Ekstrøm CT (2019). “dataMaid: Your Assistant for Documenting Supervised Data Quality Screening in R.” _Journal of Statistical Software_, *90*(6), 1-38. doi: 10.18637/jss.v090.i06 ( \url{https://doi.org/10.18637/jss.v090.i06}).
-URL: https://github.com/ekstroem/dataMaid
+URL: https://github.com/ekstroem/dataMaid, https://doi.org/10.18637/jss.v090.i06
 BugReports: https://github.com/ekstroem/dataMaid/issues    
 Imports:
     ggplot2,
