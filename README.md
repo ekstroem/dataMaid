@@ -16,7 +16,7 @@ To install the development version of dataMaid run the following
 commands from within R (requires that the `devtools` package is already installed)
 
 ```{r}
-devtools::install_github('ekstroem/dataMaid')
+devtools::install_github("ekstroem/dataMaid")
 ```
 
 [![Build Status](https://travis-ci.org/ekstroem/dataMaid.svg)](https://travis-ci.org/ekstroem/dataMaid) ![Download counter](http://cranlogs.r-pkg.org/badges/grand-total/dataMaid)
@@ -25,12 +25,12 @@ devtools::install_github('ekstroem/dataMaid')
 ## Package overview
 
 A super simple way to get started is to load the package and use the
-`makeDataReport` function on a data frame (if you try to generate several
+`makeDataReport()` function on a data frame (if you try to generate several
 reports for the same data, then it may be necessary to add the `replace=TRUE`
 argument to overwrite the existing report). 
 
 ```{r}
-library(dataMaid)
+library("dataMaid")
 data(trees)
 makeDataReport(trees)
 ```
@@ -43,7 +43,8 @@ is needed for creating pdf reports.
 
 ### Using dataMaid interactively
 
-The dataMaid package can also be used interactively by running checks for the individual variables or for all variables in the dataset
+The dataMaid package can also be used interactively by running checks
+for the individual variables or for all variables in the dataset
 
 ```{r}
 data(toyData)
@@ -53,10 +54,11 @@ check(toyData) # Check all variables at once
 
 By default the standard battery of tests is run depending on the
 variable type. If we just want a specific test for, say, a numeric
-variable then we can specify
-that. All available checks can be viewed by calling `allCheckFunctions()`. See
-[the documentation](https://github.com/ekstroem/dataMaid/blob/master/latex/article_vol2.pdf) for
-an overview of the checks available or how to create and include your own tests.
+variable then we can specify that. All available checks can be viewed
+by calling `allCheckFunctions()`. See [the
+documentation](https://github.com/ekstroem/dataMaid/blob/master/latex/article_vol2.pdf)
+for an overview of the checks available or how to create and include
+your own tests.
 
 
 ```{r}
@@ -86,9 +88,17 @@ summarize(toyData$events, summaries = setSummaries(all =  c("centralValue", "min
 
 ## Detailed documentation
 
-[This manuscript](https://github.com/ekstroem/dataMaid/blob/master/latex/article_accept.pdf) has been accepted for publication in JSS and it
-provides a detailed introduction to the dataMaid package. At one point
-it will be added as a vignette. Moreover, we have created a vignette that describes how to extend dataMaid to include user-defined data screening checks, summaries and visualizations. This vignette is called `extending_dataMaid`:
+You can read the main paper accompanying the package at the [Journal
+of Statistical
+Software](https://www.jstatsoft.org/article/view/v090i06). It provides
+a detailed introduction to the dataMaid package.
+
+We also have two blog posts that provide an introduction to the package. The can be found [here (the primary one)](https://sandsynligvis.dk/2017/08/21/datamaid-your-personal-assistant-for-cleaning-up-the-data-cleaning-process/) and [here](https://sandsynligvis.dk/2018/03/03/generating-codebooks-in-r/).
+
+Moreover, we have
+created a vignette that describes how to extend dataMaid to include
+user-defined data screening checks, summaries and visualizations. This
+vignette is called `extending_dataMaid`:
 
 ```{r}
 vignette("extending_dataMaid")
