@@ -82,11 +82,18 @@ basicVisual <- visualFunction(basicVisual, "Histograms and barplots using graphi
 #' importFrom stats na.omit
 #' @inheritParams standardVisual
 basicVisualCFLB <- function(v, vnam, doEval = TRUE) {
-  v <- escapeRStyle(na.omit(v))
+  v <- na.omit(v)
   if (identifyNums(v, nVals = 0)$problem) {
-    v <- as.numeric(as.character(v))
+    v <- factor(as.numeric(as.character(v)))
+  } else {
+    if (is.factor(v)) {
+      levs <-  escapeRStyle(levels(v))
+      v <- factor(escapeRStyle(v), levels = levs)
+    } else {
+      v <- escapeRStyle(v)
+      v <- factor(v)
+    }
   }
-  v <- factor(v)
   aggrV <- table(v)
   thisCall <- call("barplot", height = aggrV, main = vnam)
   if (doEval) {

@@ -82,9 +82,16 @@ standardVisual <- visualFunction(standardVisual, "Histograms and barplots using 
 
 #character, factor, labelled and logical variables
 standardVisualCFLB <- function(v, vnam, doEval = TRUE) {
-  v <- escapeRStyle(na.omit(v))
+  v <- na.omit(v)
   if (identifyNums(v, nVals = 0)$problem) {
     v <- as.numeric(as.character(v))
+  } else {
+    if (is.factor(v)) {
+      levs <-  escapeRStyle(levels(v))
+      v <- factor(escapeRStyle(v), levels = levs)
+    } else {
+      v <- escapeRStyle(v)
+    }
   }
   pf <- aggregateForBarplot(v)
   thisCall <- call("ggAggBarplot", data = pf, vnam = vnam)
