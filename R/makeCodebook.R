@@ -65,8 +65,9 @@ makeCodebook <- function(data, vol="", reportTitle=NULL, file=NULL, ...) {
     Call$maxProbVals <- ifelse(is.null(Call[["maxProbVals"]]), Inf, Call[["maxProbVals"]])
     Call$listChecks <-  ifelse(is.null(Call[["listChecks"]]), FALSE, Call[["listChecks"]])
     Call$smartNum <- ifelse(is.null(Call[["smartNum"]]), FALSE, Call[["smartNum"]])
-                          
-    Call[[1L]] <- as.name("makeDataReport")
+
+
+    Call[[1]] <- quote(dataMaid::makeDataReport)
     eval.parent(Call)
 
     
