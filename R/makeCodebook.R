@@ -1,11 +1,11 @@
 #' Produce a data codebook
 #'
 #' Make a data codebook that summarizes the contents of a dataset.
-#' The result is saved to an R markdown file which can
+#' The result is saved to an R markdown file which can be
 #' rendered into an easy-to-read codebook in pdf, html or word formats. 
 #'
 #' @param data The dataset to be checked. This dataset should be of class \code{data.frame},
-#' \code{tibble} or \code{matrix}. If it is of classs \code{matrix}, it will be converted to a
+#' \code{tibble} or \code{matrix}. If it is of class \code{matrix}, it will be converted to a
 #' \code{data.frame}.
 #' 
 #' @param vol Extra text string or numeric that is appended on the end of the output
@@ -19,7 +19,7 @@
 #' If set to \code{NULL} (the default), the filename will be the name of \code{data}
 #' prefixed with "codebook_", if this qualifies as a valid file name (e.g. no special
 #' characters allowed). Otherwise, \code{makeCodebook()} tries to create a valid filename by
-#' substituing illegal characters. Note that a valid file is of type .Rmd, hence all
+#' substituting illegal characters. Note that a valid file is of type .Rmd, hence all
 #' filenames should have a ".Rmd"-suffix.
 #'
 #' @param ... Additional parameters passed to \code{makeDataReport}.
