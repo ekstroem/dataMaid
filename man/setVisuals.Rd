@@ -4,9 +4,17 @@
 \alias{setVisuals}
 \title{Set visual arguments for makeDataReport}
 \usage{
-setVisuals(character = NULL, factor = NULL, labelled = NULL,
-  haven_labelled = NULL, numeric = NULL, integer = NULL,
-  logical = NULL, Date = NULL, all = "standardVisual")
+setVisuals(
+  character = NULL,
+  factor = NULL,
+  labelled = NULL,
+  haven_labelled = NULL,
+  numeric = NULL,
+  integer = NULL,
+  logical = NULL,
+  Date = NULL,
+  all = "standardVisual"
+)
 }
 \arguments{
 \item{character}{A function name (character string) to be used as the visual function for character

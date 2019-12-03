@@ -4,14 +4,17 @@
 \alias{setSummaries}
 \title{Set summary arguments for makeDataReport}
 \usage{
-setSummaries(character = defaultCharacterSummaries(),
+setSummaries(
+  character = defaultCharacterSummaries(),
   factor = defaultFactorSummaries(),
   labelled = defaultLabelledSummaries(),
   haven_labelled = defaultHavenlabelledSummaries(),
   numeric = defaultNumericSummaries(),
   integer = defaultIntegerSummaries(),
-  logical = defaultLogicalSummaries(), Date = defaultDateSummaries(),
-  all = NULL)
+  logical = defaultLogicalSummaries(),
+  Date = defaultDateSummaries(),
+  all = NULL
+)
 }
 \arguments{
 \item{character}{A character vector of function names to be used as summaries for character

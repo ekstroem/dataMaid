@@ -4,12 +4,17 @@
 \alias{setChecks}
 \title{Set check arguments for makeDataReport}
 \usage{
-setChecks(character = defaultCharacterChecks(),
-  factor = defaultFactorChecks(), labelled = defaultLabelledChecks(),
+setChecks(
+  character = defaultCharacterChecks(),
+  factor = defaultFactorChecks(),
+  labelled = defaultLabelledChecks(),
   haven_labelled = defaultHavenlabelledChecks(),
-  numeric = defaultNumericChecks(), integer = defaultIntegerChecks(),
-  logical = defaultLogicalChecks(), Date = defaultDateChecks(),
-  all = NULL)
+  numeric = defaultNumericChecks(),
+  integer = defaultIntegerChecks(),
+  logical = defaultLogicalChecks(),
+  Date = defaultDateChecks(),
+  all = NULL
+)
 }
 \arguments{
 \item{character}{A character vector of function names to be used as checks for character

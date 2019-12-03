@@ -4,9 +4,11 @@
 \alias{messageGenerator}
 \title{Produce a message for the output of a checkFunction}
 \usage{
-messageGenerator(problemStatus,
+messageGenerator(
+  problemStatus,
   message = "Note that a check function found the following problematic values:",
-  nMax = 10)
+  nMax = 10
+)
 }
 \arguments{
 \item{problemStatus}{A list consisting of two entries:

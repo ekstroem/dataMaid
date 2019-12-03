@@ -2,7 +2,7 @@ Package: dataMaid
 Type: Package
 Title: A Suite of Checks for Identification of Potential Errors in a Data Frame
     as Part of the Data Screening Process
-Version: 1.3.2
+Version: 1.3.3
 Date: 2019-07-26
 Authors@R: c(person(given="Anne Helby", family="Petersen", email="ahpe@sund.ku.dk", role=c("aut")),
              person(given="Claus Thorn", family="Ekstrøm", email="ekstrom@sund.ku.dk", role=c("aut", "cre")))
@@ -29,11 +29,12 @@ Suggests:
     rmarkdown (>= 1.10),
     testthat
 VignetteBuilder: knitr
+SystemRequirements: pandoc (>= 2.0; https://pandoc.org)
 Encoding: UTF-8
 LazyData: true
 ByteCompile: true
 License: GPL-2
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.1
 Collate: 
     'aggregateForBarplot.R'
     'aggregateForHistogram.R'
@@ -86,5 +87,6 @@ Collate:
     'tableVisual.R'
     'uniqueValues.R'
     'unpackLabelled.R'
+    'utility.R'
     'variableType.R'
     'visualize.R'
