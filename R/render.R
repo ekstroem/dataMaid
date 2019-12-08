@@ -19,5 +19,11 @@
 #' @seealso \code{\link[rmarkdown]{render}}.
 #'
 #' @export
-render <- function(file, quiet) rmarkdown::render(file, quiet=quiet)
+render <- function(file, quiet) {
 
+    if (!rmarkdown::pandoc_available()) {
+        stop("pandoc appears not to be installed on the system. Please see the vignette for the rmarkdown package on how to install pandoc")
+    }
+
+    rmarkdown::render(file, quiet=quiet)
+}

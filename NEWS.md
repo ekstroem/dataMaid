@@ -1,6 +1,9 @@
 # Upcoming version
 
+# dataMaid 1.4.0
+
 *   Fixed a bug in isCPR that threw a warning when checking if a variable was labelled or haven_labelled
+*   Added functions to check that pandoc, whoami, and git are available on the system. If not, an error message is printed
 
 # dataMaid 1.3.1
 

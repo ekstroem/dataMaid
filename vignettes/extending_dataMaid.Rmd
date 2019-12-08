@@ -725,7 +725,8 @@ The 11 variables of `artData` can be summarized as follows:
 
 The options for the data report described above are specified as follows:
 
-```{r makeReport, message  = FALSE, warning = FALSE}
+
+```{r makeReport, message  = FALSE, warning = FALSE, eval=rmarkdown::pandoc_available()}
 makeDataReport(artData,
   #add extra precheck function         
   preChecks = c("isKey", "isSingular", "isSupported", "isID"),
@@ -771,8 +772,8 @@ We have chosen the output to be html (`output = "html"`) so that it can easily b
 
 #A dataMaid report with user-defined functions: Documenting artData
 
-We include the report documenting `artData`:
+We include the report documenting `artData` (this is only shown if `pandoc` is available to generate it):
 
-```{r includeReport}
+```{r includeReport, eval=rmarkdown::pandoc_available()}
 htmltools::includeHTML("dataMaid_artData.html")
 ```
