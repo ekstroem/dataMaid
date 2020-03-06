@@ -1,4 +1,11 @@
-# dataMaid
+# dataMaid <img src="man/figures/logo.png" width="121px" height="140px" align="right" style="padding-left:10px;background-color:white;" />
+
+
+[![Travis-CI Build
+Status](https://travis-ci.org/ekstroem/dataMaid.svg?branch=master)](https://travis-ci.org/ekstroem/dataMaid)
+[![CRAN\_Release\_Badge](http://www.r-pkg.org/badges/version-ago/dataMaid)](https://CRAN.R-project.org/package=dataMaid)
+[![CRAN\_Download\_Badge](http://cranlogs.r-pkg.org/badges/dataMaid)](https://CRAN.R-project.org/package=dataMaid)
+
 
 dataMaid is an R package for documenting and creating reports on data cleanliness. 
 
