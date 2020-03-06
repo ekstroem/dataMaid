@@ -4,7 +4,7 @@
 [![Travis-CI Build
 Status](https://travis-ci.org/ekstroem/dataMaid.svg?branch=master)](https://travis-ci.org/ekstroem/dataMaid)
 [![CRAN\_Release\_Badge](http://www.r-pkg.org/badges/version-ago/dataMaid)](https://CRAN.R-project.org/package=dataMaid)
-[![CRAN\_Download\_Badge](http://cranlogs.r-pkg.org/badges/dataMaid)](https://CRAN.R-project.org/package=dataMaid)
+![Download counter](http://cranlogs.r-pkg.org/badges/grand-total/dataMaid)
 
 
 dataMaid is an R package for documenting and creating reports on data cleanliness. 
@@ -25,9 +25,6 @@ commands from within R (requires that the `devtools` package is already installe
 ```{r}
 devtools::install_github("ekstroem/dataMaid")
 ```
-
-[![Build Status](https://travis-ci.org/ekstroem/dataMaid.svg)](https://travis-ci.org/ekstroem/dataMaid) ![Download counter](http://cranlogs.r-pkg.org/badges/grand-total/dataMaid)
-
 
 ## Package overview
 
