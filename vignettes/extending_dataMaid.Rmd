@@ -1,7 +1,7 @@
 ---
 title: "Extending dataMaid"
 author: "Anne Helby Petersen and Claus Thorn Ekstrøm"
-date: "November 13, 2017"
+date: "July 3, 2020"
 output: 
   rmarkdown::html_vignette:
     toc: true
@@ -18,10 +18,10 @@ Sys.setenv(TZ="Europe/Copenhagen")  ## Set time zone to prevent warnings
 Sys.getenv("TZ")
 ```
 
-#Introduction
-The data documentation tools available in `dataMaid` allows for it to be utilized as an easy-to-use, self-contained package, as outlined in our [article manuscript](https://github.com/ekstroem/dataMaid/blob/master/latex/article_vol3.pdf). However, this does *not* imply that `dataMaid` is not customizable: `dataMaid` was specifically built for including user-made extensions and this vignette is a tutorial into how one can write simple extensions that can be used in e.g. the `makeDataReport()` function from `dataMaid`. 
+## Introduction
+The data documentation tools available in `dataMaid` allows for it to be utilized as an easy-to-use, self-contained package, as outlined in our [article](https://www.jstatsoft.org/article/view/v090i06). However, this does *not* imply that `dataMaid` is not customizable: `dataMaid` was specifically built for including user-made extensions and this vignette is a tutorial into how one can write simple extensions that can be used in e.g. the `makeDataReport()` function from `dataMaid`. 
 
-##Three steps of data documentation
+### Three steps of data documentation
 In order to understand how different parts of the report creation can be customized, we will briefly dwell on the structure of the data reports made by `dataMaid`. Aside from a few pages dedicated to gaining an overview of the full dataset and what was done to document its current state, the report sequentially presents information for each variable. More specifically, each variable is presented with one of the two sets of information:
 
 1. The result of a single eligibility check (referred to as a *pre-check* below)
@@ -48,7 +48,7 @@ In this vignette, we focus on the report creation tools of `dataMaid`. However, 
 
 
 
-#Function templates
+## Function templates
 In order to construct a summary, visual or check function, one needs
 to create a new function with a specific structure.  This can be done with
 different levels of strictness. If
@@ -78,7 +78,7 @@ This table summarizes the minimal and recommended structures for summary-, visua
 
 
 
-##Writing a summaryFunction
+### Writing a summaryFunction
 As mentioned above, `dataMaid` provides a dedicated class for
 `summaryFunction`s. However, this does not imply that they are
 particularly advanced or complicated to create; in fact, they are
@@ -141,7 +141,7 @@ allClasses()
 ```
 
 
-##Writing a visualFunction
+### Writing a visualFunction
 `visualFunction`s are the functions that produce the figures in a
 `dataMaid` output document. Writing a `visualFunction` is slightly
 more complicated than writing a `summaryFunction`. This is due to
@@ -189,7 +189,7 @@ Now, `myVisualFunction()` will be available in a `allVisualFunctions()`
 call, just like the two build-in `visualFunctions`, `standardVisual`
 and `basicVisual`.
 
-##Writing a checkFunction
+### Writing a checkFunction
 The last, but perhaps most important, `dataMaid` function type is
 the `checkFunction`. These are the functions that flag issues in
 the data in the *check* step and/or control the overall flow of the data
@@ -293,7 +293,7 @@ Now, problematic values will be rounded in the outputted message, while they
 will still appear in their original format under the entry `problemValues`
 in the returned object.
 
-#A worked example
+## A worked example
 
 As an example, we now create some new functions and show both how they can be
 used interactively and how they can be integrated with the `makeDataReport()`
@@ -311,11 +311,11 @@ function. These new functions are:
 
 These functions are defined in turn below, and afterwards, an example of how they can be called from `makeDataReport()` is provided.
 
-##summaryFunction examples: countZeros() and meanSummary()
+### summaryFunction examples: countZeros() and meanSummary()
 We start by defining two summary functions. For both functions, we use `summaryResult()` for creating the function output and then we use `summaryFunction()` in order to add the functions to the output from a `allSummaryFunctions()` call. 
 
 
-###countZeros --- a simple summaryFunction
+#### countZeros --- a simple summaryFunction
 First, we will make a summary function that counts how many times the value `0` occurs in a variable - either as a character or as a numeric value. We define this `summaryFunction` in the following lines of code:
 
 ```{r defineCountZeros}
@@ -357,7 +357,7 @@ countZeros <- summaryFunction(countZeros,
 
 Please note that this is just meta-information: The function can still be called on `Date` and `logical` variables, but then the user will know that they are acting against the recommendations of the programmer. In order to control what input variables can actually be used, we suggest writing the function as an S3 generic with methods for some, but not all, data classes, as the next example will show. 
 
-###meanSummary --- an S3 generic summary function
+#### meanSummary --- an S3 generic summary function
 In this example, we will use the concept of method dispatch and generic S3 functions in order to control what data classes a `summaryFunction` can be used for. If you are not familiar with S3 classes, we refer to Hadley Wickham's [Advanced R](http://adv-r.had.co.nz/OO-essentials.html) for a excellent, though somewhat computer science heavy, introduction to object oriented programming in R. 
 
 We would like to define a very simple summary function that computes the arithmetic mean of a variable. This is of course only meaningful for numerical variables, i.e. variables with the classes numeric`, `integer` or `logical`. Therefore, we will use the S3 framework to force users to only call our function on these appropriate classes. 
@@ -437,10 +437,10 @@ allSummaryFunctions()
 ```  
 
 
-##visualFunction examples: mosaicVisual() and prettierHist() 
+### visualFunction examples: mosaicVisual() and prettierHist() 
 We will now define two different visual functions. The first one is a `graphics`-based function, while the second one is `ggplot2`-based.
 
-###mosaicVisual --- a new visualFunction for categorical data
+#### mosaicVisual --- a new visualFunction for categorical data
 In the base `R` package `graphics`, a function which produces
 mosaic plots is available. It is intended to be called on one-way tables, as. e.g. returned from `table()`. This function is named `mosiacplot` and results in the following type of plots:
 
@@ -501,7 +501,7 @@ classes except the `numeric`, `integer` and `Date` classes, as the mosaic plot i
 have been left as `NULL` and then the classes for which methods are
 available would be added automatically by `visualFunction()`.
 
-###prettierHist() --- a customized ggplot2 histogram 
+#### prettierHist() --- a customized ggplot2 histogram 
 Next, we will define a `ggplot2`-based plotting function. We will simply make a slight alteration of the looks of the typical `ggplot2` histogram, but it serves of a general example of how `ggplot2` visual functions can be built. 
 
 But first, we define a helper function that does the actual plotting. This makes it simpler to write a visual function using the `call()`/`eval()` structure presented in the above, thereby making it easy to provide a visual function that can both be used interactively (with `doEval = TRUE`) and in `makeDataReport()` (with `doEval = FALSE`). The helper function is defined like this:
@@ -553,10 +553,10 @@ allVisualFunctions()
 ```
 
 
-##checkFunction examples: isID() and identifyColons() 
+### checkFunction examples: isID() and identifyColons() 
 Next up is two new check functions. First, we will define a check function that is intended for use in the pre-check stage, i.e. used for screening variables for eligibility for the summarize/visualize/check-steps. This will be a function that checks the entries in a variable for a certain structure which often used in ID type variables and we will name the new function `isID()`. Afterwards, we will define a check function that looks for `:` in categorical variables, as these might be the result of unintended interactions introduced in the data wrangling process.
 
-###isID --- a new checkFunction without problem values
+#### isID --- a new checkFunction without problem values
 First, let's define the `isID()` function. As this function is
 not supposed to list problematic values, it falls within the category
 of `checkFunctions` represented by
@@ -611,7 +611,7 @@ isID(rnorm(10))
 As we have not changed the class of this check function to be a `checkFunction`, it should be noted that it will *not* show up in the output of a `allCheckFunctions()` call. 
 
 
-###identifyColons --- a new checkFunction with problem values
+#### identifyColons --- a new checkFunction with problem values
 
 The last function we will define in this vignette is `identifyColons()`. We
 define it using the helper function `messageGenerator()` to
@@ -691,7 +691,7 @@ identifyColons(letters)
 ```
 
 
-##Calling the new summarize/visualize/check functions from makeDataReport()
+### Calling the new summarize/visualize/check functions from makeDataReport()
 
 Now, we are ready to use all the new functions in a `makeDataReport()`
 call. We wish to produce a report that utilizes the newly defined functions in the following way:
@@ -770,7 +770,7 @@ makeDataReport(artData,
 
 We have chosen the output to be html (`output = "html"`) so that it can easily be included in this vignette by use of the `includeHTML()` function from the `htmltools` package. We have set `open = FALSE` so that the outputted html file is not opened automatically. The outputted report is available at the end of this vignette. 
 
-#A dataMaid report with user-defined functions: Documenting artData
+## A dataMaid report with user-defined functions: Documenting artData
 
 We include the report documenting `artData` (this is only shown if `pandoc` is available to generate it):
 
