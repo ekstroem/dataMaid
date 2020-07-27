@@ -136,17 +136,41 @@ printProblemValues <- function(problemValues, nMax = Inf) {
         ##NOTE: sort removes NaNs if not told explicitly not to by use of the na.last-argument
     nVals <- length(problemValues)
     extraStr <- ""
+    
     if (nMax < nVals) {
       if (nMax == 0) {
-        problemValues <- ""
-        extraStr <- paste(nVals-nMax, "problematic value(s) omitted")
-      } else {
-        problemValues <- problemValues[1:nMax]
-        extraStr <- paste(" (", nVals-nMax, " additional values omitted)", sep="")
+       outText <- paste(nVals-nMax, "problematic value(s) omitted")
       }
+      if (nMax == 1) {
+        outText <- paste("\\\"", problemValues[1], "\\\"",
+                         " (", nVals-nMax, " additional values omitted)", sep = "")
+      }
+      if (nMax > 1) {
+        nLeft <- ceiling(nMax / 2)
+        nRight <- floor(nMax / 2)
+        strLeft <- paste0(paste0("\\\"", problemValues[1:nLeft], "\\\""),
+                         collapse=", ")
+        strRight <- paste0(paste0("\\\"", problemValues[(nVals-nRight+1):nVals], "\\\""),collapse=", ")
+        extraStr <- paste(" (", nVals-nMax, " values omitted)", sep="")
+        outText <- paste0(strLeft, ", ..., ",strRight, extraStr)
+      }
+    } else { #if no omission of probvals
+      outText <- paste(paste("\\\"", problemValues, "\\\"", sep=""), collapse = ", ")
     }
-    paste(paste(paste("\\\"", problemValues, "\\\"", sep=""),
-                collapse=", "), extraStr, sep="")
+    
+    outText
+    
+  ##old version that prints the first problemvalues only:
+  #  if (nMax < nVals) {
+  #    if (nMax == 0) {
+  #      
+  #    } else {
+  #      problemValues <- problemValues[1:nMax]
+  #      extraStr <- paste(" (", nVals-nMax, " additional values omitted)", sep="")
+  #    }
+  #  }
+  #  paste(paste(paste("\\\"", problemValues, "\\\"", sep=""),
+  #              collapse=", "), extraStr, sep="")
 }
 
 #Does character escaping such that the text can be rendered by rmarkdown
