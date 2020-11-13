@@ -1,5 +1,7 @@
 # Upcoming version
 
+*   Fixed a bug in identifyNums that removed all periods when checking if a variable was numeric - thanks to Hervé Barjat (#56)
+
 # dataMaid 1.4.0
 
 *   Fixed a bug in isCPR that threw a warning when checking if a variable was labelled or haven_labelled
