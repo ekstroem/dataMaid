@@ -4,7 +4,8 @@
 \name{testData}
 \alias{testData}
 \title{Extended example data to test the features of dataMaid}
-\format{A data frame with 15 rows and 14 variables.
+\format{
+A data frame with 15 rows and 14 variables.
 \describe{
    \item{charVar}{A character vector with a single missing observation.}
    \item{factorVar}{A factor vector with a miscoded missing observation, \code{999}.}
@@ -25,7 +26,8 @@
    is a number and a many (12) different levels are in use.}
    \item{dateVar}{A Date vector.}
    \item{labelledVar}{A labelled vector with two missing observations.}
-}}
+}
+}
 \source{
 Artificial data
 }

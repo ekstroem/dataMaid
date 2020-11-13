@@ -4,7 +4,8 @@
 \name{presidentData}
 \alias{presidentData}
 \title{Semi-artificial data about the US presidents}
-\format{A data frame with 46 rows and 11 variables.
+\format{
+A data frame with 46 rows and 11 variables.
 \describe{
    \item{lastName}{A \code{Name} type variable containing the last name of the president.}
    \item{firstName}{A \code{Name} type variable containing the first name of the president.}
@@ -20,7 +21,8 @@
    \item{ageAtInauguration}{A character variable with the age at inauguration.}
    \item{favoriteNumber}{A \code{complex} type variable with a fictional favorite number for
    each president.}
-}}
+}
+}
 \source{
 Artificial dataset constructed based on the US president dataset available from 
 \href{http://www.data-explorer.com/data}{Data Explorer}.

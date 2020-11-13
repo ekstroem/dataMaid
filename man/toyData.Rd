@@ -4,7 +4,8 @@
 \name{toyData}
 \alias{toyData}
 \title{Small example data to show the features of dataMaid}
-\format{A \code{data.frame} with 15 rows and 6 variables.
+\format{
+A \code{data.frame} with 15 rows and 6 variables.
 \describe{
    \item{pill}{A factor variable with two levels (\code{"red"} and \code{"blue"}) and a few
    (correctly coded) missing observations. This represents the colour of a pill.}
@@ -18,7 +19,8 @@
    with a number between 1 and 15), i.e. a key variable.}
    \item{spotifysong}{A factor variable that has the same level (\code{"Irrelevant"}) for all
    observations, i.e. a empty variable. The latest song played on Spotify.}
-}}
+}
+}
 \source{
 Artificial data
 }

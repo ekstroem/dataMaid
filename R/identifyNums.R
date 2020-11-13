@@ -55,7 +55,7 @@ identifyNums <- function(v, nVals = 12, ...) {
   }
   v[v==""] <- "a" #make sure v contains no empty strings
   v <- gsub("^-{1}", "", v) #remove signs (prefixed -)
-  v <- gsub("\\.{1}", "", v) #remove decimal points
+  v <- sub("\\.{1}", "", v) #remove decimal points
   v <- gsub("[[:digit:]]", "", v) #replace numbers with empty strings
   if (sum(nchar(v)) == 0) {
     out$problem <- TRUE

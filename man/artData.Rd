@@ -4,7 +4,8 @@
 \name{artData}
 \alias{artData}
 \title{Semi-artificial data about masterpieces of art}
-\format{A data frame with 200 rows and 11 variables.
+\format{
+A data frame with 200 rows and 11 variables.
 \describe{
    \item{ArtistID}{A unique ID used for cataloging the artists (fictional).}
    \item{ArtistName}{The name of the artist.}
@@ -17,7 +18,8 @@
    \item{Height}{The height of the painting, in centimers.}
    \item{Media}{The media/materials of the painting.}
    \item{Movement}{The artistic movement(s) the painting belongs to.}
-}}
+}
+}
 \source{
 Semi-artificial dataset constructed based on the Master Works of Art dataset available from 
 \href{http://www.data-explorer.com/data}{Data Explorer}.

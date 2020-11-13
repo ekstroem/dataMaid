@@ -4,7 +4,8 @@
 \name{exampleData}
 \alias{exampleData}
 \title{Example data with zero-inflated variables}
-\format{A \code{data.frame} with 300 observations on the following 6 variables.
+\format{
+A \code{data.frame} with 300 observations on the following 6 variables.
   \describe{
     \item{\code{addresses}}{a factor with fictitious US addresses}
     \item{\code{binomial}}{a numeric vector with a binomial distributed variable}
@@ -12,7 +13,8 @@
     \item{\code{gauss}}{a numeric vector with a Gaussian distributed variable}
     \item{\code{zigauss}}{a numeric vector with a zero-inflated Gaussian distributed variable}
     \item{\code{bpinteraction}}{a factor with interactions between binomial and poisson values}
- }}
+ }
+}
 \source{
 Artificial data
 }
