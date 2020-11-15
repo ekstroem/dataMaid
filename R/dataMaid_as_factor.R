@@ -43,7 +43,13 @@ dataMaid_haven_replace_with <- function(x, from, to)
     stopifnot(length(from) == length(to))
     out <- x
     matches <- match(x, from, incomparables = NA)
-    out[!is.na(matches)] <- to[matches[!is.na(matches)]]
+
+    if (anyNA(matches)) {
+      out[!is.na(matches)] <- to[matches[!is.na(matches)]]
+    } else {
+      out <- to[matches]
+    }
+
     tagged <- haven::is_tagged_na(x)
     if (!any(tagged)) {
         return(out)
