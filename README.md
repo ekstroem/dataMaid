@@ -6,8 +6,20 @@ Status](https://travis-ci.org/ekstroem/dataMaid.svg?branch=master)](https://trav
 [![CRAN\_Release\_Badge](http://www.r-pkg.org/badges/version-ago/dataMaid)](https://CRAN.R-project.org/package=dataMaid)
 ![Download counter](http://cranlogs.r-pkg.org/badges/grand-total/dataMaid)
 
-
 dataMaid is an R package for documenting and creating reports on data cleanliness. 
+
+## dataMaid has become dataReporter
+
+dataMaid has been renamed to dataReporter. All future updates and development will be made for dataReporter. Install the new package from CRAN like this
+ ```{r}
+ install.packages("dataReporter")
+ ``` 
+ or install the development version from Github:
+ ```{r]
+ devtools::install_github("ekstroem/dataReporter")
+ ```
+ Please report bugs at our [new repository](https://github.com/ekstroem/dataReporter). 
+
 
 
 ## Installation
