@@ -95,6 +95,7 @@ identifyMissingMessage <- "The following suspected missing value codes enter as 
 #removing the prefix. If e.g. prefix = "-" and char = 8,
 #values like -88, -8, -8888 will be identified (if present).
 identifyMissRepChar <- function(v, char, prefix=NULL, ignoreFirst = FALSE) {
+  originalClass <- class(v)
   v <- as.character(v)
   char <- as.character(char)
   if (!is.null(prefix)) {
@@ -111,6 +112,7 @@ identifyMissRepChar <- function(v, char, prefix=NULL, ignoreFirst = FALSE) {
       vals <- paste(prefix, v[problems], sep="")
     } else vals <- v[problems]
     vals <- unique(vals)
+    class(vals) <- originalClass
   } else vals <- NULL
   vals
 }

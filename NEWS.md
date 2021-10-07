@@ -1,5 +1,10 @@
-# Upcoming version
+# NOTICE
 
+dataMaid has been superseeded by the dataReporter package. You should swap to that package immediately. The dataMaid package will not be extended or updated.
+
+# dataMaid 1.4.1
+
+*   Fixed a bug in IdentifyMissing() in order to keep the package on CRAN
 *   Fixed a bug in identifyNums that removed all periods when checking if a variable was numeric - thanks to Hervé Barjat (#56)
 
 # dataMaid 1.4.0

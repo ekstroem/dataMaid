@@ -15,5 +15,7 @@
 ^latex$
 ^sandbox$
 ^docs$
+^doc$
 ^_pkgdown.yaml
 ^texput.log
+.httr-oauth
