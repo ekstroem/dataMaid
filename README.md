@@ -10,7 +10,7 @@ dataMaid is an R package for documenting and creating reports on data cleanlines
 
 ## dataMaid has become dataReporter
 
-dataMaid has been renamed to dataReporter. All future updates and development will be made for dataReporter. Install the new package from CRAN like this
+dataMaid has been renamed to dataReporter. **dataMaid is no longer maintained. All future updates and development will be made for dataReporter.** Install the new package from CRAN like this
  ```{r}
  install.packages("dataReporter")
  ``` 
@@ -18,7 +18,7 @@ dataMaid has been renamed to dataReporter. All future updates and development wi
  ```{r]
  devtools::install_github("ekstroem/dataReporter")
  ```
- Please report bugs at our [new repository](https://github.com/ekstroem/dataReporter). 
+ **Please report bugs at our [new repository](https://github.com/ekstroem/dataReporter). **
 
 
 
