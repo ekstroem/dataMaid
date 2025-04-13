@@ -22,7 +22,7 @@ A data frame with 200 rows and 11 variables.
 }
 \source{
 Semi-artificial dataset constructed based on the Master Works of Art dataset available from 
-\href{http://www.data-explorer.com/data}{Data Explorer}.
+\href{https://www.data-explorer.com/data/}{Data Explorer}.
 }
 \usage{
 artData

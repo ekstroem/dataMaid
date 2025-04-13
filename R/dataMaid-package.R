@@ -24,9 +24,9 @@
 #'    \item{favoriteNumber}{A \code{complex} type variable with a fictional favorite number for
 #'    each president.}
 #' }
-#' @references Petersen AH, Ekstrøm CT (2019). “dataMaid: Your Assistant for Documenting Supervised Data Quality Screening in R.” _Journal of Statistical Software_, *90*(6), 1-38. doi: 10.18637/jss.v090.i06 ( \url{https://doi.org/10.18637/jss.v090.i06}).
+#' @references Petersen AH, Ekstrøm CT (2019). “dataMaid: Your Assistant for Documenting Supervised Data Quality Screening in R.” _Journal of Statistical Software_, *90*(6), 1-38. doi: 10.18637/jss.v090.i06 ( \doi{10.18637/jss.v090.i06}).
 #' @source Artificial dataset constructed based on the US president dataset available from 
-#' \href{http://www.data-explorer.com/data}{Data Explorer}.
+#' \href{https://www.data-explorer.com/data/}{Data Explorer}.
 #' @examples
 #' data(presidentData)
 #'
@@ -67,8 +67,8 @@
 #'    each president.}
 #' }
 #' @source Artificial dataset constructed based on the US president dataset available from 
-#' \href{http://www.data-explorer.com/data}{Data Explorer}.
-#' @references Petersen AH, Ekstrøm CT (2019). “dataMaid: Your Assistant for Documenting Supervised Data Quality Screening in R.” _Journal of Statistical Software_, *90*(6), 1-38. doi: 10.18637/jss.v090.i06 ( \url{https://doi.org/10.18637/jss.v090.i06}).
+#' \href{https://www.data-explorer.com/data/}{Data Explorer}.
+#' @references Petersen AH, Ekstrøm CT (2019). “dataMaid: Your Assistant for Documenting Supervised Data Quality Screening in R.” _Journal of Statistical Software_, *90*(6), 1-38. doi: 10.18637/jss.v090.i06 ( \doi{10.18637/jss.v090.i06}).
 #' @examples
 #' data(bigPresidentData)
 #'
@@ -97,7 +97,7 @@
 #'    \item{Movement}{The artistic movement(s) the painting belongs to.}
 #'}
 #' @source Semi-artificial dataset constructed based on the Master Works of Art dataset available from 
-#' \href{http://www.data-explorer.com/data}{Data Explorer}.
+#' \href{https://www.data-explorer.com/data/}{Data Explorer}.
 #' @examples
 #' data(artData)
 #'
@@ -160,7 +160,7 @@
 #'    observations, i.e. a empty variable. The latest song played on Spotify.}
 #' }
 #' @source Artificial data
-#' @references Petersen AH, Ekstrøm CT (2019). “dataMaid: Your Assistant for Documenting Supervised Data Quality Screening in R.” _Journal of Statistical Software_, *90*(6), 1-38. doi: 10.18637/jss.v090.i06 ( \url{https://doi.org/10.18637/jss.v090.i06}).
+#' @references Petersen AH, Ekstrøm CT (2019). “dataMaid: Your Assistant for Documenting Supervised Data Quality Screening in R.” _Journal of Statistical Software_, *90*(6), 1-38. doi: 10.18637/jss.v090.i06 ( \doi{10.18637/jss.v090.i06}).
 #' @examples
 #' data(toyData)
 #'

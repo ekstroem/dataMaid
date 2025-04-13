@@ -19,7 +19,7 @@ Sys.getenv("TZ")
 ```
 
 ## Introduction
-The data documentation tools available in `dataMaid` allows for it to be utilized as an easy-to-use, self-contained package, as outlined in our [article](https://www.jstatsoft.org/article/view/v090i06). However, this does *not* imply that `dataMaid` is not customizable: `dataMaid` was specifically built for including user-made extensions and this vignette is a tutorial into how one can write simple extensions that can be used in e.g. the `makeDataReport()` function from `dataMaid`. 
+The data documentation tools available in `dataMaid` allows for it to be utilized as an easy-to-use, self-contained package, as outlined in our [article](https://doi.org/10.18637/jss.v090.i06). However, this does *not* imply that `dataMaid` is not customizable: `dataMaid` was specifically built for including user-made extensions and this vignette is a tutorial into how one can write simple extensions that can be used in e.g. the `makeDataReport()` function from `dataMaid`. 
 
 ### Three steps of data documentation
 In order to understand how different parts of the report creation can be customized, we will briefly dwell on the structure of the data reports made by `dataMaid`. Aside from a few pages dedicated to gaining an overview of the full dataset and what was done to document its current state, the report sequentially presents information for each variable. More specifically, each variable is presented with one of the two sets of information:
@@ -702,7 +702,7 @@ call. We wish to produce a report that utilizes the newly defined functions in t
 * We want the new summary function, `meanSummary()`, to be used for `numeric`, `integer` and `logical` variables.
 * We want the new check function, `identifyColons()`, to be added to the checks performed on `character`, `factor` and `labelled` variables.
 
-We will make a data report for the built-in dataset `artData` that is based on the *Master Works of Art* data from [Data Explorer](http://www.data-explorer.com/data). The dataset contains 200 observations (corresponding to paintings) of 11 variables, describing different properties of the paintings and their artists. The first 5 observations look like this:
+We will make a data report for the built-in dataset `artData` that is based on the *Master Works of Art* data from [Data Explorer](https://www.data-explorer.com/data/). The dataset contains 200 observations (corresponding to paintings) of 11 variables, describing different properties of the paintings and their artists. The first 5 observations look like this:
 
 ```{r headArtData}
 data(artData)

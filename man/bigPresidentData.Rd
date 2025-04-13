@@ -29,7 +29,7 @@ A data frame with 47 rows and 15 variables.
 }
 \source{
 Artificial dataset constructed based on the US president dataset available from 
-\href{http://www.data-explorer.com/data}{Data Explorer}.
+\href{https://www.data-explorer.com/data/}{Data Explorer}.
 }
 \usage{
 bigPresidentData
@@ -50,6 +50,6 @@ data(bigPresidentData)
 
 }
 \references{
-Petersen AH, Ekstrøm CT (2019). “dataMaid: Your Assistant for Documenting Supervised Data Quality Screening in R.” _Journal of Statistical Software_, *90*(6), 1-38. doi: 10.18637/jss.v090.i06 ( \url{https://doi.org/10.18637/jss.v090.i06}).
+Petersen AH, Ekstrøm CT (2019). “dataMaid: Your Assistant for Documenting Supervised Data Quality Screening in R.” _Journal of Statistical Software_, *90*(6), 1-38. doi: 10.18637/jss.v090.i06 ( \doi{10.18637/jss.v090.i06}).
 }
 \keyword{datasets}

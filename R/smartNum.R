@@ -18,10 +18,16 @@ smartNum <- function(v) {
 
 #Get the original class of a smartNum or fakeLabelled object. Used in makeDataReport().
 oClass <- function(v) UseMethod("oClass")
+
+#' @exportS3Method
 oClass.default <- function(v) {
   oC <- attr(v, "orginalClass")
   if (!is.null(oC)) return(oC)
   else class(v)
 }
+
+#' @exportS3Method
 oClass.smartNum <- function(v) attr(v, "originalClass")
+
+#' @exportS3Method
 oClass.fakeLabelled <- function(v) attr(v, "originalClass")

@@ -39,7 +39,7 @@
 #' \code{$problemValues} (the outlier values).  
 #'
 #' @seealso \code{\link{check}}, \code{\link{allCheckFunctions}}, 
-#' \code{\link{checkFunction}}, \code{\link{checkResult}}, \code{\link{mc}}
+#' \code{\link{checkFunction}}, \code{\link{checkResult}}, \code{\link[robustbase]{mc}}
 #'
 #' @examples
 #'  identifyOutliers(c(1:10, 200, 200, 700))
